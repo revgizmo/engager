@@ -4,7 +4,7 @@
 
 ---
 
-Mission: Consolidate the two local branches (`cursor/audit-and-refine-r-package-product-requirements-2a82` and `prd-audit/2025-01-27`) into a clean, single branch structure while preserving all valuable work and removing redundant branches.
+Mission: Implement the findings and recommendations from the comprehensive PRD audit to align the zoomstudentengagement R package with ideal product requirements, address scope creep, and improve user experience.
 
 FIRST: Pull the prd-audit branch and review the work completed:
 ```bash
@@ -17,25 +17,26 @@ Context files to link:
 - @docs/Ideal_PRD_and_Analysis.md (Comprehensive PRD analysis and recommendations)
 - @docs/PRD_Review.md (PRD evaluation against best practices)
 - @docs/Reverse_Engineered_PRD.md (Current implied product requirements)
-- @docs/Project_Handoff_2025-08-25_branch-consolidation.md (MAIN HANDOFF DOCUMENT)
+- @docs/Project_Handoff_2025-08-25_prd-audit.md (MAIN HANDOFF DOCUMENT)
 - @docs/development/AI_AGENT_HANDOFF_TEMPLATE.md (Handoff process template)
 
-Your task: Implement the branch consolidation plan by merging the prd-audit branch to main and deleting the empty cursor branch.
+Your task: Implement the PRD audit findings to address scope creep (42 functions vs ideal 16), define success metrics, and simplify user experience while maintaining privacy and educational focus.
 
-Focus: Git branch management and repository cleanup for R package development
+Focus: Product requirements implementation and user experience improvement for R package development
 
 Key requirements:
 - Follow R package development standards and tidyverse approach
-- Preserve all valuable PRD audit documentation during merge
-- Delete empty cursor branch safely
-- Maintain clean git history
-- Verify no data loss during consolidation
-- Ensure all documentation links remain valid
+- Implement measurable success metrics and performance benchmarks
+- Reduce scope from 42 to ideal 16 functions systematically
+- Simplify user experience and improve onboarding
+- Maintain privacy-first design and educational focus
+- Preserve existing functionality while improving focus
 
-Success criteria: Clean branch structure with all PRD documentation merged to main, empty cursor branch deleted, and repository ready for continued development.
+Success criteria: Package aligned with ideal PRD requirements, success metrics defined and measurable, scope reduced to core functions, user experience simplified, and performance benchmarks established.
 
-Start with the handoff document and follow the consolidation workflow. The analysis is complete and the implementation plan is straightforward - the prd-audit branch contains valuable work that needs to be preserved while the cursor branch is empty and can be safely removed.
+Start with the handoff document and follow the PRD implementation recommendations. The audit provides clear findings: strong foundation with excellent privacy implementation, but significant scope creep and missing success metrics that need to be addressed systematically.
 
 ---
 
-**Branch consolidation analysis complete - ready for implementation phase.**
+**PRD audit analysis complete - ready for implementation phase to align package with ideal requirements.**
+
