@@ -78,6 +78,13 @@ docs(readme): update installation instructions
 - [ ] **Merge Readiness**: Conflicts resolved, CI passing
 - [ ] **Project Alignment**: Supports CRAN submission goals
 
+#### Temporary CI Policy (until CI is unblocked)
+- CI is currently blocked. During this period, maintainers may self-merge their own PRs if BOTH of the following succeed locally:
+  - `Rscript scripts/pre-pr-validation.R`
+  - `./scripts/save-context.sh`
+- Document the successful runs in the PR description or as a review comment.
+- When CI is restored, this temporary policy will be removed and normal CI gating will resume.
+
 ### Decision Criteria
 - **APPROVE**: Meets all criteria, ready for merge
 - **REVISE**: Has merit but needs specific improvements
@@ -87,7 +94,7 @@ docs(readme): update installation instructions
 - **Clean Merge**: Standard process, no conflicts
 - **Merge Conflicts**: Rebase required before merge
 - **Branch Protection**: Use admin override when appropriate
-- **CI Pending**: Acceptable for documentation, require fixes for code changes
+- **CI Pending / Blocked**: While CI is blocked, self-merge is allowed if `scripts/pre-pr-validation.R` and `scripts/save-context.sh` both complete successfully locally and results are recorded in the PR.
 
 ### Time Estimates
 - **Low**: <10 files, documentation (10-15 min)
