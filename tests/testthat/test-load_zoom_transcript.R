@@ -195,7 +195,8 @@ test_that("load_zoom_transcript handles large transcripts", {
   for (i in seq_len(entries)) {
     start_sec <- (i - 1) * 2
     end_sec <- start_sec + 1
-    lines <- c(lines,
+    lines <- c(
+      lines,
       as.character(i),
       paste0(build_time(start_sec), " --> ", build_time(end_sec)),
       paste0("Student", i, ": Comment ", i),

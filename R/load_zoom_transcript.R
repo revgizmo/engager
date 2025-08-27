@@ -120,8 +120,7 @@ load_zoom_transcript <- function(transcript_file_path) {
       !is.na(result$duration) &
       result$duration >= 0 &
       !is.na(result$comment) &
-      result$comment != "",
-    ,
+      result$comment != "", ,
     drop = FALSE
   ]
 
