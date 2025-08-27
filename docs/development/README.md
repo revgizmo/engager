@@ -76,12 +76,12 @@
 2. **Check CRAN Compliance**: Review [CRAN_SUBMISSION.md](CRAN_SUBMISSION.md)
 3. **Update Documentation**: Ensure all changes are documented
 
-#### Temporary CI Policy (until CI is unblocked)
+#### Temporary CI Policy (until CI is unblocked) — see Issue #406
 - CI is currently blocked. During this period, maintainers may self-merge their own PRs if BOTH of the following succeed locally:
   - `Rscript scripts/pre-pr-validation.R`
   - `./scripts/save-context.sh`
 - Document the successful runs in the PR description or as a review comment.
-- When CI is restored, this temporary policy will be removed and normal CI gating will resume.
+- When CI is restored, this temporary policy will be removed and normal CI gating will resume. Track at Issue #406.
 
 ---
 
