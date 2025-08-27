@@ -94,9 +94,12 @@ load_zoom_transcript <- function(transcript_file_path) {
   transcript_df$start <- sapply(time_split, function(x) if (length(x) == 2) x[1] else NA_character_)
   transcript_df$end <- sapply(time_split, function(x) if (length(x) == 2) x[2] else NA_character_)
 
-  # Convert to hms and calculate duration
-  transcript_df$start <- hms::as_hms(transcript_df$start)
-  transcript_df$end <- hms::as_hms(transcript_df$end)
+  # Convert to hms with error handling and calculate duration
+  safe_as_hms <- function(x) {
+    tryCatch(hms::as_hms(x), warning = function(w) hms::as_hms(NA), error = function(e) hms::as_hms(NA))
+  }
+  transcript_df$start <- do.call(c, lapply(transcript_df$start, safe_as_hms))
+  transcript_df$end <- do.call(c, lapply(transcript_df$end, safe_as_hms))
   transcript_df$duration <- transcript_df$end - transcript_df$start
 
   # Calculate wordcount
@@ -110,8 +113,16 @@ load_zoom_transcript <- function(transcript_file_path) {
   # Select final columns using base R
   result <- transcript_df[, c("transcript_file", "comment_num", "name", "comment", "start", "end", "duration", "wordcount")]
 
-  # Filter out any rows with missing timestamps or comments using base R
-  result <- result[!is.na(result$start) & !is.na(result$end) & !is.na(result$comment) & result$comment != "", , drop = FALSE]
+  # Filter out rows with missing or invalid timestamps, comments, or negative duration
+  result <- result[
+    !is.na(result$start) &
+      !is.na(result$end) &
+      !is.na(result$duration) &
+      result$duration >= 0 &
+      !is.na(result$comment) &
+      result$comment != "", ,
+    drop = FALSE
+  ]
 
   if (nrow(result) == 0) {
     return(NULL)
