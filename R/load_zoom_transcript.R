@@ -96,10 +96,10 @@ load_zoom_transcript <- function(transcript_file_path) {
 
   # Convert to hms with error handling and calculate duration
   safe_as_hms <- function(x) {
-    tryCatch(hms::as_hms(x), warning = function(w) NA, error = function(e) NA)
+    tryCatch(hms::as_hms(x), warning = function(w) hms::as_hms(NA), error = function(e) hms::as_hms(NA))
   }
-  transcript_df$start <- sapply(transcript_df$start, safe_as_hms)
-  transcript_df$end <- sapply(transcript_df$end, safe_as_hms)
+  transcript_df$start <- do.call(c, lapply(transcript_df$start, safe_as_hms))
+  transcript_df$end <- do.call(c, lapply(transcript_df$end, safe_as_hms))
   transcript_df$duration <- transcript_df$end - transcript_df$start
 
   # Calculate wordcount
