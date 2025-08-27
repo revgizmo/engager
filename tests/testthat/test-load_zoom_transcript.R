@@ -132,3 +132,79 @@ test_that("load_zoom_transcript handles VTT file with insufficient entries", {
   result <- load_zoom_transcript(temp_file)
   expect_null(result)
 })
+
+test_that("load_zoom_transcript errors on missing WEBVTT header", {
+  temp_file <- tempfile(fileext = ".vtt")
+  writeLines(c("NOTVTT", "", "1", "00:00:00.000 --> 00:00:01.000", "Student1: Hi"), temp_file)
+  on.exit(unlink(temp_file), add = TRUE)
+  expect_error(load_zoom_transcript(temp_file), "Invalid VTT")
+})
+
+test_that("load_zoom_transcript skips entries with invalid timestamps", {
+  vtt_content <- c(
+    "WEBVTT",
+    "",
+    "1",
+    "00:00:00.000 --> 00:00:03.000",
+    "Student1: Hello",
+    "",
+    "2",
+    "00:00:05.000 --> not_a_time",
+    "Student2: Bad time",
+    "",
+    "3",
+    "00:00:06.000 --> 00:00:04.000",
+    "Student3: Reversed times"
+  )
+  temp_file <- tempfile(fileext = ".vtt")
+  writeLines(vtt_content, temp_file)
+  on.exit(unlink(temp_file), add = TRUE)
+
+  result <- load_zoom_transcript(temp_file)
+
+  # Only the first entry should be valid
+  expect_equal(nrow(result), 1)
+  expect_equal(result$name, "Student1")
+})
+
+test_that("load_zoom_transcript handles missing timestamp separator", {
+  vtt_content <- c(
+    "WEBVTT",
+    "",
+    "1",
+    "00:00:00.000 00:00:03.000",
+    "Student1: Hello"
+  )
+  temp_file <- tempfile(fileext = ".vtt")
+  writeLines(vtt_content, temp_file)
+  on.exit(unlink(temp_file), add = TRUE)
+
+  result <- load_zoom_transcript(temp_file)
+  expect_null(result)
+})
+
+test_that("load_zoom_transcript handles large transcripts", {
+  build_time <- function(sec) {
+    hrs <- sec %/% 3600
+    mins <- (sec %% 3600) %/% 60
+    secs <- sec %% 60
+    sprintf("%02d:%02d:%02d.000", hrs, mins, secs)
+  }
+  entries <- 1000
+  lines <- c("WEBVTT", "")
+  for (i in seq_len(entries)) {
+    start_sec <- (i - 1) * 2
+    end_sec <- start_sec + 1
+    lines <- c(lines,
+      as.character(i),
+      paste0(build_time(start_sec), " --> ", build_time(end_sec)),
+      paste0("Student", i, ": Comment ", i),
+      ""
+    )
+  }
+  temp_file <- tempfile(fileext = ".vtt")
+  writeLines(lines, temp_file)
+  on.exit(unlink(temp_file), add = TRUE)
+  result <- load_zoom_transcript(temp_file)
+  expect_equal(nrow(result), entries)
+})
