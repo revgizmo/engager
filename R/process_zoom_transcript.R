@@ -51,16 +51,12 @@ process_zoom_transcript <- function(transcript_file_path = "",
                                     dead_air_name = "dead_air",
                                     na_name = "unknown",
                                     transcript_df = NULL) {
-  . <- begin <- comment_num <- duration <- end <- name <- prior_dead_air <-
-    start <- NULL
-
-  max_pause_sec_ <- max_pause_sec
-  dead_air_name_ <- dead_air_name
-  na_name_ <- na_name
-
-
-  if (file.exists(transcript_file_path)) {
-    transcript_df <- zoomstudentengagement::load_zoom_transcript(transcript_file_path)
+  if (is.null(transcript_df)) {
+    if (nzchar(transcript_file_path) && file.exists(transcript_file_path)) {
+      transcript_df <- zoomstudentengagement::load_zoom_transcript(transcript_file_path)
+    } else {
+      return(NULL)
+    }
   }
 
   if (tibble::is_tibble(transcript_df)) {
@@ -85,14 +81,16 @@ process_zoom_transcript <- function(transcript_file_path = "",
     transcript_df <- transcript_df[, c(col_order, other_cols)]
 
 
-    if (consolidate_comments == TRUE) {
-      transcript_df <- transcript_df %>%
-        zoomstudentengagement::consolidate_transcript(., max_pause_sec = max_pause_sec_)
+    if (consolidate_comments) {
+      transcript_df <- zoomstudentengagement::consolidate_transcript(transcript_df,
+        max_pause_sec = max_pause_sec
+      )
     }
 
-    if (add_dead_air == TRUE) {
-      transcript_df <- transcript_df %>%
-        zoomstudentengagement::add_dead_air_rows(dead_air_name = dead_air_name_)
+    if (add_dead_air) {
+      transcript_df <- zoomstudentengagement::add_dead_air_rows(transcript_df,
+        dead_air_name = dead_air_name
+      )
     }
 
     # Use base R operations instead of dplyr to avoid segmentation fault
@@ -103,9 +101,10 @@ process_zoom_transcript <- function(transcript_file_path = "",
     return_df$comment_num <- seq_len(nrow(return_df))
 
     # Handle NA names using base R
-    return_df$name <- ifelse(is.na(return_df$name), na_name_, return_df$name)
+    return_df$name <- ifelse(is.na(return_df$name), na_name, return_df$name)
 
     # Convert to tibble to maintain expected return type
     return(tibble::as_tibble(return_df))
   }
+  NULL
 }
