@@ -20,8 +20,8 @@ This directory contains utility scripts for development and project management.
 
 ### Before Creating PRs
 ```bash
-# Run comprehensive validation
-Rscript scripts/pre-pr-validation.R
+# Run validation and refresh context files
+./scripts/pre-pr.sh
 ```
 
 ## Context Scripts for Cursor
@@ -36,21 +36,31 @@ Rscript scripts/pre-pr-validation.R
 
 # Then link in Cursor:
 # @context.md - Shell context
-# @r-context.md - R-specific context  
+# @r-context.md - R-specific context
 # @full-context.md - Combined context (RECOMMENDED)
 ```
 
-**Why This is Best**: 
+**Why This is Best**:
 - Saves context to files you can link with `@full-context.md`
-- Includes backups and validation
+- Minimal and fast; no manual copy/paste
 - Perfect for ongoing development work
-- No need to copy/paste - just link the file
 
 **Creates**:
 - `.cursor/context.md` - Shell context
 - `.cursor/r-context.md` - R-specific context
 - `.cursor/full-context.md` - Combined context (use this one!)
 - `.cursor/context_YYYYMMDD_HHMMSS.md` - Timestamped version
+
+**Note**: This script does not modify `PROJECT.md`. Update that file manually when project-level status changes.
+
+### `pre-pr.sh`
+**Purpose**: Run pre-PR validation and update context in one step
+
+**Usage**:
+```bash
+# Validate package and refresh context
+./scripts/pre-pr.sh
+```
 
 ### `context-for-new-chat.sh`
 **Purpose**: Generate comprehensive project context for new Cursor chats
