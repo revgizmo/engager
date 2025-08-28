@@ -30,7 +30,7 @@ Decision: manage work directly via Issues, Milestones, Labels, and PRs. No Proje
   - Each PR links an issue (Closes #X); PR template checklist must pass
   - Use saved issue filters instead of a board (e.g., `is:open label:"priority:high" -label:"status:blocked"`)
 
-## Current Status (Updated: 2025-01-27)
+## Current Status (Updated: 2025-08-25)
 **Package Status: EXCELLENT - Very Close to CRAN Ready**
 
 ### 📊 **PRD Audit Analysis (COMPLETED - 2025-01-27)**
@@ -138,131 +138,21 @@ A comprehensive ethical analysis conducted on 2025-08-04 revealed **CATASTROPHIC
  - **Test Coverage**: 90.69% (target achieved)
 
 ### What Needs Work ❌ (Critical Issues for CRAN)
-
-#### **Pre-CRAN Critical Work (1-2 weeks)**
-- **PRD Implementation Foundation**: Success metrics, function audit, UX simplification
-- **Issue #160 - Name Matching with Privacy**: Complete enhanced Phase 2 implementation
-- **CRAN Submission Preparation**: Final testing and validation
-
-#### **Post-CRAN Implementation (6-8 weeks)**
-- **Full Scope Reduction**: Systematically reduce from 68 to ideal 16 functions
-- **Performance Optimization**: Implement benchmarks and optimization
-- **Advanced Feature Management**: Evaluate and manage advanced features
-- **Community Engagement**: Build user community and support processes
-
-#### **Existing Critical Issues**
-- **CRITICAL: Add FERPA Compliance Features and Documentation**: ✅ **RESOLVED** ([Issue #126](https://github.com/revgizmo/zoomstudentengagement/issues/126) - CLOSED)
-- **HIGH: Complete Function Documentation and Examples**: ✅ **RESOLVED** ([Issue #130](https://github.com/revgizmo/zoomstudentengagement/issues/130) - CLOSED)
-- **HIGH: Transition to Test-Driven Design and Full Functionality Coverage**: OPEN ([Issue #215](https://github.com/revgizmo/zoomstudentengagement/issues/215) - Priority: HIGH)
-- **HIGH: Complete Real-World Testing with Confidential Data**: OPEN ([Issue #129](https://github.com/revgizmo/zoomstudentengagement/issues/129) - Priority: HIGH)
-- **CRITICAL: Project Restructuring Based on Premortem Analysis**: OPEN ([Issue #123](https://github.com/revgizmo/zoomstudentengagement/issues/123) - Priority: HIGH)
-- **Phase 2: Comprehensive Real-World Testing for dplyr to Base R Conversions**: OPEN ([Issue #115](https://github.com/revgizmo/zoomstudentengagement/issues/115) - Priority: HIGH)
+- **BLOCKER: CI temporarily disabled; follow temporary self-merge policy**: OPEN ([Issue #406](https://github.com/revgizmo/zoomstudentengagement/issues/406) - Priority: HIGH)
+- **[PRD] Basic UX Simplification**: OPEN ([Issue #394](https://github.com/revgizmo/zoomstudentengagement/issues/394) - Priority: HIGH)
+- **[PRD] Core Function Audit & Categorization**: OPEN ([Issue #393](https://github.com/revgizmo/zoomstudentengagement/issues/393) - Priority: HIGH)
+- **[PRD] Success Metrics Definition & Implementation**: OPEN ([Issue #392](https://github.com/revgizmo/zoomstudentengagement/issues/392) - Priority: HIGH)
+- **feat(privacy): name masking helper with docs**: OPEN ([Issue #298](https://github.com/revgizmo/zoomstudentengagement/issues/298) - Priority: HIGH)
+- **test(ingestion): malformed inputs edge cases**: OPEN ([Issue #293](https://github.com/revgizmo/zoomstudentengagement/issues/293) - Priority: HIGH)
+- **Plan: Near-term Simplification for CRAN Readiness (single-plan)**: OPEN ([Issue #282](https://github.com/revgizmo/zoomstudentengagement/issues/282) - Priority: HIGH)
+- **Phase 2: Docker Performance Optimization**: OPEN ([Issue #244](https://github.com/revgizmo/zoomstudentengagement/issues/244) - Priority: HIGH)
+- **Epic: Comprehensive Docker Development Environment Optimization**: OPEN ([Issue #242](https://github.com/revgizmo/zoomstudentengagement/issues/242) - Priority: HIGH)
+- **docs: Create CRAN submission preparation guide**: OPEN ([Issue #230](https://github.com/revgizmo/zoomstudentengagement/issues/230) - Priority: HIGH)
+- **fix: Wrap diagnostic output in test environment checks for CRAN compliance**: OPEN ([Issue #220](https://github.com/revgizmo/zoomstudentengagement/issues/220) - Priority: HIGH)
+- **docs: Institutional FERPA compliance adoption guide**: OPEN ([Issue #154](https://github.com/revgizmo/zoomstudentengagement/issues/154) - Priority: HIGH)
+- **test: Real-world FERPA compliance validation**: OPEN ([Issue #153](https://github.com/revgizmo/zoomstudentengagement/issues/153) - Priority: HIGH)
 - **Add missing function documentation**: OPEN ([Issue #90](https://github.com/revgizmo/zoomstudentengagement/issues/90) - Priority: HIGH)
 - **Add transcript_file column with intelligent duplicate handling**: OPEN ([Issue #56](https://github.com/revgizmo/zoomstudentengagement/issues/56) - Priority: HIGH)
-- **Refactor: Replace acronyms in exported function names for clarity**: OPEN ([Issue #23](https://github.com/revgizmo/zoomstudentengagement/issues/23) - Priority: HIGH)
-- **Audit: Improve error messages**: OPEN ([Issue #18](https://github.com/revgizmo/zoomstudentengagement/issues/18) - Priority: HIGH)
-- **Audit: Refactor duplicated code**: OPEN ([Issue #17](https://github.com/revgizmo/zoomstudentengagement/issues/17) - Priority: HIGH)
-- **Audit: Review function naming and API consistency**: OPEN ([Issue #16](https://github.com/revgizmo/zoomstudentengagement/issues/16) - Priority: HIGH)
-
-### 🔒 **Security and Performance Review Recommendations (INTEGRATED)**
-**Security Enhancements** (Medium Priority):
-- **Path Validation**: Add enhanced path validation for user-provided files ([Issue #375](https://github.com/revgizmo/zoomstudentengagement/issues/375))
-- **File Size Limits**: Implement file size limits for transcript processing ([Issue #376](https://github.com/revgizmo/zoomstudentengagement/issues/376))
-- **Audit Logging**: Add audit logging for privacy-sensitive operations ([Issue #381](https://github.com/revgizmo/zoomstudentengagement/issues/381))
-
-**Performance Optimizations** (Medium Priority):
-- **Chunked Reading**: Implement chunked reading for large files ([Issue #378](https://github.com/revgizmo/zoomstudentengagement/issues/378))
-- **Cross Join Optimization**: Optimize cross join operations in join_transcripts_list.R ([Issue #379](https://github.com/revgizmo/zoomstudentengagement/issues/379))
-- **Memory Optimization**: Optimize memory usage for large transcript files ([Issue #380](https://github.com/revgizmo/zoomstudentengagement/issues/380))
-
-## 🚀 **Ethical Research Implementation Roadmap**
-
-### **✅ Phase 1: Privacy Implementation (COMPLETED - 2025-08-08)**
-Based on comprehensive ethical research in `docs/development/ethical-issues-research/CRAN_ROADMAP.md`:
-
-**✅ Week 1: Core Privacy Implementation (COMPLETED)**
-- ✅ Implement `ensure_privacy()` function with privacy levels (mask, none)
-- ✅ Create `set_privacy_defaults()` for global configuration
-- ✅ Integrate privacy at user-facing boundaries (writers, summaries, plots)
-- ✅ Add privacy-first defaults with `.onLoad()` function
-- ✅ Create FERPA/ethics vignette and comprehensive tests
-
-**Week 2: Compliance and Documentation (NEXT)**
-- FERPA compliance documentation
-- Security enhancements
-- Ethical use guidelines
-- CRAN preparation and submission
-
-### **✅ Priority Functions for Privacy Integration (COMPLETED)**
-- ✅ `mask_user_names_by_metric()` (enhanced and integrated)
-- ✅ `plot_users_by_metric()` (privacy integration complete)
-- ✅ `plot_users_masked_section_by_metric()` (privacy integration complete)
-- ✅ `summarize_transcript_metrics()` (privacy integration complete)
-- ✅ `write_engagement_metrics()` (privacy integration complete)
-- ✅ `write_transcripts_summary()` (privacy integration complete)
-
-### **🎯 Current Status and Next Priorities**
-**Major Achievement**: Privacy-first MVP successfully implemented and tested
-- ✅ All user-facing functions now default to masked outputs
-- ✅ Global privacy configuration with `set_privacy_defaults()`
-- ✅ Comprehensive test coverage for privacy features
-- ✅ FERPA/ethics vignette created and documented
-
-**Next Critical Priorities**:
-1. **Issue #129**: Complete real-world testing with confidential data
-2. **Issue #127**: Performance optimization for large datasets
-3. **Issue #115**: Comprehensive real-world testing for dplyr to Base R conversions
-4. **Issue #123**: Project restructuring based on premortem analysis
-
-## 🐳 **Docker Development Environment Optimization (Epic #242)**
-
-### **Overview**
-Comprehensive Docker optimization to achieve ideal development environment with fast, reliable, and developer-friendly containerization.
-
-### **Current State**
-- **Issue #221**: Basic Docker container development environment (CLOSED - consolidated)
-- **Issue #223**: Performance optimization (CLOSED - consolidated)
-- **Issue #39**: GitHub Actions workflow optimization (BLOCKED - integrated)
-- **Issue #99**: QA testing process improvement (BLOCKED - integrated)
-
-### **Phased Implementation Plan**
-
-#### **Phase 1: Foundation & Stability** (Issue #243 - CRITICAL)
-- **Status**: BLOCKED - Container startup failures
-- **Objective**: Fix basic container startup and establish stable foundation
-- **Timeline**: 1 week
-- **Success Metrics**: Container starts in <60 seconds, 100% reliability
-
-#### **Phase 2: Performance Optimization** (Issue #244 - HIGH)
-- **Status**: BLOCKED - Depends on Phase 1
-- **Objective**: Achieve target performance metrics
-- **Timeline**: 1 week
-- **Success Metrics**: Startup <30 seconds, build time <5 minutes, image size <1.8 GB
-
-#### **Phase 3: Development Experience** (Issue #245 - MEDIUM)
-- **Status**: BLOCKED - Depends on Phase 2
-- **Objective**: Perfect Cursor IDE integration and developer workflow
-- **Timeline**: 1 week
-- **Success Metrics**: Setup time <5 minutes, 100% background agent reliability
-
-#### **Phase 4: CI/CD Integration** (Issue #246 - MEDIUM)
-- **Status**: BLOCKED - Depends on Phase 3
-- **Objective**: Integrate with GitHub Actions and quality assurance
-- **Timeline**: 1 week
-- **Success Metrics**: CI/CD build time <10 minutes, automated quality checks
-
-### **Success Metrics**
-- **Container startup**: 2-3 minutes → 10-30 seconds
-- **Build time**: 10-15 minutes → 2-5 minutes
-- **Image size**: ~2.5 GB → ~1.8 GB
-- **Setup time**: 30+ minutes → 5 minutes
-- **Reliability**: 100% startup success rate
-
-### **Implementation Timeline**
-- **Week 1**: Foundation & stability
-- **Week 2**: Performance optimization
-- **Week 3**: Development experience
-- **Week 4**: CI/CD integration
 ## 🚨 **Premortem Analysis and Action Plan (August 2025)**
 
 ### **Critical Findings**
@@ -314,12 +204,19 @@ A comprehensive premortem analysis conducted on 2025-08-04 revealed fundamental 
 5. **Missing Example Data**: **RESOLVED** - All examples now pass R CMD check ([Issue #58](https://github.com/revgizmo/zoomstudentengagement_cursor/issues/58) - CLOSED)
 
 ### 🔄 **Remaining Issues (Critical - CRAN Ready Soon)**
-- **[Issue #130](https://github.com/revgizmo/zoomstudentengagement/issues/130)**: HIGH: Complete Function Documentation and Examples (OPEN)
-- **[Issue #129](https://github.com/revgizmo/zoomstudentengagement/issues/129)**: HIGH: Complete Real-World Testing with Confidential Data (OPEN)
-- **[Issue #127](https://github.com/revgizmo/zoomstudentengagement/issues/127)**: Performance Optimization for Large Datasets (OPEN)
-- **[Issue #126](https://github.com/revgizmo/zoomstudentengagement/issues/126)**: ✅ **RESOLVED**: Add FERPA Compliance Features and Documentation (CLOSED)
-- **[Issue #125](https://github.com/revgizmo/zoomstudentengagement/issues/125)**: CRITICAL: Implement Privacy-First Defaults and Data Anonymization (OPEN)
-- **[Issue #123](https://github.com/revgizmo/zoomstudentengagement/issues/123)**: CRITICAL: Project Restructuring Based on Premortem Analysis (OPEN)
+- **[Issue #394](https://github.com/revgizmo/zoomstudentengagement/issues/394)**: [PRD] Basic UX Simplification (OPEN)
+- **[Issue #393](https://github.com/revgizmo/zoomstudentengagement/issues/393)**: [PRD] Core Function Audit & Categorization (OPEN)
+- **[Issue #392](https://github.com/revgizmo/zoomstudentengagement/issues/392)**: [PRD] Success Metrics Definition & Implementation (OPEN)
+- **[Issue #301](https://github.com/revgizmo/zoomstudentengagement/issues/301)**: release(0.1.0): prepare NEWS.md, tag and build (OPEN)
+- **[Issue #300](https://github.com/revgizmo/zoomstudentengagement/issues/300)**: chore(metadata): verify DESCRIPTION/NAMESPACE/license (OPEN)
+- **[Issue #297](https://github.com/revgizmo/zoomstudentengagement/issues/297)**: ci(rhub): add rhub::check() job (OPEN)
+- **[Issue #288](https://github.com/revgizmo/zoomstudentengagement/issues/288)**: ci(actions): add R CMD check matrix across OS/R (OPEN)
+- **[Issue #282](https://github.com/revgizmo/zoomstudentengagement/issues/282)**: Plan: Near-term Simplification for CRAN Readiness (single-plan) (OPEN)
+- **[Issue #230](https://github.com/revgizmo/zoomstudentengagement/issues/230)**: docs: Create CRAN submission preparation guide (OPEN)
+- **[Issue #229](https://github.com/revgizmo/zoomstudentengagement/issues/229)**: test: Improve test coverage for safe_name_matching_workflow.R (OPEN)
+- **[Issue #228](https://github.com/revgizmo/zoomstudentengagement/issues/228)**: test: Improve test coverage for privacy_audit.R (OPEN)
+- **[Issue #220](https://github.com/revgizmo/zoomstudentengagement/issues/220)**: fix: Wrap diagnostic output in test environment checks for CRAN compliance (OPEN)
+- **[Issue #215](https://github.com/revgizmo/zoomstudentengagement/issues/215)**: test: Transition to test-driven design and ensure full functionality coverage (OPEN)
 - **[Issue #4](https://github.com/revgizmo/zoomstudentengagement/issues/4)**: CRAN Preparation (OPEN)
 ### 🆕 **New Critical Issues Created (Premortem Analysis)**
 1. **[Issue #125](https://github.com/revgizmo/zoomstudentengagement/issues/125)**: CRITICAL: Implement Privacy-First Defaults and Data Anonymization
