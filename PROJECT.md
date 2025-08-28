@@ -1,6 +1,6 @@
 # Project Plan: zoomstudentengagement
 
-> **🤖 For AI Assistants**: Before starting work, run `./scripts/save-context.sh` to get current project status and avoid working on already-resolved issues.
+> **🤖 For AI Assistants**: Before starting work, run `./scripts/save-context.sh` (or `./scripts/pre-pr.sh`) to refresh `.cursor/full-context.md` with the latest project snapshot. `PROJECT.md` is maintained manually; update it directly when high-level status changes.
 
 ## Overview
 A package to analyze and visualize student engagement from Zoom transcripts, aimed at instructors and educational researchers.
