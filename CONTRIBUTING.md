@@ -221,6 +221,40 @@ devtools::check()                    # Full package check
 devtools::build()                    # Create distributable package
 ```
 
+### Pre-commit Hooks (Recommended)
+
+Keep your changes clean by running formatting and linting automatically before
+each commit using pre-commit hooks.
+
+Setup (one time):
+
+```bash
+# Install pre-commit (choose one)
+brew install pre-commit             # macOS
+pipx install pre-commit             # Python toolchain (recommended)
+python3 -m pip install --user pre-commit
+
+# Install R dependencies used by the hooks
+Rscript -e "install.packages(c('styler','lintr','roxygen2','spelling'), dep = TRUE)"
+
+# Install the hooks defined in .pre-commit-config.yaml
+pre-commit install
+
+# Optional: run hooks across the entire repo once
+pre-commit run --all-files
+```
+
+What runs:
+- Base hygiene hooks: trailing whitespace, EOF fixer, YAML checks
+- Local R hook via `scripts/pre-commit.sh` that:
+  - Styles staged `.R`/`.Rmd` files using `styler`
+  - Lints staged files using `lintr` and fails on lint
+
+Notes:
+- If a hook modifies files (e.g., styling), re-stage and commit.
+- Keep `styler`/`lintr` versions current to match CI behavior.
+
+
 ### Diagnostic Output Policy
 
 - Default to quiet output. Provide a `verbose = FALSE` argument for functions that may emit diagnostics.
