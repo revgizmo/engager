@@ -166,7 +166,7 @@ new_mappings <- data.frame(
 )
 
 # Append to existing file or create new one
-write_section_names_lookup(new_mappings, "section_names_lookup.csv")
+write_section_names_lookup(new_mappings, ".", "section_names_lookup.csv")
 ```
 
 ### Step 4: Re-run Your Analysis
@@ -249,7 +249,7 @@ if (!file.exists("section_names_lookup.csv")) {
     preferred_name = character(0),
     stringsAsFactors = FALSE
   )
-  write_section_names_lookup(empty_mapping, "section_names_lookup.csv")
+  write_section_names_lookup(empty_mapping, ".", "section_names_lookup.csv")
 }
 ```
 

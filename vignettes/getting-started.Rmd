@@ -113,7 +113,7 @@ name_mappings <- data.frame(
 )
 
 # Write the mapping file
-write_section_names_lookup(name_mappings, "section_names_lookup.csv")
+write_section_names_lookup(name_mappings, ".", "section_names_lookup.csv")
 ```
 
 #### Issue: Guest Users in Transcripts
