@@ -1,9 +1,9 @@
 🔍 Generating context for zoomstudentengagement R Package...
 ==================================================
 🔍 Validating dependencies...
-📅 Date: 2025-08-30 15:49:08 UTC
-🌿 Branch: main
-📊 Uncommitted changes: 2
+📅 Date: 2025-08-30 20:01:17 UTC
+🌿 Branch: feature/issue-426-export-functions-implementation
+📊 Uncommitted changes: 1
 
 🎯 PROJECT STATUS SUMMARY
 ------------------------
@@ -14,13 +14,13 @@ Current Status: Status unknown - check PROJECT.md
 📈 KEY METRICS
 -------------
 🔍 Checking test status...
-Test Status: FAILING (0 failures, 56 warnings, 2015 passed, 15 skipped)
+Test Status: FAILING (7 failures, 57 warnings, 2125 passed, 15 skipped)
 🔍 Checking R CMD check status...
-R CMD Check: 0 errors, 0 warnings, 4 notes
+R CMD Check: Failed (run manually with devtools::check())
 🔍 Checking test coverage...
-Test Coverage: 88.38% (target: 90%)
+Test Coverage: N/A (covr not available)
 🔍 Counting exported functions...
-Exported Functions: 75
+Exported Functions: 84
 
 🔒 PRIVACY & ETHICAL COMPLIANCE
 -----------------------------
@@ -58,7 +58,7 @@ Exported Functions: 75
 #428: feat: Add configuration system for ideal course transcripts (OPEN) - 2025-08-30
 #427: feat: Add visualization functions for ideal course transcripts (OPEN) - 2025-08-30
 #426: feat: Add export functions for ideal course transcripts (OPEN) - 2025-08-30
-#425: feat: Add data validation and quality checks for ideal course transcripts (OPEN) - 2025-08-30
+#406: BLOCKER: CI temporarily disabled; follow temporary self-merge policy (OPEN) - 2025-08-27
 
 📁 ESSENTIAL FILES TO REVIEW
 ---------------------------
@@ -73,8 +73,6 @@ Exported Functions: 75
 ---------------------------
 1. High Priority Issues (15 issues)
 2. CRAN Submission Blockers (14 issues)
-3. Test Coverage Improvement (88.38% → 90%)
-4. R CMD Check Issues (0 errors, 0 warnings, 4 notes)
 5. Documentation and Testing
 6. Real-world Testing
 
@@ -93,9 +91,9 @@ gh issue view <ISSUE_NUMBER>
 
 📂 PROJECT STRUCTURE
 -------------------
-R/ - Core functions (75 exported)
-tests/ - Test suite (79 test files)
-man/ - Documentation (118 files)
+R/ - Core functions (84 exported)
+tests/ - Test suite (81 test files)
+man/ - Documentation (158 files)
 vignettes/ - Usage examples (10 files)
 inst/extdata/ - Sample data
 docs/ - Development documentation
@@ -114,13 +112,11 @@ scripts/ - Development utilities
 📦 CRAN READINESS STATUS
 ----------------------
 ❌ Test Suite: FAILING
-✅ R CMD Check: PASSING (0 errors, 0 warnings)
-⚠️  Test Coverage: 88.38% (need 90%)
-⚠️  R CMD Notes: 4 minor notes
+❌ R CMD Check: FAILING ( errors,  warnings)
+⚠️  Test Coverage: Unable to check
 
 🎯 IMMEDIATE NEXT STEPS
 ---------------------
-2. Improve test coverage to 90% (currently 88.38%)
 3. Address high priority issues (15 issues)
 4. Resolve CRAN submission blockers (14 issues)
 5. Update documentation and examples

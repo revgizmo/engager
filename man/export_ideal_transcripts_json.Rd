@@ -28,10 +28,11 @@ Invisibly returns the exported data as list
 }
 \description{
 Exports ideal course transcript data to JSON format with structured output
-and privacy protection.
+and privacy protection. Note: For very large datasets, consider CSV export
+for better performance.
 }
 \examples{
-\dontrun{
+\donttest{
 # Export with default settings
 export_ideal_transcripts_json(transcript_data)
 

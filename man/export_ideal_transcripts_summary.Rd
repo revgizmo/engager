@@ -21,7 +21,7 @@ export_ideal_transcripts_summary(
 
 \item{privacy_level}{Character. Privacy level for data masking. Default from option}
 
-\item{include_charts}{Logical. Whether to include charts (Excel only). Default: FALSE}
+\item{include_charts}{Logical. Whether to include charts (Excel only). Currently disabled. Default: FALSE}
 }
 \value{
 Invisibly returns the summary data
@@ -32,7 +32,7 @@ formats with key metrics and insights. Note: Excel format requires the 'openxlsx
 package to be installed. If not available, consider using CSV or JSON format instead.
 }
 \examples{
-\dontrun{
+\donttest{
 # Export summary as CSV
 export_ideal_transcripts_summary(transcript_data, format = "csv")
 

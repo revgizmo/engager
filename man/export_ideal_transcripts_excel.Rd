@@ -32,7 +32,7 @@ and rich formatting. Note: This function requires the 'openxlsx' package
 to be installed. If not available, consider using CSV or JSON export instead.
 }
 \examples{
-\dontrun{
+\donttest{
 # Export with default settings
 export_ideal_transcripts_excel(transcript_data)
 

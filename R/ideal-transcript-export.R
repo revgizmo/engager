@@ -10,7 +10,7 @@
 #' @return Invisibly returns the exported data frame
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Export with default settings
 #' export_ideal_transcripts_csv(transcript_data)
 #'
@@ -18,7 +18,7 @@
 #' export_ideal_transcripts_csv(
 #'   transcript_data,
 #'   file_path = "my_transcript.csv",
-#'   privacy_level = "full"
+#'   privacy_level = "ferpa_standard"
 #' )
 #' }
 export_ideal_transcripts_csv <- function(
@@ -68,7 +68,8 @@ export_ideal_transcripts_csv <- function(
 #' Export Ideal Course Transcripts to JSON
 #'
 #' Exports ideal course transcript data to JSON format with structured output
-#' and privacy protection.
+#' and privacy protection. Note: For very large datasets, consider CSV export
+#' for better performance.
 #'
 #' @param transcript_data Data frame containing transcript data
 #' @param file_path Character. Output file path. If NULL, generates default name
@@ -78,7 +79,7 @@ export_ideal_transcripts_csv <- function(
 #' @return Invisibly returns the exported data as list
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Export with default settings
 #' export_ideal_transcripts_json(transcript_data)
 #'
@@ -165,7 +166,7 @@ export_ideal_transcripts_json <- function(
 #' @return Invisibly returns the workbook object
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Export with default settings
 #' export_ideal_transcripts_excel(transcript_data)
 #'
@@ -256,11 +257,11 @@ export_ideal_transcripts_excel <- function(
 #' @param file_path Character. Output file path. If NULL, generates default name
 #' @param format Character. Output format: "csv", "json", or "excel". Default: "csv"
 #' @param privacy_level Character. Privacy level for data masking. Default from option
-#' @param include_charts Logical. Whether to include charts (Excel only). Default: FALSE
+#' @param include_charts Logical. Whether to include charts (Excel only). Currently disabled. Default: FALSE
 #' @return Invisibly returns the summary data
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Export summary as CSV
 #' export_ideal_transcripts_summary(transcript_data, format = "csv")
 #'
@@ -391,5 +392,6 @@ generate_transcript_summary <- function(data) {
 add_summary_charts <- function(wb, summary_data) {
   # Add basic charts if summary data is available
   # This is a placeholder for future chart functionality
-  message("Chart functionality not yet implemented")
+  # Currently disabled to avoid unnecessary complexity
+  invisible(wb)
 }
