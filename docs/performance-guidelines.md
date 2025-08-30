@@ -83,6 +83,16 @@ devtools::test(filter = "performance")
    - Check recent code changes
    - Review function profiling results
 
+4. **Segmentation faults during benchmarking**
+   - This is a known issue with microbenchmark package in some environments
+   - The package includes graceful error handling to skip affected tests
+   - Consider using alternative timing methods if persistent
+
+5. **Missing transcript files**
+   - Ensure ideal course transcript files are present in `inst/extdata/test_transcripts/`
+   - Check file permissions and accessibility
+   - Verify package installation is complete
+
 ### Performance Profiling
 Use R's built-in profiling tools:
 
