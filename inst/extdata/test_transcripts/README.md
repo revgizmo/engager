@@ -234,14 +234,17 @@ All transcripts follow the WebVTT format:
 ```
 WEBVTT
 
+1
 00:00:00.000 --> 00:00:02.000
-<v Speaker Name>Transcript content here.
+Speaker Name: Transcript content here.
 
+2
 00:00:02.000 --> 00:00:04.000
-<v Another Speaker>More transcript content.
+Another Speaker: More transcript content.
 ```
 
-- Speaker names in angle brackets with `v` prefix
+- Comment numbers for each entry
+- Speaker names followed by colon and space
 - Timestamps in HH:MM:SS.mmm format
 - Realistic timing intervals
 - Proper VTT formatting and structure
