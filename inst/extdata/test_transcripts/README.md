@@ -8,10 +8,14 @@ This directory contains realistic Zoom VTT transcript examples designed for test
 test_transcripts/
 ├── README.md                           # This documentation file
 ├── intro_statistics_week1.vtt         # Statistics course - Week 1
-├── intro_statistics_week2.vtt         # Statistics course - Week 2  
+├── intro_statistics_week2.vtt         # Statistics course - Week 2
 ├── computer_science_101_week1.vtt     # Computer Science course - Week 1
 ├── english_literature_discussion.vtt  # English Literature discussion
-└── biology_lab_session.vtt            # Biology lab session
+├── biology_lab_session.vtt            # Biology lab session
+├── ideal_course_roster.csv            # Roster with name variations
+├── ideal_course_session1.vtt          # Ideal course - Session 1
+├── ideal_course_session2.vtt          # Ideal course - Session 2
+└── ideal_course_session3.vtt          # Ideal course - Session 3
 ```
 
 ## Transcript Descriptions
@@ -102,11 +106,34 @@ test_transcripts/
 - Measuring understanding of experimental procedures
 - Tracking technical skill development
 
+### 5. Ideal Course Example
+**Files:** `ideal_course_session1.vtt`, `ideal_course_session2.vtt`,
+`ideal_course_session3.vtt`
+
+**Course Type:** Training Workshop  
+**Instructor:** Professor Ed  
+**Students:** Thomas Miller, Samantha Smith, Robert Jones, Ling Wei,  
+José Álvarez, Anthony García-Lopez, Priya Patel  
+**Duration:** ~1 minute each
+
+**Characteristics:**
+- Roster with preferred and transcript name variations
+- Students missing some or all sessions
+- Guests in multiple sessions (one session with multiple guests)
+- Mid-session display name change and cross-session name shifts
+- Consecutive utterances and long pauses
+
+**Use Cases:**
+- Testing name matching and attendance logic
+- Ensuring support for internationalized names
+- Handling guest speakers and display name changes
+- Evaluating dead air and rapid dialogue handling
+
 ## Transcript Features
 
 ### Speaker Identification
 All transcripts use consistent speaker identification:
-- Instructors: `Professor Smith`, `Dr. Johnson`, `Professor Williams`, `Dr. Chen`
+- Instructors: `Professor Smith`, `Dr. Johnson`, `Professor Williams`, `Dr. Chen`, `Professor Ed`
 - Students: `Student A`, `Student B`, `Student C`, etc.
 
 ### Timing
