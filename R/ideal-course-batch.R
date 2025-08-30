@@ -24,6 +24,7 @@
 #'   - validation_results: Basic validation checks
 #'   - processing_info: Metadata about the batch processing
 #'
+#' @importFrom utils read.csv
 #' @examples
 #' \dontrun{
 #' # Process all ideal course sessions with default settings

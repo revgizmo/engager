@@ -30,7 +30,9 @@ Suggests:
     covr,
     knitr,
     rmarkdown,
-    purrr
+    purrr,
+    microbenchmark,
+    pryr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 URL: https://github.com/revgizmo/zoomstudentengagement
