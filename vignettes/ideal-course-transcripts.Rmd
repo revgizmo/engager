@@ -355,6 +355,84 @@ cat("Scenario 3: Privacy-Aware Processing\n")
 cat("✓ Use process_transcript_with_privacy() for secure processing\n")
 ```
 
+## Batch Processing with Ideal Course Transcripts
+
+### Processing All Sessions at Once
+
+The package provides batch processing functions to analyze all ideal course sessions simultaneously, making it easier to test and validate package functionality across multiple scenarios.
+
+```{r batch-processing}
+# Process all ideal course transcripts in batch
+batch_results <- process_ideal_course_batch(
+  include_roster = TRUE,
+  privacy_level = "masked",
+  output_format = "list"
+)
+
+# View batch processing results
+str(batch_results)
+
+# Check processing information
+cat("Processing Summary:\n")
+cat("Sessions processed:", batch_results$processing_info$sessions_processed, "\n")
+cat("Total participants:", batch_results$processing_info$total_participants, "\n")
+cat("Privacy level:", batch_results$processing_info$privacy_level, "\n")
+```
+
+### Comparing Sessions
+
+```{r session-comparison}
+# Compare engagement patterns across sessions
+comparison_results <- compare_ideal_sessions(
+  batch_results,
+  comparison_metrics = c("total_comments", "duration", "wordcount"),
+  visualization = TRUE
+)
+
+# View comparison insights
+cat("Comparison Insights:\n")
+print(comparison_results$insights)
+
+# View comparison data
+print(comparison_results$comparison_data)
+
+# View trend analysis
+cat("Trend Analysis:\n")
+print(comparison_results$trends)
+```
+
+### Validating Scenarios
+
+```{r scenario-validation}
+# Validate all ideal course scenarios
+validation_results <- validate_ideal_scenarios(
+  batch_results,
+  detailed_report = TRUE
+)
+
+# View validation summary
+cat("Validation Summary:\n")
+cat("Overall status:", validation_results$validation_summary$overall_status, "\n")
+cat("Passed rules:", validation_results$validation_summary$passed_rules, "\n")
+cat("Failed rules:", validation_results$validation_summary$failed_rules, "\n")
+
+# View recommendations
+cat("Recommendations:\n")
+print(validation_results$recommendations)
+```
+
+### Different Output Formats
+
+```{r output-formats}
+# Get summary format for quick overview
+summary_results <- process_ideal_course_batch(output_format = "summary")
+print(summary_results)
+
+# Get data frame format for analysis
+df_results <- process_ideal_course_batch(output_format = "data.frame")
+head(df_results)
+```
+
 ## Integration with Package Workflow
 
 ### Using Ideal Course Data with Main Functions
@@ -369,6 +447,12 @@ cat("This function can process multiple transcripts and rosters\n")
 cat("✓ Supports multi-session analysis\n")
 cat("✓ Includes privacy protection\n")
 cat("✓ Generates engagement metrics\n")
+
+# The package also includes batch processing functions
+cat("\nBatch Processing Functions:\n")
+cat("✓ process_ideal_course_batch() - Process all sessions at once\n")
+cat("✓ compare_ideal_sessions() - Compare engagement patterns\n")
+cat("✓ validate_ideal_scenarios() - Validate data quality\n")
 ```
 
 ## Conclusion
