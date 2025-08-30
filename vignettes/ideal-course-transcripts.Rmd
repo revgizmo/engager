@@ -455,6 +455,46 @@ cat("✓ compare_ideal_sessions() - Compare engagement patterns\n")
 cat("✓ validate_ideal_scenarios() - Validate data quality\n")
 ```
 
+## Exporting Ideal Course Transcripts
+
+The package provides comprehensive export functions for ideal course transcripts in multiple formats.
+
+### CSV Export
+
+```{r export-csv}
+# Export to CSV format
+export_ideal_transcripts_csv(transcript_data)
+```
+
+### JSON Export
+
+```{r export-json}
+# Export to JSON format
+export_ideal_transcripts_json(transcript_data)
+```
+
+### Excel Export
+
+```{r export-excel}
+# Export to Excel format with multiple sheets
+export_ideal_transcripts_excel(
+  transcript_data,
+  include_summary_sheet = TRUE,
+  include_metadata_sheet = TRUE
+)
+```
+
+### Summary Reports
+
+```{r export-summary}
+# Export summary report
+export_ideal_transcripts_summary(
+  transcript_data,
+  format = "excel",
+  include_charts = TRUE
+)
+```
+
 ## Conclusion
 
 The ideal course transcripts provide comprehensive test data for the `zoomstudentengagement` package. They include realistic scenarios with name variations, attendance patterns, and diverse participation levels, making them perfect for:

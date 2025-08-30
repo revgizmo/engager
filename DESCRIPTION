@@ -20,6 +20,7 @@ Imports:
     jsonlite,
     lubridate,
     magrittr,
+    openxlsx,
     readr,
     rlang,
     stringr,
