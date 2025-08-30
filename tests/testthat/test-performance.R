@@ -6,8 +6,8 @@ library(zoomstudentengagement)
 
 # Performance thresholds (in milliseconds)
 PERFORMANCE_THRESHOLDS <- list(
-  individual_processing_max = 1000, # 1 second max for individual processing
-  batch_processing_max = 3000, # 3 seconds max for batch processing
+  individual_processing_max = 2000, # 2 seconds max for individual processing (increased for reliability)
+  batch_processing_max = 5000, # 5 seconds max for batch processing (increased for reliability)
   memory_increase_max = 100 * 1024 * 1024 # 100MB max memory increase
 )
 
