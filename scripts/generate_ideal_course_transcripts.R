@@ -4,10 +4,15 @@
 
 generate_vtt <- function(df, path) {
   lines <- c("WEBVTT", "")
-  segments <- with(
-    df,
-    paste0(start, " --> ", end, "\n<v ", speaker, ">", text, "\n")
-  )
+  segments <- character(nrow(df) * 3)
+  
+  for (i in 1:nrow(df)) {
+    idx <- (i - 1) * 3 + 1
+    segments[idx] <- as.character(i)
+    segments[idx + 1] <- paste0(df$start[i], " --> ", df$end[i])
+    segments[idx + 2] <- paste0(df$speaker[i], ": ", df$text[i])
+  }
+  
   readr::write_lines(c(lines, segments), path)
 }
 
