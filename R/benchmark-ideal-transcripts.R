@@ -42,6 +42,12 @@ benchmark_ideal_transcripts <- function(iterations = 5,
     "ideal_course_session2.vtt",
     "ideal_course_session3.vtt"
   )
+  
+  # Validate that transcript files exist
+  missing_files <- session_files[!file.exists(file.path(transcript_dir, session_files))]
+  if (length(missing_files) > 0) {
+    warning("Missing transcript files: ", paste(missing_files, collapse = ", "))
+  }
 
   # Benchmark 1: Individual transcript processing
   cat("Running individual transcript processing benchmarks...\n")

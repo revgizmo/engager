@@ -65,22 +65,30 @@ test_that("memory usage is within acceptable limits", {
 test_that("benchmarking functions work correctly", {
   # Test that benchmarking functions can be called
   expect_true(exists("benchmark_ideal_transcripts"))
-  
+
   # Test with minimal iterations to avoid long runtime
   # Skip if microbenchmark causes issues
   skip_on_cran()
-  
+
+  # Skip if microbenchmark is not available or causes issues
+  if (!requireNamespace("microbenchmark", quietly = TRUE)) {
+    skip("microbenchmark package not available")
+  }
+
   # Use tryCatch to handle potential segmentation faults
-  result <- tryCatch({
-    benchmark_ideal_transcripts(iterations = 1, output_file = NULL)
-  }, error = function(e) {
-    if (grepl("segfault|segmentation", e$message, ignore.case = TRUE)) {
-      skip("Skipping due to microbenchmark segmentation fault")
-    } else {
-      stop(e)
+  result <- tryCatch(
+    {
+      benchmark_ideal_transcripts(iterations = 1, output_file = NULL)
+    },
+    error = function(e) {
+      if (grepl("segfault|segmentation", e$message, ignore.case = TRUE)) {
+        skip("Skipping due to microbenchmark segmentation fault")
+      } else {
+        stop(e)
+      }
     }
-  })
-  
+  )
+
   # If we get here, the function worked
   expect_true(!is.null(result))
 })
@@ -100,23 +108,26 @@ test_that("performance regression detection works", {
 test_that("benchmark results have expected structure", {
   # Skip on CRAN to avoid long-running tests
   skip_on_cran()
-  
+
   # Use tryCatch to handle potential segmentation faults
-  results <- tryCatch({
-    benchmark_ideal_transcripts(iterations = 1, output_file = NULL)
-  }, error = function(e) {
-    if (grepl("segfault|segmentation", e$message, ignore.case = TRUE)) {
-      skip("Skipping due to microbenchmark segmentation fault")
-    } else {
-      stop(e)
+  results <- tryCatch(
+    {
+      benchmark_ideal_transcripts(iterations = 1, output_file = NULL)
+    },
+    error = function(e) {
+      if (grepl("segfault|segmentation", e$message, ignore.case = TRUE)) {
+        skip("Skipping due to microbenchmark segmentation fault")
+      } else {
+        stop(e)
+      }
     }
-  })
-  
+  )
+
   # Check structure
   expect_true("timestamp" %in% names(results))
   expect_true("benchmarks" %in% names(results))
   expect_true("summary" %in% names(results))
-  
+
   # Check benchmarks structure
   expect_true("individual" %in% names(results$benchmarks))
   expect_true("batch" %in% names(results$benchmarks))
@@ -183,18 +194,21 @@ test_that("consolidate_transcript performance with ideal course data", {
 test_that("performance benchmarks handle missing files gracefully", {
   # Test that benchmarking functions handle missing files properly
   skip_on_cran()
-  
+
   # Use tryCatch to handle potential segmentation faults
-  result <- tryCatch({
-    benchmark_ideal_transcripts(iterations = 1, output_file = NULL)
-  }, error = function(e) {
-    if (grepl("segfault|segmentation", e$message, ignore.case = TRUE)) {
-      skip("Skipping due to microbenchmark segmentation fault")
-    } else {
-      stop(e)
+  result <- tryCatch(
+    {
+      benchmark_ideal_transcripts(iterations = 1, output_file = NULL)
+    },
+    error = function(e) {
+      if (grepl("segfault|segmentation", e$message, ignore.case = TRUE)) {
+        skip("Skipping due to microbenchmark segmentation fault")
+      } else {
+        stop(e)
+      }
     }
-  })
-  
+  )
+
   # If we get here, the function worked
   expect_true(!is.null(result))
 })
@@ -202,24 +216,27 @@ test_that("performance benchmarks handle missing files gracefully", {
 test_that("memory profiling works when pryr is available", {
   # Skip on CRAN to avoid long-running tests
   skip_on_cran()
-  
+
   # Test memory profiling functionality
   if (requireNamespace("pryr", quietly = TRUE)) {
     # Use tryCatch to handle potential segmentation faults
-    results <- tryCatch({
-      benchmark_ideal_transcripts(
-        iterations = 1, 
-        output_file = NULL,
-        include_memory = TRUE
-      )
-    }, error = function(e) {
-      if (grepl("segfault|segmentation", e$message, ignore.case = TRUE)) {
-        skip("Skipping due to microbenchmark segmentation fault")
-      } else {
-        stop(e)
+    results <- tryCatch(
+      {
+        benchmark_ideal_transcripts(
+          iterations = 1,
+          output_file = NULL,
+          include_memory = TRUE
+        )
+      },
+      error = function(e) {
+        if (grepl("segfault|segmentation", e$message, ignore.case = TRUE)) {
+          skip("Skipping due to microbenchmark segmentation fault")
+        } else {
+          stop(e)
+        }
       }
-    })
-    
+    )
+
     # Check that memory data is present
     expect_true("memory_usage" %in% names(results$benchmarks$individual[[1]]))
   }
