@@ -21,18 +21,17 @@ export_ideal_transcripts_summary(
 
 \item{privacy_level}{Character. Privacy level for data masking. Default from option}
 
-\item{include_charts}{Logical. Whether to include charts (Excel only). Currently disabled. Default: FALSE}
+\item{include_charts}{Logical. Whether to include charts (Excel only). Default: FALSE}
 }
 \value{
 Invisibly returns the summary data
 }
 \description{
 Creates and exports summary reports for ideal course transcripts in multiple
-formats with key metrics and insights. Note: Excel format requires the 'openxlsx'
-package to be installed. If not available, consider using CSV or JSON format instead.
+formats with key metrics and insights.
 }
 \examples{
-\donttest{
+\dontrun{
 # Export summary as CSV
 export_ideal_transcripts_summary(transcript_data, format = "csv")
 

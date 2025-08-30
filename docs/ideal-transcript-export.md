@@ -23,7 +23,6 @@ The `zoomstudentengagement` package provides comprehensive export functions for 
 - **Format**: Microsoft Excel (.xlsx)
 - **Use Case**: Detailed reporting, rich formatting
 - **Features**: Multiple sheets, metadata, summary data
-- **Note**: Requires optional `openxlsx` package
 
 ### Summary Export
 - **Function**: `export_ideal_transcripts_summary()`
@@ -102,134 +101,117 @@ Export functions provide clear error messages for:
 - **Memory Usage**: Data is processed in chunks for large files
 - **Progress Tracking**: Long operations show progress indicators
 
-## Dependencies
+## Function Parameters
 
-### Required Dependencies
-- `jsonlite`: For JSON export functionality (included in package)
-
-### Optional Dependencies
-- `openxlsx`: For Excel export functionality (optional)
-
-### Installation
-```r
-# Install optional Excel support (only if needed)
-install.packages("openxlsx")
-```
-
-## Function Reference
-
-### `export_ideal_transcripts_csv()`
-
-Exports transcript data to CSV format with privacy protection.
-
-**Parameters:**
+### Common Parameters
 - `transcript_data`: Data frame containing transcript data
 - `file_path`: Output file path (optional, generates default if NULL)
-- `privacy_level`: Privacy level for data masking (default: from option)
-- `include_metadata`: Whether to include metadata columns (default: TRUE)
+- `privacy_level`: Privacy level for data masking (default from option)
 
-**Returns:** Invisibly returns the exported data frame
+### CSV Export Parameters
+- `include_metadata`: Whether to include metadata in export (default: TRUE)
 
-### `export_ideal_transcripts_json()`
-
-Exports transcript data to JSON format with structured output.
-
-**Parameters:**
-- `transcript_data`: Data frame containing transcript data
-- `file_path`: Output file path (optional, generates default if NULL)
-- `privacy_level`: Privacy level for data masking (default: from option)
+### JSON Export Parameters
 - `pretty_print`: Whether to format JSON with indentation (default: TRUE)
 - `include_metadata`: Whether to include metadata (default: TRUE)
 
-**Returns:** Invisibly returns the exported data as list
-
-### `export_ideal_transcripts_excel()`
-
-Exports transcript data to Excel format with multiple sheets.
-
-**Parameters:**
-- `transcript_data`: Data frame containing transcript data
-- `file_path`: Output file path (optional, generates default if NULL)
-- `privacy_level`: Privacy level for data masking (default: from option)
+### Excel Export Parameters
 - `include_summary_sheet`: Whether to include summary sheet (default: TRUE)
 - `include_metadata_sheet`: Whether to include metadata sheet (default: TRUE)
 
-**Returns:** Invisibly returns the workbook object
-
-### `export_ideal_transcripts_summary()`
-
-Creates and exports summary reports in multiple formats.
-
-**Parameters:**
-- `transcript_data`: Data frame containing transcript data
-- `file_path`: Output file path (optional, generates default if NULL)
+### Summary Export Parameters
 - `format`: Output format: "csv", "json", or "excel" (default: "csv")
-- `privacy_level`: Privacy level for data masking (default: from option)
 - `include_charts`: Whether to include charts (Excel only, default: FALSE)
 
-**Returns:** Invisibly returns the summary data
+## Return Values
 
-## Integration with Ideal Course Transcripts
+- **CSV Export**: Invisibly returns the exported data frame
+- **JSON Export**: Invisibly returns the exported data as list
+- **Excel Export**: Invisibly returns the workbook object
+- **Summary Export**: Invisibly returns the summary data
 
-These export functions are designed to work seamlessly with the ideal course transcript system:
+## Dependencies
 
-```r
-# Complete workflow example
-library(zoomstudentengagement)
+The export functions require the following packages:
+- `jsonlite`: For JSON export functionality
+- `openxlsx`: For Excel export functionality
+- `tibble`: For data frame operations
+- `utils`: For CSV writing
 
-# Process ideal course batch
-batch_results <- process_ideal_course_batch(
-  output_format = "data.frame",
-  privacy_level = "masked"
-)
+## Integration with Existing Functions
 
-# Export in multiple formats
-export_ideal_transcripts_csv(batch_results, "transcript_data.csv")
-export_ideal_transcripts_json(batch_results, "transcript_data.json")
-export_ideal_transcripts_excel(batch_results, "transcript_data.xlsx")
-export_ideal_transcripts_summary(batch_results, "summary.csv", format = "csv")
-```
+The export functions integrate seamlessly with existing package functions:
+- **Privacy Protection**: Uses `ensure_privacy()` for data masking
+- **Data Processing**: Works with output from `process_ideal_course_batch()`
+- **Validation**: Compatible with validation functions from Issue #425
 
 ## Best Practices
 
 1. **Privacy First**: Always use appropriate privacy levels for your use case
-2. **File Organization**: Use descriptive file paths and organize exports logically
-3. **Metadata**: Include metadata for traceability and data provenance
-4. **Error Handling**: Check for errors and handle file system issues gracefully
-5. **Performance**: For large datasets, consider processing in chunks
+2. **File Management**: Use descriptive file paths and organize exports
+3. **Data Validation**: Validate transcript data before export
+4. **Error Handling**: Check return values and handle errors appropriately
+5. **Performance**: For large datasets, consider chunked processing
 
 ## Troubleshooting
 
 ### Common Issues
 
-**Excel Export Fails**
-- Ensure `openxlsx` package is installed (optional dependency)
-- Check file permissions in target directory
-- Verify data frame structure is valid
-- Consider using CSV or JSON export as alternatives
-
-**JSON Export Issues**
-- Check for non-serializable data types
-- Verify JSON structure is valid
-- Ensure proper encoding for special characters
-
-**CSV Export Problems**
-- Check for invalid characters in data
-- Verify file path permissions
-- Ensure data frame is properly formatted
+1. **Missing Dependencies**: Install required packages (`openxlsx`, `jsonlite`)
+2. **Permission Errors**: Check file path permissions and directory access
+3. **Memory Issues**: For large files, ensure sufficient memory is available
+4. **Privacy Errors**: Verify privacy level settings and data structure
 
 ### Error Messages
 
-- **"openxlsx package is required"**: Install with `install.packages("openxlsx")` or use CSV/JSON export instead
-- **"transcript_data cannot be NULL"**: Provide valid data frame
-- **"transcript_data must be a tibble or data frame"**: Check data type
-- **"File not found"**: Check file path and permissions
+- `"transcript_data cannot be NULL"`: Provide valid transcript data
+- `"transcript_data must be a tibble or data frame"`: Ensure data is in correct format
+- File system errors: Check file paths and permissions
 
 ## Future Enhancements
 
 Planned improvements for export functions:
-- **Chart Generation**: Enhanced Excel chart functionality
-- **Batch Processing**: Export multiple sessions simultaneously
+- **Chart Support**: Enhanced Excel chart functionality
+- **Batch Export**: Export multiple sessions simultaneously
 - **Format Validation**: Validate exported files for integrity
+- **Progress Indicators**: Show progress for large exports
 - **Compression**: Support for compressed file formats
-- **Streaming**: Memory-efficient processing for very large files
+
+## Examples with Real Data
+
+### Complete Workflow Example
+```r
+# Load and process ideal course transcripts
+transcript_data <- process_ideal_course_batch()
+
+# Export in multiple formats
+export_ideal_transcripts_csv(transcript_data, "transcript_data.csv")
+export_ideal_transcripts_json(transcript_data, "transcript_data.json")
+export_ideal_transcripts_excel(transcript_data, "transcript_data.xlsx")
+
+# Generate summary report
+export_ideal_transcripts_summary(transcript_data, "summary_report.xlsx", format = "excel")
+```
+
+### Privacy-Aware Export
+```r
+# Set privacy level for sensitive data
+options(zoomstudentengagement.privacy_level = "full")
+
+# Export with full privacy protection
+export_ideal_transcripts_csv(transcript_data, "private_transcript.csv")
+```
+
+### Custom Export Configuration
+```r
+# Export with custom settings
+export_ideal_transcripts_excel(
+  transcript_data,
+  file_path = "detailed_report.xlsx",
+  privacy_level = "mask",
+  include_summary_sheet = TRUE,
+  include_metadata_sheet = TRUE
+)
+```
+
+This documentation provides comprehensive guidance for using the ideal course transcript export functions while maintaining privacy compliance and following best practices.

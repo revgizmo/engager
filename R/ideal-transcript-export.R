@@ -10,7 +10,7 @@
 #' @return Invisibly returns the exported data frame
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Export with default settings
 #' export_ideal_transcripts_csv(transcript_data)
 #'
@@ -18,7 +18,7 @@
 #' export_ideal_transcripts_csv(
 #'   transcript_data,
 #'   file_path = "my_transcript.csv",
-#'   privacy_level = "ferpa_standard"
+#'   privacy_level = "full"
 #' )
 #' }
 export_ideal_transcripts_csv <- function(
@@ -58,18 +58,16 @@ export_ideal_transcripts_csv <- function(
     dir.create(dir_path, recursive = TRUE)
   }
 
-  # Write CSV file
+    # Write CSV file
   utils::write.csv(export_data, file_path, row.names = FALSE)
-
-  message("CSV export completed: ", file_path)
-  invisible(export_data)
+  
+  invisible(file_path)
 }
 
 #' Export Ideal Course Transcripts to JSON
 #'
 #' Exports ideal course transcript data to JSON format with structured output
-#' and privacy protection. Note: For very large datasets, consider CSV export
-#' for better performance.
+#' and privacy protection.
 #'
 #' @param transcript_data Data frame containing transcript data
 #' @param file_path Character. Output file path. If NULL, generates default name
@@ -79,7 +77,7 @@ export_ideal_transcripts_csv <- function(
 #' @return Invisibly returns the exported data as list
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Export with default settings
 #' export_ideal_transcripts_json(transcript_data)
 #'
@@ -140,23 +138,21 @@ export_ideal_transcripts_json <- function(
     dir.create(dir_path, recursive = TRUE)
   }
 
-  # Write JSON file
+    # Write JSON file
   jsonlite::write_json(
-    json_data,
-    file_path,
-    pretty = pretty_print,
+    json_data, 
+    file_path, 
+    pretty = pretty_print, 
     auto_unbox = TRUE
   )
-
-  message("JSON export completed: ", file_path)
-  invisible(json_data)
+  
+  invisible(file_path)
 }
 
 #' Export Ideal Course Transcripts to Excel
 #'
 #' Exports ideal course transcript data to Excel format with multiple sheets
-#' and rich formatting. Note: This function requires the 'openxlsx' package
-#' to be installed. If not available, consider using CSV or JSON export instead.
+#' and rich formatting.
 #'
 #' @param transcript_data Data frame containing transcript data
 #' @param file_path Character. Output file path. If NULL, generates default name
@@ -166,7 +162,7 @@ export_ideal_transcripts_json <- function(
 #' @return Invisibly returns the workbook object
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Export with default settings
 #' export_ideal_transcripts_excel(transcript_data)
 #'
@@ -190,15 +186,6 @@ export_ideal_transcripts_excel <- function(
 
   if (!tibble::is_tibble(transcript_data) && !is.data.frame(transcript_data)) {
     stop("transcript_data must be a tibble or data frame")
-  }
-
-  # Check if openxlsx is available
-  if (!requireNamespace("openxlsx", quietly = TRUE)) {
-    stop(
-      "openxlsx package is required for Excel export.\n",
-      "Please install it with: install.packages('openxlsx')\n",
-      "Alternatively, use CSV or JSON export formats which don't require additional dependencies."
-    )
   }
 
   # Apply privacy protection
@@ -240,28 +227,26 @@ export_ideal_transcripts_excel <- function(
     dir.create(dir_path, recursive = TRUE)
   }
 
-  # Save workbook
+    # Save workbook
   openxlsx::saveWorkbook(wb, file_path, overwrite = TRUE)
-
-  message("Excel export completed: ", file_path)
-  invisible(wb)
+  
+  invisible(file_path)
 }
 
 #' Export Ideal Course Transcripts Summary Report
 #'
 #' Creates and exports summary reports for ideal course transcripts in multiple
-#' formats with key metrics and insights. Note: Excel format requires the 'openxlsx'
-#' package to be installed. If not available, consider using CSV or JSON format instead.
+#' formats with key metrics and insights.
 #'
 #' @param transcript_data Data frame containing transcript data
 #' @param file_path Character. Output file path. If NULL, generates default name
 #' @param format Character. Output format: "csv", "json", or "excel". Default: "csv"
 #' @param privacy_level Character. Privacy level for data masking. Default from option
-#' @param include_charts Logical. Whether to include charts (Excel only). Currently disabled. Default: FALSE
+#' @param include_charts Logical. Whether to include charts (Excel only). Default: FALSE
 #' @return Invisibly returns the summary data
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Export summary as CSV
 #' export_ideal_transcripts_summary(transcript_data, format = "csv")
 #'
@@ -304,10 +289,9 @@ export_ideal_transcripts_summary <- function(
     file_path <- paste0("ideal_transcript_summary_", timestamp, ".", format)
   }
 
-  # Export based on format
+    # Export based on format
   if (format == "csv") {
     utils::write.csv(summary_data, file_path, row.names = FALSE)
-    message("Summary CSV export completed: ", file_path)
   } else if (format == "json") {
     json_data <- list(
       summary_data = as.list(summary_data),
@@ -318,30 +302,19 @@ export_ideal_transcripts_summary <- function(
       )
     )
     jsonlite::write_json(json_data, file_path, pretty = TRUE, auto_unbox = TRUE)
-    message("Summary JSON export completed: ", file_path)
   } else if (format == "excel") {
-    # Check if openxlsx is available
-    if (!requireNamespace("openxlsx", quietly = TRUE)) {
-      stop(
-        "openxlsx package is required for Excel export.\n",
-        "Please install it with: install.packages('openxlsx')\n",
-        "Alternatively, use CSV or JSON export formats which don't require additional dependencies."
-      )
-    }
-
     wb <- openxlsx::createWorkbook()
     openxlsx::addWorksheet(wb, "Summary")
     openxlsx::writeData(wb, "Summary", summary_data)
-
+    
     if (include_charts) {
       add_summary_charts(wb, summary_data)
     }
-
+    
     openxlsx::saveWorkbook(wb, file_path, overwrite = TRUE)
-    message("Summary Excel export completed: ", file_path)
   }
 
-  invisible(summary_data)
+  invisible(file_path)
 }
 
 #' Add Export Metadata
@@ -392,6 +365,5 @@ generate_transcript_summary <- function(data) {
 add_summary_charts <- function(wb, summary_data) {
   # Add basic charts if summary data is available
   # This is a placeholder for future chart functionality
-  # Currently disabled to avoid unnecessary complexity
-  invisible(wb)
+  # Chart functionality not yet implemented
 }

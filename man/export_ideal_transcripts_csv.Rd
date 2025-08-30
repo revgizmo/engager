@@ -28,7 +28,7 @@ Exports ideal course transcript data to CSV format with privacy protection
 and comprehensive metadata.
 }
 \examples{
-\donttest{
+\dontrun{
 # Export with default settings
 export_ideal_transcripts_csv(transcript_data)
 
@@ -36,7 +36,7 @@ export_ideal_transcripts_csv(transcript_data)
 export_ideal_transcripts_csv(
   transcript_data,
   file_path = "my_transcript.csv",
-  privacy_level = "ferpa_standard"
+  privacy_level = "full"
 )
 }
 }
