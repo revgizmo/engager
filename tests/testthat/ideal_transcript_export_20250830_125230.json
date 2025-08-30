@@ -1,0 +1,24 @@
+{
+  "transcript_data": {
+    "name": "Student 01",
+    "comment": "Hello everyone",
+    "start": 0,
+    "end": 25
+  },
+  "export_info": {
+    "timestamp": "2025-08-30 12:52:30",
+    "format": "json",
+    "privacy_level": "mask",
+    "row_count": 1,
+    "column_count": 4
+  },
+  "metadata": {
+    "export_timestamp": "2025-08-30 12:52:30",
+    "export_format": "json",
+    "export_version": "1.0.0",
+    "row_count": 1,
+    "column_count": 4,
+    "column_names": ["name", "comment", "start", "end"],
+    "data_types": ["character", "character", "numeric", "numeric"]
+  }
+}
