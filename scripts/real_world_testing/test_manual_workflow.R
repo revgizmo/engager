@@ -60,11 +60,11 @@ for (level in privacy_levels) {
 # Step 4: Test visualization
 cat("Step 4: Testing visualization...\n")
 tryCatch({
-  # Create a simple plot
-  p <- plot_users_by_metric(
-    metrics_data = metrics,
+  # Create a simple plot with improved bar chart aesthetics
+  p <- plot_users(
+    data = metrics,
     metric = "perc_messages",
-    privacy_level = "mask"
+    mask_by = "name"
   )
   cat("  ✓ Plot created successfully\n")
 }, error = function(e) {

@@ -17,6 +17,9 @@
 - **Quiet logs**: Gated verbose diagnostics in `load_zoom_recorded_sessions_list()` behind `options(zoomstudentengagement.verbose)` (default FALSE).
 - **Quality gates**: All tests pass; R CMD check: 0 errors / 0 warnings / 0 notes.
 
+- **Plotting refresh**: `plot_users()` now uses bar charts with a minimal theme for clearer comparisons.
+- **Reporting helper**: Added `run_student_reports()` to render per-student summary reports from a packaged template.
+
 ## 0.2.0 (Unreleased)
 - Project-wide refactor for consistency, safety, and velocity
 - CI streamlined with caching and lint/coverage

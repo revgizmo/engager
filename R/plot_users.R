@@ -101,16 +101,24 @@ plot_users <- function(
     }
   }
 
-  # Build plot
-  p <- ggplot2::ggplot(df, ggplot2::aes(x = .data[[student_col_local]], y = .data[[metric]])) +
-    ggplot2::geom_point() +
+  # Build plot with professional styling
+  p <- ggplot2::ggplot(
+    df,
+    ggplot2::aes(x = .data[[student_col_local]], y = .data[[metric]])
+  ) +
+    ggplot2::geom_col(fill = "#4477AA") +
     ggplot2::coord_flip() +
     ggplot2::labs(
       y = metric,
       x = student_col_local,
       title = description_text
     ) +
-    ggplot2::ylim(c(0, NA))
+    ggplot2::ylim(c(0, NA)) +
+    ggplot2::theme_minimal(base_size = 12) +
+    ggplot2::theme(
+      axis.text.y = ggplot2::element_text(size = 10),
+      plot.title = ggplot2::element_text(size = 14, face = "bold")
+    )
 
   # Optional faceting
   if (!identical(facet_by, "none") && facet_by %in% names(df)) {
