@@ -18,6 +18,7 @@
     - <a href="#data-management" id="toc-data-management">Data Management</a>
     - <a href="#analysis-and-visualization"
       id="toc-analysis-and-visualization">Analysis and Visualization</a>
+    - <a href="#reporting" id="toc-reporting">Reporting</a>
     - <a href="#diagnostics-and-interactive-prompts"
       id="toc-diagnostics-and-interactive-prompts">Diagnostics and interactive
       prompts</a>
@@ -58,7 +59,7 @@ participation equity, from Zoom transcripts of recorded course sessions.
 - **[docs/features/feature-index.md](docs/features/feature-index.md)** -
   Comprehensive feature documentation
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute
-- **[docs/development/docs/development/docs/development/ISSUE_MANAGEMENT_QUICK_REFERENCE.md](docs/development/docs/development/docs/development/ISSUE_MANAGEMENT_QUICK_REFERENCE.md)** -
+- **[docs/development/ISSUE_MANAGEMENT_QUICK_REFERENCE.md](docs/development/ISSUE_MANAGEMENT_QUICK_REFERENCE.md)** -
   Quick guide for issue management
 
 ## 🚀 Quick Start
@@ -200,6 +201,7 @@ currently supported but may be added in future versions.
 - `make_transcripts_summary_df()` - Generate summary statistics
 
 ### Reporting
+
 - `run_student_reports()` - Render per-student summary reports
 
 ### Diagnostics and interactive prompts
