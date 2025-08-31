@@ -30,14 +30,13 @@ run_student_reports(
 
 \item{student_summary_report_folder}{Folder containing the template file.}
 
-\item{output_format}{Output format passed to \code{\link[rmarkdown:render]{rmarkdown::render()}}.}
+\item{output_format}{Output format passed to \code{rmarkdown::render()}.}
 }
 \value{
 Invisibly, a character vector of generated report paths.
 }
 \description{
-Render the packaged student summary R Markdown template for each student in
-each section.
+Render the packaged student summary R Markdown template for each student in each section.
 }
 \examples{
 \dontrun{

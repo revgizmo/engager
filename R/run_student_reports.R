@@ -24,22 +24,23 @@
 #' )
 #' }
 run_student_reports <- function(
-    df_sections,
-    df_roster,
-    data_folder,
-    transcripts_session_summary_file = "transcripts_session_summary.csv",
-    transcripts_summary_file = "transcripts_summary.csv",
-    student_summary_report = "Zoom_Student_Engagement_Analysis_student_summary_report.Rmd",
-    student_summary_report_folder = system.file("", package = "zoomstudentengagement"),
-    output_format = NULL) {
+  df_sections,
+  df_roster,
+  data_folder,
+  transcripts_session_summary_file = "transcripts_session_summary.csv",
+  transcripts_summary_file = "transcripts_summary.csv",
+  student_summary_report = "Zoom_Student_Engagement_Analysis_student_summary_report.Rmd",
+  student_summary_report_folder = system.file("", package = "zoomstudentengagement"),
+  output_format = NULL
+) {
   template <- file.path(student_summary_report_folder, student_summary_report)
   outputs <- character(0)
   for (section in df_sections$section) {
     target_section <- section
-    # Use base R operations to avoid dplyr segfault issues
-    section_mask <- df_roster$section == target_section
-    target_students <- df_roster$preferred_name[section_mask]
-    target_students <- c("All Students", target_students)
+    target_students <- df_roster |>
+      dplyr::filter(.data$section == target_section) |>
+      dplyr::pull(.data$preferred_name) |>
+      c("All Students", .)
     base_name <- tools::file_path_sans_ext(basename(student_summary_report))
     for (target_student in target_students) {
       output_file <- file.path(

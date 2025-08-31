@@ -4,8 +4,8 @@ test_that("run_student_reports renders reports", {
   dir.create(temp_dir)
   data_src <- system.file("extdata", package = "zoomstudentengagement")
   file.copy(data_src, temp_dir, recursive = TRUE)
-  df_sections <- tibble::tibble(section = "23.24")
-  df_roster <- tibble::tibble(section = "23.24", preferred_name = "Conor Healy")
+  df_sections <- tibble::tibble(section = 24)
+  df_roster <- tibble::tibble(section = 24, preferred_name = "Conor Healy")
   outputs <- run_student_reports(
     df_sections = df_sections,
     df_roster = df_roster,
