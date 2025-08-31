@@ -105,6 +105,7 @@ transcript_file <- system.file(
 metrics <- summarize_transcript_metrics(transcript_file_path = transcript_file)
 
 # 2) Plot one metric with privacy-first defaults
+#    (outputs a bar chart with a minimal theme)
 plot <- plot_users(metrics, metric = "session_ct", facet_by = "none", mask_by = "name")
 print(plot)
 
@@ -197,6 +198,9 @@ currently supported but may be added in future versions.
 - `plot_users_masked_section_by_metric()` - Legacy plotting API (still
   available)
 - `make_transcripts_summary_df()` - Generate summary statistics
+
+### Reporting
+- `run_student_reports()` - Render per-student summary reports
 
 ### Diagnostics and interactive prompts
 

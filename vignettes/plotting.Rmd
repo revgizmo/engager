@@ -95,7 +95,8 @@ head(transcripts_summary_df)
 
 ### Plotting by Metric
 
-Use the unified `plot_users()` function to create visualizations for different engagement metrics:
+Use the unified `plot_users()` function to create visualizations for different engagement metrics. The default output is a bar
+chart with a minimal theme for improved readability:
 
 ```{r basic-plots}
 # Plot session count
