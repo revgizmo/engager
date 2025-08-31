@@ -5,8 +5,8 @@
 \title{Safe Name Matching Workflow}
 \usage{
 safe_name_matching_workflow(
-  transcript_file_path,
-  roster_data,
+  transcript_file_path = NULL,
+  roster_data = NULL,
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
   unmatched_names_action = getOption("zoomstudentengagement.unmatched_names_action",
     "stop"),

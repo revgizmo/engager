@@ -5,7 +5,7 @@
 \title{Export Ideal Course Transcripts Summary Report}
 \usage{
 export_ideal_transcripts_summary(
-  transcript_data,
+  transcript_data = NULL,
   file_path = NULL,
   format = c("csv", "json", "excel"),
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),

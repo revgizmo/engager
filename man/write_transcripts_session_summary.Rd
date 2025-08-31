@@ -5,7 +5,7 @@
 \title{Write Transcripts Session Summary}
 \usage{
 write_transcripts_session_summary(
-  transcripts_session_summary_df,
+  transcripts_session_summary_df = NULL,
   data_folder = ".",
   transcripts_session_summary_file = "transcripts_session_summary.csv"
 )

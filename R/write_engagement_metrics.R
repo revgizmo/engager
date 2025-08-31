@@ -8,7 +8,7 @@
 #'
 #' @return Invisibly returns the processed data that was written
 #' @export
-write_engagement_metrics <- function(metrics_data, file_path, comments_format = c("text", "count")) {
+write_engagement_metrics <- function(metrics_data = NULL, file_path = NULL, comments_format = c("text", "count")) {
   comments_format <- match.arg(comments_format)
   write_metrics(
     data = metrics_data,

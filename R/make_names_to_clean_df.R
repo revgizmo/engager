@@ -48,7 +48,7 @@
 #' # Find students with transcript recordings but no matching student ID
 #' make_names_to_clean_df(sample_clean_names_df)
 #' }
-make_names_to_clean_df <- function(clean_names_df) {
+make_names_to_clean_df <- function(clean_names_df = NULL) {
   n <- preferred_name <- student_id <- transcript_name <- NULL
 
   if (tibble::is_tibble(clean_names_df)

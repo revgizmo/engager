@@ -4,7 +4,7 @@
 \alias{load_zoom_transcript}
 \title{Load Zoom Transcript}
 \usage{
-load_zoom_transcript(transcript_file_path)
+load_zoom_transcript(transcript_file_path = NULL)
 }
 \arguments{
 \item{transcript_file_path}{File path of a .transcript.vtt file of a Zoom recording

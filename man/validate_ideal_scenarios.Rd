@@ -5,7 +5,7 @@
 \title{Validate all ideal course scenarios}
 \usage{
 validate_ideal_scenarios(
-  batch_results,
+  batch_results = NULL,
   validation_rules = NULL,
   detailed_report = TRUE,
   include_data_quality = TRUE

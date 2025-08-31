@@ -21,7 +21,7 @@
 #' roster_file <- system.file("extdata/roster.csv", package = "zoomstudentengagement")
 #' roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
 #' make_sections_df(roster_df = roster_df)
-make_sections_df <- function(roster_df) {
+make_sections_df <- function(roster_df = NULL) {
   dept <- course <- section <- n <- NULL
 
   # Defensive: check for valid input

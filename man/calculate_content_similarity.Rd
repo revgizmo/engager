@@ -5,8 +5,8 @@
 \title{Calculate Content Similarity Between Two Transcripts}
 \usage{
 calculate_content_similarity(
-  transcript1,
-  transcript2,
+  transcript1 = NULL,
+  transcript2 = NULL,
   names_to_exclude = c("dead_air")
 )
 }

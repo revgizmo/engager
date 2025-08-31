@@ -247,7 +247,7 @@ process_ideal_course_batch <- function(include_roster = TRUE,
 #' }
 #'
 #' @export
-compare_ideal_sessions <- function(batch_results,
+compare_ideal_sessions <- function(batch_results = NULL,
                                    comparison_metrics = c("total_comments", "duration"),
                                    visualization = TRUE,
                                    include_roster_comparison = TRUE) {
@@ -357,7 +357,7 @@ compare_ideal_sessions <- function(batch_results,
 #' }
 #'
 #' @export
-validate_ideal_scenarios <- function(batch_results,
+validate_ideal_scenarios <- function(batch_results = NULL,
                                      validation_rules = NULL,
                                      detailed_report = TRUE,
                                      include_data_quality = TRUE) {

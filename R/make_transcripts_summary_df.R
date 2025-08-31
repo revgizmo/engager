@@ -29,7 +29,7 @@
 #' # Test the function with the sample data
 #' make_transcripts_summary_df(sample_data)
 make_transcripts_summary_df <-
-  function(transcripts_session_summary_df) {
+  function(transcripts_session_summary_df = NULL) {
     duration <- n <- preferred_name <- section <- wordcount <- NULL
 
     if (tibble::is_tibble(transcripts_session_summary_df)

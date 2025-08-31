@@ -5,7 +5,7 @@
 \title{Anonymize Educational Data}
 \usage{
 anonymize_educational_data(
-  data,
+  data = NULL,
   method = c("mask", "hash", "pseudonymize", "aggregate"),
   preserve_columns = NULL,
   hash_salt = NULL,

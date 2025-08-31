@@ -5,7 +5,7 @@
 \title{Ensure Privacy for Outputs}
 \usage{
 ensure_privacy(
-  x,
+  x = NULL,
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
   id_columns = c("preferred_name", "name", "first_last", "name_raw", "student_id",
     "email", "transcript_name", "formal_name"),

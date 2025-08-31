@@ -49,11 +49,11 @@
 #'   session_times = c("10:00", "09:00", "14:00")
 #' )
 create_course_info <- function(
-    dept,
-    course,
-    section,
-    instructor,
-    session_length_hours,
+    dept = NULL,
+    course = NULL,
+    section = NULL,
+    instructor = NULL,
+    session_length_hours = 1.5,
     semester_start_mdy = "Jan 01, 2024",
     semester_end_mdy = "May 15, 2024",
     session_days = NULL,

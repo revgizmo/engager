@@ -128,7 +128,7 @@ validate_ideal_transcript_structure <- function(transcript_data = NULL,
 #' transcript_data <- load_zoom_transcript("path/to/transcript.vtt")
 #' results <- validate_ideal_content_quality(transcript_data)
 #' }
-validate_ideal_content_quality <- function(transcript_data,
+validate_ideal_content_quality <- function(transcript_data = NULL,
                                            quality_threshold = 0.8,
                                            check_realism = TRUE) {
   # Initialize results
@@ -213,7 +213,7 @@ validate_ideal_content_quality <- function(transcript_data,
 #' transcript_data <- load_zoom_transcript("path/to/transcript.vtt")
 #' results <- validate_ideal_timing_consistency(transcript_data)
 #' }
-validate_ideal_timing_consistency <- function(transcript_data,
+validate_ideal_timing_consistency <- function(transcript_data = NULL,
                                               max_gap_seconds = 300,
                                               check_overlaps = TRUE) {
   # Initialize results
@@ -304,7 +304,7 @@ validate_ideal_timing_consistency <- function(transcript_data,
 #' expected_names <- c("Professor Ed", "Tom Miller", "Samantha Smith")
 #' results <- validate_ideal_name_coverage(transcript_data, expected_names)
 #' }
-validate_ideal_name_coverage <- function(transcript_data,
+validate_ideal_name_coverage <- function(transcript_data = NULL,
                                          expected_names = NULL,
                                          check_variations = TRUE,
                                          check_edge_cases = TRUE) {

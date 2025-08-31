@@ -202,7 +202,6 @@ set_privacy_defaults("ferpa_strict")
 
 
 # NEVER use "none" without explicit institutional approval
-
 ```
 
 ### Audit Logging

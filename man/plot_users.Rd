@@ -5,7 +5,7 @@
 \title{Plot Users}
 \usage{
 plot_users(
-  data,
+  data = NULL,
   metric = "session_ct",
   student_col = "name",
   facet_by = c("section", "transcript_file", "none"),

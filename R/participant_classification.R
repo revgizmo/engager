@@ -22,8 +22,8 @@
 #' @return The `transcript_df` augmented with columns:
 #'   `clean_name`, `participant_type`, `student_id`, `is_matched`.
 #' @export
-classify_participants <- function(transcript_df,
-                                  roster_df,
+classify_participants <- function(transcript_df = NULL,
+                                  roster_df = NULL,
                                   lookup_df = NULL,
                                   privacy_level = getOption(
                                     "zoomstudentengagement.privacy_level",

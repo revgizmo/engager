@@ -5,7 +5,7 @@
 \title{Validate Ideal Course Transcript Content Quality}
 \usage{
 validate_ideal_content_quality(
-  transcript_data,
+  transcript_data = NULL,
   quality_threshold = 0.8,
   check_realism = TRUE
 )

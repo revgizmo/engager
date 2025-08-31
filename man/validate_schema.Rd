@@ -4,7 +4,7 @@
 \alias{validate_schema}
 \title{Validate that a data frame contains required columns (and optionally types)}
 \usage{
-validate_schema(df, required_cols, types = NULL)
+validate_schema(df = NULL, required_cols = NULL, types = NULL)
 }
 \arguments{
 \item{df}{A data.frame or tibble}

@@ -5,7 +5,7 @@
 \title{Validate Ideal Course Transcript Timing Consistency}
 \usage{
 validate_ideal_timing_consistency(
-  transcript_data,
+  transcript_data = NULL,
   max_gap_seconds = 300,
   check_overlaps = TRUE
 )

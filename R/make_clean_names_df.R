@@ -67,8 +67,8 @@
 #'
 make_clean_names_df <- function(data_folder = ".",
                                 section_names_lookup_file = "section_names_lookup.csv",
-                                transcripts_metrics_df,
-                                roster_sessions) {
+                                transcripts_metrics_df = NULL,
+                                roster_sessions = NULL) {
   comments <-
     day <-
     dept <-

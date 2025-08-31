@@ -4,7 +4,7 @@
 \alias{conditionally_write_lookup}
 \title{Conditionally Write Lookup (Read-Only Gate)}
 \usage{
-conditionally_write_lookup(df, path, allow_write = FALSE)
+conditionally_write_lookup(df = NULL, path = NULL, allow_write = FALSE)
 }
 \arguments{
 \item{df}{Data frame. Lookup to write (normalized internally).}

@@ -5,7 +5,7 @@
 \title{Plot Users by Metric}
 \usage{
 plot_users_by_metric(
-  transcripts_summary_df,
+  transcripts_summary_df = NULL,
   metric = "session_ct",
   metrics_lookup_df = make_metrics_lookup_df(),
   student_col_name = "preferred_name"

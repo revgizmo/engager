@@ -5,7 +5,7 @@
 \title{Summarize Transcript Files}
 \usage{
 summarize_transcript_files(
-  transcript_file_names,
+  transcript_file_names = NULL,
   data_folder = ".",
   transcripts_folder = "transcripts",
   names_to_exclude = NULL,

@@ -5,7 +5,7 @@
 \title{Prompt User for Name Matching}
 \usage{
 prompt_name_matching(
-  unmatched_names,
+  unmatched_names = NULL,
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
   data_folder = ".",
   section_names_lookup_file = "section_names_lookup.csv",

@@ -56,7 +56,7 @@
 #' )
 #'
 detect_duplicate_transcripts <- function(
-    transcript_list,
+    transcript_list = NULL,
     data_folder = ".",
     transcripts_folder = "transcripts",
     similarity_threshold = 0.95,

@@ -5,7 +5,7 @@
 \title{Compare engagement patterns across ideal course sessions}
 \usage{
 compare_ideal_sessions(
-  batch_results,
+  batch_results = NULL,
   comparison_metrics = c("total_comments", "duration"),
   visualization = TRUE,
   include_roster_comparison = TRUE

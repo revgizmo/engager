@@ -5,7 +5,7 @@
 \title{Generate FERPA Compliance Report}
 \usage{
 generate_ferpa_report(
-  data,
+  data = NULL,
   output_file = NULL,
   report_format = c("text", "html", "json"),
   include_audit_trail = TRUE,

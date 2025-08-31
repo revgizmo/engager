@@ -5,7 +5,7 @@
 \title{Make Students Only Transcripts Summary}
 \usage{
 make_students_only_transcripts_summary_df(
-  transcripts_session_summary_df,
+  transcripts_session_summary_df = NULL,
   preferred_name_exclude_cv = c("dead_air", "Instructor Name", "Guests", "unknown")
 )
 }

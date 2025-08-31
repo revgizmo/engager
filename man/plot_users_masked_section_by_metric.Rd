@@ -4,7 +4,7 @@
 \alias{plot_users_masked_section_by_metric}
 \title{Plot Users by Metric}
 \usage{
-plot_users_masked_section_by_metric(df, metric = "session_ct")
+plot_users_masked_section_by_metric(df = NULL, metric = "session_ct")
 }
 \arguments{
 \item{df}{a tibble that summarizes results at the level of the class section and student.}

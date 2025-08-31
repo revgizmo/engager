@@ -5,7 +5,7 @@
 \title{Validate FERPA Compliance}
 \usage{
 validate_ferpa_compliance(
-  data,
+  data = NULL,
   institution_type = c("educational", "research", "mixed"),
   check_retention = TRUE,
   retention_period = c("academic_year", "semester", "quarter", "custom"),

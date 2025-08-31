@@ -5,7 +5,7 @@
 \title{Validate Ideal Course Transcript Name Coverage}
 \usage{
 validate_ideal_name_coverage(
-  transcript_data,
+  transcript_data = NULL,
   expected_names = NULL,
   check_variations = TRUE,
   check_edge_cases = TRUE
