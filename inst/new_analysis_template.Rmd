@@ -49,7 +49,7 @@ In it's current form, the `zoomstudentengagement` library is useful for 4 relate
 4. **Analyze results** across students/speakers to gain insights into student engagement, with a particular focus on participation equity.
     1. `make_transcripts_session_summary_df()` returns a tibble from the cleaned names, and summarizes results at the level of the session and preferred student name.
     2. `make_transcripts_summary_df()` returns a tibble from the summary metrics by student and class session (from `make_transcripts_session_summary_df()`) that summarizes results at the level of the class section and preferred student name.
-    3. `plot_users_by_metric()` outputs plots for the key metrics.  This function needs to be run for each metric.
+    3. `plot_users()` outputs plots for the key metrics with improved bar chart aesthetics.  This function needs to be run for each metric.
 
 
 
@@ -487,18 +487,18 @@ write_transcripts_summary(
 
 ## 2. Plot Users by key metrics
 
-1. Run `plot_users_by_metric()` for the key metrics to output said plots.
+1. Run `plot_users()` for the key metrics to output said plots with improved bar chart aesthetics.
 
 ```{r fig.height=4}
-# plot_users_by_metric()
-plot_users_by_metric(transcripts_summary_df, metric = "session_ct")
-plot_users_by_metric(transcripts_summary_df, metric = "n")
-plot_users_by_metric(transcripts_summary_df, metric = "perc_n")
-plot_users_by_metric(transcripts_summary_df, metric = "duration")
-plot_users_by_metric(transcripts_summary_df, metric = "perc_duration")
-plot_users_by_metric(transcripts_summary_df, metric = "wordcount")
-plot_users_by_metric(transcripts_summary_df, metric = "perc_wordcount")
-plot_users_by_metric(transcripts_summary_df, metric = "wpm")
+# plot_users() - improved bar charts with minimal theme
+plot_users(transcripts_summary_df, metric = "session_ct", facet_by = "section", mask_by = "name")
+plot_users(transcripts_summary_df, metric = "n", facet_by = "section", mask_by = "name")
+plot_users(transcripts_summary_df, metric = "perc_n", facet_by = "section", mask_by = "name")
+plot_users(transcripts_summary_df, metric = "duration", facet_by = "section", mask_by = "name")
+plot_users(transcripts_summary_df, metric = "perc_duration", facet_by = "section", mask_by = "name")
+plot_users(transcripts_summary_df, metric = "wordcount", facet_by = "section", mask_by = "name")
+plot_users(transcripts_summary_df, metric = "perc_wordcount", facet_by = "section", mask_by = "name")
+plot_users(transcripts_summary_df, metric = "wpm", facet_by = "section", mask_by = "name")
 ```
 
 
@@ -522,32 +522,32 @@ students_only_transcripts_summary_df
 
 ## 2. Plot Students by key metrics
 
-1. Run `plot_users_by_metric()` for the key metrics to output said plots.
+1. Run `plot_users()` for the key metrics to output said plots with improved bar chart aesthetics.
 
 ```{r fig.height=4}
-plot_users_by_metric(students_only_transcripts_summary_df,
-  metric = "session_ct"
+plot_users(students_only_transcripts_summary_df,
+  metric = "session_ct", facet_by = "section", mask_by = "name"
 )
-plot_users_by_metric(students_only_transcripts_summary_df,
-  metric = "n"
+plot_users(students_only_transcripts_summary_df,
+  metric = "n", facet_by = "section", mask_by = "name"
 )
-plot_users_by_metric(students_only_transcripts_summary_df,
-  metric = "perc_n"
+plot_users(students_only_transcripts_summary_df,
+  metric = "perc_n", facet_by = "section", mask_by = "name"
 )
-plot_users_by_metric(students_only_transcripts_summary_df,
-  metric = "duration"
+plot_users(students_only_transcripts_summary_df,
+  metric = "duration", facet_by = "section", mask_by = "name"
 )
-plot_users_by_metric(students_only_transcripts_summary_df,
-  metric = "perc_duration"
+plot_users(students_only_transcripts_summary_df,
+  metric = "perc_duration", facet_by = "section", mask_by = "name"
 )
-plot_users_by_metric(students_only_transcripts_summary_df,
-  metric = "wordcount"
+plot_users(students_only_transcripts_summary_df,
+  metric = "wordcount", facet_by = "section", mask_by = "name"
 )
-plot_users_by_metric(students_only_transcripts_summary_df,
-  metric = "perc_wordcount"
+plot_users(students_only_transcripts_summary_df,
+  metric = "perc_wordcount", facet_by = "section", mask_by = "name"
 )
-plot_users_by_metric(students_only_transcripts_summary_df,
-  metric = "wpm"
+plot_users(students_only_transcripts_summary_df,
+  metric = "wpm", facet_by = "section", mask_by = "name"
 )
 ```
 
@@ -555,40 +555,40 @@ plot_users_by_metric(students_only_transcripts_summary_df,
 
 ## 3. Plot Students with names masked by key metrics
 
-1. Run `plot_users_masked_section_by_metric()` for the key metrics to output said plots, but with student names masked by "Student _".
+1. Run `plot_users()` with rank-based masking for the key metrics to output said plots with improved bar chart aesthetics and privacy protection.
 
 ```{r fig.height=4}
-plot_users_masked_section_by_metric(
-  df = students_only_transcripts_summary_df,
-  metric = "session_ct"
+plot_users(
+  data = students_only_transcripts_summary_df,
+  metric = "session_ct", facet_by = "section", mask_by = "rank"
 )
-plot_users_masked_section_by_metric(
-  df = students_only_transcripts_summary_df,
-  metric = "n"
+plot_users(
+  data = students_only_transcripts_summary_df,
+  metric = "n", facet_by = "section", mask_by = "rank"
 )
-plot_users_masked_section_by_metric(
-  df = students_only_transcripts_summary_df,
-  metric = "perc_n"
+plot_users(
+  data = students_only_transcripts_summary_df,
+  metric = "perc_n", facet_by = "section", mask_by = "rank"
 )
-plot_users_masked_section_by_metric(
-  df = students_only_transcripts_summary_df,
-  metric = "duration"
+plot_users(
+  data = students_only_transcripts_summary_df,
+  metric = "duration", facet_by = "section", mask_by = "rank"
 )
-plot_users_masked_section_by_metric(
-  df = students_only_transcripts_summary_df,
-  metric = "perc_duration"
+plot_users(
+  data = students_only_transcripts_summary_df,
+  metric = "perc_duration", facet_by = "section", mask_by = "rank"
 )
-plot_users_masked_section_by_metric(
-  df = students_only_transcripts_summary_df,
-  metric = "wordcount"
+plot_users(
+  data = students_only_transcripts_summary_df,
+  metric = "wordcount", facet_by = "section", mask_by = "rank"
 )
-plot_users_masked_section_by_metric(
-  df = students_only_transcripts_summary_df,
-  metric = "perc_wordcount"
+plot_users(
+  data = students_only_transcripts_summary_df,
+  metric = "perc_wordcount", facet_by = "section", mask_by = "rank"
 )
-plot_users_masked_section_by_metric(
-  df = students_only_transcripts_summary_df,
-  metric = "wpm"
+plot_users(
+  data = students_only_transcripts_summary_df,
+  metric = "wpm", facet_by = "section", mask_by = "rank"
 )
 ```
 
