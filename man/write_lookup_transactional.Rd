@@ -4,7 +4,7 @@
 \alias{write_lookup_transactional}
 \title{Transactional Write with Backup}
 \usage{
-write_lookup_transactional(df, path)
+write_lookup_transactional(df = NULL, path = NULL)
 }
 \arguments{
 \item{df}{Data frame. The lookup to write (will be normalized).}

@@ -9,7 +9,7 @@
 #' @return Invisibly returns the written tibble
 #' @export
 write_transcripts_summary <-
-  function(transcripts_summary_df,
+  function(transcripts_summary_df = NULL,
            data_folder = ".",
            transcripts_summary_file = "transcripts_summary.csv") {
     if (!tibble::is_tibble(transcripts_summary_df)) {

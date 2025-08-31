@@ -25,7 +25,7 @@
 #' )
 #' }
 load_session_mapping <- function(
-    mapping_file,
+    mapping_file = NULL,
     zoom_recordings_df = NULL,
     validate_mapping = TRUE) {
   # Declare global variables to avoid R CMD check warnings

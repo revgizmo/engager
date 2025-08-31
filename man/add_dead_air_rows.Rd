@@ -4,7 +4,7 @@
 \alias{add_dead_air_rows}
 \title{Add Dead Air Rows}
 \usage{
-add_dead_air_rows(df, dead_air_name = "dead_air")
+add_dead_air_rows(df = NULL, dead_air_name = "dead_air")
 }
 \arguments{
 \item{df}{A tibble containing the comments from a Zoom recording transcript.}

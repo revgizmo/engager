@@ -8,7 +8,7 @@
 #'
 #' @return A ggplot object.
 #' @export
-plot_users_masked_section_by_metric <- function(df, metric = "session_ct") {
+plot_users_masked_section_by_metric <- function(df = NULL, metric = "session_ct") {
   if (!tibble::is_tibble(df)) stop("`df` must be a tibble")
   if (!metric %in% names(df)) {
     stop(sprintf("Metric '%s' not found in data", metric))

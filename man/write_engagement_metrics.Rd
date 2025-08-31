@@ -5,8 +5,8 @@
 \title{Write Engagement Metrics to CSV}
 \usage{
 write_engagement_metrics(
-  metrics_data,
-  file_path,
+  metrics_data = NULL,
+  file_path = NULL,
   comments_format = c("text", "count")
 )
 }

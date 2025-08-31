@@ -17,7 +17,7 @@ NULL
 #' @examples
 #' df <- tibble::tibble(a = 1L, b = "x")
 #' validate_schema(df, c("a", "b"), types = list(a = "integer", b = "character"))
-validate_schema <- function(df, required_cols, types = NULL) {
+validate_schema <- function(df = NULL, required_cols = NULL, types = NULL) {
   if (!is.data.frame(df)) {
     abort_zse("`df` must be a data.frame or tibble", class = "zse_schema_error")
   }

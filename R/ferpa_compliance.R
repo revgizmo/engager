@@ -45,7 +45,7 @@ NULL
 #' validation_result <- validate_ferpa_compliance(sample_data)
 #' print(validation_result$compliant)
 #' print(validation_result$recommendations)
-validate_ferpa_compliance <- function(data,
+validate_ferpa_compliance <- function(data = NULL,
                                       institution_type = c("educational", "research", "mixed"),
                                       check_retention = TRUE,
                                       retention_period = c("academic_year", "semester", "quarter", "custom"),
@@ -194,7 +194,7 @@ validate_ferpa_compliance <- function(data,
 #'
 #' # Hash method with salt
 #' hashed <- anonymize_educational_data(sample_data, method = "hash", hash_salt = "my_salt")
-anonymize_educational_data <- function(data,
+anonymize_educational_data <- function(data = NULL,
                                        method = c("mask", "hash", "pseudonymize", "aggregate"),
                                        preserve_columns = NULL,
                                        hash_salt = NULL,
@@ -322,7 +322,7 @@ anonymize_educational_data <- function(data,
 #'
 #' report <- generate_ferpa_report(sample_data)
 #' print(report$summary)
-generate_ferpa_report <- function(data,
+generate_ferpa_report <- function(data = NULL,
                                   output_file = NULL,
                                   report_format = c("text", "html", "json"),
                                   include_audit_trail = TRUE,
@@ -422,7 +422,7 @@ generate_ferpa_report <- function(data,
 #'   date_column = "session_date"
 #' )
 #' print(retention_check$compliant)
-check_data_retention_policy <- function(data,
+check_data_retention_policy <- function(data = NULL,
                                         retention_period = c("academic_year", "semester", "quarter", "custom"),
                                         custom_retention_days = NULL,
                                         date_column = NULL,

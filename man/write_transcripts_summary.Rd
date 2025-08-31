@@ -5,7 +5,7 @@
 \title{Write Transcripts Summary}
 \usage{
 write_transcripts_summary(
-  transcripts_summary_df,
+  transcripts_summary_df = NULL,
   data_folder = ".",
   transcripts_summary_file = "transcripts_summary.csv"
 )

@@ -23,7 +23,7 @@
 #' # Summarize transcript files
 #' summary <- summarize_transcript_files(transcript_file_names = transcript_files)
 summarize_transcript_files <-
-  function(transcript_file_names,
+  function(transcript_file_names = NULL,
            data_folder = ".",
            transcripts_folder = "transcripts",
            names_to_exclude = NULL,

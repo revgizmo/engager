@@ -41,7 +41,7 @@
 #' similarity <- calculate_content_similarity(transcript1, transcript2,
 #'   names_to_exclude = c("dead_air", "silence")
 #' )
-calculate_content_similarity <- function(transcript1, transcript2, names_to_exclude = c("dead_air")) {
+calculate_content_similarity <- function(transcript1 = NULL, transcript2 = NULL, names_to_exclude = c("dead_air")) {
   # Handle NULL transcripts
   if (is.null(transcript1) || is.null(transcript2)) {
     return(0.0)

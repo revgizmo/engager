@@ -79,7 +79,7 @@ NULL
 #'
 #' @return A normalized data frame with expected columns.
 #' @export
-read_lookup_safely <- function(path) {
+read_lookup_safely <- function(path = NULL) {
   if (!is.character(path) || length(path) != 1) {
     stop("path must be a single character string", call. = FALSE)
   }
@@ -102,7 +102,7 @@ read_lookup_safely <- function(path) {
 #'
 #' @return A merged, normalized, de-duplicated data frame.
 #' @export
-merge_lookup_preserve <- function(existing_df, add_df) {
+merge_lookup_preserve <- function(existing_df = NULL, add_df = NULL) {
   base <- .normalize_lookup_df(existing_df)
   add <- .normalize_lookup_df(add_df)
 
@@ -171,7 +171,7 @@ merge_lookup_preserve <- function(existing_df, add_df) {
 #'
 #' @return Invisibly returns the path written.
 #' @export
-write_lookup_transactional <- function(df, path) {
+write_lookup_transactional <- function(df = NULL, path = NULL) {
   if (!is.character(path) || length(path) != 1) {
     stop("path must be a single character string", call. = FALSE)
   }
@@ -224,7 +224,7 @@ write_lookup_transactional <- function(df, path) {
 #'
 #' @return Logical indicating whether a write occurred.
 #' @export
-conditionally_write_lookup <- function(df, path, allow_write = FALSE) {
+conditionally_write_lookup <- function(df = NULL, path = NULL, allow_write = FALSE) {
   if (!isTRUE(allow_write)) {
     return(FALSE)
   }
@@ -242,7 +242,7 @@ conditionally_write_lookup <- function(df, path, allow_write = FALSE) {
 #'
 #' @return A merged lookup including instructor rows.
 #' @export
-ensure_instructor_rows <- function(existing_df, instructor_name) {
+ensure_instructor_rows <- function(existing_df = NULL, instructor_name = NULL) {
   if (!is.character(instructor_name) || length(instructor_name) != 1) {
     stop("instructor_name must be a single character string", call. = FALSE)
   }

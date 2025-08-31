@@ -46,8 +46,8 @@
 #' )
 #' }
 create_session_mapping <- function(
-    zoom_recordings_df,
-    course_info_df,
+    zoom_recordings_df = NULL,
+    course_info_df = NULL,
     output_file = "session_mapping.csv",
     semester_start_mdy = "Jan 01, 2024",
     auto_assign_patterns = list(

@@ -4,7 +4,7 @@
 \alias{consolidate_transcript}
 \title{Consolidate Transcript}
 \usage{
-consolidate_transcript(df, max_pause_sec = 1)
+consolidate_transcript(df = NULL, max_pause_sec = 1)
 }
 \arguments{
 \item{df}{A tibble containing the comments from a Zoom recording transcript.}

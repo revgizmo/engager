@@ -4,7 +4,7 @@
 \alias{merge_lookup_preserve}
 \title{Merge Lookup Preserving Existing Rows}
 \usage{
-merge_lookup_preserve(existing_df, add_df)
+merge_lookup_preserve(existing_df = NULL, add_df = NULL)
 }
 \arguments{
 \item{existing_df}{Data frame. Existing normalized lookup.}

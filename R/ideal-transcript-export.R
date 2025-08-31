@@ -22,7 +22,7 @@
 #' )
 #' }
 export_ideal_transcripts_csv <- function(
-    transcript_data,
+    transcript_data = NULL,
     file_path = NULL,
     privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
     include_metadata = TRUE) {
@@ -89,7 +89,7 @@ export_ideal_transcripts_csv <- function(
 #' )
 #' }
 export_ideal_transcripts_json <- function(
-    transcript_data,
+    transcript_data = NULL,
     file_path = NULL,
     privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
     pretty_print = TRUE,
@@ -174,7 +174,7 @@ export_ideal_transcripts_json <- function(
 #' )
 #' }
 export_ideal_transcripts_excel <- function(
-    transcript_data,
+    transcript_data = NULL,
     file_path = NULL,
     privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
     include_summary_sheet = TRUE,
@@ -369,7 +369,7 @@ export_ideal_transcripts_excel <- function(
 #' )
 #' }
 export_ideal_transcripts_summary <- function(
-    transcript_data,
+    transcript_data = NULL,
     file_path = NULL,
     format = c("csv", "json", "excel"),
     privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),

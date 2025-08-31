@@ -5,7 +5,7 @@
 \title{Hash Names Consistently for Privacy-Aware Matching}
 \usage{
 hash_name_consistently(
-  names,
+  names = NULL,
   salt = "zoomstudentengagement",
   normalize_names = TRUE
 )

@@ -5,7 +5,7 @@
 \title{Load and Process Zoom Transcript}
 \usage{
 load_and_process_zoom_transcript(
-  transcript_file_path,
+  transcript_file_path = NULL,
   consolidate_comments = TRUE,
   max_pause_sec = 1,
   add_dead_air = TRUE,

@@ -5,7 +5,7 @@
 \title{Validate Privacy Compliance}
 \usage{
 validate_privacy_compliance(
-  data,
+  data = NULL,
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
   real_names = NULL,
   stop_on_violation = TRUE

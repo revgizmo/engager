@@ -37,8 +37,8 @@
 #'
 #' @export
 analyze_multi_session_attendance <- function(
-    transcript_files,
-    roster_data,
+    transcript_files = NULL,
+    roster_data = NULL,
     data_folder = ".",
     transcripts_folder = "transcripts",
     unmatched_names_action = c("stop", "warn"),
@@ -221,7 +221,7 @@ analyze_multi_session_attendance <- function(
 #'
 #' @export
 generate_attendance_report <- function(
-    analysis_results,
+    analysis_results = NULL,
     output_file = NULL,
     include_charts = FALSE) {
   if (!is.list(analysis_results) || !"participation_patterns" %in% names(analysis_results)) {

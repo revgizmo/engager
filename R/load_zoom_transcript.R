@@ -24,7 +24,7 @@
 #' )
 #' load_zoom_transcript(transcript_file_path = transcript_file)
 #'
-load_zoom_transcript <- function(transcript_file_path) {
+load_zoom_transcript <- function(transcript_file_path = NULL) {
   . <-
     begin <-
     comment_num <-

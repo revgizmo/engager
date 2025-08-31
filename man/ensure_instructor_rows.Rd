@@ -4,7 +4,7 @@
 \alias{ensure_instructor_rows}
 \title{Ensure Instructor Rows (Pure Merge)}
 \usage{
-ensure_instructor_rows(existing_df, instructor_name)
+ensure_instructor_rows(existing_df = NULL, instructor_name = NULL)
 }
 \arguments{
 \item{existing_df}{Data frame. Existing lookup.}

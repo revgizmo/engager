@@ -20,7 +20,7 @@
 #'
 #' # Without normalization (exact matching only)
 #' hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = FALSE)
-hash_name_consistently <- function(names,
+hash_name_consistently <- function(names = NULL,
                                    salt = "zoomstudentengagement",
                                    normalize_names = TRUE) {
   # Input validation

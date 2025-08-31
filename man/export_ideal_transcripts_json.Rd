@@ -5,7 +5,7 @@
 \title{Export Ideal Course Transcripts to JSON}
 \usage{
 export_ideal_transcripts_json(
-  transcript_data,
+  transcript_data = NULL,
   file_path = NULL,
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
   pretty_print = TRUE,

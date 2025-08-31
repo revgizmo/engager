@@ -27,7 +27,7 @@
 #' # Check with specific real names
 #' real_names <- c("John Smith", "Jane Doe")
 #' validate_privacy_compliance(df, real_names = real_names)
-validate_privacy_compliance <- function(data,
+validate_privacy_compliance <- function(data = NULL,
                                         privacy_level = getOption(
                                           "zoomstudentengagement.privacy_level",
                                           "mask"

@@ -74,7 +74,7 @@
 #' # Clean up
 #' unlink(temp_dir, recursive = TRUE)
 write_section_names_lookup <-
-  function(clean_names_df,
+  function(clean_names_df = NULL,
            data_folder = ".",
            section_names_lookup_file = "section_names_lookup.csv") {
     course <-

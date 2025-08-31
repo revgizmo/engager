@@ -5,8 +5,8 @@
 \title{Classify Participants (Pure, Privacy-Aware)}
 \usage{
 classify_participants(
-  transcript_df,
-  roster_df,
+  transcript_df = NULL,
+  roster_df = NULL,
   lookup_df = NULL,
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask")
 )

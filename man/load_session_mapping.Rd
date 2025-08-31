@@ -5,7 +5,7 @@
 \title{Load Session Mapping}
 \usage{
 load_session_mapping(
-  mapping_file,
+  mapping_file = NULL,
   zoom_recordings_df = NULL,
   validate_mapping = TRUE
 )

@@ -4,7 +4,7 @@
 \alias{make_roster_small}
 \title{Make a Smaller DF of the Student Roster}
 \usage{
-make_roster_small(roster_df)
+make_roster_small(roster_df = NULL)
 }
 \arguments{
 \item{roster_df}{A tibble listing the students enrolled in the class or

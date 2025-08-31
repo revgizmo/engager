@@ -4,7 +4,7 @@
 \alias{make_transcripts_session_summary_df}
 \title{Make Transcripts Session Summary}
 \usage{
-make_transcripts_session_summary_df(clean_names_df)
+make_transcripts_session_summary_df(clean_names_df = NULL)
 }
 \arguments{
 \item{clean_names_df}{A tibble containing session details and summary metrics

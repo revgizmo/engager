@@ -32,8 +32,8 @@
 #'   unmatched_names_action = "warn"
 #' )
 #' }
-safe_name_matching_workflow <- function(transcript_file_path,
-                                        roster_data,
+safe_name_matching_workflow <- function(transcript_file_path = NULL,
+                                        roster_data = NULL,
                                         privacy_level = getOption(
                                           "zoomstudentengagement.privacy_level",
                                           "mask"
@@ -312,8 +312,8 @@ handle_unmatched_names <- function(unmatched_names,
 #'   transcript_data = transcript_data,
 #'   roster_data = roster_data
 #' )
-process_transcript_with_privacy <- function(transcript_data,
-                                            roster_data,
+process_transcript_with_privacy <- function(transcript_data = NULL,
+                                            roster_data = NULL,
                                             name_mappings = NULL,
                                             privacy_level = getOption(
                                               "zoomstudentengagement.privacy_level",
@@ -387,8 +387,8 @@ process_transcript_with_privacy <- function(transcript_data,
 #'   transcript_data = transcript_data,
 #'   roster_data = roster_data
 #' )
-match_names_with_privacy <- function(transcript_data,
-                                     roster_data,
+match_names_with_privacy <- function(transcript_data = NULL,
+                                     roster_data = NULL,
                                      name_mappings = NULL,
                                      privacy_level = getOption(
                                        "zoomstudentengagement.privacy_level",

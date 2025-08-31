@@ -4,7 +4,7 @@
 \alias{make_sections_df}
 \title{Make a DF of Class Sections from the Student Roster}
 \usage{
-make_sections_df(roster_df)
+make_sections_df(roster_df = NULL)
 }
 \arguments{
 \item{roster_df}{A tibble listing the students enrolled in the class or classes.

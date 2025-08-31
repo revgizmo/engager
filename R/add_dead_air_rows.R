@@ -16,7 +16,7 @@
 #' add_dead_air_rows(df = "NULL")
 #'
 # CRAN compliance: global variables handled in package file
-add_dead_air_rows <- function(df, dead_air_name = "dead_air") {
+add_dead_air_rows <- function(df = NULL, dead_air_name = "dead_air") {
   # Removed local NULL assignments; handled by globalVariables above.
 
   if (tibble::is_tibble(df)) {

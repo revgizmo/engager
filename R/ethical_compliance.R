@@ -213,8 +213,8 @@ validate_ethical_use <- function(usage_context = c("research", "teaching", "asse
 #'   contact_person = "Dr. Jane Smith"
 #' )
 #' cat(report)
-create_ethical_use_report <- function(usage_context,
-                                      data_scope,
+create_ethical_use_report <- function(usage_context = NULL,
+                                      data_scope = NULL,
                                       purpose_statement = NULL,
                                       institution_name = NULL,
                                       contact_person = NULL,
@@ -359,9 +359,9 @@ create_ethical_use_report <- function(usage_context,
 #'   privacy_settings = c("mask", "mask", "ferpa_strict"),
 #'   time_period = 30
 #' )
-audit_ethical_usage <- function(function_calls,
-                                data_sizes,
-                                privacy_settings,
+audit_ethical_usage <- function(function_calls = NULL,
+                                data_sizes = NULL,
+                                privacy_settings = NULL,
                                 time_period = 30) {
   # Initialize results
   result <- list(
