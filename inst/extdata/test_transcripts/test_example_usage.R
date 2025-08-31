@@ -85,7 +85,7 @@ cat("\n=== Example 8: Batch Processing ===\n")
 all_transcripts <- lapply(test_files, function(file) {
   data <- parse_zoom_transcript(file)
   data$file <- basename(file)
-  return(data)
+  data
 })
 
 # Combine all transcripts

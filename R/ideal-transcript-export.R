@@ -58,9 +58,9 @@ export_ideal_transcripts_csv <- function(
     dir.create(dir_path, recursive = TRUE)
   }
 
-    # Write CSV file
+  # Write CSV file
   utils::write.csv(export_data, file_path, row.names = FALSE)
-  
+
   invisible(file_path)
 }
 
@@ -138,14 +138,14 @@ export_ideal_transcripts_json <- function(
     dir.create(dir_path, recursive = TRUE)
   }
 
-    # Write JSON file
+  # Write JSON file
   jsonlite::write_json(
-    json_data, 
-    file_path, 
-    pretty = pretty_print, 
+    json_data,
+    file_path,
+    pretty = pretty_print,
     auto_unbox = TRUE
   )
-  
+
   invisible(file_path)
 }
 
@@ -194,25 +194,136 @@ export_ideal_transcripts_excel <- function(
     privacy_level = privacy_level
   )
 
+  # Convert to data frame and ensure all columns are simple types
+  export_data <- as.data.frame(export_data, stringsAsFactors = FALSE)
+
+  # Convert list columns to character strings
+  for (col in names(export_data)) {
+    if (is.list(export_data[[col]])) {
+      export_data[[col]] <- sapply(export_data[[col]], function(x) {
+        if (is.null(x)) {
+          return(NA_character_)
+        }
+        if (length(x) == 0) {
+          return(NA_character_)
+        }
+        paste(as.character(x), collapse = "; ")
+      })
+    }
+  }
+
+  # Ensure all columns are atomic types that openxlsx can handle
+  for (col in names(export_data)) {
+    if (!is.atomic(export_data[[col]])) {
+      export_data[[col]] <- as.character(export_data[[col]])
+    }
+  }
+
+  # Convert any remaining complex types to character
+  export_data <- data.frame(
+    lapply(export_data, function(x) {
+      if (is.factor(x)) {
+        as.character(x)
+      } else if (is.list(x)) {
+        sapply(x, function(y) if (is.null(y)) NA_character_ else as.character(y))
+      } else {
+        x
+      }
+    }),
+    stringsAsFactors = FALSE
+  )
+
   # Create workbook
   wb <- openxlsx::createWorkbook()
 
-  # Add main data sheet
+  # Add main data sheet with error handling
   openxlsx::addWorksheet(wb, "Transcript Data")
-  openxlsx::writeData(wb, "Transcript Data", export_data)
+
+  # Try to write data with error handling
+  tryCatch(
+    {
+      openxlsx::writeData(wb, "Transcript Data", export_data)
+    },
+    error = function(e) {
+      # If Excel write fails, try with simplified data
+      simple_data <- data.frame(
+        lapply(export_data, as.character),
+        stringsAsFactors = FALSE
+      )
+      openxlsx::writeData(wb, "Transcript Data", simple_data)
+    }
+  )
 
   # Add summary sheet if requested
   if (include_summary_sheet) {
     summary_data <- generate_transcript_summary(export_data)
+    # Ensure summary data is also a simple data frame
+    if (is.data.frame(summary_data)) {
+      summary_data <- as.data.frame(summary_data)
+      for (col in names(summary_data)) {
+        if (is.list(summary_data[[col]])) {
+          summary_data[[col]] <- sapply(summary_data[[col]], function(x) {
+            if (is.null(x)) {
+              return(NA_character_)
+            }
+            if (length(x) == 0) {
+              return(NA_character_)
+            }
+            paste(as.character(x), collapse = "; ")
+          })
+        }
+      }
+    }
     openxlsx::addWorksheet(wb, "Summary")
-    openxlsx::writeData(wb, "Summary", summary_data)
+    tryCatch(
+      {
+        openxlsx::writeData(wb, "Summary", summary_data)
+      },
+      error = function(e) {
+        # If Excel write fails, try with simplified data
+        simple_summary <- data.frame(
+          lapply(summary_data, as.character),
+          stringsAsFactors = FALSE
+        )
+        openxlsx::writeData(wb, "Summary", simple_summary)
+      }
+    )
   }
 
   # Add metadata sheet if requested
   if (include_metadata_sheet) {
     metadata_data <- generate_export_metadata(export_data, format = "excel")
+    # Ensure metadata data is also a simple data frame
+    if (is.data.frame(metadata_data)) {
+      metadata_data <- as.data.frame(metadata_data)
+      for (col in names(metadata_data)) {
+        if (is.list(metadata_data[[col]])) {
+          metadata_data[[col]] <- sapply(metadata_data[[col]], function(x) {
+            if (is.null(x)) {
+              return(NA_character_)
+            }
+            if (length(x) == 0) {
+              return(NA_character_)
+            }
+            paste(as.character(x), collapse = "; ")
+          })
+        }
+      }
+    }
     openxlsx::addWorksheet(wb, "Metadata")
-    openxlsx::writeData(wb, "Metadata", metadata_data)
+    tryCatch(
+      {
+        openxlsx::writeData(wb, "Metadata", metadata_data)
+      },
+      error = function(e) {
+        # If Excel write fails, try with simplified data
+        simple_metadata <- data.frame(
+          lapply(metadata_data, as.character),
+          stringsAsFactors = FALSE
+        )
+        openxlsx::writeData(wb, "Metadata", simple_metadata)
+      }
+    )
   }
 
   # Determine output path
@@ -227,9 +338,9 @@ export_ideal_transcripts_excel <- function(
     dir.create(dir_path, recursive = TRUE)
   }
 
-    # Save workbook
+  # Save workbook
   openxlsx::saveWorkbook(wb, file_path, overwrite = TRUE)
-  
+
   invisible(file_path)
 }
 
@@ -289,7 +400,7 @@ export_ideal_transcripts_summary <- function(
     file_path <- paste0("ideal_transcript_summary_", timestamp, ".", format)
   }
 
-    # Export based on format
+  # Export based on format
   if (format == "csv") {
     utils::write.csv(summary_data, file_path, row.names = FALSE)
   } else if (format == "json") {
@@ -306,11 +417,11 @@ export_ideal_transcripts_summary <- function(
     wb <- openxlsx::createWorkbook()
     openxlsx::addWorksheet(wb, "Summary")
     openxlsx::writeData(wb, "Summary", summary_data)
-    
+
     if (include_charts) {
       add_summary_charts(wb, summary_data)
     }
-    
+
     openxlsx::saveWorkbook(wb, file_path, overwrite = TRUE)
   }
 

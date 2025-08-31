@@ -473,9 +473,15 @@ validate_ideal_scenarios <- function(batch_results,
   # Generate detailed report
   detailed_report_content <- NULL
   if (detailed_report) {
-    detailed_report_content <- generate_detailed_validation_report(
-      rule_results, validation_summary, data_quality_report, recommendations
+    # Create a results object compatible with the validation function
+    validation_results <- list(
+      validation_results = rule_results,
+      overall_status = validation_summary$overall_status,
+      summary = validation_summary,
+      recommendations = recommendations,
+      timestamp = Sys.time()
     )
+    detailed_report_content <- generate_detailed_validation_report(validation_results)
   }
 
   # Create result
@@ -855,31 +861,4 @@ generate_validation_recommendations <- function(rule_results, validation_summary
   }
 
   return(recommendations)
-}
-
-#' Generate detailed validation report
-#' @keywords internal
-generate_detailed_validation_report <- function(rule_results, validation_summary,
-                                                data_quality_report, recommendations) {
-  report <- list()
-
-  # Executive summary
-  report$executive_summary <- paste(
-    "Validation completed with", validation_summary$passed_rules, "passed and",
-    validation_summary$failed_rules, "failed rules. Overall status:",
-    validation_summary$overall_status
-  )
-
-  # Detailed rule results
-  report$rule_details <- rule_results
-
-  # Data quality summary
-  if (!is.null(data_quality_report)) {
-    report$data_quality_summary <- data_quality_report$overall_stats
-  }
-
-  # Recommendations
-  report$recommendations <- recommendations
-
-  return(report)
 }

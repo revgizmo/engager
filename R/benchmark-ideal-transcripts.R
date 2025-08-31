@@ -50,14 +50,11 @@ benchmark_ideal_transcripts <- function(iterations = 5,
   }
 
   # Benchmark 1: Individual transcript processing
-  cat("Running individual transcript processing benchmarks...\n")
   individual_benchmarks <- list()
 
   for (session_file in session_files) {
     session_path <- file.path(transcript_dir, session_file)
     if (file.exists(session_path)) {
-      cat("Benchmarking:", session_file, "\n")
-
       # Measure processing time
       time_result <- microbenchmark::microbenchmark(
         process_zoom_transcript(session_path),
@@ -83,7 +80,6 @@ benchmark_ideal_transcripts <- function(iterations = 5,
   benchmark_results$benchmarks$individual <- individual_benchmarks
 
   # Benchmark 2: Batch processing
-  cat("Running batch processing benchmarks...\n")
 
   batch_time <- microbenchmark::microbenchmark(
     process_ideal_course_batch(),
@@ -103,7 +99,6 @@ benchmark_ideal_transcripts <- function(iterations = 5,
   )
 
   # Benchmark 3: Function-specific benchmarks
-  cat("Running function-specific benchmarks...\n")
 
   # Test with first session
   test_file <- file.path(transcript_dir, session_files[1])
@@ -131,7 +126,6 @@ benchmark_ideal_transcripts <- function(iterations = 5,
   # Save results
   if (!is.null(output_file)) {
     saveRDS(benchmark_results, output_file)
-    cat("Benchmark results saved to:", output_file, "\n")
   }
 
   # Print summary
@@ -197,21 +191,6 @@ generate_benchmark_summary <- function(benchmark_results) {
 #' Print benchmark summary
 #' @keywords internal
 print_benchmark_summary <- function(summary) {
-  cat("\n=== PERFORMANCE BENCHMARK SUMMARY ===\n")
-
-  if ("individual_processing" %in% names(summary)) {
-    ind <- summary$individual_processing
-    cat("Individual Processing:\n")
-    cat("  Mean time:", round(ind$mean_time, 2), "ms\n")
-    cat("  Median time:", round(ind$median_time, 2), "ms\n")
-    cat("  Range:", round(ind$min_time, 2), "-", round(ind$max_time, 2), "ms\n")
-    cat("  Files processed:", ind$total_files, "\n\n")
-  }
-
-  if ("batch_processing" %in% names(summary)) {
-    batch <- summary$batch_processing
-    cat("Batch Processing:\n")
-    cat("  Median time:", round(batch$median_time, 2), "ms\n")
-    cat("  Throughput:", round(batch$throughput, 2), "files/second\n\n")
-  }
+  # Silent function - no diagnostic output
+  invisible(summary)
 }

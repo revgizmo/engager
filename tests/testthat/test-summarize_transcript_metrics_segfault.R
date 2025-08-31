@@ -43,11 +43,11 @@ test_that("summarize_transcript_metrics minimal test with logging", {
       message("ERROR in summarize_transcript_metrics: ", e$message)
       message("Error call: ", deparse(e$call))
       print(traceback())
-      return(NULL)
+      NULL
     },
     warning = function(w) {
       message("WARNING in summarize_transcript_metrics: ", w$message)
-      return(NULL)
+      NULL
     }
   )
 
@@ -94,7 +94,7 @@ test_that("summarize_transcript_metrics with rlang::syms debugging", {
       message("ERROR in test: ", e$message)
       message("Error call: ", deparse(e$call))
       print(traceback())
-      return(NULL)
+      NULL
     }
   )
 

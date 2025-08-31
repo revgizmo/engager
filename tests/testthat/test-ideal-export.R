@@ -133,18 +133,18 @@ test_that("Export functions generate default filenames", {
     end = c(25)
   )
 
-    # Test CSV with default filename
+  # Test CSV with default filename
   result_csv <- export_ideal_transcripts_csv(test_data)
   expect_true(grepl("ideal_transcript_export_.*\\.csv$", result_csv))
-  
+
   # Test JSON with default filename
   result_json <- export_ideal_transcripts_json(test_data)
   expect_true(grepl("ideal_transcript_export_.*\\.json$", result_json))
-  
+
   # Test Excel with default filename
   result_excel <- export_ideal_transcripts_excel(test_data)
   expect_true(grepl("ideal_transcript_export_.*\\.xlsx$", result_excel))
-  
+
   # Test summary with default filename
   result_summary <- export_ideal_transcripts_summary(test_data, format = "csv")
   expect_true(grepl("ideal_transcript_summary_.*\\.csv$", result_summary))
