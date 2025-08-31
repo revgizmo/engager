@@ -65,7 +65,7 @@ The ideal course transcripts include several realistic scenarios:
 # Display roster information
 cat("Ideal Course Roster:\n")
 cat("===================\n")
-for (i in 1:nrow(roster)) {
+for (i in seq_len(nrow(roster))) {
   cat(sprintf(
     "%d. %s (prefers: %s)\n",
     i,
@@ -462,15 +462,26 @@ The package provides comprehensive export functions for ideal course transcripts
 ### CSV Export
 
 ```{r export-csv}
+# Create sample data for export demonstration
+sample_data <- data.frame(
+  name = c("Professor Smith", "Student A", "Student B"),
+  comment = c("Welcome to class", "Great question", "I agree"),
+  start = c(0, 30, 60),
+  end = c(25, 55, 85),
+  duration = c(25, 25, 25),
+  wordcount = c(4, 2, 2),
+  stringsAsFactors = FALSE
+)
+
 # Export to CSV format
-export_ideal_transcripts_csv(transcript_data)
+export_ideal_transcripts_csv(sample_data)
 ```
 
 ### JSON Export
 
 ```{r export-json}
 # Export to JSON format
-export_ideal_transcripts_json(transcript_data)
+export_ideal_transcripts_json(sample_data)
 ```
 
 ### Excel Export
@@ -478,7 +489,7 @@ export_ideal_transcripts_json(transcript_data)
 ```{r export-excel}
 # Export to Excel format with multiple sheets
 export_ideal_transcripts_excel(
-  transcript_data,
+  sample_data,
   include_summary_sheet = TRUE,
   include_metadata_sheet = TRUE
 )
@@ -489,7 +500,7 @@ export_ideal_transcripts_excel(
 ```{r export-summary}
 # Export summary report
 export_ideal_transcripts_summary(
-  transcript_data,
+  sample_data,
   format = "excel",
   include_charts = TRUE
 )

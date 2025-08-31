@@ -345,7 +345,7 @@ participation_stats <- student_summary %>%
     median_utterances = median(total_utterances, na.rm = TRUE),
     sd_utterances = sd(total_utterances, na.rm = TRUE),
     gini_coefficient = (2 * sum(rank(total_utterances) * total_utterances) /
-      (n() * sum(total_utterances))) - (n() + 1) / n()
+                          (n() * sum(total_utterances))) - (n() + 1) / n()
   )
 
 cat("\nParticipation Statistics:\n")

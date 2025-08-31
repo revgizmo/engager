@@ -135,10 +135,7 @@ For more control, use interactive mode:
 ```{r interactive-assign, eval = FALSE}
 # Interactive session mapping (commented out for vignette)
 # session_mapping_interactive <- create_session_mapping(
-#   zoom_recordings_df = zoom_recordings_raw,
-#   course_info_df = course_info,
-#   output_file = "session_mapping_interactive.csv",
-#   interactive = TRUE
+
 # )
 ```
 

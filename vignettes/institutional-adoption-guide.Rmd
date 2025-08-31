@@ -143,7 +143,7 @@ for (rec in validation$recommendations) {
 ```{r data-processing}
 # Load and process data with privacy protection
 # Note: This is a conceptual example - actual file paths would be used in practice
-# transcript_data <- load_zoom_transcript("path/to/transcript.vtt")
+
 
 # Create sample data for demonstration
 sample_data <- tibble::tibble(
@@ -199,10 +199,10 @@ writeLines(paste(
 set_privacy_defaults("ferpa_strict")
 
 # For research with IRB approval, you might use:
-# set_privacy_defaults("ferpa_standard")
+
 
 # NEVER use "none" without explicit institutional approval
-# set_privacy_defaults("none")  # NOT RECOMMENDED
+
 ```
 
 ### Audit Logging
