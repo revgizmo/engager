@@ -39,8 +39,8 @@ run_student_reports <- function(
     target_section <- section
     target_students <- df_roster |>
       dplyr::filter(.data$section == target_section) |>
-      dplyr::pull(.data$preferred_name) |>
-      c("All Students", .)
+      dplyr::pull(.data$preferred_name)
+    target_students <- c("All Students", target_students)
     base_name <- tools::file_path_sans_ext(basename(student_summary_report))
     for (target_student in target_students) {
       output_file <- file.path(

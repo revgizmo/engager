@@ -42,6 +42,6 @@ sample <- tibble::tibble(
   preferred_name = c("Alice", "Bob"),
   session_ct = c(3, 5)
 )
-plot_users_by_metric(sample, metric = "session_ct", metrics_lookup_df = metrics_lookup)
+plot_users(sample, metric = "session_ct", metrics_lookup_df = metrics_lookup)
 
 }
