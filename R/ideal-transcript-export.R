@@ -297,7 +297,7 @@ export_ideal_transcripts_excel <- function(
     timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
     file_path <- paste0("ideal_transcript_export_", timestamp, ".xlsx")
   }
-  
+
   # Ensure file_path is not empty
   if (file_path == "" || is.na(file_path)) {
     timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
@@ -319,7 +319,8 @@ export_ideal_transcripts_excel <- function(
 #' Export Ideal Course Transcripts Summary Report
 #'
 #' Creates and exports summary reports for ideal course transcripts in multiple
-#' formats with key metrics and insights.
+#' formats with key metrics and insights. Note: Excel export temporarily creates
+#' CSV files due to openxlsx segfault issues.
 #'
 #' @param transcript_data Data frame containing transcript data
 #' @param file_path Character. Output file path. If NULL, generates default name
@@ -386,15 +387,28 @@ export_ideal_transcripts_summary <- function(
     )
     jsonlite::write_json(json_data, file_path, pretty = TRUE, auto_unbox = TRUE)
   } else if (format == "excel") {
-    wb <- openxlsx::createWorkbook()
-    openxlsx::addWorksheet(wb, "Summary")
-    openxlsx::writeData(wb, "Summary", summary_data)
-
-    if (include_charts) {
-      add_summary_charts(wb, summary_data)
-    }
-
-    openxlsx::saveWorkbook(wb, file_path, overwrite = TRUE)
+    # TEMPORARY WORKAROUND: Skip Excel export due to segfault issues
+    # Create a CSV file instead of Excel to avoid openxlsx segfault
+    warning("Excel export temporarily disabled due to segfault issues. Creating CSV file instead.")
+    
+    # Create CSV file as alternative
+    csv_file <- gsub("\\.xlsx$", ".csv", file_path)
+    write.csv(summary_data, csv_file, row.names = FALSE)
+    
+    # Create a simple text file explaining the situation
+    info_file <- gsub("\\.xlsx$", "_info.txt", file_path)
+    info_content <- c(
+      "Excel export temporarily disabled due to segfault issues.",
+      "Summary data has been exported to CSV format instead.",
+      paste("CSV file:", csv_file),
+      paste("Timestamp:", Sys.time()),
+      "",
+      "To re-enable Excel export, the openxlsx package segfault issue must be resolved."
+    )
+    writeLines(info_content, info_file)
+    
+    # Return the CSV file path instead of Excel file path
+    file_path <- csv_file
   }
 
   invisible(file_path)
