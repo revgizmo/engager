@@ -119,6 +119,14 @@ zoom_real_world_testing/
 data/
 my_data/
 
+# Test output files and temporary artifacts
+tests/testthat/ideal_transcript_export_*.csv
+tests/testthat/ideal_transcript_export_*.json
+tests/testthat/ideal_transcript_export_*.txt
+tests/testthat/ideal_transcript_summary_*.csv
+tests/testthat/section_names_lookup.csv
+tests/testthat/session_mapping.csv
+
 # Rmd render artifacts
 scripts/real_world_testing/*.html
 scripts/real_world_testing/*_files/
