@@ -2,7 +2,7 @@
 % Please edit documentation in R/ideal-transcript-export.R
 \name{export_ideal_transcripts_excel}
 \alias{export_ideal_transcripts_excel}
-\title{Export Ideal Course Transcripts to Excel}
+\title{Export Ideal Course Transcripts to Excel (Temporarily CSV)}
 \usage{
 export_ideal_transcripts_excel(
   transcript_data = NULL,
@@ -24,18 +24,26 @@ export_ideal_transcripts_excel(
 \item{include_metadata_sheet}{Logical. Whether to include metadata sheet. Default: TRUE}
 }
 \value{
-Invisibly returns the workbook object
+Invisibly returns the file path (CSV format due to temporary workaround)
 }
 \description{
-Exports ideal course transcript data to Excel format with multiple sheets
-and rich formatting.
+Exports ideal course transcript data to CSV format as a temporary workaround
+for Excel export segfault issues. This function temporarily creates CSV files
+instead of Excel files due to openxlsx package segfault problems.
+}
+\note{
+This function temporarily exports to CSV format instead of Excel due to
+segfault issues with the openxlsx package. The function name is maintained
+for backward compatibility, but it creates CSV files with appropriate
+extensions. Summary and metadata sheets are created as separate CSV files
+when requested.
 }
 \examples{
 \dontrun{
-# Export with default settings
+# Export with default settings (creates CSV file)
 export_ideal_transcripts_excel(transcript_data)
 
-# Export with custom sheets
+# Export with custom sheets (creates separate CSV files)
 export_ideal_transcripts_excel(
   transcript_data,
   include_summary_sheet = FALSE,
