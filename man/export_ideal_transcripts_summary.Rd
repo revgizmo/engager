@@ -28,7 +28,8 @@ Invisibly returns the summary data
 }
 \description{
 Creates and exports summary reports for ideal course transcripts in multiple
-formats with key metrics and insights.
+formats with key metrics and insights. Note: Excel export temporarily creates
+CSV files due to openxlsx segfault issues.
 }
 \examples{
 \dontrun{
