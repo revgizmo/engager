@@ -18,6 +18,7 @@
     - <a href="#data-management" id="toc-data-management">Data Management</a>
     - <a href="#analysis-and-visualization"
       id="toc-analysis-and-visualization">Analysis and Visualization</a>
+    - <a href="#reporting" id="toc-reporting">Reporting</a>
     - <a href="#diagnostics-and-interactive-prompts"
       id="toc-diagnostics-and-interactive-prompts">Diagnostics and interactive
       prompts</a>
@@ -200,6 +201,7 @@ currently supported but may be added in future versions.
 - `make_transcripts_summary_df()` - Generate summary statistics
 
 ### Reporting
+
 - `run_student_reports()` - Render per-student summary reports
 
 ### Diagnostics and interactive prompts
