@@ -240,6 +240,24 @@ export_ideal_transcripts_excel <- function(
     stringsAsFactors = FALSE
   )
 
+  # Determine output path first
+  if (is.null(file_path)) {
+    timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
+    file_path <- paste0("ideal_transcript_export_", timestamp, ".xlsx")
+  }
+
+  # Ensure file_path is not empty
+  if (file_path == "" || is.na(file_path)) {
+    timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
+    file_path <- paste0("ideal_transcript_export_", timestamp, ".xlsx")
+  }
+
+  # Create directory if needed
+  dir_path <- dirname(file_path)
+  if (dir_path != "." && !dir.exists(dir_path)) {
+    dir.create(dir_path, recursive = TRUE)
+  }
+
   # TEMPORARILY DISABLED: Excel workbook creation due to segfault issues
   # wb <- openxlsx::createWorkbook()
   # openxlsx::addWorksheet(wb, "Transcript Data")
@@ -292,28 +310,13 @@ export_ideal_transcripts_excel <- function(
     }
   }
 
-  # Determine output path
-  if (is.null(file_path)) {
-    timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
-    file_path <- paste0("ideal_transcript_export_", timestamp, ".xlsx")
-  }
 
-  # Ensure file_path is not empty
-  if (file_path == "" || is.na(file_path)) {
-    timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
-    file_path <- paste0("ideal_transcript_export_", timestamp, ".xlsx")
-  }
-
-  # Create directory if needed
-  dir_path <- dirname(file_path)
-  if (dir_path != "." && !dir.exists(dir_path)) {
-    dir.create(dir_path, recursive = TRUE)
-  }
 
   # TEMPORARILY DISABLED: Excel workbook saving due to segfault issues
   # openxlsx::saveWorkbook(wb, file_path, overwrite = TRUE)
 
-  invisible(file_path)
+  # Return the actual CSV file path since we're creating CSV instead of Excel
+  invisible(csv_file)
 }
 
 #' Export Ideal Course Transcripts Summary Report
@@ -390,11 +393,11 @@ export_ideal_transcripts_summary <- function(
     # TEMPORARY WORKAROUND: Skip Excel export due to segfault issues
     # Create a CSV file instead of Excel to avoid openxlsx segfault
     warning("Excel export temporarily disabled due to segfault issues. Creating CSV file instead.")
-    
+
     # Create CSV file as alternative
     csv_file <- gsub("\\.xlsx$", ".csv", file_path)
     write.csv(summary_data, csv_file, row.names = FALSE)
-    
+
     # Create a simple text file explaining the situation
     info_file <- gsub("\\.xlsx$", "_info.txt", file_path)
     info_content <- c(
@@ -406,7 +409,7 @@ export_ideal_transcripts_summary <- function(
       "To re-enable Excel export, the openxlsx package segfault issue must be resolved."
     )
     writeLines(info_content, info_file)
-    
+
     # Return the CSV file path instead of Excel file path
     file_path <- csv_file
   }

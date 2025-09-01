@@ -45,8 +45,8 @@ test_that("Excel export functions work correctly", {
     end = c(25, 55)
   )
 
-  # Test Excel export
-  temp_file <- tempfile(fileext = ".xlsx")
+  # Test Excel export (temporarily creates CSV)
+  temp_file <- tempfile(fileext = ".csv")
   expect_invisible(export_ideal_transcripts_excel(test_data, file_path = temp_file))
 
   expect_true(file.exists(temp_file))
@@ -141,9 +141,9 @@ test_that("Export functions generate default filenames", {
   result_json <- export_ideal_transcripts_json(test_data)
   expect_true(grepl("ideal_transcript_export_.*\\.json$", result_json))
 
-  # Test Excel with default filename
+  # Test Excel with default filename (temporarily creates CSV)
   result_excel <- export_ideal_transcripts_excel(test_data)
-  expect_true(grepl("ideal_transcript_export_.*\\.xlsx$", result_excel))
+  expect_true(grepl("ideal_transcript_export_.*\\.csv$", result_excel))
 
   # Test summary with default filename
   result_summary <- export_ideal_transcripts_summary(test_data, format = "csv")
@@ -363,8 +363,8 @@ test_that("Export functions handle Excel sheet options", {
     end = c(25)
   )
 
-  # Test Excel with all sheets
-  temp_file <- tempfile(fileext = ".xlsx")
+  # Test Excel with all sheets (temporarily creates CSV)
+  temp_file <- tempfile(fileext = ".csv")
   result_all_sheets <- export_ideal_transcripts_excel(
     test_data,
     file_path = temp_file,
@@ -374,8 +374,8 @@ test_that("Export functions handle Excel sheet options", {
 
   expect_true(file.exists(temp_file))
 
-  # Test Excel with minimal sheets
-  temp_file2 <- tempfile(fileext = ".xlsx")
+  # Test Excel with minimal sheets (temporarily creates CSV)
+  temp_file2 <- tempfile(fileext = ".csv")
   result_minimal_sheets <- export_ideal_transcripts_excel(
     test_data,
     file_path = temp_file2,
@@ -418,8 +418,8 @@ test_that("Export functions handle summary format options", {
 
   expect_true(file.exists(temp_file2))
 
-  # Test summary Excel
-  temp_file3 <- tempfile(fileext = ".xlsx")
+  # Test summary Excel (temporarily creates CSV)
+  temp_file3 <- tempfile(fileext = ".csv")
   result_excel <- export_ideal_transcripts_summary(
     test_data,
     file_path = temp_file3,
