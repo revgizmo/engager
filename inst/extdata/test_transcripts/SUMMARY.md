@@ -1,7 +1,7 @@
 # Test Transcript Collection Summary
 
 ## Overview
-This collection contains **5 realistic Zoom VTT transcript examples** designed for testing the `zoomstudentengagement` R package. The transcripts simulate various educational scenarios with different participation patterns, course types, and engagement levels.
+This collection contains **8 realistic Zoom VTT transcript examples** designed for testing the `zoomstudentengagement` R package. The transcripts simulate various educational scenarios with different participation patterns, course types, and engagement levels.
 
 ## Quick Reference
 
@@ -12,6 +12,9 @@ This collection contains **5 realistic Zoom VTT transcript examples** designed f
 | `computer_science_101_week1.vtt` | Computer Science | 5.2 min | 3 | Python programming, hands-on coding |
 | `english_literature_discussion.vtt` | English Literature | 5.0 min | 4 | Shakespeare analysis, Socratic discussion |
 | `biology_lab_session.vtt` | Biology Lab | 7.3 min | 4 | DNA extraction, lab procedures |
+| `ideal_course_session1.vtt` | Training Workshop | 0.7 min | 6 | Preferred names, intl name, guest |
+| `ideal_course_session2.vtt` | Training Workshop | 0.7 min | 5 | Mid-session name change, two guests |
+| `ideal_course_session3.vtt` | Training Workshop | 0.7 min | 4 | Cross-session name shift, long dead air |
 
 ## Testing Capabilities
 
@@ -82,7 +85,11 @@ test_transcripts/
 ├── intro_statistics_week2.vtt   # Statistics Week 2
 ├── computer_science_101_week1.vtt
 ├── english_literature_discussion.vtt
-└── biology_lab_session.vtt
+├── biology_lab_session.vtt
+├── ideal_course_roster.csv
+├── ideal_course_session1.vtt
+├── ideal_course_session2.vtt
+└── ideal_course_session3.vtt
 ```
 
 ## Quality Assurance
@@ -126,8 +133,8 @@ For questions about these test transcripts:
 
 ---
 
-**Total Transcripts**: 5  
-**Total Duration**: ~25 minutes  
+**Total Transcripts**: 8  
+**Total Duration**: ~28 minutes  
 **Course Types**: 4 different subjects  
-**Student Participants**: 12 unique fictional students  
+**Student Participants**: 19 unique fictional students  
 **Use Cases**: Comprehensive testing scenarios

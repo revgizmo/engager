@@ -5,7 +5,7 @@
 \title{Privacy Audit}
 \usage{
 privacy_audit(
-  data,
+  data = NULL,
   id_columns = c("preferred_name", "name", "first_last", "name_raw", "student_id",
     "email")
 )

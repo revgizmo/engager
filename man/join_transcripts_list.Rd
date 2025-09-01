@@ -5,9 +5,9 @@
 \title{Join Transcripts Files Into a Single Tibble}
 \usage{
 join_transcripts_list(
-  df_zoom_recorded_sessions,
-  df_transcript_files,
-  df_cancelled_classes
+  df_zoom_recorded_sessions = NULL,
+  df_transcript_files = NULL,
+  df_cancelled_classes = NULL
 )
 }
 \arguments{

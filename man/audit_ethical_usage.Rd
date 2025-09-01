@@ -5,9 +5,9 @@
 \title{Audit Ethical Usage Patterns}
 \usage{
 audit_ethical_usage(
-  function_calls,
-  data_sizes,
-  privacy_settings,
+  function_calls = NULL,
+  data_sizes = NULL,
+  privacy_settings = NULL,
   time_period = 30
 )
 }

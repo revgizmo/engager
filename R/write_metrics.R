@@ -12,7 +12,7 @@
 #' @return Invisibly returns the written tibble (after privacy transformations and list conversions).
 #' @export
 write_metrics <- function(
-    data,
+    data = NULL,
     what = c("engagement", "summary", "session_summary"),
     path = NULL,
     comments_format = c("text", "count"),

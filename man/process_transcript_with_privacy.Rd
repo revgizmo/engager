@@ -5,8 +5,8 @@
 \title{Process Transcript with Privacy}
 \usage{
 process_transcript_with_privacy(
-  transcript_data,
-  roster_data,
+  transcript_data = NULL,
+  roster_data = NULL,
   name_mappings = NULL,
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask")
 )

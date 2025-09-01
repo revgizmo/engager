@@ -4,7 +4,7 @@
 \alias{read_lookup_safely}
 \title{Read Lookup Safely}
 \usage{
-read_lookup_safely(path)
+read_lookup_safely(path = NULL)
 }
 \arguments{
 \item{path}{Character. Path to the lookup CSV file.}

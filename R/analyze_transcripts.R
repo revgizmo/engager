@@ -10,7 +10,7 @@
 #' @return A tibble of engagement metrics (privacy-masked by default at write-time; in-memory masking depends on consumer).
 #' @export
 analyze_transcripts <- function(
-    transcripts_folder,
+    transcripts_folder = NULL,
     names_to_exclude = c("dead_air"),
     write = FALSE,
     output_path = NULL) {

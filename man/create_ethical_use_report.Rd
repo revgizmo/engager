@@ -5,8 +5,8 @@
 \title{Create Ethical Use Report}
 \usage{
 create_ethical_use_report(
-  usage_context,
-  data_scope,
+  usage_context = NULL,
+  data_scope = NULL,
   purpose_statement = NULL,
   institution_name = NULL,
   contact_person = NULL,

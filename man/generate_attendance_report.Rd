@@ -5,7 +5,7 @@
 \title{Generate Multi-Session Attendance Report}
 \usage{
 generate_attendance_report(
-  analysis_results,
+  analysis_results = NULL,
   output_file = NULL,
   include_charts = FALSE
 )

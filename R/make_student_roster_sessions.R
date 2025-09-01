@@ -25,8 +25,8 @@
 #'   roster_small_df = make_roster_small(roster_df = roster_df)
 #' )
 make_student_roster_sessions <-
-  function(transcripts_list_df,
-           roster_small_df) {
+  function(transcripts_list_df = NULL,
+           roster_small_df = NULL) {
     . <-
       course <-
       course_transcript <-

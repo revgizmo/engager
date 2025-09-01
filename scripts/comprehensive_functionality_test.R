@@ -121,7 +121,7 @@ test_data <- tibble::tibble(
 )
 
 temp_file <- tempfile(fileext = ".csv")
-result <- write_section_names_lookup(test_data, temp_file)
+result <- write_section_names_lookup(test_data, ".", temp_file)
 cat("   Output rows:", nrow(result), "\n")
 cat("   Unique combinations:", nrow(result), "\n")
 cat("   ✅ write_section_names_lookup works correctly\n\n")

@@ -1,0 +1,20 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: mixed-line-ending
+      - id: check-added-large-files
+
+  # Local hook to style and lint R/Rmd files using existing script
+  - repo: local
+    hooks:
+      - id: r-style-and-lint
+        name: Style and lint R files (styler/lintr)
+        entry: bash scripts/pre-commit.sh
+        language: system
+        pass_filenames: false
+        files: "\\.(R|r|Rmd)$"
+

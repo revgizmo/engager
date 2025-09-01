@@ -38,7 +38,7 @@
 #'   session_ct = c(3, 5, 2)
 #' )
 #' ensure_privacy(df)
-ensure_privacy <- function(x,
+ensure_privacy <- function(x = NULL,
                            privacy_level = getOption(
                              "zoomstudentengagement.privacy_level",
                              "mask"

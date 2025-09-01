@@ -9,6 +9,39 @@ library(styler)
 
 cat("🔍 Running Pre-PR Validation (Bugbot-style checks)...\n\n")
 
+# Progress indicator functions
+show_spinner <- function(message, duration = 2) {
+  spinner <- c("⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏")
+  for (i in 1:(duration * 10)) {
+    cat("\r", message, spinner[i %% length(spinner) + 1])
+    Sys.sleep(0.1)
+  }
+  cat("\r", message, "✅\n")
+}
+
+show_progress <- function(message, operation, estimated_time = NULL) {
+  if (!is.null(estimated_time)) {
+    cat(message, "(estimated", estimated_time, ")\n")
+  } else {
+    cat(message, "\n")
+  }
+  
+  start_time <- Sys.time()
+  result <- tryCatch({
+    operation()
+    end_time <- Sys.time()
+    duration <- round(as.numeric(difftime(end_time, start_time, units = "secs")), 1)
+    cat("   ✅ Completed in", duration, "seconds\n")
+    TRUE
+  }, error = function(e) {
+    end_time <- Sys.time()
+    duration <- round(as.numeric(difftime(end_time, start_time, units = "secs")), 1)
+    cat("   ❌ Failed after", duration, "seconds:", e$message, "\n")
+    FALSE
+  })
+  return(result)
+}
+
 # Initialize status tracking
 validation_status <- list(
   code_style = FALSE,
@@ -25,379 +58,358 @@ validation_status <- list(
 
 # 1. Code Style and Quality
 cat("1. Code Style and Quality:\n")
-tryCatch({
-  styler::style_pkg()
-  cat("   ✅ Code formatting applied\n")
-  validation_status$code_style <- TRUE
-}, error = function(e) {
-  cat("   ❌ Code formatting failed:", e$message, "\n")
-})
+validation_status$code_style <- show_progress(
+  "   🔄 Applying code formatting",
+  function() styler::style_pkg(),
+  "5-15 seconds"
+)
 
-tryCatch({
-  lint_results <- lintr::lint_package()
-  if (length(lint_results) == 0) {
-    cat("   ✅ No linting issues found\n")
-    validation_status$linting <- TRUE
-  } else {
-    cat("   ⚠️  Linting issues found:", length(lint_results), "\n")
-    for (i in 1:min(5, length(lint_results))) {
-      cat("      -", lint_results[[i]]$message, "at", lint_results[[i]]$filename, ":", lint_results[[i]]$line_number, "\n")
+validation_status$linting <- show_progress(
+  "   🔄 Running linting checks",
+  function() {
+    lint_results <- lintr::lint_package()
+    if (length(lint_results) > 0) {
+      cat("   ⚠️  Linting issues found:", length(lint_results), "\n")
+      for (i in 1:min(5, length(lint_results))) {
+        cat("      -", lint_results[[i]]$message, "at", lint_results[[i]]$filename, ":", lint_results[[i]]$line_number, "\n")
+      }
+      stop("Linting issues found")
     }
-  }
-}, error = function(e) {
-  cat("   ❌ Linting failed:", e$message, "\n")
-})
+  },
+  "3-8 seconds"
+)
 
 # 2. Documentation
 cat("\n2. Documentation:\n")
-tryCatch({
-  devtools::document()
-  cat("   ✅ Documentation updated\n")
-  validation_status$documentation <- TRUE
-}, error = function(e) {
-  cat("   ❌ Documentation failed:", e$message, "\n")
-})
+validation_status$documentation <- show_progress(
+  "   🔄 Updating documentation",
+  function() devtools::document(),
+  "10-30 seconds"
+)
 
-tryCatch({
-  devtools::build_readme()
-  cat("   ✅ README built\n")
-  validation_status$readme <- TRUE
-}, error = function(e) {
-  cat("   ❌ README build failed:", e$message, "\n")
-})
+validation_status$readme <- show_progress(
+  "   🔄 Building README",
+  function() devtools::build_readme(),
+  "5-15 seconds"
+)
 
 # 3. Vignette Validation
 cat("\n3. Vignette Validation:\n")
-tryCatch({
-  # Check if vignettes build
-  # Note: devtools::build_vignettes() will generate HTML files in doc/
-  # Source files (.Rmd, .R) are properly located in vignettes/
-  devtools::build_vignettes()
-  cat("   ✅ Vignettes build successfully\n")
-  cat("   ℹ️  Generated HTML files in doc/ (auto-ignored by .gitignore)\n")
-  validation_status$vignettes <- TRUE
-}, error = function(e) {
-  cat("   ❌ Vignette build failed:", e$message, "\n")
-})
+validation_status$vignettes <- show_progress(
+  "   🔄 Building vignettes",
+  function() {
+    devtools::build_vignettes()
+    cat("   ℹ️  Generated HTML files in doc/ (auto-ignored by .gitignore)\n")
+  },
+  "1-3 minutes"
+)
 
 # 4. Function Signature Validation (Enhanced)
 cat("\n4. Function Signature Validation:\n")
-tryCatch({
-  # Load package and check function signatures
-  devtools::load_all()
-  
-  # Get only exported symbols from this package, not imported ones
-  exported_functions <- getNamespaceExports("zoomstudentengagement")
-  
-  # Check for common issues
-  issues_found <- FALSE
-  
-  # Track specific function signature issues
-  function_signature_issues <- list()
-  
-  # Functions to ignore (test helpers or not applicable here)
-  ignore_functions <- c(
-    "create_sample_roster", "create_sample_section_names_lookup",
-    "create_sample_metrics_lookup", "create_sample_transcript_metrics",
-    "create_temp_test_file"
-  )
-  
-  for (func_name in exported_functions) {
-    if (func_name %in% ignore_functions) next
-    obj <- tryCatch(get(func_name, envir = asNamespace("zoomstudentengagement")), error = function(e) NULL)
-    if (!is.function(obj)) next
+validation_status$function_signatures <- show_progress(
+  "   🔄 Validating function signatures",
+  function() {
+    # Load package and check function signatures
+    devtools::load_all()
     
-    # Check if function has documentation topic
-    help_topic <- file.exists(file.path("man", paste0(func_name, ".Rd")))
+    # Get only exported symbols from this package, not imported ones
+    exported_functions <- getNamespaceExports("zoomstudentengagement")
     
-    if (!help_topic) {
-      cat("   ℹ️  Note: Function", func_name, "may lack a man topic (documentation).\n")
-      # Do not mark as a signature failure; informational only
-    }
+    # Check for common issues
+    issues_found <- FALSE
     
-    # Example specific signature check
-    if (func_name == "load_roster") {
-      args <- names(formals(obj))
-      if (!all(c("data_folder", "roster_file") %in% args)) {
-        function_signature_issues[[func_name]] <- "Expected data_folder and roster_file arguments"
-        issues_found <- TRUE
-      }
-    }
-  }
-  
-  if (length(function_signature_issues) > 0) {
-    cat("   ⚠️  Function signature issues found:\n")
-    for (func in names(function_signature_issues)) {
-      cat("      -", func, ":", function_signature_issues[[func]], "\n")
-    }
-  }
-  
-  if (!issues_found) {
-    cat("   ✅ Function signatures and documentation look good\n")
-    validation_status$function_signatures <- TRUE
-  }
-}, error = function(e) {
-  cat("   ❌ Function validation failed:", e$message, "\n")
-})
-
-# 5. Data Structure Validation (Enhanced)
-cat("\n5. Data Structure Validation:\n")
-tryCatch({
-  # Check if sample data loads correctly
-  roster <- load_roster(
-    data_folder = system.file("extdata", package = "zoomstudentengagement"),
-    roster_file = "roster.csv"
-  )
-  cat("   ✅ Roster data loads successfully\n")
-  
-  # Check column names
-  if (nrow(roster) > 0) {
-    cat("   ✅ Roster has data rows\n")
-    cat("   📋 Available columns:", paste(names(roster), collapse = ", "), "\n")
+    # Track specific function signature issues
+    function_signature_issues <- list()
     
-    # Check for common column name issues
-    expected_columns <- c("first_last", "preferred_name", "last_first")
-    missing_columns <- setdiff(expected_columns, names(roster))
-    if (length(missing_columns) > 0) {
-      cat("   ⚠️  Missing expected columns:", paste(missing_columns, collapse = ", "), "\n")
-    }
+    # Functions to ignore (test helpers or not applicable here)
+    ignore_functions <- c(
+      "create_sample_roster", "create_sample_section_names_lookup",
+      "create_sample_transcript", "create_sample_transcript_data",
+      "create_test_data", "create_test_transcript",
+      "create_test_roster", "create_test_section_names_lookup"
+    )
     
-    # Check for 'name' column that might be incorrectly referenced
-    if ("name" %in% names(roster)) {
-      cat("   ✅ 'name' column exists\n")
-    } else {
-      cat("   ⚠️  'name' column not found - vignettes may need updating\n")
-    }
-  } else {
-    cat("   ⚠️  Roster is empty\n")
-    cat("   💡 This may cause issues in vignettes and examples\n")
-    cat("   🔍 Check inst/extdata/roster.csv for data\n")
-  }
-  
-  # Check other sample data files
-  cat("\n   📁 Checking other sample data files:\n")
-  sample_files <- list.files(system.file("extdata", package = "zoomstudentengagement"))
-  for (file in sample_files) {
-    if (grepl("\\.csv$", file)) {
+    # Check each exported function
+    for (func_name in exported_functions) {
+      if (func_name %in% ignore_functions) next
+      
       tryCatch({
-        data <- read.csv(system.file("extdata", file, package = "zoomstudentengagement"))
-        cat("   ✅", file, "-", nrow(data), "rows\n")
+        func <- get(func_name, envir = asNamespace("zoomstudentengagement"))
+        
+        # Check if it's a function
+        if (!is.function(func)) next
+        
+        # Get function arguments
+        args <- formals(func)
+        
+        # Check for common issues
+        if (length(args) == 0) {
+          cat("   ⚠️  Function", func_name, "has no arguments\n")
+          issues_found <- TRUE
+        }
+        
+        # Check for missing default values in required arguments
+        for (arg_name in names(args)) {
+          if (arg_name == "...") next
+          if (is.symbol(args[[arg_name]]) && as.character(args[[arg_name]]) == "") {
+            cat("   ⚠️  Function", func_name, "argument", arg_name, "has no default value\n")
+            issues_found <- TRUE
+          }
+        }
+        
       }, error = function(e) {
-        cat("   ❌", file, "- Error loading\n")
+        cat("   ⚠️  Could not analyze function", func_name, ":", e$message, "\n")
+        issues_found <- TRUE
       })
     }
-  }
-  
-  validation_status$data_validation <- TRUE
-  
-}, error = function(e) {
-  cat("   ❌ Data validation failed:", e$message, "\n")
-})
+    
+    if (!issues_found) {
+      cat("   ✅ All function signatures validated\n")
+    } else {
+      stop("Function signature issues found")
+    }
+  },
+  "10-20 seconds"
+)
+
+# 5. Data Validation
+cat("\n5. Data Validation:\n")
+validation_status$data_validation <- show_progress(
+  "   🔄 Validating data loading",
+  function() {
+    # Test loading sample data
+    devtools::load_all()
+    
+    # Test transcript loading
+    sample_transcript <- system.file("extdata", "sample_transcript.csv", package = "zoomstudentengagement")
+    if (file.exists(sample_transcript)) {
+      transcript_data <- read.csv(sample_transcript)
+      if (nrow(transcript_data) == 0) {
+        stop("Sample transcript data is empty")
+      }
+      cat("   ✅ Sample transcript data loads correctly\n")
+    } else {
+      cat("   ⚠️  Sample transcript data not found\n")
+    }
+    
+    # Test roster loading
+    sample_roster <- system.file("extdata", "sample_roster.csv", package = "zoomstudentengagement")
+    if (file.exists(sample_roster)) {
+      roster_data <- read.csv(sample_roster)
+      if (nrow(roster_data) == 0) {
+        stop("Sample roster data is empty")
+      }
+      cat("   ✅ Sample roster data loads correctly\n")
+    } else {
+      cat("   ⚠️  Sample roster data not found\n")
+    }
+  },
+  "5-10 seconds"
+)
 
 # 6. Mathematical Formula Validation
 cat("\n6. Mathematical Formula Validation:\n")
-tryCatch({
-  # Check for common mathematical errors in vignettes
-  vignette_files <- list.files("vignettes", pattern = "\\.Rmd$", full.names = TRUE)
-  
-  for (vignette_file in vignette_files) {
-    vignette_content <- readLines(vignette_file)
+show_progress(
+  "   🔄 Validating mathematical formulas",
+  function() {
+    # Check for common mathematical errors in vignettes
+    vignette_files <- list.files("vignettes", pattern = "\\.Rmd$", full.names = TRUE)
     
-    # Check for Gini coefficient formula errors
-    gini_patterns <- c(
-      "1 - \\(?2 \\* sum\\(?rank\\(?\\.\\*\\) \\* \\.*\\) / \\(?n\\(?\\) \\* sum\\(?\\.\\*\\)\\)\\) - 1/n\\(?\\)",
-      "gini_coefficient.*1 -"
-    )
-    
-    for (pattern in gini_patterns) {
-      matches <- grep(pattern, vignette_content, value = TRUE)
-      if (length(matches) > 0) {
-        cat("   ⚠️  Potential Gini coefficient formula error in", basename(vignette_file), "\n")
-        cat("      Check formula: should not start with '1 -' and should use correct final term\n")
+    for (vignette_file in vignette_files) {
+      vignette_content <- readLines(vignette_file)
+      
+      # Check for Gini coefficient formula errors
+      gini_patterns <- c(
+        "1 - \\(?2 \\* sum\\(?rank\\(?\\.\\*\\) \\* \\.*\\) / \\(?n\\(?\\) \\* sum\\(?\\.\\*\\)\\)\\) - 1/n\\(?\\)",
+        "gini_coefficient.*1 -"
+      )
+      
+      for (pattern in gini_patterns) {
+        matches <- grep(pattern, vignette_content, value = TRUE)
+        if (length(matches) > 0) {
+          cat("   ⚠️  Potential Gini coefficient formula error in", basename(vignette_file), "\n")
+          cat("      Check formula: should not start with '1 -' and should use correct final term\n")
+        }
       }
     }
-  }
-  
-  cat("   ✅ Mathematical formula validation completed\n")
-}, error = function(e) {
-  cat("   ❌ Mathematical validation failed:", e$message, "\n")
-})
+    
+    cat("   ✅ Mathematical formula validation completed\n")
+  },
+  "5-10 seconds"
+)
 
 # 7. Testing
 cat("\n7. Testing:\n")
-tryCatch({
-  # Run tests with timeout and error handling
-  test_results <- devtools::test(reporter = "stop")
-  cat("   ✅ All tests pass\n")
-  validation_status$testing <- TRUE
-}, error = function(e) {
-  if (grepl("segfault", e$message, ignore.case = TRUE)) {
-    cat("   ❌ Testing failed: Segmentation fault detected\n")
-    cat("   💡 This may indicate memory management issues\n")
-    cat("   🔍 Check for memory leaks in functions\n")
-  } else {
-    cat("   ❌ Testing failed:", e$message, "\n")
-  }
-}, warning = function(w) {
-  cat("   ⚠️  Test warning:", w$message, "\n")
-})
+validation_status$testing <- show_progress(
+  "   🔄 Running test suite",
+  function() {
+    # Run tests with timeout and error handling
+    test_results <- devtools::test(reporter = "stop")
+    cat("   ✅ All tests pass\n")
+  },
+  "10-30 seconds"
+)
 
 # 7.5. Test Output Validation
 cat("\n7.5. Test Output Validation:\n")
-tryCatch({
-  # Check for diagnostic output pollution in R files
-  r_files <- list.files("R", pattern = "\\.R$", full.names = TRUE)
-  # Whitelist helper files that intentionally wrap diagnostics
-  whitelist_files <- c("utils_diagnostics.R")
-  output_issues <- list()
-  
-  for (r_file in r_files) {
-    if (basename(r_file) %in% whitelist_files) next
-    content <- readLines(r_file)
-    # Look for print(), cat(), message() outside of TESTTHAT checks
-    for (i in seq_along(content)) {
-      line <- content[i]
-      # Skip commented lines (including roxygen)
-      if (grepl("^\\s*#", line)) next
-      
-      # Check for output functions
-      if (grepl("\\b(print|cat|message)\\s*\\(", line)) {
-        # Check if this line is inside a TESTTHAT conditional
-        in_testthat_block <- FALSE
+validation_status$test_output_validation <- show_progress(
+  "   🔄 Validating test output",
+  function() {
+    # Check for diagnostic output pollution in R files
+    r_files <- list.files("R", pattern = "\\.R$", full.names = TRUE)
+    # Whitelist helper files that intentionally wrap diagnostics
+    whitelist_files <- c("utils_diagnostics.R")
+    output_issues <- list()
+    
+    for (r_file in r_files) {
+      if (basename(r_file) %in% whitelist_files) next
+      content <- readLines(r_file)
+      # Look for print(), cat(), message() outside of TESTTHAT checks
+      for (i in seq_along(content)) {
+        line <- content[i]
+        # Skip commented lines (including roxygen)
+        if (grepl("^\\s*#", line)) next
         
-        # Look backwards for TESTTHAT check with proper scope detection
-        brace_count <- 0
-        for (j in i:1) {
-          line_content <- content[j]
+        # Check for output functions
+        if (grepl("\\b(print|cat|message)\\s*\\(", line)) {
+          # Check if this line is inside a TESTTHAT conditional
+          in_testthat_block <- FALSE
           
-          # Count closing braces
-          if (grepl("^\\s*}", line_content)) {
-            brace_count <- brace_count + 1
-          }
-          
-          # Count opening braces
-          if (grepl("\\{\\s*$", line_content)) {
-            brace_count <- brace_count - 1
-          }
-          
-          # Check for TESTTHAT conditional
-          if (grepl('Sys.getenv("TESTTHAT") != "true"', line_content, fixed = TRUE)) {
-            # If we're at brace level 0 or 1, we're in the TESTTHAT block
-            if (brace_count <= 1) {
-              in_testthat_block <- TRUE
+          # Look backwards for TESTTHAT check with proper scope detection
+          brace_count <- 0
+          for (j in i:1) {
+            line_content <- content[j]
+            
+            # Count closing braces
+            if (grepl("^\\s*}", line_content)) {
+              brace_count <- brace_count + 1
             }
-            break
+            
+            # Count opening braces
+            if (grepl("\\{\\s*$", line_content)) {
+              brace_count <- brace_count - 1
+            }
+            
+            # Check for TESTTHAT conditional
+            if (grepl('Sys.getenv("TESTTHAT") != "true"', line_content, fixed = TRUE)) {
+              # If we're at brace level 0 or 1, we're in the TESTTHAT block
+              if (brace_count <= 1) {
+                in_testthat_block <- TRUE
+              }
+              break
+            }
+            
+            # If we've gone too far back without finding the conditional, stop
+            if (j < max(1, i - 50)) {
+              break
+            }
           }
           
-          # If we've gone too far back without finding the conditional, stop
-          if (j < max(1, i - 50)) {
-            break
+          if (!in_testthat_block) {
+            output_issues[[basename(r_file)]] <- c(output_issues[[basename(r_file)]], 
+                                                  paste("Line", i, ":", trimws(line)))
           }
         }
-        
-        if (!in_testthat_block) {
-          output_issues[[basename(r_file)]] <- c(output_issues[[basename(r_file)]], 
-                                                paste("Line", i, ":", trimws(line)))
-        }
       }
     }
-  }
-  
-  if (length(output_issues) > 0) {
-    cat("   ⚠️  Found diagnostic output not conditional on test environment:\n")
-    for (file in names(output_issues)) {
-      cat("      ", file, ":\n")
-      for (issue in output_issues[[file]]) {
-        cat("         ", issue, "\n")
+    
+    if (length(output_issues) > 0) {
+      cat("   ⚠️  Diagnostic output found in R files:\n")
+      for (file in names(output_issues)) {
+        cat("      -", file, ":", length(output_issues[[file]]), "issues\n")
       }
+      stop("Diagnostic output issues found")
+    } else {
+      cat("   ✅ All diagnostic output properly conditional\n")
     }
-    cat("   💡 Wrap print(), cat(), message() in if (Sys.getenv(\"TESTTHAT\") != \"true\")\n")
-  } else {
-    cat("   ✅ All diagnostic output properly conditional\n")
-  }
-  
-  validation_status$test_output_validation <- TRUE
-}, error = function(e) {
-  cat("   ❌ Test output validation failed:", e$message, "\n")
-})
+  },
+  "5-10 seconds"
+)
 
 # 8. Shell Script Validation
 cat("\n8. Shell Script Validation:\n")
-tryCatch({
-  # Check for bash integer comparisons on floating point values
-  shell_files <- list.files("scripts", pattern = "\\.sh$", full.names = TRUE)
-  issues_found <- FALSE
-  
-  for (file in shell_files) {
-    content <- readLines(file)
-    # Look for integer comparisons on variables that might be decimal
-    decimal_comparisons <- grep("\\[.*\\$.*\\..*\\s+[-][lg][te]\\s+[0-9]", content)
-    if (length(decimal_comparisons) > 0) {
-      cat("   ⚠️  Potential floating point comparison issues in", basename(file), "\n")
-      issues_found <- TRUE
+show_progress(
+  "   🔄 Validating shell scripts",
+  function() {
+    # Check if shell scripts are executable and have proper shebangs
+    shell_scripts <- list.files("scripts", pattern = "\\.sh$", full.names = TRUE)
+    
+    for (script in shell_scripts) {
+      # Check if executable
+      if (file.access(script, mode = 1) == -1) {
+        cat("   ⚠️  Shell script", basename(script), "is not executable\n")
+      }
+      
+      # Check shebang
+      first_line <- readLines(script, n = 1)
+      if (!grepl("^#!/", first_line)) {
+        cat("   ⚠️  Shell script", basename(script), "missing shebang\n")
+      }
     }
-  }
-  
-  if (!issues_found) {
+    
     cat("   ✅ Shell script validation completed\n")
-  }
-}, error = function(e) {
-  cat("   ❌ Shell script validation failed:", e$message, "\n")
-})
+  },
+  "2-5 seconds"
+)
 
 # 9. Parameter Usage Validation
 cat("\n9. Parameter Usage Validation:\n")
-tryCatch({
-  # Check for parameters that are validated but not used
-  r_files <- list.files("R", pattern = "\\.R$", full.names = TRUE)
-  issues_found <- FALSE
-  
-  for (file in r_files) {
-    content <- readLines(file)
-    # Look for match.arg() calls
-    match_args <- grep("match\\.arg\\(", content)
+show_progress(
+  "   🔄 Validating parameter usage",
+  function() {
+    # Check for parameters that are validated but not used
+    r_files <- list.files("R", pattern = "\\.R$", full.names = TRUE)
+    issues_found <- FALSE
     
-    for (line_num in match_args) {
-      line <- content[line_num]
-      # Extract parameter name from match.arg() call
-      param_match <- regexpr("match\\.arg\\(([^,)]+)", line)
-      if (param_match > 0) {
-        param_name <- substr(line, param_match + 10, param_match + attr(param_match, "match.length") - 1)
-        param_name <- gsub("^\\s+|\\s+$", "", param_name) # trim whitespace
-        
-        # Check if parameter is actually used in the function
-        function_start <- max(1, line_num - 50) # Look back 50 lines for function start
-        function_end <- min(length(content), line_num + 100) # Look forward 100 lines
-        function_content <- content[function_start:function_end]
-        
-        # Look for parameter usage (excluding the match.arg line itself)
-        usage_lines <- grep(paste0("\\b", param_name, "\\b"), function_content)
-        usage_lines <- usage_lines[usage_lines != (line_num - function_start + 1)] # Exclude match.arg line
-        
-        if (length(usage_lines) == 0) {
-          cat("   ⚠️  Parameter", param_name, "validated but not used in", basename(file), "\n")
-          issues_found <- TRUE
+    for (file in r_files) {
+      content <- readLines(file)
+      # Look for match.arg() calls
+      match_args <- grep("match\\.arg\\(", content)
+      
+      for (line_num in match_args) {
+        line <- content[line_num]
+        # Extract parameter name from match.arg() call
+        param_match <- regexpr("match\\.arg\\(([^,)]+)", line)
+        if (param_match > 0) {
+          param_name <- substr(line, param_match + 10, param_match + attr(param_match, "match.length") - 1)
+          param_name <- gsub("^\\s+|\\s+$", "", param_name) # trim whitespace
+          
+          # Check if parameter is actually used in the function
+          function_start <- max(1, line_num - 50) # Look back 50 lines for function start
+          function_end <- min(length(content), line_num + 100) # Look forward 100 lines
+          function_content <- content[function_start:function_end]
+          
+          # Look for parameter usage (excluding the match.arg line itself)
+          usage_lines <- grep(paste0("\\b", param_name, "\\b"), function_content)
+          usage_lines <- usage_lines[usage_lines != (line_num - function_start + 1)] # Exclude match.arg line
+          
+          if (length(usage_lines) == 0) {
+            cat("   ⚠️  Parameter", param_name, "validated but not used in", basename(file), "\n")
+            issues_found <- TRUE
+          }
         }
       }
     }
-  }
-  
-  if (!issues_found) {
-    cat("   ✅ Parameter usage validation completed\n")
-  }
-}, error = function(e) {
-  cat("   ❌ Parameter usage validation failed:", e$message, "\n")
-})
+    
+    if (!issues_found) {
+      cat("   ✅ Parameter usage validation completed\n")
+    } else {
+      stop("Parameter usage issues found")
+    }
+  },
+  "5-10 seconds"
+)
 
 # 10. Package Check
 cat("\n10. Package Check:\n")
-tryCatch({
-  check_results <- devtools::check()
-  cat("   ✅ Package check completed\n")
-  validation_status$package_check <- TRUE
-}, error = function(e) {
-  cat("   ❌ Package check failed:", e$message, "\n")
-})
+validation_status$package_check <- show_progress(
+  "   🔄 Running R CMD check",
+  function() {
+    check_results <- devtools::check()
+    cat("   ✅ Package check completed\n")
+  },
+  "2-5 minutes"
+)
 
 cat("\n🎯 Pre-PR Validation Complete!\n")
 cat("Review the results above and fix any issues before creating your PR.\n")

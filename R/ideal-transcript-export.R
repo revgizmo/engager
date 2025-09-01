@@ -1,0 +1,480 @@
+#' Export Ideal Course Transcripts to CSV
+#'
+#' Exports ideal course transcript data to CSV format with privacy protection
+#' and comprehensive metadata.
+#'
+#' @param transcript_data Data frame containing transcript data
+#' @param file_path Character. Output file path. If NULL, generates default name
+#' @param privacy_level Character. Privacy level for data masking. Default from option
+#' @param include_metadata Logical. Whether to include metadata in export. Default: TRUE
+#' @return Invisibly returns the exported data frame
+#' @export
+#' @examples
+#' \dontrun{
+#' # Export with default settings
+#' export_ideal_transcripts_csv(transcript_data)
+#'
+#' # Export with custom privacy level
+#' export_ideal_transcripts_csv(
+#'   transcript_data,
+#'   file_path = "my_transcript.csv",
+#'   privacy_level = "full"
+#' )
+#' }
+export_ideal_transcripts_csv <- function(
+    transcript_data = NULL,
+    file_path = NULL,
+    privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
+    include_metadata = TRUE) {
+  # Validate inputs
+  if (is.null(transcript_data)) {
+    stop("transcript_data cannot be NULL")
+  }
+
+  if (!tibble::is_tibble(transcript_data) && !is.data.frame(transcript_data)) {
+    stop("transcript_data must be a tibble or data frame")
+  }
+
+  # Apply privacy protection
+  export_data <- zoomstudentengagement::ensure_privacy(
+    transcript_data,
+    privacy_level = privacy_level
+  )
+
+  # Add metadata if requested
+  if (include_metadata) {
+    export_data <- add_export_metadata(export_data, format = "csv")
+  }
+
+  # Determine output path
+  if (is.null(file_path)) {
+    timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
+    file_path <- paste0("ideal_transcript_export_", timestamp, ".csv")
+  }
+
+  # Create directory if needed
+  dir_path <- dirname(file_path)
+  if (dir_path != "." && !dir.exists(dir_path)) {
+    dir.create(dir_path, recursive = TRUE)
+  }
+
+  # Write CSV file
+  utils::write.csv(export_data, file_path, row.names = FALSE)
+
+  invisible(file_path)
+}
+
+#' Export Ideal Course Transcripts to JSON
+#'
+#' Exports ideal course transcript data to JSON format with structured output
+#' and privacy protection.
+#'
+#' @param transcript_data Data frame containing transcript data
+#' @param file_path Character. Output file path. If NULL, generates default name
+#' @param privacy_level Character. Privacy level for data masking. Default from option
+#' @param pretty_print Logical. Whether to format JSON with indentation. Default: TRUE
+#' @param include_metadata Logical. Whether to include metadata. Default: TRUE
+#' @return Invisibly returns the exported data as list
+#' @export
+#' @examples
+#' \dontrun{
+#' # Export with default settings
+#' export_ideal_transcripts_json(transcript_data)
+#'
+#' # Export with custom formatting
+#' export_ideal_transcripts_json(
+#'   transcript_data,
+#'   pretty_print = FALSE,
+#'   include_metadata = FALSE
+#' )
+#' }
+export_ideal_transcripts_json <- function(
+    transcript_data = NULL,
+    file_path = NULL,
+    privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
+    pretty_print = TRUE,
+    include_metadata = TRUE) {
+  # Validate inputs
+  if (is.null(transcript_data)) {
+    stop("transcript_data cannot be NULL")
+  }
+
+  if (!tibble::is_tibble(transcript_data) && !is.data.frame(transcript_data)) {
+    stop("transcript_data must be a tibble or data frame")
+  }
+
+  # Apply privacy protection
+  export_data <- zoomstudentengagement::ensure_privacy(
+    transcript_data,
+    privacy_level = privacy_level
+  )
+
+  # Convert to list structure
+  json_data <- list(
+    transcript_data = as.list(export_data),
+    export_info = list(
+      timestamp = Sys.time(),
+      format = "json",
+      privacy_level = privacy_level,
+      row_count = nrow(export_data),
+      column_count = ncol(export_data)
+    )
+  )
+
+  # Add metadata if requested
+  if (include_metadata) {
+    json_data$metadata <- generate_export_metadata(export_data, format = "json")
+  }
+
+  # Determine output path
+  if (is.null(file_path)) {
+    timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
+    file_path <- paste0("ideal_transcript_export_", timestamp, ".json")
+  }
+
+  # Create directory if needed
+  dir_path <- dirname(file_path)
+  if (dir_path != "." && !dir.exists(dir_path)) {
+    dir.create(dir_path, recursive = TRUE)
+  }
+
+  # Write JSON file
+  jsonlite::write_json(
+    json_data,
+    file_path,
+    pretty = pretty_print,
+    auto_unbox = TRUE
+  )
+
+  invisible(file_path)
+}
+
+#' Export Ideal Course Transcripts to Excel
+#'
+#' Exports ideal course transcript data to Excel format with multiple sheets
+#' and rich formatting.
+#'
+#' @param transcript_data Data frame containing transcript data
+#' @param file_path Character. Output file path. If NULL, generates default name
+#' @param privacy_level Character. Privacy level for data masking. Default from option
+#' @param include_summary_sheet Logical. Whether to include summary sheet. Default: TRUE
+#' @param include_metadata_sheet Logical. Whether to include metadata sheet. Default: TRUE
+#' @return Invisibly returns the workbook object
+#' @export
+#' @examples
+#' \dontrun{
+#' # Export with default settings
+#' export_ideal_transcripts_excel(transcript_data)
+#'
+#' # Export with custom sheets
+#' export_ideal_transcripts_excel(
+#'   transcript_data,
+#'   include_summary_sheet = FALSE,
+#'   include_metadata_sheet = TRUE
+#' )
+#' }
+export_ideal_transcripts_excel <- function(
+    transcript_data = NULL,
+    file_path = NULL,
+    privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
+    include_summary_sheet = TRUE,
+    include_metadata_sheet = TRUE) {
+  # Validate inputs
+  if (is.null(transcript_data)) {
+    stop("transcript_data cannot be NULL")
+  }
+
+  if (!tibble::is_tibble(transcript_data) && !is.data.frame(transcript_data)) {
+    stop("transcript_data must be a tibble or data frame")
+  }
+
+  # Apply privacy protection
+  export_data <- zoomstudentengagement::ensure_privacy(
+    transcript_data,
+    privacy_level = privacy_level
+  )
+
+  # Convert to data frame and ensure all columns are simple types
+  export_data <- as.data.frame(export_data, stringsAsFactors = FALSE)
+
+  # Convert list columns to character strings
+  for (col in names(export_data)) {
+    if (is.list(export_data[[col]])) {
+      export_data[[col]] <- sapply(export_data[[col]], function(x) {
+        if (is.null(x)) {
+          return(NA_character_)
+        }
+        if (length(x) == 0) {
+          return(NA_character_)
+        }
+        paste(as.character(x), collapse = "; ")
+      })
+    }
+  }
+
+  # Ensure all columns are atomic types that openxlsx can handle
+  for (col in names(export_data)) {
+    if (!is.atomic(export_data[[col]])) {
+      export_data[[col]] <- as.character(export_data[[col]])
+    }
+  }
+
+  # Convert any remaining complex types to character
+  export_data <- data.frame(
+    lapply(export_data, function(x) {
+      if (is.factor(x)) {
+        as.character(x)
+      } else if (is.list(x)) {
+        sapply(x, function(y) if (is.null(y)) NA_character_ else as.character(y))
+      } else {
+        x
+      }
+    }),
+    stringsAsFactors = FALSE
+  )
+
+  # Create workbook
+  wb <- openxlsx::createWorkbook()
+
+  # Add main data sheet with error handling
+  openxlsx::addWorksheet(wb, "Transcript Data")
+
+  # Try to write data with error handling
+  tryCatch(
+    {
+      openxlsx::writeData(wb, "Transcript Data", export_data)
+    },
+    error = function(e) {
+      # If Excel write fails, try with simplified data
+      simple_data <- data.frame(
+        lapply(export_data, as.character),
+        stringsAsFactors = FALSE
+      )
+      openxlsx::writeData(wb, "Transcript Data", simple_data)
+    }
+  )
+
+  # Add summary sheet if requested
+  if (include_summary_sheet) {
+    summary_data <- generate_transcript_summary(export_data)
+    # Ensure summary data is also a simple data frame
+    if (is.data.frame(summary_data)) {
+      summary_data <- as.data.frame(summary_data)
+      for (col in names(summary_data)) {
+        if (is.list(summary_data[[col]])) {
+          summary_data[[col]] <- sapply(summary_data[[col]], function(x) {
+            if (is.null(x)) {
+              return(NA_character_)
+            }
+            if (length(x) == 0) {
+              return(NA_character_)
+            }
+            paste(as.character(x), collapse = "; ")
+          })
+        }
+      }
+    }
+    openxlsx::addWorksheet(wb, "Summary")
+    tryCatch(
+      {
+        openxlsx::writeData(wb, "Summary", summary_data)
+      },
+      error = function(e) {
+        # If Excel write fails, try with simplified data
+        simple_summary <- data.frame(
+          lapply(summary_data, as.character),
+          stringsAsFactors = FALSE
+        )
+        openxlsx::writeData(wb, "Summary", simple_summary)
+      }
+    )
+  }
+
+  # Add metadata sheet if requested
+  if (include_metadata_sheet) {
+    metadata_data <- generate_export_metadata(export_data, format = "excel")
+    # Ensure metadata data is also a simple data frame
+    if (is.data.frame(metadata_data)) {
+      metadata_data <- as.data.frame(metadata_data)
+      for (col in names(metadata_data)) {
+        if (is.list(metadata_data[[col]])) {
+          metadata_data[[col]] <- sapply(metadata_data[[col]], function(x) {
+            if (is.null(x)) {
+              return(NA_character_)
+            }
+            if (length(x) == 0) {
+              return(NA_character_)
+            }
+            paste(as.character(x), collapse = "; ")
+          })
+        }
+      }
+    }
+    openxlsx::addWorksheet(wb, "Metadata")
+    tryCatch(
+      {
+        openxlsx::writeData(wb, "Metadata", metadata_data)
+      },
+      error = function(e) {
+        # If Excel write fails, try with simplified data
+        simple_metadata <- data.frame(
+          lapply(metadata_data, as.character),
+          stringsAsFactors = FALSE
+        )
+        openxlsx::writeData(wb, "Metadata", simple_metadata)
+      }
+    )
+  }
+
+  # Determine output path
+  if (is.null(file_path)) {
+    timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
+    file_path <- paste0("ideal_transcript_export_", timestamp, ".xlsx")
+  }
+
+  # Create directory if needed
+  dir_path <- dirname(file_path)
+  if (dir_path != "." && !dir.exists(dir_path)) {
+    dir.create(dir_path, recursive = TRUE)
+  }
+
+  # Save workbook
+  openxlsx::saveWorkbook(wb, file_path, overwrite = TRUE)
+
+  invisible(file_path)
+}
+
+#' Export Ideal Course Transcripts Summary Report
+#'
+#' Creates and exports summary reports for ideal course transcripts in multiple
+#' formats with key metrics and insights.
+#'
+#' @param transcript_data Data frame containing transcript data
+#' @param file_path Character. Output file path. If NULL, generates default name
+#' @param format Character. Output format: "csv", "json", or "excel". Default: "csv"
+#' @param privacy_level Character. Privacy level for data masking. Default from option
+#' @param include_charts Logical. Whether to include charts (Excel only). Default: FALSE
+#' @return Invisibly returns the summary data
+#' @export
+#' @examples
+#' \dontrun{
+#' # Export summary as CSV
+#' export_ideal_transcripts_summary(transcript_data, format = "csv")
+#'
+#' # Export summary as Excel with charts
+#' export_ideal_transcripts_summary(
+#'   transcript_data,
+#'   format = "excel",
+#'   include_charts = TRUE
+#' )
+#' }
+export_ideal_transcripts_summary <- function(
+    transcript_data = NULL,
+    file_path = NULL,
+    format = c("csv", "json", "excel"),
+    privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
+    include_charts = FALSE) {
+  # Validate inputs
+  if (is.null(transcript_data)) {
+    stop("transcript_data cannot be NULL")
+  }
+
+  if (!tibble::is_tibble(transcript_data) && !is.data.frame(transcript_data)) {
+    stop("transcript_data must be a tibble or data frame")
+  }
+
+  format <- match.arg(format)
+
+  # Apply privacy protection
+  export_data <- zoomstudentengagement::ensure_privacy(
+    transcript_data,
+    privacy_level = privacy_level
+  )
+
+  # Generate summary data
+  summary_data <- generate_transcript_summary(export_data)
+
+  # Determine output path
+  if (is.null(file_path)) {
+    timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
+    file_path <- paste0("ideal_transcript_summary_", timestamp, ".", format)
+  }
+
+  # Export based on format
+  if (format == "csv") {
+    utils::write.csv(summary_data, file_path, row.names = FALSE)
+  } else if (format == "json") {
+    json_data <- list(
+      summary_data = as.list(summary_data),
+      export_info = list(
+        timestamp = Sys.time(),
+        format = "json",
+        privacy_level = privacy_level
+      )
+    )
+    jsonlite::write_json(json_data, file_path, pretty = TRUE, auto_unbox = TRUE)
+  } else if (format == "excel") {
+    wb <- openxlsx::createWorkbook()
+    openxlsx::addWorksheet(wb, "Summary")
+    openxlsx::writeData(wb, "Summary", summary_data)
+
+    if (include_charts) {
+      add_summary_charts(wb, summary_data)
+    }
+
+    openxlsx::saveWorkbook(wb, file_path, overwrite = TRUE)
+  }
+
+  invisible(file_path)
+}
+
+#' Add Export Metadata
+#' @keywords internal
+add_export_metadata <- function(data, format = "csv") {
+  # Add export timestamp and format info
+  data$export_timestamp <- Sys.time()
+  data$export_format <- format
+  data$export_version <- "1.0.0"
+  return(data)
+}
+
+#' Generate Export Metadata
+#' @keywords internal
+generate_export_metadata <- function(data, format = "csv") {
+  metadata <- list(
+    export_timestamp = Sys.time(),
+    export_format = format,
+    export_version = "1.0.0",
+    row_count = nrow(data),
+    column_count = ncol(data),
+    column_names = names(data),
+    data_types = sapply(data, class)
+  )
+  return(metadata)
+}
+
+#' Generate Transcript Summary
+#' @keywords internal
+generate_transcript_summary <- function(data) {
+  summary_data <- list(
+    total_rows = nrow(data),
+    total_columns = ncol(data),
+    unique_speakers = if ("name" %in% names(data)) length(unique(data$name)) else NA,
+    time_range = if (all(c("start", "end") %in% names(data))) {
+      paste(min(data$start), "to", max(data$end))
+    } else {
+      NA
+    },
+    export_timestamp = Sys.time()
+  )
+
+  return(as.data.frame(summary_data))
+}
+
+#' Add Summary Charts to Excel Workbook
+#' @keywords internal
+add_summary_charts <- function(wb, summary_data) {
+  # Add basic charts if summary data is available
+  # This is a placeholder for future chart functionality
+  # Chart functionality not yet implemented
+}

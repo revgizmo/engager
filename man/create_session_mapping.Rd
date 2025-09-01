@@ -5,8 +5,8 @@
 \title{Create Session Mapping from Zoom Recordings and Course Information}
 \usage{
 create_session_mapping(
-  zoom_recordings_df,
-  course_info_df,
+  zoom_recordings_df = NULL,
+  course_info_df = NULL,
   output_file = "session_mapping.csv",
   semester_start_mdy = "Jan 01, 2024",
   auto_assign_patterns = list(`CS 101` = "CS.*101", `MATH 250` = "MATH.*250", `LTF 201` =

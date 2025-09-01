@@ -5,7 +5,7 @@
 \title{Write Section Names Lookup}
 \usage{
 write_section_names_lookup(
-  clean_names_df,
+  clean_names_df = NULL,
   data_folder = ".",
   section_names_lookup_file = "section_names_lookup.csv"
 )

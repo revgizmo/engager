@@ -5,8 +5,8 @@
 \title{Detect Unmatched Names}
 \usage{
 detect_unmatched_names(
-  transcript_data,
-  roster_data,
+  transcript_data = NULL,
+  roster_data = NULL,
   name_mappings = NULL,
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask")
 )

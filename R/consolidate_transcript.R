@@ -20,7 +20,7 @@
 #' @examples
 #' consolidate_transcript(df = "NULL")
 #'
-consolidate_transcript <- function(df, max_pause_sec = 1) {
+consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {
   . <-
     begin <-
     comment <-

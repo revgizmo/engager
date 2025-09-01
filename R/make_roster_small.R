@@ -22,7 +22,7 @@
 #' roster_file <- system.file("extdata/roster.csv", package = "zoomstudentengagement")
 #' roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
 #' make_roster_small(roster_df = roster_df)
-make_roster_small <- function(roster_df) {
+make_roster_small <- function(roster_df = NULL) {
   # Defensive: check for valid input type
   if (!tibble::is_tibble(roster_df)) {
     stop("roster_df must be a tibble")

@@ -14,7 +14,7 @@
 #'
 #' @return A ggplot object
 #' @export
-plot_users_by_metric <- function(transcripts_summary_df,
+plot_users_by_metric <- function(transcripts_summary_df = NULL,
                                  metric = "session_ct",
                                  metrics_lookup_df = make_metrics_lookup_df(),
                                  student_col_name = "preferred_name") {

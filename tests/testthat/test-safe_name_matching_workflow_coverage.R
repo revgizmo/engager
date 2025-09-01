@@ -642,7 +642,7 @@ test_that("handle_unmatched_names handles different actions", {
   with_mocked_bindings(
     prompt_name_matching = function(...) {
       # Mock implementation that doesn't prompt
-      return(invisible(NULL))
+      invisible(NULL)
     },
     {
       expect_error(

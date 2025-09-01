@@ -5,8 +5,8 @@
 \title{Analyze Multi-Session Attendance Patterns}
 \usage{
 analyze_multi_session_attendance(
-  transcript_files,
-  roster_data,
+  transcript_files = NULL,
+  roster_data = NULL,
   data_folder = ".",
   transcripts_folder = "transcripts",
   unmatched_names_action = c("stop", "warn"),

@@ -1,38 +1,3 @@
-# Project Plan: zoomstudentengagement
-
-> **🤖 For AI Assistants**: Before starting work, run `./scripts/save-context.sh` to get current project status and avoid working on already-resolved issues.
-
-## Overview
-A package to analyze and visualize student engagement from Zoom transcripts, aimed at instructors and educational researchers.
-
-**Core Mission**: Enable instructors to identify participation inequities in Zoom sessions through privacy-first transcript analysis.
-
-**Origin Story**: Started as a personal tool to understand student participation patterns in your DATASCI courses at UC Berkeley, evolved into a comprehensive R package through the Lecturer Teaching Fellows Program. See `docs/PROJECT_ORIGIN_STORY.md` for the complete evolution from personal need to educational tool.
-
-- See also: `docs/planning/SPINOFF_PROJECTS_PLAN.md` for the spin-off projects roadmap and grouped issues.
-- See also: `docs/implementation/PRD_AUDIT_IMPLEMENTATION_PLAN.md` for comprehensive PRD audit implementation planning.
-
-## Goals
-- **Primary**: Prepare for CRAN submission with focus on participation equity analysis
-- **Secondary**: Improve documentation and usability for educational researchers
-- **Quality**: Ensure robust testing and error handling
-- **Scope**: Align package with original vision of "Fostering Equitable Participation"
-
-## Lean issue/branch workflow (no Projects board)
-
-Decision: manage work directly via Issues, Milestones, Labels, and PRs. No Projects board automation.
-
-- Labels: keep small, consistent set (priority:high/medium/low; area:*; documentation; refactor; test; privacy; status:blocked/in-progress/needs-review)
-- Milestones: CRAN-aligned only (Code Quality & Style, Documentation Complete, Testing & Coverage (>90%), CI/QA Green, CRAN Preflight, Release 0.1.0)
-- Definition of Done: unchanged; enforce via PR template and CI
-- Process:
-  - Create/triage issues weekly; label, assign, attach milestone
-  - Each PR links an issue (Closes #X); PR template checklist must pass
-  - Use saved issue filters instead of a board (e.g., `is:open label:"priority:high" -label:"status:blocked"`)
-
-## Current Status (Updated: 2025-01-27)
-**Package Status: EXCELLENT - Very Close to CRAN Ready**
-
 ### 📊 **PRD Audit Analysis (COMPLETED - 2025-01-27)**
 A comprehensive PRD audit was completed with **ACTIONABLE FINDINGS** for package optimization:
 
@@ -127,142 +92,33 @@ A comprehensive ethical analysis conducted on 2025-08-04 revealed **CATASTROPHIC
 - **Repository Setup**: Clean main branch, proper git workflow with branch protection
 - **Issue Tracking**: GitHub issues consolidated and organized with proper labels
 - **CRAN Compliance**: License and R-CMD-check issues resolved ([Issue #21](https://github.com/revgizmo/zoomstudentengagement_cursor/issues/21) - CLOSED)
+- **Ideal Course Transcripts**: ✅ **COMPLETED** - Comprehensive synthetic test data with 12 test scenarios covering name variations, guest speakers, international names, attendance gaps, and roster patterns
 - **Master Audit**: Comprehensive codebase audit completed ([Issue #15](https://github.com/revgizmo/zoomstudentengagement_cursor/issues/15) - CLOSED)
 - **Vignettes**: Complete vignette suite created and deployed to GitHub Pages ([Issue #45](https://github.com/revgizmo/zoomstudentengagement/issues/45) - CLOSED)
 - **Privacy Implementation**: Privacy-first MVP implemented with `ensure_privacy()` and `set_privacy_defaults()` functions
  - **API Consolidation & Privacy Tools**: Unified user-facing APIs with `plot_users()`, `write_metrics()`, and `analyze_transcripts()`; legacy plotting/writing functions now delegate for backward compatibility. Added `privacy_audit()` and provenance attributes on outputs; standardized metric names to `perc_*` with backward-compatible aliases.
  - **CI Enhancements**: Added benchmark workflow with configurable performance budgets; expanded R-CMD-check matrix across OS/R versions.
  - **Traceability Updates**: Filed follow-up issues for hygiene and enforcement: #206 (deprecation badges/timeline), #207 (curate exports), #208 (schema/provenance docs), #209 (benchmark budgets), #210 (edge/error-path tests), #211 (`.Rbuildignore` top-level dirs).
- - **Test Suite**: **1825 tests passing, 0 failures**
+ - **Test Suite**: **1875 tests passing, 0 failures**
  - **R CMD Check**: **0 errors, 0 warnings, 2 notes** (future timestamp check: "unable to verify current time"; environment-related and acceptable)
- - **Test Coverage**: 90.69% (target achieved)
+ - **Test Coverage**: 90.48% (target achieved)
 
 ### What Needs Work ❌ (Critical Issues for CRAN)
-
-#### **Pre-CRAN Critical Work (1-2 weeks)**
-- **PRD Implementation Foundation**: Success metrics, function audit, UX simplification
-- **Issue #160 - Name Matching with Privacy**: Complete enhanced Phase 2 implementation
-- **CRAN Submission Preparation**: Final testing and validation
-
-#### **Post-CRAN Implementation (6-8 weeks)**
-- **Full Scope Reduction**: Systematically reduce from 68 to ideal 16 functions
-- **Performance Optimization**: Implement benchmarks and optimization
-- **Advanced Feature Management**: Evaluate and manage advanced features
-- **Community Engagement**: Build user community and support processes
-
-#### **Existing Critical Issues**
-- **CRITICAL: Add FERPA Compliance Features and Documentation**: ✅ **RESOLVED** ([Issue #126](https://github.com/revgizmo/zoomstudentengagement/issues/126) - CLOSED)
-- **HIGH: Complete Function Documentation and Examples**: ✅ **RESOLVED** ([Issue #130](https://github.com/revgizmo/zoomstudentengagement/issues/130) - CLOSED)
-- **HIGH: Transition to Test-Driven Design and Full Functionality Coverage**: OPEN ([Issue #215](https://github.com/revgizmo/zoomstudentengagement/issues/215) - Priority: HIGH)
-- **HIGH: Complete Real-World Testing with Confidential Data**: OPEN ([Issue #129](https://github.com/revgizmo/zoomstudentengagement/issues/129) - Priority: HIGH)
-- **CRITICAL: Project Restructuring Based on Premortem Analysis**: OPEN ([Issue #123](https://github.com/revgizmo/zoomstudentengagement/issues/123) - Priority: HIGH)
-- **Phase 2: Comprehensive Real-World Testing for dplyr to Base R Conversions**: OPEN ([Issue #115](https://github.com/revgizmo/zoomstudentengagement/issues/115) - Priority: HIGH)
+- **BLOCKER: CI temporarily disabled; follow temporary self-merge policy**: OPEN ([Issue #406](https://github.com/revgizmo/zoomstudentengagement/issues/406) - Priority: HIGH)
+- **[PRD] Basic UX Simplification**: OPEN ([Issue #394](https://github.com/revgizmo/zoomstudentengagement/issues/394) - Priority: HIGH)
+- **[PRD] Core Function Audit & Categorization**: OPEN ([Issue #393](https://github.com/revgizmo/zoomstudentengagement/issues/393) - Priority: HIGH)
+- **[PRD] Success Metrics Definition & Implementation**: OPEN ([Issue #392](https://github.com/revgizmo/zoomstudentengagement/issues/392) - Priority: HIGH)
+- **feat(privacy): name masking helper with docs**: OPEN ([Issue #298](https://github.com/revgizmo/zoomstudentengagement/issues/298) - Priority: HIGH)
+- **test(ingestion): malformed inputs edge cases**: OPEN ([Issue #293](https://github.com/revgizmo/zoomstudentengagement/issues/293) - Priority: HIGH)
+- **Plan: Near-term Simplification for CRAN Readiness (single-plan)**: OPEN ([Issue #282](https://github.com/revgizmo/zoomstudentengagement/issues/282) - Priority: HIGH)
+- **Phase 2: Docker Performance Optimization**: OPEN ([Issue #244](https://github.com/revgizmo/zoomstudentengagement/issues/244) - Priority: HIGH)
+- **Epic: Comprehensive Docker Development Environment Optimization**: OPEN ([Issue #242](https://github.com/revgizmo/zoomstudentengagement/issues/242) - Priority: HIGH)
+- **docs: Create CRAN submission preparation guide**: OPEN ([Issue #230](https://github.com/revgizmo/zoomstudentengagement/issues/230) - Priority: HIGH)
+- **fix: Wrap diagnostic output in test environment checks for CRAN compliance**: OPEN ([Issue #220](https://github.com/revgizmo/zoomstudentengagement/issues/220) - Priority: HIGH)
+- **docs: Institutional FERPA compliance adoption guide**: OPEN ([Issue #154](https://github.com/revgizmo/zoomstudentengagement/issues/154) - Priority: HIGH)
+- **test: Real-world FERPA compliance validation**: OPEN ([Issue #153](https://github.com/revgizmo/zoomstudentengagement/issues/153) - Priority: HIGH)
 - **Add missing function documentation**: OPEN ([Issue #90](https://github.com/revgizmo/zoomstudentengagement/issues/90) - Priority: HIGH)
 - **Add transcript_file column with intelligent duplicate handling**: OPEN ([Issue #56](https://github.com/revgizmo/zoomstudentengagement/issues/56) - Priority: HIGH)
-- **Refactor: Replace acronyms in exported function names for clarity**: OPEN ([Issue #23](https://github.com/revgizmo/zoomstudentengagement/issues/23) - Priority: HIGH)
-- **Audit: Improve error messages**: OPEN ([Issue #18](https://github.com/revgizmo/zoomstudentengagement/issues/18) - Priority: HIGH)
-- **Audit: Refactor duplicated code**: OPEN ([Issue #17](https://github.com/revgizmo/zoomstudentengagement/issues/17) - Priority: HIGH)
-- **Audit: Review function naming and API consistency**: OPEN ([Issue #16](https://github.com/revgizmo/zoomstudentengagement/issues/16) - Priority: HIGH)
-
-### 🔒 **Security and Performance Review Recommendations (INTEGRATED)**
-**Security Enhancements** (Medium Priority):
-- **Path Validation**: Add enhanced path validation for user-provided files ([Issue #375](https://github.com/revgizmo/zoomstudentengagement/issues/375))
-- **File Size Limits**: Implement file size limits for transcript processing ([Issue #376](https://github.com/revgizmo/zoomstudentengagement/issues/376))
-- **Audit Logging**: Add audit logging for privacy-sensitive operations ([Issue #381](https://github.com/revgizmo/zoomstudentengagement/issues/381))
-
-**Performance Optimizations** (Medium Priority):
-- **Chunked Reading**: Implement chunked reading for large files ([Issue #378](https://github.com/revgizmo/zoomstudentengagement/issues/378))
-- **Cross Join Optimization**: Optimize cross join operations in join_transcripts_list.R ([Issue #379](https://github.com/revgizmo/zoomstudentengagement/issues/379))
-- **Memory Optimization**: Optimize memory usage for large transcript files ([Issue #380](https://github.com/revgizmo/zoomstudentengagement/issues/380))
-
-## 🚀 **Ethical Research Implementation Roadmap**
-
-### **✅ Phase 1: Privacy Implementation (COMPLETED - 2025-08-08)**
-Based on comprehensive ethical research in `docs/development/ethical-issues-research/CRAN_ROADMAP.md`:
-
-**✅ Week 1: Core Privacy Implementation (COMPLETED)**
-- ✅ Implement `ensure_privacy()` function with privacy levels (mask, none)
-- ✅ Create `set_privacy_defaults()` for global configuration
-- ✅ Integrate privacy at user-facing boundaries (writers, summaries, plots)
-- ✅ Add privacy-first defaults with `.onLoad()` function
-- ✅ Create FERPA/ethics vignette and comprehensive tests
-
-**Week 2: Compliance and Documentation (NEXT)**
-- FERPA compliance documentation
-- Security enhancements
-- Ethical use guidelines
-- CRAN preparation and submission
-
-### **✅ Priority Functions for Privacy Integration (COMPLETED)**
-- ✅ `mask_user_names_by_metric()` (enhanced and integrated)
-- ✅ `plot_users_by_metric()` (privacy integration complete)
-- ✅ `plot_users_masked_section_by_metric()` (privacy integration complete)
-- ✅ `summarize_transcript_metrics()` (privacy integration complete)
-- ✅ `write_engagement_metrics()` (privacy integration complete)
-- ✅ `write_transcripts_summary()` (privacy integration complete)
-
-### **🎯 Current Status and Next Priorities**
-**Major Achievement**: Privacy-first MVP successfully implemented and tested
-- ✅ All user-facing functions now default to masked outputs
-- ✅ Global privacy configuration with `set_privacy_defaults()`
-- ✅ Comprehensive test coverage for privacy features
-- ✅ FERPA/ethics vignette created and documented
-
-**Next Critical Priorities**:
-1. **Issue #129**: Complete real-world testing with confidential data
-2. **Issue #127**: Performance optimization for large datasets
-3. **Issue #115**: Comprehensive real-world testing for dplyr to Base R conversions
-4. **Issue #123**: Project restructuring based on premortem analysis
-
-## 🐳 **Docker Development Environment Optimization (Epic #242)**
-
-### **Overview**
-Comprehensive Docker optimization to achieve ideal development environment with fast, reliable, and developer-friendly containerization.
-
-### **Current State**
-- **Issue #221**: Basic Docker container development environment (CLOSED - consolidated)
-- **Issue #223**: Performance optimization (CLOSED - consolidated)
-- **Issue #39**: GitHub Actions workflow optimization (BLOCKED - integrated)
-- **Issue #99**: QA testing process improvement (BLOCKED - integrated)
-
-### **Phased Implementation Plan**
-
-#### **Phase 1: Foundation & Stability** (Issue #243 - CRITICAL)
-- **Status**: BLOCKED - Container startup failures
-- **Objective**: Fix basic container startup and establish stable foundation
-- **Timeline**: 1 week
-- **Success Metrics**: Container starts in <60 seconds, 100% reliability
-
-#### **Phase 2: Performance Optimization** (Issue #244 - HIGH)
-- **Status**: BLOCKED - Depends on Phase 1
-- **Objective**: Achieve target performance metrics
-- **Timeline**: 1 week
-- **Success Metrics**: Startup <30 seconds, build time <5 minutes, image size <1.8 GB
-
-#### **Phase 3: Development Experience** (Issue #245 - MEDIUM)
-- **Status**: BLOCKED - Depends on Phase 2
-- **Objective**: Perfect Cursor IDE integration and developer workflow
-- **Timeline**: 1 week
-- **Success Metrics**: Setup time <5 minutes, 100% background agent reliability
-
-#### **Phase 4: CI/CD Integration** (Issue #246 - MEDIUM)
-- **Status**: BLOCKED - Depends on Phase 3
-- **Objective**: Integrate with GitHub Actions and quality assurance
-- **Timeline**: 1 week
-- **Success Metrics**: CI/CD build time <10 minutes, automated quality checks
-
-### **Success Metrics**
-- **Container startup**: 2-3 minutes → 10-30 seconds
-- **Build time**: 10-15 minutes → 2-5 minutes
-- **Image size**: ~2.5 GB → ~1.8 GB
-- **Setup time**: 30+ minutes → 5 minutes
-- **Reliability**: 100% startup success rate
-
-### **Implementation Timeline**
-- **Week 1**: Foundation & stability
-- **Week 2**: Performance optimization
-- **Week 3**: Development experience
-- **Week 4**: CI/CD integration
 ## 🚨 **Premortem Analysis and Action Plan (August 2025)**
 
 ### **Critical Findings**
@@ -314,12 +170,19 @@ A comprehensive premortem analysis conducted on 2025-08-04 revealed fundamental 
 5. **Missing Example Data**: **RESOLVED** - All examples now pass R CMD check ([Issue #58](https://github.com/revgizmo/zoomstudentengagement_cursor/issues/58) - CLOSED)
 
 ### 🔄 **Remaining Issues (Critical - CRAN Ready Soon)**
-- **[Issue #130](https://github.com/revgizmo/zoomstudentengagement/issues/130)**: HIGH: Complete Function Documentation and Examples (OPEN)
-- **[Issue #129](https://github.com/revgizmo/zoomstudentengagement/issues/129)**: HIGH: Complete Real-World Testing with Confidential Data (OPEN)
-- **[Issue #127](https://github.com/revgizmo/zoomstudentengagement/issues/127)**: Performance Optimization for Large Datasets (OPEN)
-- **[Issue #126](https://github.com/revgizmo/zoomstudentengagement/issues/126)**: ✅ **RESOLVED**: Add FERPA Compliance Features and Documentation (CLOSED)
-- **[Issue #125](https://github.com/revgizmo/zoomstudentengagement/issues/125)**: CRITICAL: Implement Privacy-First Defaults and Data Anonymization (OPEN)
-- **[Issue #123](https://github.com/revgizmo/zoomstudentengagement/issues/123)**: CRITICAL: Project Restructuring Based on Premortem Analysis (OPEN)
+- **[Issue #394](https://github.com/revgizmo/zoomstudentengagement/issues/394)**: [PRD] Basic UX Simplification (OPEN)
+- **[Issue #393](https://github.com/revgizmo/zoomstudentengagement/issues/393)**: [PRD] Core Function Audit & Categorization (OPEN)
+- **[Issue #392](https://github.com/revgizmo/zoomstudentengagement/issues/392)**: [PRD] Success Metrics Definition & Implementation (OPEN)
+- **[Issue #301](https://github.com/revgizmo/zoomstudentengagement/issues/301)**: release(0.1.0): prepare NEWS.md, tag and build (OPEN)
+- **[Issue #300](https://github.com/revgizmo/zoomstudentengagement/issues/300)**: chore(metadata): verify DESCRIPTION/NAMESPACE/license (OPEN)
+- **[Issue #297](https://github.com/revgizmo/zoomstudentengagement/issues/297)**: ci(rhub): add rhub::check() job (OPEN)
+- **[Issue #288](https://github.com/revgizmo/zoomstudentengagement/issues/288)**: ci(actions): add R CMD check matrix across OS/R (OPEN)
+- **[Issue #282](https://github.com/revgizmo/zoomstudentengagement/issues/282)**: Plan: Near-term Simplification for CRAN Readiness (single-plan) (OPEN)
+- **[Issue #230](https://github.com/revgizmo/zoomstudentengagement/issues/230)**: docs: Create CRAN submission preparation guide (OPEN)
+- **[Issue #229](https://github.com/revgizmo/zoomstudentengagement/issues/229)**: test: Improve test coverage for safe_name_matching_workflow.R (OPEN)
+- **[Issue #228](https://github.com/revgizmo/zoomstudentengagement/issues/228)**: test: Improve test coverage for privacy_audit.R (OPEN)
+- **[Issue #220](https://github.com/revgizmo/zoomstudentengagement/issues/220)**: fix: Wrap diagnostic output in test environment checks for CRAN compliance (OPEN)
+- **[Issue #215](https://github.com/revgizmo/zoomstudentengagement/issues/215)**: test: Transition to test-driven design and ensure full functionality coverage (OPEN)
 - **[Issue #4](https://github.com/revgizmo/zoomstudentengagement/issues/4)**: CRAN Preparation (OPEN)
 ### 🆕 **New Critical Issues Created (Premortem Analysis)**
 1. **[Issue #125](https://github.com/revgizmo/zoomstudentengagement/issues/125)**: CRITICAL: Implement Privacy-First Defaults and Data Anonymization
@@ -443,7 +306,7 @@ A comprehensive premortem analysis conducted on 2025-08-04 revealed fundamental 
 
 ### 🎉 **Major Success Achieved**
 The project has made **outstanding progress** toward CRAN submission:
-- **Test Suite**: **1825 tests passing, 0 failures**
+- **Test Suite**: **1875 tests passing, 0 failures**
 - **R CMD Check**: **0 errors, 0 warnings, 2 notes** (excellent progress!)
 - **CRAN Compliance**: All major blockers resolved
 - **Package Status**: Technically sound but has critical privacy/ethical risks
@@ -1262,3 +1125,272 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+### All Open Issues (259 Total)
+
+#### High Priority (16 issues)
+- [Issue #418]: feat(project): Enhance PROJECT.md auto-update with All Open Issues section and AI review system (enhancement, priority:high, area:core)
+- [Issue #406]: BLOCKER: CI temporarily disabled; follow temporary self-merge policy (priority:high, ci)
+- [Issue #394]: [PRD] Basic UX Simplification (priority:high, CRAN:submission, area:core)
+- [Issue #393]: [PRD] Core Function Audit & Categorization (priority:high, CRAN:submission, area:core)
+- [Issue #392]: [PRD] Success Metrics Definition & Implementation (priority:high, CRAN:submission, area:core)
+- [Issue #298]: feat(privacy): name masking helper with docs (priority:high, area:core, privacy)
+- [Issue #293]: test(ingestion): malformed inputs edge cases (priority:high, area:testing, test)
+- [Issue #282]: Plan: Near-term Simplification for CRAN Readiness (single-plan) (documentation, priority:high, CRAN:submission)
+- [Issue #244]: Phase 2: Docker Performance Optimization (enhancement, priority:high, area:infrastructure, performance)
+- [Issue #242]: Epic: Comprehensive Docker Development Environment Optimization (enhancement, priority:high, area:infrastructure, epic)
+- [Issue #230]: docs: Create CRAN submission preparation guide (documentation, priority:high, CRAN:submission)
+- [Issue #220]: fix: Wrap diagnostic output in test environment checks for CRAN compliance (priority:high, CRAN:submission, area:testing)
+- [Issue #154]: docs: Institutional FERPA compliance adoption guide (documentation, priority:high, priority:medium, FERPA, CRAN-blocker)
+- [Issue #153]: test: Real-world FERPA compliance validation (priority:high, priority:medium, area:testing, FERPA, CRAN-blocker)
+- [Issue #90]: Add missing function documentation (bug, priority:high, area:documentation)
+- [Issue #56]: Add transcript_file column with intelligent duplicate handling (enhancement, priority:high, area:core)
+
+#### Medium Priority (48 issues)
+- [Issue #403]: enhancement: Apply metric existence guard pattern to other column-accessing functions (enhancement, priority:medium, area:core, refactor)
+- [Issue #402]: test: Expand edge case testing for column validation functions (priority:medium, area:testing, test)
+- [Issue #401]: docs: Add required columns documentation to function documentation (documentation, priority:medium, area:documentation)
+- [Issue #395]: [PRD] Post-CRAN Implementation Coordination (priority:medium, area:core)
+- [Issue #382]: refactor: Consolidate type coercion logic to reduce code complexity (priority:medium, area:core, refactor)
+- [Issue #380]: performance: Optimize memory usage for large transcript files (priority:medium, area:core, performance)
+- [Issue #379]: performance: Optimize cross join operations in join_transcripts_list.R (priority:medium, area:core, performance)
+- [Issue #378]: performance: Implement chunked reading for large files (priority:medium, area:core, performance)
+- [Issue #375]: security: Implement file size limits for transcript processing (priority:medium, area:core)
+- [Issue #374]: enhancement: Add file organization checks to pre-PR validation process (enhancement, priority:medium)
+- [Issue #373]: enhancement: Integrate file organization prevention script into CI/CD pipeline (enhancement, priority:medium, ci)
+- [Issue #365]: test: Add comprehensive VTT test fixtures for edge case testing (enhancement, priority:medium, area:testing)
+- [Issue #363]: test: Add comprehensive edge case testing for VTT parsing (enhancement, priority:medium, area:testing)
+- [Issue #349]: performance(benchmark): establish comprehensive performance benchmarking for optimized functions (enhancement, priority:medium, performance)
+- [Issue #348]: performance(test): make performance test thresholds configurable for different environments (priority:medium, area:testing, performance)
+- [Issue #344]: refactor(test): reduce test output pollution at the source (priority:medium, area:testing, refactor)
+- [Issue #343]: refactor(schema): robust schema type checks via inherits (priority:medium, refactor)
+- [Issue #342]: refactor(api): trim the public API surface (soft deprecations) (documentation, priority:medium, refactor)
+- [Issue #341]: refactor(privacy): unify hashing/anonymization implementation (priority:medium, refactor, privacy)
+- [Issue #340]: performance: vectorized/data.table summarization in transcript metrics (enhancement, priority:medium)
+- [Issue #339]: refactor(scripts): deduplicate context/update scripts and gate PROJECT.md prompts (documentation, priority:medium, refactor)
+- [Issue #338]: refactor\(error\): standardize error signaling and quiet default output (priority:medium, refactor, docs, ci)
+- [Issue #302]: chore(test-output): wrap diagnostic output behind TESTTHAT guard (priority:medium, area:infrastructure)
+- [Issue #301]: release(0.1.0): prepare NEWS.md, tag and build (documentation, priority:medium, CRAN:submission)
+- [Issue #300]: chore(metadata): verify DESCRIPTION/NAMESPACE/license (documentation, priority:medium, CRAN:submission, area:documentation)
+- [Issue #297]: ci(rhub): add rhub::check() job (priority:medium, CRAN:submission, area:infrastructure)
+- [Issue #296]: ci(actions): spell/style/coverage jobs (priority:medium, area:infrastructure)
+- [Issue #292]: docs(vignettes): participation equity vignette (documentation, priority:medium, area:documentation)
+- [Issue #291]: docs(readme): rebuild README.md via devtools::build_readme() (documentation, priority:medium, area:documentation)
+- [Issue #289]: style(pkg): run styler and configure lintr (priority:medium, refactor, area:infrastructure)
+- [Issue #288]: ci(actions): add R CMD check matrix across OS/R (priority:medium, CRAN:submission, area:infrastructure)
+- [Issue #246]: Phase 4: CI/CD Integration & Quality Assurance (enhancement, priority:medium, area:testing, area:infrastructure)
+- [Issue #245]: Phase 3: Perfect Development Experience (documentation, enhancement, priority:medium, area:infrastructure)
+- [Issue #229]: test: Improve test coverage for safe_name_matching_workflow.R (priority:medium, CRAN:submission)
+- [Issue #228]: test: Improve test coverage for privacy_audit.R (priority:medium, CRAN:submission)
+- [Issue #219]: fix: GitHub Pages deployment failing due to pkgdown build issues (bug, priority:medium, area:documentation)
+- [Issue #154]: docs: Institutional FERPA compliance adoption guide (documentation, priority:high, priority:medium, FERPA, CRAN-blocker)
+- [Issue #153]: test: Real-world FERPA compliance validation (priority:high, priority:medium, area:testing, FERPA, CRAN-blocker)
+- [Issue #110]: Performance: Vectorized operations for lag functions (enhancement, priority:medium, refactor)
+- [Issue #101]: Document QA vs Real-World Testing relationship and integration (documentation, priority:medium, area:testing)
+- [Issue #99]: Improve QA testing process and infrastructure (enhancement, priority:medium, area:testing, status:blocked)
+- [Issue #97]: Support multiple Zoom file types: cc.vtt and chat.txt files (enhancement, priority:medium, area:core)
+- [Issue #93]: Analyze Cursor Bugbot comments and improve local validation (enhancement, priority:medium)
+- [Issue #91]: Improve pre-PR validation robustness (enhancement, priority:medium)
+- [Issue #50]: Generalize Topic parsing in load_zoom_recorded_sessions_list to only extract section and optionally dept (enhancement, priority:medium, area:core)
+- [Issue #47]: Create verification helper script (enhancement, priority:medium, area:infrastructure)
+- [Issue #32]: Update and complete roxygen2 documentation for all exported functions (documentation, priority:medium, area:documentation)
+- [Issue #6]: Function Documentation Review (documentation, priority:medium, area:documentation)
+
+#### Low Priority (10 issues)
+- [Issue #381]: security: Add audit logging for privacy-sensitive operations (priority:low, area:core)
+- [Issue #368]: refactor: Decompose large functions for better maintainability (enhancement, priority:low, refactor)
+- [Issue #367]: style: Address lint warnings and improve code consistency (enhancement, priority:low, refactor)
+- [Issue #366]: refactor: Standardize error handling across functions (enhancement, priority:low, refactor)
+- [Issue #364]: test: Reduce test warning noise for cleaner output (priority:low, area:testing, refactor)
+- [Issue #345]: performance: minor speedups and safety tweaks (enhancement, priority:low)
+- [Issue #39]: Optimize GitHub Actions workflow for faster dependency installation (enhancement, priority:low, status:blocked, area:infrastructure)
+- [Issue #36]: Cross-reference issues and track progress in AUDIT_LOG.md (documentation, priority:low, area:documentation)
+- [Issue #4]: CRAN Preparation (enhancement, priority:low, CRAN:submission, area:infrastructure)
+- [Issue #2]: Documentation Overhaul (documentation, priority:low, area:documentation)
+
+#### Unprioritized (185 issues)
+- [Issue #418]: feat(project): Enhance PROJECT.md auto-update with All Open Issues section and AI review system (enhancement, priority:high, area:core)
+- [Issue #418]: feat(project): Enhance PROJECT.md auto-update with All Open Issues section and AI review system (enhancement, priority:high, area:core)
+- [Issue #406]: BLOCKER: CI temporarily disabled; follow temporary self-merge policy (priority:high, ci)
+- [Issue #403]: enhancement: Apply metric existence guard pattern to other column-accessing functions (enhancement, priority:medium, area:core, refactor)
+- [Issue #403]: enhancement: Apply metric existence guard pattern to other column-accessing functions (enhancement, priority:medium, area:core, refactor)
+- [Issue #403]: enhancement: Apply metric existence guard pattern to other column-accessing functions (enhancement, priority:medium, area:core, refactor)
+- [Issue #402]: test: Expand edge case testing for column validation functions (priority:medium, area:testing, test)
+- [Issue #402]: test: Expand edge case testing for column validation functions (priority:medium, area:testing, test)
+- [Issue #401]: docs: Add required columns documentation to function documentation (documentation, priority:medium, area:documentation)
+- [Issue #401]: docs: Add required columns documentation to function documentation (documentation, priority:medium, area:documentation)
+- [Issue #397]: Review Success Metrics Implementation Post-CRAN (documentation, refactor, CRAN:review)
+- [Issue #397]: Review Success Metrics Implementation Post-CRAN (documentation, refactor, CRAN:review)
+- [Issue #397]: Review Success Metrics Implementation Post-CRAN (documentation, refactor, CRAN:review)
+- [Issue #395]: [PRD] Post-CRAN Implementation Coordination (priority:medium, area:core)
+- [Issue #394]: [PRD] Basic UX Simplification (priority:high, CRAN:submission, area:core)
+- [Issue #394]: [PRD] Basic UX Simplification (priority:high, CRAN:submission, area:core)
+- [Issue #393]: [PRD] Core Function Audit & Categorization (priority:high, CRAN:submission, area:core)
+- [Issue #393]: [PRD] Core Function Audit & Categorization (priority:high, CRAN:submission, area:core)
+- [Issue #392]: [PRD] Success Metrics Definition & Implementation (priority:high, CRAN:submission, area:core)
+- [Issue #392]: [PRD] Success Metrics Definition & Implementation (priority:high, CRAN:submission, area:core)
+- [Issue #382]: refactor: Consolidate type coercion logic to reduce code complexity (priority:medium, area:core, refactor)
+- [Issue #382]: refactor: Consolidate type coercion logic to reduce code complexity (priority:medium, area:core, refactor)
+- [Issue #381]: security: Add audit logging for privacy-sensitive operations (priority:low, area:core)
+- [Issue #380]: performance: Optimize memory usage for large transcript files (priority:medium, area:core, performance)
+- [Issue #380]: performance: Optimize memory usage for large transcript files (priority:medium, area:core, performance)
+- [Issue #379]: performance: Optimize cross join operations in join_transcripts_list.R (priority:medium, area:core, performance)
+- [Issue #379]: performance: Optimize cross join operations in join_transcripts_list.R (priority:medium, area:core, performance)
+- [Issue #378]: performance: Implement chunked reading for large files (priority:medium, area:core, performance)
+- [Issue #378]: performance: Implement chunked reading for large files (priority:medium, area:core, performance)
+- [Issue #375]: security: Implement file size limits for transcript processing (priority:medium, area:core)
+- [Issue #374]: enhancement: Add file organization checks to pre-PR validation process (enhancement, priority:medium)
+- [Issue #373]: enhancement: Integrate file organization prevention script into CI/CD pipeline (enhancement, priority:medium, ci)
+- [Issue #373]: enhancement: Integrate file organization prevention script into CI/CD pipeline (enhancement, priority:medium, ci)
+- [Issue #368]: refactor: Decompose large functions for better maintainability (enhancement, priority:low, refactor)
+- [Issue #368]: refactor: Decompose large functions for better maintainability (enhancement, priority:low, refactor)
+- [Issue #367]: style: Address lint warnings and improve code consistency (enhancement, priority:low, refactor)
+- [Issue #367]: style: Address lint warnings and improve code consistency (enhancement, priority:low, refactor)
+- [Issue #366]: refactor: Standardize error handling across functions (enhancement, priority:low, refactor)
+- [Issue #366]: refactor: Standardize error handling across functions (enhancement, priority:low, refactor)
+- [Issue #365]: test: Add comprehensive VTT test fixtures for edge case testing (enhancement, priority:medium, area:testing)
+- [Issue #365]: test: Add comprehensive VTT test fixtures for edge case testing (enhancement, priority:medium, area:testing)
+- [Issue #364]: test: Reduce test warning noise for cleaner output (priority:low, area:testing, refactor)
+- [Issue #364]: test: Reduce test warning noise for cleaner output (priority:low, area:testing, refactor)
+- [Issue #363]: test: Add comprehensive edge case testing for VTT parsing (enhancement, priority:medium, area:testing)
+- [Issue #363]: test: Add comprehensive edge case testing for VTT parsing (enhancement, priority:medium, area:testing)
+- [Issue #349]: performance(benchmark): establish comprehensive performance benchmarking for optimized functions (enhancement, priority:medium, performance)
+- [Issue #349]: performance(benchmark): establish comprehensive performance benchmarking for optimized functions (enhancement, priority:medium, performance)
+- [Issue #348]: performance(test): make performance test thresholds configurable for different environments (priority:medium, area:testing, performance)
+- [Issue #348]: performance(test): make performance test thresholds configurable for different environments (priority:medium, area:testing, performance)
+- [Issue #345]: performance: minor speedups and safety tweaks (enhancement, priority:low)
+- [Issue #344]: refactor(test): reduce test output pollution at the source (priority:medium, area:testing, refactor)
+- [Issue #344]: refactor(test): reduce test output pollution at the source (priority:medium, area:testing, refactor)
+- [Issue #343]: refactor(schema): robust schema type checks via inherits (priority:medium, refactor)
+- [Issue #342]: refactor(api): trim the public API surface (soft deprecations) (documentation, priority:medium, refactor)
+- [Issue #342]: refactor(api): trim the public API surface (soft deprecations) (documentation, priority:medium, refactor)
+- [Issue #341]: refactor(privacy): unify hashing/anonymization implementation (priority:medium, refactor, privacy)
+- [Issue #341]: refactor(privacy): unify hashing/anonymization implementation (priority:medium, refactor, privacy)
+- [Issue #340]: performance: vectorized/data.table summarization in transcript metrics (enhancement, priority:medium)
+- [Issue #339]: refactor(scripts): deduplicate context/update scripts and gate PROJECT.md prompts (documentation, priority:medium, refactor)
+- [Issue #339]: refactor(scripts): deduplicate context/update scripts and gate PROJECT.md prompts (documentation, priority:medium, refactor)
+- [Issue #338]: refactor\(error\): standardize error signaling and quiet default output (priority:medium, refactor, docs, ci)
+- [Issue #338]: refactor\(error\): standardize error signaling and quiet default output (priority:medium, refactor, docs, ci)
+- [Issue #338]: refactor\(error\): standardize error signaling and quiet default output (priority:medium, refactor, docs, ci)
+- [Issue #334]: Epic: Tutorials overhaul - privacy-first, progressive learning, best-practice pattern (privacy, docs, epic, tutorial)
+- [Issue #334]: Epic: Tutorials overhaul - privacy-first, progressive learning, best-practice pattern (privacy, docs, epic, tutorial)
+- [Issue #334]: Epic: Tutorials overhaul - privacy-first, progressive learning, best-practice pattern (privacy, docs, epic, tutorial)
+- [Issue #334]: Epic: Tutorials overhaul - privacy-first, progressive learning, best-practice pattern (privacy, docs, epic, tutorial)
+- [Issue #311]: chore(context): fix PROJECT.md “update required” false-positive (area:infrastructure)
+- [Issue #309]: chore(scripts): add trailing newline at EOF in 3 scripts (area:infrastructure)
+- [Issue #302]: chore(test-output): wrap diagnostic output behind TESTTHAT guard (priority:medium, area:infrastructure)
+- [Issue #301]: release(0.1.0): prepare NEWS.md, tag and build (documentation, priority:medium, CRAN:submission)
+- [Issue #301]: release(0.1.0): prepare NEWS.md, tag and build (documentation, priority:medium, CRAN:submission)
+- [Issue #300]: chore(metadata): verify DESCRIPTION/NAMESPACE/license (documentation, priority:medium, CRAN:submission, area:documentation)
+- [Issue #300]: chore(metadata): verify DESCRIPTION/NAMESPACE/license (documentation, priority:medium, CRAN:submission, area:documentation)
+- [Issue #300]: chore(metadata): verify DESCRIPTION/NAMESPACE/license (documentation, priority:medium, CRAN:submission, area:documentation)
+- [Issue #298]: feat(privacy): name masking helper with docs (priority:high, area:core, privacy)
+- [Issue #298]: feat(privacy): name masking helper with docs (priority:high, area:core, privacy)
+- [Issue #297]: ci(rhub): add rhub::check() job (priority:medium, CRAN:submission, area:infrastructure)
+- [Issue #297]: ci(rhub): add rhub::check() job (priority:medium, CRAN:submission, area:infrastructure)
+- [Issue #296]: ci(actions): spell/style/coverage jobs (priority:medium, area:infrastructure)
+- [Issue #293]: test(ingestion): malformed inputs edge cases (priority:high, area:testing, test)
+- [Issue #293]: test(ingestion): malformed inputs edge cases (priority:high, area:testing, test)
+- [Issue #292]: docs(vignettes): participation equity vignette (documentation, priority:medium, area:documentation)
+- [Issue #292]: docs(vignettes): participation equity vignette (documentation, priority:medium, area:documentation)
+- [Issue #291]: docs(readme): rebuild README.md via devtools::build_readme() (documentation, priority:medium, area:documentation)
+- [Issue #291]: docs(readme): rebuild README.md via devtools::build_readme() (documentation, priority:medium, area:documentation)
+- [Issue #289]: style(pkg): run styler and configure lintr (priority:medium, refactor, area:infrastructure)
+- [Issue #289]: style(pkg): run styler and configure lintr (priority:medium, refactor, area:infrastructure)
+- [Issue #288]: ci(actions): add R CMD check matrix across OS/R (priority:medium, CRAN:submission, area:infrastructure)
+- [Issue #288]: ci(actions): add R CMD check matrix across OS/R (priority:medium, CRAN:submission, area:infrastructure)
+- [Issue #282]: Plan: Near-term Simplification for CRAN Readiness (single-plan) (documentation, priority:high, CRAN:submission)
+- [Issue #282]: Plan: Near-term Simplification for CRAN Readiness (single-plan) (documentation, priority:high, CRAN:submission)
+- [Issue #277]: Tracking: Clear R CMD check NOTES and quiet diagnostics (documentation)
+- [Issue #246]: Phase 4: CI/CD Integration & Quality Assurance (enhancement, priority:medium, area:testing, area:infrastructure)
+- [Issue #246]: Phase 4: CI/CD Integration & Quality Assurance (enhancement, priority:medium, area:testing, area:infrastructure)
+- [Issue #246]: Phase 4: CI/CD Integration & Quality Assurance (enhancement, priority:medium, area:testing, area:infrastructure)
+- [Issue #245]: Phase 3: Perfect Development Experience (documentation, enhancement, priority:medium, area:infrastructure)
+- [Issue #245]: Phase 3: Perfect Development Experience (documentation, enhancement, priority:medium, area:infrastructure)
+- [Issue #245]: Phase 3: Perfect Development Experience (documentation, enhancement, priority:medium, area:infrastructure)
+- [Issue #244]: Phase 2: Docker Performance Optimization (enhancement, priority:high, area:infrastructure, performance)
+- [Issue #244]: Phase 2: Docker Performance Optimization (enhancement, priority:high, area:infrastructure, performance)
+- [Issue #244]: Phase 2: Docker Performance Optimization (enhancement, priority:high, area:infrastructure, performance)
+- [Issue #242]: Epic: Comprehensive Docker Development Environment Optimization (enhancement, priority:high, area:infrastructure, epic)
+- [Issue #242]: Epic: Comprehensive Docker Development Environment Optimization (enhancement, priority:high, area:infrastructure, epic)
+- [Issue #242]: Epic: Comprehensive Docker Development Environment Optimization (enhancement, priority:high, area:infrastructure, epic)
+- [Issue #240]: fix: Context script coverage display discrepancy and enhancements (bug, enhancement)
+- [Issue #240]: fix: Context script coverage display discrepancy and enhancements (bug, enhancement)
+- [Issue #230]: docs: Create CRAN submission preparation guide (documentation, priority:high, CRAN:submission)
+- [Issue #230]: docs: Create CRAN submission preparation guide (documentation, priority:high, CRAN:submission)
+- [Issue #229]: test: Improve test coverage for safe_name_matching_workflow.R (priority:medium, CRAN:submission)
+- [Issue #228]: test: Improve test coverage for privacy_audit.R (priority:medium, CRAN:submission)
+- [Issue #220]: fix: Wrap diagnostic output in test environment checks for CRAN compliance (priority:high, CRAN:submission, area:testing)
+- [Issue #220]: fix: Wrap diagnostic output in test environment checks for CRAN compliance (priority:high, CRAN:submission, area:testing)
+- [Issue #219]: fix: GitHub Pages deployment failing due to pkgdown build issues (bug, priority:medium, area:documentation)
+- [Issue #219]: fix: GitHub Pages deployment failing due to pkgdown build issues (bug, priority:medium, area:documentation)
+- [Issue #215]: test: Transition to test-driven design and ensure full functionality coverage (enhancement, CRAN:submission, area:testing, priority: high)
+- [Issue #215]: test: Transition to test-driven design and ensure full functionality coverage (enhancement, CRAN:submission, area:testing, priority: high)
+- [Issue #215]: test: Transition to test-driven design and ensure full functionality coverage (enhancement, CRAN:submission, area:testing, priority: high)
+- [Issue #211]: build: Add .Rbuildignore entries for top-level non-standard dirs (docs)
+- [Issue #210]: test: Add edge/error-path tests for analyze_transcripts and FERPA levels (coverage)
+- [Issue #209]: ci: Tune and enforce benchmark budgets (ci)
+- [Issue #208]: docs: Add Schemas/Provenance section to docs (docs)
+- [Issue #207]: refactor: Curate exports and internalize non-user helpers (docs)
+- [Issue #206]: docs: Add deprecation badges and removal timeline for legacy functions (docs)
+- [Issue #205]: Spin-offs: CI Templates for R (R CMD check, pkgdown Pages) (enhancement, area:documentation, area:infrastructure, ci, priority: medium)
+- [Issue #205]: Spin-offs: CI Templates for R (R CMD check, pkgdown Pages) (enhancement, area:documentation, area:infrastructure, ci, priority: medium)
+- [Issue #205]: Spin-offs: CI Templates for R (R CMD check, pkgdown Pages) (enhancement, area:documentation, area:infrastructure, ci, priority: medium)
+- [Issue #205]: Spin-offs: CI Templates for R (R CMD check, pkgdown Pages) (enhancement, area:documentation, area:infrastructure, ci, priority: medium)
+- [Issue #204]: Spin-offs: Data Processing Modules (VTT parser, Consolidation utils, Names, Pipeline) (enhancement, area:core, priority: medium)
+- [Issue #204]: Spin-offs: Data Processing Modules (VTT parser, Consolidation utils, Names, Pipeline) (enhancement, area:core, priority: medium)
+- [Issue #203]: Spin-offs: Privacy & Compliance Kits (Privacy Core, FERPA Toolkit) (enhancement, area:core, area:documentation, priority: medium)
+- [Issue #203]: Spin-offs: Privacy & Compliance Kits (Privacy Core, FERPA Toolkit) (enhancement, area:core, area:documentation, priority: medium)
+- [Issue #203]: Spin-offs: Privacy & Compliance Kits (Privacy Core, FERPA Toolkit) (enhancement, area:core, area:documentation, priority: medium)
+- [Issue #202]: Spin-offs: Dev Workflow & Context Automation (enhancement, area:documentation, area:infrastructure, priority: high)
+- [Issue #202]: Spin-offs: Dev Workflow & Context Automation (enhancement, area:documentation, area:infrastructure, priority: high)
+- [Issue #202]: Spin-offs: Dev Workflow & Context Automation (enhancement, area:documentation, area:infrastructure, priority: high)
+- [Issue #201]: Spin-offs: Testing & QA Kits (Real-World Testing, Shell QA, Segfault/Memcheck) (enhancement, area:testing, priority: high)
+- [Issue #201]: Spin-offs: Testing & QA Kits (Real-World Testing, Shell QA, Segfault/Memcheck) (enhancement, area:testing, priority: high)
+- [Issue #200]: Spin-off projects: roadmap and tracking (enhancement, priority: high)
+- [Issue #199]: Documentation overhaul (v0.2) (docs, tracking)
+- [Issue #199]: Documentation overhaul (v0.2) (docs, tracking)
+- [Issue #198]: Add a one-call orchestration helper (docs, reference, priority: high)
+- [Issue #198]: Add a one-call orchestration helper (docs, reference, priority: high)
+- [Issue #197]: Auto-detect unsupported Zoom file types with guidance (privacy, docs, reference, priority: high)
+- [Issue #197]: Auto-detect unsupported Zoom file types with guidance (privacy, docs, reference, priority: high)
+- [Issue #197]: Auto-detect unsupported Zoom file types with guidance (privacy, docs, reference, priority: high)
+- [Issue #196]: Enforce strict input validation in transcript functions (docs, reference, priority: high)
+- [Issue #196]: Enforce strict input validation in transcript functions (docs, reference, priority: high)
+- [Issue #195]: Document real-world testing scripts and workflow (docs, priority: medium)
+- [Issue #194]: Update pkgdown reference groups for Name Matching & Privacy (privacy, docs, pkgdown, priority: medium)
+- [Issue #194]: Update pkgdown reference groups for Name Matching & Privacy (privacy, docs, pkgdown, priority: medium)
+- [Issue #194]: Update pkgdown reference groups for Name Matching & Privacy (privacy, docs, pkgdown, priority: medium)
+- [Issue #193]: Document dataset: section_names_lookup (docs, reference, data, priority: medium)
+- [Issue #193]: Document dataset: section_names_lookup (docs, reference, data, priority: medium)
+- [Issue #193]: Document dataset: section_names_lookup (docs, reference, data, priority: medium)
+- [Issue #189]: Link `inst/new_analysis_template.Rmd` from README (docs, readme, priority: high)
+- [Issue #189]: Link `inst/new_analysis_template.Rmd` from README (docs, readme, priority: high)
+- [Issue #188]: Specify minimum R version in DESCRIPTION (docs, priority: high)
+- [Issue #186]: Add NEWS.md and wire it into pkgdown site (docs, pkgdown, priority: medium)
+- [Issue #186]: Add NEWS.md and wire it into pkgdown site (docs, pkgdown, priority: medium)
+- [Issue #185]: Add Performance tips article (vignette) (docs, vignettes, performance, priority: medium)
+- [Issue #185]: Add Performance tips article (vignette) (docs, vignettes, performance, priority: medium)
+- [Issue #185]: Add Performance tips article (vignette) (docs, vignettes, performance, priority: medium)
+- [Issue #184]: Add README to inst/extdata describing sample files (docs)
+- [Issue #183]: Clarify privacy defaults in README and link FERPA vignette (privacy, docs, readme, priority: high)
+- [Issue #183]: Clarify privacy defaults in README and link FERPA vignette (privacy, docs, readme, priority: high)
+- [Issue #183]: Clarify privacy defaults in README and link FERPA vignette (privacy, docs, readme, priority: high)
+- [Issue #182]: Document input validation and error behavior for key functions (docs, reference, priority: high)
+- [Issue #182]: Document input validation and error behavior for key functions (docs, reference, priority: high)
+- [Issue #181]: Organize pkgdown reference groups and navbar (docs, pkgdown, priority: medium)
+- [Issue #181]: Organize pkgdown reference groups and navbar (docs, pkgdown, priority: medium)
+- [Issue #180]: Create Troubleshooting & FAQ vignette (docs, vignettes, faq, priority: medium)
+- [Issue #180]: Create Troubleshooting & FAQ vignette (docs, vignettes, faq, priority: medium)
+- [Issue #180]: Create Troubleshooting & FAQ vignette (docs, vignettes, faq, priority: medium)
+- [Issue #179]: Add roster requirements to README and link to load_roster() (docs, readme, priority: high)
+- [Issue #179]: Add roster requirements to README and link to load_roster() (docs, readme, priority: high)
+- [Issue #178]: Document supported file types and limitations in README (docs, readme, priority: high)
+- [Issue #178]: Document supported file types and limitations in README (docs, readme, priority: high)
+- [Issue #177]: Add 60-second end-to-end quickstart snippet to README (docs, readme, priority: high)
+- [Issue #177]: Add 60-second end-to-end quickstart snippet to README (docs, readme, priority: high)
+- [Issue #176]: Improve Install section: devtools and pak; add CRAN note (docs, readme, priority: high)
+- [Issue #176]: Improve Install section: devtools and pak; add CRAN note (docs, readme, priority: high)
+- [Issue #175]: Add badges to README (R CMD check, pkgdown, license, lifecycle) (docs, readme, pkgdown, priority: high)
+- [Issue #175]: Add badges to README (R CMD check, pkgdown, license, lifecycle) (docs, readme, pkgdown, priority: high)
+- [Issue #175]: Add badges to README (R CMD check, pkgdown, license, lifecycle) (docs, readme, pkgdown, priority: high)
+

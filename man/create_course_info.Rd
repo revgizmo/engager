@@ -5,11 +5,11 @@
 \title{Create Course Information Tibble}
 \usage{
 create_course_info(
-  dept,
-  course,
-  section,
-  instructor,
-  session_length_hours,
+  dept = NULL,
+  course = NULL,
+  section = NULL,
+  instructor = NULL,
+  session_length_hours = 1.5,
   semester_start_mdy = "Jan 01, 2024",
   semester_end_mdy = "May 15, 2024",
   session_days = NULL,

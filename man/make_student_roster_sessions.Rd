@@ -4,7 +4,10 @@
 \alias{make_student_roster_sessions}
 \title{Make a DF of the Student Roster With Rows for Each Recorded Class Section}
 \usage{
-make_student_roster_sessions(transcripts_list_df, roster_small_df)
+make_student_roster_sessions(
+  transcripts_list_df = NULL,
+  roster_small_df = NULL
+)
 }
 \arguments{
 \item{transcripts_list_df}{A tibble listing the class sessions with corresponding transcript

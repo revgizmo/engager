@@ -20,6 +20,7 @@ Imports:
     jsonlite,
     lubridate,
     magrittr,
+    openxlsx,
     readr,
     rlang,
     stringr,
@@ -29,7 +30,10 @@ Suggests:
     withr,
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    purrr,
+    microbenchmark,
+    pryr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 URL: https://github.com/revgizmo/zoomstudentengagement

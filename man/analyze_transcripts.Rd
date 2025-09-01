@@ -5,7 +5,7 @@
 \title{Analyze Transcripts (High-level orchestration)}
 \usage{
 analyze_transcripts(
-  transcripts_folder,
+  transcripts_folder = NULL,
   names_to_exclude = c("dead_air"),
   write = FALSE,
   output_path = NULL

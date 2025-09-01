@@ -5,7 +5,7 @@
 \title{Write Metrics}
 \usage{
 write_metrics(
-  data,
+  data = NULL,
   what = c("engagement", "summary", "session_summary"),
   path = NULL,
   comments_format = c("text", "count"),

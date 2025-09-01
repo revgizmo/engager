@@ -4,7 +4,11 @@
 \alias{mask_user_names_by_metric}
 \title{Mask User Names by Metric}
 \usage{
-mask_user_names_by_metric(df, metric = "session_ct", target_student = "")
+mask_user_names_by_metric(
+  df = NULL,
+  metric = "session_ct",
+  target_student = ""
+)
 }
 \arguments{
 \item{df}{a tibble that summarizes results at the level of the class section

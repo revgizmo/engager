@@ -5,7 +5,7 @@
 \title{Check Data Retention Policy}
 \usage{
 check_data_retention_policy(
-  data,
+  data = NULL,
   retention_period = c("academic_year", "semester", "quarter", "custom"),
   custom_retention_days = NULL,
   date_column = NULL,

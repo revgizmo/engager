@@ -27,7 +27,7 @@
 #'   data_folder = tempdir(),
 #'   section_names_lookup_file = "section_names_lookup.csv"
 #' )
-prompt_name_matching <- function(unmatched_names,
+prompt_name_matching <- function(unmatched_names = NULL,
                                  privacy_level = getOption(
                                    "zoomstudentengagement.privacy_level",
                                    "mask"
@@ -185,8 +185,8 @@ generate_name_matching_guidance <- function(unmatched_names, privacy_level, incl
 #'   course_section = c("101.A", "101.A")
 #' )
 #' unmatched <- detect_unmatched_names(transcript_df, roster_df)
-detect_unmatched_names <- function(transcript_data,
-                                   roster_data,
+detect_unmatched_names <- function(transcript_data = NULL,
+                                   roster_data = NULL,
                                    name_mappings = NULL,
                                    privacy_level = getOption(
                                      "zoomstudentengagement.privacy_level",

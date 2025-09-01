@@ -1,237 +1,281 @@
-# Development Scripts
+# Context Capture System Documentation
 
-This directory contains utility scripts for development and project management.
+## Overview
 
-## 🎯 **Quick Start - Most Common Commands**
+The context capture system provides automated project status tracking and documentation updates for the zoomstudentengagement R package. It generates context files for AI agents and automatically updates PROJECT.md with current metrics.
 
-### For Getting Current Status (RECOMMENDED)
+## Scripts
+
+### Core Scripts
+
+#### `save-context.sh`
+Main context generation script that creates shell, R, and combined context files.
+
+**Usage:**
 ```bash
-# Save context to files for linking in Cursor
+# Generate context files only
 ./scripts/save-context.sh
 
-# Then link in Cursor with: @full-context.md
+# Check if PROJECT.md needs updating
+./scripts/save-context.sh --check-project-md
+
+# Update PROJECT.md with current metrics
+./scripts/save-context.sh --fix-project-md
+
+# Dry run - show what would be updated
+./scripts/save-context.sh --fix-project-md --dry-run
+
+# Show help
+./scripts/save-context.sh --help
 ```
 
-### For New Cursor Chats
-```bash
-# Generate context for copying to new chat
-./scripts/context-for-new-chat.sh
-```
-
-### Before Creating PRs
-```bash
-# Run comprehensive validation
-Rscript scripts/pre-pr-validation.R
-```
-
-## Context Scripts for Cursor
-
-### `save-context.sh` ⭐ **RECOMMENDED**
-**Purpose**: Save context output to files for linking in Cursor chats
-
-**Usage**:
-```bash
-# Save context to files
-./scripts/save-context.sh
-
-# Then link in Cursor:
-# @context.md - Shell context
-# @r-context.md - R-specific context  
-# @full-context.md - Combined context (RECOMMENDED)
-```
-
-**Why This is Best**: 
-- Saves context to files you can link with `@full-context.md`
-- Includes backups and validation
-- Perfect for ongoing development work
-- No need to copy/paste - just link the file
-
-**Creates**:
+**Output Files:**
 - `.cursor/context.md` - Shell context
 - `.cursor/r-context.md` - R-specific context
-- `.cursor/full-context.md` - Combined context (use this one!)
-- `.cursor/context_YYYYMMDD_HHMMSS.md` - Timestamped version
+- `.cursor/full-context.md` - Combined context
+- `.cursor/metrics.json` - Current project metrics
+- `.cursor/context_YYYYMMDD_HHMMSS.md` - Timestamped backup
 
-### `context-for-new-chat.sh`
-**Purpose**: Generate comprehensive project context for new Cursor chats
+#### `check-project-md.sh`
+Validates if PROJECT.md needs updating by comparing current metrics with stored values.
 
-**Usage**:
+**Usage:**
 ```bash
-# Generate context
-./scripts/context-for-new-chat.sh
-
-# Copy output to new Cursor chat
+./scripts/check-project-md.sh
 ```
 
-**When to Use**: 
-- Starting a completely new Cursor chat
-- Need to copy/paste context into chat
-- Don't need persistent context files
+**Exit Codes:**
+- `0` - PROJECT.md is up to date
+- `1` - PROJECT.md needs updating
 
-**Provides**:
-- Project status and metrics
-- Current GitHub issues and priorities
-- Development workflow and conventions
-- CRAN readiness status
-- Next steps and immediate priorities
+#### `update-project-md.sh`
+Updates PROJECT.md with current metrics from the JSON file.
 
-### `context-for-new-chat.R`
-**Purpose**: Generate R-specific context for new Cursor chats
-
-**Usage**:
+**Usage:**
 ```bash
-# Generate R-specific context
+# Update PROJECT.md
+./scripts/update-project-md.sh
+
+# Dry run - show what would be updated
+./scripts/update-project-md.sh --dry-run
+```
+
+#### `validate-context-update.sh`
+Validates that all context updates were successful.
+
+**Usage:**
+```bash
+./scripts/validate-context-update.sh
+```
+
+**Checks:**
+- Metrics JSON exists and is valid
+- PROJECT.md is up to date
+- All context files exist
+
+### Integration Scripts
+
+#### `pre-pr.sh`
+Complete pre-PR workflow that runs validation, refreshes context, and updates PROJECT.md.
+
+**Usage:**
+```bash
+./scripts/pre-pr.sh [args passed to pre-pr-validation.R]
+```
+
+**Workflow:**
+1. Runs pre-PR validation
+2. Refreshes context files
+3. Updates PROJECT.md with current metrics
+
+#### `r-environment-check.sh`
+Assesses R development environment capabilities for AI agents.
+
+**Usage:**
+```bash
+./scripts/r-environment-check.sh
+```
+
+**Environment Types:**
+- `FULL_DEVELOPMENT` - Can build, test, and develop
+- `TESTING_DEVELOPMENT` - Can build and test, limited dev tools
+- `BUILD_ONLY` - Can build, limited testing
+- `BACKGROUND` - Code analysis only
+
+## Metrics Tracking
+
+### Metrics JSON Structure
+
+The system generates `.cursor/metrics.json` with the following structure:
+
+```json
+{
+  "coverage": 90.48,
+  "tests_passed": 1875,
+  "failures": 0,
+  "skipped": 15,
+  "rcmd_notes": 2,
+  "open_issues": 30,
+  "exported_functions": 60,
+  "last_updated": "2025-08-28",
+  "package_status": "EXCELLENT - Very Close to CRAN Ready"
+}
+```
+
+### PROJECT.md Updates
+
+The system updates specific lines in PROJECT.md:
+
+- **Date**: `Updated: YYYY-MM-DD`
+- **Test Suite**: `- **Test Suite**: **XXXX tests passing, 0 failures**`
+- **R CMD Check**: `- **R CMD Check**: **0 errors, 0 warnings, X notes**`
+- **Test Coverage**: `- **Test Coverage**: XX.XX% (target achieved)`
+
+## Workflow Integration
+
+### Pre-PR Workflow
+
+The complete pre-PR workflow automatically:
+
+1. **Validates Code**: Runs comprehensive validation checks
+2. **Refreshes Context**: Generates current context files
+3. **Updates Documentation**: Updates PROJECT.md with current metrics
+4. **Validates Updates**: Ensures all updates were successful
+
+### AI Agent Integration
+
+AI agents can use the context system by:
+
+1. **Linking Context Files**: Use `@full-context.md` in Cursor chats
+2. **Checking Status**: Run `./scripts/check-project-md.sh`
+3. **Updating Documentation**: Run `./scripts/save-context.sh --fix-project-md`
+4. **Validating Updates**: Run `./scripts/validate-context-update.sh`
+
+## Error Handling
+
+### Common Issues
+
+1. **Metrics JSON Generation Fails**
+   - Check R package dependencies (`devtools`, `covr`, `jsonlite`)
+   - Verify file permissions for `.cursor/` directory
+   - Check for variable scope issues in R script
+
+2. **PROJECT.md Update Fails**
+   - Verify file permissions for PROJECT.md
+   - Check that sed commands work on your system
+   - Ensure backup creation works
+
+3. **GitHub CLI Issues**
+   - Verify `gh` CLI is installed and authenticated
+   - Check GitHub API rate limits
+   - Ensure repository access permissions
+
+### Debugging Commands
+
+```bash
+# Check current metrics
+cat .cursor/metrics.json | jq .
+
+# Check PROJECT.md status
+./scripts/check-project-md.sh
+
+# Test individual components
 Rscript scripts/context-for-new-chat.R
+./scripts/update-project-md.sh --dry-run
 
-# Copy output to new Cursor chat
+# Validate complete workflow
+./scripts/validate-context-update.sh
 ```
 
-**When to Use**:
-- Need detailed R package information
-- Debugging R-specific issues
-- Want to see package structure and dependencies
+## Dependencies
 
-**Provides**:
-- Package loading status
-- Test results and coverage
-- Package structure and dependencies
-- Exported functions
-- Common issues and solutions
-- Development tips
+### Required Tools
+- `R` and `Rscript` - R programming environment
+- `jq` - JSON processing
+- `sed` - Text processing
+- `git` - Version control
+- `gh` - GitHub CLI (optional, for issue counting)
 
-### Combined Usage
-For complete context, run both scripts:
-```bash
-./scripts/context-for-new-chat.sh && Rscript scripts/context-for-new-chat.R
-```
+### Required R Packages
+- `devtools` - Package development
+- `covr` - Test coverage
+- `jsonlite` - JSON processing
+- `testthat` - Testing framework
 
-### `get-context.sh`
-**Purpose**: Run both context scripts in sequence
+## Best Practices
 
-**Usage**:
-```bash
-# Get complete context
-./scripts/get-context.sh
-```
+### For Developers
+1. **Always run pre-PR workflow** before creating pull requests
+2. **Check context accuracy** when making significant changes
+3. **Validate updates** after running context generation
+4. **Use dry-run** to preview changes before applying them
 
-## Pre-PR Validation
+### For AI Agents
+1. **Check environment capabilities** before starting work
+2. **Link context files** in Cursor chats for current status
+3. **Update PROJECT.md** when project status changes
+4. **Validate all changes** before proposing them
 
-### `pre-pr-validation.R` ⭐ **ALWAYS RUN BEFORE PRs**
-**Purpose**: Comprehensive validation before creating pull requests
+### For Maintainers
+1. **Monitor context accuracy** regularly
+2. **Review metrics JSON** for data quality
+3. **Test workflow integration** after changes
+4. **Document new metrics** when adding them
 
-**Usage**:
-```bash
-# Run validation
-Rscript scripts/pre-pr-validation.R
-```
+## Troubleshooting
 
-**Checks**:
-- Code formatting with styler
-- Documentation completeness
-- Test execution
-- R CMD check
-- Spell checking
-- Coverage analysis
+### Validation Failures
 
-**Why This is Critical**:
-- Catches issues that would fail in CI/CD
-- Ensures CRAN compliance
-- Validates all documentation
-- Runs full package check
+If validation fails, check:
 
-## Real-World Testing
+1. **File Permissions**: Ensure write access to `.cursor/` and `PROJECT.md`
+2. **Dependencies**: Verify all required tools and packages are installed
+3. **JSON Format**: Check that metrics.json is valid JSON
+4. **Sed Patterns**: Verify sed commands match PROJECT.md format
 
-### `real_world_testing/`
-**Purpose**: Testing infrastructure for confidential data validation
+### Context Generation Issues
 
-**Contents**:
-- `run_real_world_tests.R` - Main testing script
-- `run_tests.sh` - Test runner script
-- `real_world_test_plan.md` - Comprehensive testing plan
-- `README.md` - Testing documentation
+If context generation fails:
 
-**Usage**:
-```bash
-# Set up testing environment (see real_world_testing/README.md)
-cd zoom_real_world_testing
-./run_tests.sh
-```
+1. **R Environment**: Check R package availability
+2. **Variable Scope**: Verify all variables are properly defined
+3. **Error Handling**: Check tryCatch blocks in R script
+4. **Fallback Values**: Ensure default values are reasonable
 
-## 🚀 **Development Workflow**
+### Integration Problems
 
-### Daily Development
-1. **Get current status**: `./scripts/save-context.sh`
-2. **Link context**: Use `@full-context.md` in Cursor
-3. **Make changes and test**: `Rscript scripts/pre-pr-validation.R`
-4. **Create PR**: Use GitHub CLI or web interface
+If workflow integration fails:
 
-### New Chat Setup
-1. **Generate context**: `./scripts/context-for-new-chat.sh`
-2. **Copy output** to new Cursor chat
-3. **Start development work**
+1. **Script Permissions**: Ensure all scripts are executable
+2. **Path Issues**: Verify script paths are correct
+3. **Exit Codes**: Check that scripts return appropriate exit codes
+4. **Error Propagation**: Ensure errors are properly handled
 
-### Before PR Creation
-1. **Run validation**: `Rscript scripts/pre-pr-validation.R`
-2. **Fix any issues** that come up
-3. **Create PR** only after all checks pass
+## Future Enhancements
 
-## Quick Reference
+### Planned Features
+- **Real-time Metrics**: Live metrics from GitHub API
+- **Performance Tracking**: Build and test performance metrics
+- **Dependency Monitoring**: Package dependency status
+- **Automated Alerts**: Notifications for metric changes
 
-### Essential Commands
-```bash
-# Get project status (RECOMMENDED)
-./scripts/save-context.sh
+### Potential Improvements
+- **Web Interface**: Web-based metrics dashboard
+- **Historical Tracking**: Metric history and trends
+- **Custom Metrics**: User-defined metric tracking
+- **Integration APIs**: REST API for external tools
 
-# Generate context for new chat
-./scripts/context-for-new-chat.sh
+## Support
 
-# Validate before PR
-Rscript scripts/pre-pr-validation.R
+For issues with the context capture system:
 
-# Check current issues
-gh issue list --limit 10
+1. **Check Documentation**: Review this README and implementation guide
+2. **Run Diagnostics**: Use validation and debugging commands
+3. **Review Logs**: Check script output for error messages
+4. **Create Issues**: Report problems with detailed information
 
-# View specific issue
-gh issue view <ISSUE_NUMBER>
-```
+---
 
-### Context Templates
-For quick context, copy and paste:
-
-```markdown
-## Project Context: zoomstudentengagement R Package
-
-**Current Status**: EXCELLENT - Very Close to CRAN Ready
-**Goal**: CRAN submission preparation
-**Test Status**: 0 failures, 453 tests passing
-**Coverage**: 83.41% (target: 90%)
-**R CMD Check**: 0 errors, 0 warnings, 3 notes
-
-**Key Files to Review**:
-- README.md - Package overview
-- PROJECT.md - Current status and CRAN readiness
-- docs/development/docs/development/docs/development/ISSUE_MANAGEMENT_QUICK_REFERENCE.md - Issue workflow
-- CONTRIBUTING.md - Contribution guidelines
-
-**Current Priorities**:
-1. Test coverage improvement (83.41% → 90%)
-2. Test warnings cleanup (29 warnings)
-3. R CMD check notes resolution
-4. Real-world testing with confidential data
-5. FERPA/Security compliance review
-```
-
-## 📚 **Documentation**
-
-For detailed information about using context scripts with Cursor, see:
-- [Cursor Integration Guide](../docs/development/CURSOR_INTEGRATION.md)
-- [Issue Management Quick Reference](../docs/development/docs/development/docs/development/ISSUE_MANAGEMENT_QUICK_REFERENCE.md)
-- [Real-World Testing Guide](../zoom_real_world_testing/README.md)
-
-## 💡 **Pro Tips**
-
-1. **Use `save-context.sh` for ongoing work** - Link with `@full-context.md`
-2. **Use `context-for-new-chat.sh` for new chats** - Copy/paste output
-3. **Always run `pre-pr-validation.R` before PRs** - Catches issues early
-4. **Keep context files updated** - Run `save-context.sh` after major changes
-5. **Link context files in Cursor** - Much easier than copying/pasting 
+**Last Updated**: 2025-08-28  
+**Version**: 1.0.0  
+**Status**: Production Ready 

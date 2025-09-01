@@ -71,7 +71,7 @@ devtools::install_github("revgizmo/zoomstudentengagement")
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-# library(zoomstudentengagement)
+
 ```
 
 
@@ -88,15 +88,13 @@ library(dplyr)
 ## 1. Define Inputs:
 
 ```{r results='asis'}
-# data_folder_input <- 'data_201_2024_t1_spring'
-# data_folder_input <- 'data_lft'
 
 # library(zoomstudentengagement)
 data_folder_input <- system.file("extdata", package = "zoomstudentengagement")
 
 
 
-# data_folder_input <- 'data'
+
 
 transcripts_folder_input <- "transcripts"
 topic_split_pattern_input <- paste0(
@@ -164,7 +162,6 @@ cat(paste0(
 + `*r library(zoomstudentengagement) `
     
 ```{r}
-# library(zoomstudentengagement)
 
 devtools::load_all()
 # devtools::load_all('../zoomstudentengagement')

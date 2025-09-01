@@ -29,9 +29,9 @@
 #' )
 #' }
 join_transcripts_list <- function(
-    df_zoom_recorded_sessions,
-    df_transcript_files,
-    df_cancelled_classes) {
+    df_zoom_recorded_sessions = NULL,
+    df_transcript_files = NULL,
+    df_cancelled_classes = NULL) {
   match_start_time <- start_time_local <- match_end_time <- section <- NULL
 
   # Return empty tibble with correct structure if any input is invalid

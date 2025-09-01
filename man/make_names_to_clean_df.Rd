@@ -4,7 +4,7 @@
 \alias{make_names_to_clean_df}
 \title{Make Names to Clean DF}
 \usage{
-make_names_to_clean_df(clean_names_df)
+make_names_to_clean_df(clean_names_df = NULL)
 }
 \arguments{
 \item{clean_names_df}{A tibble containing session details and summary metrics

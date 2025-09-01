@@ -53,7 +53,7 @@
 #' mask_user_names_by_metric(sample_summary, target_student = "Jane Doe")
 #' }
 mask_user_names_by_metric <-
-  function(df,
+  function(df = NULL,
            metric = "session_ct",
            target_student = "") {
     row_num <- preferred_name <- section <- NULL

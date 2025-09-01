@@ -22,7 +22,7 @@
 #' # Minimal example
 #' # plot_users(df, metric = "session_ct")
 plot_users <- function(
-    data,
+    data = NULL,
     metric = "session_ct",
     student_col = "name",
     facet_by = c("section", "transcript_file", "none"),
