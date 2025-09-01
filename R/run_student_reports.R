@@ -47,29 +47,34 @@ run_student_reports <- function(
         sprintf("%s - section %s - %s.html", base_name, target_section, target_student)
       )
       # Add error handling for R Markdown rendering
-      tryCatch({
-        rmarkdown::render(
-          template,
-          params = list(
-            target_section = target_section,
-            target_student = target_student,
-            data_folder = data_folder,
-            transcripts_session_summary_file = transcripts_session_summary_file,
-            transcripts_summary_file = transcripts_summary_file
-          ),
-          output_file = output_file,
-          output_format = output_format
-        )
-      }, error = function(e) {
-        warning(sprintf("Failed to render report for section %s, student %s: %s", 
-                       target_section, target_student, e$message))
-        # Create a simple error report instead
-        error_content <- sprintf(
-          "Error generating report for section %s, student %s: %s",
-          target_section, target_student, e$message
-        )
-        writeLines(error_content, output_file)
-      })
+      tryCatch(
+        {
+          rmarkdown::render(
+            template,
+            params = list(
+              target_section = target_section,
+              target_student = target_student,
+              data_folder = data_folder,
+              transcripts_session_summary_file = transcripts_session_summary_file,
+              transcripts_summary_file = transcripts_summary_file
+            ),
+            output_file = output_file,
+            output_format = output_format
+          )
+        },
+        error = function(e) {
+          warning(sprintf(
+            "Failed to render report for section %s, student %s: %s",
+            target_section, target_student, e$message
+          ))
+          # Create a simple error report instead
+          error_content <- sprintf(
+            "Error generating report for section %s, student %s: %s",
+            target_section, target_student, e$message
+          )
+          writeLines(error_content, output_file)
+        }
+      )
       outputs <- c(outputs, output_file)
     }
   }
