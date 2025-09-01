@@ -149,30 +149,37 @@ export_ideal_transcripts_json <- function(
   invisible(file_path)
 }
 
-#' Export Ideal Course Transcripts to Excel
+#' Export Ideal Course Transcripts to Excel (Temporarily CSV)
 #'
-#' Exports ideal course transcript data to Excel format with multiple sheets
-#' and rich formatting.
+#' Exports ideal course transcript data to CSV format as a temporary workaround
+#' for Excel export segfault issues. This function temporarily creates CSV files
+#' instead of Excel files due to openxlsx package segfault problems.
 #'
 #' @param transcript_data Data frame containing transcript data
 #' @param file_path Character. Output file path. If NULL, generates default name
 #' @param privacy_level Character. Privacy level for data masking. Default from option
 #' @param include_summary_sheet Logical. Whether to include summary sheet. Default: TRUE
 #' @param include_metadata_sheet Logical. Whether to include metadata sheet. Default: TRUE
-#' @return Invisibly returns the workbook object
+#' @return Invisibly returns the file path (CSV format due to temporary workaround)
 #' @export
 #' @examples
 #' \dontrun{
-#' # Export with default settings
+#' # Export with default settings (creates CSV file)
 #' export_ideal_transcripts_excel(transcript_data)
 #'
-#' # Export with custom sheets
+#' # Export with custom sheets (creates separate CSV files)
 #' export_ideal_transcripts_excel(
 #'   transcript_data,
 #'   include_summary_sheet = FALSE,
 #'   include_metadata_sheet = TRUE
 #' )
 #' }
+#' @note
+#' This function temporarily exports to CSV format instead of Excel due to
+#' segfault issues with the openxlsx package. The function name is maintained
+#' for backward compatibility, but it creates CSV files with appropriate
+#' extensions. Summary and metadata sheets are created as separate CSV files
+#' when requested.
 export_ideal_transcripts_excel <- function(
     transcript_data = NULL,
     file_path = NULL,

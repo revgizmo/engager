@@ -1,5 +1,9 @@
 # zoomstudentengagement News
 
+## 1.0.1 (Unreleased)
+- **Segfault fixes**: Resolved critical segfault issues in R Markdown template rendering and Excel export functionality.
+- **Excel export workaround**: Temporarily disabled openxlsx operations due to segfault issues; `export_ideal_transcripts_excel()` now exports to CSV format with backward compatibility.
+
 ## 1.0.0 (2025-08-14)
 - **CRAN Release**: First stable release ready for CRAN submission
 - **Comprehensive Refactoring**: Complete code quality overhaul with schema validation and error handling
