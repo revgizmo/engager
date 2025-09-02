@@ -7,6 +7,8 @@ library(devtools)
 library(lintr)
 library(styler)
 
+
+
 cat("🔍 Running Pre-PR Validation (Bugbot-style checks)...\n\n")
 
 # Progress indicator functions
@@ -240,9 +242,42 @@ show_progress(
 
 # 7. Testing
 cat("\n7. Testing:\n")
+
+# Check environment variables and platform safety for benchmarking
+do_benchmarks <- Sys.getenv("PREPR_DO_BENCH", "0") == "1"  # Explicit string comparison
+platform_safe <- !grepl("aarch64|arm64", Sys.info()["machine"])
+microbenchmark_available <- requireNamespace("microbenchmark", quietly = TRUE)
+
+
+
+cat("   📊 Benchmark Configuration:\n")
+cat("      - PREPR_DO_BENCH:", ifelse(do_benchmarks, "enabled", "disabled (default)"), "\n")
+cat("      - Platform safe:", ifelse(platform_safe, "yes", "no (ARM64 detected)"), "\n")
+cat("      - microbenchmark available:", ifelse(microbenchmark_available, "yes", "no"), "\n")
+
+if (do_benchmarks && platform_safe && microbenchmark_available) {
+  cat("      - Benchmarking: ENABLED (all conditions met)\n")
+} else {
+  cat("      - Benchmarking: DISABLED (", 
+      if (!do_benchmarks) "flag not set" 
+      else if (!platform_safe) "platform not supported"
+      else "microbenchmark not available", ")\n")
+}
+
 validation_status$testing <- show_progress(
   "   🔄 Running test suite",
   function() {
+    # Set environment variable to control benchmarking in tests
+    if (do_benchmarks && platform_safe && microbenchmark_available) {
+      cat("   🚀 Running with benchmarking enabled\n")
+      # Set environment variable for this R session
+      Sys.setenv("PREPR_DO_BENCH" = "1")
+    } else {
+      cat("   ⏭️  Skipping benchmarking tests\n")
+      # Set environment variable for this R session
+      Sys.setenv("PREPR_DO_BENCH" = "0")
+    }
+    
     # Run tests with timeout and error handling
     test_results <- devtools::test(reporter = "stop")
     cat("   ✅ All tests pass\n")

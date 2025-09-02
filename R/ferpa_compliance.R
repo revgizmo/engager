@@ -511,13 +511,10 @@ log_ferpa_compliance_check <- function(compliant,
 
   # Store in package environment for session tracking (CRAN compliant)
   log_key <- paste0("zse_ferpa_log_", format(timestamp, "%Y%m%d_%H%M%S"))
-  
-  # Use a package-level environment for logging
-  if (!exists("zse_logs_env", envir = .GlobalEnv)) {
-    assign("zse_logs_env", new.env(), envir = .GlobalEnv)
-  }
-  logs_env <- get("zse_logs_env", envir = .GlobalEnv)
-  logs_env[[log_key]] <- log_entry
+  env <- .zse_get_logs_env()
+  current <- env$logs
+  current[[log_key]] <- log_entry
+  env$logs <- current
 
   # Optionally write to file if logging is enabled
   log_file <- getOption("zoomstudentengagement.ferpa_log_file", NULL)

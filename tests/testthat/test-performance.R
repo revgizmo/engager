@@ -1,4 +1,10 @@
 # Test file for performance benchmarking
+#
+# Environment Variable Control:
+# - PREPR_DO_BENCH=1: Enable benchmarking tests (for development)
+# - PREPR_DO_BENCH=0 or unset: Skip benchmarking tests (for pre-PR validation)
+# - This prevents segfaults in CI/pre-PR environments while allowing
+#   developers to test performance when needed
 # Tests for performance regression detection and benchmarking functions
 
 library(testthat)
@@ -70,6 +76,11 @@ test_that("benchmarking functions work correctly", {
   # Skip if microbenchmark causes issues
   skip_on_cran()
 
+  # Skip if PREPR_DO_BENCH is not enabled (for pre-PR validation)
+  if (Sys.getenv("PREPR_DO_BENCH") != "1") {
+    skip("Benchmarking disabled in pre-PR validation (set PREPR_DO_BENCH=1 to enable)")
+  }
+
   # Skip if microbenchmark is not available or causes issues
   if (!requireNamespace("microbenchmark", quietly = TRUE)) {
     skip("microbenchmark package not available")
@@ -108,6 +119,11 @@ test_that("performance regression detection works", {
 test_that("benchmark results have expected structure", {
   # Skip on CRAN to avoid long-running tests
   skip_on_cran()
+
+  # Skip if PREPR_DO_BENCH is not enabled (for pre-PR validation)
+  if (Sys.getenv("PREPR_DO_BENCH") != "1") {
+    skip("Benchmarking disabled in pre-PR validation (set PREPR_DO_BENCH=1 to enable)")
+  }
 
   # Use tryCatch to handle potential segmentation faults
   results <- tryCatch(
@@ -195,6 +211,11 @@ test_that("performance benchmarks handle missing files gracefully", {
   # Test that benchmarking functions handle missing files properly
   skip_on_cran()
 
+  # Skip if PREPR_DO_BENCH is not enabled (for pre-PR validation)
+  if (Sys.getenv("PREPR_DO_BENCH") != "1") {
+    skip("Benchmarking disabled in pre-PR validation (set PREPR_DO_BENCH=1 to enable)")
+  }
+
   # Use tryCatch to handle potential segmentation faults
   result <- tryCatch(
     {
@@ -216,6 +237,11 @@ test_that("performance benchmarks handle missing files gracefully", {
 test_that("memory profiling works when pryr is available", {
   # Skip on CRAN to avoid long-running tests
   skip_on_cran()
+
+  # Skip if PREPR_DO_BENCH is not enabled (for pre-PR validation)
+  if (Sys.getenv("PREPR_DO_BENCH") != "1") {
+    skip("Benchmarking disabled in pre-PR validation (set PREPR_DO_BENCH=1 to enable)")
+  }
 
   # Test memory profiling functionality
   if (requireNamespace("pryr", quietly = TRUE)) {
