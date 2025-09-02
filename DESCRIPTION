@@ -1,4 +1,4 @@
-Package: zoomstudentengagement
+Package: engager
 Type: Package
 Title: Zoom Student Engagement
 Version: 1.0.0
@@ -36,5 +36,7 @@ Suggests:
     pryr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+# TODO: update after repo rename
 URL: https://github.com/revgizmo/zoomstudentengagement
+# TODO: update after repo rename
 BugReports: https://github.com/revgizmo/zoomstudentengagement/issues
