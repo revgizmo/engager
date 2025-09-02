@@ -73,6 +73,7 @@
 ^\.Rproj\.user$
 ^doc$
 ^Meta$
+^\.pre-commit-config\.yaml$
 
 # IDE and development files
 ^\.vscode/
