@@ -30,37 +30,37 @@ jobs:
       
       - name: Install dependencies
         run: |
-          install.packages(c("bookdown", "rmarkdown", "knitr"))
+          Rscript -e 'install.packages(c("bookdown", "rmarkdown", "knitr"))'
       
       - name: Validate R Markdown files
         run: |
           echo "Checking R Markdown files for syntax errors..."
-          find . -name "*.Rmd" -exec Rscript -e '
+          find . -name "*.Rmd" -exec Rscript -e "
             tryCatch({
               rmarkdown::render(commandArgs(trailingOnly = TRUE)[1], 
-                              output_format = "html_document",
-                              output_file = tempfile(fileext = ".html"),
+                              output_format = 'html_document',
+                              output_file = tempfile(fileext = '.html'),
                               quiet = TRUE)
-              cat("✓", commandArgs(trailingOnly = TRUE)[1], "\n")
+              cat('✓', commandArgs(trailingOnly = TRUE)[1], '\\n')
             }, error = function(e) {
-              cat("✗", commandArgs(trailingOnly = TRUE)[1], ":", e$message, "\n")
+              cat('✗', commandArgs(trailingOnly = TRUE)[1], ':', e\$message, '\\n')
               quit(status = 1)
             })
-          ' {} \;
+          " {} \;
       
       - name: Test bookdown build
         run: |
           echo "Testing bookdown build process..."
           cd docs/ds-cheatsheet
-          Rscript -e '
+          Rscript -e "
             tryCatch({
-              bookdown::render_book("index.Rmd", output_dir = "_book_test")
-              cat("✓ Bookdown build successful\n")
+              bookdown::render_book('index.Rmd', output_dir = '_book_test')
+              cat('✓ Bookdown build successful\\n')
             }, error = function(e) {
-              cat("✗ Bookdown build failed:", e$message, "\n")
+              cat('✗ Bookdown build failed:', e\$message, '\\n')
               quit(status = 1)
             })
-          '
+          "
       
       - name: Check for broken links
         run: |
