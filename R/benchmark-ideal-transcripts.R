@@ -81,6 +81,7 @@ benchmark_ideal_transcripts <- function(iterations = 5,
 
   # Benchmark 2: Batch processing
 
+  # nolint: object_usage_linter
   batch_time <- microbenchmark::microbenchmark(
     process_ideal_course_batch(),
     times = iterations
@@ -88,6 +89,7 @@ benchmark_ideal_transcripts <- function(iterations = 5,
 
   batch_memory <- NULL
   if (include_memory) {
+    # nolint: object_usage_linter
     batch_memory <- measure_memory_usage(
       process_ideal_course_batch()
     )
@@ -131,7 +133,7 @@ benchmark_ideal_transcripts <- function(iterations = 5,
   # Print summary
   print_benchmark_summary(benchmark_results$summary)
 
-  return(benchmark_results)
+  benchmark_results
 }
 
 #' Measure memory usage of a function
@@ -145,12 +147,12 @@ measure_memory_usage <- function(expr) {
   result <- eval(expr)
   mem_after <- pryr::mem_used()
 
-  return(list(
+  list(
     memory_before = mem_before,
     memory_after = mem_after,
     memory_increase = mem_after - mem_before,
     result_size = pryr::object_size(result)
-  ))
+  )
 }
 
 #' Generate benchmark summary statistics
@@ -185,7 +187,7 @@ generate_benchmark_summary <- function(benchmark_results) {
     )
   }
 
-  return(summary)
+  summary
 }
 
 #' Print benchmark summary

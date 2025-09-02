@@ -45,4 +45,5 @@ analyze_transcripts <- function(
 }
 
 # Safe infix for defaults (using backticks for special operator names)
+# nolint: object_name_linter
 `%||%` <- function(a, b) if (is.null(a)) b else a

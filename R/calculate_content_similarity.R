@@ -41,14 +41,19 @@
 #' similarity <- calculate_content_similarity(transcript1, transcript2,
 #'   names_to_exclude = c("dead_air", "silence")
 #' )
-calculate_content_similarity <- function(transcript1 = NULL, transcript2 = NULL, names_to_exclude = c("dead_air")) {
+calculate_content_similarity <- function(
+    transcript1 = NULL,
+    transcript2 = NULL,
+    names_to_exclude = c("dead_air")) {
   # Handle NULL transcripts
   if (is.null(transcript1) || is.null(transcript2)) {
     return(0.0)
   }
 
   # Filter out excluded names (only if name column exists)
-  if (!is.null(names_to_exclude) && "name" %in% names(transcript1) && "name" %in% names(transcript2)) {
+  if (!is.null(names_to_exclude) &&
+    "name" %in% names(transcript1) &&
+    "name" %in% names(transcript2)) {
     # Use base R filtering instead of dplyr to avoid segmentation fault
     transcript1 <- transcript1[!transcript1$name %in% names_to_exclude, , drop = FALSE]
     transcript2 <- transcript2[!transcript2$name %in% names_to_exclude, , drop = FALSE]
