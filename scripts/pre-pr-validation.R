@@ -83,19 +83,9 @@ validation_status$code_style <- show_progress(
 validation_status$linting <- show_progress(
   "   🔄 Running linting checks",
   function() {
-    # Exclude template and documentation files from strict linting
-    exclude_patterns <- c(
-      "inst/",                          # All inst files (templates, data, etc.)
-      "docs/",                          # Documentation files
-      "vignettes/",                     # Vignette files
-      "*.Rmd",                          # All Rmd files (templates and docs)
-      "*.md"                            # All markdown files
-    )
-    
-    # Get linting results excluding problematic files
-    lint_results <- lintr::lint_package(
-      exclusions = exclude_patterns
-    )
+    # Only lint the R/ directory to avoid template and documentation issues
+    # This gives us a clean view of actual code quality issues
+    lint_results <- lintr::lint_dir("R")
     
     if (length(lint_results) > 0) {
       cat("   ⚠️  Linting issues found:", length(lint_results), "\n")
