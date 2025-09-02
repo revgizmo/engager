@@ -16,6 +16,7 @@ A comprehensive PRD audit was completed with **ACTIONABLE FINDINGS** for package
 - `docs/implementation/PRD_AUDIT_IMPLEMENTATION_PLAN.md` - Comprehensive implementation plan
 - `docs/implementation/HYBRID_APPROACH_IMPLEMENTATION_GUIDE.md` - Strategic approach
 - `docs/implementation/INITIATIVE_1_SUCCESS_METRICS_DETAILED_PLAN.md` - Success metrics foundation
+- `docs/planning/CRAN_RELEASE_PLAN.md` - Step-by-step plan for initial CRAN submission
 
 ### 🔒 **Security and Performance Review Integration (COMPLETED - 2025-08-25)**
 A comprehensive security and performance review was completed with **EXCELLENT results**:
