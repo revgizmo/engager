@@ -18,10 +18,12 @@ analyze_transcripts(
 
 \item{write}{If TRUE, writes engagement metrics to CSV via \code{write_metrics()}.}
 
-\item{output_path}{Optional output CSV path. If NULL and \code{write=TRUE}, defaults to \code{engagement_metrics.csv}.}
+\item{output_path}{Optional output CSV path. If NULL and \code{write=TRUE},
+defaults to \code{engagement_metrics.csv}.}
 }
 \value{
-A tibble of engagement metrics (privacy-masked by default at write-time; in-memory masking depends on consumer).
+A tibble of engagement metrics (privacy-masked by default at write-time;
+in-memory masking depends on consumer).
 }
 \description{
 Convenience wrapper to process a set of \code{.transcript.vtt} files from a folder,

@@ -273,7 +273,11 @@ generate_attendance_report <- function(
     "",
     "## Privacy Compliance",
     "",
-    if (analysis_results$privacy_compliant) "[PASS] All outputs maintain privacy compliance" else "[FAIL] Privacy violations detected",
+    if (analysis_results$privacy_compliant) {
+      "[PASS] All outputs maintain privacy compliance"
+    } else {
+      "[FAIL] Privacy violations detected"
+    },
     ""
   )
 
