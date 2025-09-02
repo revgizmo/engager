@@ -1,4 +1,6 @@
-# zoomstudentengagement News
+# engager News
+
+**Note:** Renamed from `zoomstudentengagement` to `engager` (no API changes).
 
 ## 1.0.1 (Unreleased)
 - **Segfault fixes**: Resolved critical segfault issues in R Markdown template rendering and Excel export functionality.

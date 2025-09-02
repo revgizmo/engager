@@ -39,14 +39,16 @@
 > After making changes to README.Rmd, run `devtools::build_readme()` to
 > update the README.md.
 
-# zoomstudentengagement
+# engager
+
+**Note:** Renamed from `zoomstudentengagement` to `engager` (no API changes).
 
 <!-- badges: start -->
 
 [![coverage](https://img.shields.io/github/actions/workflow/status/revgizmo/zoomstudentengagement/coverage.yaml?branch=main&label=coverage)](https://github.com/revgizmo/zoomstudentengagement/actions/workflows/coverage.yaml)
 <!-- badges: end -->
 
-The goal of `zoomstudentengagement` is to allow instructors to gain
+The goal of `engager` is to allow instructors to gain
 insights into student engagement, with a particular focus on
 participation equity, from Zoom transcripts of recorded course sessions.
 
@@ -68,6 +70,7 @@ participation equity, from Zoom transcripts of recorded course sessions.
 
 ``` r
 devtools::install_github("revgizmo/zoomstudentengagement")
+# TODO: update after repo rename to: devtools::install_github("revgizmo/engager")
 ```
 
 ### Development with Cursor Background Agents
@@ -78,6 +81,7 @@ For developers using Cursor IDE with background agents:
 # 1. Clone the repository
 git clone https://github.com/revgizmo/zoomstudentengagement.git
 cd zoomstudentengagement
+# TODO: update after repo rename to: git clone https://github.com/revgizmo/engager.git
 
 # 2. Use "Develop in Agent" workflow in Cursor
 # The background agent will use the standard R development environment
@@ -96,12 +100,12 @@ Docker-specific development, see the Docker isolation framework in
 ### 5-minute whole-game example
 
 ``` r
-library(zoomstudentengagement)
+library(engager)
 
 # 1) Compute metrics for a single transcript
 transcript_file <- system.file(
   "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-  package = "zoomstudentengagement"
+  package = "engager"
 )
 metrics <- summarize_transcript_metrics(transcript_file_path = transcript_file)
 
@@ -117,12 +121,12 @@ invisible(write_metrics(metrics, what = "engagement", path = "engagement_metrics
 ### Basic Example
 
 ``` r
-library(zoomstudentengagement)
+library(engager)
 
 # Load and process a transcript
 transcript_file <- system.file(
   "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-  package = "zoomstudentengagement"
+  package = "engager"
 )
 
 # Calculate engagement metrics
@@ -160,7 +164,7 @@ For detailed workflows and examples, see the package vignettes:
 
 ## 🎯 What the Package Does
 
-The `zoomstudentengagement` package provides tools for:
+The `engager` package provides tools for:
 
 1.  **Loading and Processing Zoom Transcripts**: Convert Zoom
     .transcript.vtt files into analyzable data

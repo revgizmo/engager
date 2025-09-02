@@ -18,7 +18,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-# zoomstudentengagement
+# engager
+
+**Note:** Renamed from `zoomstudentengagement` to `engager` (no API changes).
 
 <!-- badges: start -->
 [![coverage](https://img.shields.io/github/actions/workflow/status/revgizmo/zoomstudentengagement/coverage.yaml?branch=main&label=coverage)](https://github.com/revgizmo/zoomstudentengagement/actions/workflows/coverage.yaml)
@@ -64,12 +66,12 @@ cd zoomstudentengagement
 ### 5-minute whole-game example
 
 ```{r quick-whole-game}
-library(zoomstudentengagement)
+library(engager)
 
 # 1) Compute metrics for a single transcript
 transcript_file <- system.file(
   "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-  package = "zoomstudentengagement"
+  package = "engager"
 )
 metrics <- summarize_transcript_metrics(transcript_file_path = transcript_file)
 
@@ -85,12 +87,12 @@ invisible(write_metrics(metrics, what = "engagement", path = "engagement_metrics
 ### Basic Example
 
 ```{r quick-example}
-library(zoomstudentengagement)
+library(engager)
 
 # Load and process a transcript
 transcript_file <- system.file(
   "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-  package = "zoomstudentengagement"
+  package = "engager"
 )
 
 # Calculate engagement metrics
@@ -116,7 +118,7 @@ For detailed workflows and examples, see the package vignettes:
 
 ## 🎯 What the Package Does
 
-The `zoomstudentengagement` package provides tools for:
+The `engager` package provides tools for:
 
 1. **Loading and Processing Zoom Transcripts**: Convert Zoom .transcript.vtt files into analyzable data
 2. **Calculating Engagement Metrics**: Measure participation by speaker/student
