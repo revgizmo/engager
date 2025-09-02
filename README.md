@@ -263,34 +263,6 @@ See the vignette “Ethical & FERPA Guide” for details.
 
 ## 🛠️ Development
 
-### Pre-PR Validation
-
-This project includes a robust pre-PR validation system that automatically checks code quality, documentation, and tests before creating pull requests.
-
-**Standard Validation (Recommended for PRs):**
-```bash
-# Run standard pre-PR validation (skips benchmarking to avoid segfaults)
-./scripts/pre-pr.sh
-# or
-Rscript scripts/pre-pr-validation.R
-```
-
-**Validation with Benchmarking (Development Only):**
-```bash
-# Enable performance benchmarking (may cause segfaults on ARM64/macOS)
-PREPR_DO_BENCH=1 ./scripts/pre-pr-validation.sh
-# or
-PREPR_DO_BENCH=1 Rscript scripts/pre-pr-validation.R
-# or use the convenience script
-./scripts/pre-pr-with-benchmarks.sh
-```
-
-**Benchmarking Configuration:**
-- **Default**: Benchmarking disabled for stability
-- **Platform Safety**: Automatically detects ARM64/macOS and disables benchmarking
-- **Environment Variable**: `PREPR_DO_BENCH=1` enables benchmarking when safe
-- **Fallback**: Gracefully skips benchmarking tests when not supported
-
 ### Pull Request Review
 
 This project uses a lightweight PR review process focused on CRAN
