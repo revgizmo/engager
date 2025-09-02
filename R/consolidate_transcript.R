@@ -43,7 +43,7 @@ consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {
         result_cols <- c("transcript_file", result_cols)
       }
 
-      empty_result <- setNames(
+      empty_result <- stats::setNames(
         lapply(result_cols, function(x) if (x %in% c("duration", "wordcount")) numeric(0) else character(0)),
         result_cols
       )
@@ -73,7 +73,7 @@ consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {
     # Use aggregate() for efficient grouping operations
     if ("transcript_file" %in% names(df)) {
       # Group by both transcript_file and comment_num
-      agg_result <- aggregate(
+      agg_result <- stats::aggregate(
         list(
           name = df$name,
           comment = df$comment,
@@ -113,7 +113,7 @@ consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {
       )
     } else {
       # Group by comment_num only
-      agg_result <- aggregate(
+      agg_result <- stats::aggregate(
         list(
           name = df$name,
           comment = df$comment,

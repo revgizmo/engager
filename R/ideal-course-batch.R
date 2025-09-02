@@ -83,7 +83,7 @@ process_ideal_course_batch <- function(include_roster = TRUE,
   if (include_roster) {
     roster_path <- file.path(transcript_dir, "ideal_course_roster.csv")
     if (file.exists(roster_path)) {
-      roster_data <- read.csv(roster_path, stringsAsFactors = FALSE)
+      roster_data <- utils::read.csv(roster_path, stringsAsFactors = FALSE)
     } else {
       warning("Roster file not found, proceeding without roster data")
     }

@@ -31,7 +31,7 @@ benchmark_ideal_transcripts <- function(iterations = 5,
   # Initialize results storage
   benchmark_results <- list(
     timestamp = Sys.time(),
-    environment = sessionInfo(),
+    environment = utils::sessionInfo(),
     benchmarks = list()
   )
 
@@ -155,7 +155,7 @@ measure_memory_usage <- function(expr) {
 
 #' Generate benchmark summary statistics
 #' @keywords internal
-#' @importFrom stats median
+
 generate_benchmark_summary <- function(benchmark_results) {
   summary <- list()
 
@@ -168,7 +168,7 @@ generate_benchmark_summary <- function(benchmark_results) {
 
     summary$individual_processing <- list(
       mean_time = mean(individual_times),
-      median_time = median(individual_times),
+      median_time = stats::median(individual_times),
       min_time = min(individual_times),
       max_time = max(individual_times),
       total_files = length(individual_times)

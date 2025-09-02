@@ -268,7 +268,7 @@ export_ideal_transcripts_excel <- function(
 
   # Create CSV file as alternative
   csv_file <- gsub("\\.xlsx$", ".csv", file_path)
-  write.csv(export_data, csv_file, row.names = FALSE)
+  utils::write.csv(export_data, csv_file, row.names = FALSE)
 
   # Create a simple text file explaining the situation
   info_file <- gsub("\\.xlsx$", "_info.txt", file_path)
@@ -295,7 +295,7 @@ export_ideal_transcripts_excel <- function(
     summary_data <- generate_transcript_summary(export_data)
     if (is.data.frame(summary_data)) {
       summary_csv_file <- gsub("\\.xlsx$", "_summary.csv", file_path)
-      write.csv(summary_data, summary_csv_file, row.names = FALSE)
+      utils::write.csv(summary_data, summary_csv_file, row.names = FALSE)
     }
   }
 
@@ -306,7 +306,7 @@ export_ideal_transcripts_excel <- function(
     metadata_data <- generate_export_metadata(export_data, format = "excel")
     if (is.data.frame(metadata_data)) {
       metadata_csv_file <- gsub("\\.xlsx$", "_metadata.csv", file_path)
-      write.csv(metadata_data, metadata_csv_file, row.names = FALSE)
+      utils::write.csv(metadata_data, metadata_csv_file, row.names = FALSE)
     }
   }
 
@@ -396,7 +396,7 @@ export_ideal_transcripts_summary <- function(
 
     # Create CSV file as alternative
     csv_file <- gsub("\\.xlsx$", ".csv", file_path)
-    write.csv(summary_data, csv_file, row.names = FALSE)
+    utils::write.csv(summary_data, csv_file, row.names = FALSE)
 
     # Create a simple text file explaining the situation
     info_file <- gsub("\\.xlsx$", "_info.txt", file_path)
