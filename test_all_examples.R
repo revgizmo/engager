@@ -1,8 +1,8 @@
 #!/usr/bin/env Rscript
-# Comprehensive Example Testing Script for zoomstudentengagement package
+# Comprehensive Example Testing Script for engager package
 # Tests all 32 functions with @examples blocks
 
-library(zoomstudentengagement)
+library(engager)
 library(tibble)
 library(dplyr)
 library(readr)
@@ -80,21 +80,21 @@ mask_user_names_by_metric(sample_summary)
 
 # Test 4: make_sections_df (file-dependent)
 run_test("make_sections_df", '
-roster_file <- system.file("extdata/roster.csv", package = "zoomstudentengagement")
+roster_file <- system.file("extdata/roster.csv", package = "engager")
 roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
 make_sections_df(roster_df = roster_df)
 ')
 
 # Test 5: make_roster_small (file-dependent)
 run_test("make_roster_small", '
-roster_file <- system.file("extdata/roster.csv", package = "zoomstudentengagement")
+roster_file <- system.file("extdata/roster.csv", package = "engager")
 roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
 make_roster_small(roster_df = roster_df)
 ')
 
 # Test 6: load_zoom_transcript (file-dependent)
 run_test("load_zoom_transcript", '
-transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt", package = "zoomstudentengagement")
+transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt", package = "engager")
 load_zoom_transcript(transcript_file_path = transcript_file)
 ')
 
