@@ -731,20 +731,40 @@ gh pr merge --auto --delete-branch --admin
 - **Assignees & Milestones:** Assign issues to yourself or collaborators, and link them to milestones (e.g., "CRAN Submission").
 - **Checklists:** Use markdown checklists for multi-step tasks.
 
-### GitHub Projects (Projects v2)
-- [x] Create project board (Projects v2)
-- [x] Add initial issues to project board
-- [x] Set up columns (To Do, In Progress, Review, Done)
-- [ ] Manual management: Move issues/cards between columns as work progresses
-- [ ] Contributors: Update project status manually when working on or closing issues/PRs
-- [ ] Set up issue templates for different types of work (bug, enhancement, documentation)
-- [ ] Create labels for better issue categorization
-- [ ] Set up automation rules for issue/PR status updates
-- [ ] Document project board workflow in CONTRIBUTING.md
-- Note: Projects v2 does not currently support built-in automation (e.g., auto-move on PR merge/close). Monitor GitHub updates for future automation features.
-- Not recommended: Classic Projects (deprecated by GitHub)
+### GitHub Projects (Projects v2) - ARCHIVED
+- [x] Create project board (Projects v2) - **COMPLETED & ARCHIVED**
+- [x] Add initial issues to project board - **COMPLETED & ARCHIVED**
+- [x] Set up columns (To Do, In Progress, Review, Done) - **COMPLETED & ARCHIVED**
+- [x] **ARCHIVED**: Project board closed on 2025-01-13 due to evolution beyond simple project management
+- **Current Status**: Repository has evolved to use advanced automated systems instead of manual project boards
+- **Replacement**: Dynamic context scripts, automated PROJECT.md updates, comprehensive issue management with 132+ open issues
+- **Rationale**: Manual project board management became impractical with scale and complexity of development
 
-### Project Board Workflow
+### Current Modern Workflow (Replaces Project Board)
+**Note**: The repository has evolved beyond manual project board management to use automated systems.
+
+1. **Issue Creation & Management**
+   - Use appropriate issue template with comprehensive labels
+   - Issues automatically tracked in PROJECT.md via context scripts
+   - Priority-based organization (High/Medium/Low) with automated updates
+
+2. **Work Progress Tracking**
+   - Automated context capture via `./scripts/save-context.sh`
+   - Real-time PROJECT.md updates with current status
+   - Issue linking via "Fixes #X" or "Closes #X" in PRs
+
+3. **Review & Quality Assurance**
+   - Pre-PR validation via `Rscript scripts/pre-pr-validation.R`
+   - Automated testing and documentation checks
+   - Comprehensive issue tracking with 132+ open issues
+
+4. **Automated Maintenance**
+   - Context scripts provide real-time project status
+   - PROJECT.md auto-updates with current metrics
+   - No manual project board maintenance required
+
+### Legacy Project Board Workflow (ARCHIVED)
+*This section documents the previous approach for reference:*
 1. **Issue Creation**
    - Use appropriate issue template
    - Add relevant labels
@@ -814,6 +834,14 @@ Track the following metrics:
 
 4. **Reference issues in commits and pull requests:**  
    - Use `Fixes #12` in a commit or PR description to automatically close the issue when merged.
+
+### Why We Moved Beyond GitHub Projects
+
+**Scale Limitations**: With 132+ open issues, manual project board management became impractical
+**Automation Gap**: GitHub Projects v2 lacks built-in automation for complex workflows
+**Evolution**: Repository developed sophisticated automated systems that supersede manual tracking
+**Efficiency**: Context scripts provide real-time updates without manual intervention
+**Best Practice**: Current approach follows modern R package development patterns
 
 ### Resources
 - [GitHub Issues Documentation](https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues)
