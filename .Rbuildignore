@@ -28,6 +28,10 @@
 
 # Development documentation
 ^docs/
+^docs/rename-engager-plan\.md$
+^docs/rename-engager-result\.md$
+^docs/check-logs/
+^cran/
 ^DEVELOPMENT_SETUP\.md$
 ^CONTEXT_SCRIPTS_ENHANCEMENT\.md$
 ^ISSUE_20_COVERAGE_TODO\.md$
