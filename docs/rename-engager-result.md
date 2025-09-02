@@ -53,6 +53,13 @@ The package has been successfully renamed from `zoomstudentengagement` to `engag
 - [ ] Update any remaining hardcoded repository references
 - [ ] Verify GitHub Pages deployment
 
+### Post-Validation Tasks (easy to forget)
+- [ ] Run `roxygen2::roxygenise()` and commit regenerated `NAMESPACE`/`man/`
+- [ ] Run `devtools::check(args = c("--as-cran"))`; save logs under `docs/check-logs/`
+- [ ] Update `cran/cran-comments.md` with actual environments and 0E/0W/≤1N
+- [ ] Re-run `devtools::test()` and `devtools::check_examples()` and save outputs
+- [ ] Build pkgdown locally and save build log
+
 ## Owner Actions (Post-Repo-Rename)
 
 ### Immediate (Day 1)
@@ -105,14 +112,14 @@ This section documents remaining or historical mentions of the old package name 
 
 ### Remaining occurrences and actions
 - README files (md/Rmd):
-  - Diagnostics options in examples (`options(zoomstudentengagement.*)`): to be updated to `engager.*` in follow-up edit.
+  - Diagnostics options in examples updated to `options(engager.*)`
   - Repo links/badges and pkgdown URLs: intentionally left as-is with TODO notes; update post–repo-rename.
 - Tests and scripts:
   - `test_all_examples.R`: several `system.file(..., package = "zoomstudentengagement")` remain; will be updated to `"engager"` in a small follow-up commit.
 - NEWS:
-  - A note references `options(zoomstudentengagement.verbose)`; will be updated to `engager.verbose` in follow-up.
+  - Note updated to reference `options(engager.verbose)`
 - Package docs:
-  - `R/engager-package.R` roxygen example still shows `library(zoomstudentengagement)` in the long getting-started block; will be updated to `library(engager)` when regenerating docs.
+  - `R/engager-package.R` roxygen example updated to `library(engager)`
 - Vignettes (`vignettes/*.Rmd`):
   - Authors, `library(zoomstudentengagement)`, `system.file(..., package = "zoomstudentengagement")`, options keys, and pkgdown URLs still use the old name; these will be updated en masse with textual replacements (URLs deferred with TODOs).
 - Man page:
@@ -125,3 +132,11 @@ This section documents remaining or historical mentions of the old package name 
 
 ### Rationale
 - Where references are repository-path dependent (badges, pkgdown `url:`), changes are deferred with explicit TODO markers until the GitHub repository is renamed by the owner, to avoid broken links.
+
+### Common pitfalls and mitigations
+- Forgetting to regenerate `NAMESPACE`/Rd after roxygen edits → Always run roxygen before checks.
+- Editing `NAMESPACE` by hand → Never do this; rely on roxygen.
+- Leaving pkgdown `url:` stale → Add TODO and update immediately after repo rename; rebuild site.
+- Vignettes caching old library names → Clean and rebuild vignettes; verify `library(engager)` usage.
+- Tests referencing old package name → Grep for `package = "zoomstudentengagement"` and fix all.
+- CI using repo-path links → Defer updates; do a second pass post–repo-rename.

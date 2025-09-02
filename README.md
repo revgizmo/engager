@@ -215,7 +215,7 @@ can enable optional diagnostics:
 
 ``` r
 # Enable package-wide diagnostics
-options(zoomstudentengagement.verbose = TRUE)
+options(engager.verbose = TRUE)
 
 # Or enable per-call diagnostics where supported
 load_zoom_recorded_sessions_list(
@@ -225,7 +225,7 @@ load_zoom_recorded_sessions_list(
 )
 
 # Turn diagnostics back off
-options(zoomstudentengagement.verbose = FALSE)
+options(engager.verbose = FALSE)
 ```
 
 Interactive prompts (e.g., in `create_session_mapping()` when assigning
@@ -247,14 +247,14 @@ See also: `CONTRIBUTING.md` Diagnostic Output Policy.
 ## 🔒 Privacy Defaults
 
 This package is privacy-first by default. On load, it sets the global
-option `zoomstudentengagement.privacy_level` to `"mask"` (unless you set
+option `engager.privacy_level` to `"mask"` (unless you set
 it yourself). This means identifiers like names and student IDs are
 masked to labels such as `Student 01` in summaries, plots, and writers.
 
 To change behavior temporarily (not recommended for student data):
 
 ``` r
-library(zoomstudentengagement)
+library(engager)
 set_privacy_defaults("none")  # will emit a warning
 # ... analysis that may include identifiable outputs ...
 set_privacy_defaults("mask")  # restore safe default

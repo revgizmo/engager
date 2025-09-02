@@ -1,6 +1,6 @@
 Package: engager
 Type: Package
-Title: Zoom Student Engagement
+Title: engager: Analyze Student Engagement from Zoom Transcripts
 Version: 1.0.0
 Author: Conor Healy
 Maintainer: Conor Healy <conorhealy@berkeley.edu>

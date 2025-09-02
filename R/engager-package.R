@@ -36,7 +36,7 @@
 #'
 #' ```r
 #' # Load the package
-#' library(zoomstudentengagement)
+#' library(engager)
 #'
 #' # Set privacy defaults (recommended)
 #' set_privacy_defaults(privacy_level = "mask")
