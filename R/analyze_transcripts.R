@@ -6,8 +6,10 @@
 #' @param transcripts_folder Path to a folder containing Zoom `.transcript.vtt` files.
 #' @param names_to_exclude Character vector of names to exclude. Default: c("dead_air").
 #' @param write If TRUE, writes engagement metrics to CSV via `write_metrics()`.
-#' @param output_path Optional output CSV path. If NULL and `write=TRUE`, defaults to `engagement_metrics.csv`.
-#' @return A tibble of engagement metrics (privacy-masked by default at write-time; in-memory masking depends on consumer).
+#' @param output_path Optional output CSV path. If NULL and `write=TRUE`,
+#'   defaults to `engagement_metrics.csv`.
+#' @return A tibble of engagement metrics (privacy-masked by default at write-time;
+#'   in-memory masking depends on consumer).
 #' @export
 analyze_transcripts <- function(
     transcripts_folder = NULL,
@@ -42,5 +44,6 @@ analyze_transcripts <- function(
   metrics
 }
 
-# Safe infix for defaults
+# Safe infix for defaults (using backticks for special operator names)
+# nolint: object_name_linter
 `%||%` <- function(a, b) if (is.null(a)) b else a

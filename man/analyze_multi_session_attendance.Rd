@@ -25,9 +25,11 @@ analyze_multi_session_attendance(
 
 \item{unmatched_names_action}{Action for unmatched names: "stop" (default) or "warn"}
 
-\item{privacy_level}{Privacy level for output masking: "ferpa_strict", "ferpa_standard", "mask", "none"}
+\item{privacy_level}{Privacy level for output masking: "ferpa_strict",
+"ferpa_standard", "mask", "none"}
 
-\item{min_attendance_threshold}{Minimum attendance percentage to be considered a "consistent attendee" (default: 0.5)}
+\item{min_attendance_threshold}{Minimum attendance percentage to be considered a
+"consistent attendee" (default: 0.5)}
 }
 \value{
 A list containing:

@@ -73,6 +73,7 @@
 ^\.Rproj\.user$
 ^doc$
 ^Meta$
+^\.pre-commit-config\.yaml$
 
 # IDE and development files
 ^\.vscode/
@@ -174,3 +175,32 @@ docs/development/assessments/
 docs/analysis/reports/
 docs/analysis/investigations/
 docs/analysis/lessons-learned/
+
+# Additional non-standard top-level files for CRAN compliance (R CMD check notes)
+^AGENTS\.md$
+^ISSUE_399_VALIDATION_REPORT\.md$
+^ISSUE_399_VALIDATION_SUMMARY\.md$
+^ISSUE_416_IMPLEMENTATION_GUIDE\.md$
+^ISSUE_418_IMPLEMENTATION_GUIDE\.md$
+^ISSUE_421_IMPLEMENTATION_GUIDE\.md$
+^ISSUE_423_IMPLEMENTATION_GUIDE\.md$
+^ISSUE_424_IMPLEMENTATION_GUIDE\.md$
+^ISSUE_425_IMPLEMENTATION_GUIDE\.md$
+^ISSUE_426_IMPLEMENTATION_GUIDE\.md$
+^ISSUE_SEGFAULT_CONSOLIDATED_PLAN\.md$
+^ISSUE_SEGFAULT_IMPLEMENTATION_GUIDE\.md$
+^PROJECT_PROFILE_AND_CRAN_WEEK_PLAN\.md$
+^PROJECT_REVIEW_AND_UPDATED_PLAN_2025-08-30\.md$
+^PR_387_IMPLEMENTATION_GUIDE\.md$
+^PR_404_IMPLEMENTATION_GUIDE\.md$
+^PR_407_IMPLEMENTATION_GUIDE\.md$
+^PR_408_IMPLEMENTATION_GUIDE\.md$
+^PR_409_IMPLEMENTATION_GUIDE\.md$
+^PR_410_IMPLEMENTATION_GUIDE\.md$
+^PR_411_IMPLEMENTATION_GUIDE\.md$
+^PR_412_IMPLEMENTATION_GUIDE\.md$
+^SEGFAULT_FIX_IMPLEMENTATION_SUMMARY\.md$
+^figure$
+^ideal-course-transcripts\.md$
+^test_name_matching_workflow\.R$
+^verify_package_version\.R$

@@ -8,8 +8,10 @@
 #' @param data_folder Path to the data folder containing transcripts
 #' @param transcripts_folder Name of the transcripts subfolder (default: "transcripts")
 #' @param unmatched_names_action Action for unmatched names: "stop" (default) or "warn"
-#' @param privacy_level Privacy level for output masking: "ferpa_strict", "ferpa_standard", "mask", "none"
-#' @param min_attendance_threshold Minimum attendance percentage to be considered a "consistent attendee" (default: 0.5)
+#' @param privacy_level Privacy level for output masking: "ferpa_strict",
+#'   "ferpa_standard", "mask", "none"
+#' @param min_attendance_threshold Minimum attendance percentage to be considered a
+#'   "consistent attendee" (default: 0.5)
 #'
 #' @return A list containing:
 #'   - `attendance_matrix`: Data frame with participants as rows and sessions as columns
@@ -157,7 +159,9 @@ analyze_multi_session_attendance <- function(
   # Analyze participation patterns
   consistent_attendees <- all_participants[attendance_rates >= min_attendance_threshold]
   one_time_attendees <- all_participants[attendance_counts == 1]
-  occasional_attendees <- all_participants[attendance_counts > 1 & attendance_rates < min_attendance_threshold]
+  occasional_attendees <- all_participants[
+    attendance_counts > 1 & attendance_rates < min_attendance_threshold
+  ]
 
   participation_patterns <- list(
     total_participants = length(all_participants),
@@ -195,9 +199,18 @@ analyze_multi_session_attendance <- function(
 
   # Add privacy masking to sensitive data
   if (privacy_level != "none") {
-    result$attendance_matrix <- ensure_privacy(result$attendance_matrix, privacy_level = privacy_level)
-    result$attendance_summary <- ensure_privacy(result$attendance_summary, privacy_level = privacy_level)
-    result$session_summary <- ensure_privacy(result$session_summary, privacy_level = privacy_level)
+    result$attendance_matrix <- ensure_privacy(
+      result$attendance_matrix,
+      privacy_level = privacy_level
+    )
+    result$attendance_summary <- ensure_privacy(
+      result$attendance_summary,
+      privacy_level = privacy_level
+    )
+    result$session_summary <- ensure_privacy(
+      result$session_summary,
+      privacy_level = privacy_level
+    )
   }
 
   return(result)
@@ -241,8 +254,15 @@ generate_attendance_report <- function(
     "",
     "## Participation Summary",
     "",
-    paste("- **Consistent Attendees** (>=", patterns$total_sessions * 0.5, "sessions):", patterns$consistent_attendees),
-    paste("- **Occasional Attendees** (2-", ceiling(patterns$total_sessions * 0.5) - 1, "sessions):", patterns$occasional_attendees),
+    paste(
+      "- **Consistent Attendees** (>=", patterns$total_sessions * 0.5,
+      "sessions):", patterns$consistent_attendees
+    ),
+    paste(
+      "- **Occasional Attendees** (2-",
+      ceiling(patterns$total_sessions * 0.5) - 1,
+      "sessions):", patterns$occasional_attendees
+    ),
     paste("- **One-time Attendees**:", patterns$one_time_attendees),
     "",
     "## Attendance Statistics",
@@ -253,7 +273,11 @@ generate_attendance_report <- function(
     "",
     "## Privacy Compliance",
     "",
-    if (analysis_results$privacy_compliant) "[PASS] All outputs maintain privacy compliance" else "[FAIL] Privacy violations detected",
+    if (analysis_results$privacy_compliant) {
+      "[PASS] All outputs maintain privacy compliance"
+    } else {
+      "[FAIL] Privacy violations detected"
+    },
     ""
   )
 

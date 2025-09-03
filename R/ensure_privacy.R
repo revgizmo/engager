@@ -192,9 +192,12 @@ log_privacy_operation <- function(operation,
     session_id = Sys.getpid()
   )
 
-  # Store in global environment for session tracking
+  # Store in package environment for session tracking (CRAN compliant)
   log_key <- paste0("zse_privacy_log_", format(timestamp, "%Y%m%d_%H%M%S"))
-  assign(log_key, log_entry, envir = .GlobalEnv)
+  env <- .zse_get_logs_env()
+  current <- env$logs
+  current[[log_key]] <- log_entry
+  env$logs <- current
 
   # Optionally write to file if logging is enabled
   log_file <- getOption("zoomstudentengagement.privacy_log_file", NULL)

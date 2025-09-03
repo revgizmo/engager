@@ -1,0 +1,26 @@
+# Files to ignore during styling
+# These files may have intentional formatting that shouldn't be changed
+
+# Data files
+*.csv
+*.rds
+*.RData
+
+# Generated files
+*.Rout
+*.Rout.save
+
+# Documentation
+*.md
+*.Rmd
+docs/
+vignettes/
+
+# Tests
+tests/testthat/
+tests/testthat.R
+
+# Package files
+.Rprofile
+.Rbuildignore
+.Rinstignore
