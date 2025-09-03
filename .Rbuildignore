@@ -207,3 +207,11 @@ docs/analysis/lessons-learned/
 
 # Codex-specific exclusions
 ^\.codex$
+
+# Standard R package exclusions
+^\.github$
+^\.env$
+^.*\.Rproj$
+^\.Rproj\.user$
+^docs$
+^_pkgdown\.yml$
