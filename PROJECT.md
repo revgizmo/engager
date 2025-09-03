@@ -411,6 +411,16 @@ We've created comprehensive context scripts to provide current project status to
 
 ## Pre-CRAN Development Workflow
 
+### AI Agent Workflow Integration
+The project now includes a comprehensive AI Agent Workflow for AI-assisted development:
+
+- **[AI Agent Workflow](docs/development/AI_AGENT_WORKFLOW.md)**: Complete workflow reference
+- **[AI Agent Training](docs/development/AI_AGENT_TRAINING.md)**: Step-by-step training guide  
+- **[AI Agent Examples](docs/development/AI_AGENT_EXAMPLES.md)**: Real-world usage examples
+- **[AI Agent Prompt Generator](docs/development/AI_AGENT_PROMPT_GENERATOR.md)**: Create prompts for new AI agents
+
+AI agents should follow this workflow to ensure consistent, high-quality contributions while maintaining CRAN compliance standards.
+
 ### Pre-PR Validation (Development Phase)
 
 #### Phase 1: Code Quality (5-10 minutes)

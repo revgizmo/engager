@@ -14,6 +14,9 @@ Thank you for your interest in contributing to the zoomstudentengagement package
 ### For AI-Assisted Development
 - **Use the context scripts** - `./scripts/context-for-new-chat.sh`
 - **Follow AI guidelines** - [AI-Assisted Development Guide](docs/development/AI_ASSISTED_DEVELOPMENT.md)
+- **Complete AI training** - [AI Agent Training Guide](docs/development/AI_AGENT_TRAINING.md)
+- **Use AI workflow** - [AI Agent Workflow](docs/development/AI_AGENT_WORKFLOW.md)
+- **Review examples** - [AI Agent Examples](docs/development/AI_AGENT_EXAMPLES.md)
 - **Maintain ethical standards** - Privacy first, FERPA compliance
 - **Validate all changes** - Run pre-PR validation checklist
 
@@ -195,6 +198,48 @@ devtools::test(reporter = "verbose")
 - Keep README.md comprehensive and up-to-date
 - Create vignettes for complex workflows
 - Use `devtools::build_readme()` to rebuild README from README.Rmd
+
+## AI Agent Workflow
+
+### **Overview**
+The AI Agent Workflow provides a structured approach for AI agents to contribute effectively to this project while maintaining quality, consistency, and CRAN compliance standards.
+
+### **Workflow Steps**
+
+#### **1. Issue Analysis & Planning**
+- Review the GitHub issue description thoroughly
+- Identify the specific phase or work type needed
+- Understand success criteria and technical requirements
+- Create or update planning documents if needed
+
+#### **2. Development & Implementation**
+- Follow R package development standards
+- Implement functionality according to specifications
+- Maintain privacy-first approach
+- Ensure CRAN compliance
+- Create comprehensive documentation
+- Write comprehensive tests with >90% coverage
+
+#### **3. Validation & Submission**
+- Complete pre-PR validation checklist
+- Fix any issues found during validation
+- Ensure all tests pass and documentation is complete
+- Create pull request with descriptive title and body
+- Link to relevant issues using `Fixes #[NUMBER]`
+
+### **Required Documentation**
+- **[AI Agent Workflow](docs/development/AI_AGENT_WORKFLOW.md)**: Complete workflow reference
+- **[AI Agent Training](docs/development/AI_AGENT_TRAINING.md)**: Step-by-step training guide
+- **[AI Agent Examples](docs/development/AI_AGENT_EXAMPLES.md)**: Real-world usage examples
+- **[AI Agent Prompt Generator](docs/development/AI_AGENT_PROMPT_GENERATOR.md)**: Create prompts for new AI agents
+
+### **Success Criteria**
+- All tests pass (`devtools::test()`)
+- Code coverage >90% (`covr::package_coverage()`)
+- No linting errors (`lintr::lint_package()`)
+- All examples run (`devtools::check_examples()`)
+- R CMD check passes (`devtools::check()`)
+- Documentation complete and accurate
 - Include installation instructions and basic usage examples
 - Update NEWS.md for user-facing changes
 
