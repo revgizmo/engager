@@ -204,3 +204,6 @@ docs/analysis/lessons-learned/
 ^ideal-course-transcripts\.md$
 ^test_name_matching_workflow\.R$
 ^verify_package_version\.R$
+
+# Codex-specific exclusions
+^\.codex$

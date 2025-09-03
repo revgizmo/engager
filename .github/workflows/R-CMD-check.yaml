@@ -45,14 +45,21 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libgit2-dev \
+            libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
 
       - name: Install dependencies
         run: |
           options(repos = c(CRAN = "https://cloud.r-project.org"))
-          install.packages(c("remotes", "rcmdcheck", "roxygen2"))
+          install.packages(c("remotes", "rcmdcheck", "roxygen2", "lintr", "styler"))
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran(c("knitr", "rmarkdown"))
+        shell: Rscript {0}
+
+      - name: Lint
+        run: |
+          options(repos = c(CRAN = "https://cloud.r-project.org"))
+          lintr::lint_package()
         shell: Rscript {0}
 
       - name: Generate documentation (roxygenise)

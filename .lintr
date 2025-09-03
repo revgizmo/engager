@@ -1,12 +1,19 @@
 linters: linters_with_defaults(
     line_length_linter(120),
-    commented_code_linter = NULL
+    object_usage_linter(),
+    cyclocomp_linter(complexity_limit = 20),
+    commented_code_linter = NULL,
+    seq_linter(),
+    spaces_inside_linter(),
+    trailing_blank_lines_linter(),
+    trailing_whitespace_linter()
   )
 exclusions: list(
     "R/zzz.R",
     "R/benchmark-ideal-transcripts.R",
     "tests/",
     "vignettes/",
-    "inst/"
+    "inst/",
+    "README.Rmd"
   )
 encoding: "UTF-8"

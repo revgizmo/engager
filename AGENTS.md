@@ -73,3 +73,20 @@ the entire repository unless a nested `AGENTS.md` overrides them.
 - Check for other `AGENTS.md` files in subdirectories; their instructions take
   precedence within their scope.
 
+# R Package (Codex)
+
+## Goals
+Produce a passing `R CMD check --as-cran` (no ERROR/WARNING; NOTES only if unavoidable). Keep diffs minimal.
+
+## Commands
+- Docs: `R -q -e "roxygen2::roxygenise()"`
+- Build: `R CMD build .`
+- Check: `R CMD check --as-cran --no-manual ./*_*.tar.gz`
+- Tests: `R -q -e "testthat::test_dir('tests')"`
+- Lint: `R -q -e "lintr::lint_package()"; R -q -e "styler::style_pkg()"`
+
+## Conventions
+- Fail task on check ERROR/WARNING.
+- Use `--no-manual` unless LaTeX is installed.
+- Commit regenerated `NAMESPACE` and `man/`.
+
