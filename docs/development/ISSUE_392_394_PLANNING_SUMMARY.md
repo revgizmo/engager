@@ -258,6 +258,23 @@ devtools::check()
 - **Issue #394**: Complete UX simplification implementation for massive scope reduction
 - **Overall**: CRAN-ready package with ≤30 essential functions
 
+## 🚨 CRITICAL ISSUES IDENTIFIED & ADDRESSED
+
+### **Segmentation Fault Integration** 🚨
+**Issue Discovered**: Pre-PR validation revealed a critical segmentation fault during testing, validating the scope crisis.
+**Planning Enhancement**: Added specific planning for addressing data.table segfault issues that could prevent successful execution.
+**Impact**: Ensures execution plans address critical blockers discovered during validation.
+
+### **Batch Size Optimization** 📊
+**Issue Identified**: Current batch sizes (22, 50, 50) are arbitrary and may not be optimal for execution.
+**Planning Enhancement**: Plan for dynamic batch sizing based on function dependencies and testing complexity.
+**Benefit**: Optimizes execution efficiency and reduces risk of failed batches.
+
+### **Rollback Strategy Enhancement** 🔄
+**Issue Identified**: Rollback plan mentioned but not detailed with specific procedures.
+**Planning Enhancement**: Create specific rollback procedures for each batch with clear criteria for when to rollback.
+**Benefit**: Prevents wasted effort on failed batches and ensures recovery capability.
+
 ## ✅ SUCCESS DEFINITION ACHIEVED
 
 ### **Week 2 Success: ACHIEVED** ✅
@@ -294,3 +311,5 @@ The planning phase for Issues #392-394 is **COMPLETE** and addresses the confirm
 **CRAN Readiness: ACHIEVABLE** 🚀
 
 The project is now positioned for successful execution of the most aggressive scope reduction in R package development history, with comprehensive planning, risk mitigation, and success criteria that ensure CRAN submission readiness.
+
+**Planning Enhancements Applied**: Segmentation fault integration, batch size optimization, and rollback strategy enhancement ensure the planning is as efficient and suitable as possible for its intended purpose.
