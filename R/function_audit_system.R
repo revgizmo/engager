@@ -5,7 +5,7 @@
 #'
 #' @keywords internal
 #' @noRd
-
+#'
 #' Create Comprehensive Function Inventory
 #'
 #' @return List containing function inventory and metadata
@@ -17,50 +17,52 @@ create_function_inventory <- function() {
     warning("Function 'create_function_inventory' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
   }
 
-  tryCatch({
-    # Get all R files
-    r_files <- list.files("R/", pattern = "\\.R$", full.names = FALSE)
-    
-    # Get exported functions from NAMESPACE
-    namespace_exports <- character(0)
-    if (file.exists("NAMESPACE")) {
-      namespace_content <- readLines("NAMESPACE")
-      export_lines <- grep("^export\\(", namespace_content, value = TRUE)
-      namespace_exports <- gsub("^export\\(([^)]+)\\)", "\\1", export_lines)
-      # Remove quotes and clean up
-      namespace_exports <- gsub('"', '', namespace_exports)
-      namespace_exports <- gsub("'", '', namespace_exports)
-    }
-    
-    # Get function documentation files
-    man_files <- list.files("man/", pattern = "\\.Rd$", full.names = FALSE)
-    documented_functions <- gsub("\\.Rd$", "", man_files)
-    
-    # Create inventory
-    inventory <- list(
-      metadata = list(
-        audit_date = Sys.Date(),
-        audit_time = Sys.time(),
-        total_r_files = length(r_files),
-        total_man_files = length(man_files),
-        total_exports = length(namespace_exports)
-      ),
-      r_files = r_files,
-      namespace_exports = namespace_exports,
-      documented_functions = documented_functions,
-      export_status = list(
-        exported_and_documented = intersect(namespace_exports, documented_functions),
-        exported_not_documented = setdiff(namespace_exports, documented_functions),
-        documented_not_exported = setdiff(documented_functions, namespace_exports)
+  tryCatch(
+    {
+      # Get all R files
+      r_files <- list.files("R/", pattern = "\\.R$", full.names = FALSE)
+
+      # Get exported functions from NAMESPACE
+      namespace_exports <- character(0)
+      if (file.exists("NAMESPACE")) {
+        namespace_content <- readLines("NAMESPACE")
+        export_lines <- grep("^export\\(", namespace_content, value = TRUE)
+        namespace_exports <- gsub("^export\\(([^)]+)\\)", "\\1", export_lines)
+        # Remove quotes and clean up
+        namespace_exports <- gsub('"', "", namespace_exports)
+        namespace_exports <- gsub("'", "", namespace_exports)
+      }
+
+      # Get function documentation files
+      man_files <- list.files("man/", pattern = "\\.Rd$", full.names = FALSE)
+      documented_functions <- gsub("\\.Rd$", "", man_files)
+
+      # Create inventory
+      inventory <- list(
+        metadata = list(
+          audit_date = Sys.Date(),
+          audit_time = Sys.time(),
+          total_r_files = length(r_files),
+          total_man_files = length(man_files),
+          total_exports = length(namespace_exports)
+        ),
+        r_files = r_files,
+        namespace_exports = namespace_exports,
+        documented_functions = documented_functions,
+        export_status = list(
+          exported_and_documented = intersect(namespace_exports, documented_functions),
+          exported_not_documented = setdiff(namespace_exports, documented_functions),
+          documented_not_exported = setdiff(documented_functions, namespace_exports)
+        )
       )
-    )
-    
-    return(inventory)
-    
-  }, error = function(e) {
-    warning("Failed to create function inventory: ", e$message)
-    return(list(error = e$message))
-  })
+
+      return(inventory)
+    },
+    error = function(e) {
+      warning("Failed to create function inventory: ", e$message)
+      return(list(error = e$message))
+    }
+  )
 }
 
 #' Categorize Functions by Type and Purpose
@@ -78,7 +80,7 @@ categorize_functions <- function(inventory) {
   if (is.null(inventory) || "error" %in% names(inventory)) {
     return(list(error = "Invalid inventory provided"))
   }
-  
+
   # Define function categories based on naming patterns and purpose
   categories <- list(
     essential = c(
@@ -110,11 +112,11 @@ categorize_functions <- function(inventory) {
       "conditionally_write_lookup", "get_essential_functions", "get_deprecated_functions"
     )
   )
-  
+
   # Categorize each exported function
   exported_functions <- inventory$namespace_exports
   categorization <- list()
-  
+
   for (func in exported_functions) {
     category <- "uncategorized"
     for (cat_name in names(categories)) {
@@ -125,7 +127,7 @@ categorize_functions <- function(inventory) {
     }
     categorization[[func]] <- category
   }
-  
+
   # Create summary
   summary <- list(
     total_exported = length(exported_functions),
@@ -136,7 +138,7 @@ categorize_functions <- function(inventory) {
     uncategorized_count = sum(categorization == "uncategorized"),
     categorization = categorization
   )
-  
+
   return(summary)
 }
 
@@ -155,10 +157,10 @@ map_function_dependencies <- function(inventory) {
   if (is.null(inventory) || "error" %in% names(inventory)) {
     return(list(error = "Invalid inventory provided"))
   }
-  
+
   # Simple dependency mapping based on function calls
   # This is a simplified approach - in practice, you might want more sophisticated parsing
-  
+
   dependencies <- list(
     essential_functions = list(
       analyze_transcripts = c("process_zoom_transcript", "consolidate_transcript", "summarize_transcript_metrics"),
@@ -174,7 +176,7 @@ map_function_dependencies <- function(inventory) {
       join_transcripts_list = c("load_zoom_transcript")
     )
   )
-  
+
   return(dependencies)
 }
 
@@ -195,25 +197,24 @@ generate_function_audit_report <- function(inventory, categorization, dependenci
   if (is.null(inventory) || "error" %in% names(inventory)) {
     return("ERROR: Invalid inventory provided")
   }
-  
+
   report <- paste0(
     "=== FUNCTION AUDIT REPORT ===\n",
     "Audit Date: ", format(Sys.Date(), "%Y-%m-%d"), "\n",
     "Audit Time: ", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n",
-    
     "INVENTORY SUMMARY:\n",
     "  Total R Files: ", inventory$metadata$total_r_files, "\n",
     "  Total Documentation Files: ", inventory$metadata$total_man_files, "\n",
     "  Total Exported Functions: ", inventory$metadata$total_exports, "\n\n",
-    
     "EXPORT STATUS:\n",
     "  Exported and Documented: ", length(inventory$export_status$exported_and_documented), "\n",
     "  Exported but Not Documented: ", length(inventory$export_status$exported_not_documented), "\n",
     "  Documented but Not Exported: ", length(inventory$export_status$documented_not_exported), "\n\n"
   )
-  
+
   if (!is.null(categorization) && !("error" %in% names(categorization))) {
-    report <- paste0(report,
+    report <- paste0(
+      report,
       "FUNCTION CATEGORIZATION:\n",
       "  Essential Functions: ", categorization$essential_count, "\n",
       "  Deprecated Functions: ", categorization$deprecated_count, "\n",
@@ -222,7 +223,7 @@ generate_function_audit_report <- function(inventory, categorization, dependenci
       "  Uncategorized Functions: ", categorization$uncategorized_count, "\n\n"
     )
   }
-  
+
   return(report)
 }
 
@@ -234,21 +235,24 @@ generate_function_audit_report <- function(inventory, categorization, dependenci
 #' @param output_file Output file path
 #' @return TRUE if successful
 #' @keywords internal
-save_function_audit_report <- function(inventory, categorization, dependencies, 
-                                     output_file = "function_audit_report.txt") {
+save_function_audit_report <- function(inventory, categorization, dependencies,
+                                       output_file = "function_audit_report.txt") {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
     warning("Function 'save_function_audit_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
   }
 
-  tryCatch({
-    report <- generate_function_audit_report(inventory, categorization, dependencies)
-    writeLines(report, output_file)
-    message("Function audit report saved to: ", output_file)
-    TRUE
-  }, error = function(e) {
-    warning("Failed to save function audit report: ", e$message)
-    FALSE
-  })
+  tryCatch(
+    {
+      report <- generate_function_audit_report(inventory, categorization, dependencies)
+      writeLines(report, output_file)
+      message("Function audit report saved to: ", output_file)
+      TRUE
+    },
+    error = function(e) {
+      warning("Failed to save function audit report: ", e$message)
+      FALSE
+    }
+  )
 }

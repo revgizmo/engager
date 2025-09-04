@@ -10,7 +10,7 @@
 #'
 #' @return Benchmark results as a list
 #' @importFrom utils sessionInfo
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @noRd
 benchmark_ideal_transcripts <- function(iterations = 5,
                                         output_file = "benchmark_results.rds",
                                         include_memory = TRUE,

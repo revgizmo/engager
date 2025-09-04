@@ -23,7 +23,7 @@ The following metrics are included:
 \item \code{wordcount}: Total word count of verbal comments captured by Zoom
 \item \code{perc_wordcount}: Percent of total word count of verbal comments captured by Zoom
 \item \code{wpm}: Average words per minute within verbal comments captured by Zoom
-}# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+}
 }
 \description{
 Creates a tibble describing all engagement metrics used in the analysis.

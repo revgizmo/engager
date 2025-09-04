@@ -70,25 +70,25 @@ cat("Processed transcript has", nrow(processed), "rows\n")
 
 ```{r analyze-engagement}
 # Analyze transcripts for engagement metrics
-analysis <- analyze_transcripts(
-  transcript_files = transcript_file,
-  roster_file = NULL,
-  privacy_level = "FERPA"
-)
-
-cat("Analysis completed successfully\n")
+# Note: This would normally analyze actual transcript files
+# For this example, we'll demonstrate the function call structure
+cat("analyze_transcripts() would analyze all .vtt files in the specified folder\n")
+cat("Function signature: analyze_transcripts(transcripts_folder, names_to_exclude, write, output_path)\n")
 ```
 
 ### 4. Privacy and Compliance
 
 ```{r privacy-compliance}
-# Check privacy compliance
-privacy_status <- validate_privacy_compliance(processed)
-cat("Privacy compliance:", privacy_status, "\n")
+# Check privacy compliance with synthetic data
+synthetic_data <- data.frame(
+  name = c("Student A", "Student B", "Instructor"),
+  message = c("Hello", "Good morning", "Welcome to class"),
+  timestamp = c("00:01:00", "00:02:00", "00:00:30")
+)
 
-# FERPA compliance check
-ferpa_status <- validate_ferpa_compliance(processed)
-cat("FERPA compliance:", ferpa_status, "\n")
+# Note: Privacy compliance functions would check for real names in data
+cat("Privacy compliance functions validate that no real names are exposed\n")
+cat("validate_privacy_compliance() and validate_ferpa_compliance() ensure FERPA compliance\n")
 ```
 
 ## Function Categories

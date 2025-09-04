@@ -27,7 +27,7 @@ Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
 in the output. Defaults to TRUE.}
 }
 \value{
-Invisibly returns the path to the created lookup file# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+Invisibly returns the path to the created lookup file
 }
 \description{
 Provides safe user guidance for name matching when unmatched names are detected.

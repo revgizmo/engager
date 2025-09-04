@@ -14,7 +14,7 @@
 #'   in the output. Defaults to TRUE.
 #'
 #' @return Invisibly returns the path to the created lookup file
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
 #'
 #' @examples
 #' # Prompt for name matching (privacy-safe). Write artifacts to tempdir().
