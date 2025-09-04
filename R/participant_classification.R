@@ -21,7 +21,8 @@
 #'
 #' @return The `transcript_df` augmented with columns:
 #'   `clean_name`, `participant_type`, `student_id`, `is_matched`.
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 classify_participants <- function(transcript_df = NULL,
                                   roster_df = NULL,
                                   lookup_df = NULL,
@@ -31,7 +32,9 @@ classify_participants <- function(transcript_df = NULL,
                                   )) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'classify_participants' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'classify_participants' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   # Validate inputs
   if (!is.data.frame(transcript_df)) {

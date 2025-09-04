@@ -27,7 +27,7 @@ Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
 }
 \value{
 The \code{transcript_df} augmented with columns:
-\code{clean_name}, \code{participant_type}, \code{student_id}, \code{is_matched}.# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+\code{clean_name}, \code{participant_type}, \code{student_id}, \code{is_matched}.
 }
 \description{
 Given transcript utterances, a student roster, and an optional lookup,
@@ -40,3 +40,4 @@ Privacy defaults are applied to outputs. Use this to classify participants
 BEFORE computing metrics so that downstream functions operate on a
 privacy-safe, idempotent representation.
 }
+\keyword{deprecated}

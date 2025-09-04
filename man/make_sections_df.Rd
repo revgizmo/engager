@@ -22,7 +22,7 @@ A tibble with the following columns:
 \item course: character
 \item section: character
 \item n: integer (count of students in each section)
-}# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+}
 }
 \description{
 This function creates a tibble that includes rows for each section (grouped by dept and course number) and student count in each.
@@ -33,4 +33,5 @@ roster_file <- system.file("extdata/roster.csv", package = "zoomstudentengagemen
 roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
 make_sections_df(roster_df = roster_df)
 }
+\keyword{deprecated}
 \keyword{sections}

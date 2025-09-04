@@ -21,6 +21,8 @@
 #'   privacy_level = "full"
 #' )
 #' }
+#' @export
+#' @keywords deprecated
 export_ideal_transcripts_csv <- function(
     transcript_data = NULL,
     file_path = NULL,
@@ -28,7 +30,9 @@ export_ideal_transcripts_csv <- function(
     include_metadata = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'export_ideal_transcripts_csv' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'export_ideal_transcripts_csv' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   # Validate inputs
   if (is.null(transcript_data)) {
@@ -92,6 +96,8 @@ export_ideal_transcripts_csv <- function(
 #'   include_metadata = FALSE
 #' )
 #' }
+#' @export
+#' @keywords deprecated
 export_ideal_transcripts_json <- function(
     transcript_data = NULL,
     file_path = NULL,
@@ -100,7 +106,9 @@ export_ideal_transcripts_json <- function(
     include_metadata = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'export_ideal_transcripts_json' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'export_ideal_transcripts_json' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   # Validate inputs
   if (is.null(transcript_data)) {
@@ -169,7 +177,8 @@ export_ideal_transcripts_json <- function(
 #' @param include_summary_sheet Logical. Whether to include summary sheet. Default: TRUE
 #' @param include_metadata_sheet Logical. Whether to include metadata sheet. Default: TRUE
 #' @return Invisibly returns the file path (CSV format due to temporary workaround)
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 #' @examples
 #' \dontrun{
 #' # Export with default settings (creates CSV file)
@@ -196,7 +205,9 @@ export_ideal_transcripts_excel <- function(
     include_metadata_sheet = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'export_ideal_transcripts_excel' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'export_ideal_transcripts_excel' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   # Validate inputs
   if (is.null(transcript_data)) {
@@ -343,7 +354,8 @@ export_ideal_transcripts_excel <- function(
 #' @param privacy_level Character. Privacy level for data masking. Default from option
 #' @param include_charts Logical. Whether to include charts (Excel only). Default: FALSE
 #' @return Invisibly returns the summary data
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 #' @examples
 #' \dontrun{
 #' # Export summary as CSV
@@ -364,7 +376,9 @@ export_ideal_transcripts_summary <- function(
     include_charts = FALSE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'export_ideal_transcripts_summary' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'export_ideal_transcripts_summary' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   # Validate inputs
   if (is.null(transcript_data)) {

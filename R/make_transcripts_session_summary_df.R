@@ -13,7 +13,8 @@
 #'   summary metrics by speaker for all class sessions (and placeholders for
 #'   missing sections), including customized student names, and summarizes
 #'   results at the level of the session and preferred student name.
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 #'
 #' @examples
 #' # Load required packages

@@ -27,7 +27,8 @@ NULL
 #'   - `required_documentation`: Required documentation for compliance
 #'   - `institutional_guidance`: Institution-specific guidance
 #'
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 #'
 #' @examples
 #' # Validate ethical use for research
@@ -205,7 +206,8 @@ validate_ethical_use <- function(usage_context = c("research", "teaching", "asse
 #'
 #' @return A character string containing the formatted ethical use report
 #'
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 #'
 #' @examples
 #' # Generate ethical use report
@@ -357,7 +359,8 @@ create_ethical_use_report <- function(usage_context = NULL,
 #'
 #' @return A list containing audit results with usage patterns and recommendations
 #'
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 #'
 #' @examples
 #' # Audit usage patterns
@@ -373,7 +376,9 @@ audit_ethical_usage <- function(function_calls = NULL,
                                 time_period = 30) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'audit_ethical_usage' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'audit_ethical_usage' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   # Initialize results
   result <- list(

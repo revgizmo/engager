@@ -14,7 +14,7 @@ Defaults to 'dead_air'.}
 }
 \value{
 A tibble containing the comments from a Zoom recording transcript,
-with rows added for dead air.# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+with rows added for dead air.
 }
 \description{
 Take a tibble containing the comments from a Zoom recording transcript and return a tibble
@@ -26,3 +26,4 @@ accounting for the time from the beginning of the first comment to the end of th
 add_dead_air_rows(df = "NULL")
 
 }
+\keyword{deprecated}

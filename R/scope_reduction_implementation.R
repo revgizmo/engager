@@ -1,44 +1,44 @@
 #' Scope Reduction Implementation for Issue #393
-#' 
+#'
 #' This module implements the massive scope reduction required for CRAN submission,
 #' reducing from 175 exported functions to 25-30 essential functions.
-#' 
+#'
 #' @keywords internal
 #' @noRd
 
 # Essential functions to keep (25-30 functions)
 ESSENTIAL_FUNCTIONS <- c(
   # Core workflow functions (7)
-  "analyze_transcripts",           # Main user-facing function
-  "process_zoom_transcript",       # Core transcript processing
-  "load_zoom_transcript",          # Basic transcript loading
-  "consolidate_transcript",        # Transcript consolidation
-  "summarize_transcript_metrics",  # Basic metrics
-  "plot_users",                    # Basic visualization
-  "write_metrics",                 # Basic output
-  
+  "analyze_transcripts", # Main user-facing function
+  "process_zoom_transcript", # Core transcript processing
+  "load_zoom_transcript", # Basic transcript loading
+  "consolidate_transcript", # Transcript consolidation
+  "summarize_transcript_metrics", # Basic metrics
+  "plot_users", # Basic visualization
+  "write_metrics", # Basic output
+
   # Privacy and compliance functions (8)
-  "ensure_privacy",                # Privacy protection
-  "set_privacy_defaults",          # Privacy configuration
-  "privacy_audit",                 # Privacy validation
-  "mask_user_names_by_metric",     # Name masking
-  "hash_name_consistently",        # Consistent hashing
-  "anonymize_educational_data",    # Data anonymization
-  "validate_privacy_compliance",   # Privacy validation
-  "validate_ferpa_compliance",     # FERPA compliance
-  
+  "ensure_privacy", # Privacy protection
+  "set_privacy_defaults", # Privacy configuration
+  "privacy_audit", # Privacy validation
+  "mask_user_names_by_metric", # Name masking
+  "hash_name_consistently", # Consistent hashing
+  "anonymize_educational_data", # Data anonymization
+  "validate_privacy_compliance", # Privacy validation
+  "validate_ferpa_compliance", # FERPA compliance
+
   # Data loading functions (5)
-  "load_roster",                   # Roster loading
-  "load_session_mapping",          # Session mapping
-  "load_transcript_files_list",    # Transcript file loading
-  "detect_duplicate_transcripts",  # Duplicate detection
-  "detect_unmatched_names",        # Name matching
-  
+  "load_roster", # Roster loading
+  "load_session_mapping", # Session mapping
+  "load_transcript_files_list", # Transcript file loading
+  "detect_duplicate_transcripts", # Duplicate detection
+  "detect_unmatched_names", # Name matching
+
   # Analysis functions (4)
   "analyze_multi_session_attendance", # Multi-session analysis
-  "generate_attendance_report",     # Attendance reporting
-  "safe_name_matching_workflow",   # Name matching workflow
-  "validate_schema"                # Data validation
+  "generate_attendance_report", # Attendance reporting
+  "safe_name_matching_workflow", # Name matching workflow
+  "validate_schema" # Data validation
 )
 
 # Functions to deprecate immediately (all non-essential functions)
@@ -50,7 +50,7 @@ DEPRECATED_FUNCTIONS <- c(
   "make_names_to_clean_df",
   "make_new_analysis_template",
   "make_student_roster_sessions",
-  
+
   # Data creation functions
   "make_blank_cancelled_classes_df",
   "make_blank_section_names_lookup_csv",
@@ -61,7 +61,7 @@ DEPRECATED_FUNCTIONS <- c(
   "make_transcripts_summary_df",
   "make_transcripts_session_summary_df",
   "make_students_only_transcripts_summary_df",
-  
+
   # Export functions
   "export_ideal_transcripts_csv",
   "export_ideal_transcripts_excel",
@@ -72,7 +72,7 @@ DEPRECATED_FUNCTIONS <- c(
   "write_section_names_lookup",
   "write_transcripts_session_summary",
   "write_transcripts_summary",
-  
+
   # Validation functions
   "validate_ideal_transcript_comprehensive",
   "validate_ideal_transcript_structure",
@@ -82,7 +82,7 @@ DEPRECATED_FUNCTIONS <- c(
   "validate_ideal_timing_consistency",
   "validate_ethical_use",
   "audit_ethical_usage",
-  
+
   # Analysis functions
   "analyze_name_coverage",
   "analyze_roster_attendance",
@@ -94,7 +94,7 @@ DEPRECATED_FUNCTIONS <- c(
   "classify_participants",
   "generate_ferpa_report",
   "run_student_reports",
-  
+
   # Advanced functions
   "process_ideal_course_batch",
   "join_transcripts_list",
@@ -102,7 +102,7 @@ DEPRECATED_FUNCTIONS <- c(
   "load_cancelled_classes",
   "load_zoom_recorded_sessions_list",
   "load_section_names_lookup",
-  
+
   # Helper functions
   "add_export_metadata",
   "add_summary_charts",
@@ -222,7 +222,7 @@ INTERNAL_FUNCTIONS <- c(
 )
 
 #' Add Deprecation Warnings to Non-Essential Functions
-#' 
+#'
 #' @keywords internal
 #' @noRd
 add_deprecation_warnings <- function() {
@@ -232,7 +232,7 @@ add_deprecation_warnings <- function() {
 }
 
 #' Get Essential Functions List
-#' 
+#'
 #' @return Character vector of essential function names
 #' @export
 get_essential_functions <- function() {
@@ -240,7 +240,7 @@ get_essential_functions <- function() {
 }
 
 #' Get Deprecated Functions List
-#' 
+#'
 #' @return Character vector of deprecated function names
 #' @export
 get_deprecated_functions <- function() {
@@ -248,7 +248,7 @@ get_deprecated_functions <- function() {
 }
 
 #' Get Internal Functions List
-#' 
+#'
 #' @return Character vector of internal function names
 #' @export
 get_internal_functions <- function() {
@@ -256,7 +256,7 @@ get_internal_functions <- function() {
 }
 
 #' Get Scope Reduction Summary
-#' 
+#'
 #' @return List with scope reduction statistics
 #' @export
 get_scope_reduction_summary <- function() {

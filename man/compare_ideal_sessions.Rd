@@ -56,3 +56,4 @@ comparison <- compare_ideal_sessions(
 
 # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
+\keyword{deprecated}

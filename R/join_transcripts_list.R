@@ -14,7 +14,8 @@
 #'
 #' @return A tibble listing the the class sessions with corresponding transcript
 #'   files or placeholders for cancelled classes.
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 #'
 #' @examples
 #' \dontrun{
@@ -34,7 +35,9 @@ join_transcripts_list <- function(
     df_cancelled_classes = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'join_transcripts_list' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'join_transcripts_list' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   match_start_time <- start_time_local <- match_end_time <- section <- NULL
 

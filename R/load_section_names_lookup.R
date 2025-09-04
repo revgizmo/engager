@@ -9,7 +9,8 @@
 #' @param section_names_lookup_col_types column types in the csv file of customized student names by section. Defaults to 'cccccccc'
 #'
 #' @return A tibble of customized student names by section.
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 #'
 #' @examples
 #' load_section_names_lookup()
@@ -19,7 +20,9 @@ load_section_names_lookup <- function(data_folder = ".",
                                       section_names_lookup_col_types = "ccccccccc") {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'load_section_names_lookup' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'load_section_names_lookup' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   preferred_name <- section <- student_id <- NULL
 

@@ -15,7 +15,8 @@
 #'
 #' @return A tibble listing the students enrolled in the class or classes with a
 #'   small subset of the roster columns.
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 #'
 #' @examples
 #' # Load a sample roster from the package's extdata directory
@@ -25,7 +26,9 @@
 make_roster_small <- function(roster_df = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'make_roster_small' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'make_roster_small' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   # Defensive: check for valid input type
   if (!tibble::is_tibble(roster_df)) {

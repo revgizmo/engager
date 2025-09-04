@@ -322,6 +322,8 @@ anonymize_educational_data <- function(data = NULL,
 #'
 #' report <- generate_ferpa_report(sample_data)
 #' print(report$summary)
+#' @export
+#' @keywords deprecated
 generate_ferpa_report <- function(data = NULL,
                                   output_file = NULL,
                                   report_format = c("text", "html", "json"),
@@ -329,7 +331,9 @@ generate_ferpa_report <- function(data = NULL,
                                   institution_info = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_ferpa_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'generate_ferpa_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   report_format <- match.arg(report_format)
 
@@ -410,7 +414,8 @@ generate_ferpa_report <- function(data = NULL,
 #'
 #' @return A list containing retention validation results
 #'
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 #'
 #' @examples
 #' # Check data retention policy
@@ -433,7 +438,9 @@ check_data_retention_policy <- function(data = NULL,
                                         current_date = Sys.Date()) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'check_data_retention_policy' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'check_data_retention_policy' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   retention_period <- match.arg(retention_period)
 

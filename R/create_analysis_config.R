@@ -117,7 +117,7 @@ create_analysis_config <- function(
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning("Function 'create_analysis_config' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
-  
+
   # Input validation
   if (!is.character(dept) || length(dept) != 1) {
     stop("dept must be a single character string")

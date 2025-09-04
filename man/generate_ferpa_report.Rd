@@ -40,3 +40,4 @@ sample_data <- tibble::tibble(
 report <- generate_ferpa_report(sample_data)
 print(report$summary)
 }
+\keyword{deprecated}
