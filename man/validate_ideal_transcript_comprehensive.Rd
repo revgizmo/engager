@@ -21,7 +21,7 @@ validate_ideal_transcript_comprehensive(
 \item{detailed_report}{Logical. Whether to generate detailed report. Default: TRUE}
 }
 \value{
-Comprehensive validation results
+Comprehensive validation results# # # @export (REMOVED - deprecated function) (REMOVED - deprecated function) (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 Performs comprehensive validation of ideal course transcripts including

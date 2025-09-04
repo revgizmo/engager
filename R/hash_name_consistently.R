@@ -77,6 +77,10 @@ hash_name_consistently <- function(names = NULL,
 #' @return Character vector of normalized names
 #' @keywords internal
 normalize_name_for_matching <- function(names) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'normalize_name_for_matching' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Handle NA and empty values
   names[is.na(names)] <- ""
   names[nchar(trimws(names)) == 0] <- ""

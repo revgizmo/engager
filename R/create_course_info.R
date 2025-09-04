@@ -58,6 +58,10 @@ create_course_info <- function(
     semester_end_mdy = "May 15, 2024",
     session_days = NULL,
     session_times = NULL) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Input validation
   if (length(unique(c(
     length(dept), length(course), length(section),

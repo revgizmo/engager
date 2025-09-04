@@ -18,7 +18,7 @@ validate_ideal_transcript_structure(
 \item{strict_mode}{Logical. Whether to use strict validation rules. Default: TRUE}
 }
 \value{
-Validation results list with status, issues, and recommendations
+Validation results list with status, issues, and recommendations# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 Validates the structure and format of ideal course transcripts to ensure they

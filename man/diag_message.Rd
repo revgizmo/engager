@@ -9,4 +9,10 @@ diag_message(...)
 \description{
 Conditionally emit a message when verbose is enabled
 }
+\keyword{#}
+\keyword{(REMOVED}
+\keyword{-}
+\keyword{@export}
+\keyword{deprecated}
+\keyword{function)}
 \keyword{internal}

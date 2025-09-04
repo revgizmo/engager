@@ -24,7 +24,7 @@ export_ideal_transcripts_summary(
 \item{include_charts}{Logical. Whether to include charts (Excel only). Default: FALSE}
 }
 \value{
-Invisibly returns the summary data
+Invisibly returns the summary data# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 Creates and exports summary reports for ideal course transcripts in multiple

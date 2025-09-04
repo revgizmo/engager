@@ -27,7 +27,7 @@ Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
 }
 \value{
 The \code{transcript_df} augmented with columns:
-\code{clean_name}, \code{participant_type}, \code{student_id}, \code{is_matched}.
+\code{clean_name}, \code{participant_type}, \code{student_id}, \code{is_matched}.# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 Given transcript utterances, a student roster, and an optional lookup,

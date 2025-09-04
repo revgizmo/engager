@@ -69,6 +69,10 @@ make_clean_names_df <- function(data_folder = ".",
                                 section_names_lookup_file = "section_names_lookup.csv",
                                 transcripts_metrics_df = NULL,
                                 roster_sessions = NULL) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'make_clean_names_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   comments <-
     day <-
     dept <-
@@ -244,6 +248,10 @@ make_clean_names_df <- function(data_folder = ".",
 #' @return Data frame with enhanced name matching
 #' @keywords internal
 apply_privacy_aware_matching <- function(result, section_names_lookup, privacy_level) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'apply_privacy_aware_matching' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Extract transcript names for hashing
   transcript_names <- unique(result$transcript_name[!is.na(result$transcript_name)])
 

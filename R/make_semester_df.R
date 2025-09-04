@@ -12,12 +12,16 @@
 #' @return A tibble including number of units, with class start time, end time,
 #'   and duration.
 
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #' @examples
 #' make_semester_df()
 make_semester_df <- function(semester_units = 14,
                              class_start_time_gmt = "04:00:00",
                              class_duration_min = 90) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'make_semester_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   start_time_gmt <- end_time_gmt <- NULL
 
   if (semester_units <= 0) {

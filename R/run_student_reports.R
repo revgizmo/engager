@@ -13,7 +13,7 @@
 #' @param output_format Output format passed to [rmarkdown::render()].
 #'
 #' @return Invisibly, a character vector of generated report paths.
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #'
 #' @examples
 #' \dontrun{
@@ -32,6 +32,10 @@ run_student_reports <- function(
     student_summary_report = "Zoom_Student_Engagement_Analysis_student_summary_report.Rmd",
     student_summary_report_folder = system.file("", package = "zoomstudentengagement"),
     output_format = NULL) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'run_student_reports' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   template <- file.path(student_summary_report_folder, student_summary_report)
   outputs <- character(0)
   for (section in df_sections$section) {

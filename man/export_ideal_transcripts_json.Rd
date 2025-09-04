@@ -24,7 +24,7 @@ export_ideal_transcripts_json(
 \item{include_metadata}{Logical. Whether to include metadata. Default: TRUE}
 }
 \value{
-Invisibly returns the exported data as list
+Invisibly returns the exported data as list# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 Exports ideal course transcript data to JSON format with structured output

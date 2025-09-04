@@ -22,7 +22,7 @@ scheduled classes where a zoom recording is not expected.}
 }
 \value{
 A tibble listing the the class sessions with corresponding transcript
-files or placeholders for cancelled classes.
+files or placeholders for cancelled classes.# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 This function creates a tibble from the joining of the listing of session recordings loaded from the cloud recording csvs

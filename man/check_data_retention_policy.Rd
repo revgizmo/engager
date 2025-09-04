@@ -24,7 +24,7 @@ check_data_retention_policy(
 \item{current_date}{Current date for comparison (defaults to Sys.Date())}
 }
 \value{
-A list containing retention validation results
+A list containing retention validation results# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 Validates data retention policies and identifies data that should be

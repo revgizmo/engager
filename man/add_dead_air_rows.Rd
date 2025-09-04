@@ -14,7 +14,7 @@ Defaults to 'dead_air'.}
 }
 \value{
 A tibble containing the comments from a Zoom recording transcript,
-with rows added for dead air.
+with rows added for dead air.# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 Take a tibble containing the comments from a Zoom recording transcript and return a tibble

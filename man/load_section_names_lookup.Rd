@@ -19,7 +19,7 @@ Defaults to 'section_names_lookup.csv'}
 \item{section_names_lookup_col_types}{column types in the csv file of customized student names by section. Defaults to 'cccccccc'}
 }
 \value{
-A tibble of customized student names by section.
+A tibble of customized student names by section.# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 This function creates a tibble from a provided file of customized student names by section.
