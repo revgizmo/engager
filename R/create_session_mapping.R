@@ -18,6 +18,7 @@
 #'
 #' @return A tibble with session mapping information
 #' @export
+#' @keywords deprecated
 #'
 #' @examples
 #' \dontrun{
@@ -59,7 +60,9 @@ create_session_mapping <- function(
     verbose = FALSE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'create_session_mapping' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'create_session_mapping' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   # Declare global variables to avoid R CMD check warnings
   ID <- Topic <- `Start Time` <- start_time <- session_date <- zoom_recording_id <-

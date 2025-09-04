@@ -65,5 +65,5 @@ batch_results <- process_ideal_course_batch(
 )
 }
 
-# # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
+\keyword{deprecated}

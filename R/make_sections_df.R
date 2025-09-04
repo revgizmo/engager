@@ -14,7 +14,8 @@
 #'   - course: character
 #'   - section: character
 #'   - n: integer (count of students in each section)
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 #'
 #' @examples
 #' # Load a sample roster from the package's extdata directory

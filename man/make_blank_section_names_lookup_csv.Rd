@@ -18,7 +18,7 @@ An empty tibble with the following columns for section name mapping:
 \item{formal_name}{Character. Student's formal/legal name}
 \item{transcript_name}{Character. Name as it appears in Zoom transcripts}
 \item{student_id}{Character. Student identification number}
-}# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+}
 }
 \description{
 Creates an empty tibble template for customizing student names by section.
@@ -35,3 +35,4 @@ print(lookup_template)
 # for use with make_clean_names_df()
 
 }
+\keyword{deprecated}

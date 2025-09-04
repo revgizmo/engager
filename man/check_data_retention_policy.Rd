@@ -24,7 +24,7 @@ check_data_retention_policy(
 \item{current_date}{Current date for comparison (defaults to Sys.Date())}
 }
 \value{
-A list containing retention validation results# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+A list containing retention validation results
 }
 \description{
 Validates data retention policies and identifies data that should be
@@ -45,3 +45,4 @@ retention_check <- check_data_retention_policy(
 )
 print(retention_check$compliant)
 }
+\keyword{deprecated}

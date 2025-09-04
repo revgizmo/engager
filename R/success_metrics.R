@@ -8,7 +8,7 @@
 
 # Success Metrics Framework
 success_metrics_framework <- list(
-  
+
   # CRAN Readiness Metrics
   cran_readiness = list(
     errors = 0,
@@ -17,7 +17,7 @@ success_metrics_framework <- list(
     check_status = "PASS",
     description = "R CMD check must pass with 0 errors, 0 warnings, minimal notes"
   ),
-  
+
   # Function Scope Metrics
   function_scope = list(
     current = 67,
@@ -27,7 +27,7 @@ success_metrics_framework <- list(
     deprecated_functions = "37-42",
     description = "Reduce from 67 to 25-30 essential functions for CRAN readiness"
   ),
-  
+
   # Performance Metrics
   performance = list(
     transcript_processing = "1MB in <30 seconds",
@@ -35,7 +35,7 @@ success_metrics_framework <- list(
     test_coverage = "≥90% on essential functions",
     description = "Performance benchmarks for user experience and CRAN compliance"
   ),
-  
+
   # User Experience Metrics
   user_experience = list(
     time_to_first_analysis = "<15 minutes",
@@ -44,7 +44,7 @@ success_metrics_framework <- list(
     documentation_clarity = "Essential guides only",
     description = "User experience targets for adoption and usability"
   ),
-  
+
   # Documentation Metrics
   documentation = list(
     current_files = 357,
@@ -53,7 +53,7 @@ success_metrics_framework <- list(
     essential_content = "Core user guides only",
     description = "Reduce documentation from 357 to 75 essential files"
   ),
-  
+
   # Process Metrics
   process = list(
     pre_pr_validation_time = "25 → 10 minutes (60% reduction)",
@@ -73,48 +73,57 @@ get_current_baseline <- function() {
   warning("Function 'get_current_baseline' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
 
   # Get current function count
-  current_functions <- tryCatch({
-    # Simple approach - count R files
-    r_files <- list.files("R/", pattern = "\\.R$", full.names = FALSE)
-    if (length(r_files) == 0) {
-      # Fallback to fixed value if file counting fails
-      67
-    } else {
-      length(r_files)
+  current_functions <- tryCatch(
+    {
+      # Simple approach - count R files
+      r_files <- list.files("R/", pattern = "\\.R$", full.names = FALSE)
+      if (length(r_files) == 0) {
+        # Fallback to fixed value if file counting fails
+        67
+      } else {
+        length(r_files)
+      }
+    },
+    error = function(e) {
+      warning("Could not count R files: ", e$message)
+      67 # Fallback to known value
     }
-  }, error = function(e) {
-    warning("Could not count R files: ", e$message)
-    67  # Fallback to known value
-  })
-  
+  )
+
   # Get current documentation file count
-  current_docs <- tryCatch({
-    doc_count <- length(list.files("docs/", recursive = TRUE))
-    if (doc_count == 0) {
-      # Fallback to fixed value if file counting fails
-      357
-    } else {
-      doc_count
+  current_docs <- tryCatch(
+    {
+      doc_count <- length(list.files("docs/", recursive = TRUE))
+      if (doc_count == 0) {
+        # Fallback to fixed value if file counting fails
+        357
+      } else {
+        doc_count
+      }
+    },
+    error = function(e) {
+      warning("Could not count documentation files: ", e$message)
+      357 # Fallback to known value
     }
-  }, error = function(e) {
-    warning("Could not count documentation files: ", e$message)
-    357  # Fallback to known value
-  })
-  
+  )
+
   # Get current test coverage (simplified)
-  current_coverage <- tryCatch({
-    # For now, return a fixed value to avoid freezing
-    89.08
-  }, error = function(e) {
-    warning("Could not get test coverage: ", e$message)
-    NA
-  })
-  
+  current_coverage <- tryCatch(
+    {
+      # For now, return a fixed value to avoid freezing
+      89.08
+    },
+    error = function(e) {
+      warning("Could not get test coverage: ", e$message)
+      NA
+    }
+  )
+
   list(
     functions = current_functions,
     documentation_files = current_docs,
     test_coverage = current_coverage,
-    open_issues = 30,  # Fixed value for now
+    open_issues = 30, # Fixed value for now
     timestamp = Sys.time()
   )
 }
@@ -166,7 +175,7 @@ track_progress <- function(metric_name, current_value, target_value) {
   } else {
     target_avg <- as.numeric(target_value)
   }
-  
+
   # Calculate progress if we have numeric values
   if (!is.na(current_value) && !is.na(target_avg)) {
     if (current_value > target_avg) {
@@ -182,7 +191,7 @@ track_progress <- function(metric_name, current_value, target_value) {
     progress <- NA
     remaining <- NA
   }
-  
+
   # Determine status based on metric type and current vs target relationship
   if (is.na(progress)) {
     status <- "Unknown"
@@ -200,7 +209,7 @@ track_progress <- function(metric_name, current_value, target_value) {
       status <- ifelse(current_value <= target_avg, "Complete", "In Progress")
     }
   }
-  
+
   list(
     metric = metric_name,
     current = current_value,
@@ -223,25 +232,25 @@ generate_success_metrics_report <- function() {
 
   # Get current baseline
   baseline <- get_current_baseline()
-  
+
   # Get target state
   targets <- get_target_state()
-  
+
   # Generate progress tracking for key metrics
   progress <- list()
-  
+
   if (length(baseline$functions) == 1 && !is.na(baseline$functions)) {
     progress$functions <- track_progress("functions", baseline$functions, targets$functions)
   }
-  
+
   if (length(baseline$documentation_files) == 1 && !is.na(baseline$documentation_files)) {
     progress$documentation <- track_progress("documentation", baseline$documentation_files, targets$documentation_files)
   }
-  
+
   if (length(baseline$test_coverage) == 1 && !is.na(baseline$test_coverage)) {
     progress$coverage <- track_progress("coverage", baseline$test_coverage, 90)
   }
-  
+
   # Compile report
   report <- list(
     timestamp = Sys.time(),
@@ -255,7 +264,7 @@ generate_success_metrics_report <- function() {
       documentation_ok = ifelse(!is.na(progress$documentation), progress$documentation$current <= 75, FALSE)
     )
   )
-  
+
   report
 }
 
@@ -271,10 +280,10 @@ print_success_metrics_summary <- function(report = NULL) {
   if (is.null(report)) {
     report <- generate_success_metrics_report()
   }
-  
+
   cat("🎯 Success Metrics Summary for zoomstudentengagement Package\n")
   cat("========================================================\n\n")
-  
+
   # Function Scope
   cat("📊 Function Scope:\n")
   if (!is.null(report$progress$functions)) {
@@ -282,7 +291,7 @@ print_success_metrics_summary <- function(report = NULL) {
     cat("   Target: 25-30 functions\n")
     cat("   Progress: ", round(report$progress$functions$progress, 1), "% complete\n")
   }
-  
+
   # Test Coverage
   cat("\n🧪 Test Coverage:\n")
   if (!is.null(report$progress$coverage)) {
@@ -294,7 +303,7 @@ print_success_metrics_summary <- function(report = NULL) {
       cat("   ❌ Need ", 90 - report$progress$coverage$current, "% more coverage\n")
     }
   }
-  
+
   # Documentation
   cat("\n📚 Documentation:\n")
   if (!is.null(report$progress$documentation)) {
@@ -302,7 +311,7 @@ print_success_metrics_summary <- function(report = NULL) {
     cat("   Target: 75 files\n")
     cat("   Progress: ", round(report$progress$documentation$progress, 1), "% complete\n")
   }
-  
+
   # Overall Status
   cat("\n🎯 Overall Status:\n")
   overall_ready <- all(unlist(report$summary))
@@ -311,6 +320,6 @@ print_success_metrics_summary <- function(report = NULL) {
   } else {
     cat("   ❌ NOT READY - ", sum(!unlist(report$summary)), " criteria unmet\n")
   }
-  
+
   cat("\n📅 Report generated: ", format(report$timestamp, "%Y-%m-%d %H:%M:%S"), "\n")
 }

@@ -69,3 +69,4 @@ session_mapping <- create_session_mapping(
 )
 }
 }
+\keyword{deprecated}

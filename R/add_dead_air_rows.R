@@ -15,7 +15,8 @@
 #'
 #' @return A tibble containing the comments from a Zoom recording transcript,
 #'   with rows added for dead air.
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 #'
 #' @examples
 #' add_dead_air_rows(df = "NULL")

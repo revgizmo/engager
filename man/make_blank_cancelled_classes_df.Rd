@@ -10,7 +10,7 @@ make_blank_cancelled_classes_df()
 }
 \value{
 An empty tibble for recording of cancelled class sessions for scheduled classes
-where a zoom recording is not expected.# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+where a zoom recording is not expected.
 }
 \description{
 Make Cancelled Classes Tibble
@@ -20,3 +20,4 @@ sessions for scheduled classes where a Zoom recording is not expected.
 \examples{
 make_blank_cancelled_classes_df()
 }
+\keyword{deprecated}

@@ -43,7 +43,8 @@
 #' )
 #' }
 #'
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 process_ideal_course_batch <- function(include_roster = TRUE,
                                        privacy_level = "masked",
                                        output_format = "list",
@@ -52,7 +53,9 @@ process_ideal_course_batch <- function(include_roster = TRUE,
                                        names_exclude = c("dead_air")) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'process_ideal_course_batch' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'process_ideal_course_batch' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   # Validate inputs
   if (!privacy_level %in% c("full", "masked", "none")) {
@@ -251,13 +254,17 @@ process_ideal_course_batch <- function(include_roster = TRUE,
 #' }
 #'
 #' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 compare_ideal_sessions <- function(batch_results = NULL,
                                    comparison_metrics = c("total_comments", "duration"),
                                    visualization = TRUE,
                                    include_roster_comparison = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'compare_ideal_sessions' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'compare_ideal_sessions' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   # Validate inputs
   valid_metrics <- c("total_comments", "duration", "wordcount", "wpm", "participation_rate")
@@ -364,18 +371,17 @@ compare_ideal_sessions <- function(batch_results = NULL,
 #' validation <- validate_ideal_scenarios(batch_results, validation_rules = custom_rules)
 #' }
 #'
-#' # # # # @export (REMOVED - deprecated function) (REMOVED - deprecated function) (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
+#' @keywords deprecated
 validate_ideal_scenarios <- function(batch_results = NULL,
                                      validation_rules = NULL,
                                      detailed_report = TRUE,
                                      include_data_quality = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_ideal_scenarios' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
-
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_ideal_scenarios' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  if (Sys.getenv("TESTTHAT") != "true") {
+    warning("Function 'validate_ideal_scenarios' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  }
 
   # Set default validation rules if none provided
   if (is.null(validation_rules)) {

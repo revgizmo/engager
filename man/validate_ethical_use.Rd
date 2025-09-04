@@ -31,7 +31,7 @@ A list containing ethical validation results with the following elements:
 \item \code{recommendations}: Character vector of ethical recommendations
 \item \code{required_documentation}: Required documentation for compliance
 \item \code{institutional_guidance}: Institution-specific guidance
-}# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+}
 }
 \description{
 Validates that the package is being used for educational purposes that promote
@@ -48,3 +48,4 @@ validation <- validate_ethical_use(
 print(validation$ethically_compliant)
 print(validation$recommendations)
 }
+\keyword{deprecated}

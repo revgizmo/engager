@@ -20,7 +20,7 @@ classes with a small subset of the roster columns. Must contain the following co
 }
 \value{
 A tibble listing the students enrolled in the class or classes with a
-small subset of the roster columns.# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+small subset of the roster columns.
 }
 \description{
 This function creates a tibble that includes rows for each students enrolled
@@ -32,4 +32,5 @@ roster_file <- system.file("extdata/roster.csv", package = "zoomstudentengagemen
 roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
 make_roster_small(roster_df = roster_df)
 }
+\keyword{deprecated}
 \keyword{roster}
