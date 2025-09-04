@@ -1,0 +1,143 @@
+---
+title: "Essential Functions - Core Package Functionality"
+author: "zoomstudentengagement package"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Essential Functions - Core Package Functionality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Overview
+
+This vignette demonstrates the core functionality of the `zoomstudentengagement` package using only the essential functions. After scope reduction, the package now exports **26 essential functions** focused on:
+
+- **Transcript Processing**: Loading and processing Zoom transcripts
+- **Privacy Protection**: Ensuring FERPA compliance and data privacy
+- **Analysis**: Core engagement metrics and analysis
+- **Name Matching**: Safe student name matching workflows
+
+## Essential Functions
+
+The package now exports these 26 essential functions:
+
+```{r essential-functions}
+library(zoomstudentengagement)
+
+# Get list of essential functions
+essential_functions <- get_essential_functions()
+cat("Essential functions (", length(essential_functions), "):\n")
+cat(paste("-", essential_functions), sep = "\n")
+```
+
+## Core Workflow
+
+### 1. Load and Process Transcript
+
+```{r load-transcript}
+# Load a sample transcript
+transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+  package = "zoomstudentengagement"
+)
+
+# Load the transcript
+transcript <- load_zoom_transcript(transcript_file)
+cat("Transcript loaded with", nrow(transcript), "comments\n")
+```
+
+### 2. Process with Privacy Protection
+
+```{r process-transcript}
+# Process transcript with privacy defaults
+processed <- process_zoom_transcript(
+  transcript_df = transcript,
+  add_dead_air = TRUE,
+  consolidate_comments = TRUE
+)
+
+cat("Processed transcript has", nrow(processed), "rows\n")
+```
+
+### 3. Analyze Engagement
+
+```{r analyze-engagement}
+# Analyze transcripts for engagement metrics
+analysis <- analyze_transcripts(
+  transcript_files = transcript_file,
+  roster_file = NULL,
+  privacy_level = "FERPA"
+)
+
+cat("Analysis completed successfully\n")
+```
+
+### 4. Privacy and Compliance
+
+```{r privacy-compliance}
+# Check privacy compliance
+privacy_status <- validate_privacy_compliance(processed)
+cat("Privacy compliance:", privacy_status, "\n")
+
+# FERPA compliance check
+ferpa_status <- validate_ferpa_compliance(processed)
+cat("FERPA compliance:", ferpa_status, "\n")
+```
+
+## Function Categories
+
+### Transcript Processing
+- `load_zoom_transcript()` - Load Zoom transcript files
+- `process_zoom_transcript()` - Process and clean transcripts
+- `consolidate_transcript()` - Consolidate consecutive comments
+- `add_dead_air_rows()` - Add gaps between comments
+
+### Analysis
+- `analyze_transcripts()` - Main analysis function
+- `summarize_transcript_metrics()` - Calculate engagement metrics
+- `analyze_multi_session_attendance()` - Multi-session analysis
+- `generate_attendance_report()` - Generate attendance reports
+
+### Privacy & Compliance
+- `ensure_privacy()` - Apply privacy protection
+- `set_privacy_defaults()` - Configure privacy settings
+- `privacy_audit()` - Audit privacy compliance
+- `validate_privacy_compliance()` - Validate privacy settings
+- `validate_ferpa_compliance()` - FERPA compliance check
+
+### Name Matching
+- `load_roster()` - Load student roster
+- `safe_name_matching_workflow()` - Safe name matching
+- `detect_unmatched_names()` - Find unmatched names
+- `detect_duplicate_transcripts()` - Find duplicate files
+
+### Utilities
+- `plot_users()` - Plot user engagement
+- `write_metrics()` - Export metrics
+- `validate_schema()` - Validate data structure
+
+## Benefits of Scope Reduction
+
+1. **Focused Functionality**: Only essential functions are exported
+2. **Easier Maintenance**: Smaller codebase to maintain
+3. **Better User Experience**: Clear, focused API
+4. **CRAN Ready**: Minimal function surface for submission
+5. **Privacy First**: All functions prioritize data protection
+
+## Next Steps
+
+With the scope reduction complete, the package is now ready for:
+
+1. **CRAN Submission**: Minimal, focused function set
+2. **User Testing**: Clear, essential functionality
+3. **Documentation Updates**: Focus on core workflows
+4. **UX Simplification**: Streamlined user experience
+
+The package now provides a clean, focused API for analyzing student engagement from Zoom transcripts while maintaining strong privacy protection and FERPA compliance.
