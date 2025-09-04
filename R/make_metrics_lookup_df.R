@@ -23,7 +23,7 @@
 #'   \item \code{wpm}: Average words per minute within verbal comments captured by Zoom
 #' }
 #'
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #'
 #' @examples
 #' # Get the metrics lookup table
@@ -39,6 +39,10 @@
 #' plot_users(sample, metric = "session_ct", metrics_lookup_df = metrics_lookup)
 #'
 make_metrics_lookup_df <- function() {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'make_metrics_lookup_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   tibble::tribble(
     ~metric, ~description,
     "session_ct", "Number of sesessions in which Zoom captured a verbal comment",

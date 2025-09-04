@@ -8,7 +8,7 @@
 #' @param privacy_level Character. Privacy level for data masking. Default from option
 #' @param include_metadata Logical. Whether to include metadata in export. Default: TRUE
 #' @return Invisibly returns the exported data frame
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #' @examples
 #' \dontrun{
 #' # Export with default settings
@@ -26,6 +26,10 @@ export_ideal_transcripts_csv <- function(
     file_path = NULL,
     privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
     include_metadata = TRUE) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'export_ideal_transcripts_csv' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Validate inputs
   if (is.null(transcript_data)) {
     stop("transcript_data cannot be NULL")
@@ -75,7 +79,7 @@ export_ideal_transcripts_csv <- function(
 #' @param pretty_print Logical. Whether to format JSON with indentation. Default: TRUE
 #' @param include_metadata Logical. Whether to include metadata. Default: TRUE
 #' @return Invisibly returns the exported data as list
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #' @examples
 #' \dontrun{
 #' # Export with default settings
@@ -94,6 +98,10 @@ export_ideal_transcripts_json <- function(
     privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
     pretty_print = TRUE,
     include_metadata = TRUE) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'export_ideal_transcripts_json' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Validate inputs
   if (is.null(transcript_data)) {
     stop("transcript_data cannot be NULL")
@@ -161,7 +169,7 @@ export_ideal_transcripts_json <- function(
 #' @param include_summary_sheet Logical. Whether to include summary sheet. Default: TRUE
 #' @param include_metadata_sheet Logical. Whether to include metadata sheet. Default: TRUE
 #' @return Invisibly returns the file path (CSV format due to temporary workaround)
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #' @examples
 #' \dontrun{
 #' # Export with default settings (creates CSV file)
@@ -186,6 +194,10 @@ export_ideal_transcripts_excel <- function(
     privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
     include_summary_sheet = TRUE,
     include_metadata_sheet = TRUE) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'export_ideal_transcripts_excel' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Validate inputs
   if (is.null(transcript_data)) {
     stop("transcript_data cannot be NULL")
@@ -331,7 +343,7 @@ export_ideal_transcripts_excel <- function(
 #' @param privacy_level Character. Privacy level for data masking. Default from option
 #' @param include_charts Logical. Whether to include charts (Excel only). Default: FALSE
 #' @return Invisibly returns the summary data
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #' @examples
 #' \dontrun{
 #' # Export summary as CSV
@@ -350,6 +362,10 @@ export_ideal_transcripts_summary <- function(
     format = c("csv", "json", "excel"),
     privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
     include_charts = FALSE) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'export_ideal_transcripts_summary' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Validate inputs
   if (is.null(transcript_data)) {
     stop("transcript_data cannot be NULL")
@@ -420,6 +436,10 @@ export_ideal_transcripts_summary <- function(
 #' Add Export Metadata
 #' @keywords internal
 add_export_metadata <- function(data, format = "csv") {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'add_export_metadata' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Add export timestamp and format info
   data$export_timestamp <- Sys.time()
   data$export_format <- format
@@ -430,6 +450,10 @@ add_export_metadata <- function(data, format = "csv") {
 #' Generate Export Metadata
 #' @keywords internal
 generate_export_metadata <- function(data, format = "csv") {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'generate_export_metadata' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   metadata <- list(
     export_timestamp = Sys.time(),
     export_format = format,
@@ -445,6 +469,10 @@ generate_export_metadata <- function(data, format = "csv") {
 #' Generate Transcript Summary
 #' @keywords internal
 generate_transcript_summary <- function(data) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'generate_transcript_summary' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   summary_data <- list(
     total_rows = nrow(data),
     total_columns = ncol(data),
@@ -463,6 +491,10 @@ generate_transcript_summary <- function(data) {
 #' Add Summary Charts to Excel Workbook
 #' @keywords internal
 add_summary_charts <- function(wb, summary_data) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'add_summary_charts' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Add basic charts if summary data is available
   # This is a placeholder for future chart functionality
   # Chart functionality not yet implemented

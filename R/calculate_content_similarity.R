@@ -45,6 +45,10 @@ calculate_content_similarity <- function(
     transcript1 = NULL,
     transcript2 = NULL,
     names_to_exclude = c("dead_air")) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'calculate_content_similarity' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Handle NULL transcripts
   if (is.null(transcript1) || is.null(transcript2)) {
     return(0.0)

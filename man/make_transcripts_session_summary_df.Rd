@@ -15,7 +15,7 @@ including customized student names.}
 a tibble containing session details and
 summary metrics by speaker for all class sessions (and placeholders for
 missing sections), including customized student names, and summarizes
-results at the level of the session and preferred student name.
+results at the level of the session and preferred student name.# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 This function creates a tibble from the provided tibble containing session

@@ -6,11 +6,15 @@
 #'
 #' @return An empty tibble for recording of cancelled class sessions for scheduled classes
 #'   where a zoom recording is not expected.
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #'
 #' @examples
 #' make_blank_cancelled_classes_df()
 make_blank_cancelled_classes_df <- function() {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'make_blank_cancelled_classes_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Use base R operations instead of dplyr to avoid segmentation fault
   result <- readr::read_csv(
     I("dept,course_section,course,section,day,time,instructor,Topic,ID,Start Time,File Size (MB),File Count,Total Views,Total Downloads,Last Accessed,match_start_time,match_end_time,date_extract,recording_start,start_time_local,transcript_file,chat_file,closed_caption_file"),

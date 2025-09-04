@@ -22,7 +22,7 @@ A tibble with the following columns:
 \item course: character
 \item section: character
 \item n: integer (count of students in each section)
-}
+}# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 This function creates a tibble that includes rows for each section (grouped by dept and course number) and student count in each.

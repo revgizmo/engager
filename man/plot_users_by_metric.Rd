@@ -25,7 +25,7 @@ Defaults to the result of \code{make_metrics_lookup_df()}}
 Defaults to 'preferred_name'}
 }
 \value{
-A ggplot object
+A ggplot object# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 Deprecated: use \code{plot_users()} instead. This function delegates to \code{plot_users()}

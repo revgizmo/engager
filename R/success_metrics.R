@@ -68,6 +68,10 @@ success_metrics_framework <- list(
 #' @return List of current baseline measurements for all success metrics
 #' @keywords internal
 get_current_baseline <- function() {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'get_current_baseline' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Get current function count
   current_functions <- tryCatch({
     # Simple approach - count R files
@@ -120,6 +124,10 @@ get_current_baseline <- function() {
 #' @return List of target state definitions for all success metrics
 #' @keywords internal
 get_target_state <- function() {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'get_target_state' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   list(
     functions = "25-30",
     documentation_files = 75,
@@ -138,6 +146,10 @@ get_target_state <- function() {
 #' @return List with progress information
 #' @keywords internal
 track_progress <- function(metric_name, current_value, target_value) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'track_progress' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Handle different types of targets
   if (is.character(target_value)) {
     # For string targets like "25-30", extract numeric range
@@ -205,6 +217,10 @@ track_progress <- function(metric_name, current_value, target_value) {
 #' @return Comprehensive success metrics report
 #' @keywords internal
 generate_success_metrics_report <- function() {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'generate_success_metrics_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Get current baseline
   baseline <- get_current_baseline()
   
@@ -248,6 +264,10 @@ generate_success_metrics_report <- function() {
 #' @param report Success metrics report from generate_success_metrics_report()
 #' @keywords internal
 print_success_metrics_summary <- function(report = NULL) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'print_success_metrics_summary' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   if (is.null(report)) {
     report <- generate_success_metrics_report()
   }

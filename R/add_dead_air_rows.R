@@ -15,13 +15,17 @@
 #'
 #' @return A tibble containing the comments from a Zoom recording transcript,
 #'   with rows added for dead air.
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #'
 #' @examples
 #' add_dead_air_rows(df = "NULL")
 #'
 # CRAN compliance: global variables handled in package file
 add_dead_air_rows <- function(df = NULL, dead_air_name = "dead_air") {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'add_dead_air_rows' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Removed local NULL assignments; handled by globalVariables above.
 
   if (tibble::is_tibble(df)) {

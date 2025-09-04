@@ -39,7 +39,7 @@
 #'
 #' @return A tibble containing the comments from a Zoom recording transcript
 #'
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #'
 #' @examples
 #' \dontrun{
@@ -56,6 +56,10 @@ load_and_process_zoom_transcript <- function(transcript_file_path = NULL,
                                              add_dead_air = TRUE,
                                              dead_air_name = "dead_air",
                                              na_name = "unknown") {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'load_and_process_zoom_transcript' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   .Deprecated("process_zoom_transcript")
 
   process_zoom_transcript(transcript_file_path,

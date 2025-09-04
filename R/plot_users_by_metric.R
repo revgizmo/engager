@@ -13,11 +13,15 @@
 #'   Defaults to 'preferred_name'
 #'
 #' @return A ggplot object
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 plot_users_by_metric <- function(transcripts_summary_df = NULL,
                                  metric = "session_ct",
                                  metrics_lookup_df = make_metrics_lookup_df(),
                                  student_col_name = "preferred_name") {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'plot_users_by_metric' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Delegate to unified plotting
   plot_users(
     data = transcripts_summary_df,

@@ -18,7 +18,7 @@
 #'     \item{student_id}{Character. Student identification number}
 #'   }
 #'
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #'
 #' @examples
 #' # Create a blank template
@@ -29,6 +29,10 @@
 #' # for use with make_clean_names_df()
 #'
 make_blank_section_names_lookup_csv <- function() {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'make_blank_section_names_lookup_csv' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   readr::read_csv(
     I("course_section,day,time,course,section,preferred_name,formal_name,transcript_name,student_id"),
     col_types = readr::cols(

@@ -21,7 +21,7 @@ audit_ethical_usage(
 \item{time_period}{Time period of analysis (in days)}
 }
 \value{
-A list containing audit results with usage patterns and recommendations
+A list containing audit results with usage patterns and recommendations# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 Analyzes usage patterns to detect potential ethical concerns and

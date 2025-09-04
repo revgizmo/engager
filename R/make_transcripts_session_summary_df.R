@@ -13,7 +13,7 @@
 #'   summary metrics by speaker for all class sessions (and placeholders for
 #'   missing sections), including customized student names, and summarizes
 #'   results at the level of the session and preferred student name.
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #'
 #' @examples
 #' # Load required packages
@@ -31,6 +31,10 @@
 #' # Test the function with the sample data
 #' make_transcripts_session_summary_df(sample_data)
 make_transcripts_session_summary_df <- function(clean_names_df = NULL) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'make_transcripts_session_summary_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   if (is.null(clean_names_df)) {
     return(NULL)
   }

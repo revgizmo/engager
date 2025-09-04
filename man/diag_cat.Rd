@@ -9,4 +9,10 @@ diag_cat(...)
 \description{
 Conditionally emit cat-style output when verbose is enabled or in interactive sessions
 }
+\keyword{#}
+\keyword{(REMOVED}
+\keyword{-}
+\keyword{@export}
+\keyword{deprecated}
+\keyword{function)}
 \keyword{internal}

@@ -24,7 +24,7 @@ export_ideal_transcripts_excel(
 \item{include_metadata_sheet}{Logical. Whether to include metadata sheet. Default: TRUE}
 }
 \value{
-Invisibly returns the file path (CSV format due to temporary workaround)
+Invisibly returns the file path (CSV format due to temporary workaround)# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 Exports ideal course transcript data to CSV format as a temporary workaround

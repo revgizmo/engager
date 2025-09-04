@@ -10,11 +10,15 @@
 #'
 #' @return Benchmark results as a list
 #' @importFrom utils sessionInfo
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 benchmark_ideal_transcripts <- function(iterations = 5,
                                         output_file = "benchmark_results.rds",
                                         include_memory = TRUE,
                                         include_profiling = FALSE) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'benchmark_ideal_transcripts' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Check if microbenchmark is available
   if (!requireNamespace("microbenchmark", quietly = TRUE)) {
     stop("microbenchmark package is required for benchmarking")
@@ -139,6 +143,10 @@ benchmark_ideal_transcripts <- function(iterations = 5,
 #' Measure memory usage of a function
 #' @keywords internal
 measure_memory_usage <- function(expr) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'measure_memory_usage' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   if (!requireNamespace("pryr", quietly = TRUE)) {
     return(NULL)
   }
@@ -159,6 +167,10 @@ measure_memory_usage <- function(expr) {
 #' @keywords internal
 
 generate_benchmark_summary <- function(benchmark_results) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'generate_benchmark_summary' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   summary <- list()
 
   # Individual processing summary
@@ -193,6 +205,10 @@ generate_benchmark_summary <- function(benchmark_results) {
 #' Print benchmark summary
 #' @keywords internal
 print_benchmark_summary <- function(summary) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'print_benchmark_summary' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   # Silent function - no diagnostic output
   invisible(summary)
 }

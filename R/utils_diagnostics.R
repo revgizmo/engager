@@ -12,14 +12,22 @@ NULL
 
 # Return TRUE if verbose diagnostics are enabled
 is_verbose <- function() {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'is_verbose' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   isTRUE(getOption("zoomstudentengagement.verbose", FALSE))
 }
 
 #' Conditionally emit a message when verbose is enabled
 #'
 #' @keywords internal
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 diag_message <- function(...) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'diag_message' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   if (is_verbose()) {
     message(...)
   }
@@ -29,8 +37,12 @@ diag_message <- function(...) {
 #' Conditionally emit cat-style output when verbose is enabled or in interactive sessions
 #'
 #' @keywords internal
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 diag_cat <- function(...) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'diag_cat' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   if (is_verbose() || interactive()) {
     cat(...)
   }
@@ -42,6 +54,10 @@ diag_cat <- function(...) {
 #' @param verbose_flag Logical flag controlling local verbosity
 #' @keywords internal
 diag_message_if <- function(verbose_flag, ...) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'diag_message_if' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   if (isTRUE(verbose_flag) || is_verbose()) {
     message(...)
   }
@@ -53,6 +69,10 @@ diag_message_if <- function(verbose_flag, ...) {
 #' @param verbose_flag Logical flag controlling local verbosity
 #' @keywords internal
 diag_cat_if <- function(verbose_flag, ...) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'diag_cat_if' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   if (isTRUE(verbose_flag) || is_verbose() || interactive()) {
     cat(...)
   }

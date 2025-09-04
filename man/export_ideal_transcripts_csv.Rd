@@ -21,7 +21,7 @@ export_ideal_transcripts_csv(
 \item{include_metadata}{Logical. Whether to include metadata in export. Default: TRUE}
 }
 \value{
-Invisibly returns the exported data frame
+Invisibly returns the exported data frame# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 Exports ideal course transcript data to CSV format with privacy protection

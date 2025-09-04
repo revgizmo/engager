@@ -14,7 +14,7 @@
 #'   - course: character
 #'   - section: character
 #'   - n: integer (count of students in each section)
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #'
 #' @examples
 #' # Load a sample roster from the package's extdata directory
@@ -22,6 +22,10 @@
 #' roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
 #' make_sections_df(roster_df = roster_df)
 make_sections_df <- function(roster_df = NULL) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'make_sections_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   dept <- course <- section <- n <- NULL
 
   # Defensive: check for valid input

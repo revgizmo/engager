@@ -9,7 +9,7 @@
 #' @param section_names_lookup_col_types column types in the csv file of customized student names by section. Defaults to 'cccccccc'
 #'
 #' @return A tibble of customized student names by section.
-#' @export
+#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 #'
 #' @examples
 #' load_section_names_lookup()
@@ -17,6 +17,10 @@
 load_section_names_lookup <- function(data_folder = ".",
                                       names_lookup_file = "section_names_lookup.csv",
                                       section_names_lookup_col_types = "ccccccccc") {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'load_section_names_lookup' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   preferred_name <- section <- student_id <- NULL
 
   # Input validation
@@ -136,6 +140,10 @@ load_section_names_lookup <- function(data_folder = ".",
 #' @return TRUE if valid, stops with error if invalid
 #' @keywords internal
 validate_lookup_file_format <- function(lookup_data) {
+  # DEPRECATED: This function will be removed in the next version
+  # Use essential functions instead. See ?get_essential_functions for alternatives.
+  warning("Function 'validate_lookup_file_format' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+
   required_cols <- c("transcript_name", "preferred_name")
 
   if (!all(required_cols %in% names(lookup_data))) {

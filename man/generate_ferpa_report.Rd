@@ -24,7 +24,7 @@ generate_ferpa_report(
 \item{institution_info}{Optional list with institution information}
 }
 \value{
-A list containing the compliance report
+A list containing the compliance report# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
 }
 \description{
 Generates comprehensive FERPA compliance reports for educational data.
