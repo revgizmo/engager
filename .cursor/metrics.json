@@ -1,11 +1,11 @@
 {
-  "coverage": 88.74,
+  "coverage": 84.54,
   "tests_passed": 2075,
   "failures": 0,
   "skipped": 15,
   "rcmd_notes": 2,
   "open_issues": 30,
-  "exported_functions": 68,
+  "exported_functions": 70,
   "last_updated": "2025-09-04",
   "package_status": "EXCELLENT - Very Close to CRAN Ready"
 }
