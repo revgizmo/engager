@@ -155,14 +155,18 @@ analyze_function_usage <- function(function_name) {
     }
   }
 
-  # Check tests
-  test_files <- list.files("tests/testthat", pattern = "test_.*\\.R$", full.names = TRUE)
+  # Check tests - look for function name in test files
+  all_files <- list.files("tests/testthat", full.names = TRUE)
+  test_files <- all_files[grepl("^test-.*\\.R$", basename(all_files))]
   for (test_file in test_files) {
     if (file.exists(test_file)) {
       content <- readLines(test_file, warn = FALSE)
-      if (any(grepl(function_name, content, fixed = TRUE))) {
+      # Look for function name in various contexts (calls, test names, etc.)
+      if (any(grepl(function_name, content, fixed = TRUE)) || 
+          any(grepl(paste0("test.*", function_name), content, ignore.case = TRUE))) {
         usage_info$in_tests <- TRUE
         usage_info$usage_count <- usage_info$usage_count + 1
+        break  # Found in at least one test file
       }
     }
   }
