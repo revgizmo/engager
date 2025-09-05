@@ -300,7 +300,7 @@ handle_unmatched_names <- function(unmatched_names,
 #' @param privacy_level Privacy level for processing
 #'
 #' @return Processed data with privacy applied
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
 #'
 #' @examples
 #' # Process transcript with privacy
@@ -379,7 +379,7 @@ process_transcript_with_privacy <- function(transcript_data = NULL,
 #' @param privacy_level Privacy level for processing
 #'
 #' @return Matched data with privacy controls applied
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
 #'
 #' @examples
 #' # Match names with privacy

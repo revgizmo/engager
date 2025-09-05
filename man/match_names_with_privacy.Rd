@@ -21,7 +21,7 @@ match_names_with_privacy(
 \item{privacy_level}{Privacy level for processing}
 }
 \value{
-Matched data with privacy controls applied# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+Matched data with privacy controls applied
 }
 \description{
 Performs comprehensive name matching with privacy awareness. Uses consistent
