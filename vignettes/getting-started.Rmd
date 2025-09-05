@@ -1,0 +1,194 @@
+---
+title: "Getting Started with zoomstudentengagement"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+# Getting Started with zoomstudentengagement
+
+The `zoomstudentengagement` package makes it easy to analyze student engagement from Zoom transcripts. This guide will get you started with the basics in just a few minutes.
+
+## Quick Start
+
+The easiest way to analyze Zoom transcripts is with the basic workflow:
+
+```{r quick-start}
+# Load the package
+library(zoomstudentengagement)
+
+# Run basic analysis (recommended for new users)
+results <- basic_transcript_analysis("your_transcript.vtt", "output/")
+```
+
+That's it! The analysis will:
+1. Load your transcript file
+2. Process and clean the data
+3. Calculate engagement metrics
+4. Create visualizations
+5. Export results to files
+
+## Step-by-Step Workflow
+
+If you prefer more control, you can run each step individually:
+
+### 1. Load Transcript
+```{r load-transcript}
+transcript <- load_zoom_transcript("your_transcript.vtt")
+```
+
+### 2. Process Data
+```{r process-data}
+processed <- process_zoom_transcript(transcript)
+```
+
+### 3. Analyze Engagement
+```{r analyze-engagement}
+analysis <- analyze_transcripts(processed)
+```
+
+### 4. Create Visualizations
+```{r create-visualizations}
+plots <- plot_users(analysis)
+```
+
+### 5. Export Results
+```{r export-results}
+write_metrics(analysis, "output/")
+```
+
+## Supported File Formats
+
+The package supports these Zoom transcript formats:
+- **VTT files** (`.vtt`) - Video transcript files
+- **TXT files** (`.txt`) - Text transcript files  
+- **CSV files** (`.csv`) - Comma-separated transcript data
+
+## Privacy Protection
+
+Privacy protection is enabled by default. The package automatically:
+- Protects student names and personal information
+- Applies FERPA compliance features
+- Provides data anonymization options
+
+```{r privacy-example}
+# Privacy protection is automatic, but you can configure it
+set_privacy_defaults()  # Use default privacy settings
+ensure_privacy(data)    # Apply privacy protection to data
+```
+
+## Getting Help
+
+The package includes several help functions to guide you:
+
+```{r help-examples}
+# Show getting started guide
+show_getting_started()
+
+# See available functions at your level
+show_available_functions()
+
+# Get help for a specific function
+show_function_help("load_zoom_transcript")
+
+# Find the right function for your task
+find_function_for_task("create visualizations")
+```
+
+## Progressive Disclosure
+
+The package uses progressive disclosure to keep the interface simple:
+
+- **Basic level** (default): 5 essential functions
+- **Intermediate level**: 15 common functions  
+- **Advanced level**: 35+ specialized functions
+- **Expert level**: All 79 functions
+
+```{r progressive-disclosure}
+# Start with basic level (default)
+show_available_functions("basic")
+
+# See more functions
+set_ux_level("intermediate")
+show_available_functions()
+
+# Access all functions
+set_ux_level("expert")
+```
+
+## Batch Processing
+
+For multiple transcript files:
+
+```{r batch-processing}
+# Process multiple files at once
+files <- c("session1.vtt", "session2.vtt", "session3.vtt")
+results <- batch_basic_analysis(files, "batch_output/")
+```
+
+## Common Workflows
+
+### Quick Analysis
+```{r quick-analysis}
+# Fastest way to get results
+results <- quick_analysis("transcript.vtt")
+```
+
+### Privacy-Focused Analysis
+```{r privacy-analysis}
+# Maximum privacy protection
+set_privacy_defaults()
+results <- basic_transcript_analysis("transcript.vtt", "output/", "high")
+```
+
+### Custom Analysis
+```{r custom-analysis}
+# Step-by-step with custom options
+transcript <- load_zoom_transcript("transcript.vtt")
+processed <- process_zoom_transcript(transcript)
+analysis <- analyze_transcripts(processed)
+plots <- plot_users(analysis)
+write_metrics(analysis, "custom_output/")
+```
+
+## Troubleshooting
+
+If you encounter issues:
+
+```{r troubleshooting}
+# Show troubleshooting guide
+show_troubleshooting()
+
+# Get specific help
+show_function_help("function_name")
+
+# Find the right function
+find_function_for_task("what you want to do")
+```
+
+## Next Steps
+
+1. **Try the basic workflow** with your transcript files
+2. **Explore more functions** with `set_ux_level("intermediate")`
+3. **Check the privacy features** with `show_privacy_guidance()`
+4. **Learn advanced techniques** in the advanced vignettes
+
+## Resources
+
+- **Package documentation**: `help(package = "zoomstudentengagement")`
+- **Function help**: `show_function_help("function_name")`
+- **Getting started**: `show_getting_started()`
+- **Privacy guide**: `show_privacy_guidance()`
+- **Troubleshooting**: `show_troubleshooting()`
+
+Happy analyzing! 🎯

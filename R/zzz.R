@@ -1,18 +1,24 @@
-# Internal package environment for session-scoped state (e.g., logs)
-.zse_env <- new.env(parent = emptyenv())
+#' Package startup message
+#' 
+#' @description Shows helpful startup message for new users
+#' @keywords internal
+#' @noRd
 
-.onLoad <- function(libname, pkgname) {
-  # Initialize logging container
-  if (is.null(.zse_env$logs)) .zse_env$logs <- list()
-
-  # Set default options if not already set (tested in test-onload-defaults.R)
-  if (is.null(getOption("zoomstudentengagement.privacy_level"))) {
-    options(zoomstudentengagement.privacy_level = "mask")
-  }
-}
-
-# Internal helpers to get/set logs safely
-.zse_get_logs_env <- function() {
-  if (is.null(.zse_env$logs)) .zse_env$logs <- list()
-  .zse_env
+.onAttach <- function(libname, pkgname) {
+  # Get current UX level
+  ux_level <- getOption("zoomstudentengagement.ux_level", "basic")
+  
+  # Create startup message
+  packageStartupMessage(
+    "🎯 Welcome to zoomstudentengagement!\n",
+    "📊 Ready to analyze student engagement from Zoom transcripts\n\n",
+    "🚀 Quick Start:\n",
+    "   results <- basic_transcript_analysis('your_file.vtt')\n\n",
+    "❓ Need Help?\n",
+    "   • show_getting_started() - Complete guide\n",
+    "   • show_available_functions() - See available functions\n",
+    "   • find_function_for_task('what you want to do') - Find functions\n\n",
+    "🔒 Privacy protection is enabled by default\n",
+    "💡 Use set_ux_level('intermediate') to see more functions\n"
+  )
 }
