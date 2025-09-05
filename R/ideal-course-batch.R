@@ -490,7 +490,7 @@ validate_ideal_scenarios <- function(batch_results = NULL,
   }
 
   # Generate recommendations
-  recommendations <- generate_validation_recommendations(rule_results, validation_summary)
+  recommendations <- generate_ideal_validation_recommendations(rule_results)
 
   # Generate detailed report
   detailed_report_content <- NULL
@@ -884,39 +884,39 @@ generate_data_quality_report <- function(session_data, summary_metrics) {
   return(report)
 }
 
-#' Generate validation recommendations
+#' Generate ideal validation recommendations
 #' @keywords internal
-generate_validation_recommendations <- function(rule_results, validation_summary) {
+generate_ideal_validation_recommendations <- function(rule_results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning("Function 'generate_validation_recommendations' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
 
   recommendations <- list()
 
-  if (validation_summary$failed_rules > 0) {
-    recommendations$priority <- "Address failed validation rules"
-
-    # Generate specific recommendations based on failed rules
-    # Handle both simple and nested rule structures
-    failed_rules <- character(0)
-    for (rule_name in names(rule_results)) {
-      rule_result <- rule_results[[rule_name]]
-      if (is.list(rule_result) && "status" %in% names(rule_result)) {
-        if (rule_result$status == "FAIL") {
-          failed_rules <- c(failed_rules, rule_name)
-        }
-      } else if (is.list(rule_result)) {
-        # Handle nested lists
-        for (nested_name in names(rule_result)) {
-          nested_result <- rule_result[[nested_name]]
-          if (is.list(nested_result) && "status" %in% names(nested_result)) {
-            if (nested_result$status == "FAIL") {
-              failed_rules <- c(failed_rules, paste0(rule_name, ".", nested_name))
-            }
+  # Generate specific recommendations based on failed rules
+  # Handle both simple and nested rule structures
+  failed_rules <- character(0)
+  for (rule_name in names(rule_results)) {
+    rule_result <- rule_results[[rule_name]]
+    if (is.list(rule_result) && "status" %in% names(rule_result)) {
+      if (rule_result$status == "FAIL") {
+        failed_rules <- c(failed_rules, rule_name)
+      }
+    } else if (is.list(rule_result)) {
+      # Handle nested lists
+      for (nested_name in names(rule_result)) {
+        nested_result <- rule_result[[nested_name]]
+        if (is.list(nested_result) && "status" %in% names(nested_result)) {
+          if (nested_result$status == "FAIL") {
+            failed_rules <- c(failed_rules, paste0(rule_name, ".", nested_name))
           }
         }
       }
     }
+  }
+
+  if (length(failed_rules) > 0) {
+    recommendations$priority <- "Address failed validation rules"
 
     if ("session_count" %in% failed_rules) {
       recommendations$session_count <- "Ensure all ideal course sessions are available"
