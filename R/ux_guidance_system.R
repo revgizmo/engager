@@ -1,11 +1,11 @@
 #' User Guidance and Help System
-#' 
+#'
 #' @description Provides contextual help and guidance for users to navigate
 #'   the package effectively and find the right functions for their tasks.
 #' @export
 
 #' Show getting started guide
-#' 
+#'
 #' @description Displays a comprehensive getting started guide for new users
 #' @export
 #' @examples
@@ -19,7 +19,7 @@ show_getting_started <- function() {
 
 📋 Basic Workflow (5 steps):
 1. load_zoom_transcript() - Load your transcript file
-2. process_zoom_transcript() - Clean and prepare data  
+2. process_zoom_transcript() - Clean and prepare data
 3. analyze_transcripts() - Calculate engagement metrics
 4. plot_users() - Create charts and graphs
 5. write_metrics() - Save your results
@@ -56,16 +56,15 @@ show_getting_started <- function() {
 }
 
 #' Show help for specific function
-#' 
+#'
 #' @param function_name Name of function to get help for
 #' @export
 #' @examples
 #' \dontrun{
-#' show_function_help('load_zoom_transcript')
-#' show_function_help('basic_transcript_analysis')
+#' show_function_help("load_zoom_transcript")
+#' show_function_help("basic_transcript_analysis")
 #' }
 show_function_help <- function(function_name) {
-  
   # Check if function exists
   if (!exists(function_name, envir = asNamespace("zoomstudentengagement"))) {
     cat("❌ Function '", function_name, "' not found\n")
@@ -73,7 +72,7 @@ show_function_help <- function(function_name) {
     cat("💡 Or: find_function_for_task('what you want to do')\n")
     return(invisible())
   }
-  
+
   # Determine function category
   if (function_name %in% UX_ESSENTIAL_FUNCTIONS) {
     cat("🌟 Essential Function: ", function_name, "\n")
@@ -91,21 +90,24 @@ show_function_help <- function(function_name) {
     cat("🔍 Function: ", function_name, "\n")
     cat(paste(rep("=", nchar(function_name) + 12), collapse = ""), "\n")
   }
-  
+
   # Show function description if available
   desc <- UX_FUNCTION_DESCRIPTIONS[[function_name]]
   if (!is.null(desc)) {
     cat("📝 Description: ", desc, "\n\n")
   }
-  
+
   # Show function documentation
   cat("📚 Documentation:\n")
-  tryCatch({
-    help(function_name, package = "zoomstudentengagement")
-  }, error = function(e) {
-    cat("   No documentation available\n")
-  })
-  
+  tryCatch(
+    {
+      help(function_name, package = "zoomstudentengagement")
+    },
+    error = function(e) {
+      cat("   No documentation available\n")
+    }
+  )
+
   # Show usage examples for common functions
   if (function_name %in% c("basic_transcript_analysis", "quick_analysis", "batch_basic_analysis")) {
     cat("\n💡 Usage Examples:\n")
@@ -126,7 +128,7 @@ show_function_help <- function(function_name) {
 }
 
 #' Show workflow help and templates
-#' 
+#'
 #' @export
 #' @examples
 #' \dontrun{
@@ -165,7 +167,7 @@ show_workflow_help <- function() {
 }
 
 #' Show privacy and ethics guidance
-#' 
+#'
 #' @export
 #' @examples
 #' \dontrun{
@@ -207,7 +209,7 @@ show_privacy_guidance <- function() {
 }
 
 #' Show troubleshooting guide
-#' 
+#'
 #' @export
 #' @examples
 #' \dontrun{
