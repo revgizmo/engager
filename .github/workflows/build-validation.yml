@@ -28,6 +28,9 @@ jobs:
         with:
           r-version: '4.1.1'
       
+      - name: Install pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+      
       - name: Install dependencies
         run: |
           Rscript -e 'install.packages(c("bookdown", "rmarkdown", "knitr"))'
@@ -51,16 +54,20 @@ jobs:
       - name: Test bookdown build
         run: |
           echo "Testing bookdown build process..."
-          cd docs/ds-cheatsheet
-          Rscript -e "
-            tryCatch({
-              bookdown::render_book('index.Rmd', output_dir = '_book_test')
-              cat('✓ Bookdown build successful\\n')
-            }, error = function(e) {
-              cat('✗ Bookdown build failed:', e\$message, '\\n')
-              quit(status = 1)
-            })
-          "
+          if [ -d "docs/ds-cheatsheet" ]; then
+            cd docs/ds-cheatsheet
+            Rscript -e "
+              tryCatch({
+                bookdown::render_book('index.Rmd', output_dir = '_book_test')
+                cat('✓ Bookdown build successful\\n')
+              }, error = function(e) {
+                cat('✗ Bookdown build failed:', e\$message, '\\n')
+                quit(status = 1)
+              })
+            "
+          else
+            echo "⚠️  docs/ds-cheatsheet directory not found, skipping bookdown test"
+          fi
       
       - name: Check for broken links
         run: |

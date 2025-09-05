@@ -89,7 +89,7 @@ jobs:
           fi
       
       - name: Upload Progress Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: roadmap-progress-report
           path: roadmap-progress.json
