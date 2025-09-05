@@ -2,14 +2,20 @@
 % Please edit documentation in R/success_metrics.R
 \name{generate_success_metrics_report}
 \alias{generate_success_metrics_report}
-\title{Generate Success Metrics Report}
+\title{Generate success metrics report}
 \usage{
+generate_success_metrics_report()
+
 generate_success_metrics_report()
 }
 \value{
+Success metrics report
+
 Comprehensive success metrics report
 }
 \description{
+Generate success metrics report
+
 Generate Success Metrics Report
 }
 \keyword{internal}
