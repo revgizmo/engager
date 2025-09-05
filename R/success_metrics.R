@@ -63,6 +63,84 @@ success_metrics_framework <- list(
   )
 )
 
+#' Track all success metrics
+#'
+#' @return Comprehensive success metrics report
+#' @export
+track_success_metrics <- function() {
+  # Use the existing deprecated function for now
+  # This maintains backward compatibility while the new framework is developed
+  generate_success_metrics_report()
+}
+
+#' Generate success metrics report
+#'
+#' @return Success metrics report
+generate_success_metrics_report <- function() {
+  # Get current baseline
+  baseline <- get_current_baseline()
+
+  # Get target state
+  targets <- get_target_state()
+
+  # Generate progress tracking for key metrics
+  progress <- list()
+
+  if (length(baseline$functions) == 1 && !is.na(baseline$functions)) {
+    progress$functions <- track_progress("functions", baseline$functions, targets$functions)
+  }
+
+  if (length(baseline$documentation_files) == 1 && !is.na(baseline$documentation_files)) {
+    progress$documentation <- track_progress("documentation", baseline$documentation_files, targets$documentation_files)
+  }
+
+  if (length(baseline$test_coverage) == 1 && !is.na(baseline$test_coverage)) {
+    progress$coverage <- track_progress("coverage", baseline$test_coverage, 90)
+  }
+
+  # Compile report
+  report <- list(
+    timestamp = Sys.time(),
+    framework = success_metrics_framework,
+    baseline = baseline,
+    targets = targets,
+    progress = progress,
+    summary = list(
+      function_scope_ok = ifelse(!is.na(progress$functions), progress$functions$current <= 30, FALSE),
+      test_coverage_ok = ifelse(!is.na(progress$coverage), progress$coverage$current >= 90, FALSE),
+      documentation_ok = ifelse(!is.na(progress$documentation), progress$documentation$current <= 75, FALSE)
+    )
+  )
+
+  report
+}
+
+#' Calculate overall success status
+#'
+#' @param ... All metric categories
+#' @return Overall success status
+calculate_overall_status <- function(...) {
+  # Calculate overall success status based on all metrics
+  # Focus on CRAN readiness metrics for overall status
+  cran_ready <- all(sapply(list(...)[[1]], function(x) {
+    if (is.list(x) && "target_met" %in% names(x)) {
+      x$target_met
+    } else {
+      TRUE
+    }
+  }))
+
+  list(
+    status = if (cran_ready) "READY_FOR_CRAN" else "NEEDS_IMPROVEMENT",
+    cran_ready = cran_ready,
+    recommendations = if (cran_ready) {
+      "Package is ready for CRAN submission"
+    } else {
+      "Address CRAN readiness issues before submission"
+    }
+  )
+}
+
 #' Get Current Baseline Measurements
 #'
 #' @return List of current baseline measurements for all success metrics
