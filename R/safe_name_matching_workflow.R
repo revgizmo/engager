@@ -45,7 +45,7 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
                                         data_folder = ".",
                                         section_names_lookup_file = "section_names_lookup.csv") {
   # Validate inputs
-  validate_safe_name_matching_inputs(
+  validate_safe_name_inputs(
     transcript_file_path, roster_data, privacy_level,
     unmatched_names_action, data_folder, section_names_lookup_file
   )
@@ -526,8 +526,8 @@ apply_name_matching <- function(transcript_data, name_lookup, roster_data) {
 }
 
 # Helper function to validate safe name matching inputs
-validate_safe_name_matching_inputs <- function(transcript_file_path, roster_data, privacy_level,
-                                               unmatched_names_action, data_folder, section_names_lookup_file) {
+validate_safe_name_inputs <- function(transcript_file_path, roster_data, privacy_level,
+                                      unmatched_names_action, data_folder, section_names_lookup_file) {
   # Validate inputs
   if (!is.character(transcript_file_path) || length(transcript_file_path) != 1) {
     stop("transcript_file_path must be a single character string", call. = FALSE)

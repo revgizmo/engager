@@ -140,11 +140,11 @@ ldzmrcrddsssnslst <-
 
 # Helper function to setup zoom sessions loading
 setup_zoom_sessions_loading <- function(data_folder, transcripts_folder,
-                                        zoom_recorded_sessions_csv_col_names,
-                                        zoom_recorded_sessions_csv_names_pattern) {
+                                        csv_col_names,
+                                        csv_names_pattern) {
   # Handle trailing comma in column names
-  zoom_recorded_sessions_csv_col_names_vector <-
-    strsplit(zoom_recorded_sessions_csv_col_names, ",")[[1]] %>%
+  csv_col_names_vector <-
+    strsplit(csv_col_names, ",")[[1]] %>%
     stringr::str_trim() %>%
     Filter(function(x) x != "", .)
 
@@ -155,14 +155,14 @@ setup_zoom_sessions_loading <- function(data_folder, transcripts_folder,
   }
 
   term_files <- list.files(transcripts_folder_path)
-  zoom_recorded_sessions_csv_names <-
-    term_files[grepl(zoom_recorded_sessions_csv_names_pattern, term_files, fixed = FALSE)]
+  csv_names <-
+    term_files[grepl(csv_names_pattern, term_files, fixed = FALSE)]
 
   list(
     transcripts_folder_path = transcripts_folder_path,
-    zoom_recorded_sessions_csv_names = zoom_recorded_sessions_csv_names,
-    zoom_recorded_sessions_csv_col_names_vector = zoom_recorded_sessions_csv_col_names_vector,
-    no_files = length(zoom_recorded_sessions_csv_names) == 0
+    csv_names = csv_names,
+    csv_col_names_vector = csv_col_names_vector,
+    no_files = length(csv_names) == 0
   )
 }
 
@@ -192,14 +192,14 @@ load_and_process_zoom_csvs <- function(setup_result, verbose) {
   .verbose <- isTRUE(verbose) || is_verbose()
   if (.verbose) {
     diag_message("CSV files to process:")
-    diag_message(paste(setup_result$zoom_recorded_sessions_csv_names, collapse = "\n"))
+    diag_message(paste(setup_result$csv_names, collapse = "\n"))
   }
 
-  result <- setup_result$zoom_recorded_sessions_csv_names %>%
+  result <- setup_result$csv_names %>%
     paste0(setup_result$transcripts_folder_path, .) %>%
     readr::read_csv(
       id = "filepath",
-      col_names = setup_result$zoom_recorded_sessions_csv_col_names_vector,
+      col_names = setup_result$csv_col_names_vector,
       col_types = readr::cols(
         Topic = readr::col_character(),
         ID = readr::col_character(),

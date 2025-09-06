@@ -29,17 +29,17 @@ make_student_roster_sessions <-
   function(transcripts_list_df = NULL,
            roster_small_df = NULL) {
     # Validate inputs
-    validation_result <- validate_roster_sessions_inputs(transcripts_list_df, roster_small_df)
+    validation_result <- validate_roster_inputs(transcripts_list_df, roster_small_df)
     if (is.null(validation_result)) {
       return(NULL)
     }
 
     # Process transcripts and roster data
-    transcripts_processed <- process_transcripts_for_roster_matching(transcripts_list_df)
+    transcripts_processed <- process_transcripts_for_roster(transcripts_list_df)
     roster_processed <- process_roster_for_matching(roster_small_df)
 
     # Match and combine roster with transcripts
-    result <- match_and_combine_roster_transcripts(roster_processed, transcripts_processed)
+    result <- match_and_combine_roster(roster_processed, transcripts_processed)
     if (is.null(result)) {
       return(NULL)
     }
@@ -49,7 +49,7 @@ make_student_roster_sessions <-
   }
 
 # Helper function to validate roster sessions inputs
-validate_roster_sessions_inputs <- function(transcripts_list_df, roster_small_df) {
+validate_roster_inputs <- function(transcripts_list_df, roster_small_df) {
   # Defensive: check for valid tibbles
   if (!tibble::is_tibble(transcripts_list_df) || !tibble::is_tibble(roster_small_df)) {
     stop("Input must be tibbles")
@@ -83,7 +83,7 @@ validate_roster_sessions_inputs <- function(transcripts_list_df, roster_small_df
 }
 
 # Helper function to process transcripts for roster matching
-process_transcripts_for_roster_matching <- function(transcripts_list_df) {
+process_transcripts_for_roster <- function(transcripts_list_df) {
   transcripts_processed <- transcripts_list_df
 
   # Add course_section if it doesn't exist
@@ -126,7 +126,7 @@ process_roster_for_matching <- function(roster_small_df) {
 }
 
 # Helper function to match and combine roster with transcripts
-match_and_combine_roster_transcripts <- function(roster_processed, transcripts_processed) {
+match_and_combine_roster <- function(roster_processed, transcripts_processed) {
   # Create matching keys
   roster_key <- paste(roster_processed$dept, roster_processed$course, roster_processed$section, sep = "|")
   transcript_key <- paste(transcripts_processed$dept_transcript,
