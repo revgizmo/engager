@@ -287,25 +287,42 @@ generate_audit_report <- function(categories, function_analysis) {
 
   # Summary statistics
   total_functions <- length(function_analysis)
-  documented_functions <- sum(sapply(function_analysis, function(x) x$documentation == "Complete"))
-  functions_with_examples <- sum(sapply(function_analysis, function(x) x$usage$in_examples))
-  functions_in_tests <- sum(sapply(function_analysis, function(x) x$usage$in_tests))
+  
+  # Handle empty function_analysis gracefully
+  if (total_functions == 0) {
+    documented_functions <- 0
+    functions_with_examples <- 0
+    functions_in_tests <- 0
+  } else {
+    documented_functions <- sum(sapply(function_analysis, function(x) x$documentation == "Complete"))
+    functions_with_examples <- sum(sapply(function_analysis, function(x) x$usage$in_examples))
+    functions_in_tests <- sum(sapply(function_analysis, function(x) x$usage$in_tests))
+  }
 
   cat("📈 SUMMARY STATISTICS\n")
   cat(paste(rep("-", 20), collapse = ""), "\n")
   cat("Total exported functions:", total_functions, "\n")
-  cat(
-    "Functions with documentation:", documented_functions, "(",
-    round(100 * documented_functions / total_functions, 1), "%)\n"
-  )
-  cat(
-    "Functions with examples:", functions_with_examples, "(",
-    round(100 * functions_with_examples / total_functions, 1), "%)\n"
-  )
-  cat(
-    "Functions with tests:", functions_in_tests, "(",
-    round(100 * functions_in_tests / total_functions, 1), "%)\n\n"
-  )
+  if (total_functions > 0) {
+    cat(
+      "Functions with documentation:", documented_functions, "(",
+      round(100 * documented_functions / total_functions, 1), "%)\n"
+    )
+    cat(
+      "Functions with examples:", functions_with_examples, "(",
+      round(100 * functions_with_examples / total_functions, 1), "%)\n"
+    )
+  } else {
+    cat("Functions with documentation:", documented_functions, "(0%)\n")
+    cat("Functions with examples:", functions_with_examples, "(0%)\n")
+  }
+  if (total_functions > 0) {
+    cat(
+      "Functions with tests:", functions_in_tests, "(",
+      round(100 * functions_in_tests / total_functions, 1), "%)\n\n"
+    )
+  } else {
+    cat("Functions with tests:", functions_in_tests, "(0%)\n\n")
+  }
 
   # Category breakdown
   cat("📂 FUNCTION CATEGORIES\n")
