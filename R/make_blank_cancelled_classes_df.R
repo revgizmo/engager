@@ -11,11 +11,15 @@
 #'
 #' @examples
 #' make_blank_cancelled_classes_df()
-make_blank_cancelled_classes_df <- function() {
+mkblnkcnclldclsssdf <- function() {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'make_blank_cancelled_classes_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'make_blank_cancelled_classes_df' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   # Use base R operations instead of dplyr to avoid segmentation fault
@@ -34,5 +38,5 @@ make_blank_cancelled_classes_df <- function() {
   result$chat_file <- as.character(result$chat_file)
   result$closed_caption_file <- as.character(result$closed_caption_file)
 
-  return(result)
+  result
 }

@@ -31,10 +31,14 @@
 #'
 #' # Test the function with the sample data
 #' make_transcripts_session_summary_df(sample_data)
-make_transcripts_session_summary_df <- function(clean_names_df = NULL) {
+mktrnscrptssssnsmmrydf <- function(clean_names_df = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'make_transcripts_session_summary_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'make_transcripts_session_summary_df' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   if (is.null(clean_names_df)) {
     return(NULL)
@@ -63,7 +67,8 @@ make_transcripts_session_summary_df <- function(clean_names_df = NULL) {
   }
 
   # Define expected columns
-  expected_cols <- c("section", "day", "time", "session_num", "preferred_name", "course_section", "wordcount", "duration")
+  expected_cols <- c("section",
+  "day", "time", "session_num", "preferred_name", "course_section", "wordcount", "duration")
   # Filter to only use columns that are present
   available_cols <- intersect(expected_cols, names(clean_names_df))
   if (length(available_cols) == 0) {

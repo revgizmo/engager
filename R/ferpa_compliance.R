@@ -20,7 +20,8 @@ NULL
 #' @param data A data frame or tibble to validate
 #' @param institution_type Type of institution. One of `c("educational", "research", "mixed")`
 #' @param check_retention Whether to check data retention policies
-#' @param retention_period Retention period to check against. One of `c("academic_year", "semester", "quarter", "custom")`
+#' @param retention_period Retention period to check against. One of `c("academic_year", "semester", "quarter",
+#' "custom")`
 #' @param custom_retention_days Custom retention period in days (used when retention_period = "custom")
 #' @param audit_log Whether to log compliance checks for institutional review
 #'
@@ -332,7 +333,11 @@ generate_ferpa_report <- function(data = NULL,
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'generate_ferpa_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_ferpa_report' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   report_format <- match.arg(report_format)
@@ -407,7 +412,8 @@ generate_ferpa_report <- function(data = NULL,
 #' disposed of according to institutional policies.
 #'
 #' @param data A data frame or tibble to check
-#' @param retention_period Retention period to check against. One of `c("academic_year", "semester", "quarter", "custom")`
+#' @param retention_period Retention period to check against. One of `c("academic_year", "semester", "quarter",
+#' "custom")`
 #' @param custom_retention_days Custom retention period in days (used when retention_period = "custom")
 #' @param date_column Column name containing dates to check against
 #' @param current_date Current date for comparison (defaults to Sys.Date())
@@ -439,7 +445,11 @@ check_data_retention_policy <- function(data = NULL,
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'check_data_retention_policy' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'check_data_retention_policy' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   retention_period <- match.arg(retention_period)
@@ -517,7 +527,11 @@ log_ferpa_compliance_check <- function(compliant,
                                        timestamp = Sys.time()) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'log_ferpa_compliance_check' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'log_ferpa_compliance_check' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Create log entry
   log_entry <- list(

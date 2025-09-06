@@ -52,10 +52,13 @@ make_names_to_clean_df <- function(clean_names_df = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'make_names_to_clean_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'make_names_to_clean_df' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
-  n <- preferred_name <- student_id <- transcript_name <- NULL
 
   # Handle invalid input gracefully
   if (is.null(clean_names_df) || !tibble::is_tibble(clean_names_df)) {

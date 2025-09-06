@@ -5,8 +5,10 @@
 #' by speaker for all class sessions (and placeholders for missing sections)
 #' from the joining of:
 #' * a tibble of customized student names by section (`section_names_lookup_file` in the `data_folder` folder),
-#' * a tibble containing session details and summary metrics by speaker for all class sessions (`transcripts_metrics_df`), and
-#' * a tibble listing the students enrolled in the class or classes, with rows for each recorded class section for each student (`roster_sessions`) into a single tibble.
+#' * a tibble containing session details and summary metrics by speaker for all class sessions
+#' (`transcripts_metrics_df`), and
+#' * a tibble listing the students enrolled in the class or classes, with rows for each recorded class section for each
+#' student (`roster_sessions`) into a single tibble.
 #'
 #' @param data_folder overall data folder for your recordings. Defaults to
 #'   'data'
@@ -71,28 +73,12 @@ make_clean_names_df <- function(data_folder = ".",
                                 roster_sessions = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'make_clean_names_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'make_clean_names_df' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
-  comments <-
-    day <-
-    dept <-
-    duration <-
-    duration_perc <-
-    first_last <-
-    formal_name <-
-    n <-
-    n_perc <-
-    name <-
-    name_raw <-
-    preferred_name <-
-    section <-
-    session_num <-
-    start_time_local <-
-    student_id <-
-    time <-
-    transcript_name <-
-    transcript_section <-
-    course_section <- wordcount <- wordcount_perc <- wpm <- NULL
 
   # Input validation
   if (!tibble::is_tibble(transcripts_metrics_df)) {
@@ -109,7 +95,6 @@ make_clean_names_df <- function(data_folder = ".",
   }
 
   # Create the file path
-  file_path <- file.path(data_folder, section_names_lookup_file)
 
   # Load the section names lookup
   section_names_lookup <- load_section_names_lookup(
@@ -127,7 +112,8 @@ make_clean_names_df <- function(data_folder = ".",
   } else if ("transcript_section" %in% names(roster_sessions_clean)) {
     roster_sessions_clean$course_section <- as.character(roster_sessions_clean$transcript_section)
   } else {
-    roster_sessions_clean$course_section <- paste(roster_sessions_clean$course, roster_sessions_clean$section, sep = ".")
+    roster_sessions_clean$course_section <- paste(roster_sessions_clean$course,
+    roster_sessions_clean$section, sep = ".")
   }
 
   roster_sessions_clean$course <- as.character(roster_sessions_clean$course)
@@ -220,7 +206,8 @@ make_clean_names_df <- function(data_folder = ".",
 
   # Select final columns using base R
   # Ensure we preserve all expected columns that might be in the input
-  expected_cols <- c("preferred_name", "formal_name", "transcript_name", "student_id", "section", "course_section", "session_num", "n", "duration", "wordcount", "comments", "n_perc", "duration_perc", "wordcount_perc", "wpm", "name_raw", "start_time_local", "time", "day", "course", "dept")
+  expected_cols <- c("preferred_name",
+  "formal_name", "transcript_name", "student_id", "section", "course_section", "session_num", "n", "duration", "wordcount", "comments", "n_perc", "duration_perc", "wordcount_perc", "wpm", "name_raw", "start_time_local", "time", "day", "course", "dept")
 
   # Get all available columns from the result
   available_cols <- names(result)
@@ -250,7 +237,11 @@ make_clean_names_df <- function(data_folder = ".",
 apply_privacy_aware_matching <- function(result, section_names_lookup, privacy_level) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'apply_privacy_aware_matching' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'apply_privacy_aware_matching' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Extract transcript names for hashing
   transcript_names <- unique(result$transcript_name[!is.na(result$transcript_name)])

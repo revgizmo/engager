@@ -77,13 +77,6 @@ write_section_names_lookup <-
   function(clean_names_df = NULL,
            data_folder = ".",
            section_names_lookup_file = "section_names_lookup.csv") {
-    course <-
-      day <-
-      formal_name <-
-      n <-
-      preferred_name <-
-      section <-
-      student_id <- time <- transcript_name <- course_section <- NULL
 
     if (tibble::is_tibble(clean_names_df) &&
       file.exists(data_folder)

@@ -1,12 +1,14 @@
 #' Load Section Names Lookup File
 #'
 #' This function creates a tibble from a provided file of customized student names by section.
-#' If the file does not exist, the function prints an error and creates an empty tibble using `make_blank_section_names_lookup_csv()`.
+#' If the file does not exist, the function prints an error and creates an empty tibble using
+#' `make_blank_section_names_lookup_csv()`.
 #'
 #' @param data_folder overall data folder for your recordings
 #' @param names_lookup_file File name of the csv file of customized student names by section
 #'   Defaults to 'section_names_lookup.csv'
-#' @param section_names_lookup_col_types column types in the csv file of customized student names by section. Defaults to 'cccccccc'
+#' @param section_names_lookup_col_types column types in the csv file of customized student names by section. Defaults
+#' to 'cccccccc'
 #'
 #' @return A tibble of customized student names by section.
 #' @export
@@ -21,10 +23,13 @@ load_section_names_lookup <- function(data_folder = ".",
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'load_section_names_lookup' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'load_section_names_lookup' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
-  preferred_name <- section <- student_id <- NULL
 
   # Input validation
   if (!is.character(data_folder) || length(data_folder) != 1) {
@@ -145,7 +150,11 @@ load_section_names_lookup <- function(data_folder = ".",
 validate_lookup_file_format <- function(lookup_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_lookup_file_format' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_lookup_file_format' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   required_cols <- c("transcript_name", "preferred_name")
 
@@ -176,5 +185,5 @@ validate_lookup_file_format <- function(lookup_data) {
     )
   }
 
-  return(TRUE)
+  TRUE
 }

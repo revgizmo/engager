@@ -35,7 +35,7 @@ update_ux_categories <- function(function_categories, cran_functions) {
   cat("✅ UX categories updated successfully\n")
   print_ux_category_summary(ux_categories)
 
-  return(ux_categories)
+  ux_categories
 }
 
 #' Prioritize functions for UX levels
@@ -70,7 +70,7 @@ prioritize_functions_for_ux <- function(function_categories, cran_functions) {
   remaining_functions <- setdiff(cran_functions, prioritized)
   prioritized <- c(prioritized, remaining_functions)
 
-  return(prioritized)
+  prioritized
 }
 
 #' Print UX category summary
@@ -116,7 +116,7 @@ update_help_system <- function(function_categories, ux_categories) {
 
   cat("✅ Help system updated successfully\n")
 
-  return(help_system)
+  help_system
 }
 
 #' Generate progressive disclosure configuration
@@ -158,7 +158,7 @@ generate_progressive_disclosure_config <- function(ux_categories) {
 
   cat("✅ Progressive disclosure configuration generated\n")
 
-  return(disclosure_config)
+  disclosure_config
 }
 
 #' Update function help descriptions
@@ -183,7 +183,7 @@ update_function_descriptions <- function(function_categories, ux_categories) {
 
   cat("✅ Function descriptions updated\n")
 
-  return(descriptions)
+  descriptions
 }
 
 #' Get function category by name
@@ -197,7 +197,7 @@ get_function_category_by_name <- function(func_name, function_categories) {
       return(category)
     }
   }
-  return("unknown")
+  "unknown"
 }
 
 #' Generate function description based on UX level
@@ -228,9 +228,9 @@ generate_function_description <- function(func_name, ux_level) {
   )
 
   if (ux_level %in% names(level_prefixes)) {
-    return(paste0(level_prefixes[[ux_level]], base_desc))
+    paste0(level_prefixes[[ux_level]], base_desc
   } else {
-    return(base_desc)
+    base_desc
   }
 }
 
@@ -260,7 +260,7 @@ create_ux_integration_report <- function(function_categories, cran_functions, ux
 
   cat("✅ UX integration report created\n")
 
-  return(report)
+  report
 }
 
 #' Test UX integration system

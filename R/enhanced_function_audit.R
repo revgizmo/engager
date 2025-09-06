@@ -30,7 +30,7 @@ audit_all_functions <- function() {
   audit_report <- generate_audit_report(categories, function_analysis)
 
   cat("\n✅ Function audit completed successfully!\n")
-  return(audit_report)
+  audit_report
 }
 
 #' Get all exported functions from NAMESPACE
@@ -48,7 +48,7 @@ get_exported_functions <- function() {
   # Remove magrittr pipe operator
   function_names <- function_names[function_names != "%>%"]
 
-  return(function_names)
+  function_names
 }
 
 #' Analyze individual function
@@ -101,7 +101,7 @@ get_function_signature <- function(function_name) {
       }
     },
     error = function(e) {
-      return("Error retrieving signature")
+      "Error retrieving signature"
     }
   )
 }
@@ -115,9 +115,9 @@ get_function_documentation <- function(function_name) {
   man_file <- file.path("man", paste0(function_name, ".Rd"))
 
   if (file.exists(man_file)) {
-    return("Complete")
+    "Complete"
   } else {
-    return("Missing")
+    "Missing"
   }
 }
 
@@ -171,7 +171,7 @@ analyze_function_usage <- function(function_name) {
     }
   }
 
-  return(usage_info)
+  usage_info
 }
 
 #' Get function dependencies
@@ -210,7 +210,7 @@ get_function_dependencies <- function(function_name) {
       }
     },
     error = function(e) {
-      return(character(0))
+      character(0
     }
   )
 }
@@ -234,7 +234,7 @@ get_function_file_location <- function(function_name) {
     }
   }
 
-  return("Unknown")
+  "Unknown"
 }
 
 #' Analyze function complexity
@@ -347,7 +347,7 @@ generate_audit_report <- function(categories, function_analysis) {
     generated_at = Sys.time()
   )
 
-  return(report)
+  report
 }
 
 #' Save audit report to file

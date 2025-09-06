@@ -75,7 +75,7 @@
 #'   transcripts_folder = "transcripts"
 #' )
 #' }
-load_zoom_recorded_sessions_list <-
+ldzmrcrddsssnslst <-
   function(data_folder = ".",
            transcripts_folder = "transcripts",
            topic_split_pattern =
@@ -83,9 +83,9 @@ load_zoom_recorded_sessions_list <-
                "^(?<dept>\\S+) (?<course_section>\\S+) - ",
                "(?<day>[A-Za-z]+) (?<time>\\S+\\s*\\S+) (?<instructor>\\(.*?\\))"
              ),
-           zoom_recorded_sessions_csv_names_pattern =
+           zmrcrddsssnscsvnmspttrn =
              "zoomus_recordings__\\d{8}(?:\\s+copy\\s*\\d*)?\\.csv",
-           zoom_recorded_sessions_csv_col_names = paste(
+           zmrcrddsssnscsvclnms = paste(
              "Topic",
              "ID",
              "Start Time",
@@ -107,11 +107,10 @@ load_zoom_recorded_sessions_list <-
       `File Size (MB)` <-
       `File Count` <-
       `Total Views` <-
-      `Total Downloads` <- `Total Downloads` <- `Last Accessed` <- match_start_time <- NULL
 
     dept_var <- dept
     # Handle trailing comma in column names
-    zoom_recorded_sessions_csv_col_names_vector <-
+    zmrcrddsssnscsvclnmsvctr <-
       strsplit(zoom_recorded_sessions_csv_col_names, ",")[[1]] %>%
       stringr::str_trim() %>%
       Filter(function(x) x != "", .)
@@ -123,7 +122,7 @@ load_zoom_recorded_sessions_list <-
     }
 
     term_files <- list.files(transcripts_folder_path)
-    zoom_recorded_sessions_csv_names <-
+    zmrcrddsssnscsvnms <-
       term_files[grepl(zoom_recorded_sessions_csv_names_pattern, term_files, fixed = FALSE)]
 
     if (length(zoom_recorded_sessions_csv_names) == 0) {

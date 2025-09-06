@@ -25,7 +25,7 @@ validate_audit_results <- function(function_categories, cran_functions, function
   # Print validation summary
   print_validation_summary(validation_results)
 
-  return(validation_results)
+  validation_results
 }
 
 #' Validate function categories
@@ -258,14 +258,14 @@ generate_validation_report <- function(validation_results, function_categories, 
 
   cat("✅ Validation report generated\n")
 
-  return(report)
+  report
 }
 
 #' Generate validation recommendations
 #'
 #' @param validation_results Validation results
 #' @return Validation recommendations
-generate_validation_recommendations <- function(validation_results) {
+gen_validation_recommendations <- function(validation_results) {
   recommendations <- character(0)
 
   # Function count recommendations
@@ -315,7 +315,7 @@ generate_validation_recommendations <- function(validation_results) {
     recommendations <- "All validation checks passed - ready for CRAN submission"
   }
 
-  return(recommendations)
+  recommendations
 }
 
 #' Test validation system
@@ -356,5 +356,5 @@ test_validation_system <- function() {
 
   cat("✅ Validation system test completed\n")
 
-  return(validation_results)
+  validation_results
 }

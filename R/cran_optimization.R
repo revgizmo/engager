@@ -80,9 +80,9 @@ get_category_allocation <- function(category, max_functions, current_count) {
   if (category %in% names(allocations)) {
     requested <- allocations[[category]]
     remaining <- max_functions - current_count
-    return(min(requested, remaining))
+    min(requested, remaining)
   } else {
-    return(0)
+    0
   }
 }
 
@@ -100,7 +100,7 @@ mark_deprecated_functions <- function(function_categories, cran_functions) {
   cat("📊 CRAN functions:", length(cran_functions), "\n")
   cat("📊 Deprecated functions:", length(deprecated_functions), "\n\n")
 
-  return(deprecated_functions)
+  deprecated_functions
 }
 
 #' Analyze breaking change impact
@@ -136,7 +136,7 @@ analyze_breaking_changes <- function(deprecated_functions, function_analysis) {
   }
   cat("\n")
 
-  return(impact_analysis)
+  impact_analysis
 }
 
 #' Determine impact level of deprecating a function
@@ -163,7 +163,7 @@ determine_impact_level <- function(func_info) {
   }
 
   # No impact: functions without proper documentation
-  return("no_impact")
+  "no_impact"
 }
 
 #' Generate migration recommendations
@@ -172,7 +172,7 @@ determine_impact_level <- function(func_info) {
 #' @param cran_functions Functions selected for CRAN
 #' @param function_analysis Function analysis results
 #' @return Migration recommendations
-generate_migration_recommendations <- function(deprecated_functions, cran_functions, function_analysis) {
+gen_migration_recommendations <- function(deprecated_functions, cran_functions, function_analysis) {
   cat("📝 Generating migration recommendations...\n")
 
   migration_guide <- list()
@@ -193,7 +193,7 @@ generate_migration_recommendations <- function(deprecated_functions, cran_functi
     }
   }
 
-  return(migration_guide)
+  migration_guide
 }
 
 #' Find replacement function for deprecated function
@@ -227,7 +227,7 @@ find_replacement_function <- function(deprecated_func, cran_functions, function_
     return(similar_functions[1])
   }
 
-  return("No direct replacement available")
+  "No direct replacement available"
 }
 
 #' Get migration strategy for deprecated function
@@ -237,9 +237,9 @@ find_replacement_function <- function(deprecated_func, cran_functions, function_
 #' @return Migration strategy
 get_migration_strategy <- function(deprecated_func, replacement) {
   if (replacement == "No direct replacement available") {
-    return("Function will be removed. Consider alternative approaches or contact maintainers.")
+    "Function will be removed. Consider alternative approaches or contact maintainers."
   } else {
-    return(paste("Replace", deprecated_func, "with", replacement, "and update function calls."))
+    paste("Replace", deprecated_func, "with", replacement, "and update function calls."
   }
 }
 
@@ -277,7 +277,7 @@ validate_cran_optimization <- function(cran_selection, deprecated_functions, fun
   }
   cat("\n")
 
-  return(validation_results)
+  validation_results
 }
 
 #' Test CRAN optimization system

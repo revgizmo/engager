@@ -56,7 +56,6 @@ mask_user_names_by_metric <-
   function(df = NULL,
            metric = "session_ct",
            target_student = "") {
-    row_num <- preferred_name <- section <- NULL
 
     if (tibble::is_tibble(df)) {
       # Use base R operations instead of dplyr to avoid segmentation fault

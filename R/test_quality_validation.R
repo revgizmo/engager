@@ -29,7 +29,7 @@ validate_test_quality <- function() {
     test_quality = if (tests_passed && !any(output_pollution)) "EXCELLENT" else "NEEDS_IMPROVEMENT"
   )
 
-  return(quality_report)
+  quality_report
 }
 
 #' Validate privacy compliance
@@ -44,7 +44,6 @@ validate_privacy_compliance <- function() {
   )
 
   # Validate privacy settings
-  privacy_valid <- all(
     privacy_tests$default_privacy_level == "ferpa_standard",
     privacy_tests$verbose_default == FALSE,
     privacy_tests$quiet_tests == TRUE

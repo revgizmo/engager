@@ -24,5 +24,5 @@ generate_coverage_report <- function() {
     top_priority_files = names(head(coverage_analysis$impact_ranking, 5))
   )
 
-  return(summary_report)
+  summary_report
 }

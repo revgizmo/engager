@@ -247,7 +247,11 @@ handle_unmatched_names <- function(unmatched_names,
                                    section_names_lookup_file) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'handle_unmatched_names' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'handle_unmatched_names' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   if (identical(unmatched_names_action, "stop")) {
     # Stop with error for maximum privacy protection
@@ -316,7 +320,7 @@ handle_unmatched_names <- function(unmatched_names,
 #'   transcript_data = transcript_data,
 #'   roster_data = roster_data
 #' )
-process_transcript_with_privacy <- function(transcript_data = NULL,
+prcsstrnscrptwthprvcy <- function(transcript_data = NULL,
                                             roster_data = NULL,
                                             name_mappings = NULL,
                                             privacy_level = getOption(
@@ -325,7 +329,11 @@ process_transcript_with_privacy <- function(transcript_data = NULL,
                                             )) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'process_transcript_with_privacy' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'process_transcript_with_privacy' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Validate inputs
   if (!is.data.frame(transcript_data)) {
@@ -404,7 +412,11 @@ match_names_with_privacy <- function(transcript_data = NULL,
                                      )) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'match_names_with_privacy' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'match_names_with_privacy' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Validate inputs
   if (!is.data.frame(transcript_data)) {
@@ -466,7 +478,11 @@ match_names_with_privacy <- function(transcript_data = NULL,
 create_name_lookup <- function(transcript_names, roster_names, name_mappings) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'create_name_lookup' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'create_name_lookup' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Handle empty transcript names gracefully
   if (length(transcript_names) == 0) {
@@ -542,7 +558,11 @@ create_name_lookup <- function(transcript_names, roster_names, name_mappings) {
 find_roster_match <- function(transcript_name, roster_names) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'find_roster_match' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'find_roster_match' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Normalize names for comparison
   normalized_transcript <- normalize_name_for_matching(transcript_name)
@@ -577,7 +597,11 @@ find_roster_match <- function(transcript_name, roster_names) {
 apply_name_matching <- function(transcript_data, name_lookup, roster_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'apply_name_matching' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'apply_name_matching' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Create a copy of transcript data
   result <- transcript_data

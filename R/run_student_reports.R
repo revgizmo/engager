@@ -27,14 +27,18 @@ run_student_reports <- function(
     df_sections,
     df_roster,
     data_folder,
-    transcripts_session_summary_file = "transcripts_session_summary.csv",
+    trnscrptssssnsmmryfl = "transcripts_session_summary.csv",
     transcripts_summary_file = "transcripts_summary.csv",
     student_summary_report = "Zoom_Student_Engagement_Analysis_student_summary_report.Rmd",
     student_summary_report_folder = system.file("", package = "zoomstudentengagement"),
     output_format = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'run_student_reports' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'run_student_reports' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   template <- file.path(student_summary_report_folder, student_summary_report)
   outputs <- character(0)

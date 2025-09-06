@@ -3,10 +3,13 @@
 #' This function creates a tibble from summary results at the
 #' level of the class section and preferred student name after filtering for only the students enrolled in the class.
 #'
-#' @param transcripts_session_summary_df A tibble that summarizes results at the level of the class section and preferred student name.
-#' @param preferred_name_exclude_cv A character vector of names to exclude from the results. Defaults to c("dead_air", "Instructor Name", "Guests", "unknown").
+#' @param transcripts_session_summary_df A tibble that summarizes results at the level of the class section and
+#' preferred student name.
+#' @param preferred_name_exclude_cv A character vector of names to exclude from the results. Defaults to c("dead_air",
+#' "Instructor Name", "Guests", "unknown").
 #'
-#' @return A tibble that summarizes results at the level of the class section and preferred student name for only the students enrolled in the class.
+#' @return A tibble that summarizes results at the level of the class section and preferred student name for only the
+#' students enrolled in the class.
 #' @export
 #'
 #' @examples
@@ -58,10 +61,9 @@
 #'   preferred_name_exclude_cv = c("dead_air", "Instructor Name", "Guests", "unknown")
 #' )
 #' }
-make_students_only_transcripts_summary_df <-
+mkstdntsnlytrnscrptssmmrydf <-
   function(transcripts_session_summary_df = NULL,
            preferred_name_exclude_cv = c("dead_air", "Instructor Name", "Guests", "unknown")) {
-    section <- NULL
 
     if (tibble::is_tibble(transcripts_session_summary_df)
     ) {

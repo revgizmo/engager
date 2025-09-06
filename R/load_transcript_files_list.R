@@ -49,12 +49,11 @@ load_transcript_files_list <-
            transcript_files_names_pattern =
              "GMT\\d{8}-\\d{6}_Recording",
            dt_extract_pattern = "(?<=GMT)\\d{8}",
-           transcript_file_extension_pattern = ".transcript",
-           closed_caption_file_extension_pattern = ".cc",
+           trnscrptflxtnsnpttrn = ".transcript",
+           clsdcptnflxtnsnpttrn = ".cc",
            recording_start_pattern = "(?<=GMT)\\d{8}-\\d{6}",
            recording_start_format = "%Y%m%d-%H%M%S",
            start_time_local_tzone = "America/Los_Angeles") {
-    . <- file_name <- recording_start <- file_type <- NULL
 
     transcripts_folder_path <- file.path(data_folder, transcripts_folder)
 

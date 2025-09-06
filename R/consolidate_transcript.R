@@ -1,7 +1,15 @@
 #' Consolidate Transcript
 #'
-#' Take a tibble containing the comments from a Zoom recording transcript and return a tibble that consolidates all consecutive comments from the same speaker where the time between the end of the first comment and start of the second comment is less than `max_pause_sec` seconds.  This function addresses an issue with the Zoom transcript where the speaker is speaking a continuous sentence, but the Zoom transcript will cut the comment into two lines.
-#' For example, a comment of "This should be a single sentence." is often split into "This should be" and "a single sentence".  This function stitches those together into "This should be a single sentence." where the `start` time of the consolidated comment will be the beginning of the first row and the `end` time of the consolidated comment will be the ending of the last row.
+#' Take a tibble containing the comments from a Zoom recording transcript and return a tibble
+#' that consolidates all consecutive comments from the same speaker where the time between the
+#' end of the first comment and start of the second comment is less than `max_pause_sec` seconds.
+#' This function addresses an issue with the Zoom transcript where the speaker is speaking a
+#' continuous sentence, but the Zoom transcript will cut the comment into two lines.
+#' For example, a comment of "This should be a single sentence." is often split into
+#' "This should be" and "a single sentence". This function stitches those together into
+#' "This should be a single sentence." where the `start` time of the consolidated comment
+#' will be the beginning of the first row and the `end` time of the consolidated comment
+#' will be the ending of the last row.
 #'
 #' @importFrom stats aggregate setNames
 #'
@@ -21,18 +29,6 @@
 #' consolidate_transcript(df = "NULL")
 #'
 consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {
-  . <-
-    begin <-
-    comment <-
-    comment_num <-
-    duration <-
-    end <-
-    name <-
-    name_flag <-
-    prev_end <-
-    prior_dead_air <-
-    start <-
-    time_flag <- timestamp <- wordcount <- prior_speaker <- transcript_file <- NULL
 
   if (tibble::is_tibble(df)) {
     # Handle empty data case
@@ -97,7 +93,7 @@ consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {
             return(x[1]) # Take first for name, start
           }
           # For end times, take the last one
-          return(x[length(x)])
+          x[length(x)]
         },
         simplify = FALSE
       )
@@ -134,7 +130,7 @@ consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {
             return(x[1]) # Take first for name, start
           }
           # For end times, take the last one
-          return(x[length(x)])
+          x[length(x)]
         },
         simplify = FALSE
       )

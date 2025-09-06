@@ -26,7 +26,7 @@ categorize_functions <- function(function_analysis) {
     categories[[category]] <- c(categories[[category]], func_name)
   }
 
-  return(categories)
+  categories
 }
 
 #' Determine function category based on name and analysis
@@ -35,8 +35,6 @@ categorize_functions <- function(function_analysis) {
 #' @return Category name
 determine_function_category <- function(func) {
   name <- func$name
-  signature <- func$signature
-  usage <- func$usage
 
   # Core workflow functions - essential for basic transcript analysis
   if (grepl("load_zoom|process_zoom|analyze_transcript|consolidate_transcript", name)) {
@@ -74,7 +72,7 @@ determine_function_category <- function(func) {
   }
 
   # Default to utility for uncategorized functions
-  return("utility")
+  "utility"
 }
 
 #' Get functions by category
@@ -84,9 +82,9 @@ determine_function_category <- function(func) {
 #' @return Functions in category
 get_functions_by_category <- function(categories, category_name) {
   if (category_name %in% names(categories)) {
-    return(categories[[category_name]])
+    categories[[category_name]]
   } else {
-    return(character(0))
+    character(0
   }
 }
 
@@ -99,7 +97,7 @@ get_category_summary <- function(categories) {
   for (category in names(categories)) {
     summary[[category]] <- length(categories[[category]])
   }
-  return(summary)
+  summary
 }
 
 #' Validate function categories
@@ -125,7 +123,7 @@ validate_categories <- function(categories) {
     category_counts = get_category_summary(categories)
   )
 
-  return(validation_results)
+  validation_results
 }
 
 #' Print category summary
@@ -194,7 +192,7 @@ get_deprecated_functions <- function(categories, cran_functions) {
   all_functions <- unlist(categories)
   deprecated_functions <- setdiff(all_functions, cran_functions)
 
-  return(deprecated_functions)
+  deprecated_functions
 }
 
 #' Analyze function dependencies within categories
@@ -219,7 +217,7 @@ analyze_category_dependencies <- function(function_analysis, categories) {
     dependency_analysis[[category]] <- category_deps
   }
 
-  return(dependency_analysis)
+  dependency_analysis
 }
 
 #' Test categorization system
@@ -242,5 +240,5 @@ test_categorization_system <- function() {
   cat("✅ Categorization test completed\n")
   print_category_summary(categories)
 
-  return(categories)
+  categories
 }

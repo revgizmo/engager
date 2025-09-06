@@ -31,7 +31,6 @@ summarize_transcript_files <-
            similarity_threshold = 0.95,
            duplicate_method = c("hybrid", "content", "metadata")) {
     # Declare global variables to avoid R CMD check warnings
-    transcript_file <- transcript_path <- name <- transcript_file_match <- row_id <- NULL
 
     duplicate_method <- match.arg(duplicate_method)
 
@@ -86,7 +85,8 @@ summarize_transcript_files <-
       original_metadata <- NULL
       if (preserve_metadata) {
         # Use base R operations instead of dplyr to avoid segmentation fault
-        original_metadata <- transcript_file_names[, setdiff(names(transcript_file_names), "transcript_file"), drop = FALSE]
+        original_metadata <- transcript_file_names[,
+        setdiff(names(transcript_file_names), "transcript_file"), drop = FALSE]
         original_metadata$row_id <- seq_len(nrow(original_metadata))
       }
 

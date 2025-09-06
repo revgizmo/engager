@@ -29,11 +29,15 @@
 #' # The template can then be filled in and saved as a CSV file
 #' # for use with make_clean_names_df()
 #'
-make_blank_section_names_lookup_csv <- function() {
+mkblnksctnnmslkpcsv <- function() {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'make_blank_section_names_lookup_csv' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'make_blank_section_names_lookup_csv' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   readr::read_csv(

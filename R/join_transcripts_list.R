@@ -1,6 +1,7 @@
 #' Join Transcripts Files Into a Single Tibble
 #'
-#' This function creates a tibble from the joining of the listing of session recordings loaded from the cloud recording csvs
+#' This function creates a tibble from the joining of the listing of session recordings loaded from the cloud recording
+#' csvs
 #' (`df_zoom_recorded_sessions`), the list of transcript files
 #' (`df_transcript_files`), and the list of cancelled classes
 #' (`df_cancelled_classes`) into a single tibble
@@ -36,10 +37,13 @@ join_transcripts_list <- function(
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'join_transcripts_list' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'join_transcripts_list' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
-  match_start_time <- start_time_local <- match_end_time <- section <- NULL
 
   # Return empty tibble with correct structure if any input is invalid
   if (!tibble::is_tibble(df_zoom_recorded_sessions) ||
@@ -55,7 +59,7 @@ join_transcripts_list <- function(
   }
 
   # Return empty tibble if any required column is missing
-  zoom_recorded_sessions_required_cols <- c("section", "match_start_time", "match_end_time")
+  zmrcrddsssnsrqrdcls <- c("section", "match_start_time", "match_end_time")
   transcript_files_required_cols <- c("start_time_local")
 
   if (!all(zoom_recorded_sessions_required_cols %in% names(df_zoom_recorded_sessions) & transcript_files_required_cols %in% names(df_transcript_files))) {

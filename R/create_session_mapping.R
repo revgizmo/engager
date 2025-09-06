@@ -61,12 +61,15 @@ create_session_mapping <- function(
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'create_session_mapping' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'create_session_mapping' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   # Declare global variables to avoid R CMD check warnings
-  ID <- Topic <- `Start Time` <- start_time <- session_date <- zoom_recording_id <-
-    topic <- session_time <- notes <- NULL
+# # # # #   ID <- Topic <- `Start Time` <- start_time <- session_date <- zoom_recording_id <- # UNUSED # UNUSED # UNUSED # UNUSED # UNUSED
 
   # Input validation
   if (!tibble::is_tibble(zoom_recordings_df)) {

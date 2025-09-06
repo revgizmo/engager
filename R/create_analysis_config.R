@@ -83,7 +83,7 @@ create_analysis_config <- function(
     roster_file = "roster.csv",
     cancelled_classes_file = "cancelled_classes.csv",
     names_lookup_file = "section_names_lookup.csv",
-    transcripts_session_summary_file = "transcripts_session_summary.csv",
+    trnscrptssssnsmmryfl = "transcripts_session_summary.csv",
     transcripts_summary_file = "transcripts_summary.csv",
     # Report Settings
     student_summary_report = "Zoom_Student_Engagement_Analysis_student_summary_report",
@@ -93,16 +93,16 @@ create_analysis_config <- function(
       "^(?<dept>\\S+) (?<section>\\S+) - ",
       "(?<day>[A-Za-z]+) (?<time>\\S+\\s*\\S+) (?<instructor>\\(.*?\\))"
     ),
-    zoom_recorded_sessions_csv_names_pattern = "zoomus_recordings__\\d{8}(?:\\s+copy\\s*\\d*)?\\.csv",
-    zoom_recorded_sessions_csv_col_names = paste0(
+    zmrcrddsssnscsvnmspttrn = "zoomus_recordings__\\d{8}(?:\\s+copy\\s*\\d*)?\\.csv",
+    zmrcrddsssnscsvclnms = paste0(
       "Topic,ID,Start Time,File Size (MB),File Count,",
       "Total Views,Total Downloads,Last Accessed"
     ),
     # Transcript File Patterns
     transcript_files_names_pattern = "GMT\\d{8}-\\d{6}_Recording",
     dt_extract_pattern = "(?<=GMT)\\d{8}",
-    transcript_file_extension_pattern = ".transcript",
-    closed_caption_file_extension_pattern = ".cc",
+    trnscrptflxtnsnpttrn = ".transcript",
+    clsdcptnflxtnsnpttrn = ".cc",
     recording_start_pattern = "(?<=GMT)\\d{8}-\\d{6}",
     recording_start_format = "%Y%m%d-%H%M%S",
     start_time_local_tzone = "America/Los_Angeles",
@@ -116,7 +116,11 @@ create_analysis_config <- function(
     session_mapping_file = "session_mapping.csv") {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'create_analysis_config' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'create_analysis_config' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Input validation
   if (!is.character(dept) || length(dept) != 1) {

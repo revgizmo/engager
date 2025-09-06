@@ -32,7 +32,8 @@
 #'   added for dead air. Defaults to 'dead_air'.
 #' @param na_name Character string to label the `name` column in any rows where
 #'   the transcript `name` is `NA`. Defaults to 'unknown'.
-#' @param transcript_df Tibble containing the comments from a Zoom recording transcript (which is generally the result of calling `process_zoom_transcript()`.
+#' @param transcript_df Tibble containing the comments from a Zoom recording transcript (which is generally the result
+#' of calling `process_zoom_transcript()`.
 #' @param comments_format Character string specifying how to format the comments column.
 #'   Options: "list" (default, preserves list structure), "text" (semicolon-separated text),
 #'   or "count" (just the number of comments). Defaults to "list".
@@ -57,13 +58,6 @@ summarize_transcript_metrics <- function(transcript_file_path = "",
                                          na_name = "unknown",
                                          transcript_df = NULL,
                                          comments_format = c("list", "text", "count")) {
-  . <-
-    begin <-
-    comment_num <-
-    duration <-
-    end <-
-    n <-
-    name <- prior_dead_air <- start <- timestamp <- wordcount <- transcript_file <- NULL
 
   consolidate_comments_ <- consolidate_comments
   max_pause_sec_ <- max_pause_sec
@@ -196,7 +190,8 @@ summarize_transcript_metrics <- function(transcript_file_path = "",
 
     # Attach provenance attributes
     attr(result, "schema_version") <- "1.0"
-    attr(result, "source_files") <- if (!is.null(transcript_file_path) && nzchar(transcript_file_path)) basename(transcript_file_path) else NA_character_
+    attr(result,
+    "source_files") <- if (!is.null(transcript_file_path) && nzchar(transcript_file_path)) basename(transcript_file_path) else NA_character_
     attr(result, "processing_timestamp") <- as.character(Sys.time())
     attr(result, "privacy_level") <- getOption("zoomstudentengagement.privacy_level", "mask")
 

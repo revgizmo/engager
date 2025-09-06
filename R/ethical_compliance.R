@@ -15,7 +15,8 @@ NULL
 #' and provides guidance for ethical implementation.
 #'
 #' @param usage_context Context of usage. One of `c("research", "teaching", "assessment", "intervention", "other")`
-#' @param data_scope Scope of data being analyzed. One of `c("individual", "section", "course", "institution", "multi_institution")`
+#' @param data_scope Scope of data being analyzed. One of `c("individual", "section", "course", "institution",
+#' "multi_institution")`
 #' @param purpose_statement Optional statement describing the intended use
 #' @param check_consent Whether to check for consent documentation
 #' @param check_irb Whether to check for IRB approval documentation
@@ -46,7 +47,11 @@ validate_ethical_use <- function(usage_context = c("research", "teaching", "asse
                                  check_irb = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_ethical_use' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_ethical_use' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   usage_context <- match.arg(usage_context)
   data_scope <- match.arg(data_scope)
@@ -227,7 +232,11 @@ create_ethical_use_report <- function(usage_context = NULL,
                                       include_guidance = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'create_ethical_use_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'create_ethical_use_report' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Validate ethical use
   validation <- validate_ethical_use(
@@ -377,7 +386,11 @@ audit_ethical_usage <- function(function_calls = NULL,
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'audit_ethical_usage' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'audit_ethical_usage' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   # Initialize results

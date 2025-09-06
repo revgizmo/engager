@@ -2,10 +2,13 @@
 #'
 #' @title Data Objects in zoomstudentengagement Package
 #' @name package_data
-#' @description This package does not include static datasets. Instead, it provides functions to process and analyze Zoom transcript data that users provide.
+#' @description This package does not include static datasets. Instead, it provides functions to process and analyze
+#' Zoom transcript data that users provide.
 #'
 #' @details
-#' The zoomstudentengagement package is designed to work with user-provided data rather than including static datasets. This approach ensures privacy and allows the package to be used with any institutional data without concerns about data sharing or licensing.
+#' The zoomstudentengagement package is designed to work with user-provided data rather than including static datasets.
+#' This approach ensures privacy and allows the package to be used with any institutional data without concerns about
+#' data sharing or licensing.
 #'
 #' ## Data Sources
 #'

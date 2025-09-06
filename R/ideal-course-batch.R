@@ -54,7 +54,11 @@ process_ideal_course_batch <- function(include_roster = TRUE,
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'process_ideal_course_batch' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'process_ideal_course_batch' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   # Validate inputs
@@ -86,7 +90,6 @@ process_ideal_course_batch <- function(include_roster = TRUE,
   processing_errors <- list()
 
   # Load roster data if requested
-  roster_data <- NULL
   if (include_roster) {
     roster_path <- file.path(transcript_dir, "ideal_course_roster.csv")
     if (file.exists(roster_path)) {
@@ -263,7 +266,11 @@ compare_ideal_sessions <- function(batch_results = NULL,
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'compare_ideal_sessions' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'compare_ideal_sessions' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   # Validate inputs
@@ -380,7 +387,11 @@ validate_ideal_scenarios <- function(batch_results = NULL,
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'validate_ideal_scenarios' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_ideal_scenarios' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   # Set default validation rules if none provided
@@ -529,7 +540,11 @@ validate_ideal_scenarios <- function(batch_results = NULL,
 generate_comparison_insights <- function(comparison_data, metrics) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_comparison_insights' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_comparison_insights' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   insights <- list()
 
@@ -569,7 +584,7 @@ generate_comparison_insights <- function(comparison_data, metrics) {
     )
   }
 
-  return(insights)
+  insights
 }
 
 #' Analyze session trends
@@ -577,7 +592,11 @@ generate_comparison_insights <- function(comparison_data, metrics) {
 analyze_session_trends <- function(comparison_data, metrics) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'analyze_session_trends' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'analyze_session_trends' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   trends <- list()
 
@@ -610,7 +629,7 @@ analyze_session_trends <- function(comparison_data, metrics) {
     }
   }
 
-  return(trends)
+  trends
 }
 
 #' Prepare visualization data
@@ -618,7 +637,11 @@ analyze_session_trends <- function(comparison_data, metrics) {
 prepare_visualization_data <- function(comparison_data, metrics) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'prepare_visualization_data' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'prepare_visualization_data' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Create long format data for plotting
   plot_data <- data.frame()
@@ -635,7 +658,7 @@ prepare_visualization_data <- function(comparison_data, metrics) {
     }
   }
 
-  return(plot_data)
+  plot_data
 }
 
 #' Analyze roster attendance
@@ -643,7 +666,11 @@ prepare_visualization_data <- function(comparison_data, metrics) {
 analyze_roster_attendance <- function(batch_results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'analyze_roster_attendance' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'analyze_roster_attendance' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # This would analyze attendance against the roster
   # For now, return basic participation patterns
@@ -655,7 +682,7 @@ analyze_roster_attendance <- function(batch_results) {
     consistent_participants = length(Reduce(intersect, participation_patterns))
   )
 
-  return(attendance_summary)
+  attendance_summary
 }
 
 # Helper functions for validate_ideal_scenarios
@@ -665,7 +692,11 @@ analyze_roster_attendance <- function(batch_results) {
 validate_session_count <- function(session_data, min_sessions) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_session_count' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_session_count' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   actual_sessions <- length(session_data)
   status <- ifelse(actual_sessions >= min_sessions, "PASS", "FAIL")
@@ -683,7 +714,11 @@ validate_session_count <- function(session_data, min_sessions) {
 validate_participant_counts <- function(participation_patterns, rules) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_participant_counts' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_participant_counts' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list()
 
@@ -707,7 +742,7 @@ validate_participant_counts <- function(participation_patterns, rules) {
     )
   }
 
-  return(results)
+  results
 }
 
 #' Validate engagement metrics
@@ -715,7 +750,11 @@ validate_participant_counts <- function(participation_patterns, rules) {
 validate_engagement_metrics <- function(summary_metrics, min_comments) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_engagement_metrics' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_engagement_metrics' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list()
 
@@ -733,7 +772,7 @@ validate_engagement_metrics <- function(summary_metrics, min_comments) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate session duration
@@ -741,7 +780,11 @@ validate_engagement_metrics <- function(summary_metrics, min_comments) {
 validate_session_duration <- function(session_data, max_duration) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_session_duration' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_session_duration' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list()
 
@@ -759,7 +802,7 @@ validate_session_duration <- function(session_data, max_duration) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate name consistency
@@ -767,7 +810,11 @@ validate_session_duration <- function(session_data, max_duration) {
 validate_name_consistency <- function(session_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_name_consistency' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_name_consistency' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   all_names <- unique(unlist(lapply(session_data, function(x) {
     if (!is.null(x) && nrow(x) > 0) unique(x$name) else character(0)
@@ -788,7 +835,11 @@ validate_name_consistency <- function(session_data) {
 validate_timestamp_consistency <- function(session_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_timestamp_consistency' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_timestamp_consistency' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list()
 
@@ -809,7 +860,7 @@ validate_timestamp_consistency <- function(session_data) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate comment content
@@ -817,7 +868,11 @@ validate_timestamp_consistency <- function(session_data) {
 validate_comment_content <- function(session_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_comment_content' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_comment_content' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list()
 
@@ -840,7 +895,7 @@ validate_comment_content <- function(session_data) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Generate data quality report
@@ -848,7 +903,11 @@ validate_comment_content <- function(session_data) {
 generate_data_quality_report <- function(session_data, summary_metrics) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_data_quality_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_data_quality_report' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   report <- list()
 
@@ -881,7 +940,7 @@ generate_data_quality_report <- function(session_data, summary_metrics) {
 
   report$session_quality <- session_quality
 
-  return(report)
+  report
 }
 
 #' Generate ideal validation recommendations
@@ -889,7 +948,11 @@ generate_data_quality_report <- function(session_data, summary_metrics) {
 generate_ideal_validation_recommendations <- function(rule_results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_validation_recommendations' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_validation_recommendations' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   recommendations <- list()
 
@@ -934,5 +997,5 @@ generate_ideal_validation_recommendations <- function(rule_results) {
     recommendations$next_steps <- "Proceed with confidence in data quality"
   }
 
-  return(recommendations)
+  recommendations
 }

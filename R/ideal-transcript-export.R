@@ -31,7 +31,11 @@ export_ideal_transcripts_csv <- function(
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'export_ideal_transcripts_csv' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'export_ideal_transcripts_csv' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   # Validate inputs
@@ -107,7 +111,11 @@ export_ideal_transcripts_json <- function(
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'export_ideal_transcripts_json' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'export_ideal_transcripts_json' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   # Validate inputs
@@ -206,7 +214,11 @@ export_ideal_transcripts_excel <- function(
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'export_ideal_transcripts_excel' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'export_ideal_transcripts_excel' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   # Validate inputs
@@ -368,7 +380,7 @@ export_ideal_transcripts_excel <- function(
 #'   include_charts = TRUE
 #' )
 #' }
-export_ideal_transcripts_summary <- function(
+xprtdltrnscrptssmmry <- function(
     transcript_data = NULL,
     file_path = NULL,
     format = c("csv", "json", "excel"),
@@ -377,7 +389,11 @@ export_ideal_transcripts_summary <- function(
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'export_ideal_transcripts_summary' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'export_ideal_transcripts_summary' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
   }
 
   # Validate inputs
@@ -452,7 +468,11 @@ export_ideal_transcripts_summary <- function(
 add_export_metadata <- function(data, format = "csv") {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'add_export_metadata' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'add_export_metadata' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Add export timestamp and format info
   data$export_timestamp <- Sys.time()
@@ -466,7 +486,11 @@ add_export_metadata <- function(data, format = "csv") {
 generate_export_metadata <- function(data, format = "csv") {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_export_metadata' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_export_metadata' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   metadata <- list(
     export_timestamp = Sys.time(),
@@ -485,7 +509,11 @@ generate_export_metadata <- function(data, format = "csv") {
 generate_transcript_summary <- function(data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_transcript_summary' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_transcript_summary' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   summary_data <- list(
     total_rows = nrow(data),
@@ -499,7 +527,7 @@ generate_transcript_summary <- function(data) {
     export_timestamp = Sys.time()
   )
 
-  return(as.data.frame(summary_data))
+  as.data.frame(summary_data
 }
 
 #' Add Summary Charts to Excel Workbook
@@ -507,7 +535,11 @@ generate_transcript_summary <- function(data) {
 add_summary_charts <- function(wb, summary_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'add_summary_charts' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'add_summary_charts' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Add basic charts if summary data is available
   # This is a placeholder for future chart functionality

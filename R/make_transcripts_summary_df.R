@@ -30,7 +30,6 @@
 #' make_transcripts_summary_df(sample_data)
 make_transcripts_summary_df <-
   function(transcripts_session_summary_df = NULL) {
-    duration <- n <- preferred_name <- section <- wordcount <- NULL
 
     if (tibble::is_tibble(transcripts_session_summary_df)
     ) {
@@ -55,7 +54,8 @@ make_transcripts_summary_df <-
       group_cols <- c("section", "preferred_name")
 
       # Create a unique identifier for each group
-      transcripts_session_summary_df$group_id <- apply(transcripts_session_summary_df[, group_cols], 1, paste, collapse = "|")
+      transcripts_session_summary_df$group_id <- apply(transcripts_session_summary_df[,
+      group_cols], 1, paste, collapse = "|")
 
       # Aggregate by group using base R
       group_ids <- unique(transcripts_session_summary_df$group_id)

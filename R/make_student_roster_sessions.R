@@ -9,7 +9,8 @@
 #' @param roster_small_df A tibble listing the students enrolled in the class or classes with a
 #'   small subset of the roster columns.
 #'
-#' @return A tibble listing the students enrolled in the class or classes, with rows for each recorded class section for each student.
+#' @return A tibble listing the students enrolled in the class or classes, with rows for each recorded class section for
+#' each student.
 #' @export
 #'
 #' @examples
@@ -27,17 +28,6 @@
 make_student_roster_sessions <-
   function(transcripts_list_df = NULL,
            roster_small_df = NULL) {
-    . <-
-      course <-
-      course_transcript <-
-      dept <-
-      dept_transcript <-
-      first_last <-
-      preferred_name <-
-      section <-
-      section_transcript <-
-      session_num <-
-      start_time_local <- student_id <- course_section <- NULL
 
     # Defensive: check for valid tibbles
     if (!tibble::is_tibble(transcripts_list_df) || !tibble::is_tibble(roster_small_df)) {
@@ -73,13 +63,15 @@ make_student_roster_sessions <-
 
     # Add course_section if it doesn't exist
     if (!("course_section" %in% names(transcripts_processed))) {
-      transcripts_processed$course_section <- paste(transcripts_processed$course, transcripts_processed$section, sep = ".")
+      transcripts_processed$course_section <- paste(transcripts_processed$course,
+      transcripts_processed$section, sep = ".")
     }
 
     # Separate course_section into course_transcript and section_transcript using base R
     course_section_parts <- strsplit(transcripts_processed$course_section, "\\.")
     transcripts_processed$course_transcript <- sapply(course_section_parts, function(x) x[1])
-    transcripts_processed$section_transcript <- sapply(course_section_parts, function(x) if (length(x) > 1) x[2] else NA_character_)
+    transcripts_processed$section_transcript <- sapply(course_section_parts,
+    function(x) if (length(x) > 1) x[2] else NA_character_)
 
     # Add dept_transcript and remove dept
     transcripts_processed$dept_transcript <- toupper(transcripts_processed$dept)
@@ -100,7 +92,8 @@ make_student_roster_sessions <-
     # Join and filter using base R
     # Create matching keys
     roster_key <- paste(roster_processed$dept, roster_processed$course, roster_processed$section, sep = "|")
-    transcript_key <- paste(transcripts_processed$dept_transcript, transcripts_processed$course_transcript, transcripts_processed$section_transcript, sep = "|")
+    transcript_key <- paste(transcripts_processed$dept_transcript,
+    transcripts_processed$course_transcript, transcripts_processed$section_transcript, sep = "|")
 
     # Find matching indices
     matching_indices <- match(roster_key, transcript_key)

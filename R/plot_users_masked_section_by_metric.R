@@ -8,10 +8,14 @@
 #'
 #' @return A ggplot object.
 #' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
-plot_users_masked_section_by_metric <- function(df = NULL, metric = "session_ct") {
+pltsrsmskdsctnbymtrc <- function(df = NULL, metric = "session_ct") {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'plot_users_masked_section_by_metric' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'plot_users_masked_section_by_metric' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   if (!tibble::is_tibble(df)) stop("`df` must be a tibble")
   if (!metric %in% names(df)) {
