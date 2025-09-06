@@ -221,6 +221,20 @@ get_function_dependencies <- function(function_name) {
   )
 }
 
+#' Analyze function dependencies for multiple functions
+#'
+#' @param function_names Vector of function names to analyze
+#' @return List of dependencies for each function
+analyze_function_dependencies <- function(function_names) {
+  dependencies <- list()
+  
+  for (func_name in function_names) {
+    dependencies[[func_name]] <- get_function_dependencies(func_name)
+  }
+  
+  dependencies
+}
+
 #' Get function file location
 #'
 #' @param function_name Name of function
