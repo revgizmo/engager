@@ -69,6 +69,15 @@ create_session_mapping <- function(
     ))
   }
   
+  # Validate input types
+  if (!tibble::is_tibble(zoom_recordings_df)) {
+    stop("zoom_recordings_df must be a tibble")
+  }
+  
+  if (!tibble::is_tibble(course_info_df)) {
+    stop("course_info_df must be a tibble")
+  }
+  
   # Validate course_info_df has required columns
   required_cols <- c("dept", "course", "section", "instructor", "session_length_hours")
   missing_cols <- setdiff(required_cols, names(course_info_df))
