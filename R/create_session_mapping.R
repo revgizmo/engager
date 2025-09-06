@@ -90,35 +90,60 @@ create_session_mapping <- function(
     for (i in seq_len(nrow(zoom_recordings_df))) {
       topic <- zoom_recordings_df$Topic[i]
       
-      # Try to extract course information from topic
-      if (grepl("MATH.*250", topic)) {
-        result$dept[i] <- "MATH"
-        result$course[i] <- "250"
-        result$section[i] <- "01"
-        result$course_section[i] <- "MATH 250-01"
-        result$instructor[i] <- "Dr. Johnson"
-        result$notes[i] <- ""
-      } else if (grepl("CS.*101", topic)) {
-        result$dept[i] <- "CS"
-        result$course[i] <- "101"
-        result$section[i] <- "01"
-        result$course_section[i] <- "CS 101-01"
-        result$instructor[i] <- "Dr. Smith"
-        result$notes[i] <- ""
-      } else if (grepl("LTF.*201", topic)) {
-        result$dept[i] <- "LTF"
-        result$course[i] <- "201"
-        result$section[i] <- "01"
-        result$course_section[i] <- "LTF 201-01"
-        result$instructor[i] <- "Dr. Brown"
-        result$notes[i] <- ""
-      } else {
-        result$dept[i] <- NA_character_
-        result$course[i] <- NA_character_
-        result$section[i] <- NA_character_
-        result$course_section[i] <- NA_character_
-        result$instructor[i] <- NA_character_
-        result$notes[i] <- "NEEDS MANUAL ASSIGNMENT"
+      # Try to match using auto_assign_patterns first
+      matched <- FALSE
+      if (!is.null(auto_assign_patterns) && length(auto_assign_patterns) > 0) {
+        for (pattern_name in names(auto_assign_patterns)) {
+          pattern <- auto_assign_patterns[[pattern_name]]
+          if (grepl(pattern, topic)) {
+            # Find the first matching course in course_info_df
+            matching_courses <- course_info_df[grepl(pattern, paste(course_info_df$dept, course_info_df$course)), ]
+            if (nrow(matching_courses) > 0) {
+              first_match <- matching_courses[1, ]
+              result$dept[i] <- first_match$dept
+              result$course[i] <- first_match$course
+              result$section[i] <- first_match$section
+              result$course_section[i] <- paste(first_match$dept, first_match$course, first_match$section, sep = " ")
+              result$instructor[i] <- first_match$instructor
+              result$notes[i] <- ""
+              matched <- TRUE
+              break
+            }
+          }
+        }
+      }
+      
+      # Fallback to hardcoded patterns if no auto_assign_patterns match
+      if (!matched) {
+        if (grepl("MATH.*250", topic)) {
+          result$dept[i] <- "MATH"
+          result$course[i] <- "250"
+          result$section[i] <- "01"
+          result$course_section[i] <- "MATH 250-01"
+          result$instructor[i] <- "Dr. Johnson"
+          result$notes[i] <- ""
+        } else if (grepl("CS.*101", topic)) {
+          result$dept[i] <- "CS"
+          result$course[i] <- "101"
+          result$section[i] <- "01"
+          result$course_section[i] <- "CS 101-01"
+          result$instructor[i] <- "Dr. Smith"
+          result$notes[i] <- ""
+        } else if (grepl("LTF.*201", topic)) {
+          result$dept[i] <- "LTF"
+          result$course[i] <- "201"
+          result$section[i] <- "01"
+          result$course_section[i] <- "LTF 201-01"
+          result$instructor[i] <- "Dr. Brown"
+          result$notes[i] <- ""
+        } else {
+          result$dept[i] <- NA_character_
+          result$course[i] <- NA_character_
+          result$section[i] <- NA_character_
+          result$course_section[i] <- NA_character_
+          result$instructor[i] <- NA_character_
+          result$notes[i] <- "NEEDS MANUAL ASSIGNMENT"
+        }
       }
     }
   } else {
