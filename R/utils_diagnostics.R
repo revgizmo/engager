@@ -62,7 +62,16 @@ diag_cat <- function(...) {
   }
 
   if (is_verbose() || interactive()) {
-    cat(...)
+    # Convert any list arguments to strings before passing to cat()
+    args <- list(...)
+    args <- lapply(args, function(x) {
+      if (is.list(x)) {
+        return(paste(capture.output(str(x)), collapse = "\n"))
+      } else {
+        return(x)
+      }
+    })
+    do.call(cat, args)
   }
   invisible(NULL)
 }
