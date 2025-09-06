@@ -25,7 +25,8 @@ A tibble listing the the class sessions with corresponding transcript
 files or placeholders for cancelled classes.
 }
 \description{
-This function creates a tibble from the joining of the listing of session recordings loaded from the cloud recording csvs
+This function creates a tibble from the joining of the listing of session recordings loaded from the cloud recording
+csvs
 (\code{df_zoom_recorded_sessions}), the list of transcript files
 (\code{df_transcript_files}), and the list of cancelled classes
 (\code{df_cancelled_classes}) into a single tibble

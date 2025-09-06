@@ -4,13 +4,13 @@
 \alias{validate_lookup_file_format}
 \title{Validate Lookup File Format}
 \usage{
-validate_lookup_file_format(lookup_data)
+validate_lookup_file_format(data)
 }
 \arguments{
-\item{lookup_data}{Data frame containing lookup information}
+\item{data}{The data to validate}
 }
 \value{
-TRUE if valid, stops with error if invalid
+TRUE if valid, FALSE otherwise
 }
 \description{
 Internal function to validate the format of section names lookup files.

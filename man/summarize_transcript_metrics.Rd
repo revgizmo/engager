@@ -46,7 +46,8 @@ added for dead air. Defaults to 'dead_air'.}
 \item{na_name}{Character string to label the \code{name} column in any rows where
 the transcript \code{name} is \code{NA}. Defaults to 'unknown'.}
 
-\item{transcript_df}{Tibble containing the comments from a Zoom recording transcript (which is generally the result of calling \code{process_zoom_transcript()}.}
+\item{transcript_df}{Tibble containing the comments from a Zoom recording transcript (which is generally the result
+of calling \code{process_zoom_transcript()}.}
 
 \item{comments_format}{Character string specifying how to format the comments column.
 Options: "list" (default, preserves list structure), "text" (semicolon-separated text),

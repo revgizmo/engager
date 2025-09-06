@@ -4,12 +4,15 @@
 \alias{package_data}
 \title{Data Objects in zoomstudentengagement Package}
 \description{
-This package does not include static datasets. Instead, it provides functions to process and analyze Zoom transcript data that users provide.
+This package does not include static datasets. Instead, it provides functions to process and analyze
+Zoom transcript data that users provide.
 }
 \details{
 Package Data Documentation
 
-The zoomstudentengagement package is designed to work with user-provided data rather than including static datasets. This approach ensures privacy and allows the package to be used with any institutional data without concerns about data sharing or licensing.
+The zoomstudentengagement package is designed to work with user-provided data rather than including static datasets.
+This approach ensures privacy and allows the package to be used with any institutional data without concerns about
+data sharing or licensing.
 \subsection{Data Sources}{
 
 Users provide their own data through the following functions:

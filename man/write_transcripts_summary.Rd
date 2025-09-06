@@ -11,7 +11,8 @@ write_transcripts_summary(
 )
 }
 \arguments{
-\item{transcripts_summary_df}{a tibble that summarizes results at the level of the class section and preferred student name.}
+\item{transcripts_summary_df}{a tibble that summarizes results at the level of the class section and preferred
+student name.}
 
 \item{data_folder}{Overall data folder for your recordings and data. Defaults to 'data'}
 

@@ -44,22 +44,6 @@ by matching recording topics with course patterns.
 }
 \examples{
 \dontrun{
-# Create sample Zoom recordings data
-zoom_recordings <- tibble::tibble(
-  ID = c("123456789", "987654321"),
-  Topic = c("CS 101 - Monday 10:00 AM (Dr. Smith)", "MATH 250 - Tuesday 2:00 PM (Dr. Johnson)"),
-  `Start Time` = c("Jan 15, 2024 10:00 AM", "Jan 16, 2024 2:00 PM")
-)
-
-# Create course information
-course_info <- create_course_info(
-  dept = c("CS", "MATH"),
-  course = c("101", "250"),
-  section = c("1", "1"),
-  instructor = c("Dr. Smith", "Dr. Johnson"),
-  session_length_hours = c(1.5, 2.0)
-)
-
 # Create session mapping
 session_mapping <- create_session_mapping(
   zoom_recordings_df = zoom_recordings,

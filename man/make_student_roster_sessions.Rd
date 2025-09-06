@@ -17,7 +17,8 @@ files or placeholders for cancelled classes.}
 small subset of the roster columns.}
 }
 \value{
-A tibble listing the students enrolled in the class or classes, with rows for each recorded class section for each student.
+A tibble listing the students enrolled in the class or classes, with rows for each recorded class section for
+each student.
 }
 \description{
 This function creates a tibble from a provided tibble students enrolled

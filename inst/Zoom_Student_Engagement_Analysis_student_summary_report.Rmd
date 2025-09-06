@@ -17,16 +17,13 @@ title: "Zoom Student Engagement Analysis - Section `r params$target_section`"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 # Use base R operations instead of dplyr to prevent segfaults
-library(data.table)
+# Completely avoid data.table to prevent segmentation faults
+data_table_available <- FALSE
+
 library(readr)
 library(lubridate)
 library(hms)
 library(ggtext)
-
-# Ensure data.table is properly loaded
-if (!requireNamespace("data.table", quietly = TRUE)) {
-  stop("data.table package is required")
-}
 
 # Add memory management
 gc()
@@ -40,16 +37,16 @@ transcripts_summary_df <- read_csv(paste0(params$data_folder, "/", params$transc
 
 transcripts_session_summary_df <- read_csv(paste0(params$data_folder, "/", params$transcripts_session_summary_file))
 
-# Convert to data.table for better memory management
-transcripts_summary_df <- as.data.table(transcripts_summary_df)
-transcripts_session_summary_df <- as.data.table(transcripts_session_summary_df)
+# Use data.frame for memory management (avoiding data.table to prevent segfaults)
+transcripts_summary_df <- as.data.frame(transcripts_summary_df)
+transcripts_session_summary_df <- as.data.frame(transcripts_session_summary_df)
 
 target_course <- params$target_course
 target_section <- params$target_section
 target_transcript_section <- as.numeric(target_course) + (as.numeric(params$target_section) / 100)
 
-# Use data.table operations instead of dplyr
-sec_transcripts_summary_df <- transcripts_summary_df[section == target_section]
+# Use base R subsetting (avoiding data.table to prevent segfaults)
+sec_transcripts_summary_df <- transcripts_summary_df[transcripts_summary_df$section == target_section, ]
 
 target_student <- params$target_student
 
