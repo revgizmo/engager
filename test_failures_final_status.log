@@ -9,7 +9,7 @@ The following objects are masked from ‘package:base’:
 ✔ | F W  S  OK | Context
 
 ⠏ |          0 | add_dead_air_rows                                              
-⠸ |   7     17 | add_dead_air_rows                                              
+⠋ |   7     14 | add_dead_air_rows                                              
 ⠴ |   14     42 | add_dead_air_rows                                             
 ✔ |   19     63 | add_dead_air_rows
 ────────────────────────────────────────────────────────────────────────────────
@@ -133,14 +133,14 @@ Backtrace:
 ✔ |         21 | analyze_multi_session_attendance
 
 ⠏ |          0 | analyze_transcripts                                            
-⠸ |   3      1 | analyze_transcripts                                            
+⠹ |   3      0 | analyze_transcripts                                            
 ⠴ |   7      9 | analyze_transcripts                                            
-⠼ |   12     13 | analyze_transcripts                                           
-⠇ |   16  1  22 | analyze_transcripts                                           
-⠴ |   20  2  34 | analyze_transcripts                                           
-⠧ |   25  3  40 | analyze_transcripts                                           
-⠧ |   31  3  44 | analyze_transcripts                                           
-⠦ |   37  3  47 | analyze_transcripts                                           
+⠸ |   12     12 | analyze_transcripts                                           
+⠦ |   16  1  20 | analyze_transcripts                                           
+⠙ |   19  2  31 | analyze_transcripts                                           
+⠴ |   24  3  39 | analyze_transcripts                                           
+⠦ |   30  3  44 | analyze_transcripts                                           
+⠴ |   36  3  47 | analyze_transcripts                                           
 ⠼ |   42  4  49 | analyze_transcripts                                           
 ⠇ |   43  4  52 | analyze_transcripts                                           
 ⠼ |   44  5  56 | analyze_transcripts                                           
@@ -939,7 +939,7 @@ Step 3: Full function completed successfully
 ✔ |      2   0 | consolidate_transcript_segfault
 
 ⠏ |          0 | create_analysis_config                                         
-⠦ |   8     29 | create_analysis_config                                         
+⠼ |   7     28 | create_analysis_config                                         
 ✔ |   17     42 | create_analysis_config
 ────────────────────────────────────────────────────────────────────────────────
 Warning ('test-create_analysis_config.R:2:3'): create_analysis_config creates valid configuration with defaults
@@ -1160,12 +1160,12 @@ Backtrace:
 ⠏ |          0 | create_session_mapping                                         
 ⠧ |   6     12 | create_session_mapping                                         
 ⠹ | 1 10     22 | create_session_mapping                                        
-⠙ | 4 15     33 | create_session_mapping                                        
-⠧ | 7 21  3  47 | create_session_mapping                                        
-⠴ | 7 26  3  70 | create_session_mapping                                        
-⠸ | 13 28  3  80 | create_session_mapping                                       
-⠦ | 17 34  3  93 | create_session_mapping                                       
-✖ | 17 34  3  97 | create_session_mapping
+⠸ | 3 16     35 | create_session_mapping                                        
+⠏ | 6 21  3  50 | create_session_mapping                                        
+⠴ | 6 26  3  71 | create_session_mapping                                        
+⠴ | 12 29  3  82 | create_session_mapping                                       
+⠇ | 16 34  3  96 | create_session_mapping                                       
+✖ | 16 34  3  98 | create_session_mapping
 ────────────────────────────────────────────────────────────────────────────────
 Warning ('test-create_session_mapping.R:2:3'): create_course_info creates correct structure
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1246,13 +1246,13 @@ file.exists(temp_file) is not TRUE
 `expected`: TRUE 
 
 Error ('test-create_session_mapping.R:241:3'): create_session_mapping handles file output correctly
-Error: '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpeECJbb/file184f5428cbb57.csv' does not exist.
+Error: '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//Rtmpq4ql2u/file7a42d710b3.csv' does not exist.
 Backtrace:
     ▆
  1. ├─readr::read_csv(temp_file, show_col_types = FALSE) at test-create_session_mapping.R:241:3
  2. │ └─vroom::vroom(...)
  3. │   └─vroom:::vroom_(...)
- 4. └─vroom (local) `<fn>`("/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpeECJbb/file184f5428cbb57.csv")
+ 4. └─vroom (local) `<fn>`("/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//Rtmpq4ql2u/file7a42d710b3.csv")
  5.   └─vroom:::check_path(path)
 
 Warning ('test-create_session_mapping.R:253:3'): create_session_mapping handles invalid date formats gracefully
@@ -1272,30 +1272,6 @@ Function 'create_course_info' is deprecated and will be removed in the next vers
 Backtrace:
     ▆
  1. └─zoomstudentengagement::create_course_info(...) at test-create_session_mapping.R:334:3
-
-Error ('test-create_session_mapping.R:342:3'): create_session_mapping handles non-tibble inputs
-Error in `if (grepl("Jan 15, 2024", start_time)) {
-    result$session_date[i] <- as.Date("2024-01-15")
-    result$session_time[i] <- "10:00 AM"
-} else if (grepl("Jan 16, 2024", start_time)) {
-    result$session_date[i] <- as.Date("2024-01-16")
-    result$session_time[i] <- "09:00 AM"
-} else if (grepl("Jan 17, 2024", start_time)) {
-    result$session_date[i] <- as.Date("2024-01-17")
-    result$session_time[i] <- "14:00 PM"
-} else {
-    result$session_date[i] <- as.Date(NA)
-    result$session_time[i] <- "Unknown"
-}`: argument is of length zero
-Backtrace:
-    ▆
- 1. ├─testthat::expect_error(...) at test-create_session_mapping.R:342:3
- 2. │ └─testthat:::expect_condition_matching(...)
- 3. │   └─testthat:::quasi_capture(...)
- 4. │     ├─testthat (local) .capture(...)
- 5. │     │ └─base::withCallingHandlers(...)
- 6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
- 7. └─zoomstudentengagement::create_session_mapping(...)
 
 Warning ('test-create_session_mapping.R:358:3'): create_session_mapping creates correct course_section column
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1511,7 +1487,7 @@ Maximum number of failures exceeded; quitting at end of file.
 ℹ Increase this number with (e.g.) `testthat::set_max_fails(Inf)` 
 
 ══ Results ═════════════════════════════════════════════════════════════════════
-Duration: 5.0 s
+Duration: 4.9 s
 
 ── Skipped tests (12) ──────────────────────────────────────────────────────────
 • empty test (9): 'test-analyze_transcripts.R:90:1',
@@ -1532,38 +1508,14 @@ file.exists(temp_file) is not TRUE
 `expected`: TRUE 
 
 Error ('test-create_session_mapping.R:241:3'): create_session_mapping handles file output correctly
-Error: '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpeECJbb/file184f5428cbb57.csv' does not exist.
+Error: '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//Rtmpq4ql2u/file7a42d710b3.csv' does not exist.
 Backtrace:
     ▆
  1. ├─readr::read_csv(temp_file, show_col_types = FALSE) at test-create_session_mapping.R:241:3
  2. │ └─vroom::vroom(...)
  3. │   └─vroom:::vroom_(...)
- 4. └─vroom (local) `<fn>`("/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpeECJbb/file184f5428cbb57.csv")
+ 4. └─vroom (local) `<fn>`("/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//Rtmpq4ql2u/file7a42d710b3.csv")
  5.   └─vroom:::check_path(path)
-
-Error ('test-create_session_mapping.R:342:3'): create_session_mapping handles non-tibble inputs
-Error in `if (grepl("Jan 15, 2024", start_time)) {
-    result$session_date[i] <- as.Date("2024-01-15")
-    result$session_time[i] <- "10:00 AM"
-} else if (grepl("Jan 16, 2024", start_time)) {
-    result$session_date[i] <- as.Date("2024-01-16")
-    result$session_time[i] <- "09:00 AM"
-} else if (grepl("Jan 17, 2024", start_time)) {
-    result$session_date[i] <- as.Date("2024-01-17")
-    result$session_time[i] <- "14:00 PM"
-} else {
-    result$session_date[i] <- as.Date(NA)
-    result$session_time[i] <- "Unknown"
-}`: argument is of length zero
-Backtrace:
-    ▆
- 1. ├─testthat::expect_error(...) at test-create_session_mapping.R:342:3
- 2. │ └─testthat:::expect_condition_matching(...)
- 3. │   └─testthat:::quasi_capture(...)
- 4. │     ├─testthat (local) .capture(...)
- 5. │     │ └─base::withCallingHandlers(...)
- 6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
- 7. └─zoomstudentengagement::create_session_mapping(...)
 
 Failure ('test-create_session_mapping.R:376:3'): create_session_mapping creates correct course_section column
 session_mapping$course_section (`actual`) not equal to c("CS.101.1", "MATH.250.1") (`expected`).
@@ -1643,5 +1595,5 @@ session_mapping$course_section (`actual`) not equal to "CS.101.1" (`expected`).
 `actual`:   "CS 101 1"
 `expected`: "CS.101.1"
 
-[ FAIL 17 | WARN 137 | SKIP 12 | PASS 317 ]
+[ FAIL 16 | WARN 137 | SKIP 12 | PASS 318 ]
 ══ Terminated early ════════════════════════════════════════════════════════════

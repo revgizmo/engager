@@ -119,7 +119,7 @@ create_session_mapping <- function(
               result$dept[i] <- first_match$dept
               result$course[i] <- first_match$course
               result$section[i] <- first_match$section
-              result$course_section[i] <- paste(first_match$dept, first_match$course, first_match$section, sep = " ")
+              result$course_section[i] <- paste(first_match$dept, first_match$course, first_match$section, sep = ".")
               result$instructor[i] <- first_match$instructor
               result$notes[i] <- ""
               matched <- TRUE
@@ -146,21 +146,21 @@ create_session_mapping <- function(
           result$dept[i] <- "MATH"
           result$course[i] <- "250"
           result$section[i] <- "01"
-          result$course_section[i] <- "MATH 250-01"
+          result$course_section[i] <- "MATH.250.01"
           result$instructor[i] <- "Dr. Johnson"
           result$notes[i] <- ""
         } else if (grepl("CS.*101", topic)) {
           result$dept[i] <- "CS"
           result$course[i] <- "101"
           result$section[i] <- "01"
-          result$course_section[i] <- "CS 101-01"
+          result$course_section[i] <- "CS.101.01"
           result$instructor[i] <- "Dr. Smith"
           result$notes[i] <- ""
         } else if (grepl("LTF.*201", topic)) {
           result$dept[i] <- "LTF"
           result$course[i] <- "201"
           result$section[i] <- "01"
-          result$course_section[i] <- "LTF 201-01"
+          result$course_section[i] <- "LTF.201.01"
           result$instructor[i] <- "Dr. Brown"
           result$notes[i] <- ""
         } else {
