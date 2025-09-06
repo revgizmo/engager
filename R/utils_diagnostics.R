@@ -41,7 +41,22 @@ diag_message <- function(...) {
   }
 
   if (is_verbose()) {
-    message(...)
+    # Convert arguments to strings before passing to message()
+    args <- list(...)
+    args <- lapply(args, function(x) {
+      if (is.list(x)) {
+        return(paste(capture.output(str(x)), collapse = "\n"))
+      } else if (is.function(x)) {
+        return(paste("<function:", deparse(substitute(x)), ">"))
+      } else if (is.environment(x)) {
+        return(paste("<environment:", environmentName(x), ">"))
+      } else if (is.object(x)) {
+        return(paste("<", class(x)[1], "object>"))
+      } else {
+        return(x)
+      }
+    })
+    do.call(message, args)
   }
   invisible(NULL)
 }
@@ -62,11 +77,17 @@ diag_cat <- function(...) {
   }
 
   if (is_verbose() || interactive()) {
-    # Convert any list arguments to strings before passing to cat()
+    # Convert arguments to strings before passing to cat()
     args <- list(...)
     args <- lapply(args, function(x) {
       if (is.list(x)) {
         return(paste(capture.output(str(x)), collapse = "\n"))
+      } else if (is.function(x)) {
+        return(paste("<function:", deparse(substitute(x)), ">"))
+      } else if (is.environment(x)) {
+        return(paste("<environment:", environmentName(x), ">"))
+      } else if (is.object(x)) {
+        return(paste("<", class(x)[1], "object>"))
       } else {
         return(x)
       }
