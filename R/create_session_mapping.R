@@ -229,7 +229,7 @@ create_session_mapping <- function(
   unmatched_count <- sum(result$notes == "NEEDS MANUAL ASSIGNMENT", na.rm = TRUE)
   if (unmatched_count > 0 && Sys.getenv("TESTTHAT") != "true") {
     warning(
-      paste0("Found ", unmatched_count, " unmatched recordings that need manual assignment. ",
+      paste0("Found ", unmatched_count, " recordings need manual assignment. ",
              "Check the 'notes' column for details."),
       call. = FALSE
     )
