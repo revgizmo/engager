@@ -24,7 +24,10 @@ audit_all_functions <- function() {
   }
 
   # Categorize functions
-  categories <- categorize_functions(function_analysis)
+  categories <- list(
+    exported = function_analysis[sapply(function_analysis, function(x) x$exported), ],
+    internal = function_analysis[sapply(function_analysis, function(x) !x$exported), ]
+  )
 
   # Generate audit report
   audit_report <- generate_audit_report(categories, function_analysis)

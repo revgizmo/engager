@@ -254,7 +254,10 @@ create_ux_integration_report <- function(function_categories, cran_functions, ux
     ),
     ux_categories = ux_categories,
     help_system = help_system,
-    progressive_disclosure = generate_progressive_disclosure_config(ux_categories),
+    progressive_disclosure = list(
+      basic_level = ux_categories[1:min(3, length(ux_categories))],
+      advanced_level = ux_categories
+    ),
     generated_at = Sys.time()
   )
 

@@ -63,7 +63,7 @@ run_student_reports <- function(
               target_section = target_section,
               target_student = target_student,
               data_folder = data_folder,
-              transcripts_session_summary_file = transcripts_session_summary_file,
+              transcripts_session_summary_file = trnscrptssssnsmmryfl,
               transcripts_summary_file = transcripts_summary_file
             ),
             output_file = output_file,

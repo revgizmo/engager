@@ -186,7 +186,7 @@ save_scope_reduction_report <- function(tracker, output_file = "scope_reduction_
 
   tryCatch(
     {
-      report <- generate_scope_reduction_report(tracker)
+      report <- gen_scope_reduction_report(tracker)
       writeLines(report, output_file)
       message("Scope reduction report saved to: ", output_file)
       TRUE

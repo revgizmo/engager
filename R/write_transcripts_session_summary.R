@@ -15,6 +15,6 @@ wrttrnscrptssssnsmmry <-
     if (!tibble::is_tibble(transcripts_session_summary_df)) {
       return(invisible(NULL))
     }
-    path <- paste0(data_folder, "/", transcripts_session_summary_file)
+    path <- paste0(data_folder, "/", trnscrptssssnsmmryfl)
     write_metrics(transcripts_session_summary_df, what = "session_summary", path = path)
   }

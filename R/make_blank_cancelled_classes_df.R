@@ -23,13 +23,14 @@ mkblnkcnclldclsssdf <- function() {
   }
 
   # Use base R operations instead of dplyr to avoid segmentation fault
+  csv_content <- paste0(
+    "dept,course_section,course,section,day,time,instructor,Topic,ID,Start Time,",
+    "File Size (MB),File Count,Total Views,Total Downloads,Last Accessed,",
+    "match_start_time,match_end_time,date_extract,recording_start,start_time_local,",
+    "transcript_file,chat_file,closed_caption_file"
+  )
   result <- readr::read_csv(
-    I(
-      "dept,course_section,course,section,day,time,instructor,Topic,ID,Start Time,",
-      "File Size (MB),File Count,Total Views,Total Downloads,Last Accessed,",
-      "match_start_time,match_end_time,date_extract,recording_start,start_time_local,",
-      "transcript_file,chat_file,closed_caption_file"
-    ),
+    I(csv_content),
     col_types = "cciiccccccdiiicTTcTTccci"
   )
 

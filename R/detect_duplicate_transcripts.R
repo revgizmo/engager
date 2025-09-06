@@ -201,7 +201,6 @@ detect_duplicate_transcripts <- function(
   }
 
   # Initialize results
-  duplicate_groups <- list()
   similarity_matrix <- matrix(0, nrow = length(existing_names), ncol = length(existing_names))
   rownames(similarity_matrix) <- existing_names
   colnames(similarity_matrix) <- existing_names
