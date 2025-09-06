@@ -47,7 +47,7 @@ load_transcript_files_list <-
            # zoom_recorded_sessions_csv_names_pattern =
            #   'zoomus_recordings__\\d{8}(?:\\s+copy\\s*\\d*)?\\.csv',
            transcript_files_names_pattern =
-             "GMT\\d{8}-\\d{6}_Recording",
+           "GMT\\d{8}-\\d{6}_Recording",
            dt_extract_pattern = "(?<=GMT)\\d{8}",
            trnscrptflxtnsnpttrn = ".transcript",
            clsdcptnflxtnsnpttrn = ".cc",
@@ -114,7 +114,7 @@ load_transcript_files_list <-
         row_start <- result$recording_start[k]
         for (file_type in file_types) {
           type_files <- df[df$file_type == file_type & df$date_extract == row_date &
-            df$recording_start == row_start, "file_name", drop = TRUE]
+                             df$recording_start == row_start, "file_name", drop = TRUE]
           if (length(type_files) > 0) {
             result[[file_type]][k] <- type_files[1]
           }

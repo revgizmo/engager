@@ -128,8 +128,8 @@ get_metric_description <- function(metric, metrics_lookup_df) {
     )
   }
   if (!is.null(metrics_lookup_df) &&
-    tibble::is_tibble(metrics_lookup_df) &&
-    all(c("metric", "description") %in% names(metrics_lookup_df))) {
+        tibble::is_tibble(metrics_lookup_df) &&
+        all(c("metric", "description") %in% names(metrics_lookup_df))) {
     metric_rows <- metrics_lookup_df$metric == metric
     if (any(metric_rows)) {
       description_text <- metrics_lookup_df$description[which(metric_rows)[1]]

@@ -166,7 +166,7 @@ analyze_function_usage <- function(function_name) {
       content <- readLines(test_file, warn = FALSE)
       # Look for function name in various contexts (calls, test names, etc.)
       if (any(grepl(function_name, content, fixed = TRUE)) ||
-        any(grepl(paste0("test.*", function_name), content, ignore.case = TRUE))) {
+            any(grepl(paste0("test.*", function_name), content, ignore.case = TRUE))) {
         usage_info$in_tests <- TRUE
         usage_info$usage_count <- usage_info$usage_count + 1
         break # Found in at least one test file
