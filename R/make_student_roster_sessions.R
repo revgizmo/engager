@@ -28,123 +28,154 @@
 make_student_roster_sessions <-
   function(transcripts_list_df = NULL,
            roster_small_df = NULL) {
-    # Defensive: check for valid tibbles
-    if (!tibble::is_tibble(transcripts_list_df) || !tibble::is_tibble(roster_small_df)) {
-      stop("Input must be tibbles")
-    }
-
-    # Handle empty input first
-    if (nrow(transcripts_list_df) == 0 || nrow(roster_small_df) == 0) {
-      # Only show warnings if not in test environment
-      if (Sys.getenv("TESTTHAT") != "true") {
-        warning("Empty input data provided")
-      }
+    # Validate inputs
+    validation_result <- validate_roster_sessions_inputs(transcripts_list_df, roster_small_df)
+    if (is.null(validation_result)) {
       return(NULL)
     }
 
-    # Check for required columns
-    required_transcript_cols <- c("dept", "course", "section", "session_num", "start_time_local")
-    required_roster_cols <- c("student_id", "first_last", "preferred_name", "dept", "course", "section")
+    # Process transcripts and roster data
+    transcripts_processed <- process_transcripts_for_roster_matching(transcripts_list_df)
+    roster_processed <- process_roster_for_matching(roster_small_df)
 
-    missing_transcript_cols <- setdiff(required_transcript_cols, names(transcripts_list_df))
-    missing_roster_cols <- setdiff(required_roster_cols, names(roster_small_df))
-
-    if (length(missing_transcript_cols) > 0 || length(missing_roster_cols) > 0) {
-      stop(sprintf(
-        "Missing required columns:\nTranscripts: %s\nRoster: %s",
-        paste(missing_transcript_cols, collapse = ", "),
-        paste(missing_roster_cols, collapse = ", ")
-      ))
-    }
-
-    # Process transcripts list using base R
-    transcripts_processed <- transcripts_list_df
-
-    # Add course_section if it doesn't exist
-    if (!("course_section" %in% names(transcripts_processed))) {
-      transcripts_processed$course_section <- paste(transcripts_processed$course,
-        transcripts_processed$section,
-        sep = "."
-      )
-    }
-
-    # Separate course_section into course_transcript and section_transcript using base R
-    course_section_parts <- strsplit(transcripts_processed$course_section, "\\.")
-    transcripts_processed$course_transcript <- sapply(course_section_parts, function(x) x[1])
-    transcripts_processed$section_transcript <- sapply(
-      course_section_parts,
-      function(x) if (length(x) > 1) x[2] else NA_character_
-    )
-
-    # Add dept_transcript and remove dept
-    transcripts_processed$dept_transcript <- toupper(transcripts_processed$dept)
-    transcripts_processed$dept <- NULL
-
-    # Ensure character types for comparison
-    transcripts_processed$course_transcript <- as.character(transcripts_processed$course_transcript)
-    transcripts_processed$section_transcript <- as.character(transcripts_processed$section_transcript)
-
-    # Process roster using base R
-    roster_processed <- roster_small_df
-
-    # Ensure character types for comparison
-    roster_processed$course <- as.character(roster_processed$course)
-    roster_processed$section <- as.character(roster_processed$section)
-    roster_processed$dept <- toupper(roster_processed$dept)
-
-    # Join and filter using base R
-    # Create matching keys
-    roster_key <- paste(roster_processed$dept, roster_processed$course, roster_processed$section, sep = "|")
-    transcript_key <- paste(transcripts_processed$dept_transcript,
-      transcripts_processed$course_transcript, transcripts_processed$section_transcript,
-      sep = "|"
-    )
-
-    # Find matching indices
-    matching_indices <- match(roster_key, transcript_key)
-    valid_matches <- !is.na(matching_indices)
-
-    if (!any(valid_matches)) {
-      # Only show warnings if not in test environment
-      if (Sys.getenv("TESTTHAT") != "true") {
-        warning("No matching records found between transcripts and roster")
-      }
+    # Match and combine roster with transcripts
+    result <- match_and_combine_roster_transcripts(roster_processed, transcripts_processed)
+    if (is.null(result)) {
       return(NULL)
     }
-
-    # Create result by expanding roster rows for each matching transcript
-    result_rows <- list()
-    result_index <- 1
-
-    for (i in which(valid_matches)) {
-      roster_row <- roster_processed[i, , drop = FALSE]
-      matching_transcript_indices <- which(transcript_key == roster_key[i])
-
-      for (j in matching_transcript_indices) {
-        transcript_row <- transcripts_processed[j, , drop = FALSE]
-
-        # Combine roster and transcript data
-        combined_row <- data.frame(
-          student_id = roster_row$student_id,
-          first_last = roster_row$first_last,
-          preferred_name = roster_row$preferred_name,
-          dept = roster_row$dept,
-          course = roster_row$course,
-          section = roster_row$section,
-          session_num = transcript_row$session_num,
-          start_time_local = transcript_row$start_time_local,
-          course_section = transcript_row$course_section,
-          stringsAsFactors = FALSE
-        )
-
-        result_rows[[result_index]] <- combined_row
-        result_index <- result_index + 1
-      }
-    }
-
-    # Combine all rows
-    result <- do.call(rbind, result_rows)
-
+    
     # Convert to tibble to maintain expected return type
     return(tibble::as_tibble(result))
   }
+
+# Helper function to validate roster sessions inputs
+validate_roster_sessions_inputs <- function(transcripts_list_df, roster_small_df) {
+  # Defensive: check for valid tibbles
+  if (!tibble::is_tibble(transcripts_list_df) || !tibble::is_tibble(roster_small_df)) {
+    stop("Input must be tibbles")
+  }
+
+  # Handle empty input first
+  if (nrow(transcripts_list_df) == 0 || nrow(roster_small_df) == 0) {
+    # Only show warnings if not in test environment
+    if (Sys.getenv("TESTTHAT") != "true") {
+      warning("Empty input data provided")
+    }
+    return(NULL)
+  }
+
+  # Check for required columns
+  required_transcript_cols <- c("dept", "course", "section", "session_num", "start_time_local")
+  required_roster_cols <- c("student_id", "first_last", "preferred_name", "dept", "course", "section")
+
+  missing_transcript_cols <- setdiff(required_transcript_cols, names(transcripts_list_df))
+  missing_roster_cols <- setdiff(required_roster_cols, names(roster_small_df))
+
+  if (length(missing_transcript_cols) > 0 || length(missing_roster_cols) > 0) {
+    stop(sprintf(
+      "Missing required columns:\nTranscripts: %s\nRoster: %s",
+      paste(missing_transcript_cols, collapse = ", "),
+      paste(missing_roster_cols, collapse = ", ")
+    ))
+  }
+  
+  TRUE
+}
+
+# Helper function to process transcripts for roster matching
+process_transcripts_for_roster_matching <- function(transcripts_list_df) {
+  transcripts_processed <- transcripts_list_df
+
+  # Add course_section if it doesn't exist
+  if (!("course_section" %in% names(transcripts_processed))) {
+    transcripts_processed$course_section <- paste(transcripts_processed$course,
+      transcripts_processed$section,
+      sep = "."
+    )
+  }
+
+  # Separate course_section into course_transcript and section_transcript using base R
+  course_section_parts <- strsplit(transcripts_processed$course_section, "\\.")
+  transcripts_processed$course_transcript <- sapply(course_section_parts, function(x) x[1])
+  transcripts_processed$section_transcript <- sapply(
+    course_section_parts,
+    function(x) if (length(x) > 1) x[2] else NA_character_
+  )
+
+  # Add dept_transcript and remove dept
+  transcripts_processed$dept_transcript <- toupper(transcripts_processed$dept)
+  transcripts_processed$dept <- NULL
+
+  # Ensure character types for comparison
+  transcripts_processed$course_transcript <- as.character(transcripts_processed$course_transcript)
+  transcripts_processed$section_transcript <- as.character(transcripts_processed$section_transcript)
+  
+  transcripts_processed
+}
+
+# Helper function to process roster for matching
+process_roster_for_matching <- function(roster_small_df) {
+  roster_processed <- roster_small_df
+
+  # Ensure character types for comparison
+  roster_processed$course <- as.character(roster_processed$course)
+  roster_processed$section <- as.character(roster_processed$section)
+  roster_processed$dept <- toupper(roster_processed$dept)
+  
+  roster_processed
+}
+
+# Helper function to match and combine roster with transcripts
+match_and_combine_roster_transcripts <- function(roster_processed, transcripts_processed) {
+  # Create matching keys
+  roster_key <- paste(roster_processed$dept, roster_processed$course, roster_processed$section, sep = "|")
+  transcript_key <- paste(transcripts_processed$dept_transcript,
+    transcripts_processed$course_transcript, transcripts_processed$section_transcript,
+    sep = "|"
+  )
+
+  # Find matching indices
+  matching_indices <- match(roster_key, transcript_key)
+  valid_matches <- !is.na(matching_indices)
+
+  if (!any(valid_matches)) {
+    # Only show warnings if not in test environment
+    if (Sys.getenv("TESTTHAT") != "true") {
+      warning("No matching records found between transcripts and roster")
+    }
+    return(NULL)
+  }
+
+  # Create result by expanding roster rows for each matching transcript
+  result_rows <- list()
+  result_index <- 1
+
+  for (i in which(valid_matches)) {
+    roster_row <- roster_processed[i, , drop = FALSE]
+    matching_transcript_indices <- which(transcript_key == roster_key[i])
+
+    for (j in matching_transcript_indices) {
+      transcript_row <- transcripts_processed[j, , drop = FALSE]
+
+      # Combine roster and transcript data
+      combined_row <- data.frame(
+        student_id = roster_row$student_id,
+        first_last = roster_row$first_last,
+        preferred_name = roster_row$preferred_name,
+        dept = roster_row$dept,
+        course = roster_row$course,
+        section = roster_row$section,
+        session_num = transcript_row$session_num,
+        start_time_local = transcript_row$start_time_local,
+        course_section = transcript_row$course_section,
+        stringsAsFactors = FALSE
+      )
+
+      result_rows[[result_index]] <- combined_row
+      result_index <- result_index + 1
+    }
+  }
+
+  # Combine all rows
+  do.call(rbind, result_rows)
+}

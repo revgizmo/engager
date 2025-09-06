@@ -32,6 +32,33 @@ plot_users <- function(
   facet_by <- match.arg(facet_by)
   mask_by <- match.arg(mask_by)
 
+  # Validate and prepare data
+  validation_result <- validate_plot_users_inputs(data, metric, student_col)
+  data <- validation_result$data
+  metric <- validation_result$metric
+  student_col <- validation_result$student_col
+
+  # Apply masking strategy
+  masking_result <- apply_plot_users_masking(data, mask_by, metric, student_col, privacy_level)
+  df <- masking_result$df
+  student_col_local <- masking_result$student_col_local
+
+  # Get metric description
+  description_text <- get_metric_description(metric, metrics_lookup_df)
+
+  # Build and return plot
+  p <- build_plot_users_chart(df, student_col_local, metric, description_text)
+  
+  # Apply faceting if requested
+  if (!identical(facet_by, "none") && facet_by %in% names(df)) {
+    p <- p + ggplot2::facet_wrap(ggplot2::vars(.data[[facet_by]]), ncol = 1, scales = "free_y")
+  }
+
+  return(p)
+}
+
+# Helper function to validate plot users inputs
+validate_plot_users_inputs <- function(data, metric, student_col) {
   # Validate input
   if (!tibble::is_tibble(data)) {
     stop("`data` must be a tibble.")
@@ -62,9 +89,14 @@ plot_users <- function(
       stop(sprintf("Student column '%s' not found in data", student_col))
     }
   }
+  
+  list(data = data, metric = metric, student_col = student_col)
+}
 
+# Helper function to apply masking strategy
+apply_plot_users_masking <- function(data, mask_by, metric, student_col, privacy_level) {
   df <- data
-
+  
   # Masking strategy
   if (identical(mask_by, "rank")) {
     # Use rank-based masking helper, then use 'student' column
@@ -79,8 +111,12 @@ plot_users <- function(
     df <- zoomstudentengagement::ensure_privacy(df, privacy_level = privacy_level)
     student_col_local <- student_col
   }
+  
+  list(df = df, student_col_local = student_col_local)
+}
 
-  # Metric description (optional)
+# Helper function to get metric description
+get_metric_description <- function(metric, metrics_lookup_df) {
   description_text <- ""
   if (is.null(metrics_lookup_df)) {
     # try to get default without failing if unavailable
@@ -100,9 +136,13 @@ plot_users <- function(
       description_text <- stringr::str_wrap(description_text, width = 59)
     }
   }
+  
+  description_text
+}
 
-  # Build plot with professional styling
-  p <- ggplot2::ggplot(
+# Helper function to build plot users chart
+build_plot_users_chart <- function(df, student_col_local, metric, description_text) {
+  ggplot2::ggplot(
     df,
     ggplot2::aes(x = .data[[student_col_local]], y = .data[[metric]])
   ) +
@@ -119,11 +159,4 @@ plot_users <- function(
       axis.text.y = ggplot2::element_text(size = 10),
       plot.title = ggplot2::element_text(size = 14, face = "bold")
     )
-
-  # Optional faceting
-  if (!identical(facet_by, "none") && facet_by %in% names(df)) {
-    p <- p + ggplot2::facet_wrap(ggplot2::vars(.data[[facet_by]]), ncol = 1, scales = "free_y")
-  }
-
-  return(p)
 }
