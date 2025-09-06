@@ -75,10 +75,13 @@ summarize_transcript_metrics <- function(transcript_file_path = "",
       dead_air_name = dead_air_name_,
       na_name = na_name_
     )
+  } else if (is.null(transcript_df)) {
+    # If no file path and no transcript_df provided, return NULL
+    return(NULL)
   }
 
 
-  if (tibble::is_tibble(transcript_df)) {
+  if (is.data.frame(transcript_df)) {
     # Check if transcript_file column exists and prepare grouping
     group_vars <- c("name")
     if ("transcript_file" %in% names(transcript_df)) {

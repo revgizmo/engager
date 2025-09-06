@@ -3,8 +3,6 @@
 #' @description Optimizes function set for CRAN submission
 #' @keywords internal
 #' @noRd
-
-#' Select functions for CRAN submission
 #'
 #' @param function_categories Function categories from audit
 #' @param max_functions Maximum number of functions for CRAN (default: 30)
