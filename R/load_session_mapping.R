@@ -68,7 +68,7 @@ validate_mapping_data <- function(mapping_df) {
   # Use base R subsetting instead of dplyr::filter to avoid segmentation fault
   unmapped_indices <- which(is.na(mapping_df$dept) | is.na(mapping_df$course) | is.na(mapping_df$section))
   unmapped <- mapping_df[unmapped_indices, , drop = FALSE]
-  
+
   if (nrow(unmapped) > 0) {
     # Only show warnings if not in test environment
     if (Sys.getenv("TESTTHAT") != "true") {
@@ -159,7 +159,7 @@ process_merged_columns <- function(result) {
       result[[col_y]] <- NULL
     }
   }
-  
+
   result
 }
 
@@ -196,7 +196,7 @@ add_computed_columns <- function(result) {
   } else {
     rep(as.POSIXct(NA), nrow(result))
   }
-  
+
   result
 }
 

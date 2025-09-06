@@ -227,13 +227,6 @@ export_ideal_transcripts_excel <- function(
     message = "Export function deprecated - no data exported",
     files_created = character(0)
   )
-
-
-
-
-
-
-
 }
 
 #' Export Ideal Course Transcripts Summary Report

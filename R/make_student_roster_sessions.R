@@ -43,7 +43,7 @@ make_student_roster_sessions <-
     if (is.null(result)) {
       return(NULL)
     }
-    
+
     # Convert to tibble to maintain expected return type
     return(tibble::as_tibble(result))
   }
@@ -78,7 +78,7 @@ validate_roster_sessions_inputs <- function(transcripts_list_df, roster_small_df
       paste(missing_roster_cols, collapse = ", ")
     ))
   }
-  
+
   TRUE
 }
 
@@ -109,7 +109,7 @@ process_transcripts_for_roster_matching <- function(transcripts_list_df) {
   # Ensure character types for comparison
   transcripts_processed$course_transcript <- as.character(transcripts_processed$course_transcript)
   transcripts_processed$section_transcript <- as.character(transcripts_processed$section_transcript)
-  
+
   transcripts_processed
 }
 
@@ -121,7 +121,7 @@ process_roster_for_matching <- function(roster_small_df) {
   roster_processed$course <- as.character(roster_processed$course)
   roster_processed$section <- as.character(roster_processed$section)
   roster_processed$dept <- toupper(roster_processed$dept)
-  
+
   roster_processed
 }
 

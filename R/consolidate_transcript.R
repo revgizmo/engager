@@ -81,7 +81,7 @@ process_transcript_timing <- function(df, max_pause_sec) {
   df$name_flag <- ((df$name != df$prior_speaker) | is.na(df$name) | is.na(df$prior_speaker))
   df$time_flag <- df$prior_dead_air > max_pause_sec
   df$comment_num <- cumsum(df$name_flag | df$time_flag)
-  
+
   df
 }
 
@@ -92,7 +92,7 @@ aggregate_transcript_data <- function(df) {
   if ("transcript_file" %in% names(df)) {
     # Group by both transcript_file and comment_num
     agg_result <- perform_aggregation(df, c("transcript_file", "comment_num"))
-    
+
     # Extract the aggregated values
     data.frame(
       transcript_file = agg_result$transcript_file,
@@ -105,7 +105,7 @@ aggregate_transcript_data <- function(df) {
   } else {
     # Group by comment_num only
     agg_result <- perform_aggregation(df, "comment_num")
-    
+
     # Extract the aggregated values
     data.frame(
       name = unlist(agg_result$name),

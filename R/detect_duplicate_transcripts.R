@@ -67,7 +67,7 @@ validate_duplicate_detection_inputs <- function(transcript_list, similarity_thre
     stop("transcript_list must be a tibble")
   }
 
-  return(similarity_threshold)
+  similarity_threshold
 }
 
 # Helper function for empty result
@@ -99,11 +99,11 @@ calculate_metadata_similarity <- function(existing_files, existing_names, simila
       } else {
         # Size similarity
         size_sim <- 1 - abs(file_sizes[i] - file_sizes[j]) / max(file_sizes[i], file_sizes[j])
-        
+
         # Time similarity (within 1 hour = similar)
         time_diff <- abs(as.numeric(file_mtimes[i] - file_mtimes[j]))
         time_sim <- ifelse(time_diff < 3600, 1.0, max(0, 1 - time_diff / 86400)) # 1 day max
-        
+
         # Combined metadata similarity
         metadata_sim <- (size_sim + time_sim) / 2
         similarity_matrix[i, j] <- metadata_sim
@@ -111,12 +111,14 @@ calculate_metadata_similarity <- function(existing_files, existing_names, simila
       }
     }
   }
-  
+
   similarity_matrix
 }
 
 # Helper function for content similarity calculation
-calculate_content_similarity_matrix <- function(existing_files, existing_names, similarity_matrix, method, names_to_exclude) {
+calculate_content_similarity_matrix <- function(existing_files, existing_names, 
+                                                similarity_matrix, method, 
+                                                names_to_exclude) {
   # Load and compare transcript content
   transcript_data <- list()
 
@@ -156,7 +158,7 @@ calculate_content_similarity_matrix <- function(existing_files, existing_names, 
       }
     }
   }
-  
+
   similarity_matrix
 }
 
@@ -211,12 +213,16 @@ detect_duplicate_transcripts <- function(
   }
 
   if (method %in% c("content", "hybrid")) {
-    similarity_matrix <- calculate_content_similarity_matrix(existing_files, existing_names, similarity_matrix, method, names_to_exclude)
+    similarity_matrix <- calculate_content_similarity_matrix(
+      existing_files, existing_names, similarity_matrix, method, names_to_exclude
+    )
   }
 
   # Find duplicate groups and generate results
-  result <- find_duplicate_groups_and_generate_results(existing_names, similarity_matrix, similarity_threshold, method)
-  
+  result <- find_duplicate_groups_and_generate_results(
+    existing_names, similarity_matrix, similarity_threshold, method
+  )
+
   return(list(
     duplicate_groups = result$duplicate_groups,
     similarity_matrix = similarity_matrix,
@@ -268,7 +274,7 @@ find_duplicate_groups_and_generate_results <- function(existing_names, similarit
     similarity_threshold = similarity_threshold,
     method = method
   )
-  
+
   list(
     duplicate_groups = duplicate_groups,
     recommendations = recommendations,

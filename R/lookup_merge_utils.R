@@ -131,7 +131,6 @@ merge_lookup_preserve <- function(existing_df = NULL, add_df = NULL) {
     course = character(),
     instructor = character()
   )
-
 }
 
 #' Transactional Write with Backup

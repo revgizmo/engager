@@ -106,13 +106,15 @@ ldzmrcrddsssnslst <-
     # nolint end: object_name_linter
 
     # Setup and validation
-    setup_result <- setup_zoom_sessions_loading(data_folder, transcripts_folder, 
-                                               zmrcrddsssnscsvclnms, 
-                                               zmrcrddsssnscsvnmspttrn)
+    setup_result <- setup_zoom_sessions_loading(
+      data_folder, transcripts_folder,
+      zmrcrddsssnscsvclnms,
+      zmrcrddsssnscsvnmspttrn
+    )
     if (is.null(setup_result)) {
       return(NULL)
     }
-    
+
     if (setup_result$no_files) {
       return(create_empty_zoom_sessions_tibble())
     }
@@ -122,24 +124,24 @@ ldzmrcrddsssnslst <-
     if (nrow(result) == 0) {
       return(tibble::tibble())
     }
-    
+
     # Aggregate duplicate records
     result <- aggregate_zoom_sessions_data(result, verbose)
 
     # Parse topic components and process dates
     result <- parse_topic_components(result, topic_split_pattern, verbose)
     result <- process_session_times(result, scheduled_session_length_hours, verbose)
-    
+
     # Filter by department if specified
     result <- filter_by_department(result, dept, verbose)
-    
+
     tibble::as_tibble(result)
   }
 
 # Helper function to setup zoom sessions loading
-setup_zoom_sessions_loading <- function(data_folder, transcripts_folder, 
-                                       zoom_recorded_sessions_csv_col_names, 
-                                       zoom_recorded_sessions_csv_names_pattern) {
+setup_zoom_sessions_loading <- function(data_folder, transcripts_folder,
+                                        zoom_recorded_sessions_csv_col_names,
+                                        zoom_recorded_sessions_csv_names_pattern) {
   # Handle trailing comma in column names
   zoom_recorded_sessions_csv_col_names_vector <-
     strsplit(zoom_recorded_sessions_csv_col_names, ",")[[1]] %>%
@@ -217,14 +219,14 @@ load_and_process_zoom_csvs <- function(setup_result, verbose) {
     diag_message("After reading CSV:")
     diag_message(paste(utils::capture.output(str(result)), collapse = "\n"))
   }
-  
+
   result
 }
 
 # Helper function to aggregate zoom sessions data
 aggregate_zoom_sessions_data <- function(result, verbose) {
   .verbose <- isTRUE(verbose) || is_verbose()
-  
+
   # Use base R operations instead of dplyr to avoid segmentation fault
   # Group by the specified columns and take max values
   group_cols <- c("Topic", "ID", "Start Time", "File Size (MB)", "File Count")
@@ -251,14 +253,14 @@ aggregate_zoom_sessions_data <- function(result, verbose) {
     diag_message("After summarise:")
     diag_message(paste(utils::capture.output(str(result)), collapse = "\n"))
   }
-  
+
   result
 }
 
 # Helper function to parse topic components
 parse_topic_components <- function(result, topic_split_pattern, verbose) {
   .verbose <- isTRUE(verbose) || is_verbose()
-  
+
   # Convert named capture groups to plain groups for compatibility if needed
   pattern_plain <- gsub("\\(\\?<[^>]+>", "(", topic_split_pattern, perl = TRUE)
   topic_components <- tryCatch(
@@ -288,14 +290,14 @@ parse_topic_components <- function(result, topic_split_pattern, verbose) {
     diag_message("After topic parsing:")
     diag_message(paste(utils::capture.output(str(result)), collapse = "\n"))
   }
-  
+
   result
 }
 
 # Helper function to process session times
 process_session_times <- function(result, scheduled_session_length_hours, verbose) {
   .verbose <- isTRUE(verbose) || is_verbose()
-  
+
   # Extract start time values as strings
   start_time_values <- result$`Start Time`
   if (.verbose) {
@@ -320,14 +322,14 @@ process_session_times <- function(result, scheduled_session_length_hours, verbos
     diag_message("After date parsing:")
     diag_message(paste(utils::capture.output(str(result)), collapse = "\n"))
   }
-  
+
   result
 }
 
 # Helper function to filter by department
 filter_by_department <- function(result, dept, verbose) {
   .verbose <- isTRUE(verbose) || is_verbose()
-  
+
   # Optionally filter rows to those matching department, if provided
   if (!is.null(dept) && nzchar(dept)) {
     result <- result[!is.na(result$dept) & result$dept == dept, ]
@@ -337,6 +339,6 @@ filter_by_department <- function(result, dept, verbose) {
     diag_message("Final result after filtering:")
     diag_message(paste(utils::capture.output(str(result)), collapse = "\n"))
   }
-  
+
   result
 }

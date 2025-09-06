@@ -47,6 +47,6 @@ classify_participants <- function(transcript_df = NULL,
   if (is.null(transcript_df)) {
     return(tibble::tibble())
   }
-  
+
   transcript_df
 }

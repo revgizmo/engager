@@ -68,14 +68,6 @@ process_ideal_course_batch <- function(include_roster = TRUE,
     total_participants = 0,
     summary = "No processing performed - function deprecated"
   )
-
-
-
-
-
-
-
-
 }
 
 #' Compare engagement patterns across ideal course sessions
@@ -261,17 +253,6 @@ validate_ideal_scenarios <- function(batch_results = NULL,
     recommendations = character(0),
     detailed_report = if (detailed_report) "Validation completed" else NULL
   )
-
-
-
-
-
-
-
-
-
-
-
 }
 
 # Helper functions for compare_ideal_sessions
@@ -702,7 +683,4 @@ generate_validation_recs <- function(rule_results) {
     actual = 0,
     message = "No validation performed - function deprecated"
   )
-
-
-
 }

@@ -26,10 +26,10 @@ write_metrics <- function(
 
   # Process data for export
   export_data <- process_data_for_export(data, privacy_level, comments_format)
-  
+
   # Write to file
   write_processed_data_to_file(export_data, what, path)
-  
+
   invisible(export_data)
 }
 
@@ -70,7 +70,7 @@ process_data_for_export <- function(data, privacy_level, comments_format) {
       }, FUN.VALUE = character(1))
     }
   }
-  
+
   export_data
 }
 

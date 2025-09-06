@@ -48,7 +48,7 @@ plot_users <- function(
 
   # Build and return plot
   p <- build_plot_users_chart(df, student_col_local, metric, description_text)
-  
+
   # Apply faceting if requested
   if (!identical(facet_by, "none") && facet_by %in% names(df)) {
     p <- p + ggplot2::facet_wrap(ggplot2::vars(.data[[facet_by]]), ncol = 1, scales = "free_y")
@@ -89,14 +89,14 @@ validate_plot_users_inputs <- function(data, metric, student_col) {
       stop(sprintf("Student column '%s' not found in data", student_col))
     }
   }
-  
+
   list(data = data, metric = metric, student_col = student_col)
 }
 
 # Helper function to apply masking strategy
 apply_plot_users_masking <- function(data, mask_by, metric, student_col, privacy_level) {
   df <- data
-  
+
   # Masking strategy
   if (identical(mask_by, "rank")) {
     # Use rank-based masking helper, then use 'student' column
@@ -111,7 +111,7 @@ apply_plot_users_masking <- function(data, mask_by, metric, student_col, privacy
     df <- zoomstudentengagement::ensure_privacy(df, privacy_level = privacy_level)
     student_col_local <- student_col
   }
-  
+
   list(df = df, student_col_local = student_col_local)
 }
 
@@ -136,7 +136,7 @@ get_metric_description <- function(metric, metrics_lookup_df) {
       description_text <- stringr::str_wrap(description_text, width = 59)
     }
   }
-  
+
   description_text
 }
 

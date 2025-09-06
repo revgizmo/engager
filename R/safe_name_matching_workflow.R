@@ -45,21 +45,23 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
                                         data_folder = ".",
                                         section_names_lookup_file = "section_names_lookup.csv") {
   # Validate inputs
-  validate_safe_name_matching_inputs(transcript_file_path, roster_data, privacy_level, 
-                                   unmatched_names_action, data_folder, section_names_lookup_file)
+  validate_safe_name_matching_inputs(
+    transcript_file_path, roster_data, privacy_level,
+    unmatched_names_action, data_folder, section_names_lookup_file
+  )
 
   # Stage 1: Load and process with real names in memory (quiet by default)
   diag_message("Stage 1: Loading transcript and performing name matching...")
 
   # Load and validate transcript
   transcript_data <- load_and_validate_transcript(transcript_file_path)
-  
+
   # Load existing name mappings
   name_mappings <- load_name_mappings(data_folder, section_names_lookup_file)
 
   # Process name matching workflow
   processed_data <- process_name_matching_workflow(
-    transcript_data, roster_data, name_mappings, unmatched_names_action, 
+    transcript_data, roster_data, name_mappings, unmatched_names_action,
     privacy_level, data_folder, section_names_lookup_file
   )
 
@@ -524,8 +526,8 @@ apply_name_matching <- function(transcript_data, name_lookup, roster_data) {
 }
 
 # Helper function to validate safe name matching inputs
-validate_safe_name_matching_inputs <- function(transcript_file_path, roster_data, privacy_level, 
-                                             unmatched_names_action, data_folder, section_names_lookup_file) {
+validate_safe_name_matching_inputs <- function(transcript_file_path, roster_data, privacy_level,
+                                               unmatched_names_action, data_folder, section_names_lookup_file) {
   # Validate inputs
   if (!is.character(transcript_file_path) || length(transcript_file_path) != 1) {
     stop("transcript_file_path must be a single character string", call. = FALSE)
@@ -637,7 +639,7 @@ load_and_validate_transcript <- function(transcript_file_path) {
       call. = FALSE
     )
   }
-  
+
   transcript_data
 }
 
@@ -665,9 +667,9 @@ load_name_mappings <- function(data_folder, section_names_lookup_file) {
 }
 
 # Helper function to process name matching workflow
-process_name_matching_workflow <- function(transcript_data, roster_data, name_mappings, 
-                                         unmatched_names_action, privacy_level, 
-                                         data_folder, section_names_lookup_file) {
+process_name_matching_workflow <- function(transcript_data, roster_data, name_mappings,
+                                           unmatched_names_action, privacy_level,
+                                           data_folder, section_names_lookup_file) {
   # Detect unmatched names
   unmatched_names <- detect_unmatched_names(
     transcript_data = transcript_data,
@@ -710,6 +712,6 @@ process_name_matching_workflow <- function(transcript_data, roster_data, name_ma
 
   # Explicitly clear real names from memory
   rm(transcript_data, name_mappings, unmatched_names)
-  
+
   processed_data
 }

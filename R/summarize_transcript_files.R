@@ -51,8 +51,10 @@ summarize_transcript_files <-
     ) {
       # Handle duplicate detection if requested
       if (deduplicate_content) {
-        handle_duplicate_detection(transcript_file_names, data_folder, transcripts_folder, 
-                                 similarity_threshold, duplicate_method, names_to_exclude)
+        handle_duplicate_detection(
+          transcript_file_names, data_folder, transcripts_folder,
+          similarity_threshold, duplicate_method, names_to_exclude
+        )
       }
 
       # Store original metadata if preserving
@@ -63,12 +65,12 @@ summarize_transcript_files <-
 
       # Process and return results
       process_and_return_results(all_results, preserve_metadata, original_metadata)
+    }
   }
-}
 
 # Helper function to handle duplicate detection
-handle_duplicate_detection <- function(transcript_file_names, data_folder, transcripts_folder, 
-                                     similarity_threshold, duplicate_method, names_to_exclude) {
+handle_duplicate_detection <- function(transcript_file_names, data_folder, transcripts_folder,
+                                       similarity_threshold, duplicate_method, names_to_exclude) {
   # Detect duplicates
   duplicates <- detect_duplicate_transcripts(
     transcript_file_names,
@@ -145,7 +147,7 @@ process_transcript_files <- function(transcript_file_names, transcripts_folder_p
       all_results[[i]] <- metrics_result
     }
   }
-  
+
   all_results
 }
 
