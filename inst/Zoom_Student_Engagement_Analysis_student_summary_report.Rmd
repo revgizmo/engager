@@ -18,7 +18,6 @@ title: "Zoom Student Engagement Analysis - Section `r params$target_section`"
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 # Use base R operations instead of dplyr to prevent segfaults
 # Completely avoid data.table to prevent segmentation faults
-data_table_available <- FALSE
 
 library(readr)
 library(lubridate)
@@ -129,7 +128,7 @@ gc()
 metric_labels_df <- data.frame(
   metric = c("session_ct", "n", "perc_n", "duration", "perc_duration", "wordcount", "perc_wordcount", "wpm"),
   label = c(
-    ": Number of sesessions in which Zoom captured \na verbal comment",
+    ": Number of sessions in which Zoom captured \na verbal comment",
     ": Number of separate verbal comments captured \nby Zoom",
     ": Percent of separate verbal comments captured \nby Zoom",
     ": Total duration in minutes of verbal comments \ncaptured by Zoom",
@@ -257,27 +256,4 @@ for (sect in unique(transcripts_session_summary_df$section)) {
 section_transcripts_session_summary_df <- transcripts_session_summary_df[transcripts_session_summary_df$section == target_section, ]
 
 # Skip plotting for now to avoid errors and focus on segfault fix
-# student_session_graph(section_transcripts_session_summary_df, metric_name = "session_ct", target_student2 = target_student)
-# gc()
-# 
-# student_session_graph(section_transcripts_session_summary_df, metric_name = "n", target_student2 = target_student)
-# gc()
-# 
-# student_session_graph(section_transcripts_session_summary_df, metric_name = "perc_n", target_student2 = target_student)
-# gc()
-# 
-# student_session_graph(section_transcripts_session_summary_df, metric_name = "duration", target_student2 = target_student)
-# gc()
-# 
-# student_session_graph(section_transcripts_session_summary_df, metric_name = "perc_duration", target_student2 = target_student)
-# gc()
-# 
-# student_session_graph(section_transcripts_session_summary_df, metric_name = "wordcount", target_student2 = target_student)
-# gc()
-# 
-# student_session_graph(section_transcripts_session_summary_df, metric_name = "perc_wordcount", target_student2 = target_student)
-# gc()
-# 
-# student_session_graph(section_transcripts_session_summary_df, metric_name = "wpm", target_student2 = target_student)
-# gc()
 ```
