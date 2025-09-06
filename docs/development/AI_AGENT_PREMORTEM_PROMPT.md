@@ -22,9 +22,45 @@ When a user asks: **"Please implement a premortem analysis on [ISSUE] with @AI_A
 
 3. **Create branch for premortem work**:
    ```bash
-   git checkout -b feature/issue-[NUMBER]-premortem-analysis
-   git push -u origin feature/issue-[NUMBER]-premortem-analysis
+   git checkout -b feature/premortem-analysis-[ISSUE]
+   git push -u origin feature/premortem-analysis-[ISSUE]
    ```
+
+4. **CRITICAL: Create the premortem document immediately**:
+   ```bash
+   touch PREMORTEM_ANALYSIS_[ISSUE].md
+   ```
+   
+   **Initialize the document with the basic structure and issue context**:
+   ```markdown
+   # Premortem Analysis: [ISSUE]
+   
+   *Comprehensive Risk Assessment and Prevention Strategies*
+   
+   ## Issue Context
+   [Document the issue description, requirements, scope, and expected outcomes here]
+   
+   ## Analysis Progress
+   - [x] Issue analysis and context gathering
+   - [ ] Failure scenario development
+   - [ ] Root cause analysis
+   - [ ] Prevention strategy development
+   - [ ] Document completion and validation
+   
+   ## Comprehensive Failure Scenario Analysis
+   [This section will be populated during Step 2]
+   
+   ## Comprehensive Root Cause Analysis
+   [This section will be populated during Step 3]
+   
+   ## Comprehensive Prevention Strategy Matrix
+   [This section will be populated during Step 4]
+   
+   ## Implementation Recommendations
+   [This section will be populated during Step 5]
+   ```
+   
+   **This document will serve as your working memory and context throughout the entire analysis process.**
 
 ### **Step 2: Comprehensive Premortem Exercise Execution**
 
@@ -34,6 +70,8 @@ When a user asks: **"Please implement a premortem analysis on [ISSUE] with @AI_A
 **Scenario**: "It's 6 months from now. The implementation of [ISSUE] has completely failed. The project is in disarray. What went wrong?"
 
 **CRITICAL REQUIREMENT**: This analysis must be COMPREHENSIVE and THOROUGH. The goal is to identify EVERY possible failure mode so that no challenge surprises the project team.
+
+**WORKING METHOD**: As you develop each failure scenario, immediately document it in the `PREMORTEM_ANALYSIS_[ISSUE].md` file. This serves as your working memory and allows for iterative refinement.
 
 #### **2.2 Iterative Failure Scenario Development**
 
@@ -114,6 +152,8 @@ When a user asks: **"Please implement a premortem analysis on [ISSUE] with @AI_A
 
 **CRITICAL REQUIREMENT**: You MUST perform a complete 5-Why analysis for EVERY failure scenario identified in Step 2. This is not optional - it's the core of the premortem analysis.
 
+**WORKING METHOD**: As you complete each 5-Why analysis, immediately document it in the `PREMORTEM_ANALYSIS_[ISSUE].md` file under the "Comprehensive Root Cause Analysis" section. This allows you to reference previous analyses and identify patterns.
+
 **For EACH of the 60+ failure scenarios identified, perform this analysis**:
 
 #### **3.2 5-Why Analysis Template**
@@ -156,6 +196,8 @@ When a user asks: **"Please implement a premortem analysis on [ISSUE] with @AI_A
 #### **4.1 MANDATORY: Develop Prevention Strategies for ALL Root Causes**
 
 **CRITICAL REQUIREMENT**: For EVERY root cause identified in the 5-Why analysis, you MUST develop specific, actionable prevention strategies. This is the core value of the premortem analysis.
+
+**WORKING METHOD**: As you develop each prevention strategy, immediately document it in the `PREMORTEM_ANALYSIS_[ISSUE].md` file under the "Comprehensive Prevention Strategy Matrix" section. This allows you to cross-reference with previous analyses and ensure comprehensive coverage.
 
 #### **4.2 Prevention Strategy Categories**
 
@@ -233,15 +275,16 @@ When a user asks: **"Please implement a premortem analysis on [ISSUE] with @AI_A
 - **Feedback Loops**: Mechanisms for continuous improvement
 - **Escalation Procedures**: What to do when monitoring detects issues
 
-### **Step 5: Comprehensive Document Creation**
+### **Step 5: Document Completion and Finalization**
 
-#### **5.1 Create Detailed Premortem Analysis Document**
-Create: `ISSUE_[NUMBER]_PREMORTEM_ANALYSIS.md`
+#### **5.1 Complete and Finalize the Premortem Analysis Document**
 
-**CRITICAL REQUIREMENT**: This document must be COMPREHENSIVE and DETAILED. It should serve as the definitive risk assessment for this issue.
+**CRITICAL REQUIREMENT**: The `PREMORTEM_ANALYSIS_[ISSUE].md` document should now be comprehensive and detailed, serving as the definitive risk assessment for this issue.
+
+**WORKING METHOD**: Review the entire document to ensure completeness, add any missing sections, and finalize the analysis. The document should now contain all the work completed in previous steps.
 
 ```markdown
-# Premortem Analysis: Issue #[NUMBER] - [ISSUE_TITLE]
+# Premortem Analysis: [ISSUE]
 
 *Comprehensive Risk Assessment and Prevention Strategies*
 
@@ -381,6 +424,7 @@ Create: `ISSUE_[NUMBER]_PREMORTEM_ANALYSIS.md`
 - [ ] Prevention strategies are specific and actionable
 - [ ] Monitoring and response procedures defined
 - [ ] Integration with project standards documented
+- [ ] Document is comprehensive and serves as definitive risk assessment
 
 #### **6.2 Validate Against Project Context**
 ```bash
@@ -389,7 +433,17 @@ cat PROJECT.md | grep -i "cran\|quality\|privacy"
 
 # Check integration with existing processes
 cat CONTRIBUTING.md | grep -i "testing\|review\|quality"
+
+# Review the completed premortem document
+cat PREMORTEM_ANALYSIS_[ISSUE].md
 ```
+
+#### **6.3 Final Document Review**
+**CRITICAL**: Review the entire `PREMORTEM_ANALYSIS_[ISSUE].md` document to ensure:
+- All sections are complete and comprehensive
+- Analysis is thorough and addresses all identified risks
+- Prevention strategies are actionable and prioritized
+- Document serves as a complete reference for the issue
 
 ## 🎯 **Success Criteria**
 
@@ -428,8 +482,11 @@ gh pr list --search="related to #[NUMBER]"
 
 ### **Documentation Commands**
 ```bash
-# Create the premortem document
-touch ISSUE_[NUMBER]_PREMORTEM_ANALYSIS.md
+# Create the premortem document (done in Step 1)
+touch PREMORTEM_ANALYSIS_[ISSUE].md
+
+# Review the document throughout the process
+cat PREMORTEM_ANALYSIS_[ISSUE].md
 
 # Update project documentation as needed
 # (Edit files based on integration requirements)
