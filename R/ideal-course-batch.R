@@ -61,12 +61,24 @@ process_ideal_course_batch <- function(include_roster = TRUE,
     )
   }
 
-  # Simplified deprecated function - return basic batch result
+  # Simplified deprecated function - return structure expected by tests
   list(
-    processed_files = 0,
-    total_sessions = 0,
-    total_participants = 0,
-    summary = "No processing performed - function deprecated"
+    session_data = list(),
+    summary_metrics = list(
+      total_sessions = 0,
+      total_participants = 0,
+      processed_files = 0
+    ),
+    participation_patterns = list(),
+    validation_results = list(
+      status = "deprecated",
+      message = "Function deprecated - no validation performed"
+    ),
+    processing_info = list(
+      timestamp = Sys.time(),
+      status = "deprecated",
+      summary = "No processing performed - function deprecated"
+    )
   )
 }
 
