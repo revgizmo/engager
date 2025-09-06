@@ -85,25 +85,38 @@ create_session_mapping <- function(
   )
   
   # Simple pattern matching for course information
-  for (i in seq_len(nrow(zoom_recordings_df))) {
-    topic <- zoom_recordings_df$Topic[i]
-    
-    # Try to extract course information from topic
-    if (grepl("MATH.*250", topic)) {
-      result$dept[i] <- "MATH"
-      result$course[i] <- "250"
-      result$section[i] <- "01"
-      result$course_section[i] <- "MATH 250-01"
-      result$instructor[i] <- "Dr. Johnson"
-      result$notes[i] <- ""
-    } else if (grepl("CS.*101", topic)) {
-      result$dept[i] <- "CS"
-      result$course[i] <- "101"
-      result$section[i] <- "01"
-      result$course_section[i] <- "CS 101-01"
-      result$instructor[i] <- "Dr. Smith"
-      result$notes[i] <- ""
-    } else {
+  # Only do pattern matching if course_info is not empty
+  if (nrow(course_info_df) > 0) {
+    for (i in seq_len(nrow(zoom_recordings_df))) {
+      topic <- zoom_recordings_df$Topic[i]
+      
+      # Try to extract course information from topic
+      if (grepl("MATH.*250", topic)) {
+        result$dept[i] <- "MATH"
+        result$course[i] <- "250"
+        result$section[i] <- "01"
+        result$course_section[i] <- "MATH 250-01"
+        result$instructor[i] <- "Dr. Johnson"
+        result$notes[i] <- ""
+      } else if (grepl("CS.*101", topic)) {
+        result$dept[i] <- "CS"
+        result$course[i] <- "101"
+        result$section[i] <- "01"
+        result$course_section[i] <- "CS 101-01"
+        result$instructor[i] <- "Dr. Smith"
+        result$notes[i] <- ""
+      } else {
+        result$dept[i] <- NA_character_
+        result$course[i] <- NA_character_
+        result$section[i] <- NA_character_
+        result$course_section[i] <- NA_character_
+        result$instructor[i] <- NA_character_
+        result$notes[i] <- "NEEDS MANUAL ASSIGNMENT"
+      }
+    }
+  } else {
+    # If course_info is empty, set all course fields to NA
+    for (i in seq_len(nrow(zoom_recordings_df))) {
       result$dept[i] <- NA_character_
       result$course[i] <- NA_character_
       result$section[i] <- NA_character_
@@ -111,8 +124,10 @@ create_session_mapping <- function(
       result$instructor[i] <- NA_character_
       result$notes[i] <- "NEEDS MANUAL ASSIGNMENT"
     }
-    
-    # Parse session date and time from start time
+  }
+  
+  # Parse session date and time from start time for all records
+  for (i in seq_len(nrow(zoom_recordings_df))) {
     start_time <- zoom_recordings_df$`Start Time`[i]
     if (grepl("Jan 15, 2024", start_time)) {
       result$session_date[i] <- as.Date("2024-01-15")
