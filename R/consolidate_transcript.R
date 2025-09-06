@@ -32,129 +32,154 @@ consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {
   if (tibble::is_tibble(df)) {
     # Handle empty data case
     if (nrow(df) == 0) {
-      # Return empty tibble with correct structure
-      result_cols <- c("name", "comment", "start", "end", "duration", "wordcount")
-      if ("transcript_file" %in% names(df)) {
-        result_cols <- c("transcript_file", result_cols)
-      }
-
-      empty_result <- stats::setNames(
-        lapply(result_cols, function(x) if (x %in% c("duration", "wordcount")) numeric(0) else character(0)),
-        result_cols
-      )
-      return(tibble::as_tibble(empty_result))
+      return(create_empty_consolidated_result(df))
     }
 
-    # Ensure time columns are of type hms (replacing lubridate::period to avoid segfaults)
-    # Use base R operations to avoid dplyr segfaults
-    df$start <- hms::as_hms(df$start)
-    df$end <- hms::as_hms(df$end)
+    # Process time columns and calculate flags
+    df <- process_transcript_timing(df, max_pause_sec)
 
-    # Use base R operations to avoid segmentation faults with dplyr + hms
-    # Sort by start time for lag operations
-    df <- df[order(df$start), ]
+    # Perform aggregation
+    result <- aggregate_transcript_data(df)
 
-    # Calculate lag values using base R
-    df$prev_end <- c(hms::hms(0), df$end[-length(df$end)])
-    df$prior_dead_air <- as.numeric(df$start - df$prev_end)
-    df$prior_speaker <- c(df$name[1], df$name[-length(df$name)])
+    # Calculate final metrics and return
+    return(calculate_final_metrics(result))
+  }
+}
 
-    # Calculate flags
-    df$name_flag <- ((df$name != df$prior_speaker) | is.na(df$name) | is.na(df$prior_speaker))
-    df$time_flag <- df$prior_dead_air > max_pause_sec
-    df$comment_num <- cumsum(df$name_flag | df$time_flag)
+# Helper function to create empty consolidated result
+create_empty_consolidated_result <- function(df) {
+  # Return empty tibble with correct structure
+  result_cols <- c("name", "comment", "start", "end", "duration", "wordcount")
+  if ("transcript_file" %in% names(df)) {
+    result_cols <- c("transcript_file", result_cols)
+  }
 
-    # Highly optimized aggregation using vectorized operations
-    # Use aggregate() for efficient grouping operations
-    if ("transcript_file" %in% names(df)) {
-      # Group by both transcript_file and comment_num
-      agg_result <- stats::aggregate(
-        list(
-          name = df$name,
-          comment = df$comment,
-          start = df$start,
-          end = df$end
-        ),
-        by = list(
-          transcript_file = df$transcript_file,
-          comment_num = df$comment_num
-        ),
-        FUN = function(x) {
-          if (length(x) == 1) {
-            return(x)
-          }
-          # For comments, paste them together
-          if (is.character(x) && all(sapply(x, is.character))) {
-            return(paste(x, collapse = " "))
-          }
-          # For other columns, take first/last as appropriate
-          if (is.character(x) || is.numeric(x)) {
-            return(x[1]) # Take first for name, start
-          }
-          # For end times, take the last one
-          x[length(x)]
-        },
-        simplify = FALSE
-      )
+  empty_result <- stats::setNames(
+    lapply(result_cols, function(x) if (x %in% c("duration", "wordcount")) numeric(0) else character(0)),
+    result_cols
+  )
+  tibble::as_tibble(empty_result)
+}
 
-      # Extract the aggregated values
-      result <- data.frame(
-        transcript_file = agg_result$transcript_file,
-        name = unlist(agg_result$name),
-        comment = unlist(agg_result$comment),
-        start = unlist(agg_result$start),
-        end = unlist(agg_result$end),
-        stringsAsFactors = FALSE
-      )
-    } else {
-      # Group by comment_num only
-      agg_result <- stats::aggregate(
-        list(
-          name = df$name,
-          comment = df$comment,
-          start = df$start,
-          end = df$end
-        ),
-        by = list(comment_num = df$comment_num),
-        FUN = function(x) {
-          if (length(x) == 1) {
-            return(x)
-          }
-          # For comments, paste them together
-          if (is.character(x) && all(sapply(x, is.character))) {
-            return(paste(x, collapse = " "))
-          }
-          # For other columns, take first/last as appropriate
-          if (is.character(x) || is.numeric(x)) {
-            return(x[1]) # Take first for name, start
-          }
-          # For end times, take the last one
-          x[length(x)]
-        },
-        simplify = FALSE
-      )
+# Helper function to process transcript timing
+process_transcript_timing <- function(df, max_pause_sec) {
+  # Ensure time columns are of type hms (replacing lubridate::period to avoid segfaults)
+  # Use base R operations to avoid dplyr segfaults
+  df$start <- hms::as_hms(df$start)
+  df$end <- hms::as_hms(df$end)
 
-      # Extract the aggregated values
-      result <- data.frame(
-        name = unlist(agg_result$name),
-        comment = unlist(agg_result$comment),
-        start = unlist(agg_result$start),
-        end = unlist(agg_result$end),
-        stringsAsFactors = FALSE
-      )
-    }
+  # Use base R operations to avoid segmentation faults with dplyr + hms
+  # Sort by start time for lag operations
+  df <- df[order(df$start), ]
 
-    # Calculate duration and wordcount efficiently
-    result$duration <- as.numeric(result$end - result$start)
+  # Calculate lag values using base R
+  df$prev_end <- c(hms::hms(0), df$end[-length(df$end)])
+  df$prior_dead_air <- as.numeric(df$start - df$prev_end)
+  df$prior_speaker <- c(df$name[1], df$name[-length(df$name)])
 
-    # Vectorized wordcount calculation
-    result$wordcount <- vapply(
-      strsplit(result$comment, "\\s+"),
-      function(x) length(x[x != ""]),
-      integer(1)
+  # Calculate flags
+  df$name_flag <- ((df$name != df$prior_speaker) | is.na(df$name) | is.na(df$prior_speaker))
+  df$time_flag <- df$prior_dead_air > max_pause_sec
+  df$comment_num <- cumsum(df$name_flag | df$time_flag)
+  
+  df
+}
+
+# Helper function to aggregate transcript data
+aggregate_transcript_data <- function(df) {
+  # Highly optimized aggregation using vectorized operations
+  # Use aggregate() for efficient grouping operations
+  if ("transcript_file" %in% names(df)) {
+    # Group by both transcript_file and comment_num
+    agg_result <- stats::aggregate(
+      list(
+        name = df$name,
+        comment = df$comment,
+        start = df$start,
+        end = df$end
+      ),
+      by = list(
+        transcript_file = df$transcript_file,
+        comment_num = df$comment_num
+      ),
+      FUN = function(x) {
+        if (length(x) == 1) {
+          return(x)
+        }
+        # For comments, paste them together
+        if (is.character(x) && all(sapply(x, is.character))) {
+          return(paste(x, collapse = " "))
+        }
+        # For other columns, take first/last as appropriate
+        if (is.character(x) || is.numeric(x)) {
+          return(x[1]) # Take first for name, start
+        }
+        # For end times, take the last one
+        x[length(x)]
+      },
+      simplify = FALSE
     )
 
-    # Convert to tibble to maintain expected return type
-    return(tibble::as_tibble(result))
+    # Extract the aggregated values
+    data.frame(
+      transcript_file = agg_result$transcript_file,
+      name = unlist(agg_result$name),
+      comment = unlist(agg_result$comment),
+      start = unlist(agg_result$start),
+      end = unlist(agg_result$end),
+      stringsAsFactors = FALSE
+    )
+  } else {
+    # Group by comment_num only
+    agg_result <- stats::aggregate(
+      list(
+        name = df$name,
+        comment = df$comment,
+        start = df$start,
+        end = df$end
+      ),
+      by = list(comment_num = df$comment_num),
+      FUN = function(x) {
+        if (length(x) == 1) {
+          return(x)
+        }
+        # For comments, paste them together
+        if (is.character(x) && all(sapply(x, is.character))) {
+          return(paste(x, collapse = " "))
+        }
+        # For other columns, take first/last as appropriate
+        if (is.character(x) || is.numeric(x)) {
+          return(x[1]) # Take first for name, start
+        }
+        # For end times, take the last one
+        x[length(x)]
+      },
+      simplify = FALSE
+    )
+
+    # Extract the aggregated values
+    data.frame(
+      name = unlist(agg_result$name),
+      comment = unlist(agg_result$comment),
+      start = unlist(agg_result$start),
+      end = unlist(agg_result$end),
+      stringsAsFactors = FALSE
+    )
   }
+}
+
+# Helper function to calculate final metrics
+calculate_final_metrics <- function(result) {
+  # Calculate duration and wordcount efficiently
+  result$duration <- as.numeric(result$end - result$start)
+
+  # Vectorized wordcount calculation
+  result$wordcount <- vapply(
+    strsplit(result$comment, "\\s+"),
+    function(x) length(x[x != ""]),
+    integer(1)
+  )
+
+  # Convert to tibble to maintain expected return type
+  tibble::as_tibble(result)
 }

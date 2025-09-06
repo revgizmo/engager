@@ -49,11 +49,41 @@ ensure_privacy <- function(x = NULL,
                            ),
                            audit_log = TRUE) {
   # Validate privacy level
+  validate_privacy_level(privacy_level)
+
+  # Handle privacy level and get appropriate columns
+  result <- handle_privacy_level(privacy_level, id_columns, audit_log)
+  if (result$early_return) {
+    return(result$data)
+  }
+  id_columns <- result$id_columns
+
+  # Only handle tabular data for MVP; return other objects unchanged
+  if (!is.data.frame(x)) {
+    return(x)
+  }
+
+  # Apply privacy masking
+  df <- apply_privacy_masking(x, id_columns, privacy_level, audit_log)
+
+  # Preserve tibble class if input was a tibble
+  if (tibble::is_tibble(x)) {
+    df <- tibble::as_tibble(df)
+  }
+
+  df
+}
+
+# Helper function to validate privacy level
+validate_privacy_level <- function(privacy_level) {
   valid_levels <- c("ferpa_strict", "ferpa_standard", "mask", "none")
   if (!privacy_level %in% valid_levels) {
     stop("Invalid privacy_level. Must be one of: ", paste(valid_levels, collapse = ", "), call. = FALSE)
   }
+}
 
+# Helper function to handle privacy level and get appropriate columns
+handle_privacy_level <- function(privacy_level, id_columns, audit_log) {
   # If privacy is explicitly disabled, warn and return unmodified
   if (identical(privacy_level, "none")) {
     warning(
@@ -71,7 +101,7 @@ ensure_privacy <- function(x = NULL,
       )
     }
 
-    return(x)
+    return(list(early_return = TRUE, data = NULL, id_columns = NULL))
   }
 
   # FERPA strict level - most comprehensive masking
@@ -98,11 +128,11 @@ ensure_privacy <- function(x = NULL,
     )
   }
 
-  # Only handle tabular data for MVP; return other objects unchanged
-  if (!is.data.frame(x)) {
-    return(x)
-  }
+  list(early_return = FALSE, data = NULL, id_columns = id_columns)
+}
 
+# Helper function to apply privacy masking
+apply_privacy_masking <- function(x, id_columns, privacy_level, audit_log) {
   # Log privacy operation for audit purposes
   if (audit_log) {
     log_privacy_operation(
@@ -151,11 +181,6 @@ ensure_privacy <- function(x = NULL,
     if (is.character(df[[col_name]]) || is.factor(df[[col_name]])) {
       df[[col_name]] <- mask_values(df[[col_name]])
     }
-  }
-
-  # Preserve tibble class if input was a tibble
-  if (tibble::is_tibble(x)) {
-    df <- tibble::as_tibble(df)
   }
 
   df
