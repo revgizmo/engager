@@ -61,162 +61,21 @@ process_ideal_course_batch <- function(include_roster = TRUE,
     )
   }
 
-  # Validate inputs
-  if (!privacy_level %in% c("full", "masked", "none")) {
-    stop("privacy_level must be one of: 'full', 'masked', 'none'")
-  }
-
-  if (!output_format %in% c("list", "data.frame", "summary")) {
-    stop("output_format must be one of: 'list', 'data.frame', 'summary'")
-  }
-
-  # Get ideal course transcript directory
-  transcript_dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
-  if (!dir.exists(transcript_dir)) {
-    stop("Ideal course transcript directory not found")
-  }
-
-  # Define ideal course session files
-  session_files <- c(
-    "ideal_course_session1.vtt",
-    "ideal_course_session2.vtt",
-    "ideal_course_session3.vtt"
+  # Simplified deprecated function - return basic batch result
+  list(
+    processed_files = 0,
+    total_sessions = 0,
+    total_participants = 0,
+    summary = "No processing performed - function deprecated"
   )
 
-  # Initialize results storage
-  session_data <- list()
-  summary_metrics <- list()
-  participation_patterns <- list()
-  processing_errors <- list()
 
-  # Load roster data if requested
-  if (include_roster) {
-    roster_path <- file.path(transcript_dir, "ideal_course_roster.csv")
-    if (file.exists(roster_path)) {
-      roster_data <- utils::read.csv(roster_path, stringsAsFactors = FALSE)
-    } else {
-      warning("Roster file not found, proceeding without roster data")
-    }
-  }
 
-  # Process each session
-  for (i in seq_along(session_files)) {
-    session_file <- session_files[i]
-    session_name <- paste0("session", i)
-    session_path <- file.path(transcript_dir, session_file)
 
-    if (!file.exists(session_path)) {
-      processing_errors[[session_name]] <- paste("File not found:", session_file)
-      next
-    }
 
-    tryCatch(
-      {
-        # Load and process transcript
-        raw_transcript <- load_zoom_transcript(session_path)
 
-        if (is.null(raw_transcript) || nrow(raw_transcript) == 0) {
-          processing_errors[[session_name]] <- "Empty or invalid transcript"
-          next
-        }
 
-        # Process transcript with specified options
-        processed_transcript <- process_zoom_transcript(
-          transcript_file_path = session_path,
-          consolidate_comments = consolidate_comments,
-          add_dead_air = add_dead_air,
-          dead_air_name = "dead_air",
-          na_name = "unknown"
-        )
 
-        # Calculate summary metrics
-        session_metrics <- summarize_transcript_metrics(
-          transcript_file_path = session_path,
-          names_exclude = names_exclude,
-          consolidate_comments = consolidate_comments,
-          add_dead_air = add_dead_air
-        )
-
-        # Store results
-        session_data[[session_name]] <- processed_transcript
-        summary_metrics[[session_name]] <- session_metrics
-
-        # Extract participation patterns
-        participants <- unique(processed_transcript$name)
-        participants <- participants[!participants %in% names_exclude]
-        participation_patterns[[session_name]] <- participants
-      },
-      error = function(e) {
-        processing_errors[[session_name]] <- e$message
-      }
-    )
-  }
-
-  # Create processing info
-  processing_info <- list(
-    timestamp = Sys.time(),
-    privacy_level = privacy_level,
-    sessions_processed = length(session_data),
-    sessions_failed = length(processing_errors),
-    total_participants = length(unique(unlist(participation_patterns))),
-    processing_options = list(
-      consolidate_comments = consolidate_comments,
-      add_dead_air = add_dead_air,
-      names_exclude = names_exclude,
-      include_roster = include_roster
-    )
-  )
-
-  # Create validation results
-  validation_results <- list(
-    all_sessions_loaded = length(session_data) == 3,
-    no_processing_errors = length(processing_errors) == 0,
-    data_consistency = all(sapply(session_data, function(x) !is.null(x) && nrow(x) > 0)),
-    privacy_compliant = privacy_level != "none"
-  )
-
-  # Prepare output based on format
-  if (output_format == "list") {
-    result <- list(
-      session_data = session_data,
-      summary_metrics = summary_metrics,
-      participation_patterns = participation_patterns,
-      validation_results = validation_results,
-      processing_info = processing_info,
-      processing_errors = processing_errors
-    )
-  } else if (output_format == "data.frame") {
-    # Combine all summary metrics into a single data frame
-    all_metrics <- do.call(rbind, lapply(names(summary_metrics), function(session) {
-      if (!is.null(summary_metrics[[session]]) && nrow(summary_metrics[[session]]) > 0) {
-        summary_metrics[[session]]$session <- session
-        summary_metrics[[session]]
-      } else {
-        NULL
-      }
-    }))
-
-    result <- all_metrics
-  } else if (output_format == "summary") {
-    # Create a summary data frame
-    summary_df <- data.frame(
-      session = names(session_data),
-      participants = sapply(participation_patterns, length),
-      total_comments = sapply(session_data, function(x) nrow(x[x$name != "dead_air", ])),
-      total_duration = sapply(session_data, function(x) sum(x$duration[x$name != "dead_air"], na.rm = TRUE)),
-      total_words = sapply(session_data, function(x) sum(x$wordcount[x$name != "dead_air"], na.rm = TRUE)),
-      stringsAsFactors = FALSE
-    )
-
-    result <- summary_df
-  }
-
-  # Add attributes for provenance
-  attr(result, "batch_processing") <- TRUE
-  attr(result, "privacy_level") <- privacy_level
-  attr(result, "processing_timestamp") <- processing_info$timestamp
-
-  return(result)
 }
 
 #' Compare engagement patterns across ideal course sessions

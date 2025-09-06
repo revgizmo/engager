@@ -91,35 +91,8 @@ aggregate_transcript_data <- function(df) {
   # Use aggregate() for efficient grouping operations
   if ("transcript_file" %in% names(df)) {
     # Group by both transcript_file and comment_num
-    agg_result <- stats::aggregate(
-      list(
-        name = df$name,
-        comment = df$comment,
-        start = df$start,
-        end = df$end
-      ),
-      by = list(
-        transcript_file = df$transcript_file,
-        comment_num = df$comment_num
-      ),
-      FUN = function(x) {
-        if (length(x) == 1) {
-          return(x)
-        }
-        # For comments, paste them together
-        if (is.character(x) && all(sapply(x, is.character))) {
-          return(paste(x, collapse = " "))
-        }
-        # For other columns, take first/last as appropriate
-        if (is.character(x) || is.numeric(x)) {
-          return(x[1]) # Take first for name, start
-        }
-        # For end times, take the last one
-        x[length(x)]
-      },
-      simplify = FALSE
-    )
-
+    agg_result <- perform_aggregation(df, c("transcript_file", "comment_num"))
+    
     # Extract the aggregated values
     data.frame(
       transcript_file = agg_result$transcript_file,
@@ -131,32 +104,8 @@ aggregate_transcript_data <- function(df) {
     )
   } else {
     # Group by comment_num only
-    agg_result <- stats::aggregate(
-      list(
-        name = df$name,
-        comment = df$comment,
-        start = df$start,
-        end = df$end
-      ),
-      by = list(comment_num = df$comment_num),
-      FUN = function(x) {
-        if (length(x) == 1) {
-          return(x)
-        }
-        # For comments, paste them together
-        if (is.character(x) && all(sapply(x, is.character))) {
-          return(paste(x, collapse = " "))
-        }
-        # For other columns, take first/last as appropriate
-        if (is.character(x) || is.numeric(x)) {
-          return(x[1]) # Take first for name, start
-        }
-        # For end times, take the last one
-        x[length(x)]
-      },
-      simplify = FALSE
-    )
-
+    agg_result <- perform_aggregation(df, "comment_num")
+    
     # Extract the aggregated values
     data.frame(
       name = unlist(agg_result$name),
@@ -166,6 +115,42 @@ aggregate_transcript_data <- function(df) {
       stringsAsFactors = FALSE
     )
   }
+}
+
+# Helper function to perform the actual aggregation
+perform_aggregation <- function(df, by_columns) {
+  stats::aggregate(
+    list(
+      name = df$name,
+      comment = df$comment,
+      start = df$start,
+      end = df$end
+    ),
+    by = if (length(by_columns) == 1) {
+      list(comment_num = df$comment_num)
+    } else {
+      list(
+        transcript_file = df$transcript_file,
+        comment_num = df$comment_num
+      )
+    },
+    FUN = function(x) {
+      if (length(x) == 1) {
+        return(x)
+      }
+      # For comments, paste them together
+      if (is.character(x) && all(sapply(x, is.character))) {
+        return(paste(x, collapse = " "))
+      }
+      # For other columns, take first/last as appropriate
+      if (is.character(x) || is.numeric(x)) {
+        return(x[1]) # Take first for name, start
+      }
+      # For end times, take the last one
+      x[length(x)]
+    },
+    simplify = FALSE
+  )
 }
 
 # Helper function to calculate final metrics

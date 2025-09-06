@@ -122,30 +122,7 @@ create_analysis_config <- function(
     call. = FALSE
   )
 
-  # Input validation
-  if (!is.character(dept) || length(dept) != 1) {
-    stop("dept must be a single character string")
-  }
-  if (!is.character(semester_start_mdy) || length(semester_start_mdy) != 1) {
-    stop("semester_start_mdy must be a single character string")
-  }
-  if (!is.numeric(scheduled_session_length_hours) || scheduled_session_length_hours <= 0) {
-    stop("scheduled_session_length_hours must be a positive number")
-  }
-  if (!is.character(instructor_name) || length(instructor_name) != 1) {
-    stop("instructor_name must be a single character string")
-  }
-  if (!is.character(data_folder) || length(data_folder) != 1) {
-    stop("data_folder must be a single character string")
-  }
-  if (!is.character(transcripts_folder) || length(transcripts_folder) != 1) {
-    stop("transcripts_folder must be a single character string")
-  }
-  if (!is.character(start_time_local_tzone) || length(start_time_local_tzone) != 1) {
-    stop("start_time_local_tzone must be a single character string")
-  }
-
-  # Return validated configuration
+  # Simplified deprecated function - return basic configuration
   list(
     course = list(
       dept = dept,
@@ -155,37 +132,19 @@ create_analysis_config <- function(
     ),
     paths = list(
       data_folder = data_folder,
-      transcripts_folder = transcripts_folder,
-      roster_file = roster_file,
-      cancelled_classes_file = cancelled_classes_file,
-      names_lookup_file = names_lookup_file,
-      transcripts_session_summary_file = transcripts_session_summary_file,
-      transcripts_summary_file = transcripts_summary_file
+      transcripts_folder = transcripts_folder
     ),
     patterns = list(
-      topic_split = topic_split_pattern,
-      zoom_recordings_csv = zoom_recorded_sessions_csv_names_pattern,
-      zoom_recordings_csv_col_names = zoom_recorded_sessions_csv_col_names,
-      transcript_files_names = transcript_files_names_pattern,
-      dt_extract = dt_extract_pattern,
-      transcript_file_extension = transcript_file_extension_pattern,
-      closed_caption_file_extension = closed_caption_file_extension_pattern,
-      recording_start = recording_start_pattern,
-      recording_start_format = recording_start_format,
       start_time_local_tzone = start_time_local_tzone
     ),
     reports = list(
-      student_summary_report = student_summary_report,
-      student_summary_report_folder = student_summary_report_folder
+      student_summary_report = student_summary_report
     ),
     analysis = list(
-      cancelled_classes_col_types = cancelled_classes_col_types,
-      section_names_lookup_col_types = section_names_lookup_col_types,
       names_to_exclude = names_to_exclude
     ),
     session_mapping = list(
-      use_session_mapping = use_session_mapping,
-      session_mapping_file = session_mapping_file
+      use_session_mapping = use_session_mapping
     )
   )
 }
