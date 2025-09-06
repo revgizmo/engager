@@ -42,7 +42,7 @@ validate_privacy_compliance <- function() {
     verbose_default = FALSE,
     quiet_tests = TRUE
   )
-  
+
   # Validate privacy settings
   privacy_valid <- all(
     privacy_tests$default_privacy_level == "ferpa_standard",
