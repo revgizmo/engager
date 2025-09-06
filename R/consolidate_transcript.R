@@ -32,7 +32,7 @@ consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {
   if (tibble::is_tibble(df)) {
     # Handle empty data case
     if (nrow(df) == 0) {
-      return(create_empty_consolidated_result(df))
+      return(create_empty_result(df))
     }
 
     # Process time columns and calculate flags
@@ -47,7 +47,7 @@ consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {
 }
 
 # Helper function to create empty consolidated result
-create_empty_consolidated_result <- function(df) {
+create_empty_result <- function(df) {
   # Return empty tibble with correct structure
   result_cols <- c("name", "comment", "start", "end", "duration", "wordcount")
   if ("transcript_file" %in% names(df)) {

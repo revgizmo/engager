@@ -56,7 +56,7 @@
 #' )
 #'
 # Helper function for input validation
-validate_duplicate_detection_inputs <- function(transcript_list, similarity_threshold) {
+validate_duplicate_inputs <- function(transcript_list, similarity_threshold) {
   # Validate similarity threshold
   if (similarity_threshold < 0 || similarity_threshold > 1) {
     warning("similarity_threshold should be between 0 and 1, clamping to valid range")
@@ -116,9 +116,9 @@ calculate_metadata_similarity <- function(existing_files, existing_names, simila
 }
 
 # Helper function for content similarity calculation
-calculate_content_similarity_matrix <- function(existing_files, existing_names, 
-                                                similarity_matrix, method, 
-                                                names_to_exclude) {
+calc_content_similarity_matrix <- function(existing_files, existing_names, 
+                                           similarity_matrix, method, 
+                                           names_to_exclude) {
   # Load and compare transcript content
   transcript_data <- list()
 
@@ -172,7 +172,7 @@ detect_duplicate_transcripts <- function(
   method <- match.arg(method)
 
   # Validate inputs
-  similarity_threshold <- validate_duplicate_detection_inputs(transcript_list, similarity_threshold)
+  similarity_threshold <- validate_duplicate_inputs(transcript_list, similarity_threshold)
 
   if (nrow(transcript_list) == 0) {
     return(create_empty_duplicate_result())
@@ -213,13 +213,13 @@ detect_duplicate_transcripts <- function(
   }
 
   if (method %in% c("content", "hybrid")) {
-    similarity_matrix <- calculate_content_similarity_matrix(
+    similarity_matrix <- calc_content_similarity_matrix(
       existing_files, existing_names, similarity_matrix, method, names_to_exclude
     )
   }
 
   # Find duplicate groups and generate results
-  result <- find_duplicate_groups_and_generate_results(
+  result <- find_duplicate_groups(
     existing_names, similarity_matrix, similarity_threshold, method
   )
 
@@ -232,7 +232,8 @@ detect_duplicate_transcripts <- function(
 }
 
 # Helper function to find duplicate groups and generate results
-find_duplicate_groups_and_generate_results <- function(existing_names, similarity_matrix, similarity_threshold, method) {
+find_duplicate_groups <- function(existing_names, similarity_matrix, 
+                                  similarity_threshold, method) {
   # Find duplicate groups
   duplicate_groups <- list()
   processed <- logical(length(existing_names))

@@ -95,7 +95,7 @@ load_session_mapping <- function(
 
   # Merge with Zoom recordings if provided using base R instead of dplyr
   if (!is.null(zoom_recordings_df)) {
-    result <- merge_zoom_recordings_with_mapping(zoom_recordings_df, mapping_df)
+    result <- merge_zoom_with_mapping(zoom_recordings_df, mapping_df)
 
     # Process columns and handle conflicts
     result <- process_merged_columns(result)
@@ -114,7 +114,7 @@ load_session_mapping <- function(
 }
 
 # Helper function to merge zoom recordings with mapping data
-merge_zoom_recordings_with_mapping <- function(zoom_recordings_df, mapping_df) {
+merge_zoom_with_mapping <- function(zoom_recordings_df, mapping_df) {
   if (!tibble::is_tibble(zoom_recordings_df)) {
     abort_zse("zoom_recordings_df must be a tibble", class = "zse_input_error")
   }
