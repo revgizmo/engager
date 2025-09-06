@@ -55,15 +55,8 @@
 #'   similarity_threshold = 0.9
 #' )
 #'
-detect_duplicate_transcripts <- function(
-    transcript_list = NULL,
-    data_folder = ".",
-    transcripts_folder = "transcripts",
-    similarity_threshold = 0.95,
-    method = c("hybrid", "content", "metadata"),
-    names_to_exclude = c("dead_air")) {
-  method <- match.arg(method)
-
+# Helper function for input validation
+validate_duplicate_detection_inputs <- function(transcript_list, similarity_threshold) {
   # Validate similarity threshold
   if (similarity_threshold < 0 || similarity_threshold > 1) {
     warning("similarity_threshold should be between 0 and 1, clamping to valid range")
@@ -74,17 +67,37 @@ detect_duplicate_transcripts <- function(
     stop("transcript_list must be a tibble")
   }
 
+  return(similarity_threshold)
+}
+
+# Helper function for empty result
+create_empty_duplicate_result <- function() {
+  list(
+    duplicate_groups = list(),
+    similarity_matrix = matrix(numeric(0), nrow = 0, ncol = 0),
+    recommendations = character(0),
+    summary = list(
+      total_files = 0,
+      duplicate_groups = 0,
+      total_duplicates = 0
+    )
+  )
+}
+
+detect_duplicate_transcripts <- function(
+    transcript_list = NULL,
+    data_folder = ".",
+    transcripts_folder = "transcripts",
+    similarity_threshold = 0.95,
+    method = c("hybrid", "content", "metadata"),
+    names_to_exclude = c("dead_air")) {
+  method <- match.arg(method)
+
+  # Validate inputs
+  similarity_threshold <- validate_duplicate_detection_inputs(transcript_list, similarity_threshold)
+
   if (nrow(transcript_list) == 0) {
-    return(list(
-      duplicate_groups = list(),
-      similarity_matrix = matrix(numeric(0), nrow = 0, ncol = 0),
-      recommendations = character(0),
-      summary = list(
-        total_files = 0,
-        duplicate_groups = 0,
-        total_duplicates = 0
-      )
-    ))
+    return(create_empty_duplicate_result())
   }
 
   # Get transcript file names
@@ -92,16 +105,7 @@ detect_duplicate_transcripts <- function(
   transcript_files <- transcript_files[!is.na(transcript_files)]
 
   if (length(transcript_files) == 0) {
-    return(list(
-      duplicate_groups = list(),
-      similarity_matrix = matrix(numeric(0), nrow = 0, ncol = 0),
-      recommendations = character(0),
-      summary = list(
-        total_files = 0,
-        duplicate_groups = 0,
-        total_duplicates = 0
-      )
-    ))
+    return(create_empty_duplicate_result())
   }
 
   # Build full paths
@@ -117,16 +121,7 @@ detect_duplicate_transcripts <- function(
     if (Sys.getenv("TESTTHAT") != "true") {
       warning("No transcript files found in the specified directory")
     }
-    return(list(
-      duplicate_groups = list(),
-      similarity_matrix = matrix(numeric(0), nrow = 0, ncol = 0),
-      recommendations = character(0),
-      summary = list(
-        total_files = 0,
-        duplicate_groups = 0,
-        total_duplicates = 0
-      )
-    ))
+    return(create_empty_duplicate_result())
   }
 
   # Initialize results
