@@ -11,16 +11,26 @@
 #'
 #' @examples
 #' make_blank_cancelled_classes_df()
-make_blank_cancelled_classes_df <- function() {
+mkblnkcnclldclsssdf <- function() {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'make_blank_cancelled_classes_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'make_blank_cancelled_classes_df' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   # Use base R operations instead of dplyr to avoid segmentation fault
+  csv_content <- paste0(
+    "dept,course_section,course,section,day,time,instructor,Topic,ID,Start Time,",
+    "File Size (MB),File Count,Total Views,Total Downloads,Last Accessed,",
+    "match_start_time,match_end_time,date_extract,recording_start,start_time_local,",
+    "transcript_file,chat_file,closed_caption_file"
+  )
   result <- readr::read_csv(
-    I("dept,course_section,course,section,day,time,instructor,Topic,ID,Start Time,File Size (MB),File Count,Total Views,Total Downloads,Last Accessed,match_start_time,match_end_time,date_extract,recording_start,start_time_local,transcript_file,chat_file,closed_caption_file"),
+    I(csv_content),
     col_types = "cciiccccccdiiicTTcTTccci"
   )
 
@@ -34,5 +44,5 @@ make_blank_cancelled_classes_df <- function() {
   result$chat_file <- as.character(result$chat_file)
   result$closed_caption_file <- as.character(result$closed_caption_file)
 
-  return(result)
+  result
 }

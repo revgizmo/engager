@@ -1,6 +1,7 @@
 #' Make a DF of Class Sections from the Student Roster
 #'
-#' This function creates a tibble that includes rows for each section (grouped by dept and course number) and student count in each.
+#' This function creates a tibble that includes rows for each section (grouped by dept and course number) and student
+#' count in each.
 #' @keywords sections
 #'
 #' @param roster_df A tibble listing the students enrolled in the class or classes.
@@ -25,9 +26,12 @@
 make_sections_df <- function(roster_df = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'make_sections_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'make_sections_df' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
-  dept <- course <- section <- n <- NULL
 
   # Defensive: check for valid input
   if (!tibble::is_tibble(roster_df)) {

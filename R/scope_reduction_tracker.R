@@ -7,14 +7,18 @@
 #' @noRd
 
 # Initialize Scope Reduction Tracker
-initialize_scope_reduction_tracker <- function(
+ntlzscprdctntrckr <- function(
     current_functions = 74,
     target_functions = "25-30",
     reduction_target = "60-70%") {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'initialize_scope_reduction_tracker' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'initialize_scope_reduction_tracker' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   tracker <- list(
@@ -95,7 +99,11 @@ update_scope_reduction_tracker <- function(tracker, updates) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'update_scope_reduction_tracker' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'update_scope_reduction_tracker' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   # Update timestamp
@@ -108,7 +116,7 @@ update_scope_reduction_tracker <- function(tracker, updates) {
     }
   }
 
-  return(tracker)
+  tracker
 }
 
 #' Generate Scope Reduction Progress Report
@@ -116,11 +124,15 @@ update_scope_reduction_tracker <- function(tracker, updates) {
 #' @param tracker Current tracker object
 #' @return Formatted progress report
 #' @keywords internal
-generate_scope_reduction_report <- function(tracker) {
+gen_scope_reduction_report <- function(tracker) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'generate_scope_reduction_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'generate_scope_reduction_report' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   report <- paste0(
@@ -144,12 +156,15 @@ generate_scope_reduction_report <- function(tracker) {
     "  Baseline Reports: ", tracker$phase_3$baseline_reports, "\n",
     "  Handoff Preparation: ", tracker$phase_3$handoff_preparation, "\n\n",
     "VALIDATION CHECKPOINTS:\n",
-    "  Checkpoint 1: ", tracker$checkpoints$checkpoint_1$status, " - ", tracker$checkpoints$checkpoint_1$description, "\n",
-    "  Checkpoint 2: ", tracker$checkpoints$checkpoint_2$status, " - ", tracker$checkpoints$checkpoint_2$description, "\n",
-    "  Checkpoint 3: ", tracker$checkpoints$checkpoint_3$status, " - ", tracker$checkpoints$checkpoint_3$description, "\n"
+    "  Checkpoint 1: ", tracker$checkpoints$checkpoint_1$status, " - ",
+    tracker$checkpoints$checkpoint_1$description, "\n",
+    "  Checkpoint 2: ", tracker$checkpoints$checkpoint_2$status, " - ",
+    tracker$checkpoints$checkpoint_2$description, "\n",
+    "  Checkpoint 3: ", tracker$checkpoints$checkpoint_3$status, " - ",
+    tracker$checkpoints$checkpoint_3$description, "\n"
   )
 
-  return(report)
+  report
 }
 
 #' Save Scope Reduction Report
@@ -162,12 +177,16 @@ save_scope_reduction_report <- function(tracker, output_file = "scope_reduction_
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'save_scope_reduction_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'save_scope_reduction_report' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   tryCatch(
     {
-      report <- generate_scope_reduction_report(tracker)
+      report <- gen_scope_reduction_report(tracker)
       writeLines(report, output_file)
       message("Scope reduction report saved to: ", output_file)
       TRUE

@@ -24,13 +24,16 @@ audit_all_functions <- function() {
   }
 
   # Categorize functions
-  categories <- categorize_functions(function_analysis)
+  categories <- list(
+    exported = function_analysis[sapply(function_analysis, function(x) x$exported), ],
+    internal = function_analysis[sapply(function_analysis, function(x) !x$exported), ]
+  )
 
   # Generate audit report
   audit_report <- generate_audit_report(categories, function_analysis)
 
   cat("\n✅ Function audit completed successfully!\n")
-  return(audit_report)
+  audit_report
 }
 
 #' Get all exported functions from NAMESPACE
@@ -48,7 +51,7 @@ get_exported_functions <- function() {
   # Remove magrittr pipe operator
   function_names <- function_names[function_names != "%>%"]
 
-  return(function_names)
+  function_names
 }
 
 #' Analyze individual function
@@ -74,7 +77,7 @@ analyze_function <- function(function_name) {
   # Analyze function complexity
   complexity <- analyze_function_complexity(function_name)
 
-  return(list(
+  list(
     name = function_name,
     signature = signature,
     documentation = documentation,
@@ -82,7 +85,7 @@ analyze_function <- function(function_name) {
     dependencies = dependencies,
     file_location = file_location,
     complexity = complexity
-  ))
+  )
 }
 
 #' Get function signature
@@ -101,7 +104,7 @@ get_function_signature <- function(function_name) {
       }
     },
     error = function(e) {
-      return("Error retrieving signature")
+      "Error retrieving signature"
     }
   )
 }
@@ -115,9 +118,9 @@ get_function_documentation <- function(function_name) {
   man_file <- file.path("man", paste0(function_name, ".Rd"))
 
   if (file.exists(man_file)) {
-    return("Complete")
+    "Complete"
   } else {
-    return("Missing")
+    "Missing"
   }
 }
 
@@ -163,7 +166,7 @@ analyze_function_usage <- function(function_name) {
       content <- readLines(test_file, warn = FALSE)
       # Look for function name in various contexts (calls, test names, etc.)
       if (any(grepl(function_name, content, fixed = TRUE)) ||
-        any(grepl(paste0("test.*", function_name), content, ignore.case = TRUE))) {
+            any(grepl(paste0("test.*", function_name), content, ignore.case = TRUE))) {
         usage_info$in_tests <- TRUE
         usage_info$usage_count <- usage_info$usage_count + 1
         break # Found in at least one test file
@@ -171,7 +174,7 @@ analyze_function_usage <- function(function_name) {
     }
   }
 
-  return(usage_info)
+  usage_info
 }
 
 #' Get function dependencies
@@ -210,7 +213,7 @@ get_function_dependencies <- function(function_name) {
       }
     },
     error = function(e) {
-      return(character(0))
+      character(0)
     }
   )
 }
@@ -234,7 +237,7 @@ get_function_file_location <- function(function_name) {
     }
   }
 
-  return("Unknown")
+  "Unknown"
 }
 
 #' Analyze function complexity
@@ -265,10 +268,10 @@ analyze_function_complexity <- function(function_name) {
       }
     },
     error = function(e) {
-      return(list(
+      list(
         lines_of_code = 0, has_loops = FALSE, has_conditionals = FALSE,
         has_error_handling = FALSE, function_calls = 0
-      ))
+      )
     }
   )
 }
@@ -347,7 +350,7 @@ generate_audit_report <- function(categories, function_analysis) {
     generated_at = Sys.time()
   )
 
-  return(report)
+  report
 }
 
 #' Save audit report to file

@@ -4,7 +4,8 @@
 #'
 #' @param metrics_data A tibble containing engagement metrics (typically from `summarize_transcript_files`)
 #' @param file_path Path where the CSV file should be saved
-#' @param comments_format How to format the comments column: "text" (semicolon-separated) or "count" (number of comments)
+#' @param comments_format How to format the comments column: "text" (semicolon-separated) or "count" (number of
+#' comments)
 #'
 #' @return Invisibly returns the processed data that was written
 #' @export
@@ -13,7 +14,11 @@ write_engagement_metrics <- function(metrics_data = NULL, file_path = NULL, comm
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'write_engagement_metrics' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'write_engagement_metrics' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   comments_format <- match.arg(comments_format)

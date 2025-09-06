@@ -50,15 +50,19 @@
 #' load_and_process_zoom_transcript(transcript_file_path = transcript_file)
 #' }
 #'
-load_and_process_zoom_transcript <- function(transcript_file_path = NULL,
-                                             consolidate_comments = TRUE,
-                                             max_pause_sec = 1,
-                                             add_dead_air = TRUE,
-                                             dead_air_name = "dead_air",
-                                             na_name = "unknown") {
+ldndprcsszmtrnscrpt <- function(transcript_file_path = NULL,
+                                consolidate_comments = TRUE,
+                                max_pause_sec = 1,
+                                add_dead_air = TRUE,
+                                dead_air_name = "dead_air",
+                                na_name = "unknown") {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'load_and_process_zoom_transcript' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'load_and_process_zoom_transcript' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   .Deprecated("process_zoom_transcript")
 

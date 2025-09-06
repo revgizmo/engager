@@ -14,7 +14,11 @@ create_function_inventory <- function() {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'create_function_inventory' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'create_function_inventory' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   tryCatch(
@@ -60,7 +64,7 @@ create_function_inventory <- function() {
     },
     error = function(e) {
       warning("Failed to create function inventory: ", e$message)
-      return(list(error = e$message))
+      list(error = e$message)
     }
   )
 }
@@ -74,7 +78,11 @@ categorize_functions <- function(inventory) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'categorize_functions' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'categorize_functions' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   if (is.null(inventory) || "error" %in% names(inventory)) {
@@ -139,7 +147,7 @@ categorize_functions <- function(inventory) {
     categorization = categorization
   )
 
-  return(summary)
+  summary
 }
 
 #' Map Function Dependencies
@@ -151,7 +159,11 @@ map_function_dependencies <- function(inventory) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'map_function_dependencies' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'map_function_dependencies' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   if (is.null(inventory) || "error" %in% names(inventory)) {
@@ -177,7 +189,7 @@ map_function_dependencies <- function(inventory) {
     )
   )
 
-  return(dependencies)
+  dependencies
 }
 
 #' Generate Function Audit Report
@@ -191,7 +203,11 @@ generate_function_audit_report <- function(inventory, categorization, dependenci
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'generate_function_audit_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'generate_function_audit_report' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   if (is.null(inventory) || "error" %in% names(inventory)) {
@@ -224,7 +240,7 @@ generate_function_audit_report <- function(inventory, categorization, dependenci
     )
   }
 
-  return(report)
+  report
 }
 
 #' Save Function Audit Report
@@ -240,7 +256,11 @@ save_function_audit_report <- function(inventory, categorization, dependencies,
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'save_function_audit_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'save_function_audit_report' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   tryCatch(

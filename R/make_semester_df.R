@@ -20,7 +20,11 @@ make_semester_df <- function(semester_units = 14,
                              class_duration_min = 90) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'make_semester_df' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'make_semester_df' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   start_time_gmt <- end_time_gmt <- NULL
 

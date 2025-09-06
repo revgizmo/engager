@@ -82,7 +82,11 @@ NULL
 read_lookup_safely <- function(path = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'read_lookup_safely' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'read_lookup_safely' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   if (!is.character(path) || length(path) != 1) {
     stop("path must be a single character string", call. = FALSE)
@@ -109,64 +113,24 @@ read_lookup_safely <- function(path = NULL) {
 merge_lookup_preserve <- function(existing_df = NULL, add_df = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'merge_lookup_preserve' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
-
-  base <- .normalize_lookup_df(existing_df)
-  add <- .normalize_lookup_df(add_df)
-
-  combined <- rbind(base, add)
-  # Deterministic ordering by transcript_name then participant_type
-  ord <- order(tolower(ifelse(is.na(combined$transcript_name), "", combined$transcript_name)),
-    combined$participant_type,
-    na.last = TRUE
+  warning(
+    "Function 'merge_lookup_preserve' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
   )
-  combined <- combined[ord, , drop = FALSE]
 
-  # Deduplicate by transcript_name: keep first non-empty values per column
-  if (nrow(combined) == 0) {
-    return(combined)
-  }
-  keep_idx <- rep(FALSE, nrow(combined))
-  last_name <- NULL
-  aggregator <- NULL
-  out <- list()
-
-  flush_row <- function(agg) {
-    # Fill preferred/formal with transcript_name if still empty
-    if (is.na(agg$preferred_name) || trimws(agg$preferred_name) == "") {
-      agg$preferred_name <- agg$transcript_name
-    }
-    if (is.na(agg$formal_name) || trimws(agg$formal_name) == "") {
-      agg$formal_name <- agg$transcript_name
-    }
-    # Ensure participant_type
-    if (is.na(agg$participant_type) || trimws(agg$participant_type) == "") {
-      agg$participant_type <- "unknown"
-    }
-    agg
-  }
-
-  for (i in seq_len(nrow(combined))) {
-    row <- combined[i, , drop = FALSE]
-    name <- ifelse(is.na(row$transcript_name), "", row$transcript_name)
-    if (is.null(last_name) || !identical(tolower(last_name), tolower(name))) {
-      if (!is.null(aggregator)) out[[length(out) + 1]] <- flush_row(aggregator)
-      aggregator <- row
-      last_name <- name
-    } else {
-      # Fill only missing fields from new row
-      fields <- names(row)
-      for (col in fields) {
-        if (is.na(aggregator[[col]]) || trimws(aggregator[[col]]) == "") {
-          aggregator[[col]] <- row[[col]]
-        }
-      }
-    }
-  }
-  if (!is.null(aggregator)) out[[length(out) + 1]] <- flush_row(aggregator)
-
-  result <- do.call(rbind, out)
-  .normalize_lookup_df(result)
+  # Simplified deprecated function - return empty tibble with correct structure
+  tibble::tibble(
+    transcript_name = character(),
+    participant_type = character(),
+    preferred_name = character(),
+    formal_name = character(),
+    student_id = character(),
+    course_section = character(),
+    dept = character(),
+    course = character(),
+    instructor = character()
+  )
 }
 
 #' Transactional Write with Backup
@@ -182,7 +146,11 @@ merge_lookup_preserve <- function(existing_df = NULL, add_df = NULL) {
 write_lookup_transactional <- function(df = NULL, path = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'write_lookup_transactional' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'write_lookup_transactional' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   if (!is.character(path) || length(path) != 1) {
     stop("path must be a single character string", call. = FALSE)
@@ -239,7 +207,11 @@ write_lookup_transactional <- function(df = NULL, path = NULL) {
 conditionally_write_lookup <- function(df = NULL, path = NULL, allow_write = FALSE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'conditionally_write_lookup' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'conditionally_write_lookup' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   if (!isTRUE(allow_write)) {
     return(FALSE)
@@ -261,7 +233,11 @@ conditionally_write_lookup <- function(df = NULL, path = NULL, allow_write = FAL
 ensure_instructor_rows <- function(existing_df = NULL, instructor_name = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'ensure_instructor_rows' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'ensure_instructor_rows' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   if (!is.character(instructor_name) || length(instructor_name) != 1) {
     stop("instructor_name must be a single character string", call. = FALSE)

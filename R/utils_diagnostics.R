@@ -15,7 +15,11 @@ is_verbose <- function() {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'is_verbose' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'is_verbose' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   isTRUE(getOption("zoomstudentengagement.verbose", FALSE))
@@ -29,7 +33,11 @@ diag_message <- function(...) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'diag_message' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'diag_message' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   if (is_verbose()) {
@@ -46,7 +54,11 @@ diag_cat <- function(...) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'diag_cat' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'diag_cat' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   if (is_verbose() || interactive()) {
@@ -63,7 +75,11 @@ diag_message_if <- function(verbose_flag, ...) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'diag_message_if' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'diag_message_if' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   if (isTRUE(verbose_flag) || is_verbose()) {
@@ -80,7 +96,11 @@ diag_cat_if <- function(verbose_flag, ...) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'diag_cat_if' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'diag_cat_if' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   if (isTRUE(verbose_flag) || is_verbose() || interactive()) {

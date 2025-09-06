@@ -1,6 +1,7 @@
 #' Process Zoom Transcript
 #'
-#' Process a Zoom recording transcript with given parameters and return tibble containing the consolidated and annotated comments.
+#' Process a Zoom recording transcript with given parameters and return tibble containing the consolidated and annotated
+#' comments.
 
 #'
 #' Original code posted by Conor Healy:
@@ -31,7 +32,8 @@
 #'   added for dead air. Defaults to 'dead_air'.
 #' @param na_name Character string to label the `name` column in any rows where
 #'   the transcript `name` is `NA`. Defaults to 'unknown'.
-#' @param transcript_df Tibble containing the comments from a Zoom recording transcript (which is generally the result of calling `load_zoom_transcript()`.
+#' @param transcript_df Tibble containing the comments from a Zoom recording transcript (which is generally the result
+#' of calling `load_zoom_transcript()`.
 #'
 #' @return A tibble containing the comments from a Zoom recording transcript
 #'

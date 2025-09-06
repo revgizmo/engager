@@ -24,6 +24,17 @@ write_metrics <- function(
     stop("`data` must be a tibble")
   }
 
+  # Process data for export
+  export_data <- process_data_for_export(data, privacy_level, comments_format)
+
+  # Write to file
+  write_processed_data_to_file(export_data, what, path)
+
+  invisible(export_data)
+}
+
+# Helper function to process data for export
+process_data_for_export <- function(data, privacy_level, comments_format) {
   # Enforce privacy (name masking)
   export_data <- zoomstudentengagement::ensure_privacy(data, privacy_level = privacy_level)
 
@@ -60,6 +71,11 @@ write_metrics <- function(
     }
   }
 
+  export_data
+}
+
+# Helper function to write processed data to file
+write_processed_data_to_file <- function(export_data, what, path) {
   # Determine default filename
   if (is.null(path)) {
     fname <- switch(what,
@@ -74,5 +90,4 @@ write_metrics <- function(
     dir.create(dir_path, recursive = TRUE)
   }
   utils::write.csv(export_data, path, row.names = FALSE)
-  invisible(export_data)
 }

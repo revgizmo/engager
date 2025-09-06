@@ -31,13 +31,13 @@ analyze_coverage_gaps <- function() {
     }
   )
 
-  return(list(
+  list(
     overall_coverage = covr::percent_coverage(coverage),
     file_coverage = file_coverage,
     low_coverage = low_coverage,
     impact_ranking = impact_ranking,
     target_gap = max(0, 90 - covr::percent_coverage(coverage))
-  ))
+  )
 }
 
 #' Rank files by coverage impact
@@ -56,11 +56,11 @@ rank_coverage_impact <- function(low_coverage) {
   impact_scores <- sapply(names(sorted_coverage), function(file) {
     current_coverage <- sorted_coverage[file]
     potential_improvement <- (100 - current_coverage) / 100
-    return(potential_improvement)
+    potential_improvement
   })
 
   # Return ranked list
-  return(sort(impact_scores, decreasing = TRUE))
+  sort(impact_scores, decreasing = TRUE)
 }
 
 #' Count lines in file
@@ -87,5 +87,5 @@ count_file_lines <- function(file_path) {
   if (file.exists(file_path)) {
     return(length(readLines(file_path)))
   }
-  return(0)
+  0
 }

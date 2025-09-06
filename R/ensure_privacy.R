@@ -49,11 +49,41 @@ ensure_privacy <- function(x = NULL,
                            ),
                            audit_log = TRUE) {
   # Validate privacy level
+  validate_privacy_level(privacy_level)
+
+  # Handle privacy level and get appropriate columns
+  result <- handle_privacy_level(privacy_level, id_columns, audit_log)
+  if (result$early_return) {
+    return(result$data)
+  }
+  id_columns <- result$id_columns
+
+  # Only handle tabular data for MVP; return other objects unchanged
+  if (!is.data.frame(x)) {
+    return(x)
+  }
+
+  # Apply privacy masking
+  df <- apply_privacy_masking(x, id_columns, privacy_level, audit_log)
+
+  # Preserve tibble class if input was a tibble
+  if (tibble::is_tibble(x)) {
+    df <- tibble::as_tibble(df)
+  }
+
+  df
+}
+
+# Helper function to validate privacy level
+validate_privacy_level <- function(privacy_level) {
   valid_levels <- c("ferpa_strict", "ferpa_standard", "mask", "none")
   if (!privacy_level %in% valid_levels) {
     stop("Invalid privacy_level. Must be one of: ", paste(valid_levels, collapse = ", "), call. = FALSE)
   }
+}
 
+# Helper function to handle privacy level and get appropriate columns
+handle_privacy_level <- function(privacy_level, id_columns, audit_log) {
   # If privacy is explicitly disabled, warn and return unmodified
   if (identical(privacy_level, "none")) {
     warning(
@@ -71,7 +101,7 @@ ensure_privacy <- function(x = NULL,
       )
     }
 
-    return(x)
+    return(list(early_return = TRUE, data = NULL, id_columns = NULL))
   }
 
   # FERPA strict level - most comprehensive masking
@@ -98,11 +128,11 @@ ensure_privacy <- function(x = NULL,
     )
   }
 
-  # Only handle tabular data for MVP; return other objects unchanged
-  if (!is.data.frame(x)) {
-    return(x)
-  }
+  list(early_return = FALSE, data = NULL, id_columns = id_columns)
+}
 
+# Helper function to apply privacy masking
+apply_privacy_masking <- function(x, id_columns, privacy_level, audit_log) {
   # Log privacy operation for audit purposes
   if (audit_log) {
     log_privacy_operation(
@@ -153,11 +183,6 @@ ensure_privacy <- function(x = NULL,
     }
   }
 
-  # Preserve tibble class if input was a tibble
-  if (tibble::is_tibble(x)) {
-    df <- tibble::as_tibble(df)
-  }
-
   df
 }
 
@@ -184,7 +209,11 @@ log_privacy_operation <- function(operation,
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-    warning("Function 'log_privacy_operation' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+    warning(
+      "Function 'log_privacy_operation' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   # Create log entry
@@ -200,10 +229,13 @@ log_privacy_operation <- function(operation,
 
   # Store in package environment for session tracking (CRAN compliant)
   log_key <- paste0("zse_privacy_log_", format(timestamp, "%Y%m%d_%H%M%S"))
-  env <- .zse_get_logs_env()
-  current <- env$logs
+  # Simple in-memory storage for session tracking
+  if (!exists(".zse_logs", envir = .GlobalEnv)) {
+    assign(".zse_logs", list(), envir = .GlobalEnv)
+  }
+  current <- get(".zse_logs", envir = .GlobalEnv)
   current[[log_key]] <- log_entry
-  env$logs <- current
+  assign(".zse_logs", current, envir = .GlobalEnv)
 
   # Optionally write to file if logging is enabled
   log_file <- getOption("zoomstudentengagement.privacy_log_file", NULL)

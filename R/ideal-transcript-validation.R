@@ -19,12 +19,16 @@
 #' transcript_data <- load_zoom_transcript("path/to/transcript.vtt")
 #' results <- validate_ideal_transcript_structure(transcript_data = transcript_data)
 #' }
-validate_ideal_transcript_structure <- function(transcript_data = NULL,
-                                                file_path = NULL,
-                                                strict_mode = TRUE) {
+vldtdltrnscrptstrctr <- function(transcript_data = NULL,
+                                 file_path = NULL,
+                                 strict_mode = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_ideal_transcript_structure' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_ideal_transcript_structure' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Initialize results
   results <- list(
@@ -111,7 +115,7 @@ validate_ideal_transcript_structure <- function(transcript_data = NULL,
   }
 
   # Generate recommendations
-  results$recommendations <- generate_structure_recommendations(results)
+  results$recommendations <- gen_structure_recommendations(results)
 
   return(results)
 }
@@ -137,7 +141,11 @@ validate_ideal_content_quality <- function(transcript_data = NULL,
                                            check_realism = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_ideal_content_quality' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_ideal_content_quality' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Initialize results
   results <- list(
@@ -161,7 +169,7 @@ validate_ideal_content_quality <- function(transcript_data = NULL,
   }
 
   # Calculate quality metrics
-  quality_metrics <- calculate_content_quality_metrics(transcript_data)
+  quality_metrics <- clcltcntntqltymtrcs(transcript_data)
   results$quality_metrics <- quality_metrics
 
   # Check dialogue length patterns
@@ -183,7 +191,7 @@ validate_ideal_content_quality <- function(transcript_data = NULL,
   }
 
   # Calculate overall quality score
-  quality_score <- calculate_overall_quality_score(results$validation_details)
+  quality_score <- clcltvrllqltyscr(results$validation_details)
   results$quality_score <- quality_score
 
   # Determine status based on quality score and validation results
@@ -201,7 +209,7 @@ validate_ideal_content_quality <- function(transcript_data = NULL,
   results$warnings <- all_warnings
 
   # Generate recommendations
-  results$recommendations <- generate_content_recommendations(results)
+  results$recommendations <- gen_content_recommendations(results)
 
   return(results)
 }
@@ -221,16 +229,24 @@ validate_ideal_content_quality <- function(transcript_data = NULL,
 #' transcript_data <- load_zoom_transcript("path/to/transcript.vtt")
 #' results <- validate_ideal_timing_consistency(transcript_data)
 #' }
-validate_ideal_timing_consistency <- function(transcript_data = NULL,
-                                              max_gap_seconds = 300,
-                                              check_overlaps = TRUE) {
+vldtdltmngcnsstncy <- function(transcript_data = NULL,
+                               max_gap_seconds = 300,
+                               check_overlaps = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_ideal_timing_consistency' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_ideal_timing_consistency' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_ideal_timing_consistency' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_ideal_timing_consistency' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Initialize results
   results <- list(
@@ -295,7 +311,7 @@ validate_ideal_timing_consistency <- function(transcript_data = NULL,
   results$status <- determine_validation_status(results$validation_details)
 
   # Generate recommendations
-  results$recommendations <- generate_timing_recommendations(results)
+  results$recommendations <- gen_timing_recommendations(results)
 
   return(results)
 }
@@ -310,7 +326,8 @@ validate_ideal_timing_consistency <- function(transcript_data = NULL,
 #' @param check_variations Logical. Whether to check for name variations. Default: TRUE
 #' @param check_edge_cases Logical. Whether to check for edge case names. Default: TRUE
 #' @return Validation results list with name coverage analysis
-#' # # # # @export (REMOVED - deprecated function) (REMOVED - deprecated function) (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' # # # # @export (REMOVED - deprecated function) (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' (REMOVED - deprecated function)
 #' @examples
 #' \dontrun{
 #' transcript_data <- load_zoom_transcript("path/to/transcript.vtt")
@@ -326,11 +343,19 @@ validate_ideal_name_coverage <- function(transcript_data = NULL,
                                          check_edge_cases = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_ideal_name_coverage' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_ideal_name_coverage' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_ideal_name_coverage' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_ideal_name_coverage' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Initialize results
   results <- list(
@@ -401,7 +426,7 @@ validate_ideal_name_coverage <- function(transcript_data = NULL,
   results$status <- determine_validation_status(results$validation_details)
 
   # Generate recommendations
-  results$recommendations <- generate_name_coverage_recommendations(results)
+  results$recommendations <- generate_name_coverage_recs(results)
 
   return(results)
 }
@@ -416,7 +441,8 @@ validate_ideal_name_coverage <- function(transcript_data = NULL,
 #' @param validation_options List. Custom validation options. Default: NULL
 #' @param detailed_report Logical. Whether to generate detailed report. Default: TRUE
 #' @return Comprehensive validation results
-#' # # # # @export (REMOVED - deprecated function) (REMOVED - deprecated function) (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' # # # # @export (REMOVED - deprecated function) (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' (REMOVED - deprecated function)
 #' @examples
 #' \dontrun{
 #' # Validate from file
@@ -432,17 +458,25 @@ validate_ideal_name_coverage <- function(transcript_data = NULL,
 #'   validation_options = options
 #' )
 #' }
-validate_ideal_transcript_comprehensive <- function(transcript_data = NULL,
-                                                    file_path = NULL,
-                                                    validation_options = NULL,
-                                                    detailed_report = TRUE) {
+vldtdltrnscrptcmprhnsv <- function(transcript_data = NULL,
+                                   file_path = NULL,
+                                   validation_options = NULL,
+                                   detailed_report = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_ideal_transcript_comprehensive' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_ideal_transcript_comprehensive' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_ideal_transcript_comprehensive' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_ideal_transcript_comprehensive' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Set default options
   if (is.null(validation_options)) {
@@ -493,7 +527,7 @@ validate_ideal_transcript_comprehensive <- function(transcript_data = NULL,
   }
 
   # Run all validation checks
-  results$validation_results$structure <- validate_ideal_transcript_structure(
+  results$validation_results$structure <- vldtdltrnscrptstrctr(
     transcript_data = transcript_data,
     strict_mode = validation_options$strict_mode
   )
@@ -504,7 +538,7 @@ validate_ideal_transcript_comprehensive <- function(transcript_data = NULL,
     check_realism = validation_options$check_realism
   )
 
-  results$validation_results$timing_consistency <- validate_ideal_timing_consistency(
+  results$validation_results$timing_consistency <- vldtdltmngcnsstncy(
     transcript_data = transcript_data,
     max_gap_seconds = validation_options$max_gap_seconds,
     check_overlaps = validation_options$check_overlaps
@@ -531,11 +565,11 @@ validate_ideal_transcript_comprehensive <- function(transcript_data = NULL,
   results$summary <- generate_comprehensive_summary(results)
 
   # Generate recommendations
-  results$recommendations <- generate_comprehensive_recommendations(results)
+  results$recommendations <- generate_comprehensive_recs(results)
 
   # Generate detailed report if requested
   if (detailed_report) {
-    results$detailed_report <- generate_detailed_validation_report(results)
+    results$detailed_report <- gen_detailed_validation_report(results)
   }
 
   return(results)
@@ -548,7 +582,11 @@ validate_ideal_transcript_comprehensive <- function(transcript_data = NULL,
 validate_transcript_structure <- function(transcript_data, strict_mode) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_transcript_structure' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_transcript_structure' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -582,7 +620,7 @@ validate_transcript_structure <- function(transcript_data, strict_mode) {
     results$warnings$few_rows <- "Transcript has very few entries (< 5)"
   }
 
-  return(results)
+  results
 }
 
 #' Validate VTT format compliance
@@ -590,7 +628,11 @@ validate_transcript_structure <- function(transcript_data, strict_mode) {
 validate_vtt_format <- function(transcript_data, strict_mode) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_vtt_format' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_vtt_format' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -616,7 +658,7 @@ validate_vtt_format <- function(transcript_data, strict_mode) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate required fields
@@ -624,7 +666,11 @@ validate_vtt_format <- function(transcript_data, strict_mode) {
 validate_required_fields <- function(transcript_data, strict_mode) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_required_fields' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_required_fields' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -644,7 +690,7 @@ validate_required_fields <- function(transcript_data, strict_mode) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate timestamp format
@@ -652,7 +698,11 @@ validate_required_fields <- function(transcript_data, strict_mode) {
 validate_timestamp_format <- function(transcript_data, strict_mode) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_timestamp_format' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_timestamp_format' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -677,7 +727,7 @@ validate_timestamp_format <- function(transcript_data, strict_mode) {
     }
   }
 
-  return(results)
+  results
 }
 
 # Helper functions for validation status determination
@@ -687,17 +737,21 @@ validate_timestamp_format <- function(transcript_data, strict_mode) {
 determine_validation_status <- function(validation_details) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'determine_validation_status' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'determine_validation_status' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   has_issues <- any(sapply(validation_details, function(x) length(x$issues) > 0))
   has_warnings <- any(sapply(validation_details, function(x) length(x$warnings) > 0))
 
   if (has_issues) {
-    return("FAIL")
+    "FAIL"
   } else if (has_warnings) {
-    return("WARN")
+    "WARN"
   } else {
-    return("PASS")
+    "PASS"
   }
 }
 
@@ -705,10 +759,14 @@ determine_validation_status <- function(validation_details) {
 
 #' Calculate content quality metrics
 #' @keywords internal
-calculate_content_quality_metrics <- function(transcript_data) {
+clcltcntntqltymtrcs <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'calculate_content_quality_metrics' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'calculate_content_quality_metrics' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   metrics <- list()
 
@@ -730,7 +788,7 @@ calculate_content_quality_metrics <- function(transcript_data) {
     metrics$total_words <- sum(transcript_data$wordcount, na.rm = TRUE)
   }
 
-  return(metrics)
+  metrics
 }
 
 #' Validate dialogue length
@@ -738,7 +796,11 @@ calculate_content_quality_metrics <- function(transcript_data) {
 validate_dialogue_length <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_dialogue_length' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_dialogue_length' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -758,7 +820,7 @@ validate_dialogue_length <- function(transcript_data) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate speaker consistency
@@ -766,7 +828,11 @@ validate_dialogue_length <- function(transcript_data) {
 validate_speaker_consistency <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_speaker_consistency' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_speaker_consistency' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -790,7 +856,7 @@ validate_speaker_consistency <- function(transcript_data) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate content diversity
@@ -798,7 +864,11 @@ validate_speaker_consistency <- function(transcript_data) {
 validate_content_diversity <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_content_diversity' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_content_diversity' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -820,7 +890,7 @@ validate_content_diversity <- function(transcript_data) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate realistic patterns
@@ -828,7 +898,11 @@ validate_content_diversity <- function(transcript_data) {
 validate_realistic_patterns <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_realistic_patterns' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_realistic_patterns' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -851,15 +925,19 @@ validate_realistic_patterns <- function(transcript_data) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Calculate overall quality score
 #' @keywords internal
-calculate_overall_quality_score <- function(validation_details) {
+clcltvrllqltyscr <- function(validation_details) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'calculate_overall_quality_score' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'calculate_overall_quality_score' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Simple scoring based on validation results
   total_checks <- length(validation_details)
@@ -871,7 +949,7 @@ calculate_overall_quality_score <- function(validation_details) {
     }
   }))
 
-  return(passed_checks / total_checks)
+  passed_checks / total_checks
 }
 
 # Helper functions for timing validation
@@ -881,13 +959,16 @@ calculate_overall_quality_score <- function(validation_details) {
 validate_chronological_order <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_chronological_order' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_chronological_order' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
   if ("start" %in% names(transcript_data) && "end" %in% names(transcript_data)) {
     start_times <- as.numeric(transcript_data$start)
-    end_times <- as.numeric(transcript_data$end)
 
     # Check for chronological order
     if (length(start_times) > 1) {
@@ -901,7 +982,7 @@ validate_chronological_order <- function(transcript_data) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate no overlaps
@@ -909,7 +990,11 @@ validate_chronological_order <- function(transcript_data) {
 validate_no_overlaps <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_no_overlaps' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_no_overlaps' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -933,7 +1018,7 @@ validate_no_overlaps <- function(transcript_data) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate duration calculations
@@ -941,7 +1026,11 @@ validate_no_overlaps <- function(transcript_data) {
 validate_duration_calculations <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_duration_calculations' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_duration_calculations' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -972,7 +1061,7 @@ validate_duration_calculations <- function(transcript_data) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate reasonable gaps
@@ -980,7 +1069,11 @@ validate_duration_calculations <- function(transcript_data) {
 validate_reasonable_gaps <- function(transcript_data, max_gap_seconds) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_reasonable_gaps' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_reasonable_gaps' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -1000,7 +1093,7 @@ validate_reasonable_gaps <- function(transcript_data, max_gap_seconds) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Analyze timing patterns
@@ -1008,7 +1101,11 @@ validate_reasonable_gaps <- function(transcript_data, max_gap_seconds) {
 analyze_timing_patterns <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'analyze_timing_patterns' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'analyze_timing_patterns' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   analysis <- list()
 
@@ -1022,7 +1119,7 @@ analyze_timing_patterns <- function(transcript_data) {
     analysis$entries_per_minute <- analysis$total_entries / (analysis$total_duration / 60)
   }
 
-  return(analysis)
+  analysis
 }
 
 # Helper functions for name coverage validation
@@ -1032,7 +1129,11 @@ analyze_timing_patterns <- function(transcript_data) {
 analyze_name_coverage <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'analyze_name_coverage' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'analyze_name_coverage' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   analysis <- list()
 
@@ -1048,7 +1149,7 @@ analyze_name_coverage <- function(transcript_data) {
     analysis$avg_name_length <- mean(analysis$name_lengths, na.rm = TRUE)
   }
 
-  return(analysis)
+  analysis
 }
 
 #' Validate expected names
@@ -1056,7 +1157,11 @@ analyze_name_coverage <- function(transcript_data) {
 validate_expected_names <- function(transcript_data, expected_names) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_expected_names' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_expected_names' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -1081,7 +1186,7 @@ validate_expected_names <- function(transcript_data, expected_names) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate name variations
@@ -1089,7 +1194,11 @@ validate_expected_names <- function(transcript_data, expected_names) {
 validate_name_variations <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_name_variations' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_name_variations' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -1110,7 +1219,7 @@ validate_name_variations <- function(transcript_data) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate name edge cases
@@ -1118,7 +1227,11 @@ validate_name_variations <- function(transcript_data) {
 validate_name_edge_cases <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_name_edge_cases' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_name_edge_cases' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -1153,7 +1266,7 @@ validate_name_edge_cases <- function(transcript_data) {
     }
   }
 
-  return(results)
+  results
 }
 
 #' Validate scenario completeness
@@ -1161,7 +1274,11 @@ validate_name_edge_cases <- function(transcript_data) {
 validate_scenario_completeness <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'validate_scenario_completeness' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'validate_scenario_completeness' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   results <- list(status = "PASS", issues = list(), warnings = list())
 
@@ -1195,17 +1312,21 @@ validate_scenario_completeness <- function(transcript_data) {
     results$validation_details$scenarios_found <- scenarios
   }
 
-  return(results)
+  results
 }
 
 # Recommendation generation functions
 
 #' Generate structure recommendations
 #' @keywords internal
-generate_structure_recommendations <- function(results) {
+gen_structure_recommendations <- function(results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_structure_recommendations' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_structure_recommendations' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   recommendations <- list()
 
@@ -1229,15 +1350,19 @@ generate_structure_recommendations <- function(results) {
     }
   }
 
-  return(recommendations)
+  recommendations
 }
 
 #' Generate content recommendations
 #' @keywords internal
-generate_content_recommendations <- function(results) {
+gen_content_recommendations <- function(results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_content_recommendations' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_content_recommendations' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   recommendations <- list()
 
@@ -1266,15 +1391,19 @@ generate_content_recommendations <- function(results) {
     recommendations$general <- "Content quality is good"
   }
 
-  return(recommendations)
+  recommendations
 }
 
 #' Generate timing recommendations
 #' @keywords internal
-generate_timing_recommendations <- function(results) {
+gen_timing_recommendations <- function(results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_timing_recommendations' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_timing_recommendations' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   recommendations <- list()
 
@@ -1307,15 +1436,19 @@ generate_timing_recommendations <- function(results) {
     recommendations$general <- "Review timing validation results"
   }
 
-  return(recommendations)
+  recommendations
 }
 
 #' Generate name coverage recommendations
 #' @keywords internal
-generate_name_coverage_recommendations <- function(results) {
+generate_name_coverage_recs <- function(results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_name_coverage_recommendations' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_name_coverage_recommendations' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   recommendations <- list()
 
@@ -1348,7 +1481,7 @@ generate_name_coverage_recommendations <- function(results) {
     recommendations$general <- "Review name coverage validation results"
   }
 
-  return(recommendations)
+  recommendations
 }
 
 #' Generate comprehensive summary
@@ -1356,7 +1489,11 @@ generate_name_coverage_recommendations <- function(results) {
 generate_comprehensive_summary <- function(results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_comprehensive_summary' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_comprehensive_summary' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   summary <- list()
 
@@ -1378,15 +1515,19 @@ generate_comprehensive_summary <- function(results) {
     summary$quality_score <- results$validation_results$content_quality$quality_score
   }
 
-  return(summary)
+  summary
 }
 
 #' Generate comprehensive recommendations
 #' @keywords internal
-generate_comprehensive_recommendations <- function(results) {
+generate_comprehensive_recs <- function(results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_comprehensive_recommendations' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_comprehensive_recommendations' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   recommendations <- list()
 
@@ -1420,15 +1561,19 @@ generate_comprehensive_recommendations <- function(results) {
     recommendations$next_steps <- "Transcript is ready for use"
   }
 
-  return(recommendations)
+  recommendations
 }
 
 #' Generate detailed validation report
 #' @keywords internal
-generate_detailed_validation_report <- function(results) {
+gen_detailed_validation_report <- function(results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_detailed_validation_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_detailed_validation_report' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   report <- list()
 
@@ -1447,5 +1592,5 @@ generate_detailed_validation_report <- function(results) {
   # Recommendations
   report$recommendations <- results$recommendations
 
-  return(report)
+  report
 }

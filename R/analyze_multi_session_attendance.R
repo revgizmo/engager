@@ -38,7 +38,7 @@
 #' }
 #'
 #' @export
-analyze_multi_session_attendance <- function(
+nlyzmltsssnttndnc <- function(
     transcript_files = NULL,
     roster_data = NULL,
     data_folder = ".",

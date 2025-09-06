@@ -70,13 +70,13 @@ success_metrics_framework <- list(
 track_success_metrics <- function() {
   # Use the existing deprecated function for now
   # This maintains backward compatibility while the new framework is developed
-  generate_success_metrics_report()
+  gen_success_metrics_report()
 }
 
 #' Generate success metrics report
 #'
 #' @return Success metrics report
-generate_success_metrics_report <- function() {
+gen_success_metrics_report <- function() {
   # Get current baseline
   baseline <- get_current_baseline()
 
@@ -148,7 +148,11 @@ calculate_overall_status <- function(...) {
 get_current_baseline <- function() {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'get_current_baseline' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'get_current_baseline' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Get current function count
   current_functions <- tryCatch(
@@ -213,7 +217,11 @@ get_current_baseline <- function() {
 get_target_state <- function() {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'get_target_state' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'get_target_state' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   list(
     functions = "25-30",
@@ -235,7 +243,11 @@ get_target_state <- function() {
 track_progress <- function(metric_name, current_value, target_value) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'track_progress' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'track_progress' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Handle different types of targets
   if (is.character(target_value)) {
@@ -303,10 +315,14 @@ track_progress <- function(metric_name, current_value, target_value) {
 #'
 #' @return Comprehensive success metrics report
 #' @keywords internal
-generate_success_metrics_report <- function() {
+gen_success_metrics_report <- function() {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'generate_success_metrics_report' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'generate_success_metrics_report' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   # Get current baseline
   baseline <- get_current_baseline()
@@ -353,10 +369,14 @@ generate_success_metrics_report <- function() {
 print_success_metrics_summary <- function(report = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'print_success_metrics_summary' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'print_success_metrics_summary' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
   if (is.null(report)) {
-    report <- generate_success_metrics_report()
+    report <- gen_success_metrics_report()
   }
 
   cat("🎯 Success Metrics Summary for zoomstudentengagement Package\n")

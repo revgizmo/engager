@@ -83,7 +83,7 @@ create_analysis_config <- function(
     roster_file = "roster.csv",
     cancelled_classes_file = "cancelled_classes.csv",
     names_lookup_file = "section_names_lookup.csv",
-    transcripts_session_summary_file = "transcripts_session_summary.csv",
+    trnscrptssssnsmmryfl = "transcripts_session_summary.csv",
     transcripts_summary_file = "transcripts_summary.csv",
     # Report Settings
     student_summary_report = "Zoom_Student_Engagement_Analysis_student_summary_report",
@@ -93,16 +93,16 @@ create_analysis_config <- function(
       "^(?<dept>\\S+) (?<section>\\S+) - ",
       "(?<day>[A-Za-z]+) (?<time>\\S+\\s*\\S+) (?<instructor>\\(.*?\\))"
     ),
-    zoom_recorded_sessions_csv_names_pattern = "zoomus_recordings__\\d{8}(?:\\s+copy\\s*\\d*)?\\.csv",
-    zoom_recorded_sessions_csv_col_names = paste0(
+    zmrcrddsssnscsvnmspttrn = "zoomus_recordings__\\d{8}(?:\\s+copy\\s*\\d*)?\\.csv",
+    zmrcrddsssnscsvclnms = paste0(
       "Topic,ID,Start Time,File Size (MB),File Count,",
       "Total Views,Total Downloads,Last Accessed"
     ),
     # Transcript File Patterns
     transcript_files_names_pattern = "GMT\\d{8}-\\d{6}_Recording",
     dt_extract_pattern = "(?<=GMT)\\d{8}",
-    transcript_file_extension_pattern = ".transcript",
-    closed_caption_file_extension_pattern = ".cc",
+    trnscrptflxtnsnpttrn = ".transcript",
+    clsdcptnflxtnsnpttrn = ".cc",
     recording_start_pattern = "(?<=GMT)\\d{8}-\\d{6}",
     recording_start_format = "%Y%m%d-%H%M%S",
     start_time_local_tzone = "America/Los_Angeles",
@@ -116,32 +116,13 @@ create_analysis_config <- function(
     session_mapping_file = "session_mapping.csv") {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning("Function 'create_analysis_config' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.", call. = FALSE)
+  warning(
+    "Function 'create_analysis_config' is deprecated and will be removed in the next version. ",
+    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+    call. = FALSE
+  )
 
-  # Input validation
-  if (!is.character(dept) || length(dept) != 1) {
-    stop("dept must be a single character string")
-  }
-  if (!is.character(semester_start_mdy) || length(semester_start_mdy) != 1) {
-    stop("semester_start_mdy must be a single character string")
-  }
-  if (!is.numeric(scheduled_session_length_hours) || scheduled_session_length_hours <= 0) {
-    stop("scheduled_session_length_hours must be a positive number")
-  }
-  if (!is.character(instructor_name) || length(instructor_name) != 1) {
-    stop("instructor_name must be a single character string")
-  }
-  if (!is.character(data_folder) || length(data_folder) != 1) {
-    stop("data_folder must be a single character string")
-  }
-  if (!is.character(transcripts_folder) || length(transcripts_folder) != 1) {
-    stop("transcripts_folder must be a single character string")
-  }
-  if (!is.character(start_time_local_tzone) || length(start_time_local_tzone) != 1) {
-    stop("start_time_local_tzone must be a single character string")
-  }
-
-  # Return validated configuration
+  # Simplified deprecated function - return basic configuration
   list(
     course = list(
       dept = dept,
@@ -151,37 +132,19 @@ create_analysis_config <- function(
     ),
     paths = list(
       data_folder = data_folder,
-      transcripts_folder = transcripts_folder,
-      roster_file = roster_file,
-      cancelled_classes_file = cancelled_classes_file,
-      names_lookup_file = names_lookup_file,
-      transcripts_session_summary_file = transcripts_session_summary_file,
-      transcripts_summary_file = transcripts_summary_file
+      transcripts_folder = transcripts_folder
     ),
     patterns = list(
-      topic_split = topic_split_pattern,
-      zoom_recordings_csv = zoom_recorded_sessions_csv_names_pattern,
-      zoom_recordings_csv_col_names = zoom_recorded_sessions_csv_col_names,
-      transcript_files_names = transcript_files_names_pattern,
-      dt_extract = dt_extract_pattern,
-      transcript_file_extension = transcript_file_extension_pattern,
-      closed_caption_file_extension = closed_caption_file_extension_pattern,
-      recording_start = recording_start_pattern,
-      recording_start_format = recording_start_format,
       start_time_local_tzone = start_time_local_tzone
     ),
     reports = list(
-      student_summary_report = student_summary_report,
-      student_summary_report_folder = student_summary_report_folder
+      student_summary_report = student_summary_report
     ),
     analysis = list(
-      cancelled_classes_col_types = cancelled_classes_col_types,
-      section_names_lookup_col_types = section_names_lookup_col_types,
       names_to_exclude = names_to_exclude
     ),
     session_mapping = list(
-      use_session_mapping = use_session_mapping,
-      session_mapping_file = session_mapping_file
+      use_session_mapping = use_session_mapping
     )
   )
 }

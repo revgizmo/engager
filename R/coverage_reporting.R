@@ -9,7 +9,7 @@
 #' @return Coverage report
 generate_coverage_report <- function() {
   # Get coverage analysis
-  coverage_analysis <- analyze_coverage_gaps()
+  coverage_analysis <- covr::package_coverage()
 
   # Generate HTML report
   covr::report(covr::package_coverage(), "coverage_report.html")
@@ -24,5 +24,5 @@ generate_coverage_report <- function() {
     top_priority_files = names(head(coverage_analysis$impact_ranking, 5))
   )
 
-  return(summary_report)
+  summary_report
 }

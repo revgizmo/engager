@@ -32,13 +32,13 @@ validate_coverage_target <- function() {
     files_below_target = sum(file_coverage < 90)
   )
 
-  return(validation_report)
+  validation_report
 }
 
 #' Generate coverage improvement report
 #'
 #' @return Coverage improvement report
-generate_coverage_improvement_report <- function() {
+generate_coverage_report <- function() {
   # Get validation results
   validation_results <- validate_coverage_target()
 
@@ -51,5 +51,5 @@ generate_coverage_improvement_report <- function() {
     remaining_gaps = length(validation_results$remaining_gaps)
   )
 
-  return(summary)
+  summary
 }
