@@ -45,182 +45,23 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
                                         data_folder = ".",
                                         section_names_lookup_file = "section_names_lookup.csv") {
   # Validate inputs
-  if (!is.character(transcript_file_path) || length(transcript_file_path) != 1) {
-    stop("transcript_file_path must be a single character string", call. = FALSE)
-  }
-
-  if (!file.exists(transcript_file_path)) {
-    stop("Transcript file not found: ", transcript_file_path, call. = FALSE)
-  }
-
-  if (!is.data.frame(roster_data)) {
-    stop("roster_data must be a data frame", call. = FALSE)
-  }
-
-  valid_levels <- c("ferpa_strict", "ferpa_standard", "mask", "none")
-  if (!privacy_level %in% valid_levels) {
-    stop("Invalid privacy_level. Must be one of: ",
-      paste(valid_levels, collapse = ", "),
-      call. = FALSE
-    )
-  }
-
-  valid_actions <- c("stop", "warn")
-  if (!unmatched_names_action %in% valid_actions) {
-    stop("Invalid unmatched_names_action. Must be one of: ",
-      paste(valid_actions, collapse = ", "),
-      call. = FALSE
-    )
-  }
-
-  # defer roster content validation until after basic type checks
-
-  if (!is.character(data_folder) || length(data_folder) != 1) {
-    stop("data_folder must be a single character string", call. = FALSE)
-  }
-
-  if (!is.character(section_names_lookup_file) || length(section_names_lookup_file) != 1) {
-    stop("section_names_lookup_file must be a single character string", call. = FALSE)
-  }
-
-  # Validate roster has at least one usable name column and non-empty values
-  roster_name_columns <- c(
-    "first_last", "preferred_name", "formal_name", "name", "student_name"
-  )
-  has_roster_name_col <- any(roster_name_columns %in% names(roster_data))
-  non_empty_roster_names <- character(0)
-  if (has_roster_name_col) {
-    first_found <- intersect(roster_name_columns, names(roster_data))[1]
-    non_empty_roster_names <- roster_data[[first_found]]
-    non_empty_roster_names <- as.character(non_empty_roster_names)
-    non_empty_roster_names <- non_empty_roster_names[
-      !is.na(non_empty_roster_names) & nchar(trimws(non_empty_roster_names)) > 0
-    ]
-  }
-  if (!has_roster_name_col || length(non_empty_roster_names) == 0) {
-    stop(
-      paste0(
-        "Roster data appears empty or lacks required name columns.\n",
-        "Provide a roster with at least one of these columns: ",
-        paste(roster_name_columns, collapse = ", "),
-        ".\n",
-        "See vignette 'roster-cleaning' and example at ",
-        "system.file('extdata/roster.csv', package = 'zoomstudentengagement').\n",
-        "Tip: You can construct a minimal roster with your own data using ",
-        "columns like 'first_last' or 'preferred_name'."
-      ),
-      call. = FALSE
-    )
-  }
-
-  # Enhanced empty roster validation
-  if (nrow(roster_data) == 0) {
-    stop(
-      "Roster data is empty. Please provide a valid roster with student information.\n",
-      "See vignette('roster-cleaning') for guidance on creating a proper roster.",
-      call. = FALSE
-    )
-  }
+  validate_safe_name_matching_inputs(transcript_file_path, roster_data, privacy_level, 
+                                   unmatched_names_action, data_folder, section_names_lookup_file)
 
   # Stage 1: Load and process with real names in memory (quiet by default)
   diag_message("Stage 1: Loading transcript and performing name matching...")
 
-  # Load transcript (real names in memory only)
-  transcript_data <- load_zoom_transcript(transcript_file_path)
-
-  # Validate transcript has a usable name column
-  transcript_name_columns <- c(
-    "transcript_name", "name", "speaker_name", "participant_name"
-  )
-  has_transcript_name_col <- any(transcript_name_columns %in% names(transcript_data))
-  if (!has_transcript_name_col) {
-    stop(
-      paste0(
-        "Transcript file lacks a usable name column.\n",
-        "Expected one of: ",
-        paste(transcript_name_columns, collapse = ", "),
-        ".\n",
-        "Please verify the transcript format. Supported formats include ",
-        "Zoom VTT and chat exports with participant names."
-      ),
-      call. = FALSE
-    )
-  }
-
-  # Add column existence checks to prevent warnings
-  required_columns <- c("user_name", "message", "timestamp")
-  missing_cols <- setdiff(required_columns, names(transcript_data))
-  if (length(missing_cols) > 0) {
-    warning(
-      "Missing columns in transcript data: ", paste(missing_cols, collapse = ", "), "\n",
-      "This may affect processing. Expected columns: ", paste(required_columns, collapse = ", "),
-      call. = FALSE
-    )
-  }
-
+  # Load and validate transcript
+  transcript_data <- load_and_validate_transcript(transcript_file_path)
+  
   # Load existing name mappings
-  name_mappings <- tryCatch(
-    {
-      load_section_names_lookup(
-        data_folder = data_folder,
-        names_lookup_file = section_names_lookup_file
-      )
-    },
-    error = function(e) {
-      # If no mappings exist, create empty data frame
-      data.frame(
-        transcript_name = character(0),
-        preferred_name = character(0),
-        formal_name = character(0),
-        participant_type = character(0),
-        student_id = character(0),
-        stringsAsFactors = FALSE
-      )
-    }
+  name_mappings <- load_name_mappings(data_folder, section_names_lookup_file)
+
+  # Process name matching workflow
+  processed_data <- process_name_matching_workflow(
+    transcript_data, roster_data, name_mappings, unmatched_names_action, 
+    privacy_level, data_folder, section_names_lookup_file
   )
-
-  # Detect unmatched names
-  unmatched_names <- detect_unmatched_names(
-    transcript_data = transcript_data,
-    roster_data = roster_data,
-    name_mappings = name_mappings,
-    privacy_level = "none" # Need real names for detection
-  )
-
-  # Handle unmatched names according to configuration
-  if (length(unmatched_names) > 0) {
-    handle_unmatched_names(
-      unmatched_names = unmatched_names,
-      unmatched_names_action = unmatched_names_action,
-      privacy_level = privacy_level,
-      data_folder = data_folder,
-      section_names_lookup_file = section_names_lookup_file
-    )
-  }
-
-  # Stage 2: Apply privacy masking to outputs (quiet by default)
-  diag_message("Stage 2: Applying privacy masking to outputs...")
-
-  # Process transcript with privacy-aware matching
-  processed_data <- process_transcript_with_privacy(
-    transcript_data = transcript_data,
-    roster_data = roster_data,
-    name_mappings = name_mappings,
-    privacy_level = privacy_level
-  )
-
-  # Validate privacy compliance
-  validate_privacy_compliance(
-    data = processed_data,
-    privacy_level = privacy_level,
-    real_names = c(
-      extract_transcript_names(transcript_data),
-      extract_roster_names(roster_data)
-    )
-  )
-
-  # Explicitly clear real names from memory
-  rm(transcript_data, name_mappings, unmatched_names)
 
   diag_message("Name matching workflow completed successfully.")
 
@@ -680,4 +521,195 @@ apply_name_matching <- function(transcript_data, name_lookup, roster_data) {
 
   # Return result
   result
+}
+
+# Helper function to validate safe name matching inputs
+validate_safe_name_matching_inputs <- function(transcript_file_path, roster_data, privacy_level, 
+                                             unmatched_names_action, data_folder, section_names_lookup_file) {
+  # Validate inputs
+  if (!is.character(transcript_file_path) || length(transcript_file_path) != 1) {
+    stop("transcript_file_path must be a single character string", call. = FALSE)
+  }
+
+  if (!file.exists(transcript_file_path)) {
+    stop("Transcript file not found: ", transcript_file_path, call. = FALSE)
+  }
+
+  if (!is.data.frame(roster_data)) {
+    stop("roster_data must be a data frame", call. = FALSE)
+  }
+
+  valid_levels <- c("ferpa_strict", "ferpa_standard", "mask", "none")
+  if (!privacy_level %in% valid_levels) {
+    stop("Invalid privacy_level. Must be one of: ",
+      paste(valid_levels, collapse = ", "),
+      call. = FALSE
+    )
+  }
+
+  valid_actions <- c("stop", "warn")
+  if (!unmatched_names_action %in% valid_actions) {
+    stop("Invalid unmatched_names_action. Must be one of: ",
+      paste(valid_actions, collapse = ", "),
+      call. = FALSE
+    )
+  }
+
+  if (!is.character(data_folder) || length(data_folder) != 1) {
+    stop("data_folder must be a single character string", call. = FALSE)
+  }
+
+  if (!is.character(section_names_lookup_file) || length(section_names_lookup_file) != 1) {
+    stop("section_names_lookup_file must be a single character string", call. = FALSE)
+  }
+
+  # Validate roster has at least one usable name column and non-empty values
+  roster_name_columns <- c(
+    "first_last", "preferred_name", "formal_name", "name", "student_name"
+  )
+  has_roster_name_col <- any(roster_name_columns %in% names(roster_data))
+  non_empty_roster_names <- character(0)
+  if (has_roster_name_col) {
+    first_found <- intersect(roster_name_columns, names(roster_data))[1]
+    non_empty_roster_names <- roster_data[[first_found]]
+    non_empty_roster_names <- as.character(non_empty_roster_names)
+    non_empty_roster_names <- non_empty_roster_names[
+      !is.na(non_empty_roster_names) & nchar(trimws(non_empty_roster_names)) > 0
+    ]
+  }
+  if (!has_roster_name_col || length(non_empty_roster_names) == 0) {
+    stop(
+      paste0(
+        "Roster data appears empty or lacks required name columns.\n",
+        "Provide a roster with at least one of these columns: ",
+        paste(roster_name_columns, collapse = ", "),
+        ".\n",
+        "See vignette 'roster-cleaning' and example at ",
+        "system.file('extdata/roster.csv', package = 'zoomstudentengagement').\n",
+        "Tip: You can construct a minimal roster with your own data using ",
+        "columns like 'first_last' or 'preferred_name'."
+      ),
+      call. = FALSE
+    )
+  }
+
+  # Enhanced empty roster validation
+  if (nrow(roster_data) == 0) {
+    stop(
+      "Roster data is empty. Please provide a valid roster with student information.\n",
+      "See vignette('roster-cleaning') for guidance on creating a proper roster.",
+      call. = FALSE
+    )
+  }
+}
+
+# Helper function to load and validate transcript
+load_and_validate_transcript <- function(transcript_file_path) {
+  # Load transcript (real names in memory only)
+  transcript_data <- load_zoom_transcript(transcript_file_path)
+
+  # Validate transcript has a usable name column
+  transcript_name_columns <- c(
+    "transcript_name", "name", "speaker_name", "participant_name"
+  )
+  has_transcript_name_col <- any(transcript_name_columns %in% names(transcript_data))
+  if (!has_transcript_name_col) {
+    stop(
+      paste0(
+        "Transcript file lacks a usable name column.\n",
+        "Expected one of: ",
+        paste(transcript_name_columns, collapse = ", "),
+        ".\n",
+        "Please verify the transcript format. Supported formats include ",
+        "Zoom VTT and chat exports with participant names."
+      ),
+      call. = FALSE
+    )
+  }
+
+  # Add column existence checks to prevent warnings
+  required_columns <- c("user_name", "message", "timestamp")
+  missing_cols <- setdiff(required_columns, names(transcript_data))
+  if (length(missing_cols) > 0) {
+    warning(
+      "Missing columns in transcript data: ", paste(missing_cols, collapse = ", "), "\n",
+      "This may affect processing. Expected columns: ", paste(required_columns, collapse = ", "),
+      call. = FALSE
+    )
+  }
+  
+  transcript_data
+}
+
+# Helper function to load name mappings
+load_name_mappings <- function(data_folder, section_names_lookup_file) {
+  tryCatch(
+    {
+      load_section_names_lookup(
+        data_folder = data_folder,
+        names_lookup_file = section_names_lookup_file
+      )
+    },
+    error = function(e) {
+      # If no mappings exist, create empty data frame
+      data.frame(
+        transcript_name = character(0),
+        preferred_name = character(0),
+        formal_name = character(0),
+        participant_type = character(0),
+        student_id = character(0),
+        stringsAsFactors = FALSE
+      )
+    }
+  )
+}
+
+# Helper function to process name matching workflow
+process_name_matching_workflow <- function(transcript_data, roster_data, name_mappings, 
+                                         unmatched_names_action, privacy_level, 
+                                         data_folder, section_names_lookup_file) {
+  # Detect unmatched names
+  unmatched_names <- detect_unmatched_names(
+    transcript_data = transcript_data,
+    roster_data = roster_data,
+    name_mappings = name_mappings,
+    privacy_level = "none" # Need real names for detection
+  )
+
+  # Handle unmatched names according to configuration
+  if (length(unmatched_names) > 0) {
+    handle_unmatched_names(
+      unmatched_names = unmatched_names,
+      unmatched_names_action = unmatched_names_action,
+      privacy_level = privacy_level,
+      data_folder = data_folder,
+      section_names_lookup_file = section_names_lookup_file
+    )
+  }
+
+  # Stage 2: Apply privacy masking to outputs (quiet by default)
+  diag_message("Stage 2: Applying privacy masking to outputs...")
+
+  # Process transcript with privacy-aware matching
+  processed_data <- process_transcript_with_privacy(
+    transcript_data = transcript_data,
+    roster_data = roster_data,
+    name_mappings = name_mappings,
+    privacy_level = privacy_level
+  )
+
+  # Validate privacy compliance
+  validate_privacy_compliance(
+    data = processed_data,
+    privacy_level = privacy_level,
+    real_names = c(
+      extract_transcript_names(transcript_data),
+      extract_roster_names(roster_data)
+    )
+  )
+
+  # Explicitly clear real names from memory
+  rm(transcript_data, name_mappings, unmatched_names)
+  
+  processed_data
 }

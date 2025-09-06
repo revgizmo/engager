@@ -215,7 +215,21 @@ detect_duplicate_transcripts <- function(
     similarity_matrix <- calculate_content_similarity_matrix(existing_files, existing_names, similarity_matrix, method, names_to_exclude)
   }
 
+  # Find duplicate groups and generate results
+  result <- find_duplicate_groups_and_generate_results(existing_names, similarity_matrix, similarity_threshold, method)
+  
+  return(list(
+    duplicate_groups = result$duplicate_groups,
+    similarity_matrix = similarity_matrix,
+    recommendations = result$recommendations,
+    summary = result$summary
+  ))
+}
+
+# Helper function to find duplicate groups and generate results
+find_duplicate_groups_and_generate_results <- function(existing_names, similarity_matrix, similarity_threshold, method) {
   # Find duplicate groups
+  duplicate_groups <- list()
   processed <- logical(length(existing_names))
 
   for (i in seq_along(existing_names)) {
@@ -255,11 +269,10 @@ detect_duplicate_transcripts <- function(
     similarity_threshold = similarity_threshold,
     method = method
   )
-
-  return(list(
+  
+  list(
     duplicate_groups = duplicate_groups,
-    similarity_matrix = similarity_matrix,
     recommendations = recommendations,
     summary = summary
-  ))
+  )
 }
