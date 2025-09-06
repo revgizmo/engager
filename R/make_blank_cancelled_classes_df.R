@@ -15,16 +15,21 @@ mkblnkcnclldclsssdf <- function() {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-  warning(
-    "Function 'make_blank_cancelled_classes_df' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
+    warning(
+      "Function 'make_blank_cancelled_classes_df' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   # Use base R operations instead of dplyr to avoid segmentation fault
   result <- readr::read_csv(
-    I("dept,course_section,course,section,day,time,instructor,Topic,ID,Start Time,File Size (MB),File Count,Total Views,Total Downloads,Last Accessed,match_start_time,match_end_time,date_extract,recording_start,start_time_local,transcript_file,chat_file,closed_caption_file"),
+    I(
+      "dept,course_section,course,section,day,time,instructor,Topic,ID,Start Time,",
+      "File Size (MB),File Count,Total Views,Total Downloads,Last Accessed,",
+      "match_start_time,match_end_time,date_extract,recording_start,start_time_local,",
+      "transcript_file,chat_file,closed_caption_file"
+    ),
     col_types = "cciiccccccdiiicTTcTTccci"
   )
 

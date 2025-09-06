@@ -51,11 +51,11 @@
 #' }
 #'
 ldndprcsszmtrnscrpt <- function(transcript_file_path = NULL,
-                                             consolidate_comments = TRUE,
-                                             max_pause_sec = 1,
-                                             add_dead_air = TRUE,
-                                             dead_air_name = "dead_air",
-                                             na_name = "unknown") {
+                                consolidate_comments = TRUE,
+                                max_pause_sec = 1,
+                                add_dead_air = TRUE,
+                                dead_air_name = "dead_air",
+                                na_name = "unknown") {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning(

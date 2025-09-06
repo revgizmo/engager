@@ -29,7 +29,6 @@
 #' consolidate_transcript(df = "NULL")
 #'
 consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {
-
   if (tibble::is_tibble(df)) {
     # Handle empty data case
     if (nrow(df) == 0) {

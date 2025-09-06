@@ -20,8 +20,8 @@
 #' results <- validate_ideal_transcript_structure(transcript_data = transcript_data)
 #' }
 vldtdltrnscrptstrctr <- function(transcript_data = NULL,
-                                                file_path = NULL,
-                                                strict_mode = TRUE) {
+                                 file_path = NULL,
+                                 strict_mode = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning(
@@ -230,8 +230,8 @@ validate_ideal_content_quality <- function(transcript_data = NULL,
 #' results <- validate_ideal_timing_consistency(transcript_data)
 #' }
 vldtdltmngcnsstncy <- function(transcript_data = NULL,
-                                              max_gap_seconds = 300,
-                                              check_overlaps = TRUE) {
+                               max_gap_seconds = 300,
+                               check_overlaps = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning(
@@ -459,9 +459,9 @@ validate_ideal_name_coverage <- function(transcript_data = NULL,
 #' )
 #' }
 vldtdltrnscrptcmprhnsv <- function(transcript_data = NULL,
-                                                    file_path = NULL,
-                                                    validation_options = NULL,
-                                                    detailed_report = TRUE) {
+                                   file_path = NULL,
+                                   validation_options = NULL,
+                                   detailed_report = TRUE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning(
@@ -1441,7 +1441,7 @@ gen_timing_recommendations <- function(results) {
 
 #' Generate name coverage recommendations
 #' @keywords internal
-generate_name_coverage_recommendations <- function(results) {
+generate_name_coverage_recs <- function(results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning(
@@ -1520,7 +1520,7 @@ generate_comprehensive_summary <- function(results) {
 
 #' Generate comprehensive recommendations
 #' @keywords internal
-generate_comprehensive_recommendations <- function(results) {
+generate_comprehensive_recs <- function(results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning(

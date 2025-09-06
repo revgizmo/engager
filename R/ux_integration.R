@@ -24,7 +24,7 @@ update_ux_categories <- function(function_categories, cran_functions) {
   prioritized_functions <- prioritize_functions_for_ux(function_categories, cran_functions)
 
   # Allocate functions to UX levels
-  ux_categories$essential <- prioritized_functions[1:min(5, length(prioritized_functions))]
+  ux_categories$essential <- prioritized_functions[seq_len(min(5, length(prioritized_functions)))]
   ux_categories$common <- prioritized_functions[6:min(15, length(prioritized_functions))]
   ux_categories$advanced <- prioritized_functions[16:min(30, length(prioritized_functions))]
   ux_categories$expert <- prioritized_functions[31:length(prioritized_functions)]
@@ -123,7 +123,7 @@ update_help_system <- function(function_categories, ux_categories) {
 #'
 #' @param ux_categories UX categories
 #' @return Progressive disclosure configuration
-generate_progressive_disclosure_config <- function(ux_categories) {
+generate_disclosure_config <- function(ux_categories) {
   cat("🎛️  Generating progressive disclosure configuration...\n")
 
   disclosure_config <- list(
@@ -228,7 +228,7 @@ generate_function_description <- function(func_name, ux_level) {
   )
 
   if (ux_level %in% names(level_prefixes)) {
-    paste0(level_prefixes[[ux_level]], base_desc
+    paste0(level_prefixes[[ux_level]], base_desc)
   } else {
     base_desc
   }
@@ -290,8 +290,8 @@ test_ux_integration <- function() {
 
   cat("✅ UX integration test completed\n")
 
-  return(list(
+  list(
     ux_categories = ux_categories,
     help_system = help_system
-  ))
+  )
 }

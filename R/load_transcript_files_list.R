@@ -54,7 +54,6 @@ load_transcript_files_list <-
            recording_start_pattern = "(?<=GMT)\\d{8}-\\d{6}",
            recording_start_format = "%Y%m%d-%H%M%S",
            start_time_local_tzone = "America/Los_Angeles") {
-
     transcripts_folder_path <- file.path(data_folder, transcripts_folder)
 
     if (!dir.exists(transcripts_folder_path)) {
@@ -114,7 +113,8 @@ load_transcript_files_list <-
         row_date <- result$date_extract[k]
         row_start <- result$recording_start[k]
         for (file_type in file_types) {
-          type_files <- df[df$file_type == file_type & df$date_extract == row_date & df$recording_start == row_start, "file_name", drop = TRUE]
+          type_files <- df[df$file_type == file_type & df$date_extract == row_date &
+            df$recording_start == row_start, "file_name", drop = TRUE]
           if (length(type_files) > 0) {
             result[[file_type]][k] <- type_files[1]
           }

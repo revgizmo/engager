@@ -38,7 +38,7 @@ validate_coverage_target <- function() {
 #' Generate coverage improvement report
 #'
 #' @return Coverage improvement report
-generate_coverage_improvement_report <- function() {
+generate_coverage_report <- function() {
   # Get validation results
   validation_results <- validate_coverage_target()
 

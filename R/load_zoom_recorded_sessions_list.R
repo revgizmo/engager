@@ -100,13 +100,10 @@ ldzmrcrddsssnslst <-
            semester_start_mdy = "Jan 01, 2024",
            scheduled_session_length_hours = 1.5,
            verbose = FALSE) {
-    . <-
-      `Topic` <-
-      `ID` <-
-      `Start Time` <-
-      `File Size (MB)` <-
-      `File Count` <-
-      `Total Views` <-
+    # Declare global variables to avoid R CMD check warnings
+    # nolint start: object_name_linter
+    . <- `Topic` <- `ID` <- `Start Time` <- `File Size (MB)` <- `File Count` <- `Total Views` <- NULL
+    # nolint end: object_name_linter
 
     dept_var <- dept
     # Handle trailing comma in column names
@@ -258,7 +255,8 @@ ldzmrcrddsssnslst <-
 
     result$match_start_time <- parsed_dates
     # Add scheduled session length plus a 0.5 hour buffer, per tests
-    result$match_end_time <- result$match_start_time + lubridate::dhours(scheduled_session_length_hours) + lubridate::dminutes(30)
+    result$match_end_time <- result$match_start_time +
+      lubridate::dhours(scheduled_session_length_hours) + lubridate::dminutes(30)
 
     if (.verbose) {
       diag_message("After date parsing:")

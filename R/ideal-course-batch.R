@@ -54,11 +54,11 @@ process_ideal_course_batch <- function(include_roster = TRUE,
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-  warning(
-    "Function 'process_ideal_course_batch' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
+    warning(
+      "Function 'process_ideal_course_batch' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   # Validate inputs
@@ -266,11 +266,11 @@ compare_ideal_sessions <- function(batch_results = NULL,
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-  warning(
-    "Function 'compare_ideal_sessions' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
+    warning(
+      "Function 'compare_ideal_sessions' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   # Validate inputs
@@ -387,11 +387,11 @@ validate_ideal_scenarios <- function(batch_results = NULL,
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-  warning(
-    "Function 'validate_ideal_scenarios' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
+    warning(
+      "Function 'validate_ideal_scenarios' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   # Set default validation rules if none provided
@@ -701,12 +701,12 @@ validate_session_count <- function(session_data, min_sessions) {
   actual_sessions <- length(session_data)
   status <- ifelse(actual_sessions >= min_sessions, "PASS", "FAIL")
 
-  return(list(
+  list(
     status = status,
     expected = min_sessions,
     actual = actual_sessions,
     message = paste("Expected at least", min_sessions, "sessions, found", actual_sessions)
-  ))
+  )
 }
 
 #' Validate participant counts
@@ -823,11 +823,11 @@ validate_name_consistency <- function(session_data) {
   # Check for consistent name formats (basic check)
   has_consistent_format <- all(grepl("^[A-Za-z]+", all_names))
 
-  return(list(
+  list(
     status = ifelse(has_consistent_format, "PASS", "FAIL"),
     unique_names = length(all_names),
     has_consistent_format = has_consistent_format
-  ))
+  )
 }
 
 #' Validate timestamp consistency
@@ -945,7 +945,7 @@ generate_data_quality_report <- function(session_data, summary_metrics) {
 
 #' Generate ideal validation recommendations
 #' @keywords internal
-generate_ideal_validation_recommendations <- function(rule_results) {
+generate_validation_recs <- function(rule_results) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning(

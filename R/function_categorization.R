@@ -84,7 +84,7 @@ get_functions_by_category <- function(categories, category_name) {
   if (category_name %in% names(categories)) {
     categories[[category_name]]
   } else {
-    character(0
+    character(0)
   }
 }
 
@@ -174,7 +174,7 @@ get_cran_functions <- function(categories, max_functions = 30) {
       # Add functions from this category
       remaining_slots <- max_functions - length(cran_functions)
       if (remaining_slots > 0) {
-        functions_to_add <- category_functions[1:min(remaining_slots, length(category_functions))]
+        functions_to_add <- category_functions[seq_len(min(remaining_slots, length(category_functions)))]
         cran_functions <- c(cran_functions, functions_to_add)
       }
     }

@@ -113,7 +113,9 @@ make_clean_names_df <- function(data_folder = ".",
     roster_sessions_clean$course_section <- as.character(roster_sessions_clean$transcript_section)
   } else {
     roster_sessions_clean$course_section <- paste(roster_sessions_clean$course,
-    roster_sessions_clean$section, sep = ".")
+      roster_sessions_clean$section,
+      sep = "."
+    )
   }
 
   roster_sessions_clean$course <- as.character(roster_sessions_clean$course)
@@ -200,14 +202,19 @@ make_clean_names_df <- function(data_folder = ".",
 
   # Handle coalesce operations
   result$formal_name[is.na(result$formal_name)] <- NA_character_
-  result$preferred_name[is.na(result$preferred_name) & !is.na(result$formal_name)] <- as.character(result$formal_name[is.na(result$preferred_name) & !is.na(result$formal_name)])
+  result$preferred_name[is.na(result$preferred_name) & !is.na(result$formal_name)] <-
+    as.character(result$formal_name[is.na(result$preferred_name) & !is.na(result$formal_name)])
   result$preferred_name <- as.character(result$preferred_name)
   result$student_id[is.na(result$student_id)] <- NA_character_
 
   # Select final columns using base R
   # Ensure we preserve all expected columns that might be in the input
-  expected_cols <- c("preferred_name",
-  "formal_name", "transcript_name", "student_id", "section", "course_section", "session_num", "n", "duration", "wordcount", "comments", "n_perc", "duration_perc", "wordcount_perc", "wpm", "name_raw", "start_time_local", "time", "day", "course", "dept")
+  expected_cols <- c(
+    "preferred_name", "formal_name", "transcript_name", "student_id",
+    "section", "course_section", "session_num", "n", "duration", "wordcount",
+    "comments", "n_perc", "duration_perc", "wordcount_perc", "wpm", "name_raw",
+    "start_time_local", "time", "day", "course", "dept"
+  )
 
   # Get all available columns from the result
   available_cols <- names(result)

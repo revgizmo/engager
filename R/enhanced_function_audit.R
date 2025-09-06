@@ -74,7 +74,7 @@ analyze_function <- function(function_name) {
   # Analyze function complexity
   complexity <- analyze_function_complexity(function_name)
 
-  return(list(
+  list(
     name = function_name,
     signature = signature,
     documentation = documentation,
@@ -82,7 +82,7 @@ analyze_function <- function(function_name) {
     dependencies = dependencies,
     file_location = file_location,
     complexity = complexity
-  ))
+  )
 }
 
 #' Get function signature
@@ -210,7 +210,7 @@ get_function_dependencies <- function(function_name) {
       }
     },
     error = function(e) {
-      character(0
+      character(0)
     }
   )
 }
@@ -265,10 +265,10 @@ analyze_function_complexity <- function(function_name) {
       }
     },
     error = function(e) {
-      return(list(
+      list(
         lines_of_code = 0, has_loops = FALSE, has_conditionals = FALSE,
         has_error_handling = FALSE, function_calls = 0
-      ))
+      )
     }
   )
 }

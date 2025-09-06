@@ -7,6 +7,7 @@
 #' @noRd
 
 # Essential functions to keep (25-30 functions)
+# nolint start: object_name_linter
 ESSENTIAL_FUNCTIONS <- c(
   # Core workflow functions (7)
   "analyze_transcripts", # Main user-facing function
@@ -40,8 +41,10 @@ ESSENTIAL_FUNCTIONS <- c(
   "safe_name_matching_workflow", # Name matching workflow
   "validate_schema" # Data validation
 )
+# nolint end: object_name_linter
 
 # Functions to deprecate immediately (all non-essential functions)
+# nolint start: object_name_linter
 DEPRECATED_FUNCTIONS <- c(
   # Utility functions that can be internalized
   "add_dead_air_rows",
@@ -208,8 +211,10 @@ DEPRECATED_FUNCTIONS <- c(
   "validate_vtt_format",
   "zse_schema"
 )
+# nolint end: object_name_linter
 
 # Functions to keep but make internal (not exported)
+# nolint start: object_name_linter
 INTERNAL_FUNCTIONS <- c(
   "abort_zse",
   "%||%",
@@ -220,6 +225,7 @@ INTERNAL_FUNCTIONS <- c(
   "str",
   "system.file"
 )
+# nolint end: object_name_linter
 
 #' Add Deprecation Warnings to Non-Essential Functions
 #'

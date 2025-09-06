@@ -35,7 +35,7 @@ select_cran_functions <- function(function_categories, max_functions = 30) {
       allocation <- get_category_allocation(category, max_functions, length(cran_functions))
 
       if (allocation > 0 && length(category_functions) > 0) {
-        functions_to_add <- category_functions[1:min(allocation, length(category_functions))]
+        functions_to_add <- category_functions[seq_len(min(allocation, length(category_functions)))]
         cran_functions <- c(cran_functions, functions_to_add)
         category_allocations[[category]] <- length(functions_to_add)
 
@@ -49,7 +49,7 @@ select_cran_functions <- function(function_categories, max_functions = 30) {
 
   # Remove any duplicates and limit to max_functions
   cran_functions <- unique(cran_functions)
-  cran_functions <- cran_functions[1:min(max_functions, length(cran_functions))]
+  cran_functions <- cran_functions[seq_len(min(max_functions, length(cran_functions)))]
 
   cat(sprintf("\n✅ Selected %d functions for CRAN submission\n", length(cran_functions)))
 
@@ -239,7 +239,7 @@ get_migration_strategy <- function(deprecated_func, replacement) {
   if (replacement == "No direct replacement available") {
     "Function will be removed. Consider alternative approaches or contact maintainers."
   } else {
-    paste("Replace", deprecated_func, "with", replacement, "and update function calls."
+    paste("Replace", deprecated_func, "with", replacement, "and update function calls.")
   }
 }
 
@@ -301,8 +301,8 @@ test_cran_optimization <- function() {
 
   cat("✅ CRAN optimization test completed\n")
 
-  return(list(
+  list(
     cran_selection = cran_selection,
     deprecated_functions = deprecated_functions
-  ))
+  )
 }

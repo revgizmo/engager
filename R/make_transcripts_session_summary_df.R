@@ -67,12 +67,18 @@ mktrnscrptssssnsmmrydf <- function(clean_names_df = NULL) {
   }
 
   # Define expected columns
-  expected_cols <- c("section",
-  "day", "time", "session_num", "preferred_name", "course_section", "wordcount", "duration")
+  expected_cols <- c(
+    "section",
+    "day", "time", "session_num", "preferred_name", "course_section", "wordcount", "duration"
+  )
   # Filter to only use columns that are present
   available_cols <- intersect(expected_cols, names(clean_names_df))
   if (length(available_cols) == 0) {
-    stop("clean_names_df must contain at least one of the expected columns: section, day, time, session_num, preferred_name, course_section, wordcount, duration.")
+    stop(
+      "clean_names_df must contain at least one of the expected columns: ",
+      "section, day, time, session_num, preferred_name, course_section, ",
+      "wordcount, duration."
+    )
   }
 
   # Use base R operations instead of dplyr to avoid segmentation fault

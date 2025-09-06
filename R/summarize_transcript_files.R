@@ -86,7 +86,9 @@ summarize_transcript_files <-
       if (preserve_metadata) {
         # Use base R operations instead of dplyr to avoid segmentation fault
         original_metadata <- transcript_file_names[,
-        setdiff(names(transcript_file_names), "transcript_file"), drop = FALSE]
+          setdiff(names(transcript_file_names), "transcript_file"),
+          drop = FALSE
+        ]
         original_metadata$row_id <- seq_len(nrow(original_metadata))
       }
 

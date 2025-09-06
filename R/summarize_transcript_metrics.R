@@ -58,7 +58,6 @@ summarize_transcript_metrics <- function(transcript_file_path = "",
                                          na_name = "unknown",
                                          transcript_df = NULL,
                                          comments_format = c("list", "text", "count")) {
-
   consolidate_comments_ <- consolidate_comments
   max_pause_sec_ <- max_pause_sec
   add_dead_air_ <- add_dead_air
@@ -190,8 +189,14 @@ summarize_transcript_metrics <- function(transcript_file_path = "",
 
     # Attach provenance attributes
     attr(result, "schema_version") <- "1.0"
-    attr(result,
-    "source_files") <- if (!is.null(transcript_file_path) && nzchar(transcript_file_path)) basename(transcript_file_path) else NA_character_
+    attr(
+      result,
+      "source_files"
+    ) <- if (!is.null(transcript_file_path) && nzchar(transcript_file_path)) {
+      basename(transcript_file_path)
+    } else {
+      NA_character_
+    }
     attr(result, "processing_timestamp") <- as.character(Sys.time())
     attr(result, "privacy_level") <- getOption("zoomstudentengagement.privacy_level", "mask")
 

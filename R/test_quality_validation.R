@@ -44,6 +44,7 @@ validate_privacy_compliance <- function() {
   )
 
   # Validate privacy settings
+  privacy_validation <- all(
     privacy_tests$default_privacy_level == "ferpa_standard",
     privacy_tests$verbose_default == FALSE,
     privacy_tests$quiet_tests == TRUE
@@ -58,5 +59,5 @@ validate_privacy_compliance <- function() {
     privacy_compliance = "MAINTAINED"
   )
 
-  return(compliance_report)
+  compliance_report
 }

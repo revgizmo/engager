@@ -321,12 +321,12 @@ handle_unmatched_names <- function(unmatched_names,
 #'   roster_data = roster_data
 #' )
 prcsstrnscrptwthprvcy <- function(transcript_data = NULL,
-                                            roster_data = NULL,
-                                            name_mappings = NULL,
-                                            privacy_level = getOption(
-                                              "zoomstudentengagement.privacy_level",
-                                              "mask"
-                                            )) {
+                                  roster_data = NULL,
+                                  name_mappings = NULL,
+                                  privacy_level = getOption(
+                                    "zoomstudentengagement.privacy_level",
+                                    "mask"
+                                  )) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning(

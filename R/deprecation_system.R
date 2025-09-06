@@ -217,10 +217,10 @@ crtdprctndcmnttn <- function(deprecated_functions, migration_recommendations) {
 
   cat("✅ Deprecation documentation created\n")
 
-  return(list(
+  list(
     vignette_content = vignette_content,
     function_docs = function_docs
-  ))
+  )
 }
 
 #' Validate deprecation implementation
@@ -258,8 +258,9 @@ vldtdprctnmplmnttn <- function(cran_functions, deprecated_functions, migration_r
 #' @param migration_recommendations Migration recommendations
 #' @param validation_results Validation results
 #' @return Deprecation summary report
-gen_deprecation_summary_report <- function(cran_functions,
-deprecated_functions, migration_recommendations, validation_results) {
+gen_deprecation_summary_report <- function(
+    cran_functions,
+    deprecated_functions, migration_recommendations, validation_results) {
   cat("📊 Generating deprecation summary report...\n")
 
   report <- list(
@@ -306,14 +307,16 @@ test_deprecation_system <- function() {
 
   migration_guide <- generate_migration_guide(sample_deprecated_functions, sample_migration_recommendations)
   deprecation_warnings <- create_deprecation_warnings(sample_deprecated_functions, sample_migration_recommendations)
-  validation_results <- validate_deprecation_implementation(sample_cran_functions,
-  sample_deprecated_functions, sample_migration_recommendations)
+  validation_results <- validate_deprecation_implementation(
+    sample_cran_functions,
+    sample_deprecated_functions, sample_migration_recommendations
+  )
 
   cat("✅ Deprecation system test completed\n")
 
-  return(list(
+  list(
     migration_guide = migration_guide,
     deprecation_warnings = deprecation_warnings,
     validation_results = validation_results
-  ))
+  )
 }

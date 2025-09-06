@@ -14,11 +14,11 @@ write_engagement_metrics <- function(metrics_data = NULL, file_path = NULL, comm
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
-  warning(
-    "Function 'write_engagement_metrics' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
+    warning(
+      "Function 'write_engagement_metrics' is deprecated and will be removed in the next version. ",
+      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
+      call. = FALSE
+    )
   }
 
   comments_format <- match.arg(comments_format)

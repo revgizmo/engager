@@ -31,13 +31,13 @@ analyze_coverage_gaps <- function() {
     }
   )
 
-  return(list(
+  list(
     overall_coverage = covr::percent_coverage(coverage),
     file_coverage = file_coverage,
     low_coverage = low_coverage,
     impact_ranking = impact_ranking,
     target_gap = max(0, 90 - covr::percent_coverage(coverage))
-  ))
+  )
 }
 
 #' Rank files by coverage impact

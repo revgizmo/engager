@@ -25,7 +25,6 @@
 #' load_zoom_transcript(transcript_file_path = transcript_file)
 #'
 load_zoom_transcript <- function(transcript_file_path = NULL) {
-
   if (!file.exists(transcript_file_path)) {
     abort_zse("file.exists(transcript_file_path) is not TRUE", class = "zse_input_error")
   }
@@ -79,8 +78,10 @@ load_zoom_transcript <- function(transcript_file_path = NULL) {
   # Split comment into name and text more efficiently
   name_comment_split <- strsplit(transcript_df$comment, ": ", fixed = TRUE)
   transcript_df$name <- sapply(name_comment_split, function(x) if (length(x) > 1) x[1] else NA_character_)
-  transcript_df$comment <- sapply(name_comment_split,
-  function(x) if (length(x) > 1) paste(x[-1], collapse = ": ") else x[1])
+  transcript_df$comment <- sapply(
+    name_comment_split,
+    function(x) if (length(x) > 1) paste(x[-1], collapse = ": ") else x[1]
+  )
 
   # Split timestamp more efficiently
   time_split <- strsplit(transcript_df$timestamp, " --> ", fixed = TRUE)
@@ -104,8 +105,10 @@ load_zoom_transcript <- function(transcript_file_path = NULL) {
   })
 
   # Select final columns using base R
-  result <- transcript_df[,
-  c("transcript_file", "comment_num", "name", "comment", "start", "end", "duration", "wordcount")]
+  result <- transcript_df[
+    ,
+    c("transcript_file", "comment_num", "name", "comment", "start", "end", "duration", "wordcount")
+  ]
 
   # Filter out rows with missing or invalid timestamps, comments, or negative duration
   result <- result[
@@ -124,6 +127,9 @@ load_zoom_transcript <- function(transcript_file_path = NULL) {
 
   # Convert to tibble to maintain expected return type and validate minimal shape
   result <- tibble::as_tibble(result)
-  try(validate_schema(result, c("transcript_file", "comment_num", "name", "comment", "start", "end", "duration", "wordcount")), silent = TRUE)
+  try(validate_schema(result, c(
+    "transcript_file", "comment_num", "name", "comment",
+    "start", "end", "duration", "wordcount"
+  )), silent = TRUE)
   return(result)
 }

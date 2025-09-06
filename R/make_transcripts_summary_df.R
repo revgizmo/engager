@@ -30,7 +30,6 @@
 #' make_transcripts_summary_df(sample_data)
 make_transcripts_summary_df <-
   function(transcripts_session_summary_df = NULL) {
-
     if (tibble::is_tibble(transcripts_session_summary_df)
     ) {
       # Check for empty input
@@ -54,8 +53,10 @@ make_transcripts_summary_df <-
       group_cols <- c("section", "preferred_name")
 
       # Create a unique identifier for each group
-      transcripts_session_summary_df$group_id <- apply(transcripts_session_summary_df[,
-      group_cols], 1, paste, collapse = "|")
+      transcripts_session_summary_df$group_id <- apply(transcripts_session_summary_df[
+        ,
+        group_cols
+      ], 1, paste, collapse = "|")
 
       # Aggregate by group using base R
       group_ids <- unique(transcripts_session_summary_df$group_id)
@@ -63,7 +64,9 @@ make_transcripts_summary_df <-
 
       for (i in seq_along(group_ids)) {
         group_id <- group_ids[i]
-        group_data <- transcripts_session_summary_df[transcripts_session_summary_df$group_id == group_id, , drop = FALSE]
+        group_data <- transcripts_session_summary_df[transcripts_session_summary_df$group_id == group_id, ,
+          drop = FALSE
+        ]
 
         # Calculate summaries
         session_ct <- sum(!is.na(group_data$duration))

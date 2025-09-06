@@ -64,7 +64,6 @@
 mkstdntsnlytrnscrptssmmrydf <-
   function(transcripts_session_summary_df = NULL,
            preferred_name_exclude_cv = c("dead_air", "Instructor Name", "Guests", "unknown")) {
-
     if (tibble::is_tibble(transcripts_session_summary_df)
     ) {
       # Use base R operations instead of dplyr to avoid segmentation fault
