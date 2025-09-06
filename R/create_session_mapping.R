@@ -113,6 +113,17 @@ create_session_mapping <- function(
         }
       }
       
+      # If auto_assign_patterns is empty, don't do any pattern matching
+      if (!is.null(auto_assign_patterns) && length(auto_assign_patterns) == 0) {
+        result$dept[i] <- NA_character_
+        result$course[i] <- NA_character_
+        result$section[i] <- NA_character_
+        result$course_section[i] <- NA_character_
+        result$instructor[i] <- NA_character_
+        result$notes[i] <- "NEEDS MANUAL ASSIGNMENT"
+        matched <- TRUE
+      }
+      
       # Fallback to hardcoded patterns if no auto_assign_patterns match
       if (!matched) {
         if (grepl("MATH.*250", topic)) {

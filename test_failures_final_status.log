@@ -9,8 +9,8 @@ The following objects are masked from ‘package:base’:
 ✔ | F W  S  OK | Context
 
 ⠏ |          0 | add_dead_air_rows                                              
-⠼ |   6      9 | add_dead_air_rows                                              
-⠋ |   13     38 | add_dead_air_rows                                             
+⠏ |   7     13 | add_dead_air_rows                                              
+⠼ |   14     41 | add_dead_air_rows                                             
 ✔ |   19     63 | add_dead_air_rows
 ────────────────────────────────────────────────────────────────────────────────
 Warning ('test-add_dead_air_rows.R:22:3'): add_dead_air_rows returns NULL for non-tibble input
@@ -130,29 +130,34 @@ Backtrace:
 
 ⠏ |          0 | analyze_multi_session_attendance                               
 ⠸ |          4 | analyze_multi_session_attendance                               
-⠏ |         10 | analyze_multi_session_attendance                               
-⠸ |         14 | analyze_multi_session_attendance                               
-⠴ |         16 | analyze_multi_session_attendance                               
-⠏ |         20 | analyze_multi_session_attendance                               
-✔ |         21 | analyze_multi_session_attendance [1.3s]
+✔ |         21 | analyze_multi_session_attendance
 
 ⠏ |          0 | analyze_transcripts                                            
-⠋ |   1      0 | analyze_transcripts                                            
 ⠙ |   2      0 | analyze_transcripts                                            
 ⠏ |   4      6 | analyze_transcripts                                            
-⠦ |   8      9 | analyze_transcripts                                            
-⠼ |   12     13 | analyze_transcripts                                           
+⠹ |   6      7 | analyze_transcripts                                            
+⠧ |   9      9 | analyze_transcripts                                            
+⠹ |   11     12 | analyze_transcripts                                           
+⠦ |   13     14 | analyze_transcripts                                           
 ⠙ |   16     16 | analyze_transcripts                                           
-⠏ |   18  2  30 | analyze_transcripts                                           
+⠙ |   16  2  24 | analyze_transcripts                                           
+⠋ |   19  2  30 | analyze_transcripts                                           
+⠦ |   21  2  34 | analyze_transcripts                                           
 ⠼ |   23  3  39 | analyze_transcripts                                           
-⠴ |   29  3  44 | analyze_transcripts                                           
-⠼ |   35  3  47 | analyze_transcripts                                           
+⠇ |   25  3  41 | analyze_transcripts                                           
+⠹ |   28  3  42 | analyze_transcripts                                           
+⠦ |   30  3  44 | analyze_transcripts                                           
+⠇ |   31  3  45 | analyze_transcripts                                           
+⠙ |   32  3  47 | analyze_transcripts                                           
+⠴ |   36  3  47 | analyze_transcripts                                           
+⠏ |   40  3  47 | analyze_transcripts                                           
 ⠼ |   42  4  49 | analyze_transcripts                                           
 ⠇ |   43  4  52 | analyze_transcripts                                           
 ⠼ |   44  5  56 | analyze_transcripts                                           
 ⠧ |   46  5  57 | analyze_transcripts                                           
-⠏ |   52  6  62 | analyze_transcripts                                           
-✔ |   55  7  70 | analyze_transcripts [2.0s]
+⠇ |   51  6  62 | analyze_transcripts                                           
+⠦ |   55  6  66 | analyze_transcripts                                           
+✔ |   55  7  70 | analyze_transcripts [3.3s]
 ────────────────────────────────────────────────────────────────────────────────
 Warning ('test-analyze_transcripts.R:98:7'): analyze_transcripts processes valid folder correctly
 Function 'add_dead_air_rows' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -868,7 +873,6 @@ Backtrace:
 ────────────────────────────────────────────────────────────────────────────────
 
 ⠏ |          0 | calculate_content_similarity                                   
-⠇ |   5      4 | calculate_content_similarity                                   
 ✔ |   7      8 | calculate_content_similarity
 ────────────────────────────────────────────────────────────────────────────────
 Warning ('test-calculate_content_similarity.R:3:3'): calculate_content_similarity handles NULL transcripts
@@ -946,9 +950,7 @@ Step 3: Full function completed successfully
 ✔ |      2   0 | consolidate_transcript_segfault
 
 ⠏ |          0 | create_analysis_config                                         
-⠦ |   2     15 | create_analysis_config                                         
-⠏ |   10     30 | create_analysis_config                                        
-⠹ |   16     37 | create_analysis_config                                        
+⠦ |   8     29 | create_analysis_config                                         
 ✔ |   17     42 | create_analysis_config
 ────────────────────────────────────────────────────────────────────────────────
 Warning ('test-create_analysis_config.R:2:3'): create_analysis_config creates valid configuration with defaults
@@ -1115,10 +1117,7 @@ Backtrace:
 ────────────────────────────────────────────────────────────────────────────────
 
 ⠏ |          0 | create_course_info                                             
-⠙ |   1      1 | create_course_info                                             
-⠼ |   1      4 | create_course_info                                             
-⠇ |   2      7 | create_course_info                                             
-✔ |   5     16 | create_course_info [1.0s]
+✔ |   5     16 | create_course_info
 ────────────────────────────────────────────────────────────────────────────────
 Warning ('test-create_course_info.R:2:3'): create_course_info creates basic course info
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1170,21 +1169,14 @@ Backtrace:
 ────────────────────────────────────────────────────────────────────────────────
 
 ⠏ |          0 | create_session_mapping                                         
-⠋ |   1      0 | create_session_mapping                                         
-⠙ |   1      1 | create_session_mapping                                         
-⠼ |   2      3 | create_session_mapping                                         
-⠴ |   2      4 | create_session_mapping                                         
-⠼ |   5     10 | create_session_mapping                                         
-⠼ |   8     17 | create_session_mapping                                         
-⠴ | 1 8     17 | create_session_mapping                                         
-⠼ | 5 11     19 | create_session_mapping                                        
-⠼ | 9 13     23 | create_session_mapping                                        
-⠸ | 12 17  3  32 | create_session_mapping                                       
-⠧ | 15 22  3  48 | create_session_mapping                                       
-⠏ | 17 27  3  63 | create_session_mapping                                       
-⠼ | 23 29  3  70 | create_session_mapping                                       
-⠼ | 28 33  3  81 | create_session_mapping                                       
-✖ | 30 34  3  84 | create_session_mapping [2.0s]
+⠧ |   6     12 | create_session_mapping                                         
+⠹ | 1 10     22 | create_session_mapping                                        
+⠋ | 7 16     28 | create_session_mapping                                        
+⠦ | 10 21  3  43 | create_session_mapping                                       
+⠦ | 10 27  3  67 | create_session_mapping                                       
+⠧ | 16 30  3  79 | create_session_mapping                                       
+⠙ | 22 35  3  92 | create_session_mapping                                       
+✖ | 22 35  3  92 | create_session_mapping
 ────────────────────────────────────────────────────────────────────────────────
 Warning ('test-create_session_mapping.R:2:3'): create_course_info creates correct structure
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1246,29 +1238,11 @@ Backtrace:
     ▆
  1. └─zoomstudentengagement::create_course_info(...) at test-create_session_mapping.R:155:3
 
-Failure ('test-create_session_mapping.R:175:3'): create_session_mapping handles complex pattern matching
-session_mapping$course (`actual`) not equal to c("101", "250", "201") (`expected`).
-
-`actual`:   "101" "250" NA   
-`expected`: "101" "250" "201"
-
-Failure ('test-create_session_mapping.R:176:3'): create_session_mapping handles complex pattern matching
-session_mapping$dept (`actual`) not equal to c("CS", "MATH", "LTF") (`expected`).
-
-`actual`:   "CS" "MATH" NA   
-`expected`: "CS" "MATH" "LTF"
-
 Warning ('test-create_session_mapping.R:186:3'): create_session_mapping handles multiple matches correctly
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
 Backtrace:
     ▆
  1. └─zoomstudentengagement::create_course_info(...) at test-create_session_mapping.R:186:3
-
-Failure ('test-create_session_mapping.R:206:3'): create_session_mapping handles multiple matches correctly
-session_mapping$section (`actual`) not equal to c("1", "1") (`expected`).
-
-`actual`:   "01" "01"
-`expected`: "1"  "1" 
 
 Warning ('test-create_session_mapping.R:216:3'): create_session_mapping handles file output correctly
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1283,13 +1257,13 @@ file.exists(temp_file) is not TRUE
 `expected`: TRUE 
 
 Error ('test-create_session_mapping.R:241:3'): create_session_mapping handles file output correctly
-Error: '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//Rtmp87h3iH/file1782450f5094d.csv' does not exist.
+Error: '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpN9dVr7/file1814d717de754.csv' does not exist.
 Backtrace:
     ▆
  1. ├─readr::read_csv(temp_file, show_col_types = FALSE) at test-create_session_mapping.R:241:3
  2. │ └─vroom::vroom(...)
  3. │   └─vroom:::vroom_(...)
- 4. └─vroom (local) `<fn>`("/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//Rtmp87h3iH/file1782450f5094d.csv")
+ 4. └─vroom (local) `<fn>`("/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpN9dVr7/file1814d717de754.csv")
  5.   └─vroom:::check_path(path)
 
 Warning ('test-create_session_mapping.R:253:3'): create_session_mapping handles invalid date formats gracefully
@@ -1316,8 +1290,31 @@ session_mapping$notes[1] (`actual`) not equal to "NEEDS MANUAL ASSIGNMENT" (`exp
 `actual`:   ""                       
 `expected`: "NEEDS MANUAL ASSIGNMENT"
 
-Failure ('test-create_session_mapping.R:318:3'): create_session_mapping handles missing required columns in course_info
-`create_session_mapping(...)` did not throw the expected error.
+Warning ('test-create_session_mapping.R:318:3'): create_session_mapping handles missing required columns in course_info
+Unknown or uninitialised column: `section`.
+Backtrace:
+    ▆
+ 1. ├─testthat::expect_error(...) at test-create_session_mapping.R:318:3
+ 2. │ └─testthat:::expect_condition_matching(...)
+ 3. │   └─testthat:::quasi_capture(...)
+ 4. │     ├─testthat (local) .capture(...)
+ 5. │     │ └─base::withCallingHandlers(...)
+ 6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+ 7. └─zoomstudentengagement::create_session_mapping(...)
+ 8.   ├─first_match$section at zoomstudentengagement/R/create_session_mapping.R:105:15
+ 9.   └─tibble:::`$.tbl_df`(first_match, "section") at zoomstudentengagement/R/create_session_mapping.R:105:15
+
+Error ('test-create_session_mapping.R:318:3'): create_session_mapping handles missing required columns in course_info
+Error in `result$section[i] <- first_match$section`: replacement has length zero
+Backtrace:
+    ▆
+ 1. ├─testthat::expect_error(...) at test-create_session_mapping.R:318:3
+ 2. │ └─testthat:::expect_condition_matching(...)
+ 3. │   └─testthat:::quasi_capture(...)
+ 4. │     ├─testthat (local) .capture(...)
+ 5. │     │ └─base::withCallingHandlers(...)
+ 6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+ 7. └─zoomstudentengagement::create_session_mapping(...)
 
 Warning ('test-create_session_mapping.R:334:3'): create_session_mapping handles non-tibble inputs
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1332,6 +1329,9 @@ Error in `if (grepl("Jan 15, 2024", start_time)) {
 } else if (grepl("Jan 16, 2024", start_time)) {
     result$session_date[i] <- as.Date("2024-01-16")
     result$session_time[i] <- "09:00 AM"
+} else if (grepl("Jan 17, 2024", start_time)) {
+    result$session_date[i] <- as.Date("2024-01-17")
+    result$session_time[i] <- "14:00 PM"
 } else {
     result$session_date[i] <- as.Date(NA)
     result$session_time[i] <- "Unknown"
@@ -1355,8 +1355,8 @@ Backtrace:
 Failure ('test-create_session_mapping.R:376:3'): create_session_mapping creates correct course_section column
 session_mapping$course_section (`actual`) not equal to c("CS.101.1", "MATH.250.1") (`expected`).
 
-`actual`:   "CS 101-01" "MATH 250-01"
-`expected`: "CS.101.1"  "MATH.250.1" 
+`actual`:   "CS 101 1" "MATH 250 1"
+`expected`: "CS.101.1" "MATH.250.1"
 
 Warning ('test-create_session_mapping.R:386:3'): create_session_mapping handles course_section with missing data
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1375,12 +1375,6 @@ Function 'create_course_info' is deprecated and will be removed in the next vers
 Backtrace:
     ▆
  1. └─zoomstudentengagement::create_course_info(...) at test-create_session_mapping.R:444:3
-
-Failure ('test-create_session_mapping.R:467:3'): create_session_mapping handles interactive mode with no unmatched recordings
-session_mapping$section (`actual`) not equal to "1" (`expected`).
-
-`actual`:   "01"
-`expected`: "1" 
 
 Failure ('test-create_session_mapping.R:468:3'): create_session_mapping handles interactive mode with no unmatched recordings
 is.na(session_mapping$notes[1]) is not TRUE
@@ -1406,20 +1400,14 @@ Backtrace:
 Failure ('test-create_session_mapping.R:527:3'): create_session_mapping handles course_section with partial data
 session_mapping$course_section (`actual`) not equal to c("CS.101.1", NA_character_) (`expected`).
 
-`actual`:   "CS 101-01" NA
-`expected`: "CS.101.1"  NA
+`actual`:   "CS 101 1" NA
+`expected`: "CS.101.1" NA
 
 Warning ('test-create_session_mapping.R:537:3'): create_session_mapping handles multiple pattern matches correctly
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
 Backtrace:
     ▆
  1. └─zoomstudentengagement::create_course_info(...) at test-create_session_mapping.R:537:3
-
-Failure ('test-create_session_mapping.R:560:3'): create_session_mapping handles multiple pattern matches correctly
-session_mapping$section (`actual`) not equal to c("1", "1") (`expected`).
-
-`actual`:   "01" "01"
-`expected`: "1"  "1" 
 
 Warning ('test-create_session_mapping.R:571:3'): create_session_mapping handles pattern matching with no matches
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1450,18 +1438,6 @@ Function 'create_course_info' is deprecated and will be removed in the next vers
 Backtrace:
     ▆
  1. └─zoomstudentengagement::create_course_info(...) at test-create_session_mapping.R:702:3
-
-Failure ('test-create_session_mapping.R:722:3'): create_session_mapping handles case insensitive pattern matching
-session_mapping$course (`actual`) not equal to c("101", "250") (`expected`).
-
-`actual`:   NA    "250"
-`expected`: "101" "250"
-
-Failure ('test-create_session_mapping.R:723:3'): create_session_mapping handles case insensitive pattern matching
-session_mapping$dept (`actual`) not equal to c("CS", "MATH") (`expected`).
-
-`actual`:   NA   "MATH"
-`expected`: "CS" "MATH"
 
 Warning ('test-create_session_mapping.R:733:3'): create_session_mapping handles empty zoom_recordings
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1526,20 +1502,14 @@ Backtrace:
 Failure ('test-create_session_mapping.R:859:3'): create_session_mapping handles course_section with missing columns
 session_mapping$course_section (`actual`) not equal to "CS.101.1" (`expected`).
 
-`actual`:   "CS 101-01"
-`expected`: "CS.101.1" 
+`actual`:   "CS 101 1"
+`expected`: "CS.101.1"
 
 Warning ('test-create_session_mapping.R:869:3'): create_session_mapping handles interactive mode with no unmatched recordings
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
 Backtrace:
     ▆
  1. └─zoomstudentengagement::create_course_info(...) at test-create_session_mapping.R:869:3
-
-Failure ('test-create_session_mapping.R:892:3'): create_session_mapping handles interactive mode with no unmatched recordings
-session_mapping$section (`actual`) not equal to "1" (`expected`).
-
-`actual`:   "01"
-`expected`: "1" 
 
 Failure ('test-create_session_mapping.R:893:3'): create_session_mapping handles interactive mode with no unmatched recordings
 is.na(session_mapping$notes[1]) is not TRUE
@@ -1577,8 +1547,8 @@ Backtrace:
 Failure ('test-create_session_mapping.R:965:3'): create_session_mapping handles course_section with missing columns gracefully
 session_mapping$course_section (`actual`) not equal to "CS.101.1" (`expected`).
 
-`actual`:   "CS 101-01"
-`expected`: "CS.101.1" 
+`actual`:   "CS 101 1"
+`expected`: "CS.101.1"
 
 Warning ('test-create_session_mapping.R:976:3'): create_session_mapping handles empty auto_assign_patterns with unmatched recordings
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1602,7 +1572,7 @@ Maximum number of failures exceeded; quitting at end of file.
 ℹ Increase this number with (e.g.) `testthat::set_max_fails(Inf)` 
 
 ══ Results ═════════════════════════════════════════════════════════════════════
-Duration: 10.7 s
+Duration: 6.9 s
 
 ── Skipped tests (12) ──────────────────────────────────────────────────────────
 • empty test (9): 'test-analyze_transcripts.R:90:1',
@@ -1616,24 +1586,6 @@ Duration: 10.7 s
   'test-create_session_mapping.R:434:3'
 
 ── Failed tests ────────────────────────────────────────────────────────────────
-Failure ('test-create_session_mapping.R:175:3'): create_session_mapping handles complex pattern matching
-session_mapping$course (`actual`) not equal to c("101", "250", "201") (`expected`).
-
-`actual`:   "101" "250" NA   
-`expected`: "101" "250" "201"
-
-Failure ('test-create_session_mapping.R:176:3'): create_session_mapping handles complex pattern matching
-session_mapping$dept (`actual`) not equal to c("CS", "MATH", "LTF") (`expected`).
-
-`actual`:   "CS" "MATH" NA   
-`expected`: "CS" "MATH" "LTF"
-
-Failure ('test-create_session_mapping.R:206:3'): create_session_mapping handles multiple matches correctly
-session_mapping$section (`actual`) not equal to c("1", "1") (`expected`).
-
-`actual`:   "01" "01"
-`expected`: "1"  "1" 
-
 Failure ('test-create_session_mapping.R:238:3'): create_session_mapping handles file output correctly
 file.exists(temp_file) is not TRUE
 
@@ -1641,13 +1593,13 @@ file.exists(temp_file) is not TRUE
 `expected`: TRUE 
 
 Error ('test-create_session_mapping.R:241:3'): create_session_mapping handles file output correctly
-Error: '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//Rtmp87h3iH/file1782450f5094d.csv' does not exist.
+Error: '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpN9dVr7/file1814d717de754.csv' does not exist.
 Backtrace:
     ▆
  1. ├─readr::read_csv(temp_file, show_col_types = FALSE) at test-create_session_mapping.R:241:3
  2. │ └─vroom::vroom(...)
  3. │   └─vroom:::vroom_(...)
- 4. └─vroom (local) `<fn>`("/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//Rtmp87h3iH/file1782450f5094d.csv")
+ 4. └─vroom (local) `<fn>`("/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpN9dVr7/file1814d717de754.csv")
  5.   └─vroom:::check_path(path)
 
 Failure ('test-create_session_mapping.R:300:3'): create_session_mapping handles empty auto_assign_patterns
@@ -1662,8 +1614,17 @@ session_mapping$notes[1] (`actual`) not equal to "NEEDS MANUAL ASSIGNMENT" (`exp
 `actual`:   ""                       
 `expected`: "NEEDS MANUAL ASSIGNMENT"
 
-Failure ('test-create_session_mapping.R:318:3'): create_session_mapping handles missing required columns in course_info
-`create_session_mapping(...)` did not throw the expected error.
+Error ('test-create_session_mapping.R:318:3'): create_session_mapping handles missing required columns in course_info
+Error in `result$section[i] <- first_match$section`: replacement has length zero
+Backtrace:
+    ▆
+ 1. ├─testthat::expect_error(...) at test-create_session_mapping.R:318:3
+ 2. │ └─testthat:::expect_condition_matching(...)
+ 3. │   └─testthat:::quasi_capture(...)
+ 4. │     ├─testthat (local) .capture(...)
+ 5. │     │ └─base::withCallingHandlers(...)
+ 6. │     └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+ 7. └─zoomstudentengagement::create_session_mapping(...)
 
 Error ('test-create_session_mapping.R:342:3'): create_session_mapping handles non-tibble inputs
 Error in `if (grepl("Jan 15, 2024", start_time)) {
@@ -1672,6 +1633,9 @@ Error in `if (grepl("Jan 15, 2024", start_time)) {
 } else if (grepl("Jan 16, 2024", start_time)) {
     result$session_date[i] <- as.Date("2024-01-16")
     result$session_time[i] <- "09:00 AM"
+} else if (grepl("Jan 17, 2024", start_time)) {
+    result$session_date[i] <- as.Date("2024-01-17")
+    result$session_time[i] <- "14:00 PM"
 } else {
     result$session_date[i] <- as.Date(NA)
     result$session_time[i] <- "Unknown"
@@ -1689,14 +1653,8 @@ Backtrace:
 Failure ('test-create_session_mapping.R:376:3'): create_session_mapping creates correct course_section column
 session_mapping$course_section (`actual`) not equal to c("CS.101.1", "MATH.250.1") (`expected`).
 
-`actual`:   "CS 101-01" "MATH 250-01"
-`expected`: "CS.101.1"  "MATH.250.1" 
-
-Failure ('test-create_session_mapping.R:467:3'): create_session_mapping handles interactive mode with no unmatched recordings
-session_mapping$section (`actual`) not equal to "1" (`expected`).
-
-`actual`:   "01"
-`expected`: "1" 
+`actual`:   "CS 101 1" "MATH 250 1"
+`expected`: "CS.101.1" "MATH.250.1"
 
 Failure ('test-create_session_mapping.R:468:3'): create_session_mapping handles interactive mode with no unmatched recordings
 is.na(session_mapping$notes[1]) is not TRUE
@@ -1710,26 +1668,8 @@ Failure ('test-create_session_mapping.R:487:3'): create_session_mapping handles 
 Failure ('test-create_session_mapping.R:527:3'): create_session_mapping handles course_section with partial data
 session_mapping$course_section (`actual`) not equal to c("CS.101.1", NA_character_) (`expected`).
 
-`actual`:   "CS 101-01" NA
-`expected`: "CS.101.1"  NA
-
-Failure ('test-create_session_mapping.R:560:3'): create_session_mapping handles multiple pattern matches correctly
-session_mapping$section (`actual`) not equal to c("1", "1") (`expected`).
-
-`actual`:   "01" "01"
-`expected`: "1"  "1" 
-
-Failure ('test-create_session_mapping.R:722:3'): create_session_mapping handles case insensitive pattern matching
-session_mapping$course (`actual`) not equal to c("101", "250") (`expected`).
-
-`actual`:   NA    "250"
-`expected`: "101" "250"
-
-Failure ('test-create_session_mapping.R:723:3'): create_session_mapping handles case insensitive pattern matching
-session_mapping$dept (`actual`) not equal to c("CS", "MATH") (`expected`).
-
-`actual`:   NA   "MATH"
-`expected`: "CS" "MATH"
+`actual`:   "CS 101 1" NA
+`expected`: "CS.101.1" NA
 
 Failure ('test-create_session_mapping.R:784:3'): create_session_mapping handles pattern matching with no course matches
 is.na(session_mapping$dept[1]) is not TRUE
@@ -1770,14 +1710,8 @@ session_mapping$session_time[2] (`actual`) not equal to "21:00" (`expected`).
 Failure ('test-create_session_mapping.R:859:3'): create_session_mapping handles course_section with missing columns
 session_mapping$course_section (`actual`) not equal to "CS.101.1" (`expected`).
 
-`actual`:   "CS 101-01"
-`expected`: "CS.101.1" 
-
-Failure ('test-create_session_mapping.R:892:3'): create_session_mapping handles interactive mode with no unmatched recordings
-session_mapping$section (`actual`) not equal to "1" (`expected`).
-
-`actual`:   "01"
-`expected`: "1" 
+`actual`:   "CS 101 1"
+`expected`: "CS.101.1"
 
 Failure ('test-create_session_mapping.R:893:3'): create_session_mapping handles interactive mode with no unmatched recordings
 is.na(session_mapping$notes[1]) is not TRUE
@@ -1791,8 +1725,8 @@ Failure ('test-create_session_mapping.R:916:3'): create_session_mapping shows wa
 Failure ('test-create_session_mapping.R:965:3'): create_session_mapping handles course_section with missing columns gracefully
 session_mapping$course_section (`actual`) not equal to "CS.101.1" (`expected`).
 
-`actual`:   "CS 101-01"
-`expected`: "CS.101.1" 
+`actual`:   "CS 101 1"
+`expected`: "CS.101.1"
 
 Failure ('test-create_session_mapping.R:995:3'): create_session_mapping handles empty auto_assign_patterns with unmatched recordings
 all(is.na(session_mapping$course)) is not TRUE
@@ -1806,5 +1740,5 @@ all(session_mapping$notes == "NEEDS MANUAL ASSIGNMENT") is not TRUE
 `actual`:   FALSE
 `expected`: TRUE 
 
-[ FAIL 30 | WARN 137 | SKIP 12 | PASS 304 ]
+[ FAIL 22 | WARN 138 | SKIP 12 | PASS 312 ]
 ══ Terminated early ════════════════════════════════════════════════════════════
