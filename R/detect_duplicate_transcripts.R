@@ -115,6 +115,51 @@ calculate_metadata_similarity <- function(existing_files, existing_names, simila
   similarity_matrix
 }
 
+# Helper function for content similarity calculation
+calculate_content_similarity_matrix <- function(existing_files, existing_names, similarity_matrix, method, names_to_exclude) {
+  # Load and compare transcript content
+  transcript_data <- list()
+
+  # Load all transcripts
+  for (i in seq_along(existing_files)) {
+    tryCatch(
+      {
+        transcript_data[[i]] <- load_zoom_transcript(existing_files[i])
+      },
+      error = function(e) {
+        warning(paste("Could not load transcript:", existing_names[i], "-", e$message))
+        transcript_data[[i]] <- NULL
+      }
+    )
+  }
+
+  # Compare content
+  for (i in seq_along(existing_names)) {
+    for (j in i:length(existing_names)) {
+      if (i == j) {
+        similarity_matrix[i, j] <- 1.0
+      } else {
+        content_sim <- calculate_content_similarity(
+          transcript_data[[i]],
+          transcript_data[[j]],
+          names_to_exclude
+        )
+
+        if (method == "hybrid") {
+          # Combine metadata and content similarity
+          similarity_matrix[i, j] <- (similarity_matrix[i, j] + content_sim) / 2
+          similarity_matrix[j, i] <- similarity_matrix[i, j]
+        } else {
+          similarity_matrix[i, j] <- content_sim
+          similarity_matrix[j, i] <- content_sim
+        }
+      }
+    }
+  }
+  
+  similarity_matrix
+}
+
 detect_duplicate_transcripts <- function(
     transcript_list = NULL,
     data_folder = ".",
@@ -167,45 +212,7 @@ detect_duplicate_transcripts <- function(
   }
 
   if (method %in% c("content", "hybrid")) {
-    # Load and compare transcript content
-    transcript_data <- list()
-
-    # Load all transcripts
-    for (i in seq_along(existing_files)) {
-      tryCatch(
-        {
-          transcript_data[[i]] <- load_zoom_transcript(existing_files[i])
-        },
-        error = function(e) {
-          warning(paste("Could not load transcript:", existing_names[i], "-", e$message))
-          transcript_data[[i]] <- NULL
-        }
-      )
-    }
-
-    # Compare content
-    for (i in seq_along(existing_names)) {
-      for (j in i:length(existing_names)) {
-        if (i == j) {
-          similarity_matrix[i, j] <- 1.0
-        } else {
-          content_sim <- calculate_content_similarity(
-            transcript_data[[i]],
-            transcript_data[[j]],
-            names_to_exclude
-          )
-
-          if (method == "hybrid") {
-            # Combine metadata and content similarity
-            similarity_matrix[i, j] <- (similarity_matrix[i, j] + content_sim) / 2
-            similarity_matrix[j, i] <- similarity_matrix[i, j]
-          } else {
-            similarity_matrix[i, j] <- content_sim
-            similarity_matrix[j, i] <- content_sim
-          }
-        }
-      }
-    }
+    similarity_matrix <- calculate_content_similarity_matrix(existing_files, existing_names, similarity_matrix, method, names_to_exclude)
   }
 
   # Find duplicate groups

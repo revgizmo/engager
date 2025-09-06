@@ -24,19 +24,15 @@
 #'   zoom_recordings_df = zoom_recordings_df
 #' )
 #' }
-load_session_mapping <- function(
-    mapping_file = NULL,
-    zoom_recordings_df = NULL,
-    validate_mapping = TRUE) {
-  # Declare global variables to avoid R CMD check warnings
-
+# Helper function to load and validate mapping file
+load_mapping_file <- function(mapping_file) {
   # Check if mapping file exists
   if (!file.exists(mapping_file)) {
     abort_zse(paste0("Session mapping file not found: ", mapping_file), class = "zse_input_error")
   }
 
   # Load mapping file with proper column types (flexible for optional columns)
-  mapping_df <- readr::read_csv(
+  readr::read_csv(
     mapping_file,
     show_col_types = FALSE,
     col_types = readr::cols(
@@ -50,8 +46,10 @@ load_session_mapping <- function(
       .default = readr::col_character()
     )
   )
+}
 
-  # Validate required columns
+# Helper function to validate required columns
+validate_mapping_columns <- function(mapping_df) {
   required_cols <- c(
     "zoom_recording_id", "dept", "course", "section",
     "session_date", "session_time", "instructor"
@@ -63,28 +61,37 @@ load_session_mapping <- function(
       class = "zse_schema_error"
     )
   }
+}
 
-  # Validate mapping if requested using base R instead of dplyr to avoid segmentation fault
-  if (validate_mapping) {
-    # Use base R subsetting instead of dplyr::filter to avoid segmentation fault
-    unmapped_indices <- which(is.na(mapping_df$dept) | is.na(mapping_df$course) | is.na(mapping_df$section))
-    unmapped <- mapping_df[unmapped_indices, , drop = FALSE]
-
-    if (nrow(unmapped) > 0) {
-      # Only show warnings if not in test environment
-      if (Sys.getenv("TESTTHAT") != "true") {
-        warning("Found ", nrow(unmapped), " unmapped recordings in session mapping file")
-        diag_cat("Unmapped recordings:\n")
-        # Use base R subsetting instead of dplyr::select
-        if (is_verbose()) {
-          diag_message(paste(
-            utils::capture.output(str(unmapped[, c("zoom_recording_id", "topic", "notes")])),
-            collapse = "\n"
-          ))
-        }
-      }
+# Helper function to validate mapping data
+validate_mapping_data <- function(mapping_df) {
+  # Use base R subsetting instead of dplyr::filter to avoid segmentation fault
+  unmapped_indices <- which(is.na(mapping_df$dept) | is.na(mapping_df$course) | is.na(mapping_df$section))
+  unmapped <- mapping_df[unmapped_indices, , drop = FALSE]
+  
+  if (nrow(unmapped) > 0) {
+    # Only show warnings if not in test environment
+    if (Sys.getenv("TESTTHAT") != "true") {
+      warning("Found ", nrow(unmapped), " unmapped recordings in session mapping file")
     }
   }
+}
+
+load_session_mapping <- function(
+    mapping_file = NULL,
+    zoom_recordings_df = NULL,
+    validate_mapping = TRUE) {
+  # Declare global variables to avoid R CMD check warnings
+
+  # Load and validate mapping file
+  mapping_df <- load_mapping_file(mapping_file)
+  validate_mapping_columns(mapping_df)
+
+  # Validate mapping if requested
+  if (validate_mapping) {
+    validate_mapping_data(mapping_df)
+  }
+
 
   # Merge with Zoom recordings if provided using base R instead of dplyr
   if (!is.null(zoom_recordings_df)) {
