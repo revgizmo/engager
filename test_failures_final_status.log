@@ -9,8 +9,8 @@ The following objects are masked from ‘package:base’:
 ✔ | F W  S  OK | Context
 
 ⠏ |          0 | add_dead_air_rows                                              
-⠋ |   7     14 | add_dead_air_rows                                              
-⠴ |   14     42 | add_dead_air_rows                                             
+⠏ |   7     13 | add_dead_air_rows                                              
+⠼ |   14     41 | add_dead_air_rows                                             
 ✔ |   19     63 | add_dead_air_rows
 ────────────────────────────────────────────────────────────────────────────────
 Warning ('test-add_dead_air_rows.R:22:3'): add_dead_air_rows returns NULL for non-tibble input
@@ -135,18 +135,22 @@ Backtrace:
 ⠏ |          0 | analyze_transcripts                                            
 ⠹ |   3      0 | analyze_transcripts                                            
 ⠴ |   7      9 | analyze_transcripts                                            
-⠸ |   12     12 | analyze_transcripts                                           
-⠦ |   16  1  20 | analyze_transcripts                                           
-⠙ |   19  2  31 | analyze_transcripts                                           
+⠼ |   12     13 | analyze_transcripts                                           
+⠇ |   16  1  22 | analyze_transcripts                                           
+⠋ |   19  2  30 | analyze_transcripts                                           
+⠇ |   22  2  35 | analyze_transcripts                                           
 ⠴ |   24  3  39 | analyze_transcripts                                           
-⠦ |   30  3  44 | analyze_transcripts                                           
-⠴ |   36  3  47 | analyze_transcripts                                           
+⠹ |   28  3  42 | analyze_transcripts                                           
+⠇ |   31  3  45 | analyze_transcripts                                           
+⠦ |   37  3  47 | analyze_transcripts                                           
 ⠼ |   42  4  49 | analyze_transcripts                                           
 ⠇ |   43  4  52 | analyze_transcripts                                           
 ⠼ |   44  5  56 | analyze_transcripts                                           
 ⠧ |   46  5  57 | analyze_transcripts                                           
-⠏ |   52  6  62 | analyze_transcripts                                           
-✔ |   55  7  70 | analyze_transcripts [1.6s]
+⠙ |   48  5  59 | analyze_transcripts                                           
+⠧ |   50  6  62 | analyze_transcripts                                           
+⠼ |   55  6  64 | analyze_transcripts                                           
+✔ |   55  7  70 | analyze_transcripts [2.1s]
 ────────────────────────────────────────────────────────────────────────────────
 Warning ('test-analyze_transcripts.R:98:7'): analyze_transcripts processes valid folder correctly
 Function 'add_dead_air_rows' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -939,7 +943,7 @@ Step 3: Full function completed successfully
 ✔ |      2   0 | consolidate_transcript_segfault
 
 ⠏ |          0 | create_analysis_config                                         
-⠼ |   7     28 | create_analysis_config                                         
+⠹ |   6     27 | create_analysis_config                                         
 ✔ |   17     42 | create_analysis_config
 ────────────────────────────────────────────────────────────────────────────────
 Warning ('test-create_analysis_config.R:2:3'): create_analysis_config creates valid configuration with defaults
@@ -1160,12 +1164,11 @@ Backtrace:
 ⠏ |          0 | create_session_mapping                                         
 ⠧ |   6     12 | create_session_mapping                                         
 ⠹ | 1 10     22 | create_session_mapping                                        
-⠸ | 3 16     35 | create_session_mapping                                        
-⠏ | 6 21  3  50 | create_session_mapping                                        
-⠴ | 6 26  3  71 | create_session_mapping                                        
-⠴ | 12 29  3  82 | create_session_mapping                                       
-⠇ | 16 34  3  96 | create_session_mapping                                       
-✖ | 16 34  3  98 | create_session_mapping
+⠴ | 2 16  2  36 | create_session_mapping                                        
+⠹ | 4 21  3  55 | create_session_mapping                                        
+⠙ | 5 27  3  77 | create_session_mapping                                        
+⠇ | 10 30  3  86 | create_session_mapping                                       
+✖ | 12 34  3 102 | create_session_mapping
 ────────────────────────────────────────────────────────────────────────────────
 Warning ('test-create_session_mapping.R:2:3'): create_course_info creates correct structure
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1246,13 +1249,13 @@ file.exists(temp_file) is not TRUE
 `expected`: TRUE 
 
 Error ('test-create_session_mapping.R:241:3'): create_session_mapping handles file output correctly
-Error: '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//Rtmpq4ql2u/file7a42d710b3.csv' does not exist.
+Error: '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmppMjpfv/file40e764b66d8.csv' does not exist.
 Backtrace:
     ▆
  1. ├─readr::read_csv(temp_file, show_col_types = FALSE) at test-create_session_mapping.R:241:3
  2. │ └─vroom::vroom(...)
  3. │   └─vroom:::vroom_(...)
- 4. └─vroom (local) `<fn>`("/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//Rtmpq4ql2u/file7a42d710b3.csv")
+ 4. └─vroom (local) `<fn>`("/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmppMjpfv/file40e764b66d8.csv")
  5.   └─vroom:::check_path(path)
 
 Warning ('test-create_session_mapping.R:253:3'): create_session_mapping handles invalid date formats gracefully
@@ -1278,12 +1281,6 @@ Function 'create_course_info' is deprecated and will be removed in the next vers
 Backtrace:
     ▆
  1. └─zoomstudentengagement::create_course_info(...) at test-create_session_mapping.R:358:3
-
-Failure ('test-create_session_mapping.R:376:3'): create_session_mapping creates correct course_section column
-session_mapping$course_section (`actual`) not equal to c("CS.101.1", "MATH.250.1") (`expected`).
-
-`actual`:   "CS 101 1" "MATH 250 1"
-`expected`: "CS.101.1" "MATH.250.1"
 
 Warning ('test-create_session_mapping.R:386:3'): create_session_mapping handles course_section with missing data
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1323,12 +1320,6 @@ Function 'create_course_info' is deprecated and will be removed in the next vers
 Backtrace:
     ▆
  1. └─zoomstudentengagement::create_course_info(...) at test-create_session_mapping.R:507:3
-
-Failure ('test-create_session_mapping.R:527:3'): create_session_mapping handles course_section with partial data
-session_mapping$course_section (`actual`) not equal to c("CS.101.1", NA_character_) (`expected`).
-
-`actual`:   "CS 101 1" NA
-`expected`: "CS.101.1" NA
 
 Warning ('test-create_session_mapping.R:537:3'): create_session_mapping handles multiple pattern matches correctly
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
@@ -1426,12 +1417,6 @@ Backtrace:
     ▆
  1. └─zoomstudentengagement::create_course_info(...) at test-create_session_mapping.R:839:3
 
-Failure ('test-create_session_mapping.R:859:3'): create_session_mapping handles course_section with missing columns
-session_mapping$course_section (`actual`) not equal to "CS.101.1" (`expected`).
-
-`actual`:   "CS 101 1"
-`expected`: "CS.101.1"
-
 Warning ('test-create_session_mapping.R:869:3'): create_session_mapping handles interactive mode with no unmatched recordings
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
 Backtrace:
@@ -1471,12 +1456,6 @@ Backtrace:
     ▆
  1. └─zoomstudentengagement::create_course_info(...) at test-create_session_mapping.R:945:3
 
-Failure ('test-create_session_mapping.R:965:3'): create_session_mapping handles course_section with missing columns gracefully
-session_mapping$course_section (`actual`) not equal to "CS.101.1" (`expected`).
-
-`actual`:   "CS 101 1"
-`expected`: "CS.101.1"
-
 Warning ('test-create_session_mapping.R:976:3'): create_session_mapping handles empty auto_assign_patterns with unmatched recordings
 Function 'create_course_info' is deprecated and will be removed in the next version. Please use the essential functions instead. See ?get_essential_functions for alternatives.
 Backtrace:
@@ -1487,7 +1466,7 @@ Maximum number of failures exceeded; quitting at end of file.
 ℹ Increase this number with (e.g.) `testthat::set_max_fails(Inf)` 
 
 ══ Results ═════════════════════════════════════════════════════════════════════
-Duration: 4.9 s
+Duration: 5.8 s
 
 ── Skipped tests (12) ──────────────────────────────────────────────────────────
 • empty test (9): 'test-analyze_transcripts.R:90:1',
@@ -1508,20 +1487,14 @@ file.exists(temp_file) is not TRUE
 `expected`: TRUE 
 
 Error ('test-create_session_mapping.R:241:3'): create_session_mapping handles file output correctly
-Error: '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//Rtmpq4ql2u/file7a42d710b3.csv' does not exist.
+Error: '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmppMjpfv/file40e764b66d8.csv' does not exist.
 Backtrace:
     ▆
  1. ├─readr::read_csv(temp_file, show_col_types = FALSE) at test-create_session_mapping.R:241:3
  2. │ └─vroom::vroom(...)
  3. │   └─vroom:::vroom_(...)
- 4. └─vroom (local) `<fn>`("/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//Rtmpq4ql2u/file7a42d710b3.csv")
+ 4. └─vroom (local) `<fn>`("/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmppMjpfv/file40e764b66d8.csv")
  5.   └─vroom:::check_path(path)
-
-Failure ('test-create_session_mapping.R:376:3'): create_session_mapping creates correct course_section column
-session_mapping$course_section (`actual`) not equal to c("CS.101.1", "MATH.250.1") (`expected`).
-
-`actual`:   "CS 101 1" "MATH 250 1"
-`expected`: "CS.101.1" "MATH.250.1"
 
 Failure ('test-create_session_mapping.R:468:3'): create_session_mapping handles interactive mode with no unmatched recordings
 is.na(session_mapping$notes[1]) is not TRUE
@@ -1531,12 +1504,6 @@ is.na(session_mapping$notes[1]) is not TRUE
 
 Failure ('test-create_session_mapping.R:487:3'): create_session_mapping handles file output with error
 `create_session_mapping(...)` did not throw the expected error.
-
-Failure ('test-create_session_mapping.R:527:3'): create_session_mapping handles course_section with partial data
-session_mapping$course_section (`actual`) not equal to c("CS.101.1", NA_character_) (`expected`).
-
-`actual`:   "CS 101 1" NA
-`expected`: "CS.101.1" NA
 
 Failure ('test-create_session_mapping.R:784:3'): create_session_mapping handles pattern matching with no course matches
 is.na(session_mapping$dept[1]) is not TRUE
@@ -1574,12 +1541,6 @@ session_mapping$session_time[2] (`actual`) not equal to "21:00" (`expected`).
 `actual`:   "09:00 AM"
 `expected`: "21:00"   
 
-Failure ('test-create_session_mapping.R:859:3'): create_session_mapping handles course_section with missing columns
-session_mapping$course_section (`actual`) not equal to "CS.101.1" (`expected`).
-
-`actual`:   "CS 101 1"
-`expected`: "CS.101.1"
-
 Failure ('test-create_session_mapping.R:893:3'): create_session_mapping handles interactive mode with no unmatched recordings
 is.na(session_mapping$notes[1]) is not TRUE
 
@@ -1589,11 +1550,5 @@ is.na(session_mapping$notes[1]) is not TRUE
 Failure ('test-create_session_mapping.R:916:3'): create_session_mapping shows warning when unmatched recordings exist outside test environment
 `{ ... }` did not throw the expected warning.
 
-Failure ('test-create_session_mapping.R:965:3'): create_session_mapping handles course_section with missing columns gracefully
-session_mapping$course_section (`actual`) not equal to "CS.101.1" (`expected`).
-
-`actual`:   "CS 101 1"
-`expected`: "CS.101.1"
-
-[ FAIL 16 | WARN 137 | SKIP 12 | PASS 318 ]
+[ FAIL 12 | WARN 137 | SKIP 12 | PASS 322 ]
 ══ Terminated early ════════════════════════════════════════════════════════════
