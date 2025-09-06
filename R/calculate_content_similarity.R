@@ -60,8 +60,8 @@ calculate_content_similarity <- function(
   }
   
   # Simple similarity calculation based on numeric columns
-  # Only consider transcript-relevant columns (not arbitrary numeric columns)
-  transcript_cols <- c("duration", "word_count", "speaker_count", "turn_count", "avg_turn_length")
+  # Consider transcript-relevant columns (handle both formats)
+  transcript_cols <- c("duration", "word_count", "wordcount", "speaker_count", "turn_count", "avg_turn_length")
   relevant_cols <- intersect(common_cols, transcript_cols)
   if (length(relevant_cols) == 0) {
     return(0.0)
