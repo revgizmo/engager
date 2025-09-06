@@ -69,6 +69,13 @@ create_session_mapping <- function(
     ))
   }
   
+  # Validate course_info_df has required columns
+  required_cols <- c("dept", "course", "section", "instructor", "session_length_hours")
+  missing_cols <- setdiff(required_cols, names(course_info_df))
+  if (length(missing_cols) > 0) {
+    stop("course_info_df must contain columns: ", paste(missing_cols, collapse = ", "))
+  }
+  
   # Basic implementation that matches test expectations
   result <- tibble::tibble(
     recording_id = zoom_recordings_df$ID,
