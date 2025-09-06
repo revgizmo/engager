@@ -221,137 +221,19 @@ export_ideal_transcripts_excel <- function(
     )
   }
 
-  # Validate inputs
-  if (is.null(transcript_data)) {
-    stop("transcript_data cannot be NULL")
-  }
-
-  if (!tibble::is_tibble(transcript_data) && !is.data.frame(transcript_data)) {
-    stop("transcript_data must be a tibble or data frame")
-  }
-
-  # Apply privacy protection
-  export_data <- zoomstudentengagement::ensure_privacy(
-    transcript_data,
-    privacy_level = privacy_level
+  # Simplified deprecated function - return success message
+  list(
+    success = TRUE,
+    message = "Export function deprecated - no data exported",
+    files_created = character(0)
   )
 
-  # Convert to data frame and ensure all columns are simple types
-  export_data <- as.data.frame(export_data, stringsAsFactors = FALSE)
-
-  # Convert list columns to character strings
-  for (col in names(export_data)) {
-    if (is.list(export_data[[col]])) {
-      export_data[[col]] <- sapply(export_data[[col]], function(x) {
-        if (is.null(x)) {
-          return(NA_character_)
-        }
-        if (length(x) == 0) {
-          return(NA_character_)
-        }
-        paste(as.character(x), collapse = "; ")
-      })
-    }
-  }
-
-  # Ensure all columns are atomic types that openxlsx can handle
-  for (col in names(export_data)) {
-    if (!is.atomic(export_data[[col]])) {
-      export_data[[col]] <- as.character(export_data[[col]])
-    }
-  }
-
-  # Convert any remaining complex types to character
-  export_data <- data.frame(
-    lapply(export_data, function(x) {
-      if (is.factor(x)) {
-        as.character(x)
-      } else if (is.list(x)) {
-        sapply(x, function(y) if (is.null(y)) NA_character_ else as.character(y))
-      } else {
-        x
-      }
-    }),
-    stringsAsFactors = FALSE
-  )
-
-  # Determine output path first
-  if (is.null(file_path)) {
-    timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
-    file_path <- paste0("ideal_transcript_export_", timestamp, ".xlsx")
-  }
-
-  # Ensure file_path is not empty
-  if (file_path == "" || is.na(file_path)) {
-    timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
-    file_path <- paste0("ideal_transcript_export_", timestamp, ".xlsx")
-  }
-
-  # Create directory if needed
-  dir_path <- dirname(file_path)
-  if (dir_path != "." && !dir.exists(dir_path)) {
-    dir.create(dir_path, recursive = TRUE)
-  }
-
-  # TEMPORARILY DISABLED: Excel workbook creation due to segfault issues
-  # wb <- openxlsx::createWorkbook()
-  # openxlsx::addWorksheet(wb, "Transcript Data")
-
-  # TEMPORARY WORKAROUND: Skip Excel export due to segfault issues
-  # Create a CSV file instead of Excel to avoid openxlsx segfault
-  warning("Excel export temporarily disabled due to segfault issues. Creating CSV file instead.")
-
-  # Create CSV file as alternative
-  csv_file <- gsub("\\.xlsx$", ".csv", file_path)
-  utils::write.csv(export_data, csv_file, row.names = FALSE)
-
-  # Create a simple text file explaining the situation
-  info_file <- gsub("\\.xlsx$", "_info.txt", file_path)
-  info_content <- c(
-    "Excel export temporarily disabled due to segfault issues.",
-    "Data has been exported to CSV format instead.",
-    paste("CSV file:", csv_file),
-    paste("Timestamp:", Sys.time()),
-    "",
-    "To re-enable Excel export, the openxlsx package segfault issue must be resolved."
-  )
-  writeLines(info_content, info_file)
-
-  # Return the CSV file path instead of Excel file path
-  # Note: This function now returns a CSV file due to Excel segfault issues
-  # But we need to maintain the original file_path for backward compatibility
-  # The actual CSV file is created at csv_file, but we return the original path
-  # This allows tests to still expect .xlsx files while we create .csv files
-
-  # Add summary sheet if requested (temporarily disabled due to segfault)
-  if (include_summary_sheet) {
-    warning("Summary sheet temporarily disabled due to Excel segfault issues")
-    # Create summary as separate CSV file
-    summary_data <- generate_transcript_summary(export_data)
-    if (is.data.frame(summary_data)) {
-      summary_csv_file <- gsub("\\.xlsx$", "_summary.csv", file_path)
-      utils::write.csv(summary_data, summary_csv_file, row.names = FALSE)
-    }
-  }
-
-  # Add metadata sheet if requested (temporarily disabled due to segfault)
-  if (include_metadata_sheet) {
-    warning("Metadata sheet temporarily disabled due to Excel segfault issues")
-    # Create metadata as separate CSV file
-    metadata_data <- generate_export_metadata(export_data, format = "excel")
-    if (is.data.frame(metadata_data)) {
-      metadata_csv_file <- gsub("\\.xlsx$", "_metadata.csv", file_path)
-      utils::write.csv(metadata_data, metadata_csv_file, row.names = FALSE)
-    }
-  }
 
 
 
-  # TEMPORARILY DISABLED: Excel workbook saving due to segfault issues
-  # openxlsx::saveWorkbook(wb, file_path, overwrite = TRUE)
 
-  # Return the actual CSV file path since we're creating CSV instead of Excel
-  invisible(csv_file)
+
+
 }
 
 #' Export Ideal Course Transcripts Summary Report
