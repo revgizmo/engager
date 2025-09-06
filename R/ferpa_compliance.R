@@ -195,6 +195,41 @@ validate_ferpa_compliance <- function(data = NULL,
 #'
 #' # Hash method with salt
 #' hashed <- anonymize_educational_data(sample_data, method = "hash", hash_salt = "my_salt")
+# Helper function to identify columns to anonymize
+identify_anonymization_columns <- function(data, preserve_columns) {
+  # Define PII columns to anonymize
+  pii_columns <- c(
+    "student_id", "studentid", "student_id_",
+    "preferred_name", "name", "first_last", "name_raw",
+    "email", "email_address", "e_mail",
+    "phone", "phone_number", "telephone"
+  )
+
+  # Find columns to anonymize
+  columns_to_anonymize <- intersect(pii_columns, names(data))
+  columns_to_preserve <- intersect(preserve_columns, names(data))
+  setdiff(columns_to_anonymize, columns_to_preserve)
+}
+
+# Helper function for hash-based anonymization
+apply_hash_anonymization <- function(data, columns_to_anonymize, hash_salt) {
+  for (col in columns_to_anonymize) {
+    if (is.character(data[[col]]) || is.factor(data[[col]])) {
+      values <- as.character(data[[col]])
+      # Create deterministic hash
+      hash_input <- if (!is.null(hash_salt)) paste0(values, hash_salt) else values
+      hashed_values <- sapply(hash_input, function(x) {
+        if (is.na(x) || nchar(x) == 0) {
+          return(x)
+        }
+        digest::digest(x, algo = "sha256", serialize = FALSE)
+      })
+      data[[col]] <- substr(hashed_values, 1, 8) # Use first 8 characters
+    }
+  }
+  data
+}
+
 anonymize_educational_data <- function(data = NULL,
                                        method = c("mask", "hash", "pseudonymize", "aggregate"),
                                        preserve_columns = NULL,
@@ -207,18 +242,8 @@ anonymize_educational_data <- function(data = NULL,
     stop("Data must be a data frame or tibble", call. = FALSE)
   }
 
-  # Define PII columns to anonymize
-  pii_columns <- c(
-    "student_id", "studentid", "student_id_",
-    "preferred_name", "name", "first_last", "name_raw",
-    "email", "email_address", "e_mail",
-    "phone", "phone_number", "telephone"
-  )
-
-  # Find columns to anonymize
-  columns_to_anonymize <- intersect(pii_columns, names(data))
-  columns_to_preserve <- intersect(preserve_columns, names(data))
-  columns_to_anonymize <- setdiff(columns_to_anonymize, columns_to_preserve)
+  # Identify columns to anonymize
+  columns_to_anonymize <- identify_anonymization_columns(data, preserve_columns)
 
   if (length(columns_to_anonymize) == 0) {
     diag_message("No PII columns found to anonymize")
@@ -231,21 +256,7 @@ anonymize_educational_data <- function(data = NULL,
     # Use existing ensure_privacy function
     result <- ensure_privacy(data, privacy_level = "mask")
   } else if (method == "hash") {
-    # Hash-based anonymization
-    for (col in columns_to_anonymize) {
-      if (is.character(result[[col]]) || is.factor(result[[col]])) {
-        values <- as.character(result[[col]])
-        # Create deterministic hash
-        hash_input <- if (!is.null(hash_salt)) paste0(values, hash_salt) else values
-        hashed_values <- sapply(hash_input, function(x) {
-          if (is.na(x) || nchar(x) == 0) {
-            return(x)
-          }
-          digest::digest(x, algo = "sha256", serialize = FALSE)
-        })
-        result[[col]] <- substr(hashed_values, 1, 8) # Use first 8 characters
-      }
-    }
+    result <- apply_hash_anonymization(result, columns_to_anonymize, hash_salt)
   } else if (method == "pseudonymize") {
     # Pseudonymization with consistent mapping
     for (col in columns_to_anonymize) {
