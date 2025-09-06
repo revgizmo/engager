@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' make_blank_cancelled_classes_df()
-mkblnkcnclldclsssdf <- function() {
+make_blank_cancelled_classes_df <- function() {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   if (Sys.getenv("TESTTHAT") != "true") {
