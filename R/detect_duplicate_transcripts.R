@@ -116,8 +116,8 @@ calculate_metadata_similarity <- function(existing_files, existing_names, simila
 }
 
 # Helper function for content similarity calculation
-calc_content_similarity_matrix <- function(existing_files, existing_names, 
-                                           similarity_matrix, method, 
+calc_content_similarity_matrix <- function(existing_files, existing_names,
+                                           similarity_matrix, method,
                                            names_to_exclude) {
   # Load and compare transcript content
   transcript_data <- list()
@@ -232,7 +232,7 @@ detect_duplicate_transcripts <- function(
 }
 
 # Helper function to find duplicate groups and generate results
-find_duplicate_groups <- function(existing_names, similarity_matrix, 
+find_duplicate_groups <- function(existing_names, similarity_matrix,
                                   similarity_threshold, method) {
   # Find duplicate groups
   duplicate_groups <- list()

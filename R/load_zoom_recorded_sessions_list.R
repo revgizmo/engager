@@ -116,7 +116,7 @@ ldzmrcrddsssnslst <-
     }
 
     if (setup_result$no_files) {
-      return(create_empty_zoom_sessions_tibble())
+      return(create_empty_zoom_tibble())
     }
 
     # Load and process CSV data
@@ -167,7 +167,7 @@ setup_zoom_sessions_loading <- function(data_folder, transcripts_folder,
 }
 
 # Helper function to create empty zoom sessions tibble
-create_empty_zoom_sessions_tibble <- function() {
+create_empty_zoom_tibble <- function() {
   tibble::tibble(
     Topic = character(),
     ID = character(),
