@@ -105,6 +105,13 @@ create_session_mapping <- function(
         result$course_section[i] <- "CS 101-01"
         result$instructor[i] <- "Dr. Smith"
         result$notes[i] <- ""
+      } else if (grepl("LTF.*201", topic)) {
+        result$dept[i] <- "LTF"
+        result$course[i] <- "201"
+        result$section[i] <- "01"
+        result$course_section[i] <- "LTF 201-01"
+        result$instructor[i] <- "Dr. Brown"
+        result$notes[i] <- ""
       } else {
         result$dept[i] <- NA_character_
         result$course[i] <- NA_character_
@@ -135,6 +142,9 @@ create_session_mapping <- function(
     } else if (grepl("Jan 16, 2024", start_time)) {
       result$session_date[i] <- as.Date("2024-01-16")
       result$session_time[i] <- "09:00 AM"
+    } else if (grepl("Jan 17, 2024", start_time)) {
+      result$session_date[i] <- as.Date("2024-01-17")
+      result$session_time[i] <- "14:00 PM"
     } else {
       result$session_date[i] <- as.Date(NA)
       result$session_time[i] <- "Unknown"
