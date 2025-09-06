@@ -84,6 +84,37 @@ create_empty_duplicate_result <- function() {
   )
 }
 
+# Helper function for metadata similarity calculation
+calculate_metadata_similarity <- function(existing_files, existing_names, similarity_matrix) {
+  # Get file metadata
+  file_info <- file.info(existing_files)
+  file_sizes <- file_info$size
+  file_mtimes <- file_info$mtime
+
+  # Compare file sizes and modification times
+  for (i in seq_along(existing_names)) {
+    for (j in i:length(existing_names)) {
+      if (i == j) {
+        similarity_matrix[i, j] <- 1.0
+      } else {
+        # Size similarity
+        size_sim <- 1 - abs(file_sizes[i] - file_sizes[j]) / max(file_sizes[i], file_sizes[j])
+        
+        # Time similarity (within 1 hour = similar)
+        time_diff <- abs(as.numeric(file_mtimes[i] - file_mtimes[j]))
+        time_sim <- ifelse(time_diff < 3600, 1.0, max(0, 1 - time_diff / 86400)) # 1 day max
+        
+        # Combined metadata similarity
+        metadata_sim <- (size_sim + time_sim) / 2
+        similarity_matrix[i, j] <- metadata_sim
+        similarity_matrix[j, i] <- metadata_sim
+      }
+    }
+  }
+  
+  similarity_matrix
+}
+
 detect_duplicate_transcripts <- function(
     transcript_list = NULL,
     data_folder = ".",
@@ -132,31 +163,7 @@ detect_duplicate_transcripts <- function(
 
   # Detect duplicates based on method
   if (method %in% c("metadata", "hybrid")) {
-    # Get file metadata
-    file_info <- file.info(existing_files)
-    file_sizes <- file_info$size
-    file_mtimes <- file_info$mtime
-
-    # Compare file sizes and modification times
-    for (i in seq_along(existing_names)) {
-      for (j in i:length(existing_names)) {
-        if (i == j) {
-          similarity_matrix[i, j] <- 1.0
-        } else {
-          # Size similarity
-          size_sim <- 1 - abs(file_sizes[i] - file_sizes[j]) / max(file_sizes[i], file_sizes[j])
-
-          # Time similarity (within 1 hour = similar)
-          time_diff <- abs(as.numeric(file_mtimes[i] - file_mtimes[j]))
-          time_sim <- ifelse(time_diff < 3600, 1.0, max(0, 1 - time_diff / 86400)) # 1 day max
-
-          # Combined metadata similarity
-          metadata_sim <- (size_sim + time_sim) / 2
-          similarity_matrix[i, j] <- metadata_sim
-          similarity_matrix[j, i] <- metadata_sim
-        }
-      }
-    }
+    similarity_matrix <- calculate_metadata_similarity(existing_files, existing_names, similarity_matrix)
   }
 
   if (method %in% c("content", "hybrid")) {
