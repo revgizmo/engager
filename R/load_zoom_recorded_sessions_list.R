@@ -75,7 +75,7 @@
 #'   transcripts_folder = "transcripts"
 #' )
 #' }
-ldzmrcrddsssnslst <-
+load_zoom_recorded_sessions_list <-
   function(data_folder = ".",
            transcripts_folder = "transcripts",
            topic_split_pattern =
