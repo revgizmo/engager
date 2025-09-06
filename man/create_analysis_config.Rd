@@ -14,21 +14,20 @@ create_analysis_config(
   roster_file = "roster.csv",
   cancelled_classes_file = "cancelled_classes.csv",
   names_lookup_file = "section_names_lookup.csv",
-  transcripts_session_summary_file = "transcripts_session_summary.csv",
+  trnscrptssssnsmmryfl = "transcripts_session_summary.csv",
   transcripts_summary_file = "transcripts_summary.csv",
   student_summary_report = "Zoom_Student_Engagement_Analysis_student_summary_report",
   student_summary_report_folder = system.file("", package = "zoomstudentengagement"),
   topic_split_pattern = paste0("^(?<dept>\\\\S+) (?<section>\\\\S+) - ",
     "(?<day>[A-Za-z]+) (?<time>\\\\S+\\\\s*\\\\S+) (?<instructor>\\\\(.*?\\\\))"),
-  zoom_recorded_sessions_csv_names_pattern =
+  zmrcrddsssnscsvnmspttrn =
     "zoomus_recordings__\\\\d{8}(?:\\\\s+copy\\\\s*\\\\d*)?\\\\.csv",
-  zoom_recorded_sessions_csv_col_names =
-    paste0("Topic,ID,Start Time,File Size (MB),File Count,",
+  zmrcrddsssnscsvclnms = paste0("Topic,ID,Start Time,File Size (MB),File Count,",
     "Total Views,Total Downloads,Last Accessed"),
   transcript_files_names_pattern = "GMT\\\\d{8}-\\\\d{6}_Recording",
   dt_extract_pattern = "(?<=GMT)\\\\d{8}",
-  transcript_file_extension_pattern = ".transcript",
-  closed_caption_file_extension_pattern = ".cc",
+  trnscrptflxtnsnpttrn = ".transcript",
+  clsdcptnflxtnsnpttrn = ".cc",
   recording_start_pattern = "(?<=GMT)\\\\d{8}-\\\\d{6}",
   recording_start_format = "\%Y\%m\%d-\%H\%M\%S",
   start_time_local_tzone = "America/Los_Angeles",
@@ -58,8 +57,6 @@ create_analysis_config(
 
 \item{names_lookup_file}{Name of the CSV file containing section names lookup information.}
 
-\item{transcripts_session_summary_file}{Name of the output CSV file for session-level summaries.}
-
 \item{transcripts_summary_file}{Name of the output CSV file for overall summaries.}
 
 \item{student_summary_report}{Base name for student summary report files.}
@@ -68,17 +65,9 @@ create_analysis_config(
 
 \item{topic_split_pattern}{Regex pattern to parse Zoom recording topics and extract course information.}
 
-\item{zoom_recorded_sessions_csv_names_pattern}{Regex pattern to match Zoom cloud recording CSV files.}
-
-\item{zoom_recorded_sessions_csv_col_names}{Comma-separated column names for Zoom cloud recording CSVs.}
-
 \item{transcript_files_names_pattern}{Regex pattern to match transcript file names.}
 
 \item{dt_extract_pattern}{Regex pattern to extract date from transcript file names.}
-
-\item{transcript_file_extension_pattern}{Regex pattern to identify transcript files.}
-
-\item{closed_caption_file_extension_pattern}{Regex pattern to identify closed caption files.}
 
 \item{recording_start_pattern}{Regex pattern to extract recording start time from file names.}
 
@@ -95,6 +84,16 @@ create_analysis_config(
 \item{use_session_mapping}{If TRUE, use session mapping approach instead of regex parsing}
 
 \item{session_mapping_file}{Path to session mapping CSV file (if use_session_mapping = TRUE)}
+
+\item{transcripts_session_summary_file}{Name of the output CSV file for session-level summaries.}
+
+\item{zoom_recorded_sessions_csv_names_pattern}{Regex pattern to match Zoom cloud recording CSV files.}
+
+\item{zoom_recorded_sessions_csv_col_names}{Comma-separated column names for Zoom cloud recording CSVs.}
+
+\item{transcript_file_extension_pattern}{Regex pattern to identify transcript files.}
+
+\item{closed_caption_file_extension_pattern}{Regex pattern to identify closed caption files.}
 }
 \value{
 A list containing the configuration organized into logical groups:

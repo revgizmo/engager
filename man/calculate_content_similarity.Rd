@@ -11,49 +11,26 @@ calculate_content_similarity(
 )
 }
 \arguments{
-\item{transcript1}{First transcript data frame or tibble containing transcript data}
+\item{transcript1}{First transcript data frame}
 
-\item{transcript2}{Second transcript data frame or tibble containing transcript data}
+\item{transcript2}{Second transcript data frame}
 
-\item{names_to_exclude}{Character vector of names to exclude from comparison.
-Defaults to c("dead_air") to ignore silence periods and system-generated entries}
+\item{names_to_exclude}{Character vector of names to exclude from analysis}
 }
 \value{
-Similarity score between 0 and 1, where:
-\itemize{
-\item 1 indicates identical content
-\item 0 indicates completely different content
-\item Values in between represent partial similarity
-}
+Numeric similarity score between 0 and 1
 }
 \description{
-Calculates similarity between two transcript data frames based on multiple metrics
-including speaker overlap, duration, word count, and comment count. This function
-is useful for identifying duplicate or similar transcript files and for quality
-control in transcript processing workflows.
+This function calculates the similarity between two transcript data frames
+based on various metrics including speaker overlap, duration, word count,
+comment count, and content similarity.
 }
 \examples{
-# Create sample transcript data
-transcript1 <- data.frame(
-  name = c("Student A", "Student B", "dead_air"),
-  duration = c(10, 15, 5),
-  wordcount = c(20, 30, 0),
-  stringsAsFactors = FALSE
-)
-
-transcript2 <- data.frame(
-  name = c("Student A", "Student C", "dead_air"),
-  duration = c(12, 18, 3),
-  wordcount = c(22, 35, 0),
-  stringsAsFactors = FALSE
-)
-
-# Calculate similarity
-similarity <- calculate_content_similarity(transcript1, transcript2)
-print(paste("Similarity score:", round(similarity, 3)))
+# Calculate similarity between two transcripts
+# similarity <- calculate_content_similarity(transcript1, transcript2)
 
 # Calculate similarity excluding dead air entries
-similarity <- calculate_content_similarity(transcript1, transcript2,
-  names_to_exclude = c("dead_air", "silence")
-)
+# similarity <- calculate_content_similarity(transcript1, transcript2,
+#   names_to_exclude = c("dead_air", "silence")
+# )
 }

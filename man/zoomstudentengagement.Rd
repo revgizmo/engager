@@ -6,12 +6,16 @@
 \alias{zoomstudentengagement}
 \title{Analyze Student Engagement from Zoom Transcripts}
 \description{
-A comprehensive R package for analyzing student engagement and participation equity from Zoom meeting transcripts. This package provides tools for processing Zoom transcript files, matching student names with rosters, calculating engagement metrics, and generating privacy-aware visualizations and reports.
+A comprehensive R package for analyzing student engagement and participation equity from Zoom meeting
+transcripts. This package provides tools for processing Zoom transcript files, matching student names with rosters,
+calculating engagement metrics, and generating privacy-aware visualizations and reports.
 }
 \details{
 Zoom Student Engagement Analysis Package
 
-The zoomstudentengagement package is designed for educational researchers and instructors who want to analyze student participation patterns in online learning environments. The package prioritizes privacy and ethical considerations, with built-in data anonymization features and FERPA compliance tools.
+The zoomstudentengagement package is designed for educational researchers and instructors who want to analyze student
+participation patterns in online learning environments. The package prioritizes privacy and ethical considerations,
+with built-in data anonymization features and FERPA compliance tools.
 \subsection{Key Features}{
 
 \strong{Data Processing:}

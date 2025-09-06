@@ -9,8 +9,8 @@ load_transcript_files_list(
   transcripts_folder = "transcripts",
   transcript_files_names_pattern = "GMT\\\\d{8}-\\\\d{6}_Recording",
   dt_extract_pattern = "(?<=GMT)\\\\d{8}",
-  transcript_file_extension_pattern = ".transcript",
-  closed_caption_file_extension_pattern = ".cc",
+  trnscrptflxtnsnpttrn = ".transcript",
+  clsdcptnflxtnsnpttrn = ".cc",
   recording_start_pattern = "(?<=GMT)\\\\d{8}-\\\\d{6}",
   recording_start_format = "\%Y\%m\%d-\%H\%M\%S",
   start_time_local_tzone = "America/Los_Angeles"
@@ -29,14 +29,6 @@ transcript file names. Defaults to \verb{GMT\\\\d\{8\}-\\\\d\{6\}_Recording}}
 \item{dt_extract_pattern}{REGEX pattern used to extract the date of the
 transcript from the transcript file name. Defaults to \verb{(?<=GMT)\\\\d\{8\}}}
 
-\item{transcript_file_extension_pattern}{REGEX pattern used to identify
-transcript files (as opposed to chat or closed caption files). Defaults to
-\code{.transcript}}
-
-\item{closed_caption_file_extension_pattern}{REGEX pattern used to identify
-closed caption files (as opposed to chat or transcript files). Defaults to
-\code{.cc}}
-
 \item{recording_start_pattern}{REGEX pattern used to extract the recording
 start time of the transcript from the transcript file name. Defaults to
 \verb{(?<=GMT)\\\\d\{8\}-\\\\d\{6\}}}
@@ -46,6 +38,14 @@ recording start time of the transcript. Defaults to \verb{\\\%Y\\\%m\\\%d-\\\%H\
 
 \item{start_time_local_tzone}{Local time zone of the recording start time of
 the transcript. Defaults to \code{America/Los_Angeles}}
+
+\item{transcript_file_extension_pattern}{REGEX pattern used to identify
+transcript files (as opposed to chat or closed caption files). Defaults to
+\code{.transcript}}
+
+\item{closed_caption_file_extension_pattern}{REGEX pattern used to identify
+closed caption files (as opposed to chat or transcript files). Defaults to
+\code{.cc}}
 }
 \value{
 A tibble listing the transcript files from the zoom recordings

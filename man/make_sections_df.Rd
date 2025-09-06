@@ -25,7 +25,8 @@ A tibble with the following columns:
 }
 }
 \description{
-This function creates a tibble that includes rows for each section (grouped by dept and course number) and student count in each.
+This function creates a tibble that includes rows for each section (grouped by dept and course number) and student
+count in each.
 }
 \examples{
 # Load a sample roster from the package's extdata directory

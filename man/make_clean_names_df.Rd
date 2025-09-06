@@ -35,8 +35,10 @@ by speaker for all class sessions (and placeholders for missing sections)
 from the joining of:
 \itemize{
 \item a tibble of customized student names by section (\code{section_names_lookup_file} in the \code{data_folder} folder),
-\item a tibble containing session details and summary metrics by speaker for all class sessions (\code{transcripts_metrics_df}), and
-\item a tibble listing the students enrolled in the class or classes, with rows for each recorded class section for each student (\code{roster_sessions}) into a single tibble.
+\item a tibble containing session details and summary metrics by speaker for all class sessions
+(\code{transcripts_metrics_df}), and
+\item a tibble listing the students enrolled in the class or classes, with rows for each recorded class section for each
+student (\code{roster_sessions}) into a single tibble.
 }
 }
 \examples{

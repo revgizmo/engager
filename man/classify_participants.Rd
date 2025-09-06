@@ -40,4 +40,7 @@ Privacy defaults are applied to outputs. Use this to classify participants
 BEFORE computing metrics so that downstream functions operate on a
 privacy-safe, idempotent representation.
 }
+\examples{
+# classify_participants(transcript_df, roster_df, lookup_df)
+}
 \keyword{deprecated}

@@ -15,7 +15,8 @@ write_engagement_metrics(
 
 \item{file_path}{Path where the CSV file should be saved}
 
-\item{comments_format}{How to format the comments column: "text" (semicolon-separated) or "count" (number of comments)}
+\item{comments_format}{How to format the comments column: "text" (semicolon-separated) or "count" (number of
+comments)}
 }
 \value{
 Invisibly returns the processed data that was written
