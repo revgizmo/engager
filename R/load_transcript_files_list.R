@@ -79,10 +79,10 @@ load_transcript_files_list <-
 
     # Determine file type
     df$file_type <- ifelse(
-      grepl(transcript_file_extension_pattern, df$file_name, fixed = FALSE),
+      grepl(trnscrptflxtnsnpttrn, df$file_name, fixed = FALSE),
       "transcript_file",
       ifelse(
-        grepl(closed_caption_file_extension_pattern, df$file_name, fixed = FALSE),
+        grepl(clsdcptnflxtnsnpttrn, df$file_name, fixed = FALSE),
         "closed_caption_file",
         "chat_file"
       )

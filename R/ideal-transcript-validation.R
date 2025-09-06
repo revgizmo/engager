@@ -115,7 +115,7 @@ vldtdltrnscrptstrctr <- function(transcript_data = NULL,
   }
 
   # Generate recommendations
-  results$recommendations <- generate_structure_recommendations(results)
+  results$recommendations <- gen_structure_recommendations(results)
 
   return(results)
 }
@@ -169,7 +169,7 @@ validate_ideal_content_quality <- function(transcript_data = NULL,
   }
 
   # Calculate quality metrics
-  quality_metrics <- calculate_content_quality_metrics(transcript_data)
+  quality_metrics <- clcltcntntqltymtrcs(transcript_data)
   results$quality_metrics <- quality_metrics
 
   # Check dialogue length patterns
@@ -191,7 +191,7 @@ validate_ideal_content_quality <- function(transcript_data = NULL,
   }
 
   # Calculate overall quality score
-  quality_score <- calculate_overall_quality_score(results$validation_details)
+  quality_score <- clcltvrllqltyscr(results$validation_details)
   results$quality_score <- quality_score
 
   # Determine status based on quality score and validation results
@@ -209,7 +209,7 @@ validate_ideal_content_quality <- function(transcript_data = NULL,
   results$warnings <- all_warnings
 
   # Generate recommendations
-  results$recommendations <- generate_content_recommendations(results)
+  results$recommendations <- gen_content_recommendations(results)
 
   return(results)
 }
@@ -311,7 +311,7 @@ vldtdltmngcnsstncy <- function(transcript_data = NULL,
   results$status <- determine_validation_status(results$validation_details)
 
   # Generate recommendations
-  results$recommendations <- generate_timing_recommendations(results)
+  results$recommendations <- gen_timing_recommendations(results)
 
   return(results)
 }
@@ -426,7 +426,7 @@ validate_ideal_name_coverage <- function(transcript_data = NULL,
   results$status <- determine_validation_status(results$validation_details)
 
   # Generate recommendations
-  results$recommendations <- generate_name_coverage_recommendations(results)
+  results$recommendations <- generate_name_coverage_recs(results)
 
   return(results)
 }
@@ -527,7 +527,7 @@ vldtdltrnscrptcmprhnsv <- function(transcript_data = NULL,
   }
 
   # Run all validation checks
-  results$validation_results$structure <- validate_ideal_transcript_structure(
+  results$validation_results$structure <- vldtdltrnscrptstrctr(
     transcript_data = transcript_data,
     strict_mode = validation_options$strict_mode
   )
@@ -538,7 +538,7 @@ vldtdltrnscrptcmprhnsv <- function(transcript_data = NULL,
     check_realism = validation_options$check_realism
   )
 
-  results$validation_results$timing_consistency <- validate_ideal_timing_consistency(
+  results$validation_results$timing_consistency <- vldtdltmngcnsstncy(
     transcript_data = transcript_data,
     max_gap_seconds = validation_options$max_gap_seconds,
     check_overlaps = validation_options$check_overlaps
@@ -565,11 +565,11 @@ vldtdltrnscrptcmprhnsv <- function(transcript_data = NULL,
   results$summary <- generate_comprehensive_summary(results)
 
   # Generate recommendations
-  results$recommendations <- generate_comprehensive_recommendations(results)
+  results$recommendations <- generate_comprehensive_recs(results)
 
   # Generate detailed report if requested
   if (detailed_report) {
-    results$detailed_report <- generate_detailed_validation_report(results)
+    results$detailed_report <- gen_detailed_validation_report(results)
   }
 
   return(results)

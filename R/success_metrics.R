@@ -70,7 +70,7 @@ success_metrics_framework <- list(
 track_success_metrics <- function() {
   # Use the existing deprecated function for now
   # This maintains backward compatibility while the new framework is developed
-  generate_success_metrics_report()
+  gen_success_metrics_report()
 }
 
 #' Generate success metrics report
@@ -376,7 +376,7 @@ print_success_metrics_summary <- function(report = NULL) {
   )
 
   if (is.null(report)) {
-    report <- generate_success_metrics_report()
+    report <- gen_success_metrics_report()
   }
 
   cat("🎯 Success Metrics Summary for zoomstudentengagement Package\n")

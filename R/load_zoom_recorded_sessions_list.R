@@ -107,8 +107,8 @@ ldzmrcrddsssnslst <-
 
     # Setup and validation
     setup_result <- setup_zoom_sessions_loading(data_folder, transcripts_folder, 
-                                               zoom_recorded_sessions_csv_col_names, 
-                                               zoom_recorded_sessions_csv_names_pattern)
+                                               zmrcrddsssnscsvclnms, 
+                                               zmrcrddsssnscsvnmspttrn)
     if (is.null(setup_result)) {
       return(NULL)
     }
