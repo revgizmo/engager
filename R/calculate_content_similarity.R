@@ -29,6 +29,58 @@ calculate_content_similarity <- function(
     call. = FALSE
   )
 
-  # Simplified deprecated function - return 0.0 for all comparisons
-  0.0
+  # Validate inputs
+  if (is.null(transcript1) || is.null(transcript2)) {
+    return(0.0)
+  }
+  
+  if (!is.data.frame(transcript1) || !is.data.frame(transcript2)) {
+    return(0.0)
+  }
+  
+  if (nrow(transcript1) == 0 || nrow(transcript2) == 0) {
+    return(0.0)
+  }
+  
+  # Filter out excluded names
+  if (!is.null(names_to_exclude)) {
+    transcript1 <- transcript1[!transcript1$name %in% names_to_exclude, , drop = FALSE]
+    transcript2 <- transcript2[!transcript2$name %in% names_to_exclude, , drop = FALSE]
+  }
+  
+  # If no data left after filtering, return 0
+  if (nrow(transcript1) == 0 || nrow(transcript2) == 0) {
+    return(0.0)
+  }
+  
+  # Calculate basic similarity based on common columns
+  common_cols <- intersect(names(transcript1), names(transcript2))
+  if (length(common_cols) == 0) {
+    return(0.0)
+  }
+  
+  # Simple similarity calculation based on numeric columns
+  numeric_cols <- common_cols[sapply(transcript1[common_cols], is.numeric)]
+  if (length(numeric_cols) == 0) {
+    return(0.0)
+  }
+  
+  # Calculate similarity for each numeric column
+  similarities <- numeric(length(numeric_cols))
+  for (i in seq_along(numeric_cols)) {
+    col <- numeric_cols[i]
+    val1 <- sum(transcript1[[col]], na.rm = TRUE)
+    val2 <- sum(transcript2[[col]], na.rm = TRUE)
+    
+    if (val1 == 0 && val2 == 0) {
+      similarities[i] <- 0.0  # No meaningful data when both are 0
+    } else if (val1 == 0 || val2 == 0) {
+      similarities[i] <- 0.0
+    } else {
+      similarities[i] <- 1.0 - abs(val1 - val2) / max(val1, val2)
+    }
+  }
+  
+  # Return average similarity
+  mean(similarities, na.rm = TRUE)
 }
