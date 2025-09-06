@@ -42,8 +42,8 @@ calculate_content_similarity <- function(
     return(0.0)
   }
   
-  # Filter out excluded names
-  if (!is.null(names_to_exclude)) {
+  # Filter out excluded names (only if name column exists)
+  if (!is.null(names_to_exclude) && "name" %in% names(transcript1) && "name" %in% names(transcript2)) {
     transcript1 <- transcript1[!transcript1$name %in% names_to_exclude, , drop = FALSE]
     transcript2 <- transcript2[!transcript2$name %in% names_to_exclude, , drop = FALSE]
   }

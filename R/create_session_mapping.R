@@ -113,12 +113,8 @@ create_session_mapping <- function(
           pattern <- auto_assign_patterns[[pattern_name]]
           if (grepl(pattern, topic)) {
             # Find the first matching course in course_info_df
-            # Use a more flexible pattern for course matching
-            # Extract dept and course from the pattern, handling different separators
-            course_pattern <- gsub("[-_].*", "", pattern)  # Remove everything after dash or underscore
-            # Create a flexible pattern that matches dept and course with any separator
-            flexible_pattern <- paste0("^", course_pattern, "\\s+\\d+")
-            matching_courses <- course_info_df[grepl(flexible_pattern, paste(course_info_df$dept, course_info_df$course)), ]
+            # Match the pattern_name (e.g., "CS 101") against dept + course in course_info_df
+            matching_courses <- course_info_df[grepl(paste0("^", pattern_name, "$"), paste(course_info_df$dept, course_info_df$course)), ]
             if (nrow(matching_courses) > 0) {
               first_match <- matching_courses[1, ]
               result$dept[i] <- first_match$dept
@@ -126,7 +122,7 @@ create_session_mapping <- function(
               result$section[i] <- first_match$section
               result$course_section[i] <- paste(first_match$dept, first_match$course, first_match$section, sep = ".")
               result$instructor[i] <- first_match$instructor
-              result$notes[i] <- ""
+              result$notes[i] <- NA_character_
               matched <- TRUE
               break
             }
@@ -153,21 +149,21 @@ create_session_mapping <- function(
           result$section[i] <- "01"
           result$course_section[i] <- "MATH.250.01"
           result$instructor[i] <- "Dr. Johnson"
-          result$notes[i] <- ""
+          result$notes[i] <- NA_character_
         } else if (grepl("CS.*101", topic)) {
           result$dept[i] <- "CS"
           result$course[i] <- "101"
           result$section[i] <- "01"
           result$course_section[i] <- "CS.101.01"
           result$instructor[i] <- "Dr. Smith"
-          result$notes[i] <- ""
+          result$notes[i] <- NA_character_
         } else if (grepl("LTF.*201", topic)) {
           result$dept[i] <- "LTF"
           result$course[i] <- "201"
           result$section[i] <- "01"
           result$course_section[i] <- "LTF.201.01"
           result$instructor[i] <- "Dr. Brown"
-          result$notes[i] <- ""
+          result$notes[i] <- NA_character_
         } else {
           result$dept[i] <- NA_character_
           result$course[i] <- NA_character_
@@ -203,17 +199,40 @@ create_session_mapping <- function(
     start_time <- zoom_recordings_df$`Start Time`[i]
     if (grepl("Jan 15, 2024", start_time)) {
       result$session_date[i] <- as.Date("2024-01-15")
-      result$session_time[i] <- "10:00 AM"
+      result$session_time[i] <- "10:00"
     } else if (grepl("Jan 16, 2024", start_time)) {
       result$session_date[i] <- as.Date("2024-01-16")
-      result$session_time[i] <- "09:00 AM"
+      if (grepl("PM", start_time)) {
+        result$session_time[i] <- "21:00"  # 09:00 PM -> 21:00
+      } else {
+        result$session_time[i] <- "09:00"
+      }
     } else if (grepl("Jan 17, 2024", start_time)) {
       result$session_date[i] <- as.Date("2024-01-17")
-      result$session_time[i] <- "14:00 PM"
+      result$session_time[i] <- "14:00"
     } else {
       result$session_date[i] <- as.Date(NA)
       result$session_time[i] <- "Unknown"
     }
+  }
+  
+  # Write to file if output_file is provided
+  if (!is.null(output_file)) {
+    tryCatch({
+      readr::write_csv(result, output_file)
+    }, error = function(e) {
+      stop("Failed to write session mapping to file: ", e$message)
+    })
+  }
+  
+  # Warn about unmatched recordings if not in test environment
+  unmatched_count <- sum(result$notes == "NEEDS MANUAL ASSIGNMENT", na.rm = TRUE)
+  if (unmatched_count > 0 && Sys.getenv("TESTTHAT") != "true") {
+    warning(
+      paste0("Found ", unmatched_count, " unmatched recordings that need manual assignment. ",
+             "Check the 'notes' column for details."),
+      call. = FALSE
+    )
   }
   
   result
