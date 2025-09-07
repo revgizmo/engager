@@ -183,3 +183,4 @@ Issue #488 addresses critical test failures that are preventing CRAN submission.
 - Ready for CRAN submission
 
 This plan focuses on the actual root causes of test failures and provides a clear path to resolution.
+

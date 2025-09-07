@@ -268,7 +268,7 @@ generate_validation_report <- function(validation_results, function_categories, 
 #'
 #' @param validation_results Validation results
 #' @return Validation recommendations
-gen_validation_recommendations <- function(validation_results) {
+generate_validation_recommendations <- function(validation_results) {
   recommendations <- character(0)
 
   # Function count recommendations

@@ -52,7 +52,7 @@ ensure_privacy <- function(x = NULL,
   validate_privacy_level(privacy_level)
 
   # Handle privacy level and get appropriate columns
-  result <- handle_privacy_level(privacy_level, id_columns, audit_log)
+  result <- handle_privacy_level(privacy_level, id_columns, audit_log, x)
   if (result$early_return) {
     return(result$data)
   }
@@ -83,7 +83,7 @@ validate_privacy_level <- function(privacy_level) {
 }
 
 # Helper function to handle privacy level and get appropriate columns
-handle_privacy_level <- function(privacy_level, id_columns, audit_log) {
+handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
   # If privacy is explicitly disabled, warn and return unmodified
   if (identical(privacy_level, "none")) {
     warning(
@@ -101,7 +101,7 @@ handle_privacy_level <- function(privacy_level, id_columns, audit_log) {
       )
     }
 
-    return(list(early_return = TRUE, data = NULL, id_columns = NULL))
+    return(list(early_return = TRUE, data = x, id_columns = NULL))
   }
 
   # FERPA strict level - most comprehensive masking

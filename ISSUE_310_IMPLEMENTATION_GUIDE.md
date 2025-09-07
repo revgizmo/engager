@@ -517,3 +517,4 @@ Rscript -e "library(covr); coverage <- package_coverage(); report(coverage, 'fin
 ---
 
 **This implementation guide completes the coverage testing needed to reach the ≥90% target for CRAN submission, building on the completed scope reduction, UX simplification, function audit, and success metrics work.**
+
