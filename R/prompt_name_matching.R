@@ -88,7 +88,7 @@ prompt_name_matching <- function(unmatched_names = NULL,
   )
 
   # Display guidance to user (quiet by default)
-  # diag_cat("\n", guidance, "\n", sep = "")
+  diag_cat("\n", guidance, "\n", sep = "")
 
   # Create the lookup file using existing function
   lookup_file_path <- file.path(data_folder, section_names_lookup_file)
