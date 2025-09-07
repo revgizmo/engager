@@ -267,7 +267,9 @@ save_function_audit_report <- function(inventory, categorization, dependencies,
     {
       report <- generate_function_audit_report(inventory, categorization, dependencies)
       writeLines(report, output_file)
-      message("Function audit report saved to: ", output_file)
+      if (isTRUE(getOption("zoomse.verbose", FALSE))) {
+        message("Function audit report saved to: ", output_file)
+      }
       TRUE
     },
     error = function(e) {

@@ -188,7 +188,9 @@ save_scope_reduction_report <- function(tracker, output_file = "scope_reduction_
     {
       report <- gen_scope_reduction_report(tracker)
       writeLines(report, output_file)
-      message("Scope reduction report saved to: ", output_file)
+      if (isTRUE(getOption("zoomse.verbose", FALSE))) {
+        message("Scope reduction report saved to: ", output_file)
+      }
       TRUE
     },
     error = function(e) {

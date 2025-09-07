@@ -38,7 +38,9 @@ add_deprecation_warning <- function(function_name, replacement_function = NULL, 
 #' @param migration_recommendations Migration recommendations
 #' @return Migration guide content
 generate_migration_guide <- function(deprecated_functions, migration_recommendations) {
-  cat("📝 Generating migration guide for deprecated functions...\n")
+  if (isTRUE(getOption("zoomse.verbose", FALSE))) {
+    message("📝 Generating migration guide for deprecated functions...")
+  }
 
   migration_guide <- "# Function Migration Guide\n\n"
   migration_guide <- paste0(

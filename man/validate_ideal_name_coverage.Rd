@@ -21,8 +21,8 @@ validate_ideal_name_coverage(
 \item{check_edge_cases}{Logical. Whether to check for edge case names. Default: TRUE}
 }
 \value{
-Validation results list with name coverage analysis
-# # # # @export (REMOVED - deprecated function) (REMOVED - deprecated function) (REMOVED - deprecated function)
+Validation results list with name coverage analysis# # # @export (REMOVED - deprecated function) (REMOVED - deprecated function) (REMOVED - deprecated function)
+
 (REMOVED - deprecated function)
 }
 \description{

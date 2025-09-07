@@ -234,7 +234,13 @@ INTERNAL_FUNCTIONS <- c(
 add_deprecation_warnings <- function() {
   # This function will be called to add deprecation warnings
   # to all functions in DEPRECATED_FUNCTIONS
-  message("Adding deprecation warnings to ", length(DEPRECATED_FUNCTIONS), " functions")
+  if (isTRUE(getOption("zoomse.verbose", FALSE))) {
+    message(
+      "Adding deprecation warnings to ",
+      length(DEPRECATED_FUNCTIONS),
+      " functions"
+    )
+  }
 }
 
 #' Get Essential Functions List
