@@ -65,8 +65,9 @@ test_that("function audit report generation works", {
   # Should be able to generate report
   expect_error(report <- generate_function_audit_report(mock_inventory, mock_categories, mock_dependencies), NA)
 
-  # Should return a list
-  expect_true(is.list(report))
+  # Should return a character string (report content)
+  expect_true(is.character(report))
+  expect_true(length(report) > 0)
 })
 
 test_that("function audit system handles edge cases", {
@@ -108,14 +109,30 @@ test_that("function audit system respects quiet mode", {
 
 test_that("function categorization provides meaningful categories", {
   # Test that categorization produces useful categories
-  mock_functions <- c(
-    "process_zoom_transcript", # Should be essential
-    "summarize_transcript_metrics", # Should be essential
-    "old_deprecated_function", # Should be deprecated
-    "internal_helper_function" # Should be internal
+  mock_analysis <- list(
+    process_zoom_transcript = list(
+      name = "process_zoom_transcript",
+      signature = "process_zoom_transcript(file_path)",
+      documentation = "Complete"
+    ),
+    summarize_transcript_metrics = list(
+      name = "summarize_transcript_metrics",
+      signature = "summarize_transcript_metrics(data)",
+      documentation = "Complete"
+    ),
+    old_deprecated_function = list(
+      name = "old_deprecated_function",
+      signature = "old_deprecated_function()",
+      documentation = "Missing"
+    ),
+    internal_helper_function = list(
+      name = "internal_helper_function",
+      signature = "internal_helper_function()",
+      documentation = "Missing"
+    )
   )
 
-  categories <- categorize_functions(mock_functions)
+  categories <- categorize_functions(mock_analysis)
 
   # Should have expected categories
   expect_true(is.list(categories))

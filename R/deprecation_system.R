@@ -77,17 +77,41 @@ generate_migration_guide <- function(deprecated_functions, migration_recommendat
         migration_guide,
         "- **Status**: Deprecated (will be removed in v2.0.0)\n"
       )
+      # Handle both string and list formats for migration recommendations
+      if (is.character(rec)) {
+        replacement_text <- rec
+      } else if (is.list(rec) && "replacement_function" %in% names(rec)) {
+        replacement_text <- rec$replacement_function
+      } else {
+        replacement_text <- "See documentation for alternatives"
+      }
+      
       migration_guide <- paste0(
         migration_guide,
-        "- **Replacement**: ", rec$replacement_function, "\n"
+        "- **Replacement**: ", replacement_text, "\n"
       )
+      # Handle impact level
+      if (is.list(rec) && "impact_level" %in% names(rec)) {
+        impact_level <- rec$impact_level
+      } else {
+        impact_level <- "Medium"
+      }
+      
       migration_guide <- paste0(
         migration_guide,
-        "- **Impact Level**: ", rec$impact_level, "\n"
+        "- **Impact Level**: ", impact_level, "\n"
       )
+      
+      # Handle migration strategy
+      if (is.list(rec) && "migration_strategy" %in% names(rec)) {
+        migration_strategy <- rec$migration_strategy
+      } else {
+        migration_strategy <- "Update function calls as recommended"
+      }
+      
       migration_guide <- paste0(
         migration_guide,
-        "- **Migration**: ", rec$migration_strategy, "\n\n"
+        "- **Migration**: ", migration_strategy, "\n\n"
       )
     }
   }
@@ -152,11 +176,16 @@ create_deprecation_warnings <- function(deprecated_functions, migration_recommen
 #' @param cran_functions Functions to keep in NAMESPACE
 #' @param deprecated_functions Functions to remove from NAMESPACE
 #' @return Updated NAMESPACE content
-pdtnmspcfrdprctn <- function(cran_functions, deprecated_functions) {
+update_namespace_for_deprecation <- function(cran_functions, deprecated_functions) {
   cat("📝 Updating NAMESPACE for deprecation...\n")
 
-  # Read current NAMESPACE
-  namespace_lines <- readLines("NAMESPACE")
+  # Read current NAMESPACE (handle case where it doesn't exist)
+  if (file.exists("NAMESPACE")) {
+    namespace_lines <- readLines("NAMESPACE")
+  } else {
+    # Return empty namespace if file doesn't exist
+    return(character(0))
+  }
 
   # Keep only CRAN functions in exports
   new_namespace_lines <- character(0)

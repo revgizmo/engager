@@ -116,7 +116,7 @@ prompt_name_matching <- function(unmatched_names = NULL,
 #'
 #' @return Character string with guidance
 #' @keywords internal
-gen_name_matching_guidance <- function(unmatched_names, privacy_level, include_instructions) {
+generate_name_matching_guidance <- function(unmatched_names, privacy_level, include_instructions) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning(

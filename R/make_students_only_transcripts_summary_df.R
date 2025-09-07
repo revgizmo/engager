@@ -61,7 +61,7 @@
 #'   preferred_name_exclude_cv = c("dead_air", "Instructor Name", "Guests", "unknown")
 #' )
 #' }
-mkstdntsnlytrnscrptssmmrydf <-
+make_students_only_transcripts_summary_df <-
   function(transcripts_session_summary_df = NULL,
            preferred_name_exclude_cv = c("dead_air", "Instructor Name", "Guests", "unknown")) {
     if (tibble::is_tibble(transcripts_session_summary_df)

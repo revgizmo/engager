@@ -8,7 +8,7 @@
 #'
 #' @return A ggplot object.
 #' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
-pltsrsmskdsctnbymtrc <- function(df = NULL, metric = "session_ct") {
+plot_users_masked_section_by_metric <- function(df = NULL, metric = "session_ct") {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning(

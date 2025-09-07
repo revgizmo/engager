@@ -31,7 +31,7 @@
 #'
 #' # Test the function with the sample data
 #' make_transcripts_session_summary_df(sample_data)
-mktrnscrptssssnsmmrydf <- function(clean_names_df = NULL) {
+make_transcripts_session_summary_df <- function(clean_names_df = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
   warning(

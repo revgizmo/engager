@@ -8,13 +8,13 @@
 #'
 #' @return Invisibly returns the written tibble
 #' @export
-wrttrnscrptssssnsmmry <-
+write_transcripts_session_summary <-
   function(transcripts_session_summary_df = NULL,
            data_folder = ".",
-           trnscrptssssnsmmryfl = "transcripts_session_summary.csv") {
+           transcripts_session_summary_file = "transcripts_session_summary.csv") {
     if (!tibble::is_tibble(transcripts_session_summary_df)) {
       return(invisible(NULL))
     }
-    path <- paste0(data_folder, "/", trnscrptssssnsmmryfl)
+    path <- paste0(data_folder, "/", transcripts_session_summary_file)
     write_metrics(transcripts_session_summary_df, what = "session_summary", path = path)
   }

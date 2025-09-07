@@ -50,7 +50,7 @@
 #' load_and_process_zoom_transcript(transcript_file_path = transcript_file)
 #' }
 #'
-ldndprcsszmtrnscrpt <- function(transcript_file_path = NULL,
+load_and_process_zoom_transcript <- function(transcript_file_path = NULL,
                                 consolidate_comments = TRUE,
                                 max_pause_sec = 1,
                                 add_dead_air = TRUE,

@@ -40,7 +40,10 @@ audit_all_functions <- function() {
 #'
 #' @return Vector of exported function names
 get_exported_functions <- function() {
-  # Read NAMESPACE file
+  # Read NAMESPACE file (handle case where it doesn't exist)
+  if (!file.exists("NAMESPACE")) {
+    return(character(0))
+  }
   namespace_lines <- readLines("NAMESPACE")
   export_lines <- grep("^export\\(", namespace_lines, value = TRUE)
 
@@ -218,6 +221,20 @@ get_function_dependencies <- function(function_name) {
   )
 }
 
+#' Analyze function dependencies for multiple functions
+#'
+#' @param function_names Vector of function names to analyze
+#' @return List of dependencies for each function
+analyze_function_dependencies <- function(function_names) {
+  dependencies <- list()
+  
+  for (func_name in function_names) {
+    dependencies[[func_name]] <- get_function_dependencies(func_name)
+  }
+  
+  dependencies
+}
+
 #' Get function file location
 #'
 #' @param function_name Name of function
@@ -287,25 +304,51 @@ generate_audit_report <- function(categories, function_analysis) {
 
   # Summary statistics
   total_functions <- length(function_analysis)
-  documented_functions <- sum(sapply(function_analysis, function(x) x$documentation == "Complete"))
-  functions_with_examples <- sum(sapply(function_analysis, function(x) x$usage$in_examples))
-  functions_in_tests <- sum(sapply(function_analysis, function(x) x$usage$in_tests))
+  
+  # Handle empty function_analysis gracefully
+  if (total_functions == 0) {
+    documented_functions <- 0
+    functions_with_examples <- 0
+    functions_in_tests <- 0
+  } else {
+    documented_functions <- sum(sapply(function_analysis, function(x) {
+      if (is.null(x$documentation)) return(FALSE)
+      x$documentation == "Complete"
+    }))
+    functions_with_examples <- sum(sapply(function_analysis, function(x) {
+      if (is.null(x$usage) || is.null(x$usage$in_examples)) return(FALSE)
+      x$usage$in_examples
+    }))
+    functions_in_tests <- sum(sapply(function_analysis, function(x) {
+      if (is.null(x$usage) || is.null(x$usage$in_tests)) return(FALSE)
+      x$usage$in_tests
+    }))
+  }
 
   cat("📈 SUMMARY STATISTICS\n")
   cat(paste(rep("-", 20), collapse = ""), "\n")
   cat("Total exported functions:", total_functions, "\n")
-  cat(
-    "Functions with documentation:", documented_functions, "(",
-    round(100 * documented_functions / total_functions, 1), "%)\n"
-  )
-  cat(
-    "Functions with examples:", functions_with_examples, "(",
-    round(100 * functions_with_examples / total_functions, 1), "%)\n"
-  )
-  cat(
-    "Functions with tests:", functions_in_tests, "(",
-    round(100 * functions_in_tests / total_functions, 1), "%)\n\n"
-  )
+  if (total_functions > 0) {
+    cat(
+      "Functions with documentation:", documented_functions, "(",
+      round(100 * documented_functions / total_functions, 1), "%)\n"
+    )
+    cat(
+      "Functions with examples:", functions_with_examples, "(",
+      round(100 * functions_with_examples / total_functions, 1), "%)\n"
+    )
+  } else {
+    cat("Functions with documentation:", documented_functions, "(0%)\n")
+    cat("Functions with examples:", functions_with_examples, "(0%)\n")
+  }
+  if (total_functions > 0) {
+    cat(
+      "Functions with tests:", functions_in_tests, "(",
+      round(100 * functions_in_tests / total_functions, 1), "%)\n\n"
+    )
+  } else {
+    cat("Functions with tests:", functions_in_tests, "(0%)\n\n")
+  }
 
   # Category breakdown
   cat("📂 FUNCTION CATEGORIES\n")
@@ -323,14 +366,15 @@ generate_audit_report <- function(categories, function_analysis) {
       cat(paste(rep("-", nchar(category) + 10), collapse = ""), "\n")
       for (func_name in categories[[category]]) {
         func_info <- function_analysis[[func_name]]
-        doc_status <- if (func_info$documentation == "Complete") "✅" else "❌"
-        test_status <- if (func_info$usage$in_tests) "✅" else "❌"
-        example_status <- if (func_info$usage$in_examples) "✅" else "❌"
+        doc_status <- if (is.null(func_info$documentation) || func_info$documentation == "Complete") "✅" else "❌"
+        test_status <- if (is.null(func_info$usage) || is.null(func_info$usage$in_tests) || func_info$usage$in_tests) "✅" else "❌"
+        example_status <- if (is.null(func_info$usage) || is.null(func_info$usage$in_examples) || func_info$usage$in_examples) "✅" else "❌"
+        file_location <- if (is.null(func_info$file_location)) "Unknown" else func_info$file_location
 
         cat(sprintf(
           "  %-30s | Doc:%s Test:%s Ex:%s | %s\n",
           func_name, doc_status, test_status, example_status,
-          func_info$file_location
+          file_location
         ))
       }
       cat("\n")

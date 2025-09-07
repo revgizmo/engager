@@ -35,6 +35,11 @@ categorize_functions <- function(function_analysis) {
 #' @return Category name
 determine_function_category <- function(func) {
   name <- func$name
+  
+  # Handle empty or NULL names
+  if (is.null(name) || length(name) == 0 || name == "") {
+    return("uncategorized")
+  }
 
   # Core workflow functions - essential for basic transcript analysis
   if (grepl("load_zoom|process_zoom|analyze_transcript|consolidate_transcript", name)) {
