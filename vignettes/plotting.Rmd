@@ -73,19 +73,24 @@ roster_sessions <- tibble::tibble(
   course_section = "LTF.201.1"
 )
 
-# Create clean names dataframe
-# Use a temporary directory since we're working with sample data
-temp_dir <- tempdir()
-clean_names_df <- make_clean_names_df(
-  data_folder = temp_dir,
-  section_names_lookup_file = "section_names_lookup.csv",
-  transcripts_metrics_df,
-  roster_sessions
-)
+# For this example, we'll work directly with the sample data
+# In practice, you would use the essential functions to process real data
 
-# Create summary dataframes
-transcripts_session_summary_df <- make_transcripts_session_summary_df(clean_names_df)
-transcripts_summary_df <- make_transcripts_summary_df(transcripts_session_summary_df)
+# Create a simplified summary dataframe for demonstration
+transcripts_summary_df <- transcripts_metrics_df %>%
+  group_by(name) %>%
+  summarise(
+    session_ct = n(),
+    n = sum(n),
+    duration = sum(duration),
+    wordcount = sum(wordcount),
+    n_perc = mean(n_perc),
+    duration_perc = mean(duration_perc),
+    wordcount_perc = mean(wordcount_perc),
+    wpm = mean(wpm),
+    section = first(section),
+    course = first(course)
+  )
 
 # View the summary data
 head(transcripts_summary_df)
@@ -155,10 +160,10 @@ plot_users(transcripts_summary_df, metric = "perc_wordcount", facet_by = "sectio
 Focus analysis on enrolled students only:
 
 ```{r students-only}
-# Create students-only summary
-students_only_summary <- make_students_only_transcripts_summary_df(
-  transcripts_session_summary_df
-)
+# Filter for students only (exclude instructors, TAs, etc.)
+# In practice, you would use roster data to identify students
+students_only_summary <- transcripts_summary_df %>%
+  filter(!grepl("Instructor|TA|Professor", name, ignore.case = TRUE))
 
 # Plot students-only metrics
 plot_users(students_only_summary, metric = "session_ct", facet_by = "section", mask_by = "name")
@@ -205,12 +210,17 @@ plot_users(section_data, metric = "wpm", facet_by = "section", mask_by = "name")
 Compare different metrics:
 
 ```{r comparative}
-# Create comparison plots
-par(mfrow = c(2, 2))
-plot_users(transcripts_summary_df, metric = "n", facet_by = "section", mask_by = "name")
-plot_users(transcripts_summary_df, metric = "duration", facet_by = "section", mask_by = "name")
-plot_users(transcripts_summary_df, metric = "wordcount", facet_by = "section", mask_by = "name")
-plot_users(transcripts_summary_df, metric = "wpm", facet_by = "section", mask_by = "name")
+# Create comparison plots using grid layout
+library(gridExtra)
+
+# Create individual plots
+p1 <- plot_users(transcripts_summary_df, metric = "n", facet_by = "section", mask_by = "name")
+p2 <- plot_users(transcripts_summary_df, metric = "duration", facet_by = "section", mask_by = "name")
+p3 <- plot_users(transcripts_summary_df, metric = "wordcount", facet_by = "section", mask_by = "name")
+p4 <- plot_users(transcripts_summary_df, metric = "wpm", facet_by = "section", mask_by = "name")
+
+# Arrange plots in a grid
+grid.arrange(p1, p2, p3, p4, ncol = 2)
 ```
 
 ## Interpreting the Results

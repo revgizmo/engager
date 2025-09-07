@@ -378,45 +378,45 @@ print_success_metrics_summary <- function(report = NULL) {
     report <- gen_success_metrics_report()
   }
 
-  cat("🎯 Success Metrics Summary for zoomstudentengagement Package\n")
-  cat("========================================================\n\n")
+  # cat("🎯 Success Metrics Summary for zoomstudentengagement Package\n")
+  # cat("========================================================\n\n")
 
   # Function Scope
-  cat("📊 Function Scope:\n")
+  # cat("📊 Function Scope:\n")
   if (!is.null(report$progress$functions)) {
-    cat("   Current: ", report$progress$functions$current, " functions\n")
-    cat("   Target: 25-30 functions\n")
-    cat("   Progress: ", round(report$progress$functions$progress, 1), "% complete\n")
+    # cat("   Current: ", report$progress$functions$current, " functions\n")
+    # cat("   Target: 25-30 functions\n")
+    # cat("   Progress: ", round(report$progress$functions$progress, 1), "% complete\n")
   }
 
   # Test Coverage
-  cat("\n🧪 Test Coverage:\n")
+  # cat("\n🧪 Test Coverage:\n")
   if (!is.null(report$progress$coverage)) {
-    cat("   Current: ", report$progress$coverage$current, "%\n")
-    cat("   Target: ≥90%\n")
+    # cat("   Current: ", report$progress$coverage$current, "%\n")
+    # cat("   Target: ≥90%\n")
     if (report$progress$coverage$current >= 90) {
-      cat("   ✅ Target achieved\n")
+      # cat("   ✅ Target achieved\n")
     } else {
-      cat("   ❌ Need ", 90 - report$progress$coverage$current, "% more coverage\n")
+      # cat("   ❌ Need ", 90 - report$progress$coverage$current, "% more coverage\n")
     }
   }
 
   # Documentation
-  cat("\n📚 Documentation:\n")
+  # cat("\n📚 Documentation:\n")
   if (!is.null(report$progress$documentation)) {
-    cat("   Current: ", report$progress$documentation$current, " files\n")
-    cat("   Target: 75 files\n")
-    cat("   Progress: ", round(report$progress$documentation$progress, 1), "% complete\n")
+    # cat("   Current: ", report$progress$documentation$current, " files\n")
+    # cat("   Target: 75 files\n")
+    # cat("   Progress: ", round(report$progress$documentation$progress, 1), "% complete\n")
   }
 
   # Overall Status
-  cat("\n🎯 Overall Status:\n")
+  # cat("\n🎯 Overall Status:\n")
   overall_ready <- all(unlist(report$summary))
   if (overall_ready) {
-    cat("   ✅ READY for CRAN submission\n")
+    # cat("   ✅ READY for CRAN submission\n")
   } else {
-    cat("   ❌ NOT READY - ", sum(!unlist(report$summary)), " criteria unmet\n")
+    # cat("   ❌ NOT READY - ", sum(!unlist(report$summary)), " criteria unmet\n")
   }
 
-  cat("\n📅 Report generated: ", format(report$timestamp, "%Y-%m-%d %H:%M:%S"), "\n")
+  # cat("\n📅 Report generated: ", format(report$timestamp, "%Y-%m-%d %H:%M:%S"), "\n")
 }

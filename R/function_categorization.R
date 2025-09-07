@@ -35,7 +35,7 @@ categorize_functions <- function(function_analysis) {
 #' @return Category name
 determine_function_category <- function(func) {
   name <- func$name
-  
+
   # Handle empty or NULL names
   if (is.null(name) || length(name) == 0 || name == "") {
     return("uncategorized")
@@ -135,8 +135,8 @@ validate_categories <- function(categories) {
 #'
 #' @param categories Function categories
 print_category_summary <- function(categories) {
-  cat("📂 FUNCTION CATEGORY SUMMARY\n")
-  cat(paste(rep("=", 30), collapse = ""), "\n")
+  # cat("📂 FUNCTION CATEGORY SUMMARY\n")
+  # cat(paste(rep("=", 30), collapse = ""), "\n")
 
   for (category in names(categories)) {
     count <- length(categories[[category]])
@@ -146,12 +146,12 @@ print_category_summary <- function(categories) {
       0
     }
 
-    cat(sprintf(
-      "%-20s: %2d functions (%4.1f%%)\n",
-      category, count, percentage
-    ))
+    # cat(sprintf(
+    #   "%-20s: %2d functions (%4.1f%%)\n",
+    #   category, count, percentage
+    # ))
   }
-  cat("\n")
+  # cat("\n")
 }
 
 #' Get functions for CRAN submission
@@ -229,7 +229,7 @@ analyze_category_dependencies <- function(function_analysis, categories) {
 #'
 #' @return Test results
 test_categorization_system <- function() {
-  cat("🧪 Testing categorization system...\n")
+  # cat("🧪 Testing categorization system...\n")
 
   # Test with sample function analysis
   sample_analysis <- list(
@@ -242,7 +242,7 @@ test_categorization_system <- function() {
 
   categories <- categorize_functions(sample_analysis)
 
-  cat("✅ Categorization test completed\n")
+  # cat("✅ Categorization test completed\n")
   print_category_summary(categories)
 
   categories

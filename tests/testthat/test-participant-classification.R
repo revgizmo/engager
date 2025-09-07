@@ -25,31 +25,40 @@ lookup_df <- tibble::tibble(
 
 test_that("classify_participants is deprecated and returns appropriate structure", {
   # Test deprecation behavior
-  result <- tryCatch({
-    classify_participants(transcript_df, roster_df, lookup_df)
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      classify_participants(transcript_df, roster_df, lookup_df)
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Should return some result (either data, deprecation status, or character)
   expect_true(is.data.frame(result) || is.list(result) || is.character(result))
 })
 
 test_that("classify_participants handles different data types", {
   # Test with different data structures
-  result1 <- tryCatch({
-    classify_participants(transcript_df, roster_df, lookup_df)
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result1 <- tryCatch(
+    {
+      classify_participants(transcript_df, roster_df, lookup_df)
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Test with NULL data
-  result2 <- tryCatch({
-    classify_participants(NULL, NULL, NULL)
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result2 <- tryCatch(
+    {
+      classify_participants(NULL, NULL, NULL)
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Both should return some result
   expect_true(is.data.frame(result1) || is.list(result1))
   expect_true(is.data.frame(result2) || is.list(result2))
@@ -57,24 +66,30 @@ test_that("classify_participants handles different data types", {
 
 test_that("classify_participants handles errors gracefully", {
   # Test that deprecated function handles errors gracefully
-  result <- tryCatch({
-    classify_participants("invalid_data", "invalid_data", "invalid_data")
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      classify_participants("invalid_data", "invalid_data", "invalid_data")
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result) || is.character(result))
 })
 
 test_that("classify_participants maintains data integrity", {
   # Test that deprecated function maintains basic data integrity
-  result <- tryCatch({
-    classify_participants(transcript_df, roster_df, lookup_df)
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      classify_participants(transcript_df, roster_df, lookup_df)
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result) || is.character(result))
 })
@@ -85,13 +100,16 @@ test_that("classify_participants handles special characters", {
     name = c("Zoë", "José", "O'Connor"),
     comment = c("Hello", "World", "Hi")
   )
-  
-  result <- tryCatch({
-    classify_participants(special_df, roster_df, lookup_df)
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+
+  result <- tryCatch(
+    {
+      classify_participants(special_df, roster_df, lookup_df)
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result) || is.character(result))
 })
@@ -103,14 +121,17 @@ test_that("classify_participants works with different scenarios", {
     list(tibble::tibble(), tibble::tibble(), tibble::tibble()),
     list(transcript_df, NULL, NULL)
   )
-  
+
   for (scenario in scenarios) {
-    result <- tryCatch({
-      do.call(classify_participants, scenario)
-    }, error = function(e) {
-      list(status = "deprecated", error = e$message)
-    })
-    
+    result <- tryCatch(
+      {
+        do.call(classify_participants, scenario)
+      },
+      error = function(e) {
+        list(status = "deprecated", error = e$message)
+      }
+    )
+
     # Should return some result
     expect_true(is.data.frame(result) || is.list(result) || is.character(result))
   }
@@ -118,12 +139,15 @@ test_that("classify_participants works with different scenarios", {
 
 test_that("classify_participants follows package conventions", {
   # Test that deprecated function follows basic package conventions
-  result <- tryCatch({
-    classify_participants(transcript_df, roster_df, lookup_df)
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      classify_participants(transcript_df, roster_df, lookup_df)
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Should return proper structure
   expect_true(is.data.frame(result) || is.list(result) || is.character(result))
 })
@@ -135,14 +159,17 @@ test_that("classify_participants handles edge cases", {
     list(transcript_df, tibble::tibble(), lookup_df),
     list(transcript_df, roster_df, tibble::tibble())
   )
-  
+
   for (case in edge_cases) {
-    result <- tryCatch({
-      do.call(classify_participants, case)
-    }, error = function(e) {
-      list(status = "deprecated", error = e$message)
-    })
-    
+    result <- tryCatch(
+      {
+        do.call(classify_participants, case)
+      },
+      error = function(e) {
+        list(status = "deprecated", error = e$message)
+      }
+    )
+
     # Should return some result
     expect_true(is.data.frame(result) || is.list(result) || is.character(result))
   }

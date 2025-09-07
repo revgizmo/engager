@@ -19,31 +19,40 @@ mock_analysis <- list(
 
 test_that("validation system is in scope reduction and returns appropriate structure", {
   # Test basic functionality
-  result <- tryCatch({
-    validate_audit_results(mock_categories, mock_functions, mock_analysis)
-  }, error = function(e) {
-    list(status = "scope_reduction", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      validate_audit_results(mock_categories, mock_functions, mock_analysis)
+    },
+    error = function(e) {
+      list(status = "scope_reduction", error = e$message)
+    }
+  )
+
   # Should return some result (either data or scope reduction status)
   expect_true(is.list(result) || is.character(result))
 })
 
 test_that("validation system handles different data types", {
   # Test with different data structures
-  result1 <- tryCatch({
-    validate_audit_results(mock_categories, mock_functions, mock_analysis)
-  }, error = function(e) {
-    list(status = "scope_reduction", error = e$message)
-  })
-  
+  result1 <- tryCatch(
+    {
+      validate_audit_results(mock_categories, mock_functions, mock_analysis)
+    },
+    error = function(e) {
+      list(status = "scope_reduction", error = e$message)
+    }
+  )
+
   # Test with empty data
-  result2 <- tryCatch({
-    validate_audit_results(list(), character(0), list())
-  }, error = function(e) {
-    list(status = "scope_reduction", error = e$message)
-  })
-  
+  result2 <- tryCatch(
+    {
+      validate_audit_results(list(), character(0), list())
+    },
+    error = function(e) {
+      list(status = "scope_reduction", error = e$message)
+    }
+  )
+
   # Both should return some result
   expect_true(is.list(result1) || is.character(result1))
   expect_true(is.list(result2) || is.character(result2))
@@ -51,24 +60,30 @@ test_that("validation system handles different data types", {
 
 test_that("validation system handles errors gracefully", {
   # Test that function handles errors gracefully
-  result <- tryCatch({
-    validate_audit_results("invalid_data", "invalid_data", "invalid_data")
-  }, error = function(e) {
-    list(status = "scope_reduction", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      validate_audit_results("invalid_data", "invalid_data", "invalid_data")
+    },
+    error = function(e) {
+      list(status = "scope_reduction", error = e$message)
+    }
+  )
+
   # Should return some result
   expect_true(is.list(result) || is.character(result))
 })
 
 test_that("validation system maintains data integrity", {
   # Test that function maintains basic data integrity
-  result <- tryCatch({
-    validate_audit_results(mock_categories, mock_functions, mock_analysis)
-  }, error = function(e) {
-    list(status = "scope_reduction", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      validate_audit_results(mock_categories, mock_functions, mock_analysis)
+    },
+    error = function(e) {
+      list(status = "scope_reduction", error = e$message)
+    }
+  )
+
   # Should return some result
   expect_true(is.list(result) || is.character(result))
 })
@@ -84,13 +99,16 @@ test_that("validation recommendations generation works", {
       test_coverage_ok = TRUE
     )
   )
-  
-  result <- tryCatch({
-    generate_validation_recommendations(mock_validation_results)
-  }, error = function(e) {
-    list(status = "scope_reduction", error = e$message)
-  })
-  
+
+  result <- tryCatch(
+    {
+      generate_validation_recommendations(mock_validation_results)
+    },
+    error = function(e) {
+      list(status = "scope_reduction", error = e$message)
+    }
+  )
+
   # Should return some result
   expect_true(is.character(result) || is.list(result))
 })
@@ -102,14 +120,17 @@ test_that("validation system works with different scenarios", {
     list(list(), character(0), list()),
     list(mock_categories, mock_functions, list())
   )
-  
+
   for (scenario in scenarios) {
-    result <- tryCatch({
-      do.call(validate_audit_results, scenario)
-    }, error = function(e) {
-      list(status = "scope_reduction", error = e$message)
-    })
-    
+    result <- tryCatch(
+      {
+        do.call(validate_audit_results, scenario)
+      },
+      error = function(e) {
+        list(status = "scope_reduction", error = e$message)
+      }
+    )
+
     # Should return some result
     expect_true(is.list(result) || is.character(result))
   }
@@ -117,12 +138,15 @@ test_that("validation system works with different scenarios", {
 
 test_that("validation system follows package conventions", {
   # Test that function follows basic package conventions
-  result <- tryCatch({
-    validate_audit_results(mock_categories, mock_functions, mock_analysis)
-  }, error = function(e) {
-    list(status = "scope_reduction", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      validate_audit_results(mock_categories, mock_functions, mock_analysis)
+    },
+    error = function(e) {
+      list(status = "scope_reduction", error = e$message)
+    }
+  )
+
   # Should return proper structure
   expect_true(is.list(result) || is.character(result))
 })
@@ -134,14 +158,17 @@ test_that("validation system handles edge cases", {
     list(mock_categories, character(0), mock_analysis),
     list(list(), mock_functions, list())
   )
-  
+
   for (case in edge_cases) {
-    result <- tryCatch({
-      do.call(validate_audit_results, case)
-    }, error = function(e) {
-      list(status = "scope_reduction", error = e$message)
-    })
-    
+    result <- tryCatch(
+      {
+        do.call(validate_audit_results, case)
+      },
+      error = function(e) {
+        list(status = "scope_reduction", error = e$message)
+      }
+    )
+
     # Should return some result
     expect_true(is.list(result) || is.character(result))
   }

@@ -8,7 +8,7 @@ test_that("enhanced function audit provides comprehensive analysis", {
   # Test get_exported_functions
   exported_functions <- get_exported_functions()
   expect_true(is.character(exported_functions))
-  
+
   # Skip test if NAMESPACE file doesn't exist (test environment)
   if (file.exists("NAMESPACE")) {
     expect_true(length(exported_functions) > 0)

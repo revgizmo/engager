@@ -20,31 +20,40 @@ add_df <- tibble::tibble(
 
 test_that("merge_lookup_preserve is deprecated and returns appropriate structure", {
   # Test deprecation behavior
-  result <- tryCatch({
-    merge_lookup_preserve(existing_df, add_df)
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      merge_lookup_preserve(existing_df, add_df)
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Should return some result (either data or deprecation status)
   expect_true(is.data.frame(result) || is.list(result))
 })
 
 test_that("merge_lookup_preserve handles different data types", {
   # Test with different data structures
-  result1 <- tryCatch({
-    merge_lookup_preserve(existing_df, add_df)
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result1 <- tryCatch(
+    {
+      merge_lookup_preserve(existing_df, add_df)
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Test with NULL data
-  result2 <- tryCatch({
-    merge_lookup_preserve(NULL, NULL)
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result2 <- tryCatch(
+    {
+      merge_lookup_preserve(NULL, NULL)
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Both should return some result
   expect_true(is.data.frame(result1) || is.list(result1))
   expect_true(is.data.frame(result2) || is.list(result2))
@@ -52,55 +61,70 @@ test_that("merge_lookup_preserve handles different data types", {
 
 test_that("merge_lookup_preserve handles errors gracefully", {
   # Test that deprecated function handles errors gracefully
-  result <- tryCatch({
-    merge_lookup_preserve("invalid_data", "invalid_data")
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      merge_lookup_preserve("invalid_data", "invalid_data")
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result))
 })
 
 test_that("merge_lookup_preserve maintains data integrity", {
   # Test that deprecated function maintains basic data integrity
-  result <- tryCatch({
-    merge_lookup_preserve(existing_df, add_df)
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      merge_lookup_preserve(existing_df, add_df)
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result))
 })
 
 test_that("ensure_instructor_rows is deprecated and returns appropriate structure", {
   # Test deprecation behavior
-  result <- tryCatch({
-    ensure_instructor_rows(existing_df, "Dr. Smith")
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      ensure_instructor_rows(existing_df, "Dr. Smith")
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Should return some result (either data or deprecation status)
   expect_true(is.data.frame(result) || is.list(result))
 })
 
 test_that("ensure_instructor_rows handles different data types", {
   # Test with different data structures
-  result1 <- tryCatch({
-    ensure_instructor_rows(existing_df, "Dr. Smith")
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result1 <- tryCatch(
+    {
+      ensure_instructor_rows(existing_df, "Dr. Smith")
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Test with NULL data
-  result2 <- tryCatch({
-    ensure_instructor_rows(NULL, NULL)
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result2 <- tryCatch(
+    {
+      ensure_instructor_rows(NULL, NULL)
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Both should return some result
   expect_true(is.data.frame(result1) || is.list(result1))
   expect_true(is.data.frame(result2) || is.list(result2))
@@ -108,24 +132,30 @@ test_that("ensure_instructor_rows handles different data types", {
 
 test_that("ensure_instructor_rows handles errors gracefully", {
   # Test that deprecated function handles errors gracefully
-  result <- tryCatch({
-    ensure_instructor_rows("invalid_data", "invalid_instructor")
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      ensure_instructor_rows("invalid_data", "invalid_instructor")
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result))
 })
 
 test_that("ensure_instructor_rows maintains data integrity", {
   # Test that deprecated function maintains basic data integrity
-  result <- tryCatch({
-    ensure_instructor_rows(existing_df, "Dr. Smith")
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result <- tryCatch(
+    {
+      ensure_instructor_rows(existing_df, "Dr. Smith")
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result))
 })
@@ -137,20 +167,26 @@ test_that("lookup merge functions work with different scenarios", {
     list(tibble::tibble(), tibble::tibble()),
     list(existing_df, NULL)
   )
-  
+
   for (scenario in scenarios) {
-    result1 <- tryCatch({
-      do.call(merge_lookup_preserve, scenario)
-    }, error = function(e) {
-      list(status = "deprecated", error = e$message)
-    })
-    
-    result2 <- tryCatch({
-      ensure_instructor_rows(scenario[[1]], "Test Instructor")
-    }, error = function(e) {
-      list(status = "deprecated", error = e$message)
-    })
-    
+    result1 <- tryCatch(
+      {
+        do.call(merge_lookup_preserve, scenario)
+      },
+      error = function(e) {
+        list(status = "deprecated", error = e$message)
+      }
+    )
+
+    result2 <- tryCatch(
+      {
+        ensure_instructor_rows(scenario[[1]], "Test Instructor")
+      },
+      error = function(e) {
+        list(status = "deprecated", error = e$message)
+      }
+    )
+
     # Both should return some result
     expect_true(is.data.frame(result1) || is.list(result1))
     expect_true(is.data.frame(result2) || is.list(result2))
@@ -159,18 +195,24 @@ test_that("lookup merge functions work with different scenarios", {
 
 test_that("lookup merge functions follow package conventions", {
   # Test that deprecated functions follow basic package conventions
-  result1 <- tryCatch({
-    merge_lookup_preserve(existing_df, add_df)
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
-  result2 <- tryCatch({
-    ensure_instructor_rows(existing_df, "Dr. Smith")
-  }, error = function(e) {
-    list(status = "deprecated", error = e$message)
-  })
-  
+  result1 <- tryCatch(
+    {
+      merge_lookup_preserve(existing_df, add_df)
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
+  result2 <- tryCatch(
+    {
+      ensure_instructor_rows(existing_df, "Dr. Smith")
+    },
+    error = function(e) {
+      list(status = "deprecated", error = e$message)
+    }
+  )
+
   # Both should return proper structure
   expect_true(is.data.frame(result1) || is.list(result1))
   expect_true(is.data.frame(result2) || is.list(result2))

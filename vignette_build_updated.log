@@ -1,0 +1,117 @@
+ℹ Installing zoomstudentengagement in temporary library
+ℹ Building vignettes for zoomstudentengagement
+--- re-building ‘essential-functions.Rmd’ using rmarkdown
+
+
+processing file: essential-functions.Rmd
+1/13                      
+2/13 [setup]              
+3/13                      
+4/13 [essential-functions]
+5/13                      
+6/13 [load-transcript]    
+7/13                      
+8/13 [process-transcript] 
+9/13                      
+10/13 [analyze-engagement] 
+11/13                      
+12/13 [privacy-compliance] 
+13/13                      
+output file: essential-functions.knit.md
+
+/opt/homebrew/bin/pandoc +RTS -K512m -RTS essential-functions.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /Users/piper/git/zoomstudentengagement/vignettes/essential-functions.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --section-divs --template /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmd/h/default.html --highlight-style pygments --css /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmarkdown/templates/html_vignette/resources/vignette.css --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpOdoHg5/rmarkdown-stre71e34ea2cec.html 
+
+Output created: essential-functions.html
+--- finished re-building ‘essential-functions.Rmd’
+
+--- re-building ‘ferpa-ethics.Rmd’ using rmarkdown
+
+
+processing file: ferpa-ethics.Rmd
+1/1
+output file: ferpa-ethics.knit.md
+
+/opt/homebrew/bin/pandoc +RTS -K512m -RTS ferpa-ethics.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /Users/piper/git/zoomstudentengagement/vignettes/ferpa-ethics.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --section-divs --template /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmd/h/default.html --highlight-style pygments --css /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmarkdown/templates/html_vignette/resources/vignette.css --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpOdoHg5/rmarkdown-stre71e7a2b5517.html 
+
+Output created: ferpa-ethics.html
+
+
+processing file: ferpa-ethics.Rmd
+1/1
+output file: ferpa-ethics.R
+
+--- finished re-building ‘ferpa-ethics.Rmd’
+
+--- re-building ‘getting-started.Rmd’ using rmarkdown
+
+
+processing file: getting-started.Rmd
+1/15                        
+2/15 [unnamed-chunk-1]      
+3/15                        
+4/15 [setup]                
+5/15                        
+6/15 [unnamed-chunk-2]      
+7/15                        
+8/15 [quick-start]          
+9/15                        
+10/15 [name-matching-example]
+11/15                        
+12/15 [guest-users]          
+13/15                        
+14/15 [custom-names]         
+15/15                        
+output file: getting-started.knit.md
+
+/opt/homebrew/bin/pandoc +RTS -K512m -RTS getting-started.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /Users/piper/git/zoomstudentengagement/vignettes/getting-started.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --section-divs --template /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmd/h/default.html --highlight-style pygments --css /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmarkdown/templates/html_vignette/resources/vignette.css --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpOdoHg5/rmarkdown-stre71e31f90c64.html 
+
+Output created: getting-started.html
+--- finished re-building ‘getting-started.Rmd’
+
+--- re-building ‘plotting.Rmd’ using rmarkdown
+
+
+processing file: plotting.Rmd
+1/29                     
+2/29 [unnamed-chunk-1]   
+3/29                     
+4/29 [setup]             
+5/29                     
+6/29 [prepare-data]      
+7/29                     
+8/29 [basic-plots]       
+9/29                     
+10/29 [comment-count]     
+11/29                     
+12/29 [duration]          
+13/29                     
+14/29 [wordcount]         
+15/29                     
+16/29 [percentage-metrics]
+17/29                     
+18/29 [students-only]     
+19/29                     
+20/29 [masked-plots]      
+21/29                     
+22/29 [custom-filtering]  
+23/29                     
+24/29 [comparative]       
+25/29                     
+26/29 [equity-analysis]   
+27/29                     
+28/29 [custom-plots]      
+29/29                     
+output file: plotting.knit.md
+
+/opt/homebrew/bin/pandoc +RTS -K512m -RTS plotting.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /Users/piper/git/zoomstudentengagement/vignettes/plotting.html --lua-filter /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --section-divs --template /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmd/h/default.html --highlight-style pygments --css /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library/rmarkdown/rmarkdown/templates/html_vignette/resources/vignette.css --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpOdoHg5/rmarkdown-stre71e2676f780.html 
+
+Output created: plotting.html
+--- finished re-building ‘plotting.Rmd’
+
+ℹ Copying vignettes
+ℹ Moving 'essential-functions.html', 'ferpa-ethics.html',
+  'getting-started.html', 'plotting.html', 'essential-functions.R',
+  'ferpa-ethics.R', 'getting-started.R', and 'plotting.R' to 'doc/'
+ℹ Copying 'essential-functions.Rmd', 'ferpa-ethics.Rmd', 'getting-started.Rmd',
+  and 'plotting.Rmd' to 'doc/'
+ℹ Building vignette index
