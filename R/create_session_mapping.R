@@ -68,23 +68,23 @@ create_session_mapping <- function(
       notes = character()
     ))
   }
-  
+
   # Validate input types
   if (!tibble::is_tibble(zoom_recordings_df)) {
     stop("zoom_recordings_df must be a tibble")
   }
-  
+
   if (!tibble::is_tibble(course_info_df)) {
     stop("course_info_df must be a tibble")
   }
-  
+
   # Validate course_info_df has required columns
   required_cols <- c("dept", "course", "section", "instructor", "session_length_hours")
   missing_cols <- setdiff(required_cols, names(course_info_df))
   if (length(missing_cols) > 0) {
     stop("course_info_df must contain columns: ", paste(missing_cols, collapse = ", "))
   }
-  
+
   # Basic implementation that matches test expectations
   result <- tibble::tibble(
     recording_id = zoom_recordings_df$ID,
@@ -99,13 +99,13 @@ create_session_mapping <- function(
     instructor = character(nrow(zoom_recordings_df)),
     notes = character(nrow(zoom_recordings_df))
   )
-  
+
   # Simple pattern matching for course information
   # Only do pattern matching if course_info is not empty
   if (nrow(course_info_df) > 0) {
     for (i in seq_len(nrow(zoom_recordings_df))) {
       topic <- zoom_recordings_df$Topic[i]
-      
+
       # Try to match using auto_assign_patterns first
       matched <- FALSE
       if (!is.null(auto_assign_patterns) && length(auto_assign_patterns) > 0) {
@@ -129,7 +129,7 @@ create_session_mapping <- function(
           }
         }
       }
-      
+
       # If auto_assign_patterns is empty, don't do any pattern matching
       if (!is.null(auto_assign_patterns) && length(auto_assign_patterns) == 0) {
         result$dept[i] <- NA_character_
@@ -140,7 +140,7 @@ create_session_mapping <- function(
         result$notes[i] <- "NEEDS MANUAL ASSIGNMENT"
         matched <- TRUE
       }
-      
+
       # Fallback to hardcoded patterns only if auto_assign_patterns is NULL
       if (!matched && is.null(auto_assign_patterns)) {
         if (grepl("MATH.*250", topic)) {
@@ -193,7 +193,7 @@ create_session_mapping <- function(
       result$notes[i] <- "NEEDS MANUAL ASSIGNMENT"
     }
   }
-  
+
   # Parse session date and time from start time for all records
   for (i in seq_len(nrow(zoom_recordings_df))) {
     start_time <- zoom_recordings_df$`Start Time`[i]
@@ -203,7 +203,7 @@ create_session_mapping <- function(
     } else if (grepl("Jan 16, 2024", start_time)) {
       result$session_date[i] <- as.Date("2024-01-16")
       if (grepl("PM", start_time)) {
-        result$session_time[i] <- "21:00"  # 09:00 PM -> 21:00
+        result$session_time[i] <- "21:00" # 09:00 PM -> 21:00
       } else {
         result$session_time[i] <- "09:00"
       }
@@ -215,25 +215,30 @@ create_session_mapping <- function(
       result$session_time[i] <- "Unknown"
     }
   }
-  
+
   # Write to file if output_file is provided
   if (!is.null(output_file)) {
-    tryCatch({
-      readr::write_csv(result, output_file)
-    }, error = function(e) {
-      stop("Failed to write session mapping to file: ", e$message)
-    })
+    tryCatch(
+      {
+        readr::write_csv(result, output_file)
+      },
+      error = function(e) {
+        stop("Failed to write session mapping to file: ", e$message)
+      }
+    )
   }
-  
+
   # Warn about unmatched recordings if not in test environment
   unmatched_count <- sum(result$notes == "NEEDS MANUAL ASSIGNMENT", na.rm = TRUE)
   if (unmatched_count > 0 && Sys.getenv("TESTTHAT") != "true") {
     warning(
-      paste0("Found ", unmatched_count, " recordings need manual assignment. ",
-             "Check the 'notes' column for details."),
+      paste0(
+        "Found ", unmatched_count, " recordings need manual assignment. ",
+        "Check the 'notes' column for details."
+      ),
       call. = FALSE
     )
   }
-  
+
   result
 }

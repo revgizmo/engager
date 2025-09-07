@@ -91,12 +91,12 @@ handle_duplicate_detection <- function(transcript_file_names, data_folder, trans
       ))
 
       # Print recommendations (quiet by default)
-      diag_cat("\nDuplicate detection results:\n")
-      diag_cat("============================\n")
+      # diag_cat("\nDuplicate detection results:\n")
+      # diag_cat("============================\n")
       for (i in seq_along(duplicates$recommendations)) {
-        diag_cat(paste("Group", i, ":", duplicates$recommendations[i], "\n"))
+        # diag_cat(paste("Group", i, ":", duplicates$recommendations[i], "\n"))
       }
-      diag_cat("\n")
+      # diag_cat("\n")
     }
   }
 }

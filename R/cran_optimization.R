@@ -8,8 +8,8 @@
 #' @param max_functions Maximum number of functions for CRAN (default: 30)
 #' @return CRAN-optimized function set
 select_cran_functions <- function(function_categories, max_functions = 30) {
-  cat("🎯 Selecting functions for CRAN submission...\n")
-  cat("📊 Target: Maximum", max_functions, "functions\n\n")
+  # cat("🎯 Selecting functions for CRAN submission...\n")
+  # cat("📊 Target: Maximum", max_functions, "functions\n\n")
 
   # Priority order for CRAN functions (based on user workflow importance)
   priority_order <- c(
@@ -37,10 +37,10 @@ select_cran_functions <- function(function_categories, max_functions = 30) {
         cran_functions <- c(cran_functions, functions_to_add)
         category_allocations[[category]] <- length(functions_to_add)
 
-        cat(sprintf(
-          "📁 %-20s: %2d functions allocated\n",
-          category, length(functions_to_add)
-        ))
+        # cat(sprintf(
+        #   "📁 %-20s: %2d functions allocated\n",
+        #   category, length(functions_to_add)
+        # ))
       }
     }
   }
@@ -49,7 +49,7 @@ select_cran_functions <- function(function_categories, max_functions = 30) {
   cran_functions <- unique(cran_functions)
   cran_functions <- cran_functions[seq_len(min(max_functions, length(cran_functions)))]
 
-  cat(sprintf("\n✅ Selected %d functions for CRAN submission\n", length(cran_functions)))
+  # cat(sprintf("\n✅ Selected %d functions for CRAN submission\n", length(cran_functions)))
 
   return(list(
     functions = cran_functions,
@@ -93,10 +93,10 @@ mark_deprecated_functions <- function(function_categories, cran_functions) {
   all_functions <- unlist(function_categories)
   deprecated_functions <- setdiff(all_functions, cran_functions)
 
-  cat("📋 Marking functions for deprecation...\n")
-  cat("📊 Total functions:", length(all_functions), "\n")
-  cat("📊 CRAN functions:", length(cran_functions), "\n")
-  cat("📊 Deprecated functions:", length(deprecated_functions), "\n\n")
+  # cat("📋 Marking functions for deprecation...\n")
+  # cat("📊 Total functions:", length(all_functions), "\n")
+  # cat("📊 CRAN functions:", length(cran_functions), "\n")
+  # cat("📊 Deprecated functions:", length(deprecated_functions), "\n\n")
 
   deprecated_functions
 }
@@ -107,7 +107,7 @@ mark_deprecated_functions <- function(function_categories, cran_functions) {
 #' @param function_analysis Function analysis results
 #' @return Breaking change analysis
 analyze_breaking_changes <- function(deprecated_functions, function_analysis) {
-  cat("⚠️  Analyzing breaking change impact...\n")
+  # cat("⚠️  Analyzing breaking change impact...\n")
 
   impact_analysis <- list(
     high_impact = character(0),
@@ -127,12 +127,12 @@ analyze_breaking_changes <- function(deprecated_functions, function_analysis) {
   }
 
   # Print impact summary
-  cat("📊 Breaking Change Impact Summary:\n")
+  # cat("📊 Breaking Change Impact Summary:\n")
   for (impact in names(impact_analysis)) {
     count <- length(impact_analysis[[impact]])
-    cat(sprintf("  %-12s: %2d functions\n", impact, count))
+    # cat(sprintf("  %-12s: %2d functions\n", impact, count))
   }
-  cat("\n")
+  # cat("\n")
 
   impact_analysis
 }
@@ -171,7 +171,7 @@ determine_impact_level <- function(func_info) {
 #' @param function_analysis Function analysis results
 #' @return Migration recommendations
 gen_migration_recommendations <- function(deprecated_functions, cran_functions, function_analysis) {
-  cat("📝 Generating migration recommendations...\n")
+  # cat("📝 Generating migration recommendations...\n")
 
   migration_guide <- list()
 
@@ -248,7 +248,7 @@ get_migration_strategy <- function(deprecated_func, replacement) {
 #' @param function_analysis Function analysis results
 #' @return Validation results
 validate_cran_optimization <- function(cran_selection, deprecated_functions, function_analysis) {
-  cat("✅ Validating CRAN optimization results...\n")
+  # cat("✅ Validating CRAN optimization results...\n")
 
   validation_results <- list(
     function_count_valid = length(cran_selection$functions) <= 30,
@@ -268,12 +268,12 @@ validate_cran_optimization <- function(cran_selection, deprecated_functions, fun
   }
 
   # Print validation results
-  cat("📊 Validation Results:\n")
+  # cat("📊 Validation Results:\n")
   for (check in names(validation_results)) {
     status <- if (validation_results[[check]]) "✅" else "❌"
-    cat(sprintf("  %-30s: %s\n", check, status))
+    # cat(sprintf("  %-30s: %s\n", check, status))
   }
-  cat("\n")
+  # cat("\n")
 
   validation_results
 }
@@ -282,7 +282,7 @@ validate_cran_optimization <- function(cran_selection, deprecated_functions, fun
 #'
 #' @return Test results
 test_cran_optimization <- function() {
-  cat("🧪 Testing CRAN optimization system...\n")
+  # cat("🧪 Testing CRAN optimization system...\n")
 
   # Test with sample categories
   sample_categories <- list(
@@ -297,7 +297,7 @@ test_cran_optimization <- function() {
   cran_selection <- select_cran_functions(sample_categories, max_functions = 15)
   deprecated_functions <- mark_deprecated_functions(sample_categories, cran_selection$functions)
 
-  cat("✅ CRAN optimization test completed\n")
+  # cat("✅ CRAN optimization test completed\n")
 
   list(
     cran_selection = cran_selection,

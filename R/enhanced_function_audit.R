@@ -11,14 +11,14 @@ audit_all_functions <- function() {
   # Get all exported functions
   exported_functions <- get_exported_functions()
 
-  cat("🔍 Starting comprehensive function audit...\n")
-  cat("📊 Total functions to audit:", length(exported_functions), "\n\n")
+  # cat("🔍 Starting comprehensive function audit...\n")
+  # cat("📊 Total functions to audit:", length(exported_functions), "\n\n")
 
   # Analyze each function
   function_analysis <- list()
   for (i in seq_along(exported_functions)) {
     func_name <- exported_functions[i]
-    cat("📋 Analyzing function", i, "of", length(exported_functions), ":", func_name, "\n")
+    # cat("📋 Analyzing function", i, "of", length(exported_functions), ":", func_name, "\n")
 
     function_analysis[[func_name]] <- analyze_function(func_name)
   }
@@ -32,7 +32,7 @@ audit_all_functions <- function() {
   # Generate audit report
   audit_report <- generate_audit_report(categories, function_analysis)
 
-  cat("\n✅ Function audit completed successfully!\n")
+  # cat("\n✅ Function audit completed successfully!\n")
   audit_report
 }
 
@@ -227,11 +227,11 @@ get_function_dependencies <- function(function_name) {
 #' @return List of dependencies for each function
 analyze_function_dependencies <- function(function_names) {
   dependencies <- list()
-  
+
   for (func_name in function_names) {
     dependencies[[func_name]] <- get_function_dependencies(func_name)
   }
-  
+
   dependencies
 }
 
@@ -299,12 +299,12 @@ analyze_function_complexity <- function(function_name) {
 #' @param function_analysis Function analysis results
 #' @return Audit report
 generate_audit_report <- function(categories, function_analysis) {
-  cat("\n📊 GENERATING COMPREHENSIVE AUDIT REPORT\n")
-  cat(paste(rep("=", 50), collapse = ""), "\n\n")
+  # cat("\n📊 GENERATING COMPREHENSIVE AUDIT REPORT\n")
+  # cat(paste(rep("=", 50), collapse = ""), "\n\n")
 
   # Summary statistics
   total_functions <- length(function_analysis)
-  
+
   # Handle empty function_analysis gracefully
   if (total_functions == 0) {
     documented_functions <- 0
@@ -312,58 +312,64 @@ generate_audit_report <- function(categories, function_analysis) {
     functions_in_tests <- 0
   } else {
     documented_functions <- sum(sapply(function_analysis, function(x) {
-      if (is.null(x$documentation)) return(FALSE)
+      if (is.null(x$documentation)) {
+        return(FALSE)
+      }
       x$documentation == "Complete"
     }))
     functions_with_examples <- sum(sapply(function_analysis, function(x) {
-      if (is.null(x$usage) || is.null(x$usage$in_examples)) return(FALSE)
+      if (is.null(x$usage) || is.null(x$usage$in_examples)) {
+        return(FALSE)
+      }
       x$usage$in_examples
     }))
     functions_in_tests <- sum(sapply(function_analysis, function(x) {
-      if (is.null(x$usage) || is.null(x$usage$in_tests)) return(FALSE)
+      if (is.null(x$usage) || is.null(x$usage$in_tests)) {
+        return(FALSE)
+      }
       x$usage$in_tests
     }))
   }
 
-  cat("📈 SUMMARY STATISTICS\n")
-  cat(paste(rep("-", 20), collapse = ""), "\n")
-  cat("Total exported functions:", total_functions, "\n")
+  # cat("📈 SUMMARY STATISTICS\n")
+  # cat(paste(rep("-", 20), collapse = ""), "\n")
+  # cat("Total exported functions:", total_functions, "\n")
   if (total_functions > 0) {
-    cat(
-      "Functions with documentation:", documented_functions, "(",
-      round(100 * documented_functions / total_functions, 1), "%)\n"
-    )
-    cat(
-      "Functions with examples:", functions_with_examples, "(",
-      round(100 * functions_with_examples / total_functions, 1), "%)\n"
-    )
+    # cat(
+    #   "Functions with documentation:", documented_functions, "(",
+    #   round(100 * documented_functions / total_functions, 1), "%)\n"
+    # )
+    # cat(
+    #   "Functions with examples:", functions_with_examples, "(",
+    #   round(100 * functions_with_examples / total_functions, 1), "%)\n"
+    # )
   } else {
-    cat("Functions with documentation:", documented_functions, "(0%)\n")
-    cat("Functions with examples:", functions_with_examples, "(0%)\n")
+    # cat("Functions with documentation:", documented_functions, "(0%)\n")
+    # cat("Functions with examples:", functions_with_examples, "(0%)\n")
   }
   if (total_functions > 0) {
-    cat(
-      "Functions with tests:", functions_in_tests, "(",
-      round(100 * functions_in_tests / total_functions, 1), "%)\n\n"
-    )
+    # cat(
+    #   "Functions with tests:", functions_in_tests, "(",
+    #   round(100 * functions_in_tests / total_functions, 1), "%)\n\n"
+    # )
   } else {
-    cat("Functions with tests:", functions_in_tests, "(0%)\n\n")
+    # cat("Functions with tests:", functions_in_tests, "(0%)\n\n")
   }
 
   # Category breakdown
-  cat("📂 FUNCTION CATEGORIES\n")
-  cat(paste(rep("-", 20), collapse = ""), "\n")
+  # cat("📂 FUNCTION CATEGORIES\n")
+  # cat(paste(rep("-", 20), collapse = ""), "\n")
   for (category in names(categories)) {
     count <- length(categories[[category]])
-    cat(sprintf("%-20s: %2d functions\n", category, count))
+    # cat(sprintf("%-20s: %2d functions\n", category, count))
   }
-  cat("\n")
+  # cat("\n")
 
   # Detailed function list by category
   for (category in names(categories)) {
     if (length(categories[[category]]) > 0) {
-      cat("📁", toupper(category), "FUNCTIONS\n")
-      cat(paste(rep("-", nchar(category) + 10), collapse = ""), "\n")
+      # cat("📁", toupper(category), "FUNCTIONS\n")
+      # cat(paste(rep("-", nchar(category) + 10), collapse = ""), "\n")
       for (func_name in categories[[category]]) {
         func_info <- function_analysis[[func_name]]
         doc_status <- if (is.null(func_info$documentation) || func_info$documentation == "Complete") "✅" else "❌"
@@ -371,13 +377,13 @@ generate_audit_report <- function(categories, function_analysis) {
         example_status <- if (is.null(func_info$usage) || is.null(func_info$usage$in_examples) || func_info$usage$in_examples) "✅" else "❌"
         file_location <- if (is.null(func_info$file_location)) "Unknown" else func_info$file_location
 
-        cat(sprintf(
-          "  %-30s | Doc:%s Test:%s Ex:%s | %s\n",
-          func_name, doc_status, test_status, example_status,
-          file_location
-        ))
+        # cat(sprintf(
+        #   "  %-30s | Doc:%s Test:%s Ex:%s | %s\n",
+        #   func_name, doc_status, test_status, example_status,
+        #   file_location
+        # ))
       }
-      cat("\n")
+      # cat("\n")
     }
   }
 
@@ -403,7 +409,7 @@ generate_audit_report <- function(categories, function_analysis) {
 #' @param filename Output filename
 save_audit_report <- function(audit_report, filename = "function_audit_report.rds") {
   saveRDS(audit_report, filename)
-  cat("💾 Audit report saved to:", filename, "\n")
+  # cat("💾 Audit report saved to:", filename, "\n")
 }
 
 #' Load audit report from file

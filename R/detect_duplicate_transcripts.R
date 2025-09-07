@@ -162,6 +162,7 @@ calc_content_similarity_matrix <- function(existing_files, existing_names,
   similarity_matrix
 }
 
+#' @export
 detect_duplicate_transcripts <- function(
     transcript_list = NULL,
     data_folder = ".",

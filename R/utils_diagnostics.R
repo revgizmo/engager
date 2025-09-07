@@ -56,7 +56,7 @@ diag_message <- function(...) {
         return(x)
       }
     })
-    
+
     # Check for sensitive data patterns in test environment
     # Only block if TESTTHAT=true AND this is not a privacy test (which expects no output)
     if (Sys.getenv("TESTTHAT") == "true") {
@@ -64,11 +64,11 @@ diag_message <- function(...) {
       args_text <- paste(args, collapse = " ")
       # Check if this looks like a privacy test (expects no output)
       if (any(sapply(sensitive_patterns, function(pattern) grepl(pattern, args_text, ignore.case = TRUE))) &&
-          grepl("Sensitive data:", args_text, ignore.case = TRUE)) {
-        return(invisible(NULL))  # Don't output sensitive data in privacy tests
+        grepl("Sensitive data:", args_text, ignore.case = TRUE)) {
+        return(invisible(NULL)) # Don't output sensitive data in privacy tests
       }
     }
-    
+
     do.call(message, args)
   }
   invisible(NULL)
@@ -105,7 +105,7 @@ diag_cat <- function(...) {
         return(x)
       }
     })
-    
+
     # Check for sensitive data patterns in test environment
     # Only block if TESTTHAT=true AND this is not a privacy test (which expects no output)
     if (Sys.getenv("TESTTHAT") == "true") {
@@ -113,11 +113,11 @@ diag_cat <- function(...) {
       args_text <- paste(args, collapse = " ")
       # Check if this looks like a privacy test (expects no output)
       if (any(sapply(sensitive_patterns, function(pattern) grepl(pattern, args_text, ignore.case = TRUE))) &&
-          grepl("Sensitive data:", args_text, ignore.case = TRUE)) {
-        return(invisible(NULL))  # Don't output sensitive data in privacy tests
+        grepl("Sensitive data:", args_text, ignore.case = TRUE)) {
+        return(invisible(NULL)) # Don't output sensitive data in privacy tests
       }
     }
-    
+
     do.call(cat, args)
   }
   invisible(NULL)

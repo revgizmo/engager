@@ -126,111 +126,111 @@ create_analysis_config <- function(
   if (!is.character(dept) || length(dept) != 1) {
     stop("dept must be a single character string")
   }
-  
+
   if (!is.character(semester_start_mdy) || length(semester_start_mdy) != 1) {
     stop("semester_start_mdy must be a single character string")
   }
-  
+
   if (!is.numeric(scheduled_session_length_hours) || length(scheduled_session_length_hours) != 1 || scheduled_session_length_hours <= 0) {
     stop("scheduled_session_length_hours must be a positive number")
   }
-  
+
   if (!is.character(instructor_name) || length(instructor_name) != 1) {
     stop("instructor_name must be a single character string")
   }
-  
+
   if (!is.character(data_folder) || length(data_folder) != 1) {
     stop("data_folder must be a single character string")
   }
-  
+
   if (!is.character(transcripts_folder) || length(transcripts_folder) != 1) {
     stop("transcripts_folder must be a single character string")
   }
-  
+
   if (!is.character(roster_file) || length(roster_file) != 1) {
     stop("roster_file must be a single character string")
   }
-  
+
   if (!is.character(cancelled_classes_file) || length(cancelled_classes_file) != 1) {
     stop("cancelled_classes_file must be a single character string")
   }
-  
+
   if (!is.character(names_lookup_file) || length(names_lookup_file) != 1) {
     stop("names_lookup_file must be a single character string")
   }
-  
+
   if (!is.character(trnscrptssssnsmmryfl) || length(trnscrptssssnsmmryfl) != 1) {
     stop("transcripts_session_summary_file must be a single character string")
   }
-  
+
   if (!is.character(transcripts_summary_file) || length(transcripts_summary_file) != 1) {
     stop("transcripts_summary_file must be a single character string")
   }
-  
+
   if (!is.character(student_summary_report) || length(student_summary_report) != 1) {
     stop("student_summary_report must be a single character string")
   }
-  
+
   if (!is.character(student_summary_report_folder) || length(student_summary_report_folder) != 1) {
     stop("student_summary_report_folder must be a single character string")
   }
-  
+
   if (!is.character(topic_split_pattern) || length(topic_split_pattern) != 1) {
     stop("topic_split_pattern must be a single character string")
   }
-  
+
   if (!is.character(zmrcrddsssnscsvnmspttrn) || length(zmrcrddsssnscsvnmspttrn) != 1) {
     stop("zoom_recorded_sessions_csv_names_pattern must be a single character string")
   }
-  
+
   if (!is.character(zmrcrddsssnscsvclnms) || length(zmrcrddsssnscsvclnms) != 1) {
     stop("zoom_recorded_sessions_csv_col_names must be a single character string")
   }
-  
+
   if (!is.character(transcript_files_names_pattern) || length(transcript_files_names_pattern) != 1) {
     stop("transcript_files_names_pattern must be a single character string")
   }
-  
+
   if (!is.character(dt_extract_pattern) || length(dt_extract_pattern) != 1) {
     stop("dt_extract_pattern must be a single character string")
   }
-  
+
   if (!is.character(trnscrptflxtnsnpttrn) || length(trnscrptflxtnsnpttrn) != 1) {
     stop("transcript_file_extension_pattern must be a single character string")
   }
-  
+
   if (!is.character(clsdcptnflxtnsnpttrn) || length(clsdcptnflxtnsnpttrn) != 1) {
     stop("closed_caption_file_extension_pattern must be a single character string")
   }
-  
+
   if (!is.character(recording_start_pattern) || length(recording_start_pattern) != 1) {
     stop("recording_start_pattern must be a single character string")
   }
-  
+
   if (!is.character(recording_start_format) || length(recording_start_format) != 1) {
     stop("recording_start_format must be a single character string")
   }
-  
+
   if (!is.character(start_time_local_tzone) || length(start_time_local_tzone) != 1) {
     stop("start_time_local_tzone must be a single character string")
   }
-  
+
   if (!is.character(cancelled_classes_col_types) || length(cancelled_classes_col_types) != 1) {
     stop("cancelled_classes_col_types must be a single character string")
   }
-  
+
   if (!is.character(section_names_lookup_col_types) || length(section_names_lookup_col_types) != 1) {
     stop("section_names_lookup_col_types must be a single character string")
   }
-  
+
   if (!is.logical(use_session_mapping) || length(use_session_mapping) != 1) {
     stop("use_session_mapping must be a single logical value")
   }
-  
+
   if (!is.character(session_mapping_file) || length(session_mapping_file) != 1) {
     stop("session_mapping_file must be a single character string")
   }
-  
+
   # Return full configuration object as expected by tests
   list(
     course = list(

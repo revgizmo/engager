@@ -38,7 +38,7 @@ add_deprecation_warning <- function(function_name, replacement_function = NULL, 
 #' @param migration_recommendations Migration recommendations
 #' @return Migration guide content
 generate_migration_guide <- function(deprecated_functions, migration_recommendations) {
-  cat("📝 Generating migration guide for deprecated functions...\n")
+  # cat("📝 Generating migration guide for deprecated functions...\n")
 
   migration_guide <- "# Function Migration Guide\n\n"
   migration_guide <- paste0(
@@ -85,7 +85,7 @@ generate_migration_guide <- function(deprecated_functions, migration_recommendat
       } else {
         replacement_text <- "See documentation for alternatives"
       }
-      
+
       migration_guide <- paste0(
         migration_guide,
         "- **Replacement**: ", replacement_text, "\n"
@@ -96,19 +96,19 @@ generate_migration_guide <- function(deprecated_functions, migration_recommendat
       } else {
         impact_level <- "Medium"
       }
-      
+
       migration_guide <- paste0(
         migration_guide,
         "- **Impact Level**: ", impact_level, "\n"
       )
-      
+
       # Handle migration strategy
       if (is.list(rec) && "migration_strategy" %in% names(rec)) {
         migration_strategy <- rec$migration_strategy
       } else {
         migration_strategy <- "Update function calls as recommended"
       }
-      
+
       migration_guide <- paste0(
         migration_guide,
         "- **Migration**: ", migration_strategy, "\n\n"
@@ -137,7 +137,7 @@ generate_migration_guide <- function(deprecated_functions, migration_recommendat
     "3. Open an issue on GitHub if you need assistance\n\n"
   )
 
-  cat("✅ Migration guide generated\n")
+  # cat("✅ Migration guide generated\n")
 
   migration_guide
 }
@@ -148,7 +148,7 @@ generate_migration_guide <- function(deprecated_functions, migration_recommendat
 #' @param migration_recommendations Migration recommendations
 #' @return Deprecation warnings
 create_deprecation_warnings <- function(deprecated_functions, migration_recommendations) {
-  cat("⚠️  Creating deprecation warnings...\n")
+  # cat("⚠️  Creating deprecation warnings...\n")
 
   deprecation_warnings <- list()
 
@@ -166,7 +166,7 @@ create_deprecation_warnings <- function(deprecated_functions, migration_recommen
     }
   }
 
-  cat("✅ Deprecation warnings created for", length(deprecation_warnings), "functions\n")
+  # cat("✅ Deprecation warnings created for", length(deprecation_warnings), "functions\n")
 
   deprecation_warnings
 }
@@ -177,7 +177,7 @@ create_deprecation_warnings <- function(deprecated_functions, migration_recommen
 #' @param deprecated_functions Functions to remove from NAMESPACE
 #' @return Updated NAMESPACE content
 update_namespace_for_deprecation <- function(cran_functions, deprecated_functions) {
-  cat("📝 Updating NAMESPACE for deprecation...\n")
+  # cat("📝 Updating NAMESPACE for deprecation...\n")
 
   # Read current NAMESPACE (handle case where it doesn't exist)
   if (file.exists("NAMESPACE")) {
@@ -206,7 +206,7 @@ update_namespace_for_deprecation <- function(cran_functions, deprecated_function
     }
   }
 
-  cat("✅ NAMESPACE updated - removed", length(deprecated_functions), "deprecated functions\n")
+  # cat("✅ NAMESPACE updated - removed", length(deprecated_functions), "deprecated functions\n")
 
   new_namespace_lines
 }
@@ -217,7 +217,7 @@ update_namespace_for_deprecation <- function(cran_functions, deprecated_function
 #' @param migration_recommendations Migration recommendations
 #' @return Deprecation documentation
 crtdprctndcmnttn <- function(deprecated_functions, migration_recommendations) {
-  cat("📚 Creating deprecation documentation...\n")
+  # cat("📚 Creating deprecation documentation...\n")
 
   # Create deprecation vignette content
   vignette_content <- generate_migration_guide(deprecated_functions, migration_recommendations)
@@ -244,7 +244,7 @@ crtdprctndcmnttn <- function(deprecated_functions, migration_recommendations) {
     }
   }
 
-  cat("✅ Deprecation documentation created\n")
+  # cat("✅ Deprecation documentation created\n")
 
   list(
     vignette_content = vignette_content,
@@ -259,7 +259,7 @@ crtdprctndcmnttn <- function(deprecated_functions, migration_recommendations) {
 #' @param migration_recommendations Migration recommendations
 #' @return Validation results
 vldtdprctnmplmnttn <- function(cran_functions, deprecated_functions, migration_recommendations) {
-  cat("✅ Validating deprecation implementation...\n")
+  # cat("✅ Validating deprecation implementation...\n")
 
   validation_results <- list(
     no_overlap = length(intersect(cran_functions, deprecated_functions)) == 0,
@@ -270,12 +270,12 @@ vldtdprctnmplmnttn <- function(cran_functions, deprecated_functions, migration_r
   )
 
   # Print validation results
-  cat("📊 Deprecation Validation Results:\n")
+  # cat("📊 Deprecation Validation Results:\n")
   for (check in names(validation_results)) {
     status <- if (validation_results[[check]]) "✅" else "❌"
-    cat(sprintf("  %-30s: %s\n", check, status))
+    # cat(sprintf("  %-30s: %s\n", check, status))
   }
-  cat("\n")
+  # cat("\n")
 
   validation_results
 }
@@ -290,7 +290,7 @@ vldtdprctnmplmnttn <- function(cran_functions, deprecated_functions, migration_r
 gen_deprecation_summary_report <- function(
     cran_functions,
     deprecated_functions, migration_recommendations, validation_results) {
-  cat("📊 Generating deprecation summary report...\n")
+  # cat("📊 Generating deprecation summary report...\n")
 
   report <- list(
     summary = list(
@@ -306,7 +306,7 @@ gen_deprecation_summary_report <- function(
     generated_at = Sys.time()
   )
 
-  cat("✅ Deprecation summary report generated\n")
+  # cat("✅ Deprecation summary report generated\n")
 
   report
 }
@@ -315,7 +315,7 @@ gen_deprecation_summary_report <- function(
 #'
 #' @return Test results
 test_deprecation_system <- function() {
-  cat("🧪 Testing deprecation system...\n")
+  # cat("🧪 Testing deprecation system...\n")
 
   # Test with sample data
   sample_deprecated_functions <- c("old_function1", "old_function2")
@@ -340,7 +340,7 @@ test_deprecation_system <- function() {
     message = "Deprecation system validation completed"
   )
 
-  cat("✅ Deprecation system test completed\n")
+  # cat("✅ Deprecation system test completed\n")
 
   list(
     migration_guide = migration_guide,
