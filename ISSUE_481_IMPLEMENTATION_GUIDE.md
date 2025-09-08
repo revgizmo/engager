@@ -259,3 +259,6 @@ Rscript -e "devtools::check()"
 - **Validation**: Test after each major change
 - **Documentation**: Keep all docs current
 
+
+
+

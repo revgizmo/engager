@@ -27,20 +27,33 @@ test_that("migration guide generation works correctly", {
     old_function2 = "Use new_function2 instead"
   )
 
-  # Capture output to test verbose branch
-  output <- capture.output({
-    guide <- generate_migration_guide(deprecated_functions, migration_recommendations)
+  # Test without verbose (should be silent)
+  output_silent <- capture.output({
+    guide_silent <- generate_migration_guide(deprecated_functions, migration_recommendations)
   })
+  expect_true(length(output_silent) == 0)
 
-  # Should produce output
-  expect_true(length(output) > 0)
-  expect_true(any(grepl("Generating migration guide", output)))
+  # Test with verbose enabled
+  old_option <- getOption("zoomse.verbose", FALSE)
+  options(zoomse.verbose = TRUE)
+  on.exit(options(zoomse.verbose = old_option))
+
+  output_verbose <- capture.output(
+    {
+      guide_verbose <- generate_migration_guide(deprecated_functions, migration_recommendations)
+    },
+    type = "message"
+  )
+
+  # Should produce output when verbose is enabled
+  expect_true(length(output_verbose) > 0)
+  expect_true(any(grepl("Generating migration guide", output_verbose)))
 
   # Should generate guide content
-  expect_true(is.character(guide))
-  expect_true(grepl("Migration Guide", guide))
-  expect_true(grepl("old_function1", guide))
-  expect_true(grepl("old_function2", guide))
+  expect_true(is.character(guide_verbose))
+  expect_true(grepl("Migration Guide", guide_verbose))
+  expect_true(grepl("old_function1", guide_verbose))
+  expect_true(grepl("old_function2", guide_verbose))
 })
 
 test_that("namespace update for deprecation works", {
