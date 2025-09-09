@@ -174,7 +174,7 @@ process_and_return_results <- function(all_results, preserve_metadata, original_
           ))
           if (is_verbose()) {
             diag_message(paste(
-              utils::capture.output(str(mismatches[, c("file_name", "transcript_file")])),
+              utils::capture.output(utils::str(mismatches[, c("file_name", "transcript_file")])),
               collapse = "\n"
             ))
           }

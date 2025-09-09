@@ -4,8 +4,6 @@
 #' are suppressed. Users can enable verbose diagnostics by setting the option
 #' `options(zoomstudentengagement.verbose = TRUE)`.
 #'
-#' @importFrom utils str
-#' @importFrom utils capture.output
 #'
 #' @name zse_diagnostics
 #' @keywords internal
@@ -46,7 +44,7 @@ diag_message <- function(...) {
     args <- list(...)
     args <- lapply(args, function(x) {
       if (is.list(x)) {
-        return(paste(capture.output(str(x)), collapse = "\n"))
+        return(paste(utils::capture.output(utils::str(x)), collapse = "\n"))
       } else if (is.function(x)) {
         return(paste("<function:", deparse(substitute(x)), ">"))
       } else if (is.environment(x)) {
@@ -95,7 +93,7 @@ diag_cat <- function(...) {
     args <- list(...)
     args <- lapply(args, function(x) {
       if (is.list(x)) {
-        return(paste(capture.output(str(x)), collapse = "\n"))
+        return(paste(utils::capture.output(utils::str(x)), collapse = "\n"))
       } else if (is.function(x)) {
         return(paste("<function:", deparse(substitute(x)), ">"))
       } else if (is.environment(x)) {

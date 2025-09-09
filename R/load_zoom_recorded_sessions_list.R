@@ -217,7 +217,7 @@ load_and_process_zoom_csvs <- function(setup_result, verbose) {
 
   if (.verbose) {
     diag_message("After reading CSV:")
-    diag_message(paste(utils::capture.output(str(result)), collapse = "\n"))
+    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
   }
 
   result
@@ -251,7 +251,7 @@ aggregate_zoom_sessions_data <- function(result, verbose) {
 
   if (.verbose) {
     diag_message("After summarise:")
-    diag_message(paste(utils::capture.output(str(result)), collapse = "\n"))
+    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
   }
 
   result
@@ -288,7 +288,7 @@ parse_topic_components <- function(result, topic_split_pattern, verbose) {
 
   if (.verbose) {
     diag_message("After topic parsing:")
-    diag_message(paste(utils::capture.output(str(result)), collapse = "\n"))
+    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
   }
 
   result
@@ -320,7 +320,7 @@ process_session_times <- function(result, scheduled_session_length_hours, verbos
 
   if (.verbose) {
     diag_message("After date parsing:")
-    diag_message(paste(utils::capture.output(str(result)), collapse = "\n"))
+    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
   }
 
   result
@@ -337,7 +337,7 @@ filter_by_department <- function(result, dept, verbose) {
 
   if (.verbose) {
     diag_message("Final result after filtering:")
-    diag_message(paste(utils::capture.output(str(result)), collapse = "\n"))
+    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
   }
 
   result

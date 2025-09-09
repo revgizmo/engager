@@ -11,7 +11,6 @@
 #' will be the beginning of the first row and the `end` time of the consolidated comment
 #' will be the ending of the last row.
 #'
-#' @importFrom stats aggregate setNames
 #'
 #' @param df A tibble containing the comments from a Zoom recording transcript.
 #' @param max_pause_sec Maximum pause between comments to be consolidated.  If

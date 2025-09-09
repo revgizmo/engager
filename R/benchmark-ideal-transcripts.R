@@ -9,7 +9,6 @@
 #' @param include_profiling Whether to include detailed profiling (default: FALSE)
 #'
 #' @return Benchmark results as a list
-#' @importFrom utils sessionInfo
 #' @noRd
 benchmark_ideal_transcripts <- function(iterations = 5,
                                         output_file = "benchmark_results.rds",

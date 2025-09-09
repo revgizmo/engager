@@ -240,7 +240,7 @@ validation_status$data_validation <- show_progress(
     # Test roster loading
     sample_roster <- system.file("extdata", "roster.csv", package = "zoomstudentengagement")
     if (file.exists(sample_roster)) {
-      roster_data <- read.csv(sample_roster)
+      roster_data <- utils::read.csv(sample_roster)
       if (nrow(roster_data) == 0) {
         stop("Sample roster data is empty")
       }
