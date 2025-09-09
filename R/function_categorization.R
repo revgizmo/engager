@@ -135,7 +135,7 @@ validate_categories <- function(categories) {
 #'
 #' @param categories Function categories
 print_category_summary <- function(categories) {
-  # cat("📂 FUNCTION CATEGORY SUMMARY\n")
+  # cat("INFO: FUNCTION CATEGORY SUMMARY\n")
   # cat(paste(rep("=", 30), collapse = ""), "\n")
 
   for (category in names(categories)) {
@@ -229,7 +229,7 @@ analyze_category_dependencies <- function(function_analysis, categories) {
 #'
 #' @return Test results
 test_categorization_system <- function() {
-  # cat("🧪 Testing categorization system...\n")
+  # cat("TEST: Testing categorization system...\n")
 
   # Test with sample function analysis
   sample_analysis <- list(
@@ -242,7 +242,7 @@ test_categorization_system <- function() {
 
   categories <- categorize_functions(sample_analysis)
 
-  # cat("✅ Categorization test completed\n")
+  # cat("SUCCESS: Categorization test completed\n")
   print_category_summary(categories)
 
   categories
