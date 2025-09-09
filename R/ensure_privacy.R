@@ -229,13 +229,10 @@ log_privacy_operation <- function(operation,
 
   # Store in package environment for session tracking (CRAN compliant)
   log_key <- paste0("zse_privacy_log_", format(timestamp, "%Y%m%d_%H%M%S"))
-  # Simple in-memory storage for session tracking
-  if (!exists(".zse_logs", envir = .GlobalEnv)) {
-    assign(".zse_logs", list(), envir = .GlobalEnv)
-  }
-  current <- get(".zse_logs", envir = .GlobalEnv)
-  current[[log_key]] <- log_entry
-  assign(".zse_logs", current, envir = .GlobalEnv)
+  # Simple in-memory storage for session tracking - use options() for CRAN compliance
+  current_logs <- getOption("zoomstudentengagement.privacy_logs", list())
+  current_logs[[log_key]] <- log_entry
+  options(zoomstudentengagement.privacy_logs = current_logs)
 
   # Optionally write to file if logging is enabled
   log_file <- getOption("zoomstudentengagement.privacy_log_file", NULL)
