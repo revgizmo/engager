@@ -195,7 +195,84 @@ validate_ferpa_compliance <- function(data = NULL,
 #'
 #' # Hash method with salt
 #' hashed <- anonymize_educational_data(sample_data, method = "hash", hash_salt = "my_salt")
-# Helper function to identify columns to anonymize
+anonymize_educational_data <- function(data = NULL,
+                                       method = c("mask", "hash", "pseudonymize", "aggregate"),
+                                       preserve_columns = NULL,
+                                       hash_salt = NULL,
+                                       aggregation_level = c("individual", "section", "course", "institution")) {
+  method <- match.arg(method)
+  aggregation_level <- match.arg(aggregation_level)
+
+  if (!is.data.frame(data)) {
+    stop("Data must be a data frame or tibble", call. = FALSE)
+  }
+
+  # Identify columns to anonymize
+  columns_to_anonymize <- identify_anonymization_columns(data, preserve_columns)
+
+  if (length(columns_to_anonymize) == 0) {
+    diag_message("No PII columns found to anonymize")
+    return(data)
+  }
+
+  # Apply anonymization based on method
+  if (method == "mask") {
+    for (col in columns_to_anonymize) {
+      data[[col]] <- "[MASKED]"
+    }
+  } else if (method == "hash") {
+    if (is.null(hash_salt)) {
+      hash_salt <- "default_salt"
+    }
+    for (col in columns_to_anonymize) {
+      data[[col]] <- sapply(data[[col]], function(x) {
+        digest::digest(paste0(x, hash_salt), algo = "sha256")
+      })
+    }
+  } else if (method == "pseudonymize") {
+    for (col in columns_to_anonymize) {
+      unique_values <- unique(data[[col]])
+      pseudonyms <- paste0("Student_", seq_along(unique_values))
+      data[[col]] <- pseudonyms[match(data[[col]], unique_values)]
+    }
+  } else if (method == "aggregate") {
+    # For aggregation, we'll group by the aggregation level
+    if (aggregation_level == "section" && "section" %in% names(data)) {
+      data <- data %>%
+        dplyr::group_by(section) %>%
+        dplyr::summarise(across(everything(), ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.))) %>%
+        dplyr::ungroup()
+    } else if (aggregation_level == "course" && "course" %in% names(data)) {
+      data <- data %>%
+        dplyr::group_by(course) %>%
+        dplyr::summarise(across(everything(), ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.))) %>%
+        dplyr::ungroup()
+    } else {
+      # Individual level - just mask the PII columns
+      for (col in columns_to_anonymize) {
+        data[[col]] <- "[AGGREGATED]"
+      }
+    }
+  }
+
+  # Add privacy metadata
+  attr(data, "privacy_applied") <- TRUE
+  attr(data, "anonymization_method") <- method
+  attr(data, "anonymized_columns") <- columns_to_anonymize
+  attr(data, "anonymization_timestamp") <- Sys.time()
+
+  data
+}
+
+#' Identify Columns to Anonymize
+#'
+#' Helper function to identify which columns in a dataset should be anonymized
+#' based on common PII column names.
+#'
+#' @param data Data frame to analyze for PII columns
+#' @param preserve_columns Character vector of column names to preserve (not anonymize)
+#' @return Character vector of column names that should be anonymized
+#' @export
 identify_anonymization_columns <- function(data, preserve_columns) {
   # Define PII columns to anonymize
   pii_columns <- c(
@@ -230,85 +307,6 @@ apply_hash_anonymization <- function(data, columns_to_anonymize, hash_salt) {
   data
 }
 
-anonymize_educational_data <- function(data = NULL,
-                                       method = c("mask", "hash", "pseudonymize", "aggregate"),
-                                       preserve_columns = NULL,
-                                       hash_salt = NULL,
-                                       aggregation_level = c("individual", "section", "course", "institution")) {
-  method <- match.arg(method)
-  aggregation_level <- match.arg(aggregation_level)
-
-  if (!is.data.frame(data)) {
-    stop("Data must be a data frame or tibble", call. = FALSE)
-  }
-
-  # Identify columns to anonymize
-  columns_to_anonymize <- identify_anonymization_columns(data, preserve_columns)
-
-  if (length(columns_to_anonymize) == 0) {
-    diag_message("No PII columns found to anonymize")
-    return(data)
-  }
-
-  result <- data
-
-  if (method == "mask") {
-    # Use existing ensure_privacy function
-    result <- ensure_privacy(data, privacy_level = "mask")
-  } else if (method == "hash") {
-    result <- apply_hash_anonymization(result, columns_to_anonymize, hash_salt)
-  } else if (method == "pseudonymize") {
-    # Pseudonymization with consistent mapping
-    for (col in columns_to_anonymize) {
-      if (is.character(result[[col]]) || is.factor(result[[col]])) {
-        values <- as.character(result[[col]])
-        unique_vals <- unique(values[!is.na(values) & nchar(values) > 0])
-        if (length(unique_vals) > 0) {
-          # Create pseudonyms
-          pseudonyms <- paste0("PSEUDO_", stringr::str_pad(seq_along(unique_vals), width = 3, pad = "0"))
-          mapping <- stats::setNames(pseudonyms, unique_vals)
-          result[[col]] <- mapping[values]
-        }
-      }
-    }
-  } else if (method == "aggregate") {
-    # Aggregation-based anonymization
-    if (aggregation_level == "individual") {
-      # Individual level - apply masking
-      result <- ensure_privacy(data, privacy_level = "mask")
-    } else {
-      # Higher aggregation levels
-      group_cols <- switch(aggregation_level,
-        "section" = intersect(c("section", "section_name"), names(data)),
-        "course" = intersect(c("course", "course_id", "course_name"), names(data)),
-        "institution" = character(0)
-      )
-
-      if (length(group_cols) > 0) {
-        # Aggregate by group columns
-        result <- data %>%
-          dplyr::group_by(!!!rlang::syms(group_cols)) %>%
-          dplyr::summarise(
-            dplyr::across(
-              dplyr::where(is.numeric),
-              list(
-                mean = ~ mean(.x, na.rm = TRUE),
-                count = ~ dplyr::n(),
-                min = ~ min(.x, na.rm = TRUE),
-                max = ~ max(.x, na.rm = TRUE)
-              ),
-              .groups = "drop"
-            )
-          )
-      } else {
-        # No group columns available, fall back to masking
-        result <- ensure_privacy(data, privacy_level = "mask")
-      }
-    }
-  }
-
-  result
-}
 
 #' Generate FERPA Compliance Report
 #'

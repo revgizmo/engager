@@ -28,10 +28,7 @@ validate_audit_results <- function(function_categories, cran_functions, function
   validation_results
 }
 
-#' Validate function categories
-#'
-#' @param function_categories Function categories from audit
-#' @return Category validation results
+# Validate function categories (internal function)
 validate_categories <- function(function_categories) {
   # Check that all functions are categorized
   all_functions <- unlist(function_categories)

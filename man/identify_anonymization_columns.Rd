@@ -2,40 +2,19 @@
 % Please edit documentation in R/ferpa_compliance.R
 \name{identify_anonymization_columns}
 \alias{identify_anonymization_columns}
-\title{Anonymize Educational Data}
+\title{Identify Columns to Anonymize}
 \usage{
 identify_anonymization_columns(data, preserve_columns)
 }
 \arguments{
-\item{data}{A data frame or tibble to anonymize}
+\item{data}{Data frame to analyze for PII columns}
 
-\item{preserve_columns}{Character vector of column names to preserve unchanged}
-
-\item{method}{Anonymization method. One of \code{c("mask", "hash", "pseudonymize", "aggregate")}}
-
-\item{hash_salt}{Salt for hash-based anonymization (optional)}
-
-\item{aggregation_level}{Level for aggregation. One of \code{c("individual", "section", "course", "institution")}}
+\item{preserve_columns}{Character vector of column names to preserve (not anonymize)}
 }
 \value{
-The anonymized data frame with the same structure as input
+Character vector of column names that should be anonymized
 }
 \description{
-Advanced anonymization for educational data that preserves data utility
-while ensuring FERPA compliance.
-}
-\examples{
-# Anonymize sample data
-sample_data <- tibble::tibble(
-  student_id = c("12345", "67890"),
-  preferred_name = c("Alice Johnson", "Bob Smith"),
-  section = c("A", "B"),
-  participation_score = c(85, 92)
-)
-
-# Mask method (default)
-anonymized <- anonymize_educational_data(sample_data, method = "mask")
-
-# Hash method with salt
-hashed <- anonymize_educational_data(sample_data, method = "hash", hash_salt = "my_salt")
+Helper function to identify which columns in a dataset should be anonymized
+based on common PII column names.
 }

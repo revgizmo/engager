@@ -1,30 +1,34 @@
-#' Load Session Mapping
+# Load Session Mapping (not exported)
+# This function loads a session mapping file created by `create_session_mapping()`
+# and integrates it with the Zoom recordings data to provide reliable course
+# information for analysis.
+#
+# @param mapping_file Path to the session mapping CSV file
+# @param zoom_recordings_df Optional Zoom recordings tibble to merge with mapping
+# @param validate_mapping If TRUE, validates that all recordings are properly mapped
+#
+# @return A tibble with the session mapping merged with Zoom recordings data
+#
+# @examples
+# \dontrun{
+# # Load session mapping
+# session_mapping <- load_session_mapping("session_mapping.csv")
+#
+# # Load and merge with Zoom recordings
+# zoom_recordings_df <- load_zoom_recorded_sessions_list()
+# mapped_recordings <- load_session_mapping(
+#   "session_mapping.csv",
+#   zoom_recordings_df = zoom_recordings_df
+# )
+# }
+
+#' Load and Validate Mapping File
 #'
-#' This function loads a session mapping file created by `create_session_mapping()`
-#' and integrates it with the Zoom recordings data to provide reliable course
-#' information for analysis.
+#' Helper function to load and validate a session mapping CSV file.
 #'
 #' @param mapping_file Path to the session mapping CSV file
-#' @param zoom_recordings_df Optional Zoom recordings tibble to merge with mapping
-#' @param validate_mapping If TRUE, validates that all recordings are properly mapped
-#'
-#' @return A tibble with the session mapping merged with Zoom recordings data
-#'
+#' @return A tibble with the loaded mapping data
 #' @export
-#'
-#' @examples
-#' \dontrun{
-#' # Load session mapping
-#' session_mapping <- load_session_mapping("session_mapping.csv")
-#'
-#' # Load and merge with Zoom recordings
-#' zoom_recordings_df <- load_zoom_recorded_sessions_list()
-#' mapped_recordings <- load_session_mapping(
-#'   "session_mapping.csv",
-#'   zoom_recordings_df = zoom_recordings_df
-#' )
-#' }
-# Helper function to load and validate mapping file
 load_mapping_file <- function(mapping_file) {
   # Check if mapping file exists
   if (!file.exists(mapping_file)) {

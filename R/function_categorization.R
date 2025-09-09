@@ -105,10 +105,7 @@ get_category_summary <- function(categories) {
   summary
 }
 
-#' Validate function categories
-#'
-#' @param categories Function categories
-#' @return Validation results
+# Validate function categories (internal function)
 validate_categories <- function(categories) {
   # Check that all functions are categorized
   all_functions <- unlist(categories)
@@ -188,11 +185,7 @@ get_cran_functions <- function(categories, max_functions = 30) {
   return(cran_functions)
 }
 
-#' Get functions marked for deprecation
-#'
-#' @param categories Function categories
-#' @param cran_functions Functions selected for CRAN
-#' @return Functions marked for deprecation
+# Get functions marked for deprecation (internal function)
 get_deprecated_functions <- function(categories, cran_functions) {
   all_functions <- unlist(categories)
   deprecated_functions <- setdiff(all_functions, cran_functions)
