@@ -5,6 +5,7 @@
 #' `options(zoomstudentengagement.verbose = TRUE)`.
 #'
 #' @importFrom utils str
+#' @importFrom utils capture.output
 #'
 #' @name zse_diagnostics
 #' @keywords internal
