@@ -41,7 +41,7 @@ ntlzscprdctntrckr <- function(
       functions_deprecated = 25,
       functions_reexported = 25,
       deprecation_strategy = "test-aware warnings with minimal re-exports",
-      cran_compliance = "PASS (0 errors, 0 warnings, acceptable notes)"
+      crán_compliance = "PASS (0 errors, 0 warnings, acceptable notes)"
     ),
 
     # Phase 3 Status
@@ -148,7 +148,7 @@ gen_scope_reduction_report <- function(tracker) {
     "PHASE 2 STATUS: ", tracker$phase_2$status, "\n",
     "  Functions Deprecated: ", tracker$phase_2$functions_deprecated, "\n",
     "  Functions Re-exported: ", tracker$phase_2$functions_reexported, "\n",
-    "  CRAN Compliance: ", tracker$phase_2$cran_compliance, "\n\n",
+    "  CRAN Compliance: ", tracker$phase_2$crán_compliance, "\n\n",
     "PHASE 3 STATUS: ", tracker$phase_3$status, "\n",
     "  Success Metrics Integration: ", tracker$phase_3$success_metrics_integration, "\n",
     "  Audit Documentation: ", tracker$phase_3$audit_documentation, "\n",

@@ -23,7 +23,7 @@ success_metrics_framework <- list(
     current = 67,
     target = "25-30",
     reduction_percentage = "63-67%",
-    essential_functions = "<=30",
+    essential_functions = "≤30",
     deprecated_functions = "37-42",
     description = "Reduce from 67 to 25-30 essential functions for CRAN readiness"
   ),
@@ -32,14 +32,14 @@ success_metrics_framework <- list(
   performance = list(
     transcript_processing = "1MB in <30 seconds",
     user_analysis_time = "<15 minutes for new users",
-    test_coverage = ">=90% on essential functions",
+    test_coverage = "≥90% on essential functions",
     description = "Performance benchmarks for user experience and CRAN compliance"
   ),
 
   # User Experience Metrics
   user_experience = list(
     time_to_first_analysis = "<15 minutes",
-    workflow_complexity = "<=5 essential functions",
+    workflow_complexity = "≤5 essential functions",
     error_resolution_time = "<5 minutes",
     documentation_clarity = "Essential guides only",
     description = "User experience targets for adoption and usability"
@@ -56,8 +56,8 @@ success_metrics_framework <- list(
 
   # Process Metrics
   process = list(
-    pre_pr_validation_time = "25 -> 10 minutes (60% reduction)",
-    issue_count = "30 -> 75 (150% increase to manageable level)",
+    pre_pr_validation_time = "25 → 10 minutes (60% reduction)",
+    issue_count = "30 → 75 (150% increase to manageable level)",
     development_friction = "Minimal",
     description = "Development process improvement targets"
   )
@@ -225,7 +225,7 @@ get_target_state <- function() {
   list(
     functions = "25-30",
     documentation_files = 75,
-    test_coverage = ">=90%",
+    test_coverage = "≥90%",
     cran_readiness = "0 errors, 0 warnings, minimal notes",
     user_experience = "<15 minutes to first analysis",
     performance = "1MB transcript in <30 seconds"
@@ -256,8 +256,8 @@ track_progress <- function(metric_name, current_value, target_value) {
       target_min <- target_range[1]
       target_max <- target_range[2]
       target_avg <- (target_min + target_max) / 2
-    } else if (grepl(">=(\\d+)", target_value)) {
-      target_avg <- as.numeric(gsub(">=", "", target_value))
+    } else if (grepl("≥(\\d+)", target_value)) {
+      target_avg <- as.numeric(gsub("≥", "", target_value))
     } else {
       target_avg <- NA
     }
@@ -378,11 +378,11 @@ print_success_metrics_summary <- function(report = NULL) {
     report <- gen_success_metrics_report()
   }
 
-  # cat("TARGET: Success Metrics Summary for zoomstudentengagement Package\n")
+  # cat("🎯 Success Metrics Summary for zoomstudentengagement Package\n")
   # cat("========================================================\n\n")
 
   # Function Scope
-  # cat("INFO: Function Scope:\n")
+  # cat("📊 Function Scope:\n")
   if (!is.null(report$progress$functions)) {
     # cat("   Current: ", report$progress$functions$current, " functions\n")
     # cat("   Target: 25-30 functions\n")
@@ -390,19 +390,19 @@ print_success_metrics_summary <- function(report = NULL) {
   }
 
   # Test Coverage
-  # cat("\nTEST: Test Coverage:\n")
+  # cat("\n🧪 Test Coverage:\n")
   if (!is.null(report$progress$coverage)) {
     # cat("   Current: ", report$progress$coverage$current, "%\n")
-    # cat("   Target: >=90%\n")
+    # cat("   Target: ≥90%\n")
     if (report$progress$coverage$current >= 90) {
-      # cat("   PASS: Target achieved\n")
+      # cat("   ✅ Target achieved\n")
     } else {
-      # cat("   FAIL: Need ", 90 - report$progress$coverage$current, "% more coverage\n")
+      # cat("   ❌ Need ", 90 - report$progress$coverage$current, "% more coverage\n")
     }
   }
 
   # Documentation
-  # cat("\nINFO: Documentation:\n")
+  # cat("\n📚 Documentation:\n")
   if (!is.null(report$progress$documentation)) {
     # cat("   Current: ", report$progress$documentation$current, " files\n")
     # cat("   Target: 75 files\n")
@@ -410,13 +410,13 @@ print_success_metrics_summary <- function(report = NULL) {
   }
 
   # Overall Status
-  # cat("\nTARGET: Overall Status:\n")
+  # cat("\n🎯 Overall Status:\n")
   overall_ready <- all(unlist(report$summary))
   if (overall_ready) {
-    # cat("   PASS: READY for CRAN submission\n")
+    # cat("   ✅ READY for CRAN submission\n")
   } else {
-    # cat("   FAIL: NOT READY - ", sum(!unlist(report$summary)), " criteria unmet\n")
+    # cat("   ❌ NOT READY - ", sum(!unlist(report$summary)), " criteria unmet\n")
   }
 
-  # cat("\nINFO: Report generated: ", format(report$timestamp, "%Y-%m-%d %H:%M:%S"), "\n")
+  # cat("\n📅 Report generated: ", format(report$timestamp, "%Y-%m-%d %H:%M:%S"), "\n")
 }

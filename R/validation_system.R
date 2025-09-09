@@ -11,7 +11,7 @@
 #' @param function_analysis Function analysis results
 #' @return Validation results
 validate_audit_results <- function(function_categories, cran_functions, function_analysis) {
-  # cat("✅ Validating function audit results...\n")
+  # cat("SUCCESS: Validating function audit results...\n")
 
   validation_results <- list(
     function_count = length(cran_functions),
@@ -197,26 +197,26 @@ validate_cran_compliance <- function(cran_functions, function_analysis) {
 #'
 #' @param validation_results Validation results
 print_validation_summary <- function(validation_results) {
-  # cat("\n📊 VALIDATION SUMMARY\n")
+  # cat("\nINFO: VALIDATION SUMMARY\n")
   # cat(paste(rep("=", 20), collapse = ""), "\n")
 
   # Function count
   # cat(sprintf(
   #   "Function Count: %d/30 %s\n",
   #   validation_results$function_count,
-  #   if (validation_results$function_count <= 30) "✅" else "❌"
+  #   if (validation_results$function_count <= 30) "PASS" else "FAIL"
   # ))
 
   # Category completeness
   cat_complete <- validation_results$category_completeness$categories_complete
-  # cat(sprintf("Categories Complete: %s\n", if (cat_complete) "✅" else "❌"))
+  # cat(sprintf("Categories Complete: %s\n", if (cat_complete) "PASS" else "FAIL"))
 
   # Documentation
   doc_coverage <- validation_results$documentation_check$documentation_coverage
   # cat(sprintf(
   #   "Documentation Coverage: %.1f%% %s\n",
   #   doc_coverage * 100,
-  #   if (doc_coverage >= 0.95) "✅" else "❌"
+  #   if (doc_coverage >= 0.95) "PASS" else "FAIL"
   # ))
 
   # Test coverage
@@ -224,12 +224,12 @@ print_validation_summary <- function(validation_results) {
   # cat(sprintf(
   #   "Test Coverage: %.1f%% %s\n",
   #   test_coverage,
-  #   if (test_coverage >= 90) "✅" else "❌"
+  #   if (test_coverage >= 90) "PASS" else "FAIL"
   # ))
 
   # CRAN compliance
   cran_compliance <- validation_results$cran_compliance$overall_compliance
-  # cat(sprintf("CRAN Compliance: %s\n", if (cran_compliance) "✅" else "❌"))
+  # cat(sprintf("CRAN Compliance: %s\n", if (cran_compliance) "PASS" else "FAIL"))
 
   # cat("\n")
 }
@@ -241,7 +241,7 @@ print_validation_summary <- function(validation_results) {
 #' @param cran_functions Functions selected for CRAN
 #' @return Validation report
 generate_validation_report <- function(validation_results, function_categories, cran_functions) {
-  # cat("📊 Generating validation report...\n")
+  # cat("INFO: Generating validation report...\n")
 
   report <- list(
     summary = list(
@@ -259,7 +259,7 @@ generate_validation_report <- function(validation_results, function_categories, 
     )
   )
 
-  # cat("✅ Validation report generated\n")
+  # cat("SUCCESS: Validation report generated\n")
 
   report
 }
@@ -325,7 +325,7 @@ generate_validation_recommendations <- function(validation_results) {
 #'
 #' @return Test results
 test_validation_system <- function() {
-  # cat("🧪 Testing validation system...\n")
+  # cat("TEST: Testing validation system...\n")
 
   # Test with sample data
   sample_categories <- list(
@@ -357,7 +357,7 @@ test_validation_system <- function() {
 
   validation_results <- validate_audit_results(sample_categories, sample_cran_functions, sample_analysis)
 
-  # cat("✅ Validation system test completed\n")
+  # cat("SUCCESS: Validation system test completed\n")
 
   validation_results
 }
