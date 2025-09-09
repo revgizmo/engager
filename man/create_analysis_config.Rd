@@ -134,7 +134,7 @@ zoom_recorded_sessions_df <- load_zoom_recorded_sessions_list(
   data_folder = config$paths$data_folder,
   transcripts_folder = config$paths$transcripts_folder,
   topic_split_pattern = config$patterns$topic_split,
-  zoom_recorded_sessions_csv_names_pattern = config$patterns$zoom_recordings_csv,
+  zmrcrddsssnscsvnmspttrn = config$patterns$zoom_recordings_csv,
   dept = config$course$dept,
   semester_start_mdy = config$course$semester_start,
   scheduled_session_length_hours = config$course$session_length_hours
