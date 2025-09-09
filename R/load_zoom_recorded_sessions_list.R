@@ -32,11 +32,11 @@
 #'   The function now uses a generalized pattern that can handle various course
 #'   naming conventions including `DATASCI 201.006`, `LTF 101`, and
 #'   `MATH 250.001` formats.
-#' @param zoom_recorded_sessions_csv_names_pattern REGEX pattern used to parse
+#' @param zmrcrddsssnscsvnmspttrn REGEX pattern used to parse
 #'   the csv file names from the cloud recording csvs and extract useful
 #'   columns. Defaults to
 #'   `zoomus_recordings__\\\\d{8}(?:\\\\s+copy\\\\s*\\\\d*)?\\\\.csv`
-#' @param zoom_recorded_sessions_csv_col_names Comma separated string of column
+#' @param zmrcrddsssnscsvclnms Comma separated string of column
 #'   names in the cloud recording csvs. Zoom tends to save the file with an
 #'   extra `,` at the end of the header row, causing a null column to be
 #'   imported. Defaults to

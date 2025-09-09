@@ -21,10 +21,10 @@
 #'   transcript file names. Defaults to `GMT\\d{8}-\\d{6}_Recording`
 #' @param dt_extract_pattern REGEX pattern used to extract the date of the
 #'   transcript from the transcript file name. Defaults to `(?<=GMT)\\d{8}`
-#' @param transcript_file_extension_pattern REGEX pattern used to identify
+#' @param trnscrptflxtnsnpttrn REGEX pattern used to identify
 #'   transcript files (as opposed to chat or closed caption files). Defaults to
 #'   `.transcript`
-#' @param closed_caption_file_extension_pattern  REGEX pattern used to identify
+#' @param clsdcptnflxtnsnpttrn  REGEX pattern used to identify
 #'   closed caption files (as opposed to chat or transcript files). Defaults to
 #'   `.cc`
 #' @param recording_start_pattern REGEX pattern used to extract the recording

@@ -35,6 +35,17 @@ The function now uses a generalized pattern that can handle various course
 naming conventions including \verb{DATASCI 201.006}, \verb{LTF 101}, and
 \verb{MATH 250.001} formats.}
 
+\item{zmrcrddsssnscsvnmspttrn}{REGEX pattern used to parse
+the csv file names from the cloud recording csvs and extract useful
+columns. Defaults to
+\verb{zoomus_recordings__\\\\\\\\d\{8\}(?:\\\\\\\\s+copy\\\\\\\\s*\\\\\\\\d*)?\\\\\\\\.csv}}
+
+\item{zmrcrddsssnscsvclnms}{Comma separated string of column
+names in the cloud recording csvs. Zoom tends to save the file with an
+extra \verb{,} at the end of the header row, causing a null column to be
+imported. Defaults to
+\verb{Topic,ID,Start Time,File Size (MB),File Count,Total Views,Total Downloads,Last Accessed}}
+
 \item{dept}{the school department associated with the recordings to keep.
 Zoom often captures unwanted recordings, and this is used to filter only
 the targeted ones. This value is compared to the \code{dept} column extracted
@@ -48,17 +59,6 @@ to \verb{Jan 01, 2024}}
 in hours. Defaults to \code{1.5}}
 
 \item{verbose}{Logical flag to enable diagnostic output. Defaults to FALSE.}
-
-\item{zoom_recorded_sessions_csv_names_pattern}{REGEX pattern used to parse
-the csv file names from the cloud recording csvs and extract useful
-columns. Defaults to
-\verb{zoomus_recordings__\\\\\\\\d\{8\}(?:\\\\\\\\s+copy\\\\\\\\s*\\\\\\\\d*)?\\\\\\\\.csv}}
-
-\item{zoom_recorded_sessions_csv_col_names}{Comma separated string of column
-names in the cloud recording csvs. Zoom tends to save the file with an
-extra \verb{,} at the end of the header row, causing a null column to be
-imported. Defaults to
-\verb{Topic,ID,Start Time,File Size (MB),File Count,Total Views,Total Downloads,Last Accessed}}
 }
 \value{
 A tibble listing the session recordings loaded from the cloud

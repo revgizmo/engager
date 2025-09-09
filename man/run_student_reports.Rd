@@ -22,6 +22,8 @@ run_student_reports(
 
 \item{data_folder}{Directory containing summary CSVs and where reports are written.}
 
+\item{trnscrptssssnsmmryfl}{Name of the session summary CSV file.}
+
 \item{transcripts_summary_file}{Name of the summary CSV file.}
 
 \item{student_summary_report}{Name of the report template file.}
@@ -29,8 +31,6 @@ run_student_reports(
 \item{student_summary_report_folder}{Folder containing the template file.}
 
 \item{output_format}{Output format passed to \code{\link[rmarkdown:render]{rmarkdown::render()}}.}
-
-\item{transcripts_session_summary_file}{Name of the session summary CSV file.}
 }
 \value{
 Invisibly, a character vector of generated report paths.# @export (REMOVED - deprecated function) (REMOVED - deprecated function)

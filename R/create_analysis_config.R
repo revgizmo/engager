@@ -13,17 +13,17 @@
 #' @param roster_file Name of the CSV file containing student roster information.
 #' @param cancelled_classes_file Name of the CSV file containing cancelled class information.
 #' @param names_lookup_file Name of the CSV file containing section names lookup information.
-#' @param transcripts_session_summary_file Name of the output CSV file for session-level summaries.
+#' @param trnscrptssssnsmmryfl Name of the output CSV file for session-level summaries.
 #' @param transcripts_summary_file Name of the output CSV file for overall summaries.
 #' @param student_summary_report Base name for student summary report files.
 #' @param student_summary_report_folder Folder where student summary report templates are stored.
 #' @param topic_split_pattern Regex pattern to parse Zoom recording topics and extract course information.
-#' @param zoom_recorded_sessions_csv_names_pattern Regex pattern to match Zoom cloud recording CSV files.
-#' @param zoom_recorded_sessions_csv_col_names Comma-separated column names for Zoom cloud recording CSVs.
+#' @param zmrcrddsssnscsvnmspttrn Regex pattern to match Zoom cloud recording CSV files.
+#' @param zmrcrddsssnscsvclnms Comma-separated column names for Zoom cloud recording CSVs.
 #' @param transcript_files_names_pattern Regex pattern to match transcript file names.
 #' @param dt_extract_pattern Regex pattern to extract date from transcript file names.
-#' @param transcript_file_extension_pattern Regex pattern to identify transcript files.
-#' @param closed_caption_file_extension_pattern Regex pattern to identify closed caption files.
+#' @param trnscrptflxtnsnpttrn Regex pattern to identify transcript files.
+#' @param clsdcptnflxtnsnpttrn Regex pattern to identify closed caption files.
 #' @param recording_start_pattern Regex pattern to extract recording start time from file names.
 #' @param recording_start_format Format string for parsing recording start times.
 #' @param start_time_local_tzone Local timezone for recording start times.

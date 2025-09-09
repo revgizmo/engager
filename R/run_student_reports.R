@@ -6,7 +6,7 @@
 #' @param df_sections Tibble with a `section` column listing sections to render.
 #' @param df_roster Tibble with columns `section` and `preferred_name`.
 #' @param data_folder Directory containing summary CSVs and where reports are written.
-#' @param transcripts_session_summary_file Name of the session summary CSV file.
+#' @param trnscrptssssnsmmryfl Name of the session summary CSV file.
 #' @param transcripts_summary_file Name of the summary CSV file.
 #' @param student_summary_report Name of the report template file.
 #' @param student_summary_report_folder Folder containing the template file.
