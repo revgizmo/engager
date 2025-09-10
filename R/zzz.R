@@ -1,7 +1,7 @@
 .onAttach <- function(libname, pkgname) {
   # Check if user wants to suppress startup message
   show_startup <- getOption("zoomstudentengagement.show_startup", TRUE)
-  
+
   if (show_startup) {
     packageStartupMessage(
       "Welcome to zoomstudentengagement!\n",

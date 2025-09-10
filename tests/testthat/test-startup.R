@@ -15,7 +15,7 @@ test_that("startup message function exists and is callable", {
   # Test that the startup message function exists and can be called
   # This tests the function exists without relying on package loading behavior
   expect_true(exists(".onAttach", envir = asNamespace("zoomstudentengagement")))
-  
+
   # Test that the function can be called (it should not error)
   expect_error(
     .onAttach("test_lib", "zoomstudentengagement"),
