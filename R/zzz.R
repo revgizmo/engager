@@ -1,18 +1,16 @@
-# Internal package environment for session-scoped state (e.g., logs)
-.zse_env <- new.env(parent = emptyenv())
-
-.onLoad <- function(libname, pkgname) {
-  # Initialize logging container
-  if (is.null(.zse_env$logs)) .zse_env$logs <- list()
-
-  # Set default options if not already set (tested in test-onload-defaults.R)
-  if (is.null(getOption("zoomstudentengagement.privacy_level"))) {
-    options(zoomstudentengagement.privacy_level = "mask")
+.onAttach <- function(libname, pkgname) {
+  # Check if user wants to suppress startup message
+  show_startup <- getOption("zoomstudentengagement.show_startup", TRUE)
+  
+  if (show_startup) {
+    packageStartupMessage(
+      "Welcome to zoomstudentengagement!\n",
+      "- Start with: vignette('getting-started', package='zoomstudentengagement')\n",
+      "- Core functions: vignette('essential-functions', package='zoomstudentengagement')\n",
+      "- Sample data: system.file('extdata/transcripts', package='zoomstudentengagement')\n",
+      "- Quick example: example(summarize_transcript_metrics)\n",
+      "\n",
+      "To suppress this message: options(zoomstudentengagement.show_startup = FALSE)"
+    )
   }
-}
-
-# Internal helpers to get/set logs safely
-.zse_get_logs_env <- function() {
-  if (is.null(.zse_env$logs)) .zse_env$logs <- list()
-  .zse_env
 }
