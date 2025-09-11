@@ -2,7 +2,7 @@
 # NOTE: These functions are in scope reduction - tests focus on basic functionality
 
 library(testthat)
-library(zoomstudentengagement)
+library(engager)
 
 # Test data setup
 mock_categories <- list(

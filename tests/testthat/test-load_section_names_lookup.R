@@ -2,7 +2,7 @@
 # NOTE: This function is deprecated - tests focus on deprecation behavior
 
 library(testthat)
-library(zoomstudentengagement)
+library(engager)
 
 test_that("load_section_names_lookup is deprecated and returns appropriate structure", {
   # Test deprecation behavior

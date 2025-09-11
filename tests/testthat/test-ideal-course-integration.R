@@ -1,6 +1,6 @@
 test_that("ideal course transcripts work with main package functions", {
   # Test that ideal course transcripts can be processed through the main workflow
-  dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  dir <- system.file("extdata", "test_transcripts", package = "engager")
 
   # Load ideal course transcripts
   session1 <- load_zoom_transcript(file.path(dir, "ideal_course_session1.vtt"))
@@ -36,7 +36,7 @@ test_that("ideal course transcripts work with main package functions", {
 
 test_that("ideal course transcripts demonstrate name variation handling", {
   # Test that the ideal course transcripts showcase name variation scenarios
-  dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  dir <- system.file("extdata", "test_transcripts", package = "engager")
 
   # Load session 2 which has name variations
   session2 <- load_zoom_transcript(file.path(dir, "ideal_course_session2.vtt"))

@@ -216,23 +216,23 @@ test_that("FERPA privacy levels work correctly", {
 
 test_that("set_privacy_defaults works with new FERPA levels", {
   # Test ferpa_strict (diagnostics now gated; enable verbose for message checks)
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
-  options(zoomstudentengagement.verbose = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
+  options(engager.verbose = TRUE)
   expect_message(set_privacy_defaults("ferpa_strict"), "FERPA strict mode enabled")
-  expect_equal(getOption("zoomstudentengagement.privacy_level"), "ferpa_strict")
+  expect_equal(getOption("engager.privacy_level"), "ferpa_strict")
 
   # Test ferpa_standard
   expect_message(set_privacy_defaults("ferpa_standard"), "FERPA standard mode enabled")
-  expect_equal(getOption("zoomstudentengagement.privacy_level"), "ferpa_standard")
+  expect_equal(getOption("engager.privacy_level"), "ferpa_standard")
 
   # Test mask
   set_privacy_defaults("mask")
-  expect_equal(getOption("zoomstudentengagement.privacy_level"), "mask")
+  expect_equal(getOption("engager.privacy_level"), "mask")
 
   # Test none
   expect_warning(set_privacy_defaults("none"), "Privacy disabled")
-  expect_equal(getOption("zoomstudentengagement.privacy_level"), "none")
+  expect_equal(getOption("engager.privacy_level"), "none")
 
   # Restore default
   set_privacy_defaults("mask")

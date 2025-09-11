@@ -1,8 +1,8 @@
 test_that("diag_message_if and diag_cat_if respect local verbose flag and global option", {
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   # When both local and global are FALSE, no output
   out_msg_quiet <- capture.output(
@@ -31,7 +31,7 @@ test_that("diag_message_if and diag_cat_if respect local verbose flag and global
   expect_true(any(grepl("world verbose", out_cat_verbose)))
 
   # When global option is TRUE, output occurs even if local FALSE
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
   out_msg_global <- capture.output(
     {
       diag_message_if(FALSE, "hello global")

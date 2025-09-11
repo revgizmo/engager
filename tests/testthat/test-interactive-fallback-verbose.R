@@ -3,10 +3,10 @@
 
 test_that("diag_cat respects interactive fallback", {
   # Test that diag_cat works in interactive mode
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   # Test interactive fallback (should output in interactive mode)
   # Note: This test runs in non-interactive mode, so we test the fallback behavior
@@ -18,7 +18,7 @@ test_that("diag_cat respects interactive fallback", {
   expect_length(output, 0)
 
   # Test with verbose enabled
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
   output_verbose <- capture.output({
     diag_cat("test verbose output\n")
   })
@@ -29,10 +29,10 @@ test_that("diag_cat respects interactive fallback", {
 
 test_that("diag_message_if respects local verbose flag", {
   # Test that diag_message_if works with local verbose flag
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   # Test with local verbose flag TRUE
   output_local <- capture.output(
@@ -59,10 +59,10 @@ test_that("diag_message_if respects local verbose flag", {
 
 test_that("diag_cat_if respects local verbose flag", {
   # Test that diag_cat_if works with local verbose flag
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   # Test with local verbose flag TRUE
   output_local <- capture.output({
@@ -83,10 +83,10 @@ test_that("diag_cat_if respects local verbose flag", {
 
 test_that("diagnostic functions handle edge cases", {
   # Test that diagnostic functions handle edge cases gracefully
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   # Test with empty arguments
   expect_error(diag_message(), NA)
@@ -101,8 +101,8 @@ test_that("diagnostic functions handle edge cases", {
 
 test_that("diagnostic functions respect test environment", {
   # Test that diagnostic functions are quiet in test environment
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   # Set test environment
   old_testthat <- Sys.getenv("TESTTHAT", unset = NA)
@@ -118,7 +118,7 @@ test_that("diagnostic functions respect test environment", {
   )
 
   Sys.setenv(TESTTHAT = "true")
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   # Should be quiet in test environment even with verbose enabled
   # Note: The functions may still produce warnings about deprecation
@@ -140,11 +140,11 @@ test_that("diagnostic functions respect test environment", {
 
 test_that("diagnostic functions provide fallback behavior", {
   # Test that diagnostic functions provide appropriate fallback behavior
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   # Test with verbose disabled (should be quiet)
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   output_quiet <- capture.output({
     diag_cat("scenario test\n")
@@ -154,7 +154,7 @@ test_that("diagnostic functions provide fallback behavior", {
   expect_length(output_quiet, 0)
 
   # Test with verbose enabled (should output)
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   output_verbose <- capture.output({
     diag_cat("scenario test\n")
@@ -166,10 +166,10 @@ test_that("diagnostic functions provide fallback behavior", {
 
 test_that("diagnostic functions maintain privacy compliance", {
   # Test that diagnostic functions maintain privacy compliance
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   # Test that functions don't leak sensitive information
   sensitive_data <- "student_name_123"
@@ -182,7 +182,7 @@ test_that("diagnostic functions maintain privacy compliance", {
   expect_length(output, 0)
 
   # Test with verbose enabled
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
   output_verbose <- capture.output({
     diag_cat("Processing:", sensitive_data, "\n")
   })
@@ -194,10 +194,10 @@ test_that("diagnostic functions maintain privacy compliance", {
 
 test_that("diagnostic functions work with multiple arguments", {
   # Test that diagnostic functions work with multiple arguments
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   # Test multiple arguments
   output_cat <- capture.output({

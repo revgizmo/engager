@@ -1,5 +1,5 @@
 test_that("ideal course transcripts parse", {
-  dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  dir <- system.file("extdata", "test_transcripts", package = "engager")
   files <- file.path(dir, paste0("ideal_course_session", 1:3, ".vtt"))
   purrr::walk(files, function(f) {
     tr <- load_zoom_transcript(f)
@@ -8,14 +8,14 @@ test_that("ideal course transcripts parse", {
 })
 
 test_that("name variations present in session2", {
-  dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  dir <- system.file("extdata", "test_transcripts", package = "engager")
   tr <- load_zoom_transcript(file.path(dir, "ideal_course_session2.vtt"))
   expect_true("Samantha Smith" %in% tr$name)
   expect_true("Sam Smith (she/her)" %in% tr$name)
 })
 
 test_that("attendance gaps are present in session2", {
-  dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  dir <- system.file("extdata", "test_transcripts", package = "engager")
   tr <- load_zoom_transcript(file.path(dir, "ideal_course_session2.vtt"))
 
   # Check for timing gaps (dead air periods)
@@ -28,7 +28,7 @@ test_that("attendance gaps are present in session2", {
 })
 
 test_that("guest speakers are present in session2", {
-  dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  dir <- system.file("extdata", "test_transcripts", package = "engager")
   tr <- load_zoom_transcript(file.path(dir, "ideal_course_session2.vtt"))
 
   # Check for guest speakers
@@ -37,7 +37,7 @@ test_that("guest speakers are present in session2", {
 })
 
 test_that("international names are handled correctly", {
-  dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  dir <- system.file("extdata", "test_transcripts", package = "engager")
   tr <- load_zoom_transcript(file.path(dir, "ideal_course_session1.vtt"))
 
   # Check for international names
@@ -46,7 +46,7 @@ test_that("international names are handled correctly", {
 })
 
 test_that("roster attendance patterns are reflected", {
-  dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  dir <- system.file("extdata", "test_transcripts", package = "engager")
 
   # Load roster
   roster <- readr::read_csv(file.path(dir, "ideal_course_roster.csv"))

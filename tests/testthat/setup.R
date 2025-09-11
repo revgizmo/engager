@@ -1,5 +1,5 @@
 # Load required packages for testing
-library(zoomstudentengagement)
+library(engager)
 library(testthat)
 library(tibble)
 library(lubridate)
@@ -9,7 +9,7 @@ library(ggplot2)
 set.seed(42)
 
 # Create a temporary directory for test files
-test_dir <- tempfile("zoomstudentengagement_test_")
+test_dir <- tempfile("engager_test_")
 dir.create(test_dir)
 
 # Clean up after tests using modern testthat fixtures

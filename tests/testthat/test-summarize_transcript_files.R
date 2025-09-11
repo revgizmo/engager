@@ -20,9 +20,9 @@ test_that("summarize_transcript_files summarizes multiple transcript files corre
     )
   }
   # Temporarily override summarize_transcript_metrics
-  orig <- zoomstudentengagement::summarize_transcript_metrics
-  assignInNamespace("summarize_transcript_metrics", stub, ns = "zoomstudentengagement")
-  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "zoomstudentengagement"))
+  orig <- engager::summarize_transcript_metrics
+  assignInNamespace("summarize_transcript_metrics", stub, ns = "engager")
+  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
   dir.create("test_transcripts", showWarnings = FALSE)
@@ -108,9 +108,9 @@ test_that("summarize_transcript_files validates file name matching", {
   }
 
   # Temporarily override summarize_transcript_metrics
-  orig <- zoomstudentengagement::summarize_transcript_metrics
-  assignInNamespace("summarize_transcript_metrics", stub_mismatch, ns = "zoomstudentengagement")
-  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "zoomstudentengagement"))
+  orig <- engager::summarize_transcript_metrics
+  assignInNamespace("summarize_transcript_metrics", stub_mismatch, ns = "engager")
+  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
   dir.create("test_transcripts", showWarnings = FALSE)
@@ -148,9 +148,9 @@ test_that("summarize_transcript_files handles matching file names correctly", {
   }
 
   # Temporarily override summarize_transcript_metrics
-  orig <- zoomstudentengagement::summarize_transcript_metrics
-  assignInNamespace("summarize_transcript_metrics", stub_match, ns = "zoomstudentengagement")
-  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "zoomstudentengagement"))
+  orig <- engager::summarize_transcript_metrics
+  assignInNamespace("summarize_transcript_metrics", stub_match, ns = "engager")
+  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
   dir.create("test_transcripts", showWarnings = FALSE)
@@ -188,9 +188,9 @@ test_that("summarize_transcript_files handles character vector input", {
   }
 
   # Temporarily override summarize_transcript_metrics
-  orig <- zoomstudentengagement::summarize_transcript_metrics
-  assignInNamespace("summarize_transcript_metrics", stub, ns = "zoomstudentengagement")
-  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "zoomstudentengagement"))
+  orig <- engager::summarize_transcript_metrics
+  assignInNamespace("summarize_transcript_metrics", stub, ns = "engager")
+  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
   dir.create("test_transcripts", showWarnings = FALSE)
@@ -243,9 +243,9 @@ test_that("summarize_transcript_files handles empty results", {
   }
 
   # Temporarily override summarize_transcript_metrics
-  orig <- zoomstudentengagement::summarize_transcript_metrics
-  assignInNamespace("summarize_transcript_metrics", stub_null, ns = "zoomstudentengagement")
-  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "zoomstudentengagement"))
+  orig <- engager::summarize_transcript_metrics
+  assignInNamespace("summarize_transcript_metrics", stub_null, ns = "engager")
+  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
   dir.create("test_transcripts", showWarnings = FALSE)
@@ -289,9 +289,9 @@ test_that("summarize_transcript_files handles metadata preservation", {
   }
 
   # Temporarily override summarize_transcript_metrics
-  orig <- zoomstudentengagement::summarize_transcript_metrics
-  assignInNamespace("summarize_transcript_metrics", stub, ns = "zoomstudentengagement")
-  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "zoomstudentengagement"))
+  orig <- engager::summarize_transcript_metrics
+  assignInNamespace("summarize_transcript_metrics", stub, ns = "engager")
+  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
   dir.create("test_transcripts", showWarnings = FALSE)
@@ -332,9 +332,9 @@ test_that("summarize_transcript_files handles NA file names", {
   }
 
   # Temporarily override summarize_transcript_metrics
-  orig <- zoomstudentengagement::summarize_transcript_metrics
-  assignInNamespace("summarize_transcript_metrics", stub, ns = "zoomstudentengagement")
-  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "zoomstudentengagement"))
+  orig <- engager::summarize_transcript_metrics
+  assignInNamespace("summarize_transcript_metrics", stub, ns = "engager")
+  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
   dir.create("test_transcripts", showWarnings = FALSE)
@@ -377,9 +377,9 @@ test_that("summarize_transcript_files handles names_to_exclude parameter", {
   }
 
   # Temporarily override summarize_transcript_metrics
-  orig <- zoomstudentengagement::summarize_transcript_metrics
-  assignInNamespace("summarize_transcript_metrics", stub, ns = "zoomstudentengagement")
-  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "zoomstudentengagement"))
+  orig <- engager::summarize_transcript_metrics
+  assignInNamespace("summarize_transcript_metrics", stub, ns = "engager")
+  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
   dir.create("test_transcripts", showWarnings = FALSE)
@@ -447,9 +447,9 @@ test_that("summarize_transcript_files handles metadata preservation with row_id"
   }
 
   # Temporarily override summarize_transcript_metrics
-  orig <- zoomstudentengagement::summarize_transcript_metrics
-  assignInNamespace("summarize_transcript_metrics", stub, ns = "zoomstudentengagement")
-  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "zoomstudentengagement"))
+  orig <- engager::summarize_transcript_metrics
+  assignInNamespace("summarize_transcript_metrics", stub, ns = "engager")
+  on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
   dir.create("test_transcripts", showWarnings = FALSE)

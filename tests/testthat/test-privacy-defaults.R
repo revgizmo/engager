@@ -13,8 +13,8 @@ test_that("ensure_privacy masks identifying columns by default", {
 })
 
 test_that("set_privacy_defaults none disables masking with warning", {
-  old <- getOption("zoomstudentengagement.privacy_level")
-  on.exit(options(zoomstudentengagement.privacy_level = old), add = TRUE)
+  old <- getOption("engager.privacy_level")
+  on.exit(options(engager.privacy_level = old), add = TRUE)
 
   expect_warning(set_privacy_defaults("none"), regexp = "Privacy disabled")
   df <- tibble::tibble(preferred_name = c("Alice", "Bob"))

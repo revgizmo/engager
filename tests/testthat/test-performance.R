@@ -8,7 +8,7 @@
 # Tests for performance regression detection and benchmarking functions
 
 library(testthat)
-library(zoomstudentengagement)
+library(engager)
 
 # Performance thresholds (in milliseconds)
 PERFORMANCE_THRESHOLDS <- list(
@@ -22,7 +22,7 @@ test_that("individual transcript processing meets performance requirements", {
   skip_on_cran()
 
   # Get test transcript
-  transcript_dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  transcript_dir <- system.file("extdata", "test_transcripts", package = "engager")
   test_file <- file.path(transcript_dir, "ideal_course_session1.vtt")
 
   # Measure processing time
@@ -155,7 +155,7 @@ test_that("ideal course transcript processing functions are performant", {
   skip_on_cran()
 
   # Get test transcript
-  transcript_dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  transcript_dir <- system.file("extdata", "test_transcripts", package = "engager")
   test_file <- file.path(transcript_dir, "ideal_course_session1.vtt")
 
   # Test load_zoom_transcript performance
@@ -188,7 +188,7 @@ test_that("consolidate_transcript performance with ideal course data", {
   skip_on_cran()
 
   # Get test transcript
-  transcript_dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  transcript_dir <- system.file("extdata", "test_transcripts", package = "engager")
   test_file <- file.path(transcript_dir, "ideal_course_session1.vtt")
 
   # Load transcript data

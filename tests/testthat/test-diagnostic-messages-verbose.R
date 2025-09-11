@@ -3,11 +3,11 @@
 
 test_that("diagnostic messages respect privacy defaults", {
   # Test that diagnostic messages respect privacy defaults
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   # Test default privacy behavior (quiet by default)
-  options(zoomstudentengagement.verbose = NULL)
+  options(engager.verbose = NULL)
 
   output <- capture.output({
     diag_cat("sensitive information\n")
@@ -17,7 +17,7 @@ test_that("diagnostic messages respect privacy defaults", {
   expect_length(output, 0)
 
   # Test with explicit FALSE
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   output_false <- capture.output({
     diag_cat("sensitive information\n")
@@ -29,8 +29,8 @@ test_that("diagnostic messages respect privacy defaults", {
 
 test_that("diagnostic messages handle sensitive data appropriately", {
   # Test that diagnostic messages handle sensitive data appropriately
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   # Test with sensitive data
   sensitive_data <- list(
@@ -44,7 +44,7 @@ test_that("diagnostic messages handle sensitive data appropriately", {
   )
 
   # Test quiet mode (default)
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   output_quiet <- capture.output({
     diag_cat("Processing student data:", sensitive_data, "\n")
@@ -54,7 +54,7 @@ test_that("diagnostic messages handle sensitive data appropriately", {
   expect_length(output_quiet, 0)
 
   # Test verbose mode (opt-in)
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   output_verbose <- capture.output({
     diag_cat("Processing student data:", sensitive_data, "\n")
@@ -66,8 +66,8 @@ test_that("diagnostic messages handle sensitive data appropriately", {
 
 test_that("diagnostic messages respect FERPA compliance", {
   # Test that diagnostic messages respect FERPA compliance
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   # Test FERPA-sensitive information
   ferpa_data <- list(
@@ -85,7 +85,7 @@ test_that("diagnostic messages respect FERPA compliance", {
   )
 
   # Test default behavior (should be quiet)
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   output_default <- capture.output({
     diag_cat("FERPA data:", ferpa_data, "\n")
@@ -95,7 +95,7 @@ test_that("diagnostic messages respect FERPA compliance", {
   expect_length(output_default, 0)
 
   # Test with explicit opt-in
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   output_opt_in <- capture.output({
     diag_cat("FERPA data:", ferpa_data, "\n")
@@ -107,8 +107,8 @@ test_that("diagnostic messages respect FERPA compliance", {
 
 test_that("diagnostic messages handle anonymized data", {
   # Test that diagnostic messages handle anonymized data appropriately
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   # Test with anonymized data
   anonymized_data <- list(
@@ -119,7 +119,7 @@ test_that("diagnostic messages handle anonymized data", {
   )
 
   # Test quiet mode
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   output_quiet <- capture.output({
     diag_cat("Anonymized data:", anonymized_data, "\n")
@@ -129,7 +129,7 @@ test_that("diagnostic messages handle anonymized data", {
   expect_length(output_quiet, 0)
 
   # Test verbose mode
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   output_verbose <- capture.output({
     diag_cat("Anonymized data:", anonymized_data, "\n")
@@ -141,8 +141,8 @@ test_that("diagnostic messages handle anonymized data", {
 
 test_that("diagnostic messages handle error messages appropriately", {
   # Test that diagnostic messages handle error messages appropriately
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   # Test error messages
   error_messages <- c(
@@ -153,7 +153,7 @@ test_that("diagnostic messages handle error messages appropriately", {
   )
 
   # Test quiet mode (default)
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   for (error_msg in error_messages) {
     output <- capture.output({
@@ -165,7 +165,7 @@ test_that("diagnostic messages handle error messages appropriately", {
   }
 
   # Test verbose mode
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   for (error_msg in error_messages) {
     output <- capture.output({
@@ -180,8 +180,8 @@ test_that("diagnostic messages handle error messages appropriately", {
 
 test_that("diagnostic messages handle warning messages appropriately", {
   # Test that diagnostic messages handle warning messages appropriately
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   # Test warning messages
   warning_messages <- c(
@@ -192,7 +192,7 @@ test_that("diagnostic messages handle warning messages appropriately", {
   )
 
   # Test quiet mode (default)
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   for (warning_msg in warning_messages) {
     output <- capture.output({
@@ -204,7 +204,7 @@ test_that("diagnostic messages handle warning messages appropriately", {
   }
 
   # Test verbose mode
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   for (warning_msg in warning_messages) {
     output <- capture.output({
@@ -219,8 +219,8 @@ test_that("diagnostic messages handle warning messages appropriately", {
 
 test_that("diagnostic messages handle info messages appropriately", {
   # Test that diagnostic messages handle info messages appropriately
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   # Test info messages
   info_messages <- c(
@@ -231,7 +231,7 @@ test_that("diagnostic messages handle info messages appropriately", {
   )
 
   # Test quiet mode (default)
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   for (info_msg in info_messages) {
     output <- capture.output({
@@ -243,7 +243,7 @@ test_that("diagnostic messages handle info messages appropriately", {
   }
 
   # Test verbose mode
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   for (info_msg in info_messages) {
     output <- capture.output({
@@ -258,8 +258,8 @@ test_that("diagnostic messages handle info messages appropriately", {
 
 test_that("diagnostic messages maintain privacy in test environment", {
   # Test that diagnostic messages maintain privacy in test environment
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   old_testthat <- Sys.getenv("TESTTHAT", unset = NA)
   on.exit(
@@ -275,7 +275,7 @@ test_that("diagnostic messages maintain privacy in test environment", {
 
   # Set test environment
   Sys.setenv(TESTTHAT = "true")
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   # Test with sensitive data in test environment
   sensitive_data <- "student_name_123"
@@ -301,8 +301,8 @@ test_that("diagnostic messages maintain privacy in test environment", {
 
 test_that("diagnostic messages handle mixed content appropriately", {
   # Test that diagnostic messages handle mixed content appropriately
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   # Test mixed content (safe and sensitive)
   mixed_content <- list(
@@ -313,7 +313,7 @@ test_that("diagnostic messages handle mixed content appropriately", {
   )
 
   # Test quiet mode (default)
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   output_quiet <- capture.output({
     diag_cat("Mixed content:", mixed_content, "\n")
@@ -323,7 +323,7 @@ test_that("diagnostic messages handle mixed content appropriately", {
   expect_length(output_quiet, 0)
 
   # Test verbose mode
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   output_verbose <- capture.output({
     diag_cat("Mixed content:", mixed_content, "\n")
