@@ -20,7 +20,7 @@
 #' @examples
 #' # Load a sample transcript from the package's extdata directory
 #' transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-#'   package = "zoomstudentengagement"
+#'   package = "engager"
 #' )
 #' load_zoom_transcript(transcript_file_path = transcript_file)
 #'

@@ -48,7 +48,7 @@ export_ideal_transcripts_csv <- function(
   }
 
   # Apply privacy protection
-  export_data <- zoomstudentengagement::ensure_privacy(
+  export_data <- engager::ensure_privacy(
     transcript_data,
     privacy_level = privacy_level
   )
@@ -128,7 +128,7 @@ export_ideal_transcripts_json <- function(
   }
 
   # Apply privacy protection
-  export_data <- zoomstudentengagement::ensure_privacy(
+  export_data <- engager::ensure_privacy(
     transcript_data,
     privacy_level = privacy_level
   )
@@ -283,7 +283,7 @@ xprtdltrnscrptssmmry <- function(
   format <- match.arg(format)
 
   # Apply privacy protection
-  export_data <- zoomstudentengagement::ensure_privacy(
+  export_data <- engager::ensure_privacy(
     transcript_data,
     privacy_level = privacy_level
   )

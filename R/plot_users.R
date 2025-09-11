@@ -104,11 +104,11 @@ apply_plot_users_masking <- function(data, mask_by, metric, student_col, privacy
     if (!"preferred_name" %in% names(df)) {
       df$preferred_name <- df[[student_col]]
     }
-    df <- zoomstudentengagement::mask_user_names_by_metric(df, metric = metric, target_student = "")
+    df <- engager::mask_user_names_by_metric(df, metric = metric, target_student = "")
     student_col_local <- "student"
   } else {
     # Name masking via ensure_privacy
-    df <- zoomstudentengagement::ensure_privacy(df, privacy_level = privacy_level)
+    df <- engager::ensure_privacy(df, privacy_level = privacy_level)
     student_col_local <- student_col
   }
 
@@ -122,7 +122,7 @@ get_metric_description <- function(metric, metrics_lookup_df) {
     # try to get default without failing if unavailable
     try(
       {
-        metrics_lookup_df <- zoomstudentengagement::make_metrics_lookup_df()
+        metrics_lookup_df <- engager::make_metrics_lookup_df()
       },
       silent = TRUE
     )

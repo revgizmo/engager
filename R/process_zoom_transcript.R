@@ -42,7 +42,7 @@
 #' @examples
 #' # Load a sample transcript from the package's extdata directory
 #' transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-#'   package = "zoomstudentengagement"
+#'   package = "engager"
 #' )
 #' process_zoom_transcript(transcript_file_path = transcript_file)
 #'
@@ -55,7 +55,7 @@ process_zoom_transcript <- function(transcript_file_path = "",
                                     transcript_df = NULL) {
   if (is.null(transcript_df)) {
     if (nzchar(transcript_file_path) && file.exists(transcript_file_path)) {
-      transcript_df <- zoomstudentengagement::load_zoom_transcript(transcript_file_path)
+      transcript_df <- engager::load_zoom_transcript(transcript_file_path)
     } else {
       return(NULL)
     }
@@ -84,13 +84,13 @@ process_zoom_transcript <- function(transcript_file_path = "",
 
 
     if (consolidate_comments) {
-      transcript_df <- zoomstudentengagement::consolidate_transcript(transcript_df,
+      transcript_df <- engager::consolidate_transcript(transcript_df,
         max_pause_sec = max_pause_sec
       )
     }
 
     if (add_dead_air) {
-      transcript_df <- zoomstudentengagement::add_dead_air_rows(transcript_df,
+      transcript_df <- engager::add_dead_air_rows(transcript_df,
         dead_air_name = dead_air_name
       )
     }
