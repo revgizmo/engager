@@ -45,7 +45,7 @@ changes).
 
 <!-- badges: start -->
 
-[![coverage](https://img.shields.io/github/actions/workflow/status/revgizmo/zoomstudentengagement/coverage.yaml?branch=main&label=coverage)](https://github.com/revgizmo/zoomstudentengagement/actions/workflows/coverage.yaml)
+[![coverage](https://img.shields.io/github/actions/workflow/status/revgizmo/engager/coverage.yaml?branch=main&label=coverage)](https://github.com/revgizmo/engager/actions/workflows/coverage.yaml)
 <!-- badges: end -->
 
 The goal of `zoomstudentengagement` is to allow instructors to gain
@@ -69,7 +69,7 @@ participation equity, from Zoom transcripts of recorded course sessions.
 ### Installation
 
 ``` r
-devtools::install_github("revgizmo/zoomstudentengagement")
+devtools::install_github("revgizmo/engager")
 ```
 
 ### Development with Cursor Background Agents
@@ -78,8 +78,8 @@ For developers using Cursor IDE with background agents:
 
 ``` bash
 # 1. Clone the repository
-git clone https://github.com/revgizmo/zoomstudentengagement.git
-cd zoomstudentengagement
+git clone https://github.com/revgizmo/engager.git
+cd engager
 
 # 2. Use "Develop in Agent" workflow in Cursor
 # The background agent will use the standard R development environment
@@ -142,22 +142,21 @@ head(metrics)
 For detailed workflows and examples, see the package vignettes:
 
 - **[Getting
-  Started](https://revgizmo.github.io/zoomstudentengagement/getting-started.html)** -
+  Started](https://revgizmo.github.io/engager/getting-started.html)** -
   Basic setup and workflow overview
-- **[Whole
-  Game](https://revgizmo.github.io/zoomstudentengagement/whole-game.html)** -
+- **[Whole Game](https://revgizmo.github.io/engager/whole-game.html)** -
   Complete workflow for new instructors
 - **[Transcript
-  Processing](https://revgizmo.github.io/zoomstudentengagement/transcript-processing.html)** -
+  Processing](https://revgizmo.github.io/engager/transcript-processing.html)** -
   Load, process, and analyze transcripts
 - **[Roster
-  Management](https://revgizmo.github.io/zoomstudentengagement/roster-cleaning.html)** -
+  Management](https://revgizmo.github.io/engager/roster-cleaning.html)** -
   Manage student rosters and clean name mismatches
 - **[Plotting and
-  Analysis](https://revgizmo.github.io/zoomstudentengagement/plotting.html)** -
-  Create visualizations and analyze engagement patterns
+  Analysis](https://revgizmo.github.io/engager/plotting.html)** - Create
+  visualizations and analyze engagement patterns
 - **[Session
-  Mapping](https://revgizmo.github.io/zoomstudentengagement/session-mapping.html)** -
+  Mapping](https://revgizmo.github.io/engager/session-mapping.html)** -
   Handle complex scenarios with multiple courses/sections
 
 ## 🎯 What the Package Does
@@ -288,8 +287,6 @@ This package is licensed under the MIT License. See the CRAN stub in
 
 ## 🔗 Links
 
-- **GitHub Repository**:
-  <https://github.com/revgizmo/zoomstudentengagement_cursor>
-- **Issues**:
-  <https://github.com/revgizmo/zoomstudentengagement_cursor/issues>
+- **GitHub Repository**: <https://github.com/revgizmo/engager>
+- **Issues**: <https://github.com/revgizmo/engager/issues>
 - **Project Status**: [PROJECT.md](PROJECT.md)

@@ -38,5 +38,5 @@ Suggests:
     devtools
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-URL: https://github.com/revgizmo/zoomstudentengagement
-BugReports: https://github.com/revgizmo/zoomstudentengagement/issues
+URL: https://github.com/revgizmo/engager
+BugReports: https://github.com/revgizmo/engager/issues
