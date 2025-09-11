@@ -1,6 +1,6 @@
 ---
 title: "Essential Functions - Core Package Functionality"
-author: "zoomstudentengagement package"
+author: "engager package"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-This vignette demonstrates the core functionality of the `zoomstudentengagement` package using only the essential functions. After scope reduction, the package now exports **26 essential functions** focused on:
+This vignette demonstrates the core functionality of the `engager` package using only the essential functions. After scope reduction, the package now exports **26 essential functions** focused on:
 
 - **Transcript Processing**: Loading and processing Zoom transcripts
 - **Privacy Protection**: Ensuring FERPA compliance and data privacy
@@ -30,7 +30,7 @@ This vignette demonstrates the core functionality of the `zoomstudentengagement`
 The package now exports these 26 essential functions:
 
 ```{r essential-functions}
-library(zoomstudentengagement)
+library(engager)
 
 # Get list of essential functions
 essential_functions <- get_essential_functions()
@@ -45,7 +45,7 @@ cat(paste("-", essential_functions), sep = "\n")
 ```{r load-transcript}
 # Load a sample transcript
 transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-  package = "zoomstudentengagement"
+  package = "engager"
 )
 
 # Load the transcript
