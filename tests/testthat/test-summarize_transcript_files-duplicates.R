@@ -12,9 +12,9 @@ test_that("summarize_transcript_files triggers duplicate diagnostics path (quiet
   }
 
   # Temporarily override detect_duplicate_transcripts
-  orig <- zoomstudentengagement::detect_duplicate_transcripts
-  assignInNamespace("detect_duplicate_transcripts", stub_detect, ns = "zoomstudentengagement")
-  on.exit(assignInNamespace("detect_duplicate_transcripts", orig, ns = "zoomstudentengagement"))
+  orig <- engager::detect_duplicate_transcripts
+assignInNamespace("detect_duplicate_transcripts", stub_detect, ns = "engager")
+on.exit(assignInNamespace("detect_duplicate_transcripts", orig, ns = "engager"))
 
   # Create a fake transcripts folder to pass folder existence check
   dir.create("test_transcripts", showWarnings = FALSE)

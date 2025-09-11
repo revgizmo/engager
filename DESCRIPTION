@@ -1,6 +1,6 @@
-Package: zoomstudentengagement
+Package: engager
 Type: Package
-Title: Zoom Student Engagement
+Title: engager: Analyze Student Engagement from Zoom Transcripts
 Version: 1.0.0
 Author: Conor Healy
 Maintainer: Conor Healy <conorhealy@berkeley.edu>
@@ -38,5 +38,7 @@ Suggests:
     devtools
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+# TODO: update after repo rename
 URL: https://github.com/revgizmo/zoomstudentengagement
+# TODO: update after repo rename
 BugReports: https://github.com/revgizmo/zoomstudentengagement/issues

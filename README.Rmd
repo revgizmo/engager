@@ -18,7 +18,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-# zoomstudentengagement
+# engager
+
+**Note:** Renamed from `zoomstudentengagement` to `engager` (no API changes).
 
 <!-- badges: start -->
 [![coverage](https://img.shields.io/github/actions/workflow/status/revgizmo/zoomstudentengagement/coverage.yaml?branch=main&label=coverage)](https://github.com/revgizmo/zoomstudentengagement/actions/workflows/coverage.yaml)
@@ -64,12 +66,12 @@ cd zoomstudentengagement
 ### 5-minute whole-game example
 
 ```{r quick-whole-game}
-library(zoomstudentengagement)
+library(engager)
 
 # 1) Compute metrics for a single transcript
 transcript_file <- system.file(
   "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-  package = "zoomstudentengagement"
+  package = "engager"
 )
 metrics <- summarize_transcript_metrics(transcript_file_path = transcript_file)
 
@@ -85,12 +87,12 @@ invisible(write_metrics(metrics, what = "engagement", path = "engagement_metrics
 ### Basic Example
 
 ```{r quick-example}
-library(zoomstudentengagement)
+library(engager)
 
 # Load and process a transcript
 transcript_file <- system.file(
   "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-  package = "zoomstudentengagement"
+  package = "engager"
 )
 
 # Calculate engagement metrics
@@ -116,7 +118,7 @@ For detailed workflows and examples, see the package vignettes:
 
 ## 🎯 What the Package Does
 
-The `zoomstudentengagement` package provides tools for:
+The `engager` package provides tools for:
 
 1. **Loading and Processing Zoom Transcripts**: Convert Zoom .transcript.vtt files into analyzable data
 2. **Calculating Engagement Metrics**: Measure participation by speaker/student
@@ -154,7 +156,7 @@ Most functions are quiet by default to keep examples/tests clean. You can enable
 
 ```r
 # Enable package-wide diagnostics
-options(zoomstudentengagement.verbose = TRUE)
+options(engager.verbose = TRUE)
 
 # Or enable per-call diagnostics where supported
 load_zoom_recorded_sessions_list(
@@ -164,7 +166,7 @@ load_zoom_recorded_sessions_list(
 )
 
 # Turn diagnostics back off
-options(zoomstudentengagement.verbose = FALSE)
+options(engager.verbose = FALSE)
 ```
 
 Interactive prompts (e.g., in `create_session_mapping()` when assigning unmatched recordings) are only shown in interactive sessions. In non-interactive runs (e.g., CI), prompts are suppressed and a quiet fallback is used.
@@ -183,14 +185,14 @@ See also: `CONTRIBUTING.md` Diagnostic Output Policy.
 ## 🔒 Privacy Defaults
 
 This package is privacy-first by default. On load, it sets the global option
-`zoomstudentengagement.privacy_level` to `"mask"` (unless you set it yourself).
+`engager.privacy_level` to `"mask"` (unless you set it yourself).
 This means identifiers like names and student IDs are masked to labels such as
 `Student 01` in summaries, plots, and writers.
 
 To change behavior temporarily (not recommended for student data):
 
 ```r
-library(zoomstudentengagement)
+library(engager)
 set_privacy_defaults("none")  # will emit a warning
 # ... analysis that may include identifiable outputs ...
 set_privacy_defaults("mask")  # restore safe default

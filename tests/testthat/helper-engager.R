@@ -1,4 +1,4 @@
-library(zoomstudentengagement)
+library(engager)
 library(testthat)
 
 # # Create sample transcript data for testing

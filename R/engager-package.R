@@ -1,4 +1,4 @@
-#' Zoom Student Engagement Analysis Package
+#' engager: Student Engagement Analysis Package
 #'
 #' @title Analyze Student Engagement from Zoom Transcripts
 #' @description A comprehensive R package for analyzing student engagement and participation equity from Zoom meeting
@@ -6,9 +6,7 @@
 #' calculating engagement metrics, and generating privacy-aware visualizations and reports.
 #'
 #' @details
-#' The zoomstudentengagement package is designed for educational researchers and instructors who want to analyze student
-#' participation patterns in online learning environments. The package prioritizes privacy and ethical considerations,
-#' with built-in data anonymization features and FERPA compliance tools.
+#' The engager package is designed for educational researchers and instructors who want to analyze student participation patterns in online learning environments. The package prioritizes privacy and ethical considerations, with built-in data anonymization features and FERPA compliance tools.
 #'
 #' ## Key Features
 #'
@@ -40,7 +38,7 @@
 #'
 #' ```r
 #' # Load the package
-#' library(zoomstudentengagement)
+#' library(engager)
 #'
 #' # Set privacy defaults (recommended)
 #' set_privacy_defaults(privacy_level = "mask")
@@ -94,7 +92,7 @@
 #' }
 #'
 #' @docType package
-#' @name zoomstudentengagement
+#' @name engager
 #' @keywords internal
 "_PACKAGE"
 
@@ -182,12 +180,12 @@ NULL
 #' @keywords internal
 .onLoad <- function(libname, pkgname) {
   # Set privacy option to mask by default if user has not set it
-  current <- getOption("zoomstudentengagement.privacy_level", default = NULL)
+  current <- getOption("engager.privacy_level", default = NULL)
   if (is.null(current)) {
-    options(zoomstudentengagement.privacy_level = "mask")
+    options(engager.privacy_level = "mask")
   }
   # Ensure verbose option is initialized to FALSE if not set
-  if (is.null(getOption("zoomstudentengagement.verbose", default = NULL))) {
-    options(zoomstudentengagement.verbose = FALSE)
+  if (is.null(getOption("engager.verbose", default = NULL))) {
+    options(engager.verbose = FALSE)
   }
 }
