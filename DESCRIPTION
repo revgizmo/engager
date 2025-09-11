@@ -38,7 +38,5 @@ Suggests:
     devtools
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-# TODO: update after repo rename
 URL: https://github.com/revgizmo/zoomstudentengagement
-# TODO: update after repo rename
 BugReports: https://github.com/revgizmo/zoomstudentengagement/issues
