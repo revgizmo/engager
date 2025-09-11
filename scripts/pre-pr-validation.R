@@ -152,7 +152,7 @@ validation_status$function_signatures <- show_progress(
     devtools::load_all()
     
     # Get only exported symbols from this package, not imported ones
-    exported_functions <- getNamespaceExports("zoomstudentengagement")
+    exported_functions <- getNamespaceExports("engager")
     
     # Check for common issues
     issues_found <- FALSE
@@ -173,7 +173,7 @@ validation_status$function_signatures <- show_progress(
       if (func_name %in% ignore_functions) next
       
       tryCatch({
-        func <- get(func_name, envir = asNamespace("zoomstudentengagement"))
+        func <- get(func_name, envir = asNamespace("engager"))
         
         # Check if it's a function
         if (!is.function(func)) next
@@ -219,12 +219,12 @@ validation_status$data_validation <- show_progress(
     devtools::load_all()
     
     # Test transcript loading
-    sample_transcript <- system.file("extdata", "transcripts", "sample_transcript.vtt", package = "zoomstudentengagement")
+    sample_transcript <- system.file("extdata", "transcripts", "sample_transcript.vtt", package = "engager")
     if (file.exists(sample_transcript)) {
       cat("   ✅ Sample transcript data found\n")
     } else {
       # Check for any transcript files
-      transcript_dir <- system.file("extdata", "transcripts", package = "zoomstudentengagement")
+      transcript_dir <- system.file("extdata", "transcripts", package = "engager")
       if (dir.exists(transcript_dir)) {
         transcript_files <- list.files(transcript_dir, pattern = "\\.(vtt|csv|txt)$")
         if (length(transcript_files) > 0) {
@@ -238,7 +238,7 @@ validation_status$data_validation <- show_progress(
     }
     
     # Test roster loading
-    sample_roster <- system.file("extdata", "roster.csv", package = "zoomstudentengagement")
+    sample_roster <- system.file("extdata", "roster.csv", package = "engager")
     if (file.exists(sample_roster)) {
       roster_data <- utils::read.csv(sample_roster)
       if (nrow(roster_data) == 0) {
@@ -496,7 +496,7 @@ validation_status$package_check <- show_progress(
     cat("   ✅ Package loads successfully\n")
     
     # Check namespace
-    ns <- getNamespace("zoomstudentengagement")
+    ns <- getNamespace("engager")
     cat("   ✅ Namespace loaded correctly\n")
     
     # Check for obvious issues
