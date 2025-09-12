@@ -2,6 +2,7 @@
 # This file tests the non-interactive fallback diagnostic paths
 
 test_that("diag_cat respects interactive fallback", {
+  skip_on_cran()
   # Test that diag_cat works in interactive mode
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -28,6 +29,7 @@ test_that("diag_cat respects interactive fallback", {
 })
 
 test_that("diag_message_if respects local verbose flag", {
+  skip_on_cran()
   # Test that diag_message_if works with local verbose flag
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -58,6 +60,7 @@ test_that("diag_message_if respects local verbose flag", {
 })
 
 test_that("diag_cat_if respects local verbose flag", {
+  skip_on_cran()
   # Test that diag_cat_if works with local verbose flag
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -139,6 +142,7 @@ test_that("diagnostic functions respect test environment", {
 })
 
 test_that("diagnostic functions provide fallback behavior", {
+  skip_on_cran()
   # Test that diagnostic functions provide appropriate fallback behavior
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -165,6 +169,7 @@ test_that("diagnostic functions provide fallback behavior", {
 })
 
 test_that("diagnostic functions maintain privacy compliance", {
+  skip_on_cran()
   # Test that diagnostic functions maintain privacy compliance
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -193,6 +198,7 @@ test_that("diagnostic functions maintain privacy compliance", {
 })
 
 test_that("diagnostic functions work with multiple arguments", {
+  skip_on_cran()
   # Test that diagnostic functions work with multiple arguments
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)

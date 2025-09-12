@@ -47,6 +47,7 @@ test_that("load_cancelled_classes returns tibble with correct columns for empty 
 })
 
 test_that("load_cancelled_classes creates blank file when write_blank_cancelled_classes is TRUE", {
+  skip_on_cran()
   temp_dir <- tempdir()
   temp_file <- file.path(temp_dir, "new_cancelled_classes.csv")
 

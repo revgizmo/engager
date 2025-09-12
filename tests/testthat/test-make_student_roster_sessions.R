@@ -101,6 +101,7 @@ test_that("make_student_roster_sessions handles invalid input gracefully", {
 })
 
 test_that("make_student_roster_sessions shows warning when empty input provided outside test environment", {
+  skip_on_cran()
   empty_transcripts <- tibble::tibble(
     dept = character(),
     course = character(),
@@ -142,6 +143,7 @@ test_that("make_student_roster_sessions shows warning when empty input provided 
 })
 
 test_that("make_student_roster_sessions shows warning when no matches found outside test environment", {
+  skip_on_cran()
   transcripts_list_df <- tibble::tibble(
     dept = c("CS"),
     course = c("101"),

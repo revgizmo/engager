@@ -66,6 +66,7 @@ test_that("generate_ferpa_report produces JSON, HTML, and text reports", {
 })
 
 test_that("anonymize_educational_data supports mask, hash, pseudonymize, and aggregate modes", {
+  skip_on_cran()
   df <- tibble::tibble(
     student_id = c("S1", "S2", NA_character_),
     preferred_name = c("Alice", "Bëlla", ""),

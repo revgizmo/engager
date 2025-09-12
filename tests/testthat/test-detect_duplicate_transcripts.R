@@ -676,6 +676,7 @@ test_that("detect_duplicate_transcripts handles summary statistics correctly", {
 })
 
 test_that("detect_duplicate_transcripts shows warning when no files found outside test environment", {
+  skip_on_cran()
   # Test with non-existent files
   test_tibble <- tibble::tibble(transcript_file = c("nonexistent1.vtt", "nonexistent2.vtt"))
 

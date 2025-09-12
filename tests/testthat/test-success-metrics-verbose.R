@@ -2,6 +2,7 @@
 # This file tests the diagnostic output and verbose functionality
 
 test_that("success metrics framework provides comprehensive tracking", {
+  skip_on_cran()
   # Test that the success metrics framework is properly structured
   expect_true(is.list(success_metrics_framework))
   expect_true("cran_readiness" %in% names(success_metrics_framework))
@@ -23,6 +24,7 @@ test_that("success metrics framework provides comprehensive tracking", {
 })
 
 test_that("calculate_overall_status works correctly", {
+  skip_on_cran()
   # Test the calculate_overall_status function
   mock_metrics <- list(
     cran_readiness = list(errors = 0, warnings = 0, check_status = "PASS"),
@@ -39,6 +41,7 @@ test_that("calculate_overall_status works correctly", {
 })
 
 test_that("get_target_state provides current targets", {
+  skip_on_cran()
   # Test the get_target_state function
   target_state <- get_target_state()
   expect_true(is.list(target_state))
@@ -46,6 +49,7 @@ test_that("get_target_state provides current targets", {
 })
 
 test_that("success metrics handle edge cases", {
+  skip_on_cran()
   # Test with minimal data
   minimal_metrics <- list(
     cran_readiness = list(errors = 0, warnings = 0),

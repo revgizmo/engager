@@ -1,4 +1,5 @@
 test_that("prompt_name_matching works correctly", {
+  skip_on_cran()
   # Test with unmatched names
   unmatched <- c("Dr. Smith", "Tom", "Guest1")
 

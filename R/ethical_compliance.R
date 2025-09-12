@@ -250,7 +250,7 @@ create_ethical_use_report <- function(usage_context = NULL,
     "ETHICAL USE REPORT\n",
     "==================\n\n",
     "Generated: ", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n",
-    "Package: zoomstudentengagement v", utils::packageVersion("zoomstudentengagement"), "\n\n"
+    "Package: engager v", utils::packageVersion("engager"), "\n\n"
   )
 
   # Add institution information

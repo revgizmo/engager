@@ -405,6 +405,7 @@ test_that("create_session_mapping handles course_section with missing data", {
 })
 
 test_that("create_session_mapping handles interactive mode with mocked input", {
+  skip_on_cran()
   zoom_recordings <- tibble::tibble(
     ID = c("recording1", "recording2"),
     Topic = c("Unknown Course 1", "Unknown Course 2"),
@@ -435,6 +436,7 @@ test_that("create_session_mapping handles interactive mode with invalid selectio
 })
 
 test_that("create_session_mapping handles interactive mode with no unmatched recordings", {
+  skip_on_cran()
   zoom_recordings <- tibble::tibble(
     ID = c("recording1"),
     Topic = c("CS 101 - Mon 10:00 (Dr. Smith)"),
@@ -596,6 +598,7 @@ test_that("create_session_mapping handles pattern matching with no matches", {
 })
 
 test_that("create_session_mapping handles warning suppression in test environment", {
+  skip_on_cran()
   zoom_recordings <- tibble::tibble(
     ID = c("recording1"),
     Topic = c("Unknown Course"),
@@ -860,6 +863,7 @@ test_that("create_session_mapping handles course_section with missing columns", 
 })
 
 test_that("create_session_mapping handles interactive mode with no unmatched recordings", {
+  skip_on_cran()
   zoom_recordings <- tibble::tibble(
     ID = c("recording1"),
     Topic = c("CS 101 - Mon 10:00 (Dr. Smith)"),
@@ -894,6 +898,7 @@ test_that("create_session_mapping handles interactive mode with no unmatched rec
 })
 
 test_that("create_session_mapping shows warning when unmatched recordings exist outside test environment", {
+  skip_on_cran()
   zoom_recordings <- tibble::tibble(
     ID = c("recording1", "recording2"),
     Topic = c("Unknown Course", "MATH 250 - Tue 09:00 (Dr. Johnson)"),

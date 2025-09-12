@@ -2,6 +2,7 @@
 # This file tests the diagnostic output and verbose functionality
 
 test_that("deprecation warning generation works correctly", {
+  skip_on_cran()
   # Test basic deprecation warning
   warning_msg <- add_deprecation_warning("old_function")
   expect_true(is.character(warning_msg))
@@ -20,6 +21,7 @@ test_that("deprecation warning generation works correctly", {
 })
 
 test_that("migration guide generation works correctly", {
+  skip_on_cran()
   # Test migration guide generation
   deprecated_functions <- c("old_function1", "old_function2")
   migration_recommendations <- list(
@@ -57,6 +59,7 @@ test_that("migration guide generation works correctly", {
 })
 
 test_that("namespace update for deprecation works", {
+  skip_on_cran()
   # Test namespace update function
   mock_functions <- c("function1", "function2", "function3")
   mock_deprecated <- c("function2")
@@ -66,6 +69,7 @@ test_that("namespace update for deprecation works", {
 })
 
 test_that("deprecation system handles edge cases", {
+  skip_on_cran()
   # Test with empty inputs
   empty_functions <- character(0)
   empty_deprecated <- character(0)

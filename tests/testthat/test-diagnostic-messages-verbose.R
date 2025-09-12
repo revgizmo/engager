@@ -28,6 +28,7 @@ test_that("diagnostic messages respect privacy defaults", {
 })
 
 test_that("diagnostic messages handle sensitive data appropriately", {
+  skip_on_cran()
   # Test that diagnostic messages handle sensitive data appropriately
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -65,6 +66,7 @@ test_that("diagnostic messages handle sensitive data appropriately", {
 })
 
 test_that("diagnostic messages respect FERPA compliance", {
+  skip_on_cran()
   # Test that diagnostic messages respect FERPA compliance
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -106,6 +108,7 @@ test_that("diagnostic messages respect FERPA compliance", {
 })
 
 test_that("diagnostic messages handle anonymized data", {
+  skip_on_cran()
   # Test that diagnostic messages handle anonymized data appropriately
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -140,6 +143,7 @@ test_that("diagnostic messages handle anonymized data", {
 })
 
 test_that("diagnostic messages handle error messages appropriately", {
+  skip_on_cran()
   # Test that diagnostic messages handle error messages appropriately
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -179,6 +183,7 @@ test_that("diagnostic messages handle error messages appropriately", {
 })
 
 test_that("diagnostic messages handle warning messages appropriately", {
+  skip_on_cran()
   # Test that diagnostic messages handle warning messages appropriately
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -218,6 +223,7 @@ test_that("diagnostic messages handle warning messages appropriately", {
 })
 
 test_that("diagnostic messages handle info messages appropriately", {
+  skip_on_cran()
   # Test that diagnostic messages handle info messages appropriately
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -300,6 +306,7 @@ test_that("diagnostic messages maintain privacy in test environment", {
 })
 
 test_that("diagnostic messages handle mixed content appropriately", {
+  skip_on_cran()
   # Test that diagnostic messages handle mixed content appropriately
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)

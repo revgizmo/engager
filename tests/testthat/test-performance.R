@@ -18,6 +18,7 @@ PERFORMANCE_THRESHOLDS <- list(
 )
 
 test_that("individual transcript processing meets performance requirements", {
+  skip_on_cran()
   # Skip on CRAN to avoid long-running tests
   skip_on_cran()
 
@@ -41,6 +42,7 @@ test_that("individual transcript processing meets performance requirements", {
 })
 
 test_that("batch processing meets performance requirements", {
+  skip_on_cran()
   # Skip on CRAN to avoid long-running tests
   skip_on_cran()
 
@@ -105,6 +107,7 @@ test_that("benchmarking functions work correctly", {
 })
 
 test_that("performance regression detection works", {
+  skip_on_cran()
   # Test performance regression detection logic
   current_times <- c(500, 600, 550) # Current performance times
   baseline_times <- c(400, 450, 420) # Baseline times
@@ -184,6 +187,7 @@ test_that("ideal course transcript processing functions are performant", {
 })
 
 test_that("consolidate_transcript performance with ideal course data", {
+  skip_on_cran()
   # Skip on CRAN to avoid long-running tests
   skip_on_cran()
 

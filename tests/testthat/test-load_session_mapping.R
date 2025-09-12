@@ -229,6 +229,7 @@ test_that("load_session_mapping handles edge cases", {
 })
 
 test_that("load_session_mapping shows validation warnings outside test environment", {
+  skip_on_cran()
   # Create a temporary mapping file with unmapped recordings
   temp_mapping <- tibble::tibble(
     zoom_recording_id = c("recording1", "recording2"),

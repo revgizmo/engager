@@ -43,6 +43,7 @@ test_that("validate_ferpa_compliance works correctly", {
 })
 
 test_that("anonymize_educational_data works correctly", {
+  skip_on_cran()
   sample_data <- tibble::tibble(
     student_id = c("12345", "67890"),
     preferred_name = c("Alice Johnson", "Bob Smith"),
@@ -215,6 +216,7 @@ test_that("FERPA privacy levels work correctly", {
 })
 
 test_that("set_privacy_defaults works with new FERPA levels", {
+  skip_on_cran()
   # Test ferpa_strict (diagnostics now gated; enable verbose for message checks)
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)

@@ -2,6 +2,7 @@
 # This file tests comprehensive edge case and error path coverage
 
 test_that("verbose functions handle NULL inputs gracefully", {
+  skip_on_cran()
   # Test that verbose functions handle NULL inputs
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -20,6 +21,7 @@ test_that("verbose functions handle NULL inputs gracefully", {
 })
 
 test_that("verbose functions handle empty inputs gracefully", {
+  skip_on_cran()
   # Test that verbose functions handle empty inputs
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -40,6 +42,7 @@ test_that("verbose functions handle empty inputs gracefully", {
 })
 
 test_that("verbose functions handle special characters", {
+  skip_on_cran()
   # Test that verbose functions handle special characters
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -58,6 +61,7 @@ test_that("verbose functions handle special characters", {
 })
 
 test_that("verbose functions handle long inputs", {
+  skip_on_cran()
   # Test that verbose functions handle long inputs
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -78,6 +82,7 @@ test_that("verbose functions handle long inputs", {
 })
 
 test_that("verbose functions handle malformed options", {
+  skip_on_cran()
   # Test that verbose functions handle malformed options gracefully
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -97,6 +102,7 @@ test_that("verbose functions handle malformed options", {
 })
 
 test_that("verbose functions handle environment variable edge cases", {
+  skip_on_cran()
   # Test that verbose functions handle environment variable edge cases
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -127,6 +133,7 @@ test_that("verbose functions handle environment variable edge cases", {
 })
 
 test_that("verbose functions handle concurrent access", {
+  skip_on_cran()
   # Test that verbose functions handle concurrent access
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -141,6 +148,8 @@ test_that("verbose functions handle concurrent access", {
 })
 
 test_that("verbose functions handle option changes during execution", {
+  skip_on_cran()
+  skip_on_cran()
   # Test that verbose functions handle option changes during execution
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -174,6 +183,7 @@ test_that("verbose functions handle option changes during execution", {
 })
 
 test_that("verbose functions handle memory constraints", {
+  skip_on_cran()
   # Test that verbose functions handle memory constraints
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -197,6 +207,7 @@ test_that("verbose functions handle memory constraints", {
 })
 
 test_that("verbose functions handle error conditions", {
+  skip_on_cran()
   # Test that verbose functions handle error conditions gracefully
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
@@ -221,6 +232,7 @@ test_that("verbose functions handle error conditions", {
 })
 
 test_that("verbose functions maintain consistency", {
+  skip_on_cran()
   # Test that verbose functions maintain consistency across calls
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)

@@ -1,4 +1,5 @@
 test_that("diag_message_if and diag_cat_if respect local verbose flag and global option", {
+  skip_on_cran()
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
 

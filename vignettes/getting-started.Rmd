@@ -165,5 +165,5 @@ For detailed troubleshooting guidance:
 ## Getting Help
 
 - Check the [package documentation](https://revgizmo.github.io/engager/)
-- Review the [PROJECT.md](https://github.com/revgizmo/engager_cursor/blob/main/PROJECT.md) for current development status
-- Report issues on [GitHub](https://github.com/revgizmo/engager_cursor/issues)
+- Review the [PROJECT.md](https://github.com/revgizmo/engager/blob/main/PROJECT.md) for current development status
+- Report issues on [GitHub](https://github.com/revgizmo/engager/issues)

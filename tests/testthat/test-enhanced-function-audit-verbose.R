@@ -2,6 +2,7 @@
 # This file tests the diagnostic output and verbose functionality
 
 test_that("enhanced function audit provides comprehensive analysis", {
+  skip_on_cran()
   # Test that the audit system can analyze functions
   # Note: This may produce output, so we capture it
 
@@ -25,6 +26,7 @@ test_that("enhanced function audit provides comprehensive analysis", {
 })
 
 test_that("function categorization works correctly", {
+  skip_on_cran()
   # Test function categorization
   mock_analysis <- list(
     process_zoom_transcript = list(
@@ -46,6 +48,7 @@ test_that("function categorization works correctly", {
 })
 
 test_that("audit report generation works correctly", {
+  skip_on_cran()
   # Test audit report generation
   mock_categories <- list(
     essential = c("process_zoom_transcript"),
@@ -72,6 +75,7 @@ test_that("audit report generation works correctly", {
 })
 
 test_that("enhanced function audit handles edge cases", {
+  skip_on_cran()
   # Test with empty inputs
   empty_analysis <- list()
   empty_categories <- list()

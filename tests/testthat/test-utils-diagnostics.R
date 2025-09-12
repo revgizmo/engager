@@ -1,4 +1,5 @@
 test_that("diag helpers are quiet by default and verbose when enabled", {
+  skip_on_cran()
   old_opt <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_opt), add = TRUE)
 

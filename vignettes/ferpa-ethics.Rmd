@@ -392,9 +392,9 @@ Ensure data use benefits students:
 ## Resources
 
 ### FERPA Resources
-- [FERPA Regulations](https://www2.ed.gov/policy/gen/guid/fpco/ferpa/index.html)
+- [FERPA Regulations](https://www.ed.gov/policy/gen/guid/fpco/ferpa/index.html)
 - [FERPA Guidance for Educational Institutions](https://studentprivacy.ed.gov/)
-- [FERPA and Research](https://www2.ed.gov/policy/gen/guid/fpco/ferpa/students.html)
+- [FERPA and Research](https://www.ed.gov/policy/gen/guid/fpco/ferpa/students.html)
 
 ### Institutional Resources
 - Contact your institution's FERPA compliance officer

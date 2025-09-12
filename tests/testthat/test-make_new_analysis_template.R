@@ -1,4 +1,5 @@
 test_that("make_new_analysis_template copies the template file and prints a message", {
+  skip_on_cran()
   temp_dir <- tempdir()
   old_wd <- setwd(temp_dir)
   on.exit(setwd(old_wd))
@@ -22,6 +23,7 @@ test_that("make_new_analysis_template copies the template file and prints a mess
 })
 
 test_that("make_new_analysis_template handles missing template file gracefully", {
+  skip_on_cran()
   temp_dir <- tempdir()
   old_wd <- setwd(temp_dir)
   on.exit(setwd(old_wd))

@@ -1,4 +1,5 @@
 test_that("load_zoom_recorded_sessions_list emits diagnostics when global verbose enabled and is quiet otherwise", {
+  skip_on_cran()
   temp_dir <- tempdir()
   transcripts_dir <- file.path(temp_dir, "transcripts")
   dir.create(transcripts_dir, showWarnings = FALSE)

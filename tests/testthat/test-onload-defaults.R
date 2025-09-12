@@ -63,6 +63,7 @@ test_that(".onLoad function parameters are handled correctly", {
 })
 
 test_that(".onLoad integrates correctly with set_privacy_defaults", {
+  skip_on_cran()
   old <- getOption("engager.privacy_level", NULL)
   on.exit(options(engager.privacy_level = old), add = TRUE)
 

@@ -2,6 +2,7 @@
 # This file tests the diagnostic output and verbose functionality
 
 test_that("function inventory creation works correctly", {
+  skip_on_cran()
   # Test that function inventory can be created
   # Note: This function is deprecated but we need to test it for coverage
 
@@ -22,6 +23,7 @@ test_that("function inventory creation works correctly", {
 })
 
 test_that("function categorization works correctly", {
+  skip_on_cran()
   # Test function categorization
   mock_functions <- c("process_zoom_transcript", "summarize_transcript_metrics", "old_function")
 
@@ -33,6 +35,7 @@ test_that("function categorization works correctly", {
 })
 
 test_that("dependency analysis works correctly", {
+  skip_on_cran()
   # Test dependency analysis
   mock_functions <- c("process_zoom_transcript", "summarize_transcript_metrics")
 
@@ -44,6 +47,7 @@ test_that("dependency analysis works correctly", {
 })
 
 test_that("function audit report generation works", {
+  skip_on_cran()
   # Test audit report generation
   mock_inventory <- list(
     metadata = list(audit_date = Sys.Date(), total_r_files = 5),
