@@ -44,8 +44,8 @@ check_result <- function(test_name, result, details = NULL) {
 # Main validation function
 run_pre_pr_validation <- function() {
   log_message("Starting Pre-PR Validation for Background Agent Environment", "INFO")
-  log_message("Package: " %+% PACKAGE_NAME, "INFO")
-  log_message("Target Coverage: " %+% TARGET_COVERAGE %+% "%", "INFO")
+  log_message(paste("Package:", PACKAGE_NAME), "INFO")
+  log_message(paste("Target Coverage:", TARGET_COVERAGE, "%"), "INFO")
   
   results <- list()
   
@@ -233,7 +233,7 @@ run_pre_pr_validation <- function() {
   
   # Summary
   log_message("Validation Complete", "INFO")
-  log_message("=" %+% strrep("=", 50), "INFO")
+  log_message(paste("=", strrep("=", 50)), "INFO")
   
   passed_tests <- sum(unlist(results))
   total_tests <- length(results)
