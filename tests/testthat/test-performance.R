@@ -72,11 +72,8 @@ test_that("memory usage is within acceptable limits", {
 
 test_that("benchmarking functions work correctly", {
   # Test that benchmarking functions can be called
-  expect_true(exists("benchmark_ideal_transcripts"))
-
-  # Test with minimal iterations to avoid long runtime
-  # Skip if microbenchmark causes issues
-  skip_on_cran()
+  # Note: benchmark_ideal_transcripts was removed as it was a development function
+  skip("Benchmarking functions removed as development tools")
 
   # Skip if PREPR_DO_BENCH is not enabled (for pre-PR validation)
   if (Sys.getenv("PREPR_DO_BENCH") != "1") {
