@@ -63,25 +63,39 @@ The package is functionally rich but has a broad public surface (80+ exports), c
 **Functions to Internalize**
 - `add_dead_air_rows`, `consolidate_transcript`, `mask_user_names_by_metric`, `prompt_name_matching`, `write_engagement_metrics`, `plot_users_by_metric`, `plot_users_masked_section_by_metric`, diagnostic helpers (`diag_cat`, `diag_message`).
 
-## 5) Mermaid Function Map
+## 5) Mermaid Function Map (Updated 2025-01-09)
 ```mermaid
 graph TD
-  A[parse_vtt] --> B[process_zoom_transcript]
-  B --> C[summarize_transcript_metrics]
-  C --> D[engagement_summary]
-  D --> E[plot_users]
-  D --> F[write_metrics]
-  B --> G[normalize_speakers]
+  A[load_zoom_transcript] --> B[process_zoom_transcript]
+  B --> C[consolidate_transcript]
+  C --> D[summarize_transcript_metrics]
+  D --> E[analyze_transcripts]
+  E --> F[plot_users]
+  E --> G[write_metrics]
+  
+  H[load_roster] --> I[safe_name_matching_workflow]
+  J[load_session_mapping] --> I
+  I --> K[ensure_privacy]
+  K --> L[privacy_audit]
+  
+  M[validate_schema] --> B
+  N[validate_privacy_compliance] --> K
+  
   subgraph External
-    H[dplyr]
-    I[readr]
-    J[ggplot2]
-    K[hms]
+    O[dplyr]
+    P[readr]
+    Q[ggplot2]
+    R[hms]
+    S[stringr]
   end
-  A --- I
-  B --- K
-  C --- H
-  E --- J
+  
+  A --- P
+  B --- R
+  C --- O
+  D --- O
+  F --- Q
+  H --- P
+  I --- S
 ```
 
 ## 6) Best-Practices Gap Analysis
