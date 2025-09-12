@@ -1,42 +1,47 @@
-name: Performance Tests
+# Performance Tests workflow - DISABLED for CRAN submission
+# This workflow is disabled because:
+# 1. Performance testing is not required for CRAN submission
+# 2. The benchmark script requires devtools::load_all() which installs all dependencies
+# 3. This causes CI timeouts due to heavy dependency compilation
+# 4. Performance testing should be done locally during development
+#
+# To re-enable this workflow for local development:
+# 1. Uncomment the workflow below
+# 2. Run locally: Rscript scripts/benchmark-ideal-transcripts.R
+# 3. Or create a separate development-only workflow
 
-on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  performance:
-    runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        r-version: [4.1, 4.2, 4.3]
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up R
-      uses: r-lib/actions/setup-r@v2
-      with:
-        r-version: ${{ matrix.r-version }}
-    
-    - name: Install system dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
-    
-    - name: Install dependencies
-      run: |
-        Rscript -e "install.packages(c('remotes', 'testthat', 'microbenchmark', 'pryr', 'devtools'))"
-    
-    - name: Run benchmarks
-      run: |
-        Rscript scripts/benchmark-ideal-transcripts.R 3 benchmark_results.rds
-    
-    - name: Upload benchmark results
-      uses: actions/upload-artifact@v4
-      with:
-        name: benchmark-results-${{ matrix.r-version }}
-        path: benchmark_results.rds
+# name: Performance Tests
+# 
+# on:
+#   workflow_dispatch:  # Manual trigger only
+# 
+# jobs:
+#   performance:
+#     runs-on: ubuntu-latest
+#     
+#     steps:
+#     - uses: actions/checkout@v3
+#     
+#     - name: Set up R
+#       uses: r-lib/actions/setup-r@v2
+#       with:
+#         r-version: 4.3
+#     
+#     - name: Install system dependencies
+#       run: |
+#         sudo apt-get update
+#         sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+#     
+#     - name: Install dependencies
+#       run: |
+#         Rscript -e "install.packages(c('remotes', 'testthat', 'microbenchmark', 'pryr', 'devtools'))"
+#     
+#     - name: Run benchmarks
+#       run: |
+#         Rscript scripts/benchmark-ideal-transcripts.R 3 benchmark_results.rds
+#     
+#     - name: Upload benchmark results
+#       uses: actions/upload-artifact@v4
+#       with:
+#         name: benchmark-results
+#         path: benchmark_results.rds
