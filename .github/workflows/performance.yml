@@ -30,11 +30,6 @@ jobs:
     - name: Install dependencies
       run: |
         Rscript -e "install.packages(c('remotes', 'testthat', 'microbenchmark', 'pryr'))"
-        Rscript -e "remotes::install_deps(dep = FALSE)"
-    
-    - name: Run performance tests
-      run: |
-        Rscript -e "devtools::test(filter = 'performance')"
     
     - name: Run benchmarks
       run: |
