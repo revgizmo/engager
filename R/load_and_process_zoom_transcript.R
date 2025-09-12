@@ -45,7 +45,7 @@
 #' \dontrun{
 #' # Load a sample transcript from the package's extdata directory
 #' transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-#'   package = "zoomstudentengagement"
+#'   package = "engager"
 #' )
 #' load_and_process_zoom_transcript(transcript_file_path = transcript_file)
 #' }
@@ -88,7 +88,7 @@ load_and_process_zoom_transcript <- function(transcript_file_path = NULL,
   #
   #   if (file.exists(transcript_file_path)) {
   #
-  #     transcript_df <- zoomstudentengagement::load_zoom_transcript(transcript_file_path) %>%
+  #     transcript_df <- engager::load_zoom_transcript(transcript_file_path) %>%
   #       dplyr::mutate(
   #         begin = dplyr::lag(end, order_by = start, default = hms::hms(0)),
   #         prior_dead_air = start - begin,
@@ -107,12 +107,12 @@ load_and_process_zoom_transcript <- function(transcript_file_path = NULL,
   #
   #     if (consolidate_comments == TRUE) {
   #       transcript_df <- transcript_df %>%
-  #         zoomstudentengagement::consolidate_transcript(., max_pause_sec = max_pause_sec_)
+  #         engager::consolidate_transcript(., max_pause_sec = max_pause_sec_)
   #     }
   #
   #     if (add_dead_air == TRUE) {
   #       transcript_df <- transcript_df %>%
-  #         zoomstudentengagement::add_dead_air_rows(dead_air_name = dead_air_name_)
+  #         engager::add_dead_air_rows(dead_air_name = dead_air_name_)
   #     }
   #
   #     return_df <- transcript_df %>%

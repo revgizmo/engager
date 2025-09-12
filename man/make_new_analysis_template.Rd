@@ -6,8 +6,7 @@
 \usage{
 make_new_analysis_template(
   new_template_file_name = "new_analysis.Rmd",
-  template_file = system.file("new_analysis_template.Rmd", package =
-    "zoomstudentengagement"),
+  template_file = system.file("new_analysis_template.Rmd", package = "engager"),
   verbose = FALSE
 )
 }

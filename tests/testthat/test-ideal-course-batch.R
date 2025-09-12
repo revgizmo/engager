@@ -3,7 +3,7 @@
 # NOTE: These functions are deprecated - tests focus on deprecation behavior
 
 library(testthat)
-library(zoomstudentengagement)
+library(engager)
 
 # Test context
 test_that("process_ideal_course_batch is deprecated and returns appropriate structure", {

@@ -3,10 +3,10 @@
 
 test_that("verbose functions handle NULL inputs gracefully", {
   # Test that verbose functions handle NULL inputs
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   # Test NULL inputs
   expect_error(diag_message(NULL), NA)
@@ -21,10 +21,10 @@ test_that("verbose functions handle NULL inputs gracefully", {
 
 test_that("verbose functions handle empty inputs gracefully", {
   # Test that verbose functions handle empty inputs
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   # Test empty inputs
   expect_error(diag_message(), NA)
@@ -41,10 +41,10 @@ test_that("verbose functions handle empty inputs gracefully", {
 
 test_that("verbose functions handle special characters", {
   # Test that verbose functions handle special characters
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   # Test special characters
   special_chars <- c("!@#$%^&*()", "[]{}|\\", "~`", "äöü", "中文", "🚀")
@@ -59,10 +59,10 @@ test_that("verbose functions handle special characters", {
 
 test_that("verbose functions handle long inputs", {
   # Test that verbose functions handle long inputs
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   # Test long strings
   long_string <- paste(rep("a", 1000), collapse = "")
@@ -79,14 +79,14 @@ test_that("verbose functions handle long inputs", {
 
 test_that("verbose functions handle malformed options", {
   # Test that verbose functions handle malformed options gracefully
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   # Test with malformed option values
   malformed_options <- list(NA, "invalid", 123, c(TRUE, FALSE), list(TRUE))
 
   for (opt in malformed_options) {
-    options(zoomstudentengagement.verbose = opt)
+    options(engager.verbose = opt)
 
     # Should handle malformed options gracefully
     expect_error(diag_message("test"), NA)
@@ -98,8 +98,8 @@ test_that("verbose functions handle malformed options", {
 
 test_that("verbose functions handle environment variable edge cases", {
   # Test that verbose functions handle environment variable edge cases
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   old_testthat <- Sys.getenv("TESTTHAT", unset = NA)
   on.exit(
@@ -118,7 +118,7 @@ test_that("verbose functions handle environment variable edge cases", {
 
   for (testthat_val in malformed_testthat) {
     Sys.setenv(TESTTHAT = testthat_val)
-    options(zoomstudentengagement.verbose = TRUE)
+    options(engager.verbose = TRUE)
 
     # Should handle malformed environment variables gracefully
     expect_error(diag_message("test"), NA)
@@ -128,10 +128,10 @@ test_that("verbose functions handle environment variable edge cases", {
 
 test_that("verbose functions handle concurrent access", {
   # Test that verbose functions handle concurrent access
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   # Test rapid successive calls
   for (i in 1:100) {
@@ -142,11 +142,11 @@ test_that("verbose functions handle concurrent access", {
 
 test_that("verbose functions handle option changes during execution", {
   # Test that verbose functions handle option changes during execution
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
   # Test changing options during execution
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   # Start with quiet mode
   output1 <- capture.output({
@@ -155,7 +155,7 @@ test_that("verbose functions handle option changes during execution", {
   expect_length(output1, 0)
 
   # Change to verbose mode
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   # Should now output
   output2 <- capture.output({
@@ -164,7 +164,7 @@ test_that("verbose functions handle option changes during execution", {
   expect_true(any(grepl("verbose message", output2)))
 
   # Change back to quiet mode
-  options(zoomstudentengagement.verbose = FALSE)
+  options(engager.verbose = FALSE)
 
   # Should be quiet again
   output3 <- capture.output({
@@ -175,10 +175,10 @@ test_that("verbose functions handle option changes during execution", {
 
 test_that("verbose functions handle memory constraints", {
   # Test that verbose functions handle memory constraints
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   # Test with large objects
   large_object <- list(
@@ -198,10 +198,10 @@ test_that("verbose functions handle memory constraints", {
 
 test_that("verbose functions handle error conditions", {
   # Test that verbose functions handle error conditions gracefully
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   # Test with objects that might cause errors when converted to strings
   error_prone_objects <- list(
@@ -222,10 +222,10 @@ test_that("verbose functions handle error conditions", {
 
 test_that("verbose functions maintain consistency", {
   # Test that verbose functions maintain consistency across calls
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
 
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
 
   # Test consistency across multiple calls
   for (i in 1:10) {

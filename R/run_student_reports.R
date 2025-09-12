@@ -30,7 +30,7 @@ run_student_reports <- function(
     trnscrptssssnsmmryfl = "transcripts_session_summary.csv",
     transcripts_summary_file = "transcripts_summary.csv",
     student_summary_report = "Zoom_Student_Engagement_Analysis_student_summary_report.Rmd",
-    student_summary_report_folder = system.file("", package = "zoomstudentengagement"),
+    student_summary_report_folder = system.file("", package = "engager"),
     output_format = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

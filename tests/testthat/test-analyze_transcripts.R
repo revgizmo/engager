@@ -2,7 +2,7 @@
 # Tests the high-level orchestration function for processing transcript files
 
 library(testthat)
-library(zoomstudentengagement)
+library(engager)
 
 # Helper function to create sample transcript files for testing
 create_sample_transcript_files <- function() {
@@ -481,7 +481,7 @@ test_that("analyze_transcripts real-world scenarios", {
     # Use the actual sample transcript from the package
     sample_transcript <- system.file(
       "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-      package = "zoomstudentengagement"
+      package = "engager"
     )
 
     skip_if(sample_transcript == "", "Sample transcript not available")
@@ -515,7 +515,7 @@ test_that("analyze_transcripts real-world scenarios", {
   test_that("analyze_transcripts maintains privacy with real data", {
     sample_transcript <- system.file(
       "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-      package = "zoomstudentengagement"
+      package = "engager"
     )
 
     skip_if(sample_transcript == "", "Sample transcript not available")

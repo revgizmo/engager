@@ -20,7 +20,7 @@
 #' }
 make_new_analysis_template <-
   function(new_template_file_name = "new_analysis.Rmd",
-           template_file = system.file("new_analysis_template.Rmd", package = "zoomstudentengagement"),
+           template_file = system.file("new_analysis_template.Rmd", package = "engager"),
            verbose = FALSE) {
     # copy the files to the new folder
     success <- file.copy(template_file, new_template_file_name, overwrite = TRUE)

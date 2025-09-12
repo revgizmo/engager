@@ -1,10 +1,10 @@
 ---
-title: "Plotting and Analysis with zoomstudentengagement"
-author: "zoomstudentengagement package"
+title: "Plotting and Analysis with engager"
+author: "engager package"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Plotting and Analysis with zoomstudentengagement}
+  %\VignetteIndexEntry{Plotting and Analysis with engager}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -19,14 +19,14 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(zoomstudentengagement)
+library(engager)
 library(dplyr)
 library(ggplot2)
 ```
 
 # Plotting and Analysis
 
-This vignette shows how to create visualizations and analyze student engagement patterns using the `zoomstudentengagement` package.
+This vignette shows how to create visualizations and analyze student engagement patterns using the `engager` package.
 
 ## Preparing Data for Analysis
 

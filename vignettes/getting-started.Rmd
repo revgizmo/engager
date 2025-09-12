@@ -1,10 +1,10 @@
 ---
-title: "Getting Started with zoomstudentengagement"
-author: "zoomstudentengagement package"
+title: "Getting Started with engager"
+author: "engager package"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting Started with zoomstudentengagement}
+  %\VignetteIndexEntry{Getting Started with engager}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -19,21 +19,21 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(zoomstudentengagement)
+library(engager)
 library(dplyr)
 library(ggplot2)
 ```
 
-# Getting Started with zoomstudentengagement
+# Getting Started with engager
 
-The `zoomstudentengagement` package helps instructors analyze student engagement from Zoom transcripts, with a particular focus on participation equity. This vignette will get you started with the basic workflow.
+The `engager` package helps instructors analyze student engagement from Zoom transcripts, with a particular focus on participation equity. This vignette will get you started with the basic workflow.
 
 ## Installation
 
 Install the package from GitHub:
 
 ```{r eval = FALSE}
-devtools::install_github("revgizmo/zoomstudentengagement")
+devtools::install_github("revgizmo/engager")
 ```
 
 ## Quick Start
@@ -44,7 +44,7 @@ Here's a minimal example to get you started:
 # Load a sample transcript
 transcript_file <- system.file(
   "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-  package = "zoomstudentengagement"
+  package = "engager"
 )
 
 # Process the transcript
@@ -70,7 +70,7 @@ cat("FERPA Compliance:", ifelse(compliance_result$compliant, "âœ… Compliant", "â
 
 ## What the Package Does
 
-The `zoomstudentengagement` package provides tools for:
+The `engager` package provides tools for:
 
 1. **Loading and Processing Zoom Transcripts**: Convert Zoom VTT files into analyzable data
 2. **Calculating Engagement Metrics**: Measure participation by speaker/student
@@ -164,6 +164,6 @@ For detailed troubleshooting guidance:
 
 ## Getting Help
 
-- Check the [package documentation](https://revgizmo.github.io/zoomstudentengagement/)
-- Review the [PROJECT.md](https://github.com/revgizmo/zoomstudentengagement_cursor/blob/main/PROJECT.md) for current development status
-- Report issues on [GitHub](https://github.com/revgizmo/zoomstudentengagement_cursor/issues)
+- Check the [package documentation](https://revgizmo.github.io/engager/)
+- Review the [PROJECT.md](https://github.com/revgizmo/engager_cursor/blob/main/PROJECT.md) for current development status
+- Report issues on [GitHub](https://github.com/revgizmo/engager_cursor/issues)

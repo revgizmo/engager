@@ -3,9 +3,9 @@ test_that("prompt_name_matching works correctly", {
   unmatched <- c("Dr. Smith", "Tom", "Guest1")
 
   # Enable verbose diagnostics to capture output
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
-  options(zoomstudentengagement.verbose = TRUE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
+  options(engager.verbose = TRUE)
 
   # Mock the make_blank_section_names_lookup_csv function
   with_mocked_bindings(

@@ -1,6 +1,9 @@
-# zoomstudentengagement News
+# engager News
+
+**Note:** Renamed from `zoomstudentengagement` to `engager` (no API changes).
 
 ## 1.0.1 (Unreleased)
+- **Repository Rename**: Repository renamed from `zoomstudentengagement` to `engager` on GitHub. All URLs and references updated. Package functionality remains unchanged.
 - **Segfault fixes**: Resolved critical segfault issues in R Markdown template rendering and Excel export functionality.
 - **Excel export workaround**: Temporarily disabled openxlsx operations due to segfault issues; `export_ideal_transcripts_excel()` now exports to CSV format with backward compatibility.
 
@@ -18,7 +21,7 @@
 - **Documentation fixes**: Resolved Rd “lost braces” by formatting regex/file patterns with code fencing in roxygen; regenerated man pages.
 - **LICENSE**: Kept CRAN-compliant stub in `LICENSE` and added full MIT text in `LICENSE.md` for GitHub readability.
 - **Parsing hardening**: Stabilized `load_zoom_recorded_sessions_list()` to support named/unnamed regex capture groups; corrected timezone parsing and session end buffer; added tests.
-- **Quiet logs**: Gated verbose diagnostics in `load_zoom_recorded_sessions_list()` behind `options(zoomstudentengagement.verbose)` (default FALSE).
+- **Quiet logs**: Gated verbose diagnostics in `load_zoom_recorded_sessions_list()` behind `options(engager.verbose)` (default FALSE).
 - **Quality gates**: All tests pass; R CMD check: 0 errors / 0 warnings / 0 notes.
 
 - **Plotting refresh**: `plot_users()` now uses bar charts with a minimal theme for clearer comparisons.

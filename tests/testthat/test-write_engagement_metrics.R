@@ -227,7 +227,7 @@ test_that("write_engagement_metrics works with real transcript data", {
   # Use the package's sample transcript file to create realistic metrics
   transcript_file <- system.file(
     "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-    package = "zoomstudentengagement"
+    package = "engager"
   )
 
   if (file.exists(transcript_file)) {

@@ -78,7 +78,7 @@ create_analysis_config <- function(
     scheduled_session_length_hours = 1.5,
     instructor_name = "Conor Healy",
     # File Paths
-    data_folder = system.file("extdata", package = "zoomstudentengagement"),
+    data_folder = system.file("extdata", package = "engager"),
     transcripts_folder = "transcripts",
     roster_file = "roster.csv",
     cancelled_classes_file = "cancelled_classes.csv",
@@ -87,7 +87,7 @@ create_analysis_config <- function(
     transcripts_summary_file = "transcripts_summary.csv",
     # Report Settings
     student_summary_report = "Zoom_Student_Engagement_Analysis_student_summary_report",
-    student_summary_report_folder = system.file("", package = "zoomstudentengagement"),
+    student_summary_report_folder = system.file("", package = "engager"),
     # File Patterns
     topic_split_pattern = paste0(
       "^(?<dept>\\S+) (?<section>\\S+) - ",

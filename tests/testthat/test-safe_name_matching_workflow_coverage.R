@@ -2,7 +2,7 @@
 # Target: Improve coverage from 66.78% to 85%+
 
 library(testthat)
-library(zoomstudentengagement)
+library(engager)
 
 # Test data setup with proper VTT format
 setup_test_data <- function() {

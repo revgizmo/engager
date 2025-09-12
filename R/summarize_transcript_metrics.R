@@ -45,7 +45,7 @@
 #' @examples
 #' # Load a sample transcript from the package's extdata directory
 #' transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-#'   package = "zoomstudentengagement"
+#'   package = "engager"
 #' )
 #' summarize_transcript_metrics(transcript_file_path = transcript_file)
 #'
@@ -67,7 +67,7 @@ summarize_transcript_metrics <- function(transcript_file_path = "",
 
 
   if (file.exists(transcript_file_path)) {
-    transcript_df <- zoomstudentengagement::process_zoom_transcript(
+    transcript_df <- engager::process_zoom_transcript(
       transcript_file_path,
       consolidate_comments = consolidate_comments_,
       max_pause_sec = max_pause_sec_,
@@ -204,6 +204,6 @@ summarize_transcript_metrics <- function(transcript_file_path = "",
     attr(result, "privacy_level") <- getOption("zoomstudentengagement.privacy_level", "mask")
 
     # Apply privacy before returning
-    return(zoomstudentengagement::ensure_privacy(result))
+    return(engager::ensure_privacy(result))
   }
 }

@@ -9,7 +9,7 @@ create_analysis_config(
   semester_start_mdy = "Jan 01, 2024",
   scheduled_session_length_hours = 1.5,
   instructor_name = "Conor Healy",
-  data_folder = system.file("extdata", package = "zoomstudentengagement"),
+  data_folder = system.file("extdata", package = "engager"),
   transcripts_folder = "transcripts",
   roster_file = "roster.csv",
   cancelled_classes_file = "cancelled_classes.csv",
@@ -17,7 +17,7 @@ create_analysis_config(
   trnscrptssssnsmmryfl = "transcripts_session_summary.csv",
   transcripts_summary_file = "transcripts_summary.csv",
   student_summary_report = "Zoom_Student_Engagement_Analysis_student_summary_report",
-  student_summary_report_folder = system.file("", package = "zoomstudentengagement"),
+  student_summary_report_folder = system.file("", package = "engager"),
   topic_split_pattern = paste0("^(?<dept>\\\\S+) (?<section>\\\\S+) - ",
     "(?<day>[A-Za-z]+) (?<time>\\\\S+\\\\s*\\\\S+) (?<instructor>\\\\(.*?\\\\))"),
   zmrcrddsssnscsvnmspttrn =

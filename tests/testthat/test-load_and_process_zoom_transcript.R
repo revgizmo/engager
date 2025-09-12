@@ -114,7 +114,7 @@ test_that("load_and_process_zoom_transcript works with package sample data", {
   # Use the package's sample transcript file
   transcript_file <- system.file(
     "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-    package = "zoomstudentengagement"
+    package = "engager"
   )
 
   if (file.exists(transcript_file)) {

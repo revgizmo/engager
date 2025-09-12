@@ -1,4 +1,4 @@
 library(testthat)
-library(zoomstudentengagement)
+library(engager)
 
-test_check("zoomstudentengagement")
+test_check("engager")

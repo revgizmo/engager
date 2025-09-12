@@ -103,7 +103,7 @@ load_zoom_recorded_sessions_list(
 # Requires a Zoom cloud recordings CSV in the appropriate folder, e.g.:
 # inst/extdata/transcripts/zoomus_recordings__20240124.csv
 load_zoom_recorded_sessions_list(
-  data_folder = system.file("extdata", package = "zoomstudentengagement"),
+  data_folder = system.file("extdata", package = "engager"),
   transcripts_folder = "transcripts"
 )
 }

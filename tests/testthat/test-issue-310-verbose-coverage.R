@@ -23,9 +23,9 @@ test_that("load_zoom_recorded_sessions_list emits diagnostics when global verbos
   writeLines(csv_content, csv_path)
 
   # Quiet by default (no diagnostics emitted)
-  old_opt <- getOption("zoomstudentengagement.verbose", NULL)
-  on.exit(options(zoomstudentengagement.verbose = old_opt), add = TRUE)
-  options(zoomstudentengagement.verbose = FALSE)
+  old_opt <- getOption("engager.verbose", NULL)
+  on.exit(options(engager.verbose = old_opt), add = TRUE)
+  options(engager.verbose = FALSE)
   quiet_msgs <- capture.output(
     {
       invisible(load_zoom_recorded_sessions_list(
@@ -40,7 +40,7 @@ test_that("load_zoom_recorded_sessions_list emits diagnostics when global verbos
   expect_length(quiet_msgs, 0)
 
   # Global verbose emits diagnostics via diag_message()
-  options(zoomstudentengagement.verbose = TRUE)
+  options(engager.verbose = TRUE)
   verbose_msgs <- capture.output(
     {
       invisible(load_zoom_recorded_sessions_list(

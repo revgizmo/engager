@@ -43,7 +43,7 @@ benchmark_ideal_transcripts <- function(iterations = 5,
   )
 
   # Get ideal course transcript paths
-  transcript_dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  transcript_dir <- system.file("extdata", "test_transcripts", package = "engager")
   session_files <- c(
     "ideal_course_session1.vtt",
     "ideal_course_session2.vtt",

@@ -3,6 +3,8 @@ template:
 
 destination: docs
 
+url: https://revgizmo.github.io/engager/
+
 navbar:
   structure:
     left: [reference, articles]

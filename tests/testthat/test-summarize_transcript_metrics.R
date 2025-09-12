@@ -2,7 +2,7 @@
 # NOTE: This function is in scope reduction - tests focus on basic functionality
 
 library(testthat)
-library(zoomstudentengagement)
+library(engager)
 
 # Test data setup
 transcript_df <- tibble::tibble(

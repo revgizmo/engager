@@ -2,7 +2,7 @@
 # NOTE: This function is deprecated - tests focus on deprecation behavior
 
 library(testthat)
-library(zoomstudentengagement)
+library(engager)
 
 # Test data setup
 df_zoom_recorded_sessions <- tibble::tibble(

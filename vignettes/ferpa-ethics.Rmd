@@ -13,7 +13,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 # FERPA Compliance & Ethical Use Guide
 
-This vignette provides comprehensive guidance on using the `zoomstudentengagement` package in compliance with the Family Educational Rights and Privacy Act (FERPA) and ethical best practices for educational data analysis.
+This vignette provides comprehensive guidance on using the `engager` package in compliance with the Family Educational Rights and Privacy Act (FERPA) and ethical best practices for educational data analysis.
 
 ## FERPA Overview
 
@@ -32,10 +32,10 @@ The Family Educational Rights and Privacy Act (FERPA) is a federal law that prot
 The package implements privacy-first defaults to help ensure FERPA compliance:
 
 ```r
-library(zoomstudentengagement)
+library(engager)
 
 # Check current privacy level
-getOption("zoomstudentengagement.privacy_level")
+getOption("engager.privacy_level")
 ```
 
 By default, the package sets privacy level to `"mask"`, which automatically masks personally identifiable information.
@@ -309,7 +309,7 @@ If privacy masking isn't working as expected:
 
 ```r
 # Check current privacy level
-getOption("zoomstudentengagement.privacy_level")
+getOption("engager.privacy_level")
 
 # Reset to default
 set_privacy_defaults("mask")
@@ -403,7 +403,7 @@ Ensure data use benefits students:
 - Attend FERPA training sessions
 
 ### Package Resources
-- Package documentation: `?zoomstudentengagement`
+- Package documentation: `?engager`
 - Privacy functions: `?ensure_privacy`, `?set_privacy_defaults`
 - FERPA functions: `?validate_ferpa_compliance`, `?anonymize_educational_data`
 - Report generation: `?generate_ferpa_report`

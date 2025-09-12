@@ -52,3 +52,4 @@ R CMD check --as-cran --no-manual ./*_*.tar.gz
 - docs/development/ISSUE_509_CONSOLIDATED_PLAN.md
 
 
+
