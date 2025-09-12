@@ -2,13 +2,13 @@
 
 **Note:** Renamed from `zoomstudentengagement` to `engager` (no API changes).
 
-## 1.0.1 (Unreleased)
+## 0.1.1 (Unreleased)
 - **Repository Rename**: Repository renamed from `zoomstudentengagement` to `engager` on GitHub. All URLs and references updated. Package functionality remains unchanged.
 - **Segfault fixes**: Resolved critical segfault issues in R Markdown template rendering and Excel export functionality.
 - **Excel export workaround**: Temporarily disabled openxlsx operations due to segfault issues; `export_ideal_transcripts_excel()` now exports to CSV format with backward compatibility.
 
-## 1.0.0 (2025-08-14)
-- **CRAN Release**: First stable release ready for CRAN submission
+## 0.1.0 (2025-01-02)
+- **CRAN Release**: First release ready for CRAN submission
 - **Comprehensive Refactoring**: Complete code quality overhaul with schema validation and error handling
 - **Privacy Framework**: Enhanced FERPA compliance with privacy-first design and data anonymization
 - **Performance Optimization**: Fixed critical performance issues and added benchmarking infrastructure

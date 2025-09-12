@@ -2,7 +2,7 @@
 
 **Date**: January 2, 2025  
 **Status**: ✅ **COMPLETED - READY FOR CRAN SUBMISSION**  
-**Package**: `engager` v1.0.0  
+**Package**: `engager` v0.1.0  
 **Repository**: https://github.com/revgizmo/engager
 
 ## 📋 **Phase 4 Objectives - ACHIEVED**
@@ -73,7 +73,7 @@ Status: 2 NOTEs
 7. **Clean Build** - Package builds without issues
 
 ### **📦 Package Artifacts Ready**
-- **Source Package**: `engager_1.0.0.tar.gz`
+- **Source Package**: `engager_0.1.0.tar.gz`
 - **Documentation**: Complete roxygen2 docs
 - **Vignettes**: 3 comprehensive vignettes
 - **Tests**: Comprehensive test suite
@@ -83,12 +83,12 @@ Status: 2 NOTEs
 
 ### **1. Submit to CRAN**
 - **URL**: https://cran.r-project.org/submit.html
-- **Package**: Upload `engager_1.0.0.tar.gz`
+- **Package**: Upload `engager_0.1.0.tar.gz`
 - **Form**: Complete submission form with package details
 
 ### **2. Submission Details**
 - **Package Name**: `engager`
-- **Version**: 1.0.0
+- **Version**: 0.1.0
 - **License**: MIT
 - **Maintainer**: Conor Healy <conorhealy@berkeley.edu>
 - **Repository**: https://github.com/revgizmo/engager
@@ -132,4 +132,4 @@ The package maintains all original functionality while meeting CRAN's strict req
 
 ---
 
-**Next Action**: Submit `engager_1.0.0.tar.gz` to CRAN via https://cran.r-project.org/submit.html
+**Next Action**: Submit `engager_0.1.0.tar.gz` to CRAN via https://cran.r-project.org/submit.html
