@@ -31,18 +31,28 @@ This function returns a comprehensive lookup table with metric labels and their
 descriptions, which are used throughout the package for reporting, plotting,
 and documentation purposes.
 }
-\examples{
-# Get the metrics lookup table
-metrics_lookup <- make_metrics_lookup_df()
-print(metrics_lookup)
-
-# Use in plotting functions
-sample <- tibble::tibble(
-  section = c("A", "A"),
-  preferred_name = c("Alice", "Bob"),
-  session_ct = c(3, 5)
-)
-plot_users(sample, metric = "session_ct", metrics_lookup_df = metrics_lookup)
-
-}
+\keyword{"A"),}
+\keyword{"Bob"),}
+\keyword{"session_ct",}
+\keyword{#}
+\keyword{)}
+\keyword{5)}
+\keyword{<-}
+\keyword{=}
+\keyword{Use}
+\keyword{c("A",}
+\keyword{c("Alice",}
+\keyword{c(3,}
+\keyword{functions}
+\keyword{in}
 \keyword{internal}
+\keyword{metric}
+\keyword{metrics_lookup)}
+\keyword{metrics_lookup_df}
+\keyword{plot_users(sample,}
+\keyword{plotting}
+\keyword{preferred_name}
+\keyword{sample}
+\keyword{section}
+\keyword{session_ct}
+\keyword{tibble::tibble(}

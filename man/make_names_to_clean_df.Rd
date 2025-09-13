@@ -31,30 +31,48 @@ If any names except "dead_air", "unknown", or the instructor's name are listed, 
 \item Any guest students, label them as "Guests"
 }
 }
-\examples{
-# Create sample clean_names_df with unmatched students
-sample_clean_names_df <- tibble::tibble(
-  student_id = c("12345", NA, "67890"),
-  preferred_name = c("John Smith", "Unknown Student", "Jane Doe"),
-  transcript_name = c("John Smith", "Unknown Student", "Jane Doe"),
-  n = c(5, 3, 8)
-)
-
-# Find students with transcript recordings but no matching student ID
-make_names_to_clean_df(sample_clean_names_df)
-
-\dontrun{
-# More complex example with larger dataset
-# Create sample clean_names_df with unmatched students
-sample_clean_names_df <- tibble::tibble(
-  student_id = c("12345", NA, "67890"),
-  preferred_name = c("John Smith", "Unknown Student", "Jane Doe"),
-  transcript_name = c("John Smith", "Unknown Student", "Jane Doe"),
-  n = c(5, 3, 8)
-)
-
-# Find students with transcript recordings but no matching student ID
-make_names_to_clean_df(sample_clean_names_df)
-}
-}
+\keyword{"67890"),}
+\keyword{"Jane}
+\keyword{"Unknown}
+\keyword{#}
+\keyword{)}
+\keyword{3,}
+\keyword{8)}
+\keyword{<-}
+\keyword{=}
+\keyword{Create}
+\keyword{Doe"),}
+\keyword{Find}
+\keyword{ID}
+\keyword{More}
+\keyword{NA,}
+\keyword{Smith",}
+\keyword{Student",}
+\keyword{\dontrun{}
+\keyword{but}
+\keyword{c("12345",}
+\keyword{c("John}
+\keyword{c(5,}
+\keyword{clean_names_df}
+\keyword{complex}
+\keyword{dataset}
+\keyword{example}
 \keyword{internal}
+\keyword{larger}
+\keyword{make_names_to_clean_df(sample_clean_names_df)}
+\keyword{matching}
+\keyword{n}
+\keyword{no}
+\keyword{preferred_name}
+\keyword{recordings}
+\keyword{sample}
+\keyword{sample_clean_names_df}
+\keyword{student}
+\keyword{student_id}
+\keyword{students}
+\keyword{tibble::tibble(}
+\keyword{transcript}
+\keyword{transcript_name}
+\keyword{unmatched}
+\keyword{with}
+\keyword{}}

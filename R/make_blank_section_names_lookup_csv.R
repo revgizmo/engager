@@ -22,10 +22,10 @@
 # @export
 #' @keywords deprecated
 #'
-#' @examples
-#' # Create a blank template
-#' lookup_template <- make_blank_section_names_lookup_csv()
-#' print(lookup_template)
+# @examples
+# # Create a blank template
+# lookup_template <- make_blank_section_names_lookup_csv()
+# print(lookup_template)
 #'
 #' # The template can then be filled in and saved as a CSV file
 #' # for use with make_clean_names_df()

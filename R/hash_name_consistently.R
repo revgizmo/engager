@@ -12,15 +12,15 @@
 #' @keywords internal
 # @export
 #'
-#' @examples
-#' # Basic usage
-#' hash_name_consistently(c("John Smith", "J. Smith", "Smith, John"))
-#'
-#' # With normalization (handles variations)
-#' hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = TRUE)
-#'
-#' # Without normalization (exact matching only)
-#' hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = FALSE)
+# @examples
+# # Basic usage
+# hash_name_consistently(c("John Smith", "J. Smith", "Smith, John"))
+#
+# # With normalization (handles variations)
+# hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = TRUE)
+#
+# # Without normalization (exact matching only)
+# hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = FALSE)
 hash_name_consistently <- function(names = NULL,
                                    salt = "zoomstudentengagement",
                                    normalize_names = TRUE) {

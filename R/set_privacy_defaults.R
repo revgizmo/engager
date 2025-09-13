@@ -46,9 +46,13 @@ set_privacy_defaults <- function(privacy_level = c("ferpa_strict", "ferpa_standa
       call. = FALSE
     )
   } else if (identical(privacy_level, "ferpa_strict")) {
-    # FERPA strict mode enabled; maximum privacy protection applied.
+    if (getOption("engager.verbose", FALSE)) {
+      message("FERPA strict mode enabled; maximum privacy protection applied.")
+    }
   } else if (identical(privacy_level, "ferpa_standard")) {
-    # FERPA standard mode enabled; educational compliance protection applied.
+    if (getOption("engager.verbose", FALSE)) {
+      message("FERPA standard mode enabled; educational compliance protection applied.")
+    }
   }
 
   # Validate unmatched names action
@@ -60,8 +64,8 @@ set_privacy_defaults <- function(privacy_level = c("ferpa_strict", "ferpa_standa
 
   # Set global options
   options(
-    zoomstudentengagement.privacy_level = privacy_level,
-    zoomstudentengagement.unmatched_names_action = unmatched_names_action
+    engager.privacy_level = privacy_level,
+    engager.unmatched_names_action = unmatched_names_action
   )
 
   # Return configuration invisibly

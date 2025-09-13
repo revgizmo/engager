@@ -26,10 +26,10 @@
 #' @keywords internal
 # @export
 #'
-#' @examples
-#' # Get the metrics lookup table
-#' metrics_lookup <- make_metrics_lookup_df()
-#' print(metrics_lookup)
+# @examples
+# # Get the metrics lookup table
+# metrics_lookup <- make_metrics_lookup_df()
+# print(metrics_lookup)
 #'
 #' # Use in plotting functions
 #' sample <- tibble::tibble(

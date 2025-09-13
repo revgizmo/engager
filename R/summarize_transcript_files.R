@@ -172,7 +172,7 @@ process_and_return_results <- function(all_results, preserve_metadata, original_
             "Found", nrow(mismatches), "rows where transcript_file from summarize_transcript_metrics",
             "doesn't match the input file_name. This may indicate an issue in the processing pipeline."
           ))
-          if (is_verbose()) {
+          if (getOption("engager.verbose", FALSE)) {
             # paste(
             #   utils::capture.output(utils::str(mismatches[, c("file_name", "transcript_file")])),
             #   collapse = "\n"

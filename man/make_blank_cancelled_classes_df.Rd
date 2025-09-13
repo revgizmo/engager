@@ -17,8 +17,5 @@ Make Cancelled Classes Tibble
 This function creates an empty tibble for recording of cancelled class
 sessions for scheduled classes where a Zoom recording is not expected.
 }
-\examples{
-make_blank_cancelled_classes_df()
-}
 \keyword{deprecated}
 \keyword{internal}

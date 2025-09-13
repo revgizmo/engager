@@ -41,47 +41,78 @@ from the joining of:
 student (\code{roster_sessions}) into a single tibble.
 }
 }
-\examples{
-# Create sample data for demonstration
-sample_transcripts <- tibble::tibble(
-  name = c("John Smith", "Jane Doe"),
-  course_section = c("101.A", "101.B"),
-  course = c(101, 101),
-  section = c("A", "B"),
-  day = c("Monday", "Tuesday"),
-  time = c("10:00", "11:00"),
-  n = c(10, 15),
-  duration = c(300, 450),
-  wordcount = c(500, 750),
-  comments = c("Good", "Excellent"),
-  n_perc = c(0.1, 0.15),
-  duration_perc = c(0.1, 0.15),
-  wordcount_perc = c(0.1, 0.15),
-  wpm = c(100, 100),
-  name_raw = c("John Smith", "Jane Doe"),
-  start_time_local = c("2024-01-01 10:00:00", "2024-01-02 11:00:00"),
-  dept = c("CS", "CS"),
-  session_num = c(1, 1)
-)
-
-sample_roster <- tibble::tibble(
-  first_last = c("John Smith", "Jane Doe"),
-  preferred_name = c("John Smith", "Jane Doe"),
-  course = c("101", "101"),
-  section = c("A", "B"),
-  student_id = c("12345", "67890"),
-  dept = c("CS", "CS"),
-  session_num = c(1, 1),
-  start_time_local = c("2024-01-01 10:00:00", "2024-01-02 11:00:00"),
-  course_section = c("101.A", "101.B")
-)
-
-make_clean_names_df(
-  data_folder = "data",
-  section_names_lookup_file = "section_names_lookup.csv",
-  transcripts_metrics_df = sample_transcripts,
-  roster_sessions = sample_roster
-)
-
-}
+\keyword{"101"),}
+\keyword{"101.B")}
+\keyword{"101.B"),}
+\keyword{"11:00"),}
+\keyword{"2024-01-02}
+\keyword{"67890"),}
+\keyword{"B"),}
+\keyword{"CS"),}
+\keyword{"Excellent"),}
+\keyword{"Jane}
+\keyword{"Tuesday"),}
+\keyword{"data",}
+\keyword{"section_names_lookup.csv",}
+\keyword{)}
+\keyword{0.15),}
+\keyword{1)}
+\keyword{1),}
+\keyword{100),}
+\keyword{101),}
+\keyword{10:00:00",}
+\keyword{11:00:00"),}
+\keyword{15),}
+\keyword{450),}
+\keyword{750),}
+\keyword{<-}
+\keyword{=}
+\keyword{Doe"),}
+\keyword{Smith",}
+\keyword{c("101",}
+\keyword{c("101.A",}
+\keyword{c("10:00",}
+\keyword{c("12345",}
+\keyword{c("2024-01-01}
+\keyword{c("A",}
+\keyword{c("CS",}
+\keyword{c("Good",}
+\keyword{c("John}
+\keyword{c("Monday",}
+\keyword{c(0.1,}
+\keyword{c(1,}
+\keyword{c(10,}
+\keyword{c(100,}
+\keyword{c(101,}
+\keyword{c(300,}
+\keyword{c(500,}
+\keyword{comments}
+\keyword{course}
+\keyword{course_section}
+\keyword{data_folder}
+\keyword{day}
+\keyword{dept}
+\keyword{duration}
+\keyword{duration_perc}
+\keyword{first_last}
 \keyword{internal}
+\keyword{make_clean_names_df(}
+\keyword{n}
+\keyword{n_perc}
+\keyword{name}
+\keyword{name_raw}
+\keyword{preferred_name}
+\keyword{roster_sessions}
+\keyword{sample_roster}
+\keyword{sample_transcripts,}
+\keyword{section}
+\keyword{section_names_lookup_file}
+\keyword{session_num}
+\keyword{start_time_local}
+\keyword{student_id}
+\keyword{tibble::tibble(}
+\keyword{time}
+\keyword{transcripts_metrics_df}
+\keyword{wordcount}
+\keyword{wordcount_perc}
+\keyword{wpm}

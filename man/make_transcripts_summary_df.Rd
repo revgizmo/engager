@@ -20,20 +20,46 @@ This function creates a tibble from summary metrics by student and class
 session (\code{transcripts_session_summary_df}) and summarizes results at the
 level of the class section and preferred student name.
 }
-\examples{
-# Load required packages
-library(dplyr)
-
-# Create a simple sample data frame for testing
-sample_data <- tibble::tibble(
-  section = c("A", "A", "B"),
-  preferred_name = c("John Smith", "Jane Doe", "Bob Wilson"),
-  n = c(5, 3, 2),
-  duration = c(300, 180, 120),
-  wordcount = c(500, 300, 200)
-)
-
-# Test the function with the sample data
-make_transcripts_summary_df(sample_data)
-}
+\keyword{"A",}
+\keyword{"B"),}
+\keyword{"Bob}
+\keyword{"Jane}
+\keyword{#}
+\keyword{)}
+\keyword{120),}
+\keyword{180,}
+\keyword{2),}
+\keyword{200)}
+\keyword{3,}
+\keyword{300,}
+\keyword{<-}
+\keyword{=}
+\keyword{Create}
+\keyword{Doe",}
+\keyword{Smith",}
+\keyword{Test}
+\keyword{Wilson"),}
+\keyword{a}
+\keyword{c("A",}
+\keyword{c("John}
+\keyword{c(300,}
+\keyword{c(5,}
+\keyword{c(500,}
+\keyword{data}
+\keyword{duration}
+\keyword{for}
+\keyword{frame}
+\keyword{function}
 \keyword{internal}
+\keyword{make_transcripts_summary_df(sample_data)}
+\keyword{n}
+\keyword{preferred_name}
+\keyword{sample}
+\keyword{sample_data}
+\keyword{section}
+\keyword{simple}
+\keyword{testing}
+\keyword{the}
+\keyword{tibble::tibble(}
+\keyword{with}
+\keyword{wordcount}

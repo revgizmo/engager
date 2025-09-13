@@ -25,14 +25,4 @@ Creates consistent hashes for names to enable matching while maintaining privacy
 This function normalizes names and generates deterministic hashes that can be
 used for cross-session matching without exposing real names.
 }
-\examples{
-# Basic usage
-hash_name_consistently(c("John Smith", "J. Smith", "Smith, John"))
-
-# With normalization (handles variations)
-hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = TRUE)
-
-# Without normalization (exact matching only)
-hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = FALSE)
-}
 \keyword{internal}

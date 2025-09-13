@@ -24,9 +24,9 @@
 #' @keywords internal
 # @export
 #'
-#' @examples
-#' # Create sample clean_names_df with unmatched students
-#' sample_clean_names_df <- tibble::tibble(
+# @examples
+# # Create sample clean_names_df with unmatched students
+# sample_clean_names_df <- tibble::tibble(
 #'   student_id = c("12345", NA, "67890"),
 #'   preferred_name = c("John Smith", "Unknown Student", "Jane Doe"),
 #'   transcript_name = c("John Smith", "Unknown Student", "Jane Doe"),

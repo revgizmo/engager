@@ -21,10 +21,10 @@
 #' @keywords internal
 # @export
 #'
-#' @examples
-#' # Create sample data
-#' sample_transcript_list <- tibble::tibble(
-#'   name = c("Student A", "Student B", "Student C"),
+# @examples
+# # Create sample data
+# sample_transcript_list <- tibble::tibble(
+#   name = c("Student A", "Student B", "Student C"),
 #'   course_section = c("101.A", "101.A", "101.B"),
 #'   course = c(101, 101, 101),
 #'   section = c("A", "A", "B"),

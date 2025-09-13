@@ -10,8 +10,8 @@
 # @export
 #' @keywords deprecated
 #'
-#' @examples
-#' make_blank_cancelled_classes_df()
+# @examples
+# make_blank_cancelled_classes_df()
 make_blank_cancelled_classes_df <- function() {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

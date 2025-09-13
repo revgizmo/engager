@@ -24,11 +24,10 @@
 #'   customized student names.
 #' @keywords internal
 # @export
-#' @md
 #'
-#' @examples
-#' # Create sample data for demonstration
-#' sample_transcripts <- tibble::tibble(
+# @examples
+# # Create sample data for demonstration
+# sample_transcripts <- tibble::tibble(
 #'   name = c("John Smith", "Jane Doe"),
 #'   course_section = c("101.A", "101.B"),
 #'   course = c(101, 101),
