@@ -10,6 +10,16 @@ calculate_content_similarity(
   names_to_exclude = c("dead_air")
 )
 }
+\arguments{
+\item{transcript1}{First transcript data frame}
+
+\item{transcript2}{Second transcript data frame}
+
+\item{names_to_exclude}{Vector of names to exclude from comparison (default: "dead_air")}
+}
+\value{
+Similarity score between 0 and 1
+}
 \description{
 This function calculates the similarity between two transcript data frames
 based on various metrics including speaker overlap, duration, word count,

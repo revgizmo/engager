@@ -6,6 +6,16 @@
 \usage{
 apply_name_matching(transcript_data, name_lookup, roster_data)
 }
+\arguments{
+\item{transcript_data}{Transcript data to match}
+
+\item{name_lookup}{Name lookup table}
+
+\item{roster_data}{Roster data for matching}
+}
+\value{
+Matched transcript data
+}
 \description{
 Internal function to apply name matching to transcript data.
 }

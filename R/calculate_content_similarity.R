@@ -3,7 +3,11 @@
 #' This function calculates the similarity between two transcript data frames
 #' based on various metrics including speaker overlap, duration, word count,
 #' comment count, and content similarity.
-
+#'
+#' @param transcript1 First transcript data frame
+#' @param transcript2 Second transcript data frame  
+#' @param names_to_exclude Vector of names to exclude from comparison (default: "dead_air")
+#' @return Similarity score between 0 and 1
 calculate_content_similarity <- function(
     transcript1 = NULL,
     transcript2 = NULL,

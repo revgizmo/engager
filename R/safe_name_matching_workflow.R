@@ -393,6 +393,10 @@ find_roster_match <- function(transcript_name, roster_names) {
 #' Internal function to apply name matching to transcript data.
 #'
 #'
+#' @param transcript_data Transcript data to match
+#' @param name_lookup Name lookup table
+#' @param roster_data Roster data for matching
+#' @return Matched transcript data
 apply_name_matching <- function(transcript_data, name_lookup, roster_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
