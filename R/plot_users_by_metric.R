@@ -13,7 +13,7 @@
 #'   Defaults to 'preferred_name'
 #'
 #' @return A ggplot object
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
 plot_users_by_metric <- function(transcripts_summary_df = NULL,
                                  metric = "session_ct",
                                  metrics_lookup_df = make_metrics_lookup_df(),

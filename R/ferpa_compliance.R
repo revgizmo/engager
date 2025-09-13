@@ -320,7 +320,7 @@ apply_hash_anonymization <- function(data, columns_to_anonymize, hash_salt) {
 #'
 #' @return A list containing the compliance report
 #'
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
 #'
 #' @examples
 #' # Generate compliance report

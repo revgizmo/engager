@@ -13,7 +13,7 @@
 #' @param output_format Output format passed to [rmarkdown::render()].
 #'
 #' @return Invisibly, a character vector of generated report paths.
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
 #'
 #' @examples
 #' \dontrun{

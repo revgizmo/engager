@@ -33,7 +33,7 @@ run_student_reports(
 \item{output_format}{Output format passed to \code{\link[rmarkdown:render]{rmarkdown::render()}}.}
 }
 \value{
-Invisibly, a character vector of generated report paths.# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+Invisibly, a character vector of generated report paths.
 }
 \description{
 Render the packaged student summary R Markdown template for each student in

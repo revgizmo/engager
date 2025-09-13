@@ -7,7 +7,7 @@
 #' @param metric Label of the metric to plot. Defaults to 'session_ct'.
 #'
 #' @return A ggplot object.
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
 plot_users_masked_section_by_metric <- function(df = NULL, metric = "session_ct") {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

@@ -12,7 +12,7 @@ plot_users_masked_section_by_metric(df = NULL, metric = "session_ct")
 \item{metric}{Label of the metric to plot. Defaults to 'session_ct'.}
 }
 \value{
-A ggplot object.# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+A ggplot object.
 }
 \description{
 Deprecated: use \code{plot_users(mask_by = 'rank')} instead. Delegates to \code{plot_users()}

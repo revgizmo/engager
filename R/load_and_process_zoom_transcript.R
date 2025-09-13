@@ -39,7 +39,7 @@
 #'
 #' @return A tibble containing the comments from a Zoom recording transcript
 #'
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+#' @export
 #'
 #' @examples
 #' \dontrun{

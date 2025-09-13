@@ -41,7 +41,7 @@ added for dead air. Defaults to 'dead_air'.}
 the transcript \code{name} is \code{NA}. Defaults to 'unknown'.}
 }
 \value{
-A tibble containing the comments from a Zoom recording transcript# @export (REMOVED - deprecated function) (REMOVED - deprecated function)
+A tibble containing the comments from a Zoom recording transcript
 }
 \description{
 \strong{DEPRECATED}: This function is deprecated and will be removed in a future version.
