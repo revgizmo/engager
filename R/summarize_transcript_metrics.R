@@ -37,6 +37,7 @@
 #' )
 #' summarize_transcript_metrics(transcript_file_path = transcript_file)
 #'
+#' @export
 summarize_transcript_metrics <- function(transcript_file_path = "",
                                          names_exclude = c("dead_air"),
                                          consolidate_comments = TRUE,

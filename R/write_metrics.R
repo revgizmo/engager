@@ -4,6 +4,7 @@
 #'
 #'   Parent directories are created if they do not exist.
 #'
+#' @export
 write_metrics <- function(
     data = NULL,
     what = c("engagement", "summary", "session_summary"),

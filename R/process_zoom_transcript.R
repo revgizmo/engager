@@ -36,6 +36,7 @@
 #' )
 #' process_zoom_transcript(transcript_file_path = transcript_file)
 #'
+#' @export
 process_zoom_transcript <- function(transcript_file_path = "",
                                     consolidate_comments = TRUE,
                                     max_pause_sec = 1,

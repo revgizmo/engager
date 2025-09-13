@@ -5,6 +5,8 @@
 #'
 #'   defaults to `engagement_metrics.csv`.
 #'   in-memory masking depends on consumer).
+#'
+#' @export
 analyze_transcripts <- function(
     transcripts_folder = NULL,
     names_to_exclude = c("dead_air"),

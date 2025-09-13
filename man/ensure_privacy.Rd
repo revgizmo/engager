@@ -35,8 +35,7 @@ Defaults to common name/identifier columns.
 Defaults to TRUE for maximum transparency.
 
 structure is preserved with identifying fields masked when appropriate.
-}
-\section{Data frame masking example}{
+
 df <- tibble::tibble(
 section = c("A", "A", "B"),
 preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz"),
@@ -44,4 +43,3 @@ session_ct = c(3, 5, 2)
 )
 ensure_privacy(df)
 }
-

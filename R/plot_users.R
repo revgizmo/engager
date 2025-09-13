@@ -1,7 +1,8 @@
 #' Plot Users
 #'
 #' Unified plotting function for engagement metrics with privacy-aware options.
-
+#'
+#' @export
 plot_users <- function(
     data = NULL,
     metric = "session_ct",
@@ -36,7 +37,7 @@ plot_users <- function(
 
   # Add faceting if requested
   if (facet_by != "none" && facet_by %in% names(data)) {
-    p <- p + ggplot2::facet_wrap(ggplot2::as.formula(paste("~", facet_by)))
+    p <- p + ggplot2::facet_wrap(stats::as.formula(paste("~", facet_by)))
   }
 
   return(p)
@@ -61,10 +62,13 @@ validate_plot_users_inputs <- function(data, metric, student_col) {
 
 # Helper function to apply privacy masking
 apply_privacy_masking <- function(data, privacy_level, student_col, mask_by) {
-  if (privacy_level == "mask") {
-    if (mask_by == "name") {
+  # Ensure privacy_level is a single value
+  privacy_level <- privacy_level[1]
+  
+  if (identical(privacy_level, "mask")) {
+    if (identical(mask_by, "name")) {
       data[[student_col]] <- paste0("Student_", seq_len(nrow(data)))
-    } else if (mask_by == "rank") {
+    } else if (identical(mask_by, "rank")) {
       data[[student_col]] <- paste0("Rank_", seq_len(nrow(data)))
     }
   }

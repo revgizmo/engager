@@ -35,6 +35,8 @@ NULL
 #' validation_result <- validate_ferpa_compliance(sample_data)
 #' print(validation_result$compliant)
 #' print(validation_result$recommendations)
+#'
+#' @export
 validate_ferpa_compliance <- function(data = NULL,
                                       institution_type = c("educational", "research", "mixed"),
                                       check_retention = TRUE,

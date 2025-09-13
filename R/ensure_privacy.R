@@ -22,14 +22,14 @@
 #'
 #'   structure is preserved with identifying fields masked when appropriate.
 #'
-#'
-#' # Data frame masking example
 #' df <- tibble::tibble(
 #'   section = c("A", "A", "B"),
 #'   preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz"),
 #'   session_ct = c(3, 5, 2)
 #' )
 #' ensure_privacy(df)
+#'
+#' @export
 ensure_privacy <- function(x = NULL,
                            privacy_level = getOption(
                              "zoomstudentengagement.privacy_level",

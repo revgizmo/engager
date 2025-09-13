@@ -20,6 +20,7 @@
 #' )
 #' load_zoom_transcript(transcript_file_path = transcript_file)
 #'
+#' @export
 load_zoom_transcript <- function(transcript_file_path = NULL) {
   if (!file.exists(transcript_file_path)) {
     abort_zse("file.exists(transcript_file_path) is not TRUE", class = "zse_input_error")

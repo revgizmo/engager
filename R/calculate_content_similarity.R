@@ -20,14 +20,13 @@ calculate_content_similarity <- function(
 
   # Validate inputs
   if (is.null(transcript1) || is.null(transcript2)) {
-    return(list(
-      similarity_score = 0,
-      speaker_overlap = 0,
-      duration_ratio = 0,
-      word_count_ratio = 0,
-      comment_count_ratio = 0,
-      content_similarity = 0
-    ))
+    return(0)
+  }
+
+  # Check if required columns exist
+  required_cols <- c("name", "duration", "wordcount", "comments")
+  if (!all(required_cols %in% names(transcript1)) || !all(required_cols %in% names(transcript2))) {
+    return(0)
   }
 
   # Filter out excluded names
@@ -53,8 +52,8 @@ calculate_content_similarity <- function(
   word_count_ratio <- min(wordcount1, wordcount2) / max(wordcount1, wordcount2)
 
   # Calculate comment count ratio
-  comments1 <- sum(transcript1$comments, na.rm = TRUE)
-  comments2 <- sum(transcript2$comments, na.rm = TRUE)
+  comments1 <- nrow(transcript1)
+  comments2 <- nrow(transcript2)
   comment_count_ratio <- min(comments1, comments2) / max(comments1, comments2)
 
   # Calculate content similarity (simplified)
@@ -63,12 +62,5 @@ calculate_content_similarity <- function(
   # Overall similarity score
   similarity_score <- content_similarity
 
-  return(list(
-    similarity_score = similarity_score,
-    speaker_overlap = speaker_overlap,
-    duration_ratio = duration_ratio,
-    word_count_ratio = word_count_ratio,
-    comment_count_ratio = comment_count_ratio,
-    content_similarity = content_similarity
-  ))
+  return(similarity_score)
 }
