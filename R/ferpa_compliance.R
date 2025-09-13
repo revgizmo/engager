@@ -4,6 +4,7 @@
 #' These functions help institutions maintain compliance with the Family
 #' Educational Rights and Privacy Act (FERPA) when using this package.
 #'
+#' @importFrom magrittr %>%
 #' @name ferpa_compliance
 NULL
 

@@ -22,6 +22,4 @@ classes. Defaults to 'ccccccccnnnncTTcTTccci'
 creates a blank cancelled classes file. Defaults to FALSE
 
 where a zoom recording is not expected.
-
-load_cancelled_classes()
 }

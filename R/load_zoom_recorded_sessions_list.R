@@ -12,6 +12,8 @@
 #'    (or whatever path you identify in the `data_folder` and
 #'    `transcripts_folder` parameters).
 #'
+#' @importFrom magrittr %>%
+#'
 #' - Trailing commas in CSV headers (common in Zoom exports)
 #' - Multiple recordings of the same session (takes the most recent)
 #' - Timezone handling for session start/end times

@@ -32,56 +32,5 @@ This function creates a tibble from a provided csv file of Zoom recordings.
 (or whatever path you identify in the \code{data_folder} and
 \code{transcripts_folder} parameters).
 }
-\itemize{
-\item Trailing commas in CSV headers (common in Zoom exports)
-\item Multiple recordings of the same session (takes the most recent)
-\item Timezone handling for session start/end times
-\item Department filtering for targeted recordings
-\item Date format variations in Zoom exports
-
-will store the cloud recording csvs
-csvs and extract useful columns. Defaults to
-\code{paste0("^(?<dept>\\\\\\\\S+) (?<course_section>\\\\\\\\S+) - ", "(?<day>[A-Za-z]+) (?<time>\\\\\\\\S+\\\\\\\\s*\\\\\\\\S+) (?<instructor>\\\\\\\\(.*?\\\\\\\\))")}
-(Note: this REGEX pattern is formatted here as paste0() rather than a
-single string to stay beneath the 90 character line limit in the code
-checker. A single string works just as well as this combined one). Note:
-The function now uses a generalized pattern that can handle various course
-naming conventions including \verb{DATASCI 201.006}, \verb{LTF 101}, and
-\verb{MATH 250.001} formats.
-the csv file names from the cloud recording csvs and extract useful
-columns. Defaults to
-\verb{zoomus_recordings__\\\\\\\\d\{8\}(?:\\\\\\\\s+copy\\\\\\\\s*\\\\\\\\d*)?\\\\\\\\.csv}
-names in the cloud recording csvs. Zoom tends to save the file with an
-extra \verb{,} at the end of the header row, causing a null column to be
-imported. Defaults to
-\verb{Topic,ID,Start Time,File Size (MB),File Count,Total Views,Total Downloads,Last Accessed}
-Zoom often captures unwanted recordings, and this is used to filter only
-the targeted ones. This value is compared to the \code{dept} column extracted
-from the \code{Topic} column extracted from cloud recording csvs. Defaults to
-\code{LTF}
-to \verb{Jan 01, 2024}
-in hours. Defaults to \code{1.5}
-
-recording csvs. Returns \code{NULL} if the transcripts folder doesn't exist,
-or an empty tibble with the correct column structure if no matching
-files are found.
 }
 }
-}
-\section{Show what happens when no data files exist (returns empty tibble)}{
-load_zoom_recorded_sessions_list(
-data_folder = "nonexistent_folder",
-transcripts_folder = "transcripts"
-)
-
-\dontrun{
-# Load actual Zoom recordings data (requires data files)
-# Requires a Zoom cloud recordings CSV in the appropriate folder, e.g.:
-# inst/extdata/transcripts/zoomus_recordings__20240124.csv
-load_zoom_recorded_sessions_list(
-  data_folder = system.file("extdata", package = "engager"),
-  transcripts_folder = "transcripts"
-)
-}
-}
-

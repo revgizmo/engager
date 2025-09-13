@@ -10,9 +10,8 @@
 #'
 #'   where a zoom recording is not expected.
 #'
-#' load_cancelled_classes()
-load_cancelled_classes <-
-  function(data_folder = ".",
+#' @importFrom magrittr %>%
+load_cancelled_classes <- function(data_folder = ".",
            cancelled_classes_file = "cancelled_classes.csv",
            cancelled_classes_col_types = "ccccccccnnnncTTcTTccci",
            write_blank_cancelled_classes = FALSE) {
