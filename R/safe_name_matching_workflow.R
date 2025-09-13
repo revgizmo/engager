@@ -51,7 +51,7 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
   )
 
   # Stage 1: Load and process with real names in memory (quiet by default)
-  message("Stage 1: Loading transcript and performing name matching...")
+  # Stage 1: Loading transcript and performing name matching
 
   # Load and validate transcript
   transcript_data <- load_and_validate_transcript(transcript_file_path)
@@ -65,7 +65,7 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
     privacy_level, data_folder, section_names_lookup_file
   )
 
-  message("Name matching workflow completed successfully.")
+  # Name matching workflow completed successfully
 
   # Return processed data
   processed_data
@@ -690,7 +690,7 @@ process_name_matching_workflow <- function(transcript_data, roster_data, name_ma
   }
 
   # Stage 2: Apply privacy masking to outputs (quiet by default)
-  message("Stage 2: Applying privacy masking to outputs...")
+  # Stage 2: Applying privacy masking to outputs
 
   # Process transcript with privacy-aware matching
   processed_data <- process_transcript_with_privacy(

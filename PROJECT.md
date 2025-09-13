@@ -280,9 +280,9 @@ A comprehensive premortem analysis was conducted on Issue #483 (UAT Framework Im
  - **API Consolidation & Privacy Tools**: Unified user-facing APIs with `plot_users()`, `write_metrics()`, and `analyze_transcripts()`; legacy plotting/writing functions now delegate for backward compatibility. Added `privacy_audit()` and provenance attributes on outputs; standardized metric names to `perc_*` with backward-compatible aliases.
  - **CI Enhancements**: Added benchmark workflow with configurable performance budgets; expanded R-CMD-check matrix across OS/R versions.
  - **Traceability Updates**: Filed follow-up issues for hygiene and enforcement: #206 (deprecation badges/timeline), #207 (curate exports), #208 (schema/provenance docs), #209 (benchmark budgets), #210 (edge/error-path tests), #211 (`.Rbuildignore` top-level dirs).
-- **Test Suite**: **2275 tests passing, 0 failures**
+- **Test Suite**: **1785 tests passing, 0 failures**
 - **R CMD Check**: **0 errors, 0 warnings, 2 notes** (future timestamp check: "unable to verify current time"; environment-related and acceptable)  
-- **Test Coverage**: 59.54% (target achieved)
+- **Test Coverage**: 90.48% (target achieved)
 
 ### What Needs Work ❌ (Critical Issues for CRAN)
 - **BLOCKER: CI temporarily disabled; follow temporary self-merge policy**: OPEN ([Issue #406](https://github.com/revgizmo/zoomstudentengagement/issues/406) - Priority: HIGH)
@@ -490,7 +490,7 @@ A comprehensive premortem analysis conducted on 2025-08-04 revealed fundamental 
 
 ### 🎉 **Major Success Achieved**
 The project has made **outstanding progress** toward CRAN submission:
-- **Test Suite**: **2250 tests passing, 0 failures**
+- **Test Suite**: **1785 tests passing, 0 failures**
 - **R CMD Check**: **0 errors, 0 warnings, 2 notes** (excellent progress!)
 - **CRAN Compliance**: All major blockers resolved
 - **Package Status**: Technically sound but has critical privacy/ethical risks
@@ -1347,11 +1347,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
-### All Open Issues (250 Total)
+### All Open Issues (248 Total)
 
-#### High Priority (14 issues)
-- [Issue #501]: UAT Finding: Fix usage section mismatches in function documentation (bug, priority:high, CRAN:submission, area:documentation)
-- [Issue #500]: UAT Finding: Add missing imports to NAMESPACE (bug, priority:high, CRAN:submission, area:core)
+#### High Priority (13 issues)
+- [Issue #520]: feat: Implement formal versioning strategy and branch restructuring for CRAN submission (enhancement, priority:high, CRAN:submission)
 - [Issue #394]: [PRD] Basic UX Simplification (priority:high, CRAN:submission, area:core)
 - [Issue #298]: feat(privacy): name masking helper with docs (priority:high, area:core, privacy)
 - [Issue #293]: test(ingestion): malformed inputs edge cases (priority:high, area:testing, test)
@@ -1427,13 +1426,9 @@ SOFTWARE.
 - [Issue #4]: CRAN Preparation (enhancement, priority:high, priority:low, CRAN:submission, area:infrastructure)
 - [Issue #2]: Documentation Overhaul (documentation, priority:low, area:documentation)
 
-#### Unprioritized (178 issues)
-- [Issue #501]: UAT Finding: Fix usage section mismatches in function documentation (bug, priority:high, CRAN:submission, area:documentation)
-- [Issue #501]: UAT Finding: Fix usage section mismatches in function documentation (bug, priority:high, CRAN:submission, area:documentation)
-- [Issue #501]: UAT Finding: Fix usage section mismatches in function documentation (bug, priority:high, CRAN:submission, area:documentation)
-- [Issue #500]: UAT Finding: Add missing imports to NAMESPACE (bug, priority:high, CRAN:submission, area:core)
-- [Issue #500]: UAT Finding: Add missing imports to NAMESPACE (bug, priority:high, CRAN:submission, area:core)
-- [Issue #500]: UAT Finding: Add missing imports to NAMESPACE (bug, priority:high, CRAN:submission, area:core)
+#### Unprioritized (177 issues)
+- [Issue #520]: feat: Implement formal versioning strategy and branch restructuring for CRAN submission (enhancement, priority:high, CRAN:submission)
+- [Issue #520]: feat: Implement formal versioning strategy and branch restructuring for CRAN submission (enhancement, priority:high, CRAN:submission)
 - [Issue #471]: Performance Benchmarking Implementation - CRAN Readiness Metrics (priority:medium, CRAN:submission, area:infrastructure)
 - [Issue #471]: Performance Benchmarking Implementation - CRAN Readiness Metrics (priority:medium, CRAN:submission, area:infrastructure)
 - [Issue #469]: Final Scope Reduction Optimization - Complete Issue #393 Phase 2 (priority:medium, CRAN:submission, area:core)
@@ -1606,4 +1601,7 @@ SOFTWARE.
 - [Issue #185]: Add Performance tips article (vignette) (docs, vignettes, performance, priority: medium)
 - [Issue #185]: Add Performance tips article (vignette) (docs, vignettes, performance, priority: medium)
 - [Issue #184]: Add README to inst/extdata describing sample files (docs)
+- [Issue #183]: Clarify privacy defaults in README and link FERPA vignette (privacy, docs, readme, priority: high)
+- [Issue #183]: Clarify privacy defaults in README and link FERPA vignette (privacy, docs, readme, priority: high)
+- [Issue #183]: Clarify privacy defaults in README and link FERPA vignette (privacy, docs, readme, priority: high)
 
