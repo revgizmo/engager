@@ -26,7 +26,7 @@ plot_users <- function(
   }
 
   # Create the plot
-  p <- ggplot2::ggplot(data, ggplot2::aes_string(x = student_col, y = metric)) +
+  p <- ggplot2::ggplot(data, ggplot2::aes(x = !!rlang::sym(student_col), y = !!rlang::sym(metric))) +
     ggplot2::geom_col() +
     ggplot2::theme_minimal() +
     ggplot2::labs(

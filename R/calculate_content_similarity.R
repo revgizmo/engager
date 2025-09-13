@@ -71,6 +71,12 @@ calculate_content_similarity <- function(
   # Calculate content similarity (simplified)
   content_similarity <- (speaker_overlap + duration_ratio + word_count_ratio + comment_count_ratio) / 4
 
+  # Special case: if all meaningful metrics are zero, return 0.0
+  # This handles the case where transcripts have no meaningful data
+  if (max_duration == 0 && max_wordcount == 0 && max_comments == 0 && length(common_speakers) == 0) {
+    return(0.0)
+  }
+
   # Overall similarity score
   similarity_score <- content_similarity
 
