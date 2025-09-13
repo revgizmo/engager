@@ -2,10 +2,10 @@
 
 export(analyze_transcripts)
 export(consolidate_transcript)
-export(detect_duplicate_transcripts)
 export(ensure_privacy)
 export(load_zoom_transcript)
 export(plot_users)
+export(privacy_audit)
 export(process_zoom_transcript)
 export(summarize_transcript_files)
 export(summarize_transcript_metrics)

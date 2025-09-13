@@ -6,7 +6,7 @@
 plot_users <- function(
     data = NULL,
     metric = "session_ct",
-    student_col = "name",
+    student_col = NULL,
     facet_by = c("section", "transcript_file", "none"),
     mask_by = c("name", "rank"),
     privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
@@ -14,6 +14,11 @@ plot_users <- function(
   facet_by <- match.arg(facet_by)
   mask_by <- match.arg(mask_by)
 
+  # Auto-detect student column if not provided
+  if (is.null(student_col)) {
+    student_col <- auto_detect_student_column(data)
+  }
+  
   # Validate and prepare data
   validation_result <- validate_plot_users_inputs(data, metric, student_col)
   data <- validation_result$data
@@ -41,6 +46,21 @@ plot_users <- function(
   }
 
   return(p)
+}
+
+# Helper function to auto-detect student column
+auto_detect_student_column <- function(data) {
+  # Common student column names in order of preference
+  student_cols <- c("name", "preferred_name", "student_name", "participant", "user")
+  
+  for (col in student_cols) {
+    if (col %in% names(data)) {
+      return(col)
+    }
+  }
+  
+  # If no common column found, return the first column
+  return(names(data)[1])
 }
 
 # Helper function to validate inputs
