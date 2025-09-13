@@ -49,6 +49,7 @@ ensure_privacy <- function(x = NULL,
     return(result$data)
   }
   id_columns <- result$id_columns
+  privacy_level <- result$privacy_level  # Use scalarized privacy_level
 
   # Only handle tabular data for MVP; return other objects unchanged
   if (!is.data.frame(x)) {
@@ -68,6 +69,20 @@ ensure_privacy <- function(x = NULL,
 
 # Helper function to validate privacy level
 validate_privacy_level <- function(privacy_level) {
+  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
+  # This was causing 100+ test failures and preventing CRAN submission
+  
+  # Validate inputs
+  if (!is.character(privacy_level) || length(privacy_level) == 0) {
+    stop("privacy_level must be a non-empty character vector")
+  }
+  
+  # Handle vector input gracefully
+  if (length(privacy_level) > 1) {
+    privacy_level <- privacy_level[1]
+    warning("privacy_level had length > 1, using first element: ", privacy_level)
+  }
+  
   valid_levels <- c("ferpa_strict", "ferpa_standard", "mask", "none")
   if (!privacy_level %in% valid_levels) {
     stop("Invalid privacy_level. Must be one of: ", paste(valid_levels, collapse = ", "), call. = FALSE)
@@ -76,6 +91,20 @@ validate_privacy_level <- function(privacy_level) {
 
 # Helper function to handle privacy level and get appropriate columns
 handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
+  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
+  # This was causing 100+ test failures and preventing CRAN submission
+  
+  # Validate inputs
+  if (!is.character(privacy_level) || length(privacy_level) == 0) {
+    stop("privacy_level must be a non-empty character vector")
+  }
+  
+  # Handle vector input gracefully
+  if (length(privacy_level) > 1) {
+    privacy_level <- privacy_level[1]
+    warning("privacy_level had length > 1, using first element: ", privacy_level)
+  }
+  
   # If privacy is explicitly disabled, warn and return unmodified
   if (identical(privacy_level, "none")) {
     warning(
@@ -93,7 +122,7 @@ handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
       )
     }
 
-    return(list(early_return = TRUE, data = x, id_columns = NULL))
+    return(list(early_return = TRUE, data = x, id_columns = NULL, privacy_level = privacy_level))
   }
 
   # FERPA strict level - most comprehensive masking
@@ -120,11 +149,25 @@ handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
     )
   }
 
-  list(early_return = FALSE, data = NULL, id_columns = id_columns)
+  list(early_return = FALSE, data = NULL, id_columns = id_columns, privacy_level = privacy_level)
 }
 
 # Helper function to apply privacy masking
 apply_privacy_masking <- function(x, id_columns, privacy_level, audit_log) {
+  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
+  # This was causing 100+ test failures and preventing CRAN submission
+  
+  # Validate inputs
+  if (!is.character(privacy_level) || length(privacy_level) == 0) {
+    stop("privacy_level must be a non-empty character vector")
+  }
+  
+  # Handle vector input gracefully
+  if (length(privacy_level) > 1) {
+    privacy_level <- privacy_level[1]
+    warning("privacy_level had length > 1, using first element: ", privacy_level)
+  }
+  
   # Log privacy operation for audit purposes
   if (audit_log) {
     log_privacy_operation(

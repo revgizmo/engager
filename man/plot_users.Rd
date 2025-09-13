@@ -7,7 +7,7 @@
 plot_users(
   data = NULL,
   metric = "session_ct",
-  student_col = NULL,
+  student_col = "name",
   facet_by = c("section", "transcript_file", "none"),
   mask_by = c("name", "rank"),
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),

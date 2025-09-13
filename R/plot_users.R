@@ -6,7 +6,7 @@
 plot_users <- function(
     data = NULL,
     metric = "session_ct",
-    student_col = NULL,
+    student_col = "name",
     facet_by = c("section", "transcript_file", "none"),
     mask_by = c("name", "rank"),
     privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
@@ -14,11 +14,6 @@ plot_users <- function(
   facet_by <- match.arg(facet_by)
   mask_by <- match.arg(mask_by)
 
-  # Auto-detect student column if not provided
-  if (is.null(student_col)) {
-    student_col <- auto_detect_student_column(data)
-  }
-  
   # Validate and prepare data
   validation_result <- validate_plot_users_inputs(data, metric, student_col)
   data <- validation_result$data
@@ -27,7 +22,7 @@ plot_users <- function(
 
   # Apply privacy masking if needed
   if (privacy_level != "none") {
-    data <- apply_plot_privacy_masking(data, privacy_level, student_col, mask_by)
+    data <- apply_privacy_masking_plot(data, privacy_level, student_col, mask_by)
   }
 
   # Create the plot
@@ -48,35 +43,10 @@ plot_users <- function(
   return(p)
 }
 
-# Helper function to auto-detect student column
-auto_detect_student_column <- function(data) {
-  # Common student column names in order of preference
-  student_cols <- c("name", "preferred_name", "student_name", "participant", "user")
-  
-  for (col in student_cols) {
-    if (col %in% names(data)) {
-      return(col)
-    }
-  }
-  
-  # If no common column found, return the first column
-  return(names(data)[1])
-}
-
 # Helper function to validate inputs
 validate_plot_users_inputs <- function(data, metric, student_col) {
-  if (is.null(data)) {
-    stop("Data must be provided")
-  }
-  
-  # Handle empty data gracefully
-  if (nrow(data) == 0) {
-    # Return empty data with required columns
-    return(list(
-      data = data,
-      metric = metric,
-      student_col = student_col
-    ))
+  if (is.null(data) || nrow(data) == 0) {
+    stop("Data must be provided and non-empty")
   }
 
   if (!metric %in% names(data)) {
@@ -90,15 +60,27 @@ validate_plot_users_inputs <- function(data, metric, student_col) {
   return(list(data = data, metric = metric, student_col = student_col))
 }
 
-# Helper function to apply privacy masking for plots
-apply_plot_privacy_masking <- function(data, privacy_level, student_col, mask_by) {
-  # Ensure privacy_level is a single value
-  privacy_level <- privacy_level[1]
+# Helper function to apply privacy masking
+apply_privacy_masking_plot <- function(data, privacy_level, student_col, mask_by) {
+  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
+  # This was causing 100+ test failures and preventing CRAN submission
   
-  if (identical(privacy_level, "mask")) {
-    if (identical(mask_by, "name")) {
+  # Validate inputs
+  if (!is.character(privacy_level) || length(privacy_level) == 0) {
+    stop("privacy_level must be a non-empty character vector")
+  }
+  
+  # Handle vector input gracefully
+  if (length(privacy_level) > 1) {
+    privacy_level <- privacy_level[1]
+    warning("privacy_level had length > 1, using first element: ", privacy_level)
+  }
+  
+  # Apply masking based on privacy level
+  if (privacy_level == "mask") {
+    if (mask_by == "name") {
       data[[student_col]] <- paste0("Student_", seq_len(nrow(data)))
-    } else if (identical(mask_by, "rank")) {
+    } else if (mask_by == "rank") {
       data[[student_col]] <- paste0("Rank_", seq_len(nrow(data)))
     }
   }
