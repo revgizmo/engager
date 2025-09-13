@@ -46,24 +46,16 @@ set_privacy_defaults <- function(privacy_level = c("ferpa_strict", "ferpa_standa
       call. = FALSE
     )
   } else if (identical(privacy_level, "ferpa_strict")) {
-    diag_message(
-      "FERPA strict mode enabled; maximum privacy protection applied."
-    )
+    # FERPA strict mode enabled; maximum privacy protection applied.
   } else if (identical(privacy_level, "ferpa_standard")) {
-    diag_message(
-      "FERPA standard mode enabled; educational compliance protection applied."
-    )
+    # FERPA standard mode enabled; educational compliance protection applied.
   }
 
   # Validate unmatched names action
   if (identical(unmatched_names_action, "stop")) {
-    diag_message(
-      "Unmatched names action set to 'stop' - maximum privacy protection enabled."
-    )
+    # Unmatched names action set to 'stop' - maximum privacy protection enabled.
   } else if (identical(unmatched_names_action, "warn")) {
-    diag_message(
-      "Unmatched names action set to 'warn' - guided matching enabled."
-    )
+    # Unmatched names action set to 'warn' - guided matching enabled.
   }
 
   # Set global options

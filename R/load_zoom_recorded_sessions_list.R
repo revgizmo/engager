@@ -189,10 +189,10 @@ create_empty_zoom_tibble <- function() {
 
 # Helper function to load and process zoom CSVs
 load_and_process_zoom_csvs <- function(setup_result, verbose) {
-  .verbose <- isTRUE(verbose) || is_verbose()
+  .verbose <- isTRUE(verbose)
   if (.verbose) {
-    diag_message("CSV files to process:")
-    diag_message(paste(setup_result$csv_names, collapse = "\n"))
+    # CSV files to process
+    # paste(setup_result$csv_names, collapse = "\n")
   }
 
   result <- setup_result$csv_names %>%
@@ -216,8 +216,8 @@ load_and_process_zoom_csvs <- function(setup_result, verbose) {
     )
 
   if (.verbose) {
-    diag_message("After reading CSV:")
-    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
+    # After reading CSV
+    # paste(utils::capture.output(utils::str(result)), collapse = "\n")
   }
 
   result
@@ -225,7 +225,7 @@ load_and_process_zoom_csvs <- function(setup_result, verbose) {
 
 # Helper function to aggregate zoom sessions data
 aggregate_zoom_sessions_data <- function(result, verbose) {
-  .verbose <- isTRUE(verbose) || is_verbose()
+  .verbose <- isTRUE(verbose)
 
   # Use base R operations instead of dplyr to avoid segmentation fault
   # Group by the specified columns and take max values
@@ -250,8 +250,8 @@ aggregate_zoom_sessions_data <- function(result, verbose) {
   result$group_id <- NULL # Remove the temporary group_id column
 
   if (.verbose) {
-    diag_message("After summarise:")
-    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
+    # After summarise
+    # paste(utils::capture.output(utils::str(result)), collapse = "\n")
   }
 
   result
@@ -259,7 +259,7 @@ aggregate_zoom_sessions_data <- function(result, verbose) {
 
 # Helper function to parse topic components
 parse_topic_components <- function(result, topic_split_pattern, verbose) {
-  .verbose <- isTRUE(verbose) || is_verbose()
+  .verbose <- isTRUE(verbose)
 
   # Convert named capture groups to plain groups for compatibility if needed
   pattern_plain <- gsub("\\(\\?<[^>]+>", "(", topic_split_pattern, perl = TRUE)
@@ -287,8 +287,8 @@ parse_topic_components <- function(result, topic_split_pattern, verbose) {
   result$section <- suppressWarnings(as.integer(result$section))
 
   if (.verbose) {
-    diag_message("After topic parsing:")
-    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
+    # After topic parsing
+    # paste(utils::capture.output(utils::str(result)), collapse = "\n")
   }
 
   result
@@ -296,13 +296,13 @@ parse_topic_components <- function(result, topic_split_pattern, verbose) {
 
 # Helper function to process session times
 process_session_times <- function(result, scheduled_session_length_hours, verbose) {
-  .verbose <- isTRUE(verbose) || is_verbose()
+  .verbose <- isTRUE(verbose)
 
   # Extract start time values as strings
   start_time_values <- result$`Start Time`
   if (.verbose) {
-    diag_message("Start Time values:")
-    diag_message(paste(start_time_values, collapse = "\n"))
+    # Start Time values
+    # paste(start_time_values, collapse = "\n")
   }
 
   # Parse dates using multiple formats in America/Los_Angeles tz
@@ -319,8 +319,8 @@ process_session_times <- function(result, scheduled_session_length_hours, verbos
     lubridate::dhours(scheduled_session_length_hours) + lubridate::dminutes(30)
 
   if (.verbose) {
-    diag_message("After date parsing:")
-    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
+    # After date parsing
+    # paste(utils::capture.output(utils::str(result)), collapse = "\n")
   }
 
   result
@@ -328,7 +328,7 @@ process_session_times <- function(result, scheduled_session_length_hours, verbos
 
 # Helper function to filter by department
 filter_by_department <- function(result, dept, verbose) {
-  .verbose <- isTRUE(verbose) || is_verbose()
+  .verbose <- isTRUE(verbose)
 
   # Optionally filter rows to those matching department, if provided
   if (!is.null(dept) && nzchar(dept)) {
@@ -336,8 +336,8 @@ filter_by_department <- function(result, dept, verbose) {
   }
 
   if (.verbose) {
-    diag_message("Final result after filtering:")
-    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
+    # Final result after filtering
+    # paste(utils::capture.output(utils::str(result)), collapse = "\n")
   }
 
   result

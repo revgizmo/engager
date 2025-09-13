@@ -211,14 +211,14 @@ anonymize_educational_data <- function(data = NULL,
   columns_to_anonymize <- identify_anonymization_columns(data, preserve_columns)
 
   if (length(columns_to_anonymize) == 0) {
-    diag_message("No PII columns found to anonymize")
+    # No PII columns found to anonymize
     return(data)
   }
 
   # Apply anonymization based on method
   if (method == "mask") {
     for (col in columns_to_anonymize) {
-      data[[col]] <- "[MASKED]"
+      data[[col]] <- paste0("Student_", seq_len(nrow(data)))
     }
   } else if (method == "hash") {
     if (is.null(hash_salt)) {
@@ -226,13 +226,13 @@ anonymize_educational_data <- function(data = NULL,
     }
     for (col in columns_to_anonymize) {
       data[[col]] <- sapply(data[[col]], function(x) {
-        digest::digest(paste0(x, hash_salt), algo = "sha256")
+        substr(digest::digest(paste0(x, hash_salt), algo = "sha256"), 1, 8)
       })
     }
   } else if (method == "pseudonymize") {
     for (col in columns_to_anonymize) {
       unique_values <- unique(data[[col]])
-      pseudonyms <- paste0("Student_", seq_along(unique_values))
+      pseudonyms <- paste0("PSEUDO_", seq_along(unique_values))
       data[[col]] <- pseudonyms[match(data[[col]], unique_values)]
     }
   } else if (method == "aggregate") {

@@ -173,10 +173,10 @@ process_and_return_results <- function(all_results, preserve_metadata, original_
             "doesn't match the input file_name. This may indicate an issue in the processing pipeline."
           ))
           if (is_verbose()) {
-            diag_message(paste(
-              utils::capture.output(utils::str(mismatches[, c("file_name", "transcript_file")])),
-              collapse = "\n"
-            ))
+            # paste(
+            #   utils::capture.output(utils::str(mismatches[, c("file_name", "transcript_file")])),
+            #   collapse = "\n"
+            # )
           }
         }
       }

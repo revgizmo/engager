@@ -70,14 +70,14 @@ prompt_name_matching <- function(unmatched_names = NULL,
 
   # If no unmatched names, return early
   if (length(unmatched_names) == 0) {
-    diag_message("No unmatched names found. Name matching is complete.")
+    # No unmatched names found. Name matching is complete.
     return(invisible(NULL))
   }
 
   # Create data folder if it doesn't exist
   if (!dir.exists(data_folder)) {
     dir.create(data_folder, recursive = TRUE)
-    diag_message("Created data folder: ", data_folder)
+    # Created data folder
   }
 
   # Generate privacy-safe guidance
@@ -88,7 +88,7 @@ prompt_name_matching <- function(unmatched_names = NULL,
   )
 
   # Display guidance to user (quiet by default)
-  diag_cat("\n", guidance, "\n", sep = "")
+  # cat("\n", guidance, "\n", sep = "")
 
   # Create the lookup file using existing function
   lookup_file_path <- file.path(data_folder, section_names_lookup_file)
@@ -99,8 +99,8 @@ prompt_name_matching <- function(unmatched_names = NULL,
   # Save the template to the specified file
   readr::write_csv(lookup_template, lookup_file_path)
 
-  diag_message("\nCreated lookup file: ", lookup_file_path)
-  diag_message("Please edit this file to map the unmatched names, then re-run your analysis.")
+  # Created lookup file
+  # Please edit this file to map the unmatched names, then re-run your analysis.
 
   # Return the file path invisibly
   invisible(lookup_file_path)
