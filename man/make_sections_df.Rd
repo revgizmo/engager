@@ -35,4 +35,5 @@ roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
 make_sections_df(roster_df = roster_df)
 }
 \keyword{deprecated}
+\keyword{internal}
 \keyword{sections}

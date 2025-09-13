@@ -33,4 +33,5 @@ roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
 make_roster_small(roster_df = roster_df)
 }
 \keyword{deprecated}
+\keyword{internal}
 \keyword{roster}

@@ -36,3 +36,4 @@ print(lookup_template)
 
 }
 \keyword{deprecated}
+\keyword{internal}

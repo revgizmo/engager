@@ -90,7 +90,7 @@ process_zoom_transcript <- function(transcript_file_path = "",
     }
 
     if (add_dead_air) {
-      transcript_df <- engager::add_dead_air_rows(transcript_df,
+      transcript_df <- add_dead_air_rows(transcript_df,
         dead_air_name = dead_air_name
       )
     }

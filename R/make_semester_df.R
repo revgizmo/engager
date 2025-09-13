@@ -12,7 +12,8 @@
 #' @return A tibble including number of units, with class start time, end time,
 #'   and duration.
 
-#' @export
+#' @keywords internal
+# @export
 #' @examples
 #' make_semester_df()
 make_semester_df <- function(semester_units = 14,

@@ -18,7 +18,8 @@
 #'     \item{student_id}{Character. Student identification number}
 #'   }
 #'
-#' @export
+#' @keywords internal
+# @export
 #' @keywords deprecated
 #'
 #' @examples

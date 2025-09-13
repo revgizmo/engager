@@ -10,7 +10,8 @@
 #'
 #' @return A tibble that summarizes results at the level of the class section and preferred student name for only the
 #' students enrolled in the class.
-#' @export
+#' @keywords internal
+# @export
 #'
 #' @examples
 #' \dontrun{

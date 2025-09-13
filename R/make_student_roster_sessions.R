@@ -11,7 +11,8 @@
 #'
 #' @return A tibble listing the students enrolled in the class or classes, with rows for each recorded class section for
 #' each student.
-#' @export
+#' @keywords internal
+# @export
 #'
 #' @examples
 #' # Load a sample roster from the package's extdata directory

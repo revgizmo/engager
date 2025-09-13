@@ -21,7 +21,8 @@
 #' @return A tibble containing session details and summary metrics
 #'   by speaker students with transcript recordings but no matching
 #' student id.
-#' @export
+#' @keywords internal
+# @export
 #'
 #' @examples
 #' # Create sample clean_names_df with unmatched students

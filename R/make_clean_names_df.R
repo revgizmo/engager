@@ -22,7 +22,8 @@
 #' @return A tibble containing session details and summary metrics by speaker
 #'   for all class sessions (and placeholders for missing sections), including
 #'   customized student names.
-#' @export
+#' @keywords internal
+# @export
 #' @md
 #'
 #' @examples

@@ -15,7 +15,8 @@
 #'   - course: character
 #'   - section: character
 #'   - n: integer (count of students in each section)
-#' @export
+#' @keywords internal
+# @export
 #' @keywords deprecated
 #'
 #' @examples

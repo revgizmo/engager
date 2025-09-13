@@ -7,7 +7,8 @@
 #' @param transcripts_session_summary_file File name of the csv file. Defaults to 'transcripts_session_summary.csv'
 #'
 #' @return Invisibly returns the written tibble
-#' @export
+#' @keywords internal
+# @export
 write_transcripts_session_summary <-
   function(transcripts_session_summary_df = NULL,
            data_folder = ".",

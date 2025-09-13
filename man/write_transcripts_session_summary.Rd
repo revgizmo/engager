@@ -23,3 +23,4 @@ Invisibly returns the written tibble
 \description{
 Deprecated: use \code{write_metrics(data, what = 'session_summary', path = ...)} instead.
 }
+\keyword{internal}

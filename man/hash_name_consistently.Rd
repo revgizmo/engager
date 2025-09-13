@@ -35,3 +35,4 @@ hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = TRUE)
 # Without normalization (exact matching only)
 hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = FALSE)
 }
+\keyword{internal}

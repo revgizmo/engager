@@ -23,7 +23,8 @@
 #'   \item \code{wpm}: Average words per minute within verbal comments captured by Zoom
 #' }
 #'
-#' @export
+#' @keywords internal
+# @export
 #'
 #' @examples
 #' # Get the metrics lookup table

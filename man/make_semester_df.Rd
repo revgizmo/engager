@@ -31,4 +31,5 @@ to expected number of units, with class start time, end time, and duration.
 \examples{
 make_semester_df()
 }
+\keyword{internal}
 \keyword{semester}

@@ -15,7 +15,8 @@
 #'
 #' @return A tibble containing the comments from a Zoom recording transcript,
 #'   with rows added for dead air.
-#' @export
+#' @keywords internal
+# @export
 #' @keywords deprecated
 #'
 #' @examples

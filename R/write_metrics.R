@@ -36,7 +36,7 @@ write_metrics <- function(
 # Helper function to process data for export
 process_data_for_export <- function(data, privacy_level, comments_format) {
   # Enforce privacy (name masking)
-  export_data <- engager::ensure_privacy(data, privacy_level = privacy_level)
+  export_data <- ensure_privacy(data, privacy_level = privacy_level)
 
   # Handle list columns: specially treat `comments`
   if ("comments" %in% names(export_data) && is.list(export_data$comments)) {

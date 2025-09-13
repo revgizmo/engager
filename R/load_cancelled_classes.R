@@ -36,7 +36,7 @@ load_cancelled_classes <-
     } else {
       # File doesn't exist, handle the situation accordingly
       warning(paste("File does not exist:", cancelled_classes_file_path))
-      data <- engager::make_blank_cancelled_classes_df()
+      data <- make_blank_cancelled_classes_df()
 
       if (write_blank_cancelled_classes && !file.exists(cancelled_classes_file_path)) {
         data %>%

@@ -88,3 +88,4 @@ write_section_names_lookup(
 # Clean up
 unlink(temp_dir, recursive = TRUE)
 }
+\keyword{internal}

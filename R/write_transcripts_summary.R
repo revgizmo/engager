@@ -8,7 +8,8 @@
 #' @param transcripts_summary_file File name of the csv file to write. Defaults to 'transcripts_summary.csv'
 #'
 #' @return Invisibly returns the written tibble
-#' @export
+#' @keywords internal
+# @export
 write_transcripts_summary <-
   function(transcripts_summary_df = NULL,
            data_folder = ".",

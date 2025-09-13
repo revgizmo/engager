@@ -36,3 +36,4 @@ sample_data <- tibble::tibble(
 # Test the function with the sample data
 make_transcripts_summary_df(sample_data)
 }
+\keyword{internal}

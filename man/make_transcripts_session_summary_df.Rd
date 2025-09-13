@@ -40,3 +40,4 @@ sample_data <- tibble::tibble(
 make_transcripts_session_summary_df(sample_data)
 }
 \keyword{deprecated}
+\keyword{internal}

@@ -122,7 +122,7 @@ get_metric_description <- function(metric, metrics_lookup_df) {
     # try to get default without failing if unavailable
     try(
       {
-        metrics_lookup_df <- engager::make_metrics_lookup_df()
+        metrics_lookup_df <- make_metrics_lookup_df()
       },
       silent = TRUE
     )

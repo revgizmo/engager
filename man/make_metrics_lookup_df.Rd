@@ -45,3 +45,4 @@ sample <- tibble::tibble(
 plot_users(sample, metric = "session_ct", metrics_lookup_df = metrics_lookup)
 
 }
+\keyword{internal}

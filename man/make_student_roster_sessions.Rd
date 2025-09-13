@@ -38,3 +38,4 @@ make_student_roster_sessions(
   roster_small_df = make_roster_small(roster_df = roster_df)
 )
 }
+\keyword{internal}

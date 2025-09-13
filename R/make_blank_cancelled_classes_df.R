@@ -6,7 +6,8 @@
 #'
 #' @return An empty tibble for recording of cancelled class sessions for scheduled classes
 #'   where a zoom recording is not expected.
-#' @export
+#' @keywords internal
+# @export
 #' @keywords deprecated
 #'
 #' @examples

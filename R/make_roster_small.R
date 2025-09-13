@@ -15,7 +15,8 @@
 #'
 #' @return A tibble listing the students enrolled in the class or classes with a
 #'   small subset of the roster columns.
-#' @export
+#' @keywords internal
+# @export
 #' @keywords deprecated
 #'
 #' @examples

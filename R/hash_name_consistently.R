@@ -9,7 +9,8 @@
 #' @param normalize_names Logical, whether to normalize names before hashing (default: TRUE)
 #'
 #' @return Character vector of consistent hashes
-#' @export
+#' @keywords internal
+# @export
 #'
 #' @examples
 #' # Basic usage

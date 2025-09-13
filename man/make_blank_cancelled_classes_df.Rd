@@ -21,3 +21,4 @@ sessions for scheduled classes where a Zoom recording is not expected.
 make_blank_cancelled_classes_df()
 }
 \keyword{deprecated}
+\keyword{internal}
