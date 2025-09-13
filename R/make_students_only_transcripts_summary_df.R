@@ -13,10 +13,10 @@
 #' @keywords internal
 # @export
 #'
-#' @examples
-#' \dontrun{
-#' # Create sample transcript list
-#' sample_transcript_list <- tibble::tibble(
+# @examples
+# \dontrun{
+# # Create sample transcript list
+# sample_transcript_list <- tibble::tibble(
 #'   name = c("John Smith", "Jane Doe", "Unknown"),
 #'   course_section = c("101.A", "101.A", "101.A"),
 #'   course = c(101, 101, 101),

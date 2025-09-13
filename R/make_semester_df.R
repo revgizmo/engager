@@ -14,8 +14,8 @@
 
 #' @keywords internal
 # @export
-#' @examples
-#' make_semester_df()
+# @examples
+# make_semester_df()
 make_semester_df <- function(semester_units = 14,
                              class_start_time_gmt = "04:00:00",
                              class_duration_min = 90) {

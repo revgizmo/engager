@@ -25,17 +25,19 @@ This function creates a tibble from a provided tibble students enrolled
 in the class or classes (\code{roster_small_df}) and a tibble of class sessions with corresponding transcript
 files or placeholders for cancelled classes (\code{transcripts_list_df}).
 }
-\examples{
-# Load a sample roster from the package's extdata directory
-roster_file <- system.file("extdata/roster.csv", package = "engager")
-roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
-make_student_roster_sessions(
-  transcripts_list_df = join_transcripts_list(
-    df_zoom_recorded_sessions = load_zoom_recorded_sessions_list(),
-    df_transcript_files = load_transcript_files_list(),
-    df_cancelled_classes = load_cancelled_classes()
-  ),
-  roster_small_df = make_roster_small(roster_df = roster_df)
-)
-}
+\keyword{)}
+\keyword{),}
+\keyword{=}
+\keyword{df_cancelled_classes}
+\keyword{df_transcript_files}
+\keyword{df_zoom_recorded_sessions}
 \keyword{internal}
+\keyword{join_transcripts_list(}
+\keyword{load_cancelled_classes()}
+\keyword{load_transcript_files_list(),}
+\keyword{load_zoom_recorded_sessions_list(),}
+\keyword{make_roster_small(roster_df}
+\keyword{make_student_roster_sessions(}
+\keyword{roster_df)}
+\keyword{roster_small_df}
+\keyword{transcripts_list_df}

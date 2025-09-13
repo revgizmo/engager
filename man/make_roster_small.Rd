@@ -26,12 +26,6 @@ small subset of the roster columns.
 This function creates a tibble that includes rows for each students enrolled
 in the class or classes, with a small subset of the roster columns.
 }
-\examples{
-# Load a sample roster from the package's extdata directory
-roster_file <- system.file("extdata/roster.csv", package = "engager")
-roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
-make_roster_small(roster_df = roster_df)
-}
 \keyword{deprecated}
 \keyword{internal}
 \keyword{roster}

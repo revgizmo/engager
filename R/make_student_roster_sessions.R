@@ -14,10 +14,10 @@
 #' @keywords internal
 # @export
 #'
-#' @examples
-#' # Load a sample roster from the package's extdata directory
-#' roster_file <- system.file("extdata/roster.csv", package = "engager")
-#' roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
+# @examples
+# # Load a sample roster from the package's extdata directory
+# roster_file <- system.file("extdata/roster.csv", package = "engager")
+# roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
 #' make_student_roster_sessions(
 #'   transcripts_list_df = join_transcripts_list(
 #'     df_zoom_recorded_sessions = load_zoom_recorded_sessions_list(),

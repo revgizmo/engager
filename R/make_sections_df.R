@@ -19,10 +19,10 @@
 # @export
 #' @keywords deprecated
 #'
-#' @examples
-#' # Load a sample roster from the package's extdata directory
-#' roster_file <- system.file("extdata/roster.csv", package = "engager")
-#' roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
+# @examples
+# # Load a sample roster from the package's extdata directory
+# roster_file <- system.file("extdata/roster.csv", package = "engager")
+# roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
 #' make_sections_df(roster_df = roster_df)
 make_sections_df <- function(roster_df = NULL) {
   # DEPRECATED: This function will be removed in the next version
