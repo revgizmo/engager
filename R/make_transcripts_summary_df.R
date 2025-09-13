@@ -5,16 +5,11 @@
 #' level of the class section and preferred student name.
 #'
 #'
-#' @param transcripts_session_summary_df a tibble containing session details and
 #'   summary metrics by speaker for all class sessions (and placeholders for
 #'   missing sections), including customized student names, and summarizes
 #'   results at the level of the session and preferred student name.
 #'
-#' @return A tibble that summarizes results at the level of the class section and preferred student name
-#' @keywords internal
-# @export
 #'
-# @examples
 # # Load required packages
 # library(dplyr)
 #'

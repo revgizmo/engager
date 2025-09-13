@@ -13,10 +13,6 @@ apply_name_matching(transcript_data, name_lookup, roster_data)
 
 \item{roster_data}{Data frame containing roster data}
 }
-\value{
-Data frame with matched names
-}
 \description{
 Internal function to apply name matching to transcript data.
 }
-\keyword{internal}

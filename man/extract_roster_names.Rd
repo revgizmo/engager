@@ -9,10 +9,6 @@ extract_roster_names(roster_data)
 \arguments{
 \item{roster_data}{Data frame containing roster data}
 }
-\value{
-Character vector of roster names
-}
 \description{
 Internal function to extract names from roster data.
 }
-\keyword{internal}

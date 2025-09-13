@@ -12,19 +12,14 @@
 #' will be the ending of the last row.
 #'
 #'
-#' @param df A tibble containing the comments from a Zoom recording transcript.
-#' @param max_pause_sec Maximum pause between comments to be consolidated.  If
 #'   the raw comments from the Zoom recording transcript contain 2 consecutive
 #'   comments from the same speaker, and the time between the end of the first
 #'   comment and start of the second comment is less than `max_pause_sec`
 #'   seconds, then the comments will be consolidated.  If the time between the
 #'   comments is larger, they will not be consolidated. Defaults to 1.
 #'
-#' @return A tibble containing consolidated comments from a Zoom recording
 #'   transcript.
-#' @export
 #'
-#' @examples
 #' consolidate_transcript(df = "NULL")
 #'
 consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {

@@ -6,19 +6,12 @@
 #' (`df_transcript_files`), and the list of cancelled classes
 #' (`df_cancelled_classes`) into a single tibble
 #'
-#' @param df_zoom_recorded_sessions A tibble listing the session recordings
 #'   loaded from the cloud recording csvs.
-#' @param df_transcript_files A data.frame listing the transcript files from the
 #'   zoom recordings loaded from the cloud recording csvs and transcripts.
-#' @param df_cancelled_classes A tibble listing the cancelled class sessions for
 #'   scheduled classes where a zoom recording is not expected.
 #'
-#' @return A tibble listing the the class sessions with corresponding transcript
 #'   files or placeholders for cancelled classes.
-#' @export
-#' @keywords deprecated
 #'
-#' @examples
 #' \dontrun{
 #' zoom_recorded_sessions_df <- load_zoom_recorded_sessions_list()
 #' transcript_files_df <- load_transcript_files_list()

@@ -18,10 +18,6 @@ student name.}
 
 \item{transcripts_summary_file}{File name of the csv file to write. Defaults to 'transcripts_summary.csv'}
 }
-\value{
-Invisibly returns the written tibble
-}
 \description{
 Deprecated: use \code{write_metrics(data, what = 'summary', path = ...)} instead.
 }
-\keyword{internal}

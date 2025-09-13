@@ -25,11 +25,9 @@ FERPA requirements.}
 Defaults to common name/identifier columns.}
 
 \item{audit_log}{Whether to log privacy operations for compliance tracking.
-Defaults to TRUE for maximum transparency.}
-}
-\value{
-The object with privacy rules applied. For data frames, the same
-structure is preserved with identifying fields masked when appropriate.
+Defaults to TRUE for maximum transparency.
+
+structure is preserved with identifying fields masked when appropriate.}
 }
 \description{
 Applies privacy rules to objects before they are returned, written, or

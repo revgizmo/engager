@@ -9,10 +9,6 @@ extract_transcript_names(transcript_data)
 \arguments{
 \item{transcript_data}{Data frame containing transcript data}
 }
-\value{
-Character vector of transcript names
-}
 \description{
 Internal function to extract names from transcript data.
 }
-\keyword{internal}

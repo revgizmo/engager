@@ -93,17 +93,14 @@ create_analysis_config(
 
 \item{use_session_mapping}{If TRUE, use session mapping approach instead of regex parsing}
 
-\item{session_mapping_file}{Path to session mapping CSV file (if use_session_mapping = TRUE)}
-}
-\value{
-A list containing the configuration organized into logical groups:
+\item{session_mapping_file}{Path to session mapping CSV file (if use_session_mapping = TRUE)
 \itemize{
 \item course: Course-specific information
 \item paths: File and folder paths
 \item patterns: Regex patterns for file matching and parsing
 \item reports: Report generation settings
 \item analysis: Analysis-specific parameters
-}
+}}
 }
 \description{
 This function creates a validated configuration object for the zoomstudentengagement

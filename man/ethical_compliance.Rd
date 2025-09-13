@@ -8,4 +8,3 @@ Comprehensive ethical compliance tools for educational data analysis.
 These functions ensure the package promotes participation equity rather than
 surveillance and maintains the highest ethical standards for educational research.
 }
-\keyword{internal}

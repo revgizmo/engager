@@ -22,9 +22,6 @@ detect_unmatched_names(
 \code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
 Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
 }
-\value{
-Character vector of unmatched names (real names only if privacy = "none")
-}
 \description{
 Identifies names in transcript data that are not matched against roster data
 or existing name mappings. This function works with real names in memory only

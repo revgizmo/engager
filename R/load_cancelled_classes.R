@@ -3,20 +3,13 @@
 #' This function creates a tibble from a provided csv file of cancelled class
 #' sessions for scheduled classes where a zoom recording is not expected.
 #'
-#' @param data_folder Overall data folder for your recordings and data. Defaults
 #'   to 'data'
-#' @param cancelled_classes_file File name of the csv file of cancelled classes.
 #'   Defaults to 'cancelled_classes.csv'
-#' @param cancelled_classes_col_types column types in the csv file of cancelled
 #'   classes. Defaults to 'ccccccccnnnncTTcTTccci'
-#' @param write_blank_cancelled_classes Logical. If TRUE and the file doesn't exist,
 #'   creates a blank cancelled classes file. Defaults to FALSE
 #'
-#' @return A tibble listing the cancelled class sessions for scheduled classes
 #'   where a zoom recording is not expected.
-#' @export
 #'
-#' @examples
 #' load_cancelled_classes()
 load_cancelled_classes <-
   function(data_folder = ".",

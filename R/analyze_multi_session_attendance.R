@@ -3,24 +3,15 @@
 #' Analyzes attendance patterns across multiple Zoom sessions, tracking who attended
 #' which sessions and identifying participation patterns while maintaining privacy compliance.
 #'
-#' @param transcript_files Character vector of transcript file paths
-#' @param roster_data Data frame containing student roster information
-#' @param data_folder Path to the data folder containing transcripts
-#' @param transcripts_folder Name of the transcripts subfolder (default: "transcripts")
-#' @param unmatched_names_action Action for unmatched names: "stop" (default) or "warn"
-#' @param privacy_level Privacy level for output masking: "ferpa_strict",
 #'   "ferpa_standard", "mask", "none"
-#' @param min_attendance_threshold Minimum attendance percentage to be considered a
 #'   "consistent attendee" (default: 0.5)
 #'
-#' @return A list containing:
 #'   - `attendance_matrix`: Data frame with participants as rows and sessions as columns
 #'   - `attendance_summary`: Summary statistics for each participant
 #'   - `session_summary`: Summary statistics for each session
 #'   - `participation_patterns`: Analysis of participation patterns
 #'   - `privacy_compliant`: Boolean indicating if all outputs maintain privacy
 #'
-#' @examples
 #' \dontrun{
 #' # Analyze attendance across multiple sessions
 #' transcript_files <- c("session1.vtt", "session2.vtt", "session3.vtt")
@@ -37,7 +28,6 @@
 #' print(results$attendance_summary)
 #' }
 #'
-#' @export
 analyze_multi_session_attendance <- function(
     transcript_files = NULL,
     roster_data = NULL,
@@ -220,19 +210,13 @@ analyze_multi_session_attendance <- function(
 #'
 #' Creates a comprehensive report of multi-session attendance analysis.
 #'
-#' @param analysis_results Results from `analyze_multi_session_attendance()`
-#' @param output_file Path to save the report (optional)
-#' @param include_charts Whether to include attendance charts (requires ggplot2)
 #'
-#' @return Character vector containing the report content
 #'
-#' @examples
 #' \dontrun{
 #' results <- analyze_multi_session_attendance(transcript_files, roster_data)
 #' report <- generate_attendance_report(results, "attendance_report.md")
 #' }
 #'
-#' @export
 generate_attendance_report <- function(
     analysis_results = NULL,
     output_file = NULL,

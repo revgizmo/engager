@@ -26,9 +26,6 @@ Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
 \item{include_instructions}{Logical, whether to include detailed instructions
 in the output. Defaults to TRUE.}
 }
-\value{
-Invisibly returns the path to the created lookup file
-}
 \description{
 Provides safe user guidance for name matching when unmatched names are detected.
 This function maintains privacy by using the existing \code{make_blank_section_names_lookup_csv()}

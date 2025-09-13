@@ -8,14 +8,6 @@ sessions for scheduled classes where a Zoom recording is not expected.}
 \usage{
 make_blank_cancelled_classes_df()
 }
-\value{
-An empty tibble for recording of cancelled class sessions for scheduled classes
+\description{
 where a zoom recording is not expected.
 }
-\description{
-Make Cancelled Classes Tibble
-This function creates an empty tibble for recording of cancelled class
-sessions for scheduled classes where a Zoom recording is not expected.
-}
-\keyword{deprecated}
-\keyword{internal}

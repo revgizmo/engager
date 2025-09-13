@@ -112,4 +112,3 @@ write_metrics(results, "engagement_report.csv")
 \code{\link{plot_users}} for creating visualizations
 \code{\link{write_metrics}} for exporting results
 }
-\keyword{internal}

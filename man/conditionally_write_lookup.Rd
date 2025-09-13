@@ -13,9 +13,6 @@ conditionally_write_lookup(df = NULL, path = NULL, allow_write = FALSE)
 
 \item{allow_write}{Logical. Default \code{FALSE} (read-only).}
 }
-\value{
-Logical indicating whether a write occurred.
-}
 \description{
 Helper that writes the lookup only when \code{allow_write} is TRUE. Useful for
 scripts and Rmds to prevent accidental overwrites. When \code{allow_write} is

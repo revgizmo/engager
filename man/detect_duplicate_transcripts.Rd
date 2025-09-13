@@ -35,15 +35,6 @@ Higher values require more similarity. Defaults to 0.95}
 \item{names_to_exclude}{Character vector of names to exclude from content comparison.
 Defaults to c("dead_air") to ignore silence periods}
 }
-\value{
-A list containing duplicate detection results with the following elements:
-\describe{
-\item{duplicate_groups}{List of groups containing duplicate file names}
-\item{similarity_matrix}{Matrix of similarity scores between all file pairs}
-\item{recommendations}{Character vector of recommendations for handling duplicates}
-\item{summary}{List with summary statistics: total_files, duplicate_groups, total_duplicates}
-}
-}
 \description{
 Identifies and analyzes duplicate Zoom transcript files using multiple detection methods.
 This function helps clean up transcript datasets by finding files that contain similar

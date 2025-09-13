@@ -5,11 +5,6 @@
 #' descriptions, which are used throughout the package for reporting, plotting,
 #' and documentation purposes.
 #'
-#' @return A tibble with two columns containing metric definitions:
-#'   \describe{
-#'     \item{metric}{Character. The metric label used in the package (e.g., "session_ct", "duration")}
-#'     \item{description}{Character. A human-readable description of what the metric measures}
-#'   }
 #'
 #' The following metrics are included:
 #' \itemize{
@@ -23,10 +18,7 @@
 #'   \item \code{wpm}: Average words per minute within verbal comments captured by Zoom
 #' }
 #'
-#' @keywords internal
-# @export
 #'
-# @examples
 # # Get the metrics lookup table
 # metrics_lookup <- make_metrics_lookup_df()
 # print(metrics_lookup)

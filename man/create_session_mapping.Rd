@@ -35,9 +35,6 @@ a quiet fallback is used. Default is FALSE.}
 
 \item{verbose}{Logical flag to enable diagnostic output. Defaults to FALSE.}
 }
-\value{
-A tibble with session mapping information
-}
 \description{
 This function creates a mapping between Zoom recordings and course information
 by matching recording topics with course patterns.
@@ -53,4 +50,3 @@ session_mapping <- create_session_mapping(
 )
 }
 }
-\keyword{deprecated}

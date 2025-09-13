@@ -4,19 +4,11 @@
 #' This function maintains privacy by using the existing `make_blank_section_names_lookup_csv()`
 #' function and provides clear instructions for manual name mapping.
 #'
-#' @param unmatched_names Character vector of unmatched names that need mapping
-#' @param privacy_level Privacy level for the session. One of
 #'   `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
 #'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
-#' @param data_folder Data folder path for saving the lookup file
-#' @param section_names_lookup_file Name of the lookup file to create
-#' @param include_instructions Logical, whether to include detailed instructions
 #'   in the output. Defaults to TRUE.
 #'
-#' @return Invisibly returns the path to the created lookup file
-#' @export
 #'
-#' @examples
 #' # Prompt for name matching (privacy-safe). Write artifacts to tempdir().
 #' unmatched <- c("Dr. Smith", "Tom", "Guest1")
 #' prompt_name_matching(unmatched, data_folder = tempdir())
@@ -110,12 +102,7 @@ prompt_name_matching <- function(unmatched_names = NULL,
 #'
 #' Internal function to generate privacy-safe guidance for name matching.
 #'
-#' @param unmatched_names Character vector of unmatched names
-#' @param privacy_level Privacy level for the session
-#' @param include_instructions Whether to include detailed instructions
 #'
-#' @return Character string with guidance
-#' @keywords internal
 generate_name_matching_guidance <- function(unmatched_names, privacy_level, include_instructions) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -180,17 +167,10 @@ generate_name_matching_guidance <- function(unmatched_names, privacy_level, incl
 #' or existing name mappings. This function works with real names in memory only
 #' and returns privacy-safe results.
 #'
-#' @param transcript_data Data frame containing transcript data with name columns
-#' @param roster_data Data frame containing roster data with name columns
-#' @param name_mappings Data frame containing existing name mappings
-#' @param privacy_level Privacy level for the session. One of
 #'   `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
 #'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
 #'
-#' @return Character vector of unmatched names (real names only if privacy = "none")
-#' @export
 #'
-#' @examples
 #' # Detect unmatched names
 #' transcript_df <- tibble::tibble(
 #'   transcript_name = c("Dr. Smith", "John Doe", "Guest1"),
@@ -258,10 +238,7 @@ detect_unmatched_names <- function(transcript_data = NULL,
 #'
 #' Internal function to extract names from transcript data.
 #'
-#' @param transcript_data Data frame containing transcript data
 #'
-#' @return Character vector of transcript names
-#' @keywords internal
 extract_transcript_names <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -293,10 +270,7 @@ extract_transcript_names <- function(transcript_data) {
 #'
 #' Internal function to extract names from roster data.
 #'
-#' @param roster_data Data frame containing roster data
 #'
-#' @return Character vector of roster names
-#' @keywords internal
 extract_roster_names <- function(roster_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -328,10 +302,7 @@ extract_roster_names <- function(roster_data) {
 #'
 #' Internal function to extract names from name mappings.
 #'
-#' @param name_mappings Data frame containing name mappings
 #'
-#' @return Character vector of mapped names
-#' @keywords internal
 extract_mapped_names <- function(name_mappings) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

@@ -17,10 +17,6 @@ generate_name_matching_guidance(
 
 \item{include_instructions}{Whether to include detailed instructions}
 }
-\value{
-Character string with guidance
-}
 \description{
 Internal function to generate privacy-safe guidance for name matching.
 }
-\keyword{internal}

@@ -31,9 +31,6 @@ columns will be preserved in the output.}
 
 \item{duplicate_method}{Method for detecting duplicates}
 }
-\value{
-A tibble containing session details and summary metrics by speaker
-}
 \description{
 Summarize Transcript Files
 }

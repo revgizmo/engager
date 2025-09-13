@@ -3,13 +3,8 @@
 # and integrates it with the Zoom recordings data to provide reliable course
 # information for analysis.
 #
-# @param mapping_file Path to the session mapping CSV file
-# @param zoom_recordings_df Optional Zoom recordings tibble to merge with mapping
-# @param validate_mapping If TRUE, validates that all recordings are properly mapped
 #
-# @return A tibble with the session mapping merged with Zoom recordings data
 #
-# @examples
 # \dontrun{
 # # Load session mapping
 # session_mapping <- load_session_mapping("session_mapping.csv")
@@ -26,9 +21,6 @@
 #'
 #' Helper function to load and validate a session mapping CSV file.
 #'
-#' @param mapping_file Path to the session mapping CSV file
-#' @return A tibble with the loaded mapping data
-#' @export
 load_mapping_file <- function(mapping_file) {
   # Check if mapping file exists
   if (!file.exists(mapping_file)) {

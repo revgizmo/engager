@@ -5,7 +5,6 @@
 #' Educational Rights and Privacy Act (FERPA) when using this package.
 #'
 #' @name ferpa_compliance
-#' @keywords internal
 NULL
 
 #' Validate FERPA Compliance
@@ -17,29 +16,19 @@ NULL
 #' educational data protection and FERPA compliance. It helps institutions
 #' maintain legal compliance while using student data for educational improvement.
 #'
-#' @param data A data frame or tibble to validate
-#' @param institution_type Type of institution. One of `c("educational", "research", "mixed")`
-#' @param check_retention Whether to check data retention policies
-#' @param retention_period Retention period to check against. One of `c("academic_year", "semester", "quarter",
 #' "custom")`
-#' @param custom_retention_days Custom retention period in days (used when retention_period = "custom")
-#' @param audit_log Whether to log compliance checks for institutional review
 #'
-#' @return A list containing compliance validation results with the following elements:
 #'   - `compliant`: Logical indicating overall compliance
 #'   - `pii_detected`: Character vector of detected PII fields
 #'   - `recommendations`: Character vector of compliance recommendations
 #'   - `retention_check`: Data retention validation results (if requested)
 #'   - `institution_guidance`: Institution-specific recommendations
 #'
-#' @export
 #'
-#' @examples
 #' # Validate sample data for FERPA compliance
 #' sample_data <- tibble::tibble(
 #'   student_id = c("12345", "67890"),
 #'   preferred_name = c("Alice Johnson", "Bob Smith"),
-#'   email = c("alice@university.edu", "bob@university.edu"),
 #'   participation_score = c(85, 92)
 #' )
 #'
@@ -171,17 +160,9 @@ validate_ferpa_compliance <- function(data = NULL,
 #' Advanced anonymization for educational data that preserves data utility
 #' while ensuring FERPA compliance.
 #'
-#' @param data A data frame or tibble to anonymize
-#' @param method Anonymization method. One of `c("mask", "hash", "pseudonymize", "aggregate")`
-#' @param preserve_columns Character vector of column names to preserve unchanged
-#' @param hash_salt Salt for hash-based anonymization (optional)
-#' @param aggregation_level Level for aggregation. One of `c("individual", "section", "course", "institution")`
 #'
-#' @return The anonymized data frame with the same structure as input
 #'
-#' @export
 #'
-#' @examples
 #' # Anonymize sample data
 #' sample_data <- tibble::tibble(
 #'   student_id = c("12345", "67890"),
@@ -269,10 +250,6 @@ anonymize_educational_data <- function(data = NULL,
 #' Helper function to identify which columns in a dataset should be anonymized
 #' based on common PII column names.
 #'
-#' @param data Data frame to analyze for PII columns
-#' @param preserve_columns Character vector of column names to preserve (not anonymize)
-#' @return Character vector of column names that should be anonymized
-#' @export
 identify_anonymization_columns <- function(data, preserve_columns) {
   # Define PII columns to anonymize
   pii_columns <- c(
@@ -312,17 +289,9 @@ apply_hash_anonymization <- function(data, columns_to_anonymize, hash_salt) {
 #'
 #' Generates comprehensive FERPA compliance reports for educational data.
 #'
-#' @param data A data frame or tibble to analyze
-#' @param output_file Optional file path to save the report
-#' @param report_format Report format. One of `c("text", "html", "json")`
-#' @param include_audit_trail Whether to include audit trail information
-#' @param institution_info Optional list with institution information
 #'
-#' @return A list containing the compliance report
 #'
-#' @export
 #'
-#' @examples
 #' # Generate compliance report
 #' sample_data <- tibble::tibble(
 #'   student_id = c("12345", "67890"),
@@ -332,8 +301,6 @@ apply_hash_anonymization <- function(data, columns_to_anonymize, hash_salt) {
 #'
 #' report <- generate_ferpa_report(sample_data)
 #' print(report$summary)
-#' @export
-#' @keywords deprecated
 generate_ferpa_report <- function(data = NULL,
                                   output_file = NULL,
                                   report_format = c("text", "html", "json"),
@@ -420,19 +387,10 @@ generate_ferpa_report <- function(data = NULL,
 #' Validates data retention policies and identifies data that should be
 #' disposed of according to institutional policies.
 #'
-#' @param data A data frame or tibble to check
-#' @param retention_period Retention period to check against. One of `c("academic_year", "semester", "quarter",
 #' "custom")`
-#' @param custom_retention_days Custom retention period in days (used when retention_period = "custom")
-#' @param date_column Column name containing dates to check against
-#' @param current_date Current date for comparison (defaults to Sys.Date())
 #'
-#' @return A list containing retention validation results
 #'
-#' @export
-#' @keywords deprecated
 #'
-#' @examples
 #' # Check data retention policy
 #' sample_data <- tibble::tibble(
 #'   student_id = c("12345", "67890"),
@@ -524,12 +482,7 @@ check_data_retention_policy <- function(data = NULL,
 #' Internal function to log FERPA compliance checks for audit and institutional
 #' review purposes.
 #'
-#' @param compliant Whether the data is FERPA compliant
-#' @param pii_detected Number of PII fields detected
-#' @param institution_type Type of institution
-#' @param timestamp When the check was performed
 #'
-#' @keywords internal
 log_ferpa_compliance_check <- function(compliant,
                                        pii_detected,
                                        institution_type,

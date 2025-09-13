@@ -6,22 +6,15 @@
 #' csv file with the specified file name (`section_names_lookup_file`) to the
 #' specified data folder (`data_folder`).
 #'
-#' @param clean_names_df A tibble containing session details and summary metrics
 #'   by speaker for all class sessions (and placeholders for missing sections),
 #'   including customized student names.
-#' @param data_folder Overall data folder for your recordings and data. Defaults
 #'   to 'data'
-#' @param section_names_lookup_file File name of the csv file of customized
 #'   student names by section Defaults to 'section_names_lookup.csv'
 #'
-#' @return A tibble corresponding to the csv file saved, which is a sorted subset
 #'   of the provided tibble containing session details and summary metrics by
 #'   speaker for all class sessions (and placeholders for missing sections),
 #'   including customized student names.
-#' @keywords internal
-# @export
 #'
-# @examples
 # # Create sample data
 # sample_transcript_list <- tibble::tibble(
 #   name = c("Student A", "Student B", "Student C"),

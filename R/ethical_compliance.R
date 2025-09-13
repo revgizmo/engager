@@ -5,7 +5,6 @@
 #' surveillance and maintains the highest ethical standards for educational research.
 #'
 #' @name ethical_compliance
-#' @keywords internal
 NULL
 
 #' Validate Ethical Use Compliance
@@ -14,24 +13,15 @@ NULL
 #' participation equity rather than surveillance. This function checks usage patterns
 #' and provides guidance for ethical implementation.
 #'
-#' @param usage_context Context of usage. One of `c("research", "teaching", "assessment", "intervention", "other")`
-#' @param data_scope Scope of data being analyzed. One of `c("individual", "section", "course", "institution",
 #' "multi_institution")`
-#' @param purpose_statement Optional statement describing the intended use
-#' @param check_consent Whether to check for consent documentation
-#' @param check_irb Whether to check for IRB approval documentation
 #'
-#' @return A list containing ethical validation results with the following elements:
 #'   - `ethically_compliant`: Logical indicating overall ethical compliance
 #'   - `risk_level`: Risk level assessment (low, medium, high, critical)
 #'   - `recommendations`: Character vector of ethical recommendations
 #'   - `required_documentation`: Required documentation for compliance
 #'   - `institutional_guidance`: Institution-specific guidance
 #'
-#' @export
-#' @keywords deprecated
 #'
-#' @examples
 #' # Validate ethical use for research
 #' validation <- validate_ethical_use(
 #'   usage_context = "research",
@@ -202,19 +192,9 @@ validate_ethical_use <- function(usage_context = c("research", "teaching", "asse
 #' Generates a comprehensive ethical use report for institutional review
 #' and documentation purposes.
 #'
-#' @param usage_context Context of usage
-#' @param data_scope Scope of data being analyzed
-#' @param purpose_statement Purpose statement
-#' @param institution_name Name of the institution
-#' @param contact_person Contact person for questions
-#' @param include_guidance Whether to include detailed guidance
 #'
-#' @return A character string containing the formatted ethical use report
 #'
-#' @export
-#' @keywords deprecated
 #'
-#' @examples
 #' # Generate ethical use report
 #' report <- create_ethical_use_report(
 #'   usage_context = "research",
@@ -361,17 +341,9 @@ create_ethical_use_report <- function(usage_context = NULL,
 #' Analyzes usage patterns to detect potential ethical concerns and
 #' provides recommendations for improvement.
 #'
-#' @param function_calls Vector of function names that were called
-#' @param data_sizes Vector of data sizes processed
-#' @param privacy_settings Vector of privacy settings used
-#' @param time_period Time period of analysis (in days)
 #'
-#' @return A list containing audit results with usage patterns and recommendations
 #'
-#' @export
-#' @keywords deprecated
 #'
-#' @examples
 #' # Audit usage patterns
 #' audit <- audit_ethical_usage(
 #'   function_calls = c("analyze_transcripts", "plot_users", "write_metrics"),

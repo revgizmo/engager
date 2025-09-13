@@ -3,17 +3,7 @@
 #' This function creates a tibble containing course information that can be used
 #' with `create_session_mapping()` to map Zoom recordings to specific courses.
 #'
-#' @param dept Department codes (e.g., "CS", "MATH", "LTF")
-#' @param course Course numbers (e.g., "101", "250", "201")
-#' @param section Section numbers (e.g., "1", "2", "3")
-#' @param instructor Instructor names
-#' @param session_length_hours Length of each session in hours
-#' @param semester_start_mdy Semester start date in "MMM DD, YYYY" format
-#' @param semester_end_mdy Semester end date in "MMM DD, YYYY" format
-#' @param session_days Days of the week when sessions occur (e.g., c("Mon", "Wed"))
-#' @param session_times Times when sessions occur (e.g., c("10:00", "14:00"))
 #'
-#' @return A tibble with course information containing:
 #'   - dept: Department code
 #'   - course: Course number
 #'   - section: Section number
@@ -24,9 +14,7 @@
 #'   - session_days: Days of the week for sessions
 #'   - session_times: Times for sessions
 #'
-#' @export
 #'
-#' @examples
 #' # Single course with multiple sections
 #' course_info <- create_course_info(
 #'   dept = c("CS", "CS", "CS"),

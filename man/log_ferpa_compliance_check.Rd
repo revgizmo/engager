@@ -24,4 +24,3 @@ log_ferpa_compliance_check(
 Internal function to log FERPA compliance checks for audit and institutional
 review purposes.
 }
-\keyword{internal}

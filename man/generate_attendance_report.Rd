@@ -10,23 +10,12 @@ generate_attendance_report(
   include_charts = FALSE
 )
 }
-\arguments{
-\item{analysis_results}{Results from \code{analyze_multi_session_attendance()}}
-
-\item{output_file}{Path to save the report (optional)}
-
-\item{include_charts}{Whether to include attendance charts (requires ggplot2)}
-}
-\value{
-Character vector containing the report content
-}
 \description{
 Creates a comprehensive report of multi-session attendance analysis.
 }
-\examples{
+\details{
 \dontrun{
 results <- analyze_multi_session_attendance(transcript_files, roster_data)
 report <- generate_attendance_report(results, "attendance_report.md")
 }
-
 }

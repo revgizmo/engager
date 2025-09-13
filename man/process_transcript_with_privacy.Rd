@@ -20,9 +20,6 @@ process_transcript_with_privacy(
 
 \item{privacy_level}{Privacy level for processing}
 }
-\value{
-Processed data with privacy applied
-}
 \description{
 Processes transcript data with privacy-aware name matching. This function
 implements the two-stage approach: matching with real names in memory,

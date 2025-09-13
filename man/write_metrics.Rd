@@ -24,9 +24,6 @@ Parent directories are created if they do not exist.}
 
 \item{privacy_level}{Privacy level forwarded to \code{ensure_privacy()}. Default from option.}
 }
-\value{
-Invisibly returns the written tibble (after privacy transformations and list conversions).
-}
 \description{
 Unified writer for engagement-related outputs with privacy enforcement.
 }

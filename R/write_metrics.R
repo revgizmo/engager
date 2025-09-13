@@ -2,15 +2,8 @@
 #'
 #' Unified writer for engagement-related outputs with privacy enforcement.
 #'
-#' @param data A tibble to write.
-#' @param what One of c("engagement", "summary", "session_summary"). Controls default filename.
-#' @param path Output file path. If missing, a default name is chosen based on `what` in the current dir.
 #'   Parent directories are created if they do not exist.
-#' @param comments_format For list-like `comments` columns: one of c("text", "count"). Default: "text".
-#' @param privacy_level Privacy level forwarded to `ensure_privacy()`. Default from option.
 #'
-#' @return Invisibly returns the written tibble (after privacy transformations and list conversions).
-#' @export
 write_metrics <- function(
     data = NULL,
     what = c("engagement", "summary", "session_summary"),

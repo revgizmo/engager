@@ -18,11 +18,9 @@ loaded from the cloud recording csvs.}
 zoom recordings loaded from the cloud recording csvs and transcripts.}
 
 \item{df_cancelled_classes}{A tibble listing the cancelled class sessions for
-scheduled classes where a zoom recording is not expected.}
-}
-\value{
-A tibble listing the the class sessions with corresponding transcript
-files or placeholders for cancelled classes.
+scheduled classes where a zoom recording is not expected.
+
+files or placeholders for cancelled classes.}
 }
 \description{
 This function creates a tibble from the joining of the listing of session recordings loaded from the cloud recording
@@ -44,4 +42,3 @@ join_transcripts_list(
 )
 }
 }
-\keyword{deprecated}

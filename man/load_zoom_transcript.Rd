@@ -8,11 +8,9 @@ load_zoom_transcript(transcript_file_path = NULL)
 }
 \arguments{
 \item{transcript_file_path}{File path of a .transcript.vtt file of a Zoom recording
-transcript.}
-}
-\value{
-A tibble containing the comments from a Zoom recording
-transcript, or NULL if the file is empty
+transcript.
+
+transcript, or NULL if the file is empty}
 }
 \description{
 Load a Zoom recording transcript and return tibble containing the comments from a Zoom recording transcript

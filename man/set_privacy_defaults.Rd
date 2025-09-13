@@ -17,9 +17,6 @@ Defaults to \code{"mask"}. Use \code{"ferpa_strict"} for maximum FERPA complianc
 One of \code{c("stop", "warn")}. Defaults to \code{"stop"} for maximum privacy protection.
 Use \code{"warn"} for guided matching with user intervention.}
 }
-\value{
-Invisibly returns a list with the chosen privacy level and unmatched names action.
-}
 \description{
 Configure global privacy behavior for the package. The default on package
 load is \code{mask}, which replaces personally identifiable fields with

@@ -24,17 +24,14 @@ validate_ferpa_compliance(
 
 \item{custom_retention_days}{Custom retention period in days (used when retention_period = "custom")}
 
-\item{audit_log}{Whether to log compliance checks for institutional review}
-}
-\value{
-A list containing compliance validation results with the following elements:
+\item{audit_log}{Whether to log compliance checks for institutional review
 \itemize{
 \item \code{compliant}: Logical indicating overall compliance
 \item \code{pii_detected}: Character vector of detected PII fields
 \item \code{recommendations}: Character vector of compliance recommendations
 \item \code{retention_check}: Data retention validation results (if requested)
 \item \code{institution_guidance}: Institution-specific recommendations
-}
+}}
 }
 \description{
 Validates data for FERPA compliance by checking for personally identifiable

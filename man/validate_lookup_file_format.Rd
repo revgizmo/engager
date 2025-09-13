@@ -9,10 +9,6 @@ validate_lookup_file_format(data)
 \arguments{
 \item{data}{The data to validate}
 }
-\value{
-TRUE if valid, FALSE otherwise
-}
 \description{
 Internal function to validate the format of section names lookup files.
 }
-\keyword{internal}

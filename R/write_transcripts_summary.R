@@ -2,14 +2,8 @@
 #'
 #' Deprecated: use `write_metrics(data, what = 'summary', path = ...)` instead.
 #'
-#' @param transcripts_summary_df a tibble that summarizes results at the level of the class section and preferred
 #' student name.
-#' @param data_folder Overall data folder for your recordings and data. Defaults to 'data'
-#' @param transcripts_summary_file File name of the csv file to write. Defaults to 'transcripts_summary.csv'
 #'
-#' @return Invisibly returns the written tibble
-#' @keywords internal
-# @export
 write_transcripts_summary <-
   function(transcripts_summary_df = NULL,
            data_folder = ".",

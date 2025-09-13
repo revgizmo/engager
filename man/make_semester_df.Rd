@@ -18,15 +18,10 @@ to 14.}
 'HH:MM:SS'. Defaults to '04:00:00'.}
 
 \item{class_duration_min}{Number of units/weeks/classes in the semester.
-Defaults to 14.}
-}
-\value{
-A tibble including number of units, with class start time, end time,
-and duration.
+Defaults to 14.
+and duration.}
 }
 \description{
 This function creates a tibble for the units in the semester that correspond
 to expected number of units, with class start time, end time, and duration.
 }
-\keyword{internal}
-\keyword{semester}

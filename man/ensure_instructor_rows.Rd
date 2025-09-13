@@ -11,9 +11,6 @@ ensure_instructor_rows(existing_df = NULL, instructor_name = NULL)
 
 \item{instructor_name}{Character. Instructor display name.}
 }
-\value{
-A merged lookup including instructor rows.
-}
 \description{
 Returns a merged lookup that includes instructor rows for a given
 instructor name, preserving all existing rows. No side effects.

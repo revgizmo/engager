@@ -44,9 +44,6 @@ the transcript \code{name} is \code{NA}. Defaults to 'unknown'.}
 \item{transcript_df}{Tibble containing the comments from a Zoom recording transcript (which is generally the result
 of calling \code{load_zoom_transcript()}.}
 }
-\value{
-A tibble containing the comments from a Zoom recording transcript
-}
 \description{
 Process a Zoom recording transcript with given parameters and return tibble containing the consolidated and annotated
 comments.

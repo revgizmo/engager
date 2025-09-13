@@ -2,13 +2,7 @@
 #'
 #' Deprecated: use `write_metrics(data, what = 'session_summary', path = ...)` instead.
 #'
-#' @param transcripts_session_summary_df A tibble of session-level metrics per student.
-#' @param data_folder Overall data folder for your recordings and data. Defaults to 'data'
-#' @param transcripts_session_summary_file File name of the csv file. Defaults to 'transcripts_session_summary.csv'
 #'
-#' @return Invisibly returns the written tibble
-#' @keywords internal
-# @export
 write_transcripts_session_summary <-
   function(transcripts_session_summary_df = NULL,
            data_folder = ".",

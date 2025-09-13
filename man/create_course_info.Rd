@@ -33,10 +33,7 @@ create_course_info(
 
 \item{session_days}{Days of the week when sessions occur (e.g., c("Mon", "Wed"))}
 
-\item{session_times}{Times when sessions occur (e.g., c("10:00", "14:00"))}
-}
-\value{
-A tibble with course information containing:
+\item{session_times}{Times when sessions occur (e.g., c("10:00", "14:00"))
 \itemize{
 \item dept: Department code
 \item course: Course number
@@ -47,7 +44,7 @@ A tibble with course information containing:
 \item semester_end: Semester end date
 \item session_days: Days of the week for sessions
 \item session_times: Times for sessions
-}
+}}
 }
 \description{
 This function creates a tibble containing course information that can be used

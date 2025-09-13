@@ -5,18 +5,12 @@
 #' FERPA-safe placeholders. Set to `"none"` to disable masking (not
 #' recommended).
 #'
-#' @param privacy_level One of `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
 #'   Defaults to `"mask"`. Use `"ferpa_strict"` for maximum FERPA compliance.
-#' @param unmatched_names_action Action to take when unmatched names are found.
 #'   One of `c("stop", "warn")`. Defaults to `"stop"` for maximum privacy protection.
 #'   Use `"warn"` for guided matching with user intervention.
 #'
-#' @return Invisibly returns a list with the chosen privacy level and unmatched names action.
 #'
-#' @seealso [ensure_privacy()], [safe_name_matching_workflow()]
-#' @export
 #'
-#' @examples
 #' # Set privacy to mask (default)
 #' set_privacy_defaults("mask")
 #'

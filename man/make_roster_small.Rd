@@ -16,16 +16,11 @@ classes with a small subset of the roster columns. Must contain the following co
 \item dept: character
 \item course: character
 \item section: character
-}}
 }
-\value{
-A tibble listing the students enrolled in the class or classes with a
-small subset of the roster columns.
+
+small subset of the roster columns.}
 }
 \description{
 This function creates a tibble that includes rows for each students enrolled
 in the class or classes, with a small subset of the roster columns.
 }
-\keyword{deprecated}
-\keyword{internal}
-\keyword{roster}

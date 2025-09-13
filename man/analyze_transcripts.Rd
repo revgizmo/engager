@@ -11,21 +11,11 @@ analyze_transcripts(
   output_path = NULL
 )
 }
-\arguments{
-\item{transcripts_folder}{Path to a folder containing Zoom \code{.transcript.vtt} files.}
-
-\item{names_to_exclude}{Character vector of names to exclude. Default: c("dead_air").}
-
-\item{write}{If TRUE, writes engagement metrics to CSV via \code{write_metrics()}.}
-
-\item{output_path}{Optional output CSV path. If NULL and \code{write=TRUE},
-defaults to \code{engagement_metrics.csv}.}
-}
-\value{
-A tibble of engagement metrics (privacy-masked by default at write-time;
-in-memory masking depends on consumer).
-}
 \description{
 Convenience wrapper to process a set of \code{.transcript.vtt} files from a folder,
 compute engagement metrics, and optionally write outputs.
+}
+\details{
+defaults to \code{engagement_metrics.csv}.
+in-memory masking depends on consumer).
 }

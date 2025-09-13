@@ -58,13 +58,11 @@ to \verb{Jan 01, 2024}}
 \item{scheduled_session_length_hours}{scheduled length of each class session
 in hours. Defaults to \code{1.5}}
 
-\item{verbose}{Logical flag to enable diagnostic output. Defaults to FALSE.}
-}
-\value{
-A tibble listing the session recordings loaded from the cloud
+\item{verbose}{Logical flag to enable diagnostic output. Defaults to FALSE.
+
 recording csvs. Returns \code{NULL} if the transcripts folder doesn't exist,
 or an empty tibble with the correct column structure if no matching
-files are found.
+files are found.}
 }
 \description{
 This function creates a tibble from a provided csv file of Zoom recordings.

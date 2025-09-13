@@ -23,10 +23,6 @@ handle_unmatched_names(
 
 \item{section_names_lookup_file}{Name of the lookup file}
 }
-\value{
-Invisibly returns NULL
-}
 \description{
 Internal function to handle unmatched names according to configuration.
 }
-\keyword{internal}

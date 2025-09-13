@@ -31,4 +31,3 @@ Internal function to log privacy operations for audit and compliance purposes.
 This function maintains a record of privacy-related operations for institutional
 review and FERPA compliance.
 }
-\keyword{internal}

@@ -18,10 +18,6 @@ write_engagement_metrics(
 \item{comments_format}{How to format the comments column: "text" (semicolon-separated) or "count" (number of
 comments)}
 }
-\value{
-Invisibly returns the processed data that was written
-}
 \description{
 Deprecated: use \code{write_metrics(data, what = 'engagement', path = ...)} instead.
 }
-\keyword{deprecated}

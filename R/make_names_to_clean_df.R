@@ -14,15 +14,11 @@
 #'
 #'
 #'
-#' @param clean_names_df A tibble containing session details and summary metrics
 #'   by speaker for all class sessions (and placeholders for missing sections),
 #'   including customized student names.
 #'
-#' @return A tibble containing session details and summary metrics
 #'   by speaker students with transcript recordings but no matching
 #' student id.
-#' @keywords internal
-# @export
 #'
 make_names_to_clean_df <- function(clean_names_df = NULL) {
   # DEPRECATED: This function will be removed in the next version

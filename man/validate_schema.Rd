@@ -13,9 +13,6 @@ validate_schema(df = NULL, required_cols = NULL, types = NULL)
 
 \item{types}{Optional named list mapping column names to expected types}
 }
-\value{
-Invisibly returns \code{TRUE} on success; otherwise aborts with a typed error
-}
 \description{
 Validate that a data frame contains required columns (and optionally types)
 }

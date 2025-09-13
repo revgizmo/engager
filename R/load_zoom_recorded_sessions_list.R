@@ -12,17 +12,13 @@
 #'    (or whatever path you identify in the `data_folder` and
 #'    `transcripts_folder` parameters).
 #'
-#' @note The function handles several legacy and edge cases:
 #' - Trailing commas in CSV headers (common in Zoom exports)
 #' - Multiple recordings of the same session (takes the most recent)
 #' - Timezone handling for session start/end times
 #' - Department filtering for targeted recordings
 #' - Date format variations in Zoom exports
 #'
-#' @param data_folder overall data folder for your recordings
-#' @param transcripts_folder specific subfolder of the data folder where you
 #'   will store the cloud recording csvs
-#' @param topic_split_pattern REGEX pattern used to parse the `Topic` from the
 #'   csvs and extract useful columns. Defaults to
 #'   `paste0("^(?<dept>\\\\S+) (?<course_section>\\\\S+) - ",
 #'   "(?<day>[A-Za-z]+) (?<time>\\\\S+\\\\s*\\\\S+) (?<instructor>\\\\(.*?\\\\))")`
@@ -32,34 +28,25 @@
 #'   The function now uses a generalized pattern that can handle various course
 #'   naming conventions including `DATASCI 201.006`, `LTF 101`, and
 #'   `MATH 250.001` formats.
-#' @param zmrcrddsssnscsvnmspttrn REGEX pattern used to parse
 #'   the csv file names from the cloud recording csvs and extract useful
 #'   columns. Defaults to
 #'   `zoomus_recordings__\\\\d{8}(?:\\\\s+copy\\\\s*\\\\d*)?\\\\.csv`
-#' @param zmrcrddsssnscsvclnms Comma separated string of column
 #'   names in the cloud recording csvs. Zoom tends to save the file with an
 #'   extra `,` at the end of the header row, causing a null column to be
 #'   imported. Defaults to
 #'   `Topic,ID,Start Time,File Size (MB),File Count,Total Views,Total Downloads,Last Accessed`
-#' @param dept the school department associated with the recordings to keep.
 #'   Zoom often captures unwanted recordings, and this is used to filter only
 #'   the targeted ones. This value is compared to the `dept` column extracted
 #'   from the `Topic` column extracted from cloud recording csvs. Defaults to
 #'   `LTF`
-#' @param semester_start_mdy date of the first class in the semester. Defaults
 #'   to `Jan 01, 2024`
-#' @param scheduled_session_length_hours scheduled length of each class session
 #'   in hours. Defaults to `1.5`
-#' @param verbose Logical flag to enable diagnostic output. Defaults to FALSE.
 #'
-#' @return A tibble listing the session recordings loaded from the cloud
 #'   recording csvs. Returns `NULL` if the transcripts folder doesn't exist,
 #'   or an empty tibble with the correct column structure if no matching
 #'   files are found.
 #'
-#' @export
 #'
-#' @examples
 #' # Show what happens when no data files exist (returns empty tibble)
 #' load_zoom_recorded_sessions_list(
 #'   data_folder = "nonexistent_folder",

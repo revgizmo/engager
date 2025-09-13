@@ -20,9 +20,6 @@ audit_ethical_usage(
 
 \item{time_period}{Time period of analysis (in days)}
 }
-\value{
-A list containing audit results with usage patterns and recommendations
-}
 \description{
 Analyzes usage patterns to detect potential ethical concerns and
 provides recommendations for improvement.
@@ -36,4 +33,3 @@ audit <- audit_ethical_usage(
   time_period = 30
 )
 }
-\keyword{deprecated}

@@ -10,14 +10,10 @@
 
 
 
-#' @param transcript_file_path File path of a .transcript.vtt file of a Zoom recording
 #'   transcript.
 #'
-#' @return A tibble containing the comments from a Zoom recording
 #'   transcript, or NULL if the file is empty
-#' @export
 #'
-#' @examples
 #' # Load a sample transcript from the package's extdata directory
 #' transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
 #'   package = "engager"

@@ -4,13 +4,8 @@
 #' sessions for scheduled classes where a Zoom recording is not expected.
 
 #'
-#' @return An empty tibble for recording of cancelled class sessions for scheduled classes
 #'   where a zoom recording is not expected.
-#' @keywords internal
-# @export
-#' @keywords deprecated
 #'
-# @examples
 # make_blank_cancelled_classes_df()
 make_blank_cancelled_classes_df <- function() {
   # DEPRECATED: This function will be removed in the next version

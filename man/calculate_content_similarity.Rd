@@ -17,9 +17,6 @@ calculate_content_similarity(
 
 \item{names_to_exclude}{Character vector of names to exclude from analysis}
 }
-\value{
-Numeric similarity score between 0 and 1
-}
 \description{
 This function calculates the similarity between two transcript data frames
 based on various metrics including speaker overlap, duration, word count,

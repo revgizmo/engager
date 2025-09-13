@@ -11,9 +11,6 @@ identify_anonymization_columns(data, preserve_columns)
 
 \item{preserve_columns}{Character vector of column names to preserve (not anonymize)}
 }
-\value{
-Character vector of column names that should be anonymized
-}
 \description{
 Helper function to identify which columns in a dataset should be anonymized
 based on common PII column names.

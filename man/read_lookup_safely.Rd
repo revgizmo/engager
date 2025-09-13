@@ -9,9 +9,6 @@ read_lookup_safely(path = NULL)
 \arguments{
 \item{path}{Character. Path to the lookup CSV file.}
 }
-\value{
-A normalized data frame with expected columns.
-}
 \description{
 Reads a lookup CSV safely: normalizes columns, coerces to UTF-8, and
 returns an empty (0-row) normalized data frame if the file is missing.

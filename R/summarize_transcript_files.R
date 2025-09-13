@@ -1,19 +1,9 @@
 #' Summarize Transcript Files
 #'
-#' @param transcript_file_names A data.frame or character vector listing the transcript files.
 #'   If a tibble with additional columns beyond 'transcript_file' is provided, all metadata
 #'   columns will be preserved in the output.
-#' @param data_folder Overall data folder for your recordings and data
-#' @param transcripts_folder specific subfolder of the data folder where you store transcripts
-#' @param names_to_exclude Character vector of names to exclude from the results
-#' @param deduplicate_content Logical. If TRUE, detect and handle duplicate transcripts
-#' @param similarity_threshold Threshold for considering transcripts as duplicates (0-1)
-#' @param duplicate_method Method for detecting duplicates
-#' @return A tibble containing session details and summary metrics by speaker
-#' @export
 #'
 
-#' @examples
 #' # Create sample transcript file names
 #' transcript_files <- c(
 #'   "GMT20240115-100000_Recording.transcript.vtt",

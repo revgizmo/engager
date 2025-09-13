@@ -13,11 +13,7 @@ detect_privacy_violations(character_values, real_names, privacy_level)
 
 \item{privacy_level}{Privacy level for validation}
 }
-\value{
-Character vector of detected violations
-}
 \description{
 Internal function to detect privacy violations by checking for real names
 in character values.
 }
-\keyword{internal}

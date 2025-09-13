@@ -17,12 +17,8 @@ hash_name_consistently(
 
 \item{normalize_names}{Logical, whether to normalize names before hashing (default: TRUE)}
 }
-\value{
-Character vector of consistent hashes
-}
 \description{
 Creates consistent hashes for names to enable matching while maintaining privacy.
 This function normalizes names and generates deterministic hashes that can be
 used for cross-session matching without exposing real names.
 }
-\keyword{internal}

@@ -2,10 +2,6 @@
 #'
 #' Summarize which identifier columns were present and how many values were masked.
 #'
-#' @param data A tibble to audit.
-#' @param id_columns Columns treated as identifiers (same default as ensure_privacy).
-#' @return A tibble with columns: column, values, non_empty, masked_estimate.
-#' @export
 privacy_audit <- function(
     data = NULL,
     id_columns = c("preferred_name", "name", "first_last", "name_raw", "student_id", "email")) {

@@ -13,11 +13,7 @@ apply_privacy_aware_matching(result, section_names_lookup, privacy_level)
 
 \item{privacy_level}{Privacy level for processing}
 }
-\value{
-Data frame with enhanced name matching
-}
 \description{
 Internal function to apply privacy-aware name matching using consistent hashing.
 This function enhances the existing matching logic with privacy-first design.
 }
-\keyword{internal}

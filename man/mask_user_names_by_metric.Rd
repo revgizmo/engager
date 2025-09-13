@@ -20,11 +20,9 @@ that student's name will be bolded using markdown syntax and not masked.}
 'session_ct'.}
 
 \item{target_student}{preferred student name of an individual student that
-will be bolded using markdown syntax and not masked. Defaults to ''.}
-}
-\value{
-a tibble that summarizes results at the level of the class section
-and student, with student names masked by the ranking of the student.
+will be bolded using markdown syntax and not masked. Defaults to ''.
+
+and student, with student names masked by the ranking of the student.}
 }
 \description{
 Mask User Names by Metric

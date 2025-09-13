@@ -22,11 +22,9 @@ Defaults to 'cancelled_classes.csv'}
 classes. Defaults to 'ccccccccnnnncTTcTTccci'}
 
 \item{write_blank_cancelled_classes}{Logical. If TRUE and the file doesn't exist,
-creates a blank cancelled classes file. Defaults to FALSE}
-}
-\value{
-A tibble listing the cancelled class sessions for scheduled classes
-where a zoom recording is not expected.
+creates a blank cancelled classes file. Defaults to FALSE
+
+where a zoom recording is not expected.}
 }
 \description{
 This function creates a tibble from a provided csv file of cancelled class

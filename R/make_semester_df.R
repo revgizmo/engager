@@ -2,19 +2,10 @@
 #'
 #' This function creates a tibble for the units in the semester that correspond
 #' to expected number of units, with class start time, end time, and duration.
-#' @param semester_units Number of units/weeks/classes in the semester. Defaults
 #'   to 14.
-#' @param class_start_time_gmt Start time of the class in GMT, formatted as
 #'   'HH:MM:SS'. Defaults to '04:00:00'.
-#' @param class_duration_min Number of units/weeks/classes in the semester.
 #'   Defaults to 14.
-#' @keywords semester
-#' @return A tibble including number of units, with class start time, end time,
 #'   and duration.
-
-#' @keywords internal
-# @export
-# @examples
 # make_semester_df()
 make_semester_df <- function(semester_units = 14,
                              class_start_time_gmt = "04:00:00",

@@ -15,9 +15,6 @@ privacy_audit(
 
 \item{id_columns}{Columns treated as identifiers (same default as ensure_privacy).}
 }
-\value{
-A tibble with columns: column, values, non_empty, masked_estimate.
-}
 \description{
 Summarize which identifier columns were present and how many values were masked.
 }

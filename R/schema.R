@@ -8,13 +8,7 @@ NULL
 
 #' Validate that a data frame contains required columns (and optionally types)
 #'
-#' @param df A data.frame or tibble
-#' @param required_cols Character vector of required column names
-#' @param types Optional named list mapping column names to expected types
 #'
-#' @return Invisibly returns `TRUE` on success; otherwise aborts with a typed error
-#' @export
-#' @examples
 #' df <- tibble::tibble(a = 1L, b = "x")
 #' validate_schema(df, c("a", "b"), types = list(a = "integer", b = "character"))
 validate_schema <- function(df = NULL, required_cols = NULL, types = NULL) {
@@ -49,7 +43,6 @@ validate_schema <- function(df = NULL, required_cols = NULL, types = NULL) {
 #' These are documented here for reference and to be used by callers/tests.
 #' Keep them minimal; adjust as the package evolves.
 #'
-#' @keywords internal
 zse_schema <- list(
   transcript = list(
     required = c("timestamp", "speaker", "text"),

@@ -34,9 +34,6 @@ Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
 \item{metrics_lookup_df}{Optional tibble with \code{metric} and \code{description} columns
 to annotate plots. Defaults to \code{make_metrics_lookup_df()} if available.}
 }
-\value{
-A \code{ggplot} object.
-}
 \description{
 Unified plotting function for engagement metrics with privacy-aware options.
 }

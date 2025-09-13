@@ -5,19 +5,13 @@
 #' placeholders for missing sections), including customized student names, and
 #' summarizes results at the level of the session and preferred student name.
 #'
-#' @param clean_names_df A tibble containing session details and summary metrics
 #'   by speaker for all class sessions (and placeholders for missing sections),
 #'   including customized student names.
 #'
-#' @return a tibble containing session details and
 #'   summary metrics by speaker for all class sessions (and placeholders for
 #'   missing sections), including customized student names, and summarizes
 #'   results at the level of the session and preferred student name.
-#' @keywords internal
-# @export
-#' @keywords deprecated
 #'
-# @examples
 # # Load required packages
 # library(dplyr)
 #'

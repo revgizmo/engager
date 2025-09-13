@@ -13,24 +13,15 @@ Must contain the following columns:
 \item dept: character
 \item course: character
 \item section: character
-}}
-}
-\value{
-A tibble with the following columns:
-\itemize{
 \item dept: character
 \item course: character
 \item section: character
 \item n: integer (count of students in each section)
 }
+
+make_sections_df(roster_df = roster_df)}
 }
 \description{
 This function creates a tibble that includes rows for each section (grouped by dept and course number) and student
 count in each.
 }
-\keyword{=}
-\keyword{deprecated}
-\keyword{internal}
-\keyword{make_sections_df(roster_df}
-\keyword{roster_df)}
-\keyword{sections}

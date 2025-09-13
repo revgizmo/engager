@@ -9,17 +9,10 @@
 
 
 
-#' @param df A tibble containing the comments from a Zoom recording transcript.
-#' @param dead_air_name Character string to label the `name` column in the added rows.
 #'   Defaults to 'dead_air'.
 #'
-#' @return A tibble containing the comments from a Zoom recording transcript,
 #'   with rows added for dead air.
-#' @keywords internal
-# @export
-#' @keywords deprecated
 #'
-## @examples
 # add_dead_air_rows(df = "NULL")
 #
 # CRAN compliance: global variables handled in package file

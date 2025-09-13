@@ -23,9 +23,6 @@ generate_ferpa_report(
 
 \item{institution_info}{Optional list with institution information}
 }
-\value{
-A list containing the compliance report
-}
 \description{
 Generates comprehensive FERPA compliance reports for educational data.
 }
@@ -40,4 +37,3 @@ sample_data <- tibble::tibble(
 report <- generate_ferpa_report(sample_data)
 print(report$summary)
 }
-\keyword{deprecated}

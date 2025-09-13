@@ -9,10 +9,6 @@ extract_mapped_names(name_mappings)
 \arguments{
 \item{name_mappings}{Data frame containing name mappings}
 }
-\value{
-Character vector of mapped names
-}
 \description{
 Internal function to extract names from name mappings.
 }
-\keyword{internal}

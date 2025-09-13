@@ -21,17 +21,14 @@ validate_ethical_use(
 
 \item{check_consent}{Whether to check for consent documentation}
 
-\item{check_irb}{Whether to check for IRB approval documentation}
-}
-\value{
-A list containing ethical validation results with the following elements:
+\item{check_irb}{Whether to check for IRB approval documentation
 \itemize{
 \item \code{ethically_compliant}: Logical indicating overall ethical compliance
 \item \code{risk_level}: Risk level assessment (low, medium, high, critical)
 \item \code{recommendations}: Character vector of ethical recommendations
 \item \code{required_documentation}: Required documentation for compliance
 \item \code{institutional_guidance}: Institution-specific guidance
-}
+}}
 }
 \description{
 Validates that the package is being used for educational purposes that promote
@@ -48,4 +45,3 @@ validation <- validate_ethical_use(
 print(validation$ethically_compliant)
 print(validation$recommendations)
 }
-\keyword{deprecated}

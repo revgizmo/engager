@@ -9,9 +9,6 @@ load_mapping_file(mapping_file)
 \arguments{
 \item{mapping_file}{Path to the session mapping CSV file}
 }
-\value{
-A tibble with the loaded mapping data
-}
 \description{
 Helper function to load and validate a session mapping CSV file.
 }

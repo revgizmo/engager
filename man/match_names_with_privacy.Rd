@@ -20,9 +20,6 @@ match_names_with_privacy(
 
 \item{privacy_level}{Privacy level for processing}
 }
-\value{
-Matched data with privacy controls applied
-}
 \description{
 Performs comprehensive name matching with privacy awareness. Uses consistent
 hashing for cross-session matching while maintaining privacy controls.

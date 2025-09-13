@@ -24,9 +24,6 @@ If NULL, uses common name patterns to detect potential violations.}
 \item{stop_on_violation}{Logical, whether to stop with error on privacy violation.
 Defaults to TRUE for maximum privacy protection.}
 }
-\value{
-TRUE if compliant, error if violation found and stop_on_violation = TRUE
-}
 \description{
 Scans data objects to ensure no real names appear in outputs when privacy
 masking is enabled. This function performs exact matching to detect privacy

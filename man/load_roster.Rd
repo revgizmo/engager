@@ -20,9 +20,6 @@ Defaults to 'roster.csv'}
 \item{strict_errors}{Whether to throw errors for missing files instead of
 returning empty tibbles. Defaults to FALSE for backward compatibility.}
 }
-\value{
-A tibble listing the students enrolled in the class or classes.
-}
 \description{
 This function creates a tibble from a provided csv file of students enrolled
 in the class or classes

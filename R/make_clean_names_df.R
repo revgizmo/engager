@@ -10,22 +10,14 @@
 #' * a tibble listing the students enrolled in the class or classes, with rows for each recorded class section for each
 #' student (`roster_sessions`) into a single tibble.
 #'
-#' @param data_folder overall data folder for your recordings. Defaults to
 #'   'data'
-#' @param section_names_lookup_file File name of the csv file of customized
 #'   student names by section Defaults to 'section_names_lookup.csv'
-#' @param transcripts_metrics_df A tibble containing session details and summary
 #'   metrics by speaker for all class sessions in the tibble provided.
-#' @param roster_sessions A tibble listing the students enrolled in the class or
 #'   classes, with rows for each recorded class section for each student.
 #'
-#' @return A tibble containing session details and summary metrics by speaker
 #'   for all class sessions (and placeholders for missing sections), including
 #'   customized student names.
-#' @keywords internal
-# @export
 #'
-# @examples
 # # Create sample data for demonstration
 # sample_transcripts <- tibble::tibble(
 #'   name = c("John Smith", "Jane Doe"),
@@ -235,12 +227,7 @@ make_clean_names_df <- function(data_folder = ".",
 #' Internal function to apply privacy-aware name matching using consistent hashing.
 #' This function enhances the existing matching logic with privacy-first design.
 #'
-#' @param result Data frame with transcript data
-#' @param section_names_lookup Data frame with name mappings
-#' @param privacy_level Privacy level for processing
 #'
-#' @return Data frame with enhanced name matching
-#' @keywords internal
 apply_privacy_aware_matching <- function(result, section_names_lookup, privacy_level) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

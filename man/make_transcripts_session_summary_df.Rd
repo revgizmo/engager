@@ -8,14 +8,25 @@ make_transcripts_session_summary_df(clean_names_df = NULL)
 }
 \arguments{
 \item{clean_names_df}{A tibble containing session details and summary metrics
-by speaker for all class sessions (and placeholders for missing sections),
-including customized student names.}
-}
-\value{
-a tibble containing session details and
-summary metrics by speaker for all class sessions (and placeholders for
-missing sections), including customized student names, and summarizes
-results at the level of the session and preferred student name.
+  by speaker for all class sessions (and placeholders for missing sections),
+  including customized student names.
+
+  summary metrics by speaker for all class sessions (and placeholders for
+  missing sections), including customized student names, and summarizes
+  results at the level of the session and preferred student name.
+
+
+# Create a simple sample data frame for testing
+sample_data <- tibble::tibble(
+  section = c("A", "A", "B"),
+  preferred_name = c("John Smith", "Jane Doe", "Bob Wilson"),
+  n = c(5, 3, 2),
+  duration = c(300, 180, 120),
+  wordcount = c(500, 300, 200)
+)
+
+# Test the function with the sample data
+make_transcripts_session_summary_df(sample_data)}
 }
 \description{
 This function creates a tibble from the provided tibble containing session
@@ -23,47 +34,3 @@ details and summary metrics by speaker for all class sessions (and
 placeholders for missing sections), including customized student names, and
 summarizes results at the level of the session and preferred student name.
 }
-\keyword{"A",}
-\keyword{"B"),}
-\keyword{"Bob}
-\keyword{"Jane}
-\keyword{#}
-\keyword{)}
-\keyword{120),}
-\keyword{180,}
-\keyword{2),}
-\keyword{200)}
-\keyword{3,}
-\keyword{300,}
-\keyword{<-}
-\keyword{=}
-\keyword{Create}
-\keyword{Doe",}
-\keyword{Smith",}
-\keyword{Test}
-\keyword{Wilson"),}
-\keyword{a}
-\keyword{c("A",}
-\keyword{c("John}
-\keyword{c(300,}
-\keyword{c(5,}
-\keyword{c(500,}
-\keyword{data}
-\keyword{deprecated}
-\keyword{duration}
-\keyword{for}
-\keyword{frame}
-\keyword{function}
-\keyword{internal}
-\keyword{make_transcripts_session_summary_df(sample_data)}
-\keyword{n}
-\keyword{preferred_name}
-\keyword{sample}
-\keyword{sample_data}
-\keyword{section}
-\keyword{simple}
-\keyword{testing}
-\keyword{the}
-\keyword{tibble::tibble(}
-\keyword{with}
-\keyword{wordcount}

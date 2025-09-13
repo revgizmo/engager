@@ -30,9 +30,6 @@ One of \code{c("stop", "warn")}. Defaults to \code{getOption("zoomstudentengagem
 
 \item{section_names_lookup_file}{Name of the lookup file}
 }
-\value{
-Processed data with privacy applied
-}
 \description{
 Main workflow function for privacy-first name matching. Implements two-stage
 processing: Stage 1 (unmasked matching in memory) and Stage 2 (privacy masking

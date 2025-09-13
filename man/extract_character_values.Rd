@@ -9,11 +9,7 @@ extract_character_values(data)
 \arguments{
 \item{data}{Data object to extract character values from}
 }
-\value{
-Character vector of all character values found
-}
 \description{
 Internal function to extract all character values from various data types
 for privacy validation.
 }
-\keyword{internal}

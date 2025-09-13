@@ -72,4 +72,3 @@ write_metrics(results, "my_analysis_results.csv")
 \code{\link{create_name_lookup}} for creating name matching data
 \code{\link{write_metrics}} for exporting analysis results
 }
-\keyword{internal}

@@ -14,11 +14,9 @@ the raw comments from the Zoom recording transcript contain 2 consecutive
 comments from the same speaker, and the time between the end of the first
 comment and start of the second comment is less than \code{max_pause_sec}
 seconds, then the comments will be consolidated.  If the time between the
-comments is larger, they will not be consolidated. Defaults to 1.}
-}
-\value{
-A tibble containing consolidated comments from a Zoom recording
-transcript.
+comments is larger, they will not be consolidated. Defaults to 1.
+
+transcript.}
 }
 \description{
 Take a tibble containing the comments from a Zoom recording transcript and return a tibble

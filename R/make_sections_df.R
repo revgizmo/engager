@@ -2,24 +2,16 @@
 #'
 #' This function creates a tibble that includes rows for each section (grouped by dept and course number) and student
 #' count in each.
-#' @keywords sections
-#'
-#' @param roster_df A tibble listing the students enrolled in the class or classes.
 #'   Must contain the following columns:
 #'   - dept: character
 #'   - course: character
 #'   - section: character
 #'
-#' @return A tibble with the following columns:
 #'   - dept: character
 #'   - course: character
 #'   - section: character
 #'   - n: integer (count of students in each section)
-#' @keywords internal
-# @export
-#' @keywords deprecated
 #'
-# @examples
 # # Load a sample roster from the package's extdata directory
 # roster_file <- system.file("extdata/roster.csv", package = "engager")
 # roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)

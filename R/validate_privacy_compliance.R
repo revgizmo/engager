@@ -4,19 +4,12 @@
 #' masking is enabled. This function performs exact matching to detect privacy
 #' violations and stops processing if real names are found.
 #'
-#' @param data Data object to validate (data.frame, tibble, or list)
-#' @param privacy_level Privacy level to validate against. One of
 #'   `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
 #'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
-#' @param real_names Character vector of real names to check against.
 #'   If NULL, uses common name patterns to detect potential violations.
-#' @param stop_on_violation Logical, whether to stop with error on privacy violation.
 #'   Defaults to TRUE for maximum privacy protection.
 #'
-#' @return TRUE if compliant, error if violation found and stop_on_violation = TRUE
-#' @export
 #'
-#' @examples
 #' # Validate privacy compliance
 #' df <- tibble::tibble(
 #'   name = c("Student_01", "Student_02"),
@@ -98,10 +91,7 @@ validate_privacy_compliance <- function(data = NULL,
 #' Internal function to extract all character values from various data types
 #' for privacy validation.
 #'
-#' @param data Data object to extract character values from
 #'
-#' @return Character vector of all character values found
-#' @keywords internal
 extract_character_values <- function(data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -139,12 +129,7 @@ extract_character_values <- function(data) {
 #' Internal function to detect privacy violations by checking for real names
 #' in character values.
 #'
-#' @param character_values Character vector to check
-#' @param real_names Specific real names to check against (optional)
-#' @param privacy_level Privacy level for validation
 #'
-#' @return Character vector of detected violations
-#' @keywords internal
 detect_privacy_violations <- function(character_values, real_names, privacy_level) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

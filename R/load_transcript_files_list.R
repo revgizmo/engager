@@ -13,33 +13,21 @@
 #'    (or whatever path you identify in the `data_folder` and
 #'    `transcripts_folder` parameters).
 #'
-#' @param data_folder Overall data folder for your recordings and data. Defaults
 #'   to `data`
-#' @param transcripts_folder specific subfolder of the data folder where you
 #'   will store the cloud recording csvs and transcripts
-#' @param transcript_files_names_pattern REGEX pattern used to match the
 #'   transcript file names. Defaults to `GMT\\d{8}-\\d{6}_Recording`
-#' @param dt_extract_pattern REGEX pattern used to extract the date of the
 #'   transcript from the transcript file name. Defaults to `(?<=GMT)\\d{8}`
-#' @param trnscrptflxtnsnpttrn REGEX pattern used to identify
 #'   transcript files (as opposed to chat or closed caption files). Defaults to
 #'   `.transcript`
-#' @param clsdcptnflxtnsnpttrn  REGEX pattern used to identify
 #'   closed caption files (as opposed to chat or transcript files). Defaults to
 #'   `.cc`
-#' @param recording_start_pattern REGEX pattern used to extract the recording
 #'   start time of the transcript from the transcript file name. Defaults to
 #'   `(?<=GMT)\\d{8}-\\d{6}`
-#' @param recording_start_format Pattern used to parse the format of the
 #'   recording start time of the transcript. Defaults to `\%Y\%m\%d-\%H\%M\%S`
-#' @param start_time_local_tzone Local time zone of the recording start time of
 #'   the transcript. Defaults to `America/Los_Angeles`
 #'
-#' @return A tibble listing the transcript files from the zoom recordings
 #'   loaded from the cloud recording csvs and transcripts.
-#' @export
 #'
-#' @examples
 #' load_transcript_files_list()
 load_transcript_files_list <-
   function(data_folder = ".",

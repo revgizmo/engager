@@ -6,13 +6,13 @@
 \usage{
 make_metrics_lookup_df()
 }
-\value{
-A tibble with two columns containing metric definitions:
-\describe{
-\item{metric}{Character. The metric label used in the package (e.g., "session_ct", "duration")}
-\item{description}{Character. A human-readable description of what the metric measures}
+\description{
+Creates a tibble describing all engagement metrics used in the analysis.
+This function returns a comprehensive lookup table with metric labels and their
+descriptions, which are used throughout the package for reporting, plotting,
+and documentation purposes.
 }
-
+\details{
 The following metrics are included:
 \itemize{
 \item \code{session_ct}: Number of sessions in which Zoom captured a verbal comment
@@ -25,34 +25,12 @@ The following metrics are included:
 \item \code{wpm}: Average words per minute within verbal comments captured by Zoom
 }
 }
-\description{
-Creates a tibble describing all engagement metrics used in the analysis.
-This function returns a comprehensive lookup table with metric labels and their
-descriptions, which are used throughout the package for reporting, plotting,
-and documentation purposes.
+\section{Use in plotting functions}{
+sample <- tibble::tibble(
+section = c("A", "A"),
+preferred_name = c("Alice", "Bob"),
+session_ct = c(3, 5)
+)
+plot_users(sample, metric = "session_ct", metrics_lookup_df = metrics_lookup)
 }
-\keyword{"A"),}
-\keyword{"Bob"),}
-\keyword{"session_ct",}
-\keyword{#}
-\keyword{)}
-\keyword{5)}
-\keyword{<-}
-\keyword{=}
-\keyword{Use}
-\keyword{c("A",}
-\keyword{c("Alice",}
-\keyword{c(3,}
-\keyword{functions}
-\keyword{in}
-\keyword{internal}
-\keyword{metric}
-\keyword{metrics_lookup)}
-\keyword{metrics_lookup_df}
-\keyword{plot_users(sample,}
-\keyword{plotting}
-\keyword{preferred_name}
-\keyword{sample}
-\keyword{section}
-\keyword{session_ct}
-\keyword{tibble::tibble(}
+

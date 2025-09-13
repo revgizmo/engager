@@ -13,10 +13,6 @@ create_name_lookup(transcript_names, roster_names, name_mappings)
 
 \item{name_mappings}{Data frame containing name mappings}
 }
-\value{
-Data frame with name lookup information
-}
 \description{
 Internal function to create a lookup table for name matching.
 }
-\keyword{internal}

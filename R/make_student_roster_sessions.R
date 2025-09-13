@@ -4,17 +4,11 @@
 #' in the class or classes (`roster_small_df`) and a tibble of class sessions with corresponding transcript
 #'   files or placeholders for cancelled classes (`transcripts_list_df`).
 
-#' @param transcripts_list_df A tibble listing the class sessions with corresponding transcript
 #'   files or placeholders for cancelled classes.
-#' @param roster_small_df A tibble listing the students enrolled in the class or classes with a
 #'   small subset of the roster columns.
 #'
-#' @return A tibble listing the students enrolled in the class or classes, with rows for each recorded class section for
 #' each student.
-#' @keywords internal
-# @export
 #'
-# @examples
 # # Load a sample roster from the package's extdata directory
 # roster_file <- system.file("extdata/roster.csv", package = "engager")
 # roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)

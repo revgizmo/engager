@@ -11,10 +11,6 @@ find_roster_match(transcript_name, roster_names)
 
 \item{roster_names}{Character vector of roster names}
 }
-\value{
-List with match information or NULL if no match
-}
 \description{
 Internal function to find a matching name in the roster.
 }
-\keyword{internal}

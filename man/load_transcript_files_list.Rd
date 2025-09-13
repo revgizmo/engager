@@ -45,11 +45,9 @@ start time of the transcript from the transcript file name. Defaults to
 recording start time of the transcript. Defaults to \verb{\\\%Y\\\%m\\\%d-\\\%H\\\%M\\\%S}}
 
 \item{start_time_local_tzone}{Local time zone of the recording start time of
-the transcript. Defaults to \code{America/Los_Angeles}}
-}
-\value{
-A tibble listing the transcript files from the zoom recordings
-loaded from the cloud recording csvs and transcripts.
+the transcript. Defaults to \code{America/Los_Angeles}
+
+loaded from the cloud recording csvs and transcripts.}
 }
 \description{
 This function creates a tibble from a provided folder including

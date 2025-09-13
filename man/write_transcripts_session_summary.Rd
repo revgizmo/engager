@@ -17,10 +17,6 @@ write_transcripts_session_summary(
 
 \item{transcripts_session_summary_file}{File name of the csv file. Defaults to 'transcripts_session_summary.csv'}
 }
-\value{
-Invisibly returns the written tibble
-}
 \description{
 Deprecated: use \code{write_metrics(data, what = 'session_summary', path = ...)} instead.
 }
-\keyword{internal}

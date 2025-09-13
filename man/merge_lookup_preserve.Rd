@@ -11,9 +11,6 @@ merge_lookup_preserve(existing_df = NULL, add_df = NULL)
 
 \item{add_df}{Data frame. Additional rows to merge (will be normalized).}
 }
-\value{
-A merged, normalized, de-duplicated data frame.
-}
 \description{
 Merges an additional lookup data frame into an existing one while
 preserving existing rows. New information fills only missing fields.

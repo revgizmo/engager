@@ -1,19 +1,13 @@
 #' Mask User Names by Metric
 #'
-#' @param df a tibble that summarizes results at the level of the class section
 #'   and student.  This tibble will have the student names replaced by the
 #'   ranking of the student.  If a `target_student` preferred name is provided,
 #'   that student's name will be bolded using markdown syntax and not masked.
-#' @param metric Label of the metric to use to order the students. Defaults to
 #'   'session_ct'.
-#' @param target_student preferred student name of an individual student that
 #'   will be bolded using markdown syntax and not masked. Defaults to ''.
 #'
-#' @return a tibble that summarizes results at the level of the class section
 #'   and student, with student names masked by the ranking of the student.
-#' @export
 #'
-#' @examples
 #' # Create sample transcripts summary data
 #' sample_summary <- tibble::tibble(
 #'   section = c("101.A", "101.A", "101.A"),

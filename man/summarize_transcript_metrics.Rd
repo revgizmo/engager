@@ -51,11 +51,9 @@ of calling \code{process_zoom_transcript()}.}
 
 \item{comments_format}{Character string specifying how to format the comments column.
 Options: "list" (default, preserves list structure), "text" (semicolon-separated text),
-or "count" (just the number of comments). Defaults to "list".}
-}
-\value{
-A tibble containing summary metrics by speaker from a Zoom recording
-transcript
+or "count" (just the number of comments). Defaults to "list".
+
+transcript}
 }
 \description{
 Process a Zoom recording transcript and return summary metrics by speaker

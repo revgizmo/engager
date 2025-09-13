@@ -1,0 +1,27 @@
+ℹ Updating engager documentation
+ℹ Loading engager
+Welcome to engager!
+- Start with: vignette('getting-started', package='engager')
+- Core functions: vignette('essential-functions', package='engager')
+- Sample data: system.file('extdata/transcripts', package='engager')
+- Quick example: example(summarize_transcript_metrics)
+
+To suppress this message: options(engager.show_startup = FALSE)
+✖ make_students_only_transcripts_summary_df.R:13: @keywords has mismatched
+  braces or quotes.
+Writing 'add_dead_air_rows.Rd'
+Writing 'create_session_mapping.Rd'
+Writing 'validate_ethical_use.Rd'
+Writing 'create_ethical_use_report.Rd'
+Writing 'audit_ethical_usage.Rd'
+Writing 'generate_ferpa_report.Rd'
+Writing 'check_data_retention_policy.Rd'
+Writing 'join_transcripts_list.Rd'
+Writing 'load_section_names_lookup.Rd'
+Writing 'make_blank_cancelled_classes_df.Rd'
+Writing 'make_blank_section_names_lookup_csv.Rd'
+Writing 'make_roster_small.Rd'
+Writing 'make_sections_df.Rd'
+Writing 'make_semester_df.Rd'
+Writing 'make_transcripts_session_summary_df.Rd'
+Writing 'write_engagement_metrics.Rd'

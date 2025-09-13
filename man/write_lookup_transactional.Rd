@@ -11,9 +11,6 @@ write_lookup_transactional(df = NULL, path = NULL)
 
 \item{path}{Character. Target CSV path.}
 }
-\value{
-Invisibly returns the path written.
-}
 \description{
 Writes the lookup data frame to CSV with a timestamped backup of any
 existing file and an atomic replace (write to temp, then rename).

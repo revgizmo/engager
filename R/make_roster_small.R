@@ -2,9 +2,6 @@
 #'
 #' This function creates a tibble that includes rows for each students enrolled
 #' in the class or classes, with a small subset of the roster columns.
-#' @keywords roster
-#'
-#' @param roster_df A tibble listing the students enrolled in the class or
 #'   classes with a small subset of the roster columns. Must contain the following columns:
 #'   - student_id: character
 #'   - first_last: character
@@ -13,13 +10,8 @@
 #'   - course: character
 #'   - section: character
 #'
-#' @return A tibble listing the students enrolled in the class or classes with a
 #'   small subset of the roster columns.
-#' @keywords internal
-# @export
-#' @keywords deprecated
 #'
-# @examples
 # # Load a sample roster from the package's extdata directory
 # roster_file <- system.file("extdata/roster.csv", package = "engager")
 # roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)

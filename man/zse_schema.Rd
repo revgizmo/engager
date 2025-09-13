@@ -14,4 +14,4 @@ zse_schema
 These are documented here for reference and to be used by callers/tests.
 Keep them minimal; adjust as the package evolves.
 }
-\keyword{internal}
+\keyword{datasets}

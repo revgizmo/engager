@@ -26,9 +26,6 @@ create_ethical_use_report(
 
 \item{include_guidance}{Whether to include detailed guidance}
 }
-\value{
-A character string containing the formatted ethical use report
-}
 \description{
 Generates a comprehensive ethical use report for institutional review
 and documentation purposes.
@@ -44,4 +41,3 @@ report <- create_ethical_use_report(
 )
 cat(report)
 }
-\keyword{deprecated}

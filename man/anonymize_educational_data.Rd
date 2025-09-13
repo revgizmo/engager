@@ -23,9 +23,6 @@ anonymize_educational_data(
 
 \item{aggregation_level}{Level for aggregation. One of \code{c("individual", "section", "course", "institution")}}
 }
-\value{
-The anonymized data frame with the same structure as input
-}
 \description{
 Advanced anonymization for educational data that preserves data utility
 while ensuring FERPA compliance.

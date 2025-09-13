@@ -13,24 +13,16 @@
 #' `zoomstudentengagement.privacy_level`, which is set to "mask" on package
 #' load. Use `set_privacy_defaults()` to change at runtime.
 #'
-#' @param x An object to make privacy-safe. Currently supports `data.frame` or
 #'   `tibble`. Other object types are returned unchanged.
-#' @param privacy_level Privacy level to apply. One of `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
 #'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
 #'   **WARNING**: Setting to "none" disables privacy protection and may violate
 #'   FERPA requirements.
-#' @param id_columns Character vector of column names to treat as identifiers.
 #'   Defaults to common name/identifier columns.
-#' @param audit_log Whether to log privacy operations for compliance tracking.
 #'   Defaults to TRUE for maximum transparency.
 #'
-#' @return The object with privacy rules applied. For data frames, the same
 #'   structure is preserved with identifying fields masked when appropriate.
 #'
-#' @seealso [set_privacy_defaults()], [validate_ethical_use()]
-#' @export
 #'
-#' @examples
 #' # Data frame masking example
 #' df <- tibble::tibble(
 #'   section = c("A", "A", "B"),
@@ -192,14 +184,7 @@ apply_privacy_masking <- function(x, id_columns, privacy_level, audit_log) {
 #' This function maintains a record of privacy-related operations for institutional
 #' review and FERPA compliance.
 #'
-#' @param operation Type of operation performed
-#' @param privacy_level Privacy level used
-#' @param timestamp When the operation occurred
-#' @param data_rows Number of rows processed (if applicable)
-#' @param data_columns Number of columns processed (if applicable)
-#' @param warning_issued Whether a warning was issued
 #'
-#' @keywords internal
 log_privacy_operation <- function(operation,
                                   privacy_level,
                                   timestamp = Sys.time(),
