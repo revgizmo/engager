@@ -149,6 +149,7 @@ calc_content_similarity_matrix <- function(existing_files, existing_names,
 #' \code{\link{process_zoom_transcript}} for processing individual transcripts,
 #' \code{\link{summarize_transcript_metrics}} for analyzing transcript content
 #'
+#' @export
 detect_duplicate_transcripts <- function(
     transcript_list = NULL,
     data_folder = ".",

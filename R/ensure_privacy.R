@@ -160,7 +160,7 @@ apply_privacy_masking <- function(x, id_columns, privacy_level, audit_log) {
     }
     labels <- paste(
       "Student",
-      stringr::str_pad(seq_along(unique_vals), width = 2, pad = "0")
+      sprintf("%02d", seq_along(unique_vals))
     )
     mapping <- stats::setNames(labels, unique_vals)
     to_mask <- !is.na(chr) & nzchar(chr)

@@ -27,7 +27,7 @@ plot_users <- function(
 
   # Apply privacy masking if needed
   if (privacy_level != "none") {
-    data <- apply_privacy_masking(data, privacy_level, student_col, mask_by)
+    data <- apply_plot_privacy_masking(data, privacy_level, student_col, mask_by)
   }
 
   # Create the plot
@@ -65,8 +65,18 @@ auto_detect_student_column <- function(data) {
 
 # Helper function to validate inputs
 validate_plot_users_inputs <- function(data, metric, student_col) {
-  if (is.null(data) || nrow(data) == 0) {
-    stop("Data must be provided and non-empty")
+  if (is.null(data)) {
+    stop("Data must be provided")
+  }
+  
+  # Handle empty data gracefully
+  if (nrow(data) == 0) {
+    # Return empty data with required columns
+    return(list(
+      data = data,
+      metric = metric,
+      student_col = student_col
+    ))
   }
 
   if (!metric %in% names(data)) {
@@ -80,8 +90,8 @@ validate_plot_users_inputs <- function(data, metric, student_col) {
   return(list(data = data, metric = metric, student_col = student_col))
 }
 
-# Helper function to apply privacy masking
-apply_privacy_masking <- function(data, privacy_level, student_col, mask_by) {
+# Helper function to apply privacy masking for plots
+apply_plot_privacy_masking <- function(data, privacy_level, student_col, mask_by) {
   # Ensure privacy_level is a single value
   privacy_level <- privacy_level[1]
   

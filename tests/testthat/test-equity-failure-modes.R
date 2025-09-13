@@ -129,7 +129,7 @@ test_that("equity functions handle invalid metric names", {
     {
       plot_users(test_data$extreme_differences, metric = "invalid_metric")
     },
-    "Metric 'invalid_metric' not found in data"
+    "Metric column 'invalid_metric' not found in data"
   )
 
   # Test with NULL metric - should error due to match.arg

@@ -2,6 +2,7 @@
 
 export(analyze_transcripts)
 export(consolidate_transcript)
+export(detect_duplicate_transcripts)
 export(ensure_privacy)
 export(load_zoom_transcript)
 export(plot_users)
