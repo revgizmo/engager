@@ -17,13 +17,7 @@
 #
 # CRAN compliance: global variables handled in package file
 add_dead_air_rows <- function(df = NULL, dead_air_name = "dead_air") {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'add_dead_air_rows' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
+  # This function is used by process_zoom_transcript() and is kept for compatibility
 
   # Removed local NULL assignments; handled by globalVariables above.
 

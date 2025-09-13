@@ -8,15 +8,7 @@
 #'
 # make_blank_cancelled_classes_df()
 make_blank_cancelled_classes_df <- function() {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  if (Sys.getenv("TESTTHAT") != "true") {
-    warning(
-      "Function 'make_blank_cancelled_classes_df' is deprecated and will be removed in the next version. ",
-      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-      call. = FALSE
-    )
-  }
+  # This function is used by load_cancelled_classes() and is kept for compatibility
 
   # Use base R operations instead of dplyr to avoid segmentation fault
   csv_content <- paste0(

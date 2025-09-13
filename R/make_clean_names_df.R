@@ -63,13 +63,7 @@ make_clean_names_df <- function(data_folder = ".",
                                 section_names_lookup_file = "section_names_lookup.csv",
                                 transcripts_metrics_df = NULL,
                                 roster_sessions = NULL) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'make_clean_names_df' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
+  # This function is used by name matching workflows and is kept for compatibility
 
 
   # Input validation
