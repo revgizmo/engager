@@ -19,9 +19,9 @@
 # @export
 #' @keywords deprecated
 #'
-#' @examples
-#' add_dead_air_rows(df = "NULL")
-#'
+## @examples
+# add_dead_air_rows(df = "NULL")
+#
 # CRAN compliance: global variables handled in package file
 add_dead_air_rows <- function(df = NULL, dead_air_name = "dead_air") {
   # DEPRECATED: This function will be removed in the next version
