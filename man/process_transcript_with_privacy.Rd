@@ -11,32 +11,23 @@ process_transcript_with_privacy(
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask")
 )
 }
-\arguments{
-\item{transcript_data}{Data frame containing transcript data}
-
-\item{roster_data}{Data frame containing roster data}
-
-\item{name_mappings}{Data frame containing name mappings}
-
-\item{privacy_level}{Privacy level for processing}
-}
 \description{
 Processes transcript data with privacy-aware name matching. This function
 implements the two-stage approach: matching with real names in memory,
 then applying privacy masking to outputs.
 }
-\examples{
-# Process transcript with privacy
+\section{Process transcript with privacy}{
 transcript_data <- tibble::tibble(
-  transcript_name = c("Dr. Smith", "John Doe"),
-  message = c("Hello class", "Good morning")
+transcript_name = c("Dr. Smith", "John Doe"),
+message = c("Hello class", "Good morning")
 )
 roster_data <- tibble::tibble(
-  first_name = c("John"),
-  last_name = c("Doe")
+first_name = c("John"),
+last_name = c("Doe")
 )
 processed <- process_transcript_with_privacy(
-  transcript_data = transcript_data,
-  roster_data = roster_data
+transcript_data = transcript_data,
+roster_data = roster_data
 )
 }
+

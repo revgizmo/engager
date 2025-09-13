@@ -15,31 +15,17 @@ create_session_mapping(
   verbose = FALSE
 )
 }
-\arguments{
-\item{zoom_recordings_df}{A tibble containing Zoom recording information with
-columns: ID, Topic, Start Time}
-
-\item{course_info_df}{A tibble containing course information created by
-\code{create_course_info()} with columns: dept, course, section, instructor,
-session_length_hours}
-
-\item{output_file}{Optional file path to save the mapping CSV file}
-
-\item{semester_start_mdy}{Semester start date in "MMM DD, YYYY" format}
-
-\item{auto_assign_patterns}{List of patterns for automatic assignment}
-
-\item{interactive}{Whether to enable interactive assignment for unmatched recordings
-(prompts only shown in interactive sessions). In non-interactive sessions,
-a quiet fallback is used. Default is FALSE.}
-
-\item{verbose}{Logical flag to enable diagnostic output. Defaults to FALSE.}
-}
 \description{
 This function creates a mapping between Zoom recordings and course information
 by matching recording topics with course patterns.
 }
-\examples{
+\details{
+columns: ID, Topic, Start Time
+\code{create_course_info()} with columns: dept, course, section, instructor,
+session_length_hours
+(prompts only shown in interactive sessions). In non-interactive sessions,
+a quiet fallback is used. Default is FALSE.
+
 \dontrun{
 # Create session mapping
 session_mapping <- create_session_mapping(

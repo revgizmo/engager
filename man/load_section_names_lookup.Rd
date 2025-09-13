@@ -10,21 +10,14 @@ load_section_names_lookup(
   section_names_lookup_col_types = "ccccccccc"
 )
 }
-\arguments{
-\item{data_folder}{overall data folder for your recordings}
-
-\item{names_lookup_file}{File name of the csv file of customized student names by section
-Defaults to 'section_names_lookup.csv'}
-
-\item{section_names_lookup_col_types}{column types in the csv file of customized student names by section. Defaults
-to 'cccccccc'}
-}
 \description{
 This function creates a tibble from a provided file of customized student names by section.
 If the file does not exist, the function prints an error and creates an empty tibble using
 \code{make_blank_section_names_lookup_csv()}.
 }
-\examples{
-load_section_names_lookup()
+\details{
+Defaults to 'section_names_lookup.csv'
+to 'cccccccc'
 
+load_section_names_lookup()
 }

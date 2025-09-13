@@ -10,14 +10,9 @@ write_transcripts_summary(
   transcripts_summary_file = "transcripts_summary.csv"
 )
 }
-\arguments{
-\item{transcripts_summary_df}{a tibble that summarizes results at the level of the class section and preferred
-student name.}
-
-\item{data_folder}{Overall data folder for your recordings and data. Defaults to 'data'}
-
-\item{transcripts_summary_file}{File name of the csv file to write. Defaults to 'transcripts_summary.csv'}
-}
 \description{
 Deprecated: use \code{write_metrics(data, what = 'summary', path = ...)} instead.
+}
+\details{
+student name.
 }

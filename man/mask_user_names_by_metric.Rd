@@ -10,40 +10,35 @@ mask_user_names_by_metric(
   target_student = ""
 )
 }
-\arguments{
-\item{df}{a tibble that summarizes results at the level of the class section
+\description{
 and student.  This tibble will have the student names replaced by the
 ranking of the student.  If a \code{target_student} preferred name is provided,
-that student's name will be bolded using markdown syntax and not masked.}
-
-\item{metric}{Label of the metric to use to order the students. Defaults to
-'session_ct'.}
-
-\item{target_student}{preferred student name of an individual student that
+that student's name will be bolded using markdown syntax and not masked.
+'session_ct'.
 will be bolded using markdown syntax and not masked. Defaults to ''.
-
-and student, with student names masked by the ranking of the student.}
 }
-\description{
-Mask User Names by Metric
+\details{
+and student, with student names masked by the ranking of the student.
 }
-\examples{
-# Create sample transcripts summary data
+\section{Create sample transcripts summary data}{
 sample_summary <- tibble::tibble(
-  section = c("101.A", "101.A", "101.A"),
-  preferred_name = c("John Smith", "Jane Doe", "Bob Wilson"),
-  session_ct = c(5, 3, 8),
-  duration = c(300, 180, 480),
-  wordcount = c(500, 300, 800)
+section = c("101.A", "101.A", "101.A"),
+preferred_name = c("John Smith", "Jane Doe", "Bob Wilson"),
+session_ct = c(5, 3, 8),
+duration = c(300, 180, 480),
+wordcount = c(500, 300, 800)
 )
+}
 
-# Mask student names by session count (default metric)
+\section{Mask student names by session count (default metric)}{
 mask_user_names_by_metric(sample_summary)
+}
 
-# Mask student names by duration metric
+\section{Mask student names by duration metric}{
 mask_user_names_by_metric(sample_summary, metric = "duration")
+}
 
-# Highlight a specific student while masking others
+\section{Highlight a specific student while masking others}{
 mask_user_names_by_metric(sample_summary, target_student = "Jane Doe")
 
 \dontrun{
@@ -67,3 +62,4 @@ mask_user_names_by_metric(sample_summary, metric = "duration")
 mask_user_names_by_metric(sample_summary, target_student = "Jane Doe")
 }
 }
+

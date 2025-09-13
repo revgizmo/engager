@@ -6,11 +6,6 @@
 \usage{
 identify_anonymization_columns(data, preserve_columns)
 }
-\arguments{
-\item{data}{Data frame to analyze for PII columns}
-
-\item{preserve_columns}{Character vector of column names to preserve (not anonymize)}
-}
 \description{
 Helper function to identify which columns in a dataset should be anonymized
 based on common PII column names.

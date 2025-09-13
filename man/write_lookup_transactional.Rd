@@ -6,11 +6,6 @@
 \usage{
 write_lookup_transactional(df = NULL, path = NULL)
 }
-\arguments{
-\item{df}{Data frame. The lookup to write (will be normalized).}
-
-\item{path}{Character. Target CSV path.}
-}
 \description{
 Writes the lookup data frame to CSV with a timestamped backup of any
 existing file and an atomic replace (write to temp, then rename).

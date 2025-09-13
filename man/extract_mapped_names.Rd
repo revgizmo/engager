@@ -6,9 +6,6 @@
 \usage{
 extract_mapped_names(name_mappings)
 }
-\arguments{
-\item{name_mappings}{Data frame containing name mappings}
-}
 \description{
 Internal function to extract names from name mappings.
 }

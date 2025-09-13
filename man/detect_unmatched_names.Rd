@@ -11,31 +11,24 @@ detect_unmatched_names(
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask")
 )
 }
-\arguments{
-\item{transcript_data}{Data frame containing transcript data with name columns}
-
-\item{roster_data}{Data frame containing roster data with name columns}
-
-\item{name_mappings}{Data frame containing existing name mappings}
-
-\item{privacy_level}{Privacy level for the session. One of
-\code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
-Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
-}
 \description{
 Identifies names in transcript data that are not matched against roster data
 or existing name mappings. This function works with real names in memory only
 and returns privacy-safe results.
 }
-\examples{
-# Detect unmatched names
+\details{
+\code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
+Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.
+}
+\section{Detect unmatched names}{
 transcript_df <- tibble::tibble(
-  transcript_name = c("Dr. Smith", "John Doe", "Guest1"),
-  course_section = c("101.A", "101.A", "101.A")
+transcript_name = c("Dr. Smith", "John Doe", "Guest1"),
+course_section = c("101.A", "101.A", "101.A")
 )
 roster_df <- tibble::tibble(
-  first_last = c("John Doe", "Jane Smith"),
-  course_section = c("101.A", "101.A")
+first_last = c("John Doe", "Jane Smith"),
+course_section = c("101.A", "101.A")
 )
 unmatched <- detect_unmatched_names(transcript_df, roster_df)
 }
+

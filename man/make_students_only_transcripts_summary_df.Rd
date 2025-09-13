@@ -9,10 +9,6 @@ make_students_only_transcripts_summary_df(
   preferred_name_exclude_cv = c("dead_air", "Instructor Name", "Guests", "unknown")
 )
 }
-\arguments{
-\item{transcripts_session_summary_df}{A tibble that summarizes results at the level of the class section and
-preferred student name.}
-}
 \description{
 This function creates a tibble from summary results at the
 level of the class section and preferred student name after filtering for only the students enrolled in the class.

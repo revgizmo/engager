@@ -6,8 +6,9 @@
 \usage{
 make_roster_small(roster_df = NULL)
 }
-\arguments{
-\item{roster_df}{A tibble listing the students enrolled in the class or
+\description{
+This function creates a tibble that includes rows for each students enrolled
+in the class or classes, with a small subset of the roster columns.
 classes with a small subset of the roster columns. Must contain the following columns:
 \itemize{
 \item student_id: character
@@ -17,10 +18,7 @@ classes with a small subset of the roster columns. Must contain the following co
 \item course: character
 \item section: character
 }
-
-small subset of the roster columns.}
 }
-\description{
-This function creates a tibble that includes rows for each students enrolled
-in the class or classes, with a small subset of the roster columns.
+\details{
+small subset of the roster columns.
 }

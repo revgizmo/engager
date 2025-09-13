@@ -14,28 +14,16 @@ safe_name_matching_workflow(
   section_names_lookup_file = "section_names_lookup.csv"
 )
 }
-\arguments{
-\item{transcript_file_path}{Path to transcript file to process}
-
-\item{roster_data}{Data frame containing roster information}
-
-\item{privacy_level}{Privacy level for processing. One of
-\code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
-Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
-
-\item{unmatched_names_action}{Action to take when unmatched names are found.
-One of \code{c("stop", "warn")}. Defaults to \code{getOption("zoomstudentengagement.unmatched_names_action", "stop")}.}
-
-\item{data_folder}{Data folder for saving lookup files}
-
-\item{section_names_lookup_file}{Name of the lookup file}
-}
 \description{
 Main workflow function for privacy-first name matching. Implements two-stage
 processing: Stage 1 (unmasked matching in memory) and Stage 2 (privacy masking
 for outputs). Provides configuration-driven behavior for unmatched names.
 }
-\examples{
+\details{
+\code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
+Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.
+One of \code{c("stop", "warn")}. Defaults to \code{getOption("zoomstudentengagement.unmatched_names_action", "stop")}.
+
 \dontrun{
 # Default behavior (maximum privacy)
 result <- safe_name_matching_workflow(

@@ -11,15 +11,6 @@ log_ferpa_compliance_check(
   timestamp = Sys.time()
 )
 }
-\arguments{
-\item{compliant}{Whether the data is FERPA compliant}
-
-\item{pii_detected}{Number of PII fields detected}
-
-\item{institution_type}{Type of institution}
-
-\item{timestamp}{When the check was performed}
-}
 \description{
 Internal function to log FERPA compliance checks for audit and institutional
 review purposes.

@@ -12,23 +12,6 @@ ensure_privacy(
   audit_log = TRUE
 )
 }
-\arguments{
-\item{x}{An object to make privacy-safe. Currently supports \code{data.frame} or
-\code{tibble}. Other object types are returned unchanged.}
-
-\item{privacy_level}{Privacy level to apply. One of \code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
-Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.
-\strong{WARNING}: Setting to "none" disables privacy protection and may violate
-FERPA requirements.}
-
-\item{id_columns}{Character vector of column names to treat as identifiers.
-Defaults to common name/identifier columns.}
-
-\item{audit_log}{Whether to log privacy operations for compliance tracking.
-Defaults to TRUE for maximum transparency.
-
-structure is preserved with identifying fields masked when appropriate.}
-}
 \description{
 Applies privacy rules to objects before they are returned, written, or
 plotted. By default, masks personally identifiable information in tabular
@@ -43,16 +26,22 @@ and ensure FERPA compliance.
 The default behavior is controlled by the global option
 \code{zoomstudentengagement.privacy_level}, which is set to "mask" on package
 load. Use \code{set_privacy_defaults()} to change at runtime.
+
+\code{tibble}. Other object types are returned unchanged.
+Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.
+\strong{WARNING}: Setting to "none" disables privacy protection and may violate
+FERPA requirements.
+Defaults to common name/identifier columns.
+Defaults to TRUE for maximum transparency.
+
+structure is preserved with identifying fields masked when appropriate.
 }
-\examples{
-# Data frame masking example
+\section{Data frame masking example}{
 df <- tibble::tibble(
-  section = c("A", "A", "B"),
-  preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz"),
-  session_ct = c(3, 5, 2)
+section = c("A", "A", "B"),
+preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz"),
+session_ct = c(3, 5, 2)
 )
 ensure_privacy(df)
 }
-\seealso{
-\code{\link[=set_privacy_defaults]{set_privacy_defaults()}}, \code{\link[=validate_ethical_use]{validate_ethical_use()}}
-}
+

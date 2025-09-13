@@ -6,13 +6,6 @@
 \usage{
 detect_privacy_violations(character_values, real_names, privacy_level)
 }
-\arguments{
-\item{character_values}{Character vector to check}
-
-\item{real_names}{Specific real names to check against (optional)}
-
-\item{privacy_level}{Privacy level for validation}
-}
 \description{
 Internal function to detect privacy violations by checking for real names
 in character values.

@@ -6,11 +6,6 @@
 \usage{
 ensure_instructor_rows(existing_df = NULL, instructor_name = NULL)
 }
-\arguments{
-\item{existing_df}{Data frame. Existing lookup.}
-
-\item{instructor_name}{Character. Instructor display name.}
-}
 \description{
 Returns a merged lookup that includes instructor rows for a given
 instructor name, preserving all existing rows. No side effects.

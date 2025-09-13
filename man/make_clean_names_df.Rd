@@ -11,17 +11,22 @@ make_clean_names_df(
   roster_sessions = NULL
 )
 }
-\arguments{
-\item{data_folder}{overall data folder for your recordings. Defaults to
-'data'}
-
-\item{section_names_lookup_file}{File name of the csv file of customized
-student names by section Defaults to 'section_names_lookup.csv'}
-
-\item{transcripts_metrics_df}{A tibble containing session details and summary
-metrics by speaker for all class sessions in the tibble provided.}
-
-\item{roster_sessions}{A tibble listing the students enrolled in the class or
+\description{
+This function creates a tibble containing session details and summary metrics
+by speaker for all class sessions (and placeholders for missing sections)
+from the joining of:
+\itemize{
+\item a tibble of customized student names by section (\code{section_names_lookup_file} in the \code{data_folder} folder),
+\item a tibble containing session details and summary metrics by speaker for all class sessions
+(\code{transcripts_metrics_df}), and
+\item a tibble listing the students enrolled in the class or classes, with rows for each recorded class section for each
+student (\code{roster_sessions}) into a single tibble.
+}
+}
+\details{
+'data'
+student names by section Defaults to 'section_names_lookup.csv'
+metrics by speaker for all class sessions in the tibble provided.
 classes, with rows for each recorded class section for each student.
 
 for all class sessions (and placeholders for missing sections), including
@@ -64,17 +69,5 @@ data_folder = "data",
 section_names_lookup_file = "section_names_lookup.csv",
 transcripts_metrics_df = sample_transcripts,
 roster_sessions = sample_roster
-)}
-}
-\description{
-This function creates a tibble containing session details and summary metrics
-by speaker for all class sessions (and placeholders for missing sections)
-from the joining of:
-\itemize{
-\item a tibble of customized student names by section (\code{section_names_lookup_file} in the \code{data_folder} folder),
-\item a tibble containing session details and summary metrics by speaker for all class sessions
-(\code{transcripts_metrics_df}), and
-\item a tibble listing the students enrolled in the class or classes, with rows for each recorded class section for each
-student (\code{roster_sessions}) into a single tibble.
-}
+)
 }

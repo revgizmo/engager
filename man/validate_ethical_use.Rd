@@ -12,36 +12,28 @@ validate_ethical_use(
   check_irb = TRUE
 )
 }
-\arguments{
-\item{usage_context}{Context of usage. One of \code{c("research", "teaching", "assessment", "intervention", "other")}}
-
-\item{data_scope}{Scope of data being analyzed. One of \code{c("individual", "section", "course", "institution", "multi_institution")}}
-
-\item{purpose_statement}{Optional statement describing the intended use}
-
-\item{check_consent}{Whether to check for consent documentation}
-
-\item{check_irb}{Whether to check for IRB approval documentation
+\description{
+Validates that the package is being used for educational purposes that promote
+participation equity rather than surveillance. This function checks usage patterns
+and provides guidance for ethical implementation.
+}
+\details{
+"multi_institution")`
 \itemize{
 \item \code{ethically_compliant}: Logical indicating overall ethical compliance
 \item \code{risk_level}: Risk level assessment (low, medium, high, critical)
 \item \code{recommendations}: Character vector of ethical recommendations
 \item \code{required_documentation}: Required documentation for compliance
 \item \code{institutional_guidance}: Institution-specific guidance
-}}
 }
-\description{
-Validates that the package is being used for educational purposes that promote
-participation equity rather than surveillance. This function checks usage patterns
-and provides guidance for ethical implementation.
 }
-\examples{
-# Validate ethical use for research
+\section{Validate ethical use for research}{
 validation <- validate_ethical_use(
-  usage_context = "research",
-  data_scope = "section",
-  purpose_statement = "Analyzing participation equity to improve teaching methods"
+usage_context = "research",
+data_scope = "section",
+purpose_statement = "Analyzing participation equity to improve teaching methods"
 )
 print(validation$ethically_compliant)
 print(validation$recommendations)
 }
+

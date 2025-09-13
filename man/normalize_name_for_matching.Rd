@@ -6,9 +6,6 @@
 \usage{
 normalize_name_for_matching(names)
 }
-\arguments{
-\item{names}{Character vector of names to normalize}
-}
 \description{
 Internal function to normalize names for consistent matching.
 Handles common variations like case, punctuation, and formatting.

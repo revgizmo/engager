@@ -9,13 +9,14 @@ make_student_roster_sessions(
   roster_small_df = NULL
 )
 }
-\arguments{
-\item{transcripts_list_df}{A tibble listing the class sessions with corresponding transcript
-files or placeholders for cancelled classes.}
-
-\item{roster_small_df}{A tibble listing the students enrolled in the class or classes with a
+\description{
+This function creates a tibble from a provided tibble students enrolled
+in the class or classes (\code{roster_small_df}) and a tibble of class sessions with corresponding transcript
+files or placeholders for cancelled classes (\code{transcripts_list_df}).
+files or placeholders for cancelled classes.
 small subset of the roster columns.
-
+}
+\details{
 each student.
 
 make_student_roster_sessions(
@@ -25,10 +26,5 @@ df_transcript_files = load_transcript_files_list(),
 df_cancelled_classes = load_cancelled_classes()
 ),
 roster_small_df = make_roster_small(roster_df = roster_df)
-)}
-}
-\description{
-This function creates a tibble from a provided tibble students enrolled
-in the class or classes (\code{roster_small_df}) and a tibble of class sessions with corresponding transcript
-files or placeholders for cancelled classes (\code{transcripts_list_df}).
+)
 }

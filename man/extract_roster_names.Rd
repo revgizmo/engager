@@ -6,9 +6,6 @@
 \usage{
 extract_roster_names(roster_data)
 }
-\arguments{
-\item{roster_data}{Data frame containing roster data}
-}
 \description{
 Internal function to extract names from roster data.
 }

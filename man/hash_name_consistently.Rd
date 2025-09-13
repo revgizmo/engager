@@ -10,13 +10,6 @@ hash_name_consistently(
   normalize_names = TRUE
 )
 }
-\arguments{
-\item{names}{Character vector of names to hash}
-
-\item{salt}{Character string to add to hashes for security (default: package name)}
-
-\item{normalize_names}{Logical, whether to normalize names before hashing (default: TRUE)}
-}
 \description{
 Creates consistent hashes for names to enable matching while maintaining privacy.
 This function normalizes names and generates deterministic hashes that can be

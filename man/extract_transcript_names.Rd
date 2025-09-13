@@ -6,9 +6,6 @@
 \usage{
 extract_transcript_names(transcript_data)
 }
-\arguments{
-\item{transcript_data}{Data frame containing transcript data}
-}
 \description{
 Internal function to extract names from transcript data.
 }

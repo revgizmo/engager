@@ -6,13 +6,6 @@
 \usage{
 apply_name_matching(transcript_data, name_lookup, roster_data)
 }
-\arguments{
-\item{transcript_data}{Data frame containing transcript data}
-
-\item{name_lookup}{Data frame with name lookup information}
-
-\item{roster_data}{Data frame containing roster data}
-}
 \description{
 Internal function to apply name matching to transcript data.
 }

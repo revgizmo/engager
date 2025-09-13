@@ -6,22 +6,23 @@
 \usage{
 make_sections_df(roster_df = NULL)
 }
-\arguments{
-\item{roster_df}{A tibble listing the students enrolled in the class or classes.
+\description{
+This function creates a tibble that includes rows for each section (grouped by dept and course number) and student
+count in each.
 Must contain the following columns:
 \itemize{
 \item dept: character
 \item course: character
 \item section: character
+}
+}
+\details{
+\itemize{
 \item dept: character
 \item course: character
 \item section: character
 \item n: integer (count of students in each section)
 }
 
-make_sections_df(roster_df = roster_df)}
-}
-\description{
-This function creates a tibble that includes rows for each section (grouped by dept and course number) and student
-count in each.
+make_sections_df(roster_df = roster_df)
 }

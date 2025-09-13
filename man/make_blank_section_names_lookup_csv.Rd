@@ -12,7 +12,3 @@ This function generates a properly structured data frame that can be filled in
 to map between different name formats (preferred names, formal names, transcript names)
 for students across different course sections.
 }
-\details{
-# The template can then be filled in and saved as a CSV file
-# for use with make_clean_names_df()
-}

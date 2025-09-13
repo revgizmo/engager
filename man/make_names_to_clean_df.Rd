@@ -6,14 +6,6 @@
 \usage{
 make_names_to_clean_df(clean_names_df = NULL)
 }
-\arguments{
-\item{clean_names_df}{A tibble containing session details and summary metrics
-by speaker for all class sessions (and placeholders for missing sections),
-including customized student names.
-
-by speaker students with transcript recordings but no matching
-student id.}
-}
 \description{
 This function creates a tibble from the provided tibble containing session details
 and summary metrics by speaker for all class sessions (and placeholders for
@@ -28,4 +20,10 @@ If any names except "dead_air", "unknown", or the instructor's name are listed, 
 \item If appropriate, update \code{section_names_lookup.csv} with a corresponding \code{preferred_name}
 \item Any guest students, label them as "Guests"
 }
+
+by speaker for all class sessions (and placeholders for missing sections),
+including customized student names.
+
+by speaker students with transcript recordings but no matching
+student id.
 }

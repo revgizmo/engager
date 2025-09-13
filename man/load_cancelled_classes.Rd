@@ -11,25 +11,17 @@ load_cancelled_classes(
   write_blank_cancelled_classes = FALSE
 )
 }
-\arguments{
-\item{data_folder}{Overall data folder for your recordings and data. Defaults
-to 'data'}
-
-\item{cancelled_classes_file}{File name of the csv file of cancelled classes.
-Defaults to 'cancelled_classes.csv'}
-
-\item{cancelled_classes_col_types}{column types in the csv file of cancelled
-classes. Defaults to 'ccccccccnnnncTTcTTccci'}
-
-\item{write_blank_cancelled_classes}{Logical. If TRUE and the file doesn't exist,
-creates a blank cancelled classes file. Defaults to FALSE
-
-where a zoom recording is not expected.}
-}
 \description{
 This function creates a tibble from a provided csv file of cancelled class
 sessions for scheduled classes where a zoom recording is not expected.
 }
-\examples{
+\details{
+to 'data'
+Defaults to 'cancelled_classes.csv'
+classes. Defaults to 'ccccccccnnnncTTcTTccci'
+creates a blank cancelled classes file. Defaults to FALSE
+
+where a zoom recording is not expected.
+
 load_cancelled_classes()
 }

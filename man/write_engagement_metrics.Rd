@@ -10,14 +10,9 @@ write_engagement_metrics(
   comments_format = c("text", "count")
 )
 }
-\arguments{
-\item{metrics_data}{A tibble containing engagement metrics (typically from \code{summarize_transcript_files})}
-
-\item{file_path}{Path where the CSV file should be saved}
-
-\item{comments_format}{How to format the comments column: "text" (semicolon-separated) or "count" (number of
-comments)}
-}
 \description{
 Deprecated: use \code{write_metrics(data, what = 'engagement', path = ...)} instead.
+}
+\details{
+comments)
 }

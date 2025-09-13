@@ -12,18 +12,9 @@ write_metrics(
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask")
 )
 }
-\arguments{
-\item{data}{A tibble to write.}
-
-\item{what}{One of c("engagement", "summary", "session_summary"). Controls default filename.}
-
-\item{path}{Output file path. If missing, a default name is chosen based on \code{what} in the current dir.
-Parent directories are created if they do not exist.}
-
-\item{comments_format}{For list-like \code{comments} columns: one of c("text", "count"). Default: "text".}
-
-\item{privacy_level}{Privacy level forwarded to \code{ensure_privacy()}. Default from option.}
-}
 \description{
 Unified writer for engagement-related outputs with privacy enforcement.
+}
+\details{
+Parent directories are created if they do not exist.
 }

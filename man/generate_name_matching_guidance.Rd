@@ -10,13 +10,6 @@ generate_name_matching_guidance(
   include_instructions
 )
 }
-\arguments{
-\item{unmatched_names}{Character vector of unmatched names}
-
-\item{privacy_level}{Privacy level for the session}
-
-\item{include_instructions}{Whether to include detailed instructions}
-}
 \description{
 Internal function to generate privacy-safe guidance for name matching.
 }

@@ -10,11 +10,6 @@ privacy_audit(
     "email")
 )
 }
-\arguments{
-\item{data}{A tibble to audit.}
-
-\item{id_columns}{Columns treated as identifiers (same default as ensure_privacy).}
-}
 \description{
 Summarize which identifier columns were present and how many values were masked.
 }

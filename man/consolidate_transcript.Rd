@@ -6,18 +6,6 @@
 \usage{
 consolidate_transcript(df = NULL, max_pause_sec = 1)
 }
-\arguments{
-\item{df}{A tibble containing the comments from a Zoom recording transcript.}
-
-\item{max_pause_sec}{Maximum pause between comments to be consolidated.  If
-the raw comments from the Zoom recording transcript contain 2 consecutive
-comments from the same speaker, and the time between the end of the first
-comment and start of the second comment is less than \code{max_pause_sec}
-seconds, then the comments will be consolidated.  If the time between the
-comments is larger, they will not be consolidated. Defaults to 1.
-
-transcript.}
-}
 \description{
 Take a tibble containing the comments from a Zoom recording transcript and return a tibble
 that consolidates all consecutive comments from the same speaker where the time between the
@@ -30,7 +18,14 @@ For example, a comment of "This should be a single sentence." is often split int
 will be the beginning of the first row and the \code{end} time of the consolidated comment
 will be the ending of the last row.
 }
-\examples{
-consolidate_transcript(df = "NULL")
+\details{
+the raw comments from the Zoom recording transcript contain 2 consecutive
+comments from the same speaker, and the time between the end of the first
+comment and start of the second comment is less than \code{max_pause_sec}
+seconds, then the comments will be consolidated.  If the time between the
+comments is larger, they will not be consolidated. Defaults to 1.
 
+transcript.
+
+consolidate_transcript(df = "NULL")
 }

@@ -6,17 +6,7 @@
 \usage{
 validate_schema(df = NULL, required_cols = NULL, types = NULL)
 }
-\arguments{
-\item{df}{A data.frame or tibble}
-
-\item{required_cols}{Character vector of required column names}
-
-\item{types}{Optional named list mapping column names to expected types}
-}
 \description{
-Validate that a data frame contains required columns (and optionally types)
-}
-\examples{
 df <- tibble::tibble(a = 1L, b = "x")
 validate_schema(df, c("a", "b"), types = list(a = "integer", b = "character"))
 }

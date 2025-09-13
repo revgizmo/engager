@@ -12,28 +12,17 @@ generate_ferpa_report(
   institution_info = NULL
 )
 }
-\arguments{
-\item{data}{A data frame or tibble to analyze}
-
-\item{output_file}{Optional file path to save the report}
-
-\item{report_format}{Report format. One of \code{c("text", "html", "json")}}
-
-\item{include_audit_trail}{Whether to include audit trail information}
-
-\item{institution_info}{Optional list with institution information}
-}
 \description{
 Generates comprehensive FERPA compliance reports for educational data.
 }
-\examples{
-# Generate compliance report
+\section{Generate compliance report}{
 sample_data <- tibble::tibble(
-  student_id = c("12345", "67890"),
-  preferred_name = c("Alice Johnson", "Bob Smith"),
-  participation_score = c(85, 92)
+student_id = c("12345", "67890"),
+preferred_name = c("Alice Johnson", "Bob Smith"),
+participation_score = c(85, 92)
 )
 
 report <- generate_ferpa_report(sample_data)
 print(report$summary)
 }
+

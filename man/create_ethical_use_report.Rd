@@ -13,31 +13,18 @@ create_ethical_use_report(
   include_guidance = TRUE
 )
 }
-\arguments{
-\item{usage_context}{Context of usage}
-
-\item{data_scope}{Scope of data being analyzed}
-
-\item{purpose_statement}{Purpose statement}
-
-\item{institution_name}{Name of the institution}
-
-\item{contact_person}{Contact person for questions}
-
-\item{include_guidance}{Whether to include detailed guidance}
-}
 \description{
 Generates a comprehensive ethical use report for institutional review
 and documentation purposes.
 }
-\examples{
-# Generate ethical use report
+\section{Generate ethical use report}{
 report <- create_ethical_use_report(
-  usage_context = "research",
-  data_scope = "section",
-  purpose_statement = "Analyzing participation patterns to improve teaching methods",
-  institution_name = "Example University",
-  contact_person = "Dr. Jane Smith"
+usage_context = "research",
+data_scope = "section",
+purpose_statement = "Analyzing participation patterns to improve teaching methods",
+institution_name = "Example University",
+contact_person = "Dr. Jane Smith"
 )
 cat(report)
 }
+

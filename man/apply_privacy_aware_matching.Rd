@@ -6,13 +6,6 @@
 \usage{
 apply_privacy_aware_matching(result, section_names_lookup, privacy_level)
 }
-\arguments{
-\item{result}{Data frame with transcript data}
-
-\item{section_names_lookup}{Data frame with name mappings}
-
-\item{privacy_level}{Privacy level for processing}
-}
 \description{
 Internal function to apply privacy-aware name matching using consistent hashing.
 This function enhances the existing matching logic with privacy-first design.

@@ -16,24 +16,11 @@ create_course_info(
   session_times = NULL
 )
 }
-\arguments{
-\item{dept}{Department codes (e.g., "CS", "MATH", "LTF")}
-
-\item{course}{Course numbers (e.g., "101", "250", "201")}
-
-\item{section}{Section numbers (e.g., "1", "2", "3")}
-
-\item{instructor}{Instructor names}
-
-\item{session_length_hours}{Length of each session in hours}
-
-\item{semester_start_mdy}{Semester start date in "MMM DD, YYYY" format}
-
-\item{semester_end_mdy}{Semester end date in "MMM DD, YYYY" format}
-
-\item{session_days}{Days of the week when sessions occur (e.g., c("Mon", "Wed"))}
-
-\item{session_times}{Times when sessions occur (e.g., c("10:00", "14:00"))
+\description{
+This function creates a tibble containing course information that can be used
+with \code{create_session_mapping()} to map Zoom recordings to specific courses.
+}
+\details{
 \itemize{
 \item dept: Department code
 \item course: Course number
@@ -44,32 +31,29 @@ create_course_info(
 \item semester_end: Semester end date
 \item session_days: Days of the week for sessions
 \item session_times: Times for sessions
-}}
 }
-\description{
-This function creates a tibble containing course information that can be used
-with \code{create_session_mapping()} to map Zoom recordings to specific courses.
 }
-\examples{
-# Single course with multiple sections
+\section{Single course with multiple sections}{
 course_info <- create_course_info(
-  dept = c("CS", "CS", "CS"),
-  course = c("101", "101", "101"),
-  section = c("1", "2", "3"),
-  instructor = c("Dr. Smith", "Dr. Smith", "Dr. Johnson"),
-  session_length_hours = c(1.5, 1.5, 1.5),
-  session_days = c("Mon", "Mon", "Tue"),
-  session_times = c("10:00", "14:00", "10:00")
+dept = c("CS", "CS", "CS"),
+course = c("101", "101", "101"),
+section = c("1", "2", "3"),
+instructor = c("Dr. Smith", "Dr. Smith", "Dr. Johnson"),
+session_length_hours = c(1.5, 1.5, 1.5),
+session_days = c("Mon", "Mon", "Tue"),
+session_times = c("10:00", "14:00", "10:00")
 )
+}
 
-# Multiple courses
+\section{Multiple courses}{
 course_info <- create_course_info(
-  dept = c("CS", "MATH", "LTF"),
-  course = c("101", "250", "201"),
-  section = c("1", "1", "1"),
-  instructor = c("Dr. Smith", "Dr. Smith", "Dr. Smith"),
-  session_length_hours = c(1.5, 2.0, 1.5),
-  session_days = c("Mon", "Tue", "Wed"),
-  session_times = c("10:00", "09:00", "14:00")
+dept = c("CS", "MATH", "LTF"),
+course = c("101", "250", "201"),
+section = c("1", "1", "1"),
+instructor = c("Dr. Smith", "Dr. Smith", "Dr. Smith"),
+session_length_hours = c(1.5, 2.0, 1.5),
+session_days = c("Mon", "Tue", "Wed"),
+session_times = c("10:00", "09:00", "14:00")
 )
 }
+

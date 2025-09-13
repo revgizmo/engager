@@ -6,11 +6,6 @@
 \usage{
 find_roster_match(transcript_name, roster_names)
 }
-\arguments{
-\item{transcript_name}{Character string of transcript name}
-
-\item{roster_names}{Character vector of roster names}
-}
 \description{
 Internal function to find a matching name in the roster.
 }

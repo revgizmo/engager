@@ -13,26 +13,6 @@ validate_ferpa_compliance(
   audit_log = TRUE
 )
 }
-\arguments{
-\item{data}{A data frame or tibble to validate}
-
-\item{institution_type}{Type of institution. One of \code{c("educational", "research", "mixed")}}
-
-\item{check_retention}{Whether to check data retention policies}
-
-\item{retention_period}{Retention period to check against. One of \code{c("academic_year", "semester", "quarter", "custom")}}
-
-\item{custom_retention_days}{Custom retention period in days (used when retention_period = "custom")}
-
-\item{audit_log}{Whether to log compliance checks for institutional review
-\itemize{
-\item \code{compliant}: Logical indicating overall compliance
-\item \code{pii_detected}: Character vector of detected PII fields
-\item \code{recommendations}: Character vector of compliance recommendations
-\item \code{retention_check}: Data retention validation results (if requested)
-\item \code{institution_guidance}: Institution-specific recommendations
-}}
-}
 \description{
 Validates data for FERPA compliance by checking for personally identifiable
 information (PII) and validating data handling procedures.
@@ -41,17 +21,25 @@ information (PII) and validating data handling procedures.
 \strong{CRITICAL ETHICAL COMPLIANCE}: This function is essential for ensuring
 educational data protection and FERPA compliance. It helps institutions
 maintain legal compliance while using student data for educational improvement.
+
+"custom")`
+\itemize{
+\item \code{compliant}: Logical indicating overall compliance
+\item \code{pii_detected}: Character vector of detected PII fields
+\item \code{recommendations}: Character vector of compliance recommendations
+\item \code{retention_check}: Data retention validation results (if requested)
+\item \code{institution_guidance}: Institution-specific recommendations
 }
-\examples{
-# Validate sample data for FERPA compliance
+}
+\section{Validate sample data for FERPA compliance}{
 sample_data <- tibble::tibble(
-  student_id = c("12345", "67890"),
-  preferred_name = c("Alice Johnson", "Bob Smith"),
-  email = c("alice@university.edu", "bob@university.edu"),
-  participation_score = c(85, 92)
+student_id = c("12345", "67890"),
+preferred_name = c("Alice Johnson", "Bob Smith"),
+participation_score = c(85, 92)
 )
 
 validation_result <- validate_ferpa_compliance(sample_data)
 print(validation_result$compliant)
 print(validation_result$recommendations)
 }
+

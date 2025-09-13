@@ -10,21 +10,14 @@ load_roster(
   strict_errors = FALSE
 )
 }
-\arguments{
-\item{data_folder}{Overall data folder for your recordings and data. Defaults
-to 'data'}
-
-\item{roster_file}{File name of the csv file of enrolled students
-Defaults to 'roster.csv'}
-
-\item{strict_errors}{Whether to throw errors for missing files instead of
-returning empty tibbles. Defaults to FALSE for backward compatibility.}
-}
 \description{
 This function creates a tibble from a provided csv file of students enrolled
 in the class or classes
+to 'data'
+Defaults to 'roster.csv'
+returning empty tibbles. Defaults to FALSE for backward compatibility.
 }
-\examples{
+\details{
 \dontrun{
 # Load roster from default location
 roster <- load_roster()

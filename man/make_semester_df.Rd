@@ -10,18 +10,11 @@ make_semester_df(
   class_duration_min = 90
 )
 }
-\arguments{
-\item{semester_units}{Number of units/weeks/classes in the semester. Defaults
-to 14.}
-
-\item{class_start_time_gmt}{Start time of the class in GMT, formatted as
-'HH:MM:SS'. Defaults to '04:00:00'.}
-
-\item{class_duration_min}{Number of units/weeks/classes in the semester.
-Defaults to 14.
-and duration.}
-}
 \description{
 This function creates a tibble for the units in the semester that correspond
 to expected number of units, with class start time, end time, and duration.
+to 14.
+'HH:MM:SS'. Defaults to '04:00:00'.
+Defaults to 14.
+and duration.
 }

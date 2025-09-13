@@ -13,19 +13,6 @@ log_privacy_operation(
   warning_issued = FALSE
 )
 }
-\arguments{
-\item{operation}{Type of operation performed}
-
-\item{privacy_level}{Privacy level used}
-
-\item{timestamp}{When the operation occurred}
-
-\item{data_rows}{Number of rows processed (if applicable)}
-
-\item{data_columns}{Number of columns processed (if applicable)}
-
-\item{warning_issued}{Whether a warning was issued}
-}
 \description{
 Internal function to log privacy operations for audit and compliance purposes.
 This function maintains a record of privacy-related operations for institutional

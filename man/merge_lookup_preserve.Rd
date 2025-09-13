@@ -6,11 +6,6 @@
 \usage{
 merge_lookup_preserve(existing_df = NULL, add_df = NULL)
 }
-\arguments{
-\item{existing_df}{Data frame. Existing normalized lookup.}
-
-\item{add_df}{Data frame. Additional rows to merge (will be normalized).}
-}
 \description{
 Merges an additional lookup data frame into an existing one while
 preserving existing rows. New information fills only missing fields.

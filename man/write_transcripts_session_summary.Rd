@@ -10,13 +10,6 @@ write_transcripts_session_summary(
   transcripts_session_summary_file = "transcripts_session_summary.csv"
 )
 }
-\arguments{
-\item{transcripts_session_summary_df}{A tibble of session-level metrics per student.}
-
-\item{data_folder}{Overall data folder for your recordings and data. Defaults to 'data'}
-
-\item{transcripts_session_summary_file}{File name of the csv file. Defaults to 'transcripts_session_summary.csv'}
-}
 \description{
 Deprecated: use \code{write_metrics(data, what = 'session_summary', path = ...)} instead.
 }

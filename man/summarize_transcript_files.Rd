@@ -14,33 +14,18 @@ summarize_transcript_files(
   duplicate_method = c("hybrid", "content", "metadata")
 )
 }
-\arguments{
-\item{transcript_file_names}{A data.frame or character vector listing the transcript files.
-If a tibble with additional columns beyond 'transcript_file' is provided, all metadata
-columns will be preserved in the output.}
-
-\item{data_folder}{Overall data folder for your recordings and data}
-
-\item{transcripts_folder}{specific subfolder of the data folder where you store transcripts}
-
-\item{names_to_exclude}{Character vector of names to exclude from the results}
-
-\item{deduplicate_content}{Logical. If TRUE, detect and handle duplicate transcripts}
-
-\item{similarity_threshold}{Threshold for considering transcripts as duplicates (0-1)}
-
-\item{duplicate_method}{Method for detecting duplicates}
-}
 \description{
-Summarize Transcript Files
+If a tibble with additional columns beyond 'transcript_file' is provided, all metadata
+columns will be preserved in the output.
 }
-\examples{
-# Create sample transcript file names
+\section{Create sample transcript file names}{
 transcript_files <- c(
-  "GMT20240115-100000_Recording.transcript.vtt",
-  "GMT20240116-140000_Recording.transcript.vtt"
+"GMT20240115-100000_Recording.transcript.vtt",
+"GMT20240116-140000_Recording.transcript.vtt"
 )
+}
 
-# Summarize transcript files
+\section{Summarize transcript files}{
 summary <- summarize_transcript_files(transcript_file_names = transcript_files)
 }
+

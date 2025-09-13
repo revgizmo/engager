@@ -6,13 +6,6 @@
 \usage{
 create_name_lookup(transcript_names, roster_names, name_mappings)
 }
-\arguments{
-\item{transcript_names}{Character vector of transcript names}
-
-\item{roster_names}{Character vector of roster names}
-
-\item{name_mappings}{Data frame containing name mappings}
-}
 \description{
 Internal function to create a lookup table for name matching.
 }

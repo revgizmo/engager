@@ -10,15 +10,17 @@ write_section_names_lookup(
   section_names_lookup_file = "section_names_lookup.csv"
 )
 }
-\arguments{
-\item{clean_names_df}{A tibble containing session details and summary metrics
+\description{
+This function takes a tibble containing session details and summary metrics
 by speaker for all class sessions (and placeholders for missing sections),
-including customized student names.}
-
-\item{data_folder}{Overall data folder for your recordings and data. Defaults
-to 'data'}
-
-\item{section_names_lookup_file}{File name of the csv file of customized
+including customized student names (\code{clean_names_df}) and saves a subset as a
+csv file with the specified file name (\code{section_names_lookup_file}) to the
+specified data folder (\code{data_folder}).
+}
+\details{
+by speaker for all class sessions (and placeholders for missing sections),
+including customized student names.
+to 'data'
 student names by section Defaults to 'section_names_lookup.csv'
 
 of the provided tibble containing session details and summary metrics by
@@ -54,11 +56,14 @@ dept = c("CS", "CS", "CS"),
 session_num = c(1, 1, 2),
 start_time_local = c("2024-01-01 09:00:00", "2024-01-01 09:00:00", "2024-01-02 10:00:00"),
 course_section = c("101.A", "101.A", "101.B")
-)Create a temporary directory for the example
-
+)
+}
+\section{Create a temporary directory for the example}{
 temp_dir <- tempfile("example")
-dir.create(temp_dir)Run the example with the temporary directory
+dir.create(temp_dir)
+}
 
+\section{Run the example with the temporary directory}{
 write_section_names_lookup(
 clean_names_df = make_clean_names_df(
 data_folder = temp_dir,
@@ -68,14 +73,10 @@ roster_sessions = sample_roster
 ),
 data_folder = temp_dir,
 section_names_lookup_file = "section_names_lookup.csv"
-)Clean up
+)
+}
 
-unlink(temp_dir, recursive = TRUE)}
+\section{Clean up}{
+unlink(temp_dir, recursive = TRUE)
 }
-\description{
-This function takes a tibble containing session details and summary metrics
-by speaker for all class sessions (and placeholders for missing sections),
-including customized student names (\code{clean_names_df}) and saves a subset as a
-csv file with the specified file name (\code{section_names_lookup_file}) to the
-specified data folder (\code{data_folder}).
-}
+

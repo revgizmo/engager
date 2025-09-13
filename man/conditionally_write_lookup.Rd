@@ -6,13 +6,6 @@
 \usage{
 conditionally_write_lookup(df = NULL, path = NULL, allow_write = FALSE)
 }
-\arguments{
-\item{df}{Data frame. Lookup to write (normalized internally).}
-
-\item{path}{Character. Target CSV path.}
-
-\item{allow_write}{Logical. Default \code{FALSE} (read-only).}
-}
 \description{
 Helper that writes the lookup only when \code{allow_write} is TRUE. Useful for
 scripts and Rmds to prevent accidental overwrites. When \code{allow_write} is

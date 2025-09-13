@@ -10,18 +10,6 @@ join_transcripts_list(
   df_cancelled_classes = NULL
 )
 }
-\arguments{
-\item{df_zoom_recorded_sessions}{A tibble listing the session recordings
-loaded from the cloud recording csvs.}
-
-\item{df_transcript_files}{A data.frame listing the transcript files from the
-zoom recordings loaded from the cloud recording csvs and transcripts.}
-
-\item{df_cancelled_classes}{A tibble listing the cancelled class sessions for
-scheduled classes where a zoom recording is not expected.
-
-files or placeholders for cancelled classes.}
-}
 \description{
 This function creates a tibble from the joining of the listing of session recordings loaded from the cloud recording
 csvs
@@ -29,7 +17,13 @@ csvs
 (\code{df_transcript_files}), and the list of cancelled classes
 (\code{df_cancelled_classes}) into a single tibble
 }
-\examples{
+\details{
+loaded from the cloud recording csvs.
+zoom recordings loaded from the cloud recording csvs and transcripts.
+scheduled classes where a zoom recording is not expected.
+
+files or placeholders for cancelled classes.
+
 \dontrun{
 zoom_recorded_sessions_df <- load_zoom_recorded_sessions_list()
 transcript_files_df <- load_transcript_files_list()

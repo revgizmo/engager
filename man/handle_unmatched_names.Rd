@@ -12,17 +12,6 @@ handle_unmatched_names(
   section_names_lookup_file
 )
 }
-\arguments{
-\item{unmatched_names}{Character vector of unmatched names}
-
-\item{unmatched_names_action}{Action to take ("stop" or "warn")}
-
-\item{privacy_level}{Privacy level for the session}
-
-\item{data_folder}{Data folder path}
-
-\item{section_names_lookup_file}{Name of the lookup file}
-}
 \description{
 Internal function to handle unmatched names according to configuration.
 }
