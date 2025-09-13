@@ -234,15 +234,7 @@ log_privacy_operation <- function(operation,
                                   data_rows = NULL,
                                   data_columns = NULL,
                                   warning_issued = FALSE) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  if (Sys.getenv("TESTTHAT") != "true") {
-    warning(
-      "Function 'log_privacy_operation' is deprecated and will be removed in the next version. ",
-      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-      call. = FALSE
-    )
-  }
+  # This function is used by ensure_privacy() and is kept for compatibility
 
   # Create log entry
   log_entry <- list(

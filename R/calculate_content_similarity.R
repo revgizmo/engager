@@ -8,15 +8,7 @@ calculate_content_similarity <- function(
     transcript1 = NULL,
     transcript2 = NULL,
     names_to_exclude = c("dead_air")) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  if (Sys.getenv("TESTTHAT") != "true") {
-    warning(
-      "Function 'calculate_content_similarity' is deprecated and will be removed in the next version. ",
-      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-      call. = FALSE
-    )
-  }
+  # This function is used by detect_duplicate_transcripts() and is kept for compatibility
 
   # Validate inputs
   if (is.null(transcript1) || is.null(transcript2)) {
