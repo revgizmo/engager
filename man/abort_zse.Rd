@@ -18,8 +18,3 @@ No return value, throws an error
 Provides a small wrapper around \code{rlang::abort()} to standardize
 error classes within the package for precise testing and user handling.
 }
-\examples{
-\donttest{
-abort_zse("Invalid input", class = "zse_schema_error")
-}
-}

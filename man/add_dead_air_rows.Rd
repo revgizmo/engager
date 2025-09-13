@@ -6,14 +6,17 @@
 \usage{
 add_dead_air_rows(df = NULL, dead_air_name = "dead_air")
 }
+\arguments{
+\item{df}{A tibble containing transcript comments with columns: name, start, end, comment}
+
+\item{dead_air_name}{Name to use for dead air periods. Defaults to 'dead_air'.}
+}
+\value{
+A tibble with rows added for dead air periods
+}
 \description{
 Take a tibble containing the comments from a Zoom recording transcript and return a tibble
 that adds rows for any time between transcribed comments, labeled with the \code{dead_air_name}
 provided (or the default value of 'dead_air'). The resulting tibble will have rows
 accounting for the time from the beginning of the first comment to the end of the last one.
-}
-\details{
-Defaults to 'dead_air'.
-
-with rows added for dead air.
 }

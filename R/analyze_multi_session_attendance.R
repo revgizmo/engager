@@ -3,9 +3,14 @@
 #' Analyzes attendance patterns across multiple Zoom sessions, tracking who attended
 #' which sessions and identifying participation patterns while maintaining privacy compliance.
 #'
-#'   "ferpa_standard", "mask", "none"
-#'   "consistent attendee" (default: 0.5)
-#'
+#' @param transcript_files Vector of transcript file paths to analyze
+#' @param roster_data Data frame containing student roster information
+#' @param data_folder Base folder containing data files
+#' @param transcripts_folder Subfolder containing transcript files
+#' @param unmatched_names_action Action to take for unmatched names: "stop" or "warn"
+#' @param privacy_level Privacy level: "ferpa_strict", "ferpa_standard", "mask", "none"
+#' @param min_attendance_threshold Minimum attendance threshold for "consistent attendee" (default: 0.5)
+#' @return List containing:
 #'   - `attendance_matrix`: Data frame with participants as rows and sessions as columns
 #'   - `attendance_summary`: Summary statistics for each participant
 #'   - `session_summary`: Summary statistics for each session

@@ -26,7 +26,7 @@ session_length_hours
 (prompts only shown in interactive sessions). In non-interactive sessions,
 a quiet fallback is used. Default is FALSE.
 
-\dontrun{
+\donttest{
 # Create session mapping
 session_mapping <- create_session_mapping(
   zoom_recordings_df = zoom_recordings,

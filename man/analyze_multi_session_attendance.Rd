@@ -14,13 +14,23 @@ analyze_multi_session_attendance(
   min_attendance_threshold = 0.5
 )
 }
-\description{
-Analyzes attendance patterns across multiple Zoom sessions, tracking who attended
-which sessions and identifying participation patterns while maintaining privacy compliance.
+\arguments{
+\item{transcript_files}{Vector of transcript file paths to analyze}
+
+\item{roster_data}{Data frame containing student roster information}
+
+\item{data_folder}{Base folder containing data files}
+
+\item{transcripts_folder}{Subfolder containing transcript files}
+
+\item{unmatched_names_action}{Action to take for unmatched names: "stop" or "warn"}
+
+\item{privacy_level}{Privacy level: "ferpa_strict", "ferpa_standard", "mask", "none"}
+
+\item{min_attendance_threshold}{Minimum attendance threshold for "consistent attendee" (default: 0.5)}
 }
-\details{
-"ferpa_standard", "mask", "none"
-"consistent attendee" (default: 0.5)
+\value{
+List containing:
 \itemize{
 \item \code{attendance_matrix}: Data frame with participants as rows and sessions as columns
 \item \code{attendance_summary}: Summary statistics for each participant
@@ -44,4 +54,8 @@ results <- analyze_multi_session_attendance(
 # View attendance summary
 print(results$attendance_summary)
 }
+}
+\description{
+Analyzes attendance patterns across multiple Zoom sessions, tracking who attended
+which sessions and identifying participation patterns while maintaining privacy compliance.
 }
