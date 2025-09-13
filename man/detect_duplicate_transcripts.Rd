@@ -13,46 +13,36 @@ detect_duplicate_transcripts(
   names_to_exclude = c("dead_air")
 )
 }
-\description{
-Identifies and analyzes duplicate Zoom transcript files using multiple detection methods.
-This function helps clean up transcript datasets by finding files that contain similar
-or identical content, which can occur when multiple transcript formats are generated
-for the same recording session.
+\arguments{
+\item{transcript_list}{A tibble with \code{transcript_file} column containing file names}
+
+\item{data_folder}{Base folder containing data files (default: ".")}
+
+\item{transcripts_folder}{Subfolder where transcript files are stored (default: "transcripts")}
+
+\item{similarity_threshold}{Similarity threshold for duplicate detection (default: 0.95)}
+
+\item{method}{Detection method: "hybrid" (default), "content", or "metadata"}
+
+\item{names_to_exclude}{Vector of names to exclude from comparison (default: c("dead_air"))}
 }
-\details{
-\code{transcript_file} column containing file names
-are stored. Defaults to "transcripts"
-Higher values require more similarity. Defaults to 0.95
-\itemize{
-\item "hybrid" (default): Combines metadata and content analysis
-\item "content": Analyzes actual transcript content
-\item "metadata": Compares file metadata only
-Defaults to c("dead_air") to ignore silence periods
-}
-}
-\section{Create sample transcript list}{
+\value{
+List containing duplicate groups, similarity matrix, and recommendationsCreate sample transcript list
+
 transcript_list <- tibble::tibble(
 transcript_file = c(
 "GMT20240115-100000_Recording.transcript.vtt",
 "GMT20240115-100000_Recording.cc.vtt",
 "GMT20240116-140000_Recording.transcript.vtt"
 )
-)
-}
+)Detect duplicates in a transcript list
 
-\section{Detect duplicates in a transcript list}{
-duplicates <- detect_duplicate_transcripts(transcript_list)
-}
+duplicates <- detect_duplicate_transcripts(transcript_list)View duplicate groups
 
-\section{View duplicate groups}{
-duplicates$duplicate_groups
-}
+duplicates$duplicate_groupsView recommendations
 
-\section{View recommendations}{
-duplicates$recommendations
-}
+duplicates$recommendationsUse different detection method
 
-\section{Use different detection method}{
 content_duplicates <- detect_duplicate_transcripts(
 transcript_list,
 method = "content",
@@ -62,4 +52,9 @@ similarity_threshold = 0.9
 \code{\link{process_zoom_transcript}} for processing individual transcripts,
 \code{\link{summarize_transcript_metrics}} for analyzing transcript content
 }
-
+\description{
+Identifies and analyzes duplicate Zoom transcript files using multiple detection methods.
+This function helps clean up transcript datasets by finding files that contain similar
+or identical content, which can occur when multiple transcript formats are generated
+for the same recording session.
+}

@@ -13,14 +13,11 @@
 #' `zoomstudentengagement.privacy_level`, which is set to "mask" on package
 #' load. Use `set_privacy_defaults()` to change at runtime.
 #'
-#'   `tibble`. Other object types are returned unchanged.
-#'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
-#'   **WARNING**: Setting to "none" disables privacy protection and may violate
-#'   FERPA requirements.
-#'   Defaults to common name/identifier columns.
-#'   Defaults to TRUE for maximum transparency.
-#'
-#'   structure is preserved with identifying fields masked when appropriate.
+#' @param x Data object to apply privacy rules to (typically a `tibble`)
+#' @param privacy_level Privacy level: "mask", "ferpa_strict", "ferpa_standard", or "none"
+#' @param id_columns Vector of column names to treat as identifiers (default: common name columns)
+#' @param audit_log Whether to log privacy operations (default: TRUE)
+#' @return Privacy-compliant version of the input object
 #'
 #' df <- tibble::tibble(
 #'   section = c("A", "A", "B"),

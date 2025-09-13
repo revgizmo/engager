@@ -12,6 +12,25 @@ ensure_privacy(
   audit_log = TRUE
 )
 }
+\arguments{
+\item{x}{Data object to apply privacy rules to (typically a \code{tibble})}
+
+\item{privacy_level}{Privacy level: "mask", "ferpa_strict", "ferpa_standard", or "none"}
+
+\item{id_columns}{Vector of column names to treat as identifiers (default: common name columns)}
+
+\item{audit_log}{Whether to log privacy operations (default: TRUE)}
+}
+\value{
+Privacy-compliant version of the input object
+
+df <- tibble::tibble(
+section = c("A", "A", "B"),
+preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz"),
+session_ct = c(3, 5, 2)
+)
+ensure_privacy(df)
+}
 \description{
 Applies privacy rules to objects before they are returned, written, or
 plotted. By default, masks personally identifiable information in tabular
@@ -26,20 +45,4 @@ and ensure FERPA compliance.
 The default behavior is controlled by the global option
 \code{zoomstudentengagement.privacy_level}, which is set to "mask" on package
 load. Use \code{set_privacy_defaults()} to change at runtime.
-
-\code{tibble}. Other object types are returned unchanged.
-Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.
-\strong{WARNING}: Setting to "none" disables privacy protection and may violate
-FERPA requirements.
-Defaults to common name/identifier columns.
-Defaults to TRUE for maximum transparency.
-
-structure is preserved with identifying fields masked when appropriate.
-
-df <- tibble::tibble(
-section = c("A", "A", "B"),
-preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz"),
-session_ct = c(3, 5, 2)
-)
-ensure_privacy(df)
 }

@@ -112,13 +112,13 @@ calc_content_similarity_matrix <- function(existing_files, existing_names,
 #' or identical content, which can occur when multiple transcript formats are generated
 #' for the same recording session.
 #'
-#'   `transcript_file` column containing file names
-#'   are stored. Defaults to "transcripts"
-#'   Higher values require more similarity. Defaults to 0.95
-#'   - "hybrid" (default): Combines metadata and content analysis
-#'   - "content": Analyzes actual transcript content
-#'   - "metadata": Compares file metadata only
-#'   Defaults to c("dead_air") to ignore silence periods
+#' @param transcript_list A tibble with `transcript_file` column containing file names
+#' @param data_folder Base folder containing data files (default: ".")
+#' @param transcripts_folder Subfolder where transcript files are stored (default: "transcripts")
+#' @param similarity_threshold Similarity threshold for duplicate detection (default: 0.95)
+#' @param method Detection method: "hybrid" (default), "content", or "metadata"
+#' @param names_to_exclude Vector of names to exclude from comparison (default: c("dead_air"))
+#' @return List containing duplicate groups, similarity matrix, and recommendations
 #'
 #'
 #' # Create sample transcript list

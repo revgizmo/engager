@@ -11,12 +11,9 @@
 #' will be the beginning of the first row and the `end` time of the consolidated comment
 #' will be the ending of the last row.
 #'
-#'
-#'   the raw comments from the Zoom recording transcript contain 2 consecutive
-#'   comments from the same speaker, and the time between the end of the first
-#'   comment and start of the second comment is less than `max_pause_sec`
-#'   seconds, then the comments will be consolidated.  If the time between the
-#'   comments is larger, they will not be consolidated. Defaults to 1.
+#' @param df A tibble containing transcript comments with columns: name, start, end, comment
+#' @param max_pause_sec Maximum pause in seconds between comments to consolidate (default: 1)
+#' @return A tibble with consolidated comments
 #'
 #'   transcript.
 #'
