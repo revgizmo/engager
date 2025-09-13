@@ -17,21 +17,17 @@
 #'   - `participation_patterns`: Analysis of participation patterns
 #'   - `privacy_compliant`: Boolean indicating if all outputs maintain privacy
 #'
-#' \dontrun{
+#' @examples
 #' # Analyze attendance across multiple sessions
-#' transcript_files <- c("session1.vtt", "session2.vtt", "session3.vtt")
-#' roster_data <- load_roster(data_folder = "data/metadata", roster_file = "roster.csv")
-#'
-#' results <- analyze_multi_session_attendance(
-#'   transcript_files = transcript_files,
-#'   roster_data = roster_data,
-#'   data_folder = "data",
-#'   unmatched_names_action = "warn"
-#' )
-#'
-#' # View attendance summary
-#' print(results$attendance_summary)
-#' }
+#' # transcript_files <- c("session1.vtt", "session2.vtt", "session3.vtt")
+#' # roster_data <- load_roster(data_folder = "data/metadata", roster_file = "roster.csv")
+#' # results <- analyze_multi_session_attendance(
+#' #   transcript_files = transcript_files,
+#' #   roster_data = roster_data,
+#' #   data_folder = "data",
+#' #   unmatched_names_action = "warn"
+#' # )
+#' # print(results$attendance_summary)
 #'
 analyze_multi_session_attendance <- function(
     transcript_files = NULL,
@@ -217,10 +213,9 @@ analyze_multi_session_attendance <- function(
 #'
 #'
 #'
-#' \dontrun{
-#' results <- analyze_multi_session_attendance(transcript_files, roster_data)
-#' report <- generate_attendance_report(results, "attendance_report.md")
-#' }
+#' @examples
+#' # results <- analyze_multi_session_attendance(transcript_files, roster_data)
+#' # report <- generate_attendance_report(results, "attendance_report.md")
 #'
 generate_attendance_report <- function(
     analysis_results = NULL,

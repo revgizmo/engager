@@ -13,9 +13,8 @@ generate_attendance_report(
 \description{
 Creates a comprehensive report of multi-session attendance analysis.
 }
-\details{
-\dontrun{
-results <- analyze_multi_session_attendance(transcript_files, roster_data)
-report <- generate_attendance_report(results, "attendance_report.md")
-}
+\examples{
+# results <- analyze_multi_session_attendance(transcript_files, roster_data)
+# report <- generate_attendance_report(results, "attendance_report.md")
+
 }

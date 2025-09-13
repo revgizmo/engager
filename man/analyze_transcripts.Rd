@@ -11,11 +11,19 @@ analyze_transcripts(
   output_path = NULL
 )
 }
+\arguments{
+\item{transcripts_folder}{Path to folder containing transcript files}
+
+\item{names_to_exclude}{Vector of names to exclude from analysis (default: "dead_air")}
+
+\item{write}{Whether to write results to file (default: FALSE)}
+
+\item{output_path}{Path for output file (defaults to "engagement_metrics.csv")}
+}
+\value{
+Data frame with engagement metrics
+}
 \description{
 Convenience wrapper to process a set of \code{.transcript.vtt} files from a folder,
 compute engagement metrics, and optionally write outputs.
-}
-\details{
-defaults to \code{engagement_metrics.csv}.
-in-memory masking depends on consumer).
 }

@@ -12,6 +12,20 @@ anonymize_educational_data(
   aggregation_level = c("individual", "section", "course", "institution")
 )
 }
+\arguments{
+\item{data}{Data frame or tibble containing educational data}
+
+\item{method}{Anonymization method: "mask", "hash", "pseudonymize", or "aggregate"}
+
+\item{preserve_columns}{Vector of column names to preserve unchanged}
+
+\item{hash_salt}{Salt value for hash-based anonymization}
+
+\item{aggregation_level}{Level of aggregation: "individual", "section", "course", or "institution"}
+}
+\value{
+Anonymized data frame
+}
 \description{
 Advanced anonymization for educational data that preserves data utility
 while ensuring FERPA compliance.

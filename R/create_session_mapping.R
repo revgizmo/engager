@@ -10,15 +10,14 @@
 #'   a quiet fallback is used. Default is FALSE.
 #'
 #'
-#' \donttest{
+#' @examples
 #' # Create session mapping
-#' session_mapping <- create_session_mapping(
-#'   zoom_recordings_df = zoom_recordings,
-#'   course_info_df = course_info,
-#'   output_file = "session_mapping.csv",
-#'   semester_start_mdy = "Jan 15, 2024"
-#' )
-#' }
+#' # session_mapping <- create_session_mapping(
+#' #   zoom_recordings_df = zoom_recordings,
+#' #   course_info_df = course_info,
+#' #   output_file = "session_mapping.csv",
+#' #   semester_start_mdy = "Jan 15, 2024"
+#' # )
 create_session_mapping <- function(
     zoom_recordings_df = NULL,
     course_info_df = NULL,

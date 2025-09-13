@@ -179,6 +179,13 @@ validate_ferpa_compliance <- function(data = NULL,
 #'
 #' # Hash method with salt
 #' hashed <- anonymize_educational_data(sample_data, method = "hash", hash_salt = "my_salt")
+#'
+#' @param data Data frame or tibble containing educational data
+#' @param method Anonymization method: "mask", "hash", "pseudonymize", or "aggregate"
+#' @param preserve_columns Vector of column names to preserve unchanged
+#' @param hash_salt Salt value for hash-based anonymization
+#' @param aggregation_level Level of aggregation: "individual", "section", "course", or "institution"
+#' @return Anonymized data frame
 anonymize_educational_data <- function(data = NULL,
                                        method = c("mask", "hash", "pseudonymize", "aggregate"),
                                        preserve_columns = NULL,

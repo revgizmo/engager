@@ -38,24 +38,21 @@ List containing:
 \item \code{participation_patterns}: Analysis of participation patterns
 \item \code{privacy_compliant}: Boolean indicating if all outputs maintain privacy
 }
-
-\dontrun{
-# Analyze attendance across multiple sessions
-transcript_files <- c("session1.vtt", "session2.vtt", "session3.vtt")
-roster_data <- load_roster(data_folder = "data/metadata", roster_file = "roster.csv")
-
-results <- analyze_multi_session_attendance(
-  transcript_files = transcript_files,
-  roster_data = roster_data,
-  data_folder = "data",
-  unmatched_names_action = "warn"
-)
-
-# View attendance summary
-print(results$attendance_summary)
-}
 }
 \description{
 Analyzes attendance patterns across multiple Zoom sessions, tracking who attended
 which sessions and identifying participation patterns while maintaining privacy compliance.
+}
+\examples{
+# Analyze attendance across multiple sessions
+# transcript_files <- c("session1.vtt", "session2.vtt", "session3.vtt")
+# roster_data <- load_roster(data_folder = "data/metadata", roster_file = "roster.csv")
+# results <- analyze_multi_session_attendance(
+#   transcript_files = transcript_files,
+#   roster_data = roster_data,
+#   data_folder = "data",
+#   unmatched_names_action = "warn"
+# )
+# print(results$attendance_summary)
+
 }

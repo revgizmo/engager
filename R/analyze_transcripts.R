@@ -3,8 +3,11 @@
 #' Convenience wrapper to process a set of `.transcript.vtt` files from a folder,
 #' compute engagement metrics, and optionally write outputs.
 #'
-#'   defaults to `engagement_metrics.csv`.
-#'   in-memory masking depends on consumer).
+#' @param transcripts_folder Path to folder containing transcript files
+#' @param names_to_exclude Vector of names to exclude from analysis (default: "dead_air")
+#' @param write Whether to write results to file (default: FALSE)
+#' @param output_path Path for output file (defaults to "engagement_metrics.csv")
+#' @return Data frame with engagement metrics
 #'
 #' @export
 analyze_transcripts <- function(
