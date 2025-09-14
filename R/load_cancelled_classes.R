@@ -1,5 +1,5 @@
+#' @importFrom magrittr %>%
 # Internal function - no documentation needed
-# @importFrom magrittr %>%
 load_cancelled_classes <- function(data_folder = ".",
                                    cancelled_classes_file = "cancelled_classes.csv",
                                    cancelled_classes_col_types = "ccccccccnnnncTTcTTccci",
