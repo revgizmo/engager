@@ -1,11 +1,4 @@
-#' Hash Names Consistently for Privacy-Aware Matching
-#'
-#' Creates consistent hashes for names to enable matching while maintaining privacy.
-#' This function normalizes names and generates deterministic hashes that can be
-#' used for cross-session matching without exposing real names.
-#'
-#'
-#'
+# Internal function - no documentation needed
 # # Basic usage
 # hash_name_consistently(c("John Smith", "J. Smith", "Smith, John"))
 #

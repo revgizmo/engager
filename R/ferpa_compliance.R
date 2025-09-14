@@ -295,22 +295,7 @@ apply_hash_anonymization <- function(data, columns_to_anonymize, hash_salt) {
 }
 
 
-#' Generate FERPA Compliance Report
-#'
-#' Generates comprehensive FERPA compliance reports for educational data.
-#'
-#'
-#'
-#'
-#' # Generate compliance report
-#' sample_data <- tibble::tibble(
-#'   student_id = c("12345", "67890"),
-#'   preferred_name = c("Alice Johnson", "Bob Smith"),
-#'   participation_score = c(85, 92)
-#' )
-#'
-#' report <- generate_ferpa_report(sample_data)
-#' print(report$summary)
+# Internal function - no documentation needed
 generate_ferpa_report <- function(data = NULL,
                                   output_file = NULL,
                                   report_format = c("text", "html", "json"),

@@ -60,11 +60,7 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
   processed_data
 }
 
-#' Handle Unmatched Names
-#'
-#' Internal function to handle unmatched names according to configuration.
-#'
-#'
+# Internal function - no documentation needed
 handle_unmatched_names <- function(unmatched_names,
                                    unmatched_names_action,
                                    privacy_level,
@@ -348,11 +344,7 @@ create_name_lookup <- function(transcript_names, roster_names, name_mappings) {
   lookup
 }
 
-#' Find Roster Match
-#'
-#' Internal function to find a matching name in the roster.
-#'
-#'
+# Internal function - no documentation needed
 find_roster_match <- function(transcript_name, roster_names) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

@@ -207,16 +207,7 @@ analyze_multi_session_attendance <- function(
   return(result)
 }
 
-#' Generate Multi-Session Attendance Report
-#'
-#' Creates a comprehensive report of multi-session attendance analysis.
-#'
-#'
-#'
-#' @examples
-#' # results <- analyze_multi_session_attendance(transcript_files, roster_data)
-#' # report <- generate_attendance_report(results, "attendance_report.md")
-#'
+# Internal function - no documentation needed
 generate_attendance_report <- function(
     analysis_results = NULL,
     output_file = NULL,

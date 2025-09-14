@@ -98,11 +98,7 @@ prompt_name_matching <- function(unmatched_names = NULL,
   invisible(lookup_file_path)
 }
 
-#' Generate Name Matching Guidance
-#'
-#' Internal function to generate privacy-safe guidance for name matching.
-#'
-#'
+# Internal function - no documentation needed
 generate_name_matching_guidance <- function(unmatched_names, privacy_level, include_instructions) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -215,11 +211,7 @@ detect_unmatched_names <- function(transcript_data = NULL,
   unique(unmatched_names)
 }
 
-#' Extract Transcript Names
-#'
-#' Internal function to extract names from transcript data.
-#'
-#'
+# Internal function - no documentation needed
 extract_transcript_names <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
