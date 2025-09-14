@@ -473,12 +473,7 @@ check_data_retention_policy <- function(data = NULL,
   result
 }
 
-#' Log FERPA Compliance Check
-#'
-#' Internal function to log FERPA compliance checks for audit and institutional
-#' review purposes.
-#'
-#'
+# Internal function - no documentation needed
 log_ferpa_compliance_check <- function(compliant,
                                        pii_detected,
                                        institution_type,

@@ -1,25 +1,4 @@
-#' Make a DF of the Student Roster With Rows for Each Recorded Class Section
-#'
-#' This function creates a tibble from a provided tibble students enrolled
-#' in the class or classes (`roster_small_df`) and a tibble of class sessions with corresponding transcript
-#'   files or placeholders for cancelled classes (`transcripts_list_df`).
-
-#'   files or placeholders for cancelled classes.
-#'   small subset of the roster columns.
-#'
-#' each student.
-#'
-# # Load a sample roster from the package's extdata directory
-# roster_file <- system.file("extdata/roster.csv", package = "engager")
-# roster_df <- readr::read_csv(roster_file, show_col_types = FALSE)
-#' make_student_roster_sessions(
-#'   transcripts_list_df = join_transcripts_list(
-#'     df_zoom_recorded_sessions = load_zoom_recorded_sessions_list(),
-#'     df_transcript_files = load_transcript_files_list(),
-#'     df_cancelled_classes = load_cancelled_classes()
-#'   ),
-#'   roster_small_df = make_roster_small(roster_df = roster_df)
-#' )
+# Internal function - no documentation needed
 make_student_roster_sessions <-
   function(transcripts_list_df = NULL,
            roster_small_df = NULL) {

@@ -218,13 +218,7 @@ apply_privacy_masking <- function(x, id_columns, privacy_level, audit_log) {
   df
 }
 
-#' Log Privacy Operations
-#'
-#' Internal function to log privacy operations for audit and compliance purposes.
-#' This function maintains a record of privacy-related operations for institutional
-#' review and FERPA compliance.
-#'
-#'
+# Internal function - no documentation needed
 log_privacy_operation <- function(operation,
                                   privacy_level,
                                   timestamp = Sys.time(),

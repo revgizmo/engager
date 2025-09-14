@@ -1,7 +1,4 @@
-#' Make Students Only Transcripts Summary
-#'
-#' This function creates a tibble from summary results at the
-#' level of the class section and preferred student name after filtering for only the students enrolled in the class.
+# Internal function - no documentation needed
 
 make_students_only_transcripts_summary_df <-
   function(transcripts_session_summary_df = NULL,
