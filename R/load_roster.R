@@ -8,13 +8,11 @@
 #'   returning empty tibbles. Defaults to FALSE for backward compatibility.
 #'
 #'
-#' \dontrun{
 #' # Load roster from default location
-#' roster <- load_roster()
-#'
+#' # roster <- load_roster()
+#' #
 #' # Load roster from custom location
-#' roster <- load_roster(data_folder = ".", roster_file = "students.csv")
-#' }
+#' # roster <- load_roster(data_folder = ".", roster_file = "students.csv")
 load_roster <- function(
     data_folder = ".",
     roster_file = "roster.csv",

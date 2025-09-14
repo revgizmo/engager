@@ -10,6 +10,14 @@ privacy_audit(
     "email")
 )
 }
+\arguments{
+\item{data}{A tibble containing the data to audit}
+
+\item{id_columns}{Vector of column names to check for identifiers (default: common name columns)}
+}
+\value{
+A tibble containing audit results with columns: column, values, non_empty, masked_estimate
+}
 \description{
 Summarize which identifier columns were present and how many values were masked.
 }

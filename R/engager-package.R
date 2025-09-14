@@ -72,19 +72,17 @@
 #' \code{\link{write_metrics}} for exporting results
 #'
 #' # Basic workflow example
-#' \dontrun{
 #' # Load and process transcript
-#' transcript <- load_zoom_transcript("session_transcript.vtt")
-#'
+#' # transcript <- load_zoom_transcript("session_transcript.vtt")
+#' #
 #' # Analyze with privacy protection
-#' results <- analyze_transcripts(transcript)
-#'
+#' # results <- analyze_transcripts(transcript)
+#' #
 #' # Create privacy-aware visualization
-#' plot_users(results)
-#'
+#' # plot_users(results)
+#' #
 #' # Export results
-#' write_metrics(results, "engagement_report.csv")
-#' }
+#' # write_metrics(results, "engagement_report.csv")
 #'
 "_PACKAGE"
 

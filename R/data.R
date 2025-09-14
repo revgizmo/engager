@@ -44,17 +44,15 @@
 #' # No static datasets are included
 #'
 #' # Example of typical workflow:
-#' \dontrun{
 #' # Load your own data
-#' transcript <- load_zoom_transcript("path/to/transcript.vtt")
-#' roster <- load_roster("path/to/roster.csv")
-#'
+#' # transcript <- load_zoom_transcript("path/to/transcript.vtt")
+#' # roster <- load_roster("path/to/roster.csv")
+#' #
 #' # Analyze and generate results
-#' results <- analyze_transcripts(transcript, roster)
-#'
+#' # results <- analyze_transcripts(transcript, roster)
+#' #
 #' # Export generated data
-#' write_metrics(results, "my_analysis_results.csv")
-#' }
+#' # write_metrics(results, "my_analysis_results.csv")
 #'
 #' @name data
 NULL

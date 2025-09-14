@@ -20,22 +20,21 @@ processing: Stage 1 (unmasked matching in memory) and Stage 2 (privacy masking
 for outputs). Provides configuration-driven behavior for unmatched names.
 }
 \details{
-\code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
-Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.
-One of \code{c("stop", "warn")}. Defaults to \code{getOption("zoomstudentengagement.unmatched_names_action", "stop")}.
+`c("ferpa_strict", "ferpa_standard", "mask", "none")`.
+  Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
+  One of `c("stop", "warn")`. Defaults to `getOption("zoomstudentengagement.unmatched_names_action", "stop")`.
 
-\dontrun{
+
 # Default behavior (maximum privacy)
-result <- safe_name_matching_workflow(
-  transcript_file_path = "transcript.vtt",
-  roster_data = roster_df
-)
-
+# result <- safe_name_matching_workflow(
+#   transcript_file_path = "transcript.vtt",
+#   roster_data = roster_df
+# )
+#
 # Opt-in for convenience
-result <- safe_name_matching_workflow(
-  transcript_file_path = "transcript.vtt",
-  roster_data = roster_df,
-  unmatched_names_action = "warn"
-)
-}
+# result <- safe_name_matching_workflow(
+#   transcript_file_path = "transcript.vtt",
+#   roster_data = roster_df,
+#   unmatched_names_action = "warn"
+# )
 }
