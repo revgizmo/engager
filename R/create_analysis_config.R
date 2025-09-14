@@ -1,45 +1,4 @@
-#' Create Analysis Configuration
-#'
-#' This function creates a validated configuration object for the zoomstudentengagement
-#' package analysis workflow. It groups related parameters logically and provides
-#' sensible defaults while allowing customization for different course setups.
-#'
-#'
-#'   - course: Course-specific information
-#'   - paths: File and folder paths
-#'   - patterns: Regex patterns for file matching and parsing
-#'   - reports: Report generation settings
-#'   - analysis: Analysis-specific parameters
-#'
-#'
-#' # Basic configuration with defaults
-#' config <- create_analysis_config(
-#'   dept = "LTF",
-#'   instructor_name = "Dr. Smith",
-#'   data_folder = "data"
-#' )
-#'
-#' # Custom configuration for different course setup
-#' config <- create_analysis_config(
-#'   dept = "MATH",
-#'   semester_start_mdy = "Aug 28, 2024",
-#'   scheduled_session_length_hours = 2.0,
-#'   instructor_name = "Prof. Johnson",
-#'   data_folder = "math_101_data",
-#'   transcripts_folder = "zoom_recordings",
-#'   start_time_local_tzone = "America/New_York"
-#' )
-#'
-#' # Use configuration in analysis workflow
-#' zoom_recorded_sessions_df <- load_zoom_recorded_sessions_list(
-#'   data_folder = config$paths$data_folder,
-#'   transcripts_folder = config$paths$transcripts_folder,
-#'   topic_split_pattern = config$patterns$topic_split,
-#'   zmrcrddsssnscsvnmspttrn = config$patterns$zoom_recordings_csv,
-#'   dept = config$course$dept,
-#'   semester_start_mdy = config$course$semester_start,
-#'   scheduled_session_length_hours = config$course$session_length_hours
-#' )
+# Internal function - no documentation needed
 create_analysis_config <- function(
     # Course Information
     dept = "LTF",

@@ -1,23 +1,4 @@
-#' Create Session Mapping from Zoom Recordings and Course Information
-#'
-#' This function creates a mapping between Zoom recordings and course information
-#' by matching recording topics with course patterns.
-#'
-#'   columns: ID, Topic, Start Time
-#'   `create_course_info()` with columns: dept, course, section, instructor,
-#'   session_length_hours
-#'   (prompts only shown in interactive sessions). In non-interactive sessions,
-#'   a quiet fallback is used. Default is FALSE.
-#'
-#'
-#' @examples
-#' # Create session mapping
-#' # session_mapping <- create_session_mapping(
-#' #   zoom_recordings_df = zoom_recordings,
-#' #   course_info_df = course_info,
-#' #   output_file = "session_mapping.csv",
-#' #   semester_start_mdy = "Jan 15, 2024"
-#' # )
+# Internal function - no documentation needed
 create_session_mapping <- function(
     zoom_recordings_df = NULL,
     course_info_df = NULL,

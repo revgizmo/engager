@@ -187,23 +187,7 @@ validate_ethical_use <- function(usage_context = c("research", "teaching", "asse
   result
 }
 
-#' Create Ethical Use Report
-#'
-#' Generates a comprehensive ethical use report for institutional review
-#' and documentation purposes.
-#'
-#'
-#'
-#'
-#' # Generate ethical use report
-#' report <- create_ethical_use_report(
-#'   usage_context = "research",
-#'   data_scope = "section",
-#'   purpose_statement = "Analyzing participation patterns to improve teaching methods",
-#'   institution_name = "Example University",
-#'   contact_person = "Dr. Jane Smith"
-#' )
-#' cat(report)
+# Internal function - no documentation needed
 create_ethical_use_report <- function(usage_context = NULL,
                                       data_scope = NULL,
                                       purpose_statement = NULL,

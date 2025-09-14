@@ -180,13 +180,7 @@ write_lookup_transactional <- function(df = NULL, path = NULL) {
   invisible(path)
 }
 
-#' Conditionally Write Lookup (Read-Only Gate)
-#'
-#' Helper that writes the lookup only when `allow_write` is TRUE. Useful for
-#' scripts and Rmds to prevent accidental overwrites. When `allow_write` is
-#' FALSE, performs no side effects and returns `FALSE`.
-#'
-#'
+# Internal function - no documentation needed
 conditionally_write_lookup <- function(df = NULL, path = NULL, allow_write = FALSE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

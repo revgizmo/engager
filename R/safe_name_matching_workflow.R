@@ -276,11 +276,7 @@ match_names_with_privacy <- function(transcript_data = NULL,
   matched_data
 }
 
-#' Create Name Lookup
-#'
-#' Internal function to create a lookup table for name matching.
-#'
-#'
+# Internal function - no documentation needed
 create_name_lookup <- function(transcript_names, roster_names, name_mappings) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
