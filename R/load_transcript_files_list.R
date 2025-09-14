@@ -1,34 +1,4 @@
-#' Load Zoom Recording Transcript Files List
-#'
-#' This function creates a tibble from a provided folder including
-#' transcript files of Zoom recordings.
-#'
-#' ## Download Transcripts
-#' 1. Go to [https://www.zoom.us/recording](https://www.zoom.us/recording)
-#' 2. Click on each individual record to go to the page for that recording
-#' 3. Download the Audio Transcript and Chat File for each
-#'    - Chat: `GMT\\d{8}-\\d{6}_Recording.cc.vtt`
-#'    - Transcript: `GMT\\d{8}-\\d{6}_Recording.transcript.vtt`
-#' 4. Copy the Audio Transcript and Chat Files to `data/transcripts/`
-#'    (or whatever path you identify in the `data_folder` and
-#'    `transcripts_folder` parameters).
-#'
-#'   to `data`
-#'   will store the cloud recording csvs and transcripts
-#'   transcript file names. Defaults to `GMT\\d{8}-\\d{6}_Recording`
-#'   transcript from the transcript file name. Defaults to `(?<=GMT)\\d{8}`
-#'   transcript files (as opposed to chat or closed caption files). Defaults to
-#'   `.transcript`
-#'   closed caption files (as opposed to chat or transcript files). Defaults to
-#'   `.cc`
-#'   start time of the transcript from the transcript file name. Defaults to
-#'   `(?<=GMT)\\d{8}-\\d{6}`
-#'   recording start time of the transcript. Defaults to `\%Y\%m\%d-\%H\%M\%S`
-#'   the transcript. Defaults to `America/Los_Angeles`
-#'
-#'   loaded from the cloud recording csvs and transcripts.
-#'
-#' load_transcript_files_list()
+# Internal function - no documentation needed
 load_transcript_files_list <-
   function(data_folder = ".",
            transcripts_folder = "transcripts",

@@ -255,11 +255,7 @@ anonymize_educational_data <- function(data = NULL,
   data
 }
 
-#' Identify Columns to Anonymize
-#'
-#' Helper function to identify which columns in a dataset should be anonymized
-#' based on common PII column names.
-#'
+# Internal function - no documentation needed
 identify_anonymization_columns <- function(data, preserve_columns) {
   # Define PII columns to anonymize
   pii_columns <- c(

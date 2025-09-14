@@ -1,26 +1,4 @@
-#' Join Transcripts Files Into a Single Tibble
-#'
-#' This function creates a tibble from the joining of the listing of session recordings loaded from the cloud recording
-#' csvs
-#' (`df_zoom_recorded_sessions`), the list of transcript files
-#' (`df_transcript_files`), and the list of cancelled classes
-#' (`df_cancelled_classes`) into a single tibble
-#'
-#'   loaded from the cloud recording csvs.
-#'   zoom recordings loaded from the cloud recording csvs and transcripts.
-#'   scheduled classes where a zoom recording is not expected.
-#'
-#'   files or placeholders for cancelled classes.
-#'
-#' # zoom_recorded_sessions_df <- load_zoom_recorded_sessions_list()
-#' # transcript_files_df <- load_transcript_files_list()
-#' # cancelled_classes_df <- load_cancelled_classes()
-#' #
-#' # join_transcripts_list(
-#' #   df_zoom_recorded_sessions = zoom_recorded_sessions_df,
-#' #   df_transcript_files = transcript_files_df,
-#' #   df_cancelled_classes = cancelled_classes_df
-#' # )
+# Internal function - no documentation needed
 join_transcripts_list <- function(
     df_zoom_recorded_sessions = NULL,
     df_transcript_files = NULL,

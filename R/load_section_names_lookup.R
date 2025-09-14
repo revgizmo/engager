@@ -1,15 +1,4 @@
-#' Load Section Names Lookup File
-#'
-#' This function creates a tibble from a provided file of customized student names by section.
-#' If the file does not exist, the function prints an error and creates an empty tibble using
-#' `make_blank_section_names_lookup_csv()`.
-#'
-#'   Defaults to 'section_names_lookup.csv'
-#' to 'cccccccc'
-#'
-#'
-#' load_section_names_lookup()
-#'
+# Internal function - no documentation needed
 load_section_names_lookup <- function(data_folder = ".",
                                       names_lookup_file = "section_names_lookup.csv",
                                       section_names_lookup_col_types = "ccccccccc") {

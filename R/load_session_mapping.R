@@ -17,10 +17,7 @@
 # )
 # }
 
-#' Load and Validate Mapping File
-#'
-#' Helper function to load and validate a session mapping CSV file.
-#'
+# Internal function - no documentation needed
 load_mapping_file <- function(mapping_file) {
   # Check if mapping file exists
   if (!file.exists(mapping_file)) {

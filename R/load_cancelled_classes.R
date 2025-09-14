@@ -1,16 +1,4 @@
-#' Load Cancelled Classes csv file
-#'
-#' This function creates a tibble from a provided csv file of cancelled class
-#' sessions for scheduled classes where a zoom recording is not expected.
-#'
-#'   to 'data'
-#'   Defaults to 'cancelled_classes.csv'
-#'   classes. Defaults to 'ccccccccnnnncTTcTTccci'
-#'   creates a blank cancelled classes file. Defaults to FALSE
-#'
-#'   where a zoom recording is not expected.
-#'
-#' @importFrom magrittr %>%
+# Internal function - no documentation needed
 load_cancelled_classes <- function(data_folder = ".",
            cancelled_classes_file = "cancelled_classes.csv",
            cancelled_classes_col_types = "ccccccccnnnncTTcTTccci",

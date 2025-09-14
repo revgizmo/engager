@@ -1,18 +1,4 @@
-#' Load Roster of Students from a CSV file
-#'
-#' This function creates a tibble from a provided csv file of students enrolled
-#' in the class or classes
-
-#'   to 'data'
-#'   Defaults to 'roster.csv'
-#'   returning empty tibbles. Defaults to FALSE for backward compatibility.
-#'
-#'
-#' # Load roster from default location
-#' # roster <- load_roster()
-#' #
-#' # Load roster from custom location
-#' # roster <- load_roster(data_folder = ".", roster_file = "students.csv")
+# Internal function - no documentation needed
 load_roster <- function(
     data_folder = ".",
     roster_file = "roster.csv",
