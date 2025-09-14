@@ -5,7 +5,7 @@
 #' comment count, and content similarity.
 #'
 #' @param transcript1 First transcript data frame
-#' @param transcript2 Second transcript data frame  
+#' @param transcript2 Second transcript data frame
 #' @param names_to_exclude Vector of names to exclude from comparison (default: "dead_air")
 #' @return Similarity score between 0 and 1
 calculate_content_similarity <- function(
@@ -24,7 +24,7 @@ calculate_content_similarity <- function(
   if (!all(required_cols %in% names(transcript1)) || !all(required_cols %in% names(transcript2))) {
     return(0)
   }
-  
+
   # Add comments column if missing (default to 0)
   if (!"comments" %in% names(transcript1)) {
     transcript1$comments <- 0

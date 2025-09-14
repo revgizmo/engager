@@ -8,7 +8,7 @@
 #' @param roster_data Data frame containing roster information
 #' @param privacy_level Privacy level to apply. One of `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
 #'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
-#' @param unmatched_names_action Action to take for unmatched names. One of `c("stop", "warn")`. 
+#' @param unmatched_names_action Action to take for unmatched names. One of `c("stop", "warn")`.
 #'   Defaults to `getOption("zoomstudentengagement.unmatched_names_action", "stop")`.
 #' @param data_folder Directory containing data files
 #' @param section_names_lookup_file Name of the section names lookup file
