@@ -190,26 +190,7 @@ process_transcript_with_privacy <- function(transcript_data = NULL,
   matched_data
 }
 
-#' Match Names with Privacy
-#'
-#' Performs comprehensive name matching with privacy awareness. Uses consistent
-#' hashing for cross-session matching while maintaining privacy controls.
-#'
-#'
-#'
-#' # Match names with privacy
-#' transcript_data <- tibble::tibble(
-#'   transcript_name = c("Dr. Smith", "John Doe"),
-#'   message = c("Hello class", "Good morning")
-#' )
-#' roster_data <- tibble::tibble(
-#'   first_name = c("John"),
-#'   last_name = c("Doe")
-#' )
-#' matched <- match_names_with_privacy(
-#'   transcript_data = transcript_data,
-#'   roster_data = roster_data
-#' )
+# Internal function - no documentation needed
 match_names_with_privacy <- function(transcript_data = NULL,
                                      roster_data = NULL,
                                      name_mappings = NULL,

@@ -1,29 +1,4 @@
-#' Make Transcripts Summary
-#'
-#' This function creates a tibble from summary metrics by student and class
-#' session (`transcripts_session_summary_df`) and summarizes results at the
-#' level of the class section and preferred student name.
-#'
-#'
-#'   summary metrics by speaker for all class sessions (and placeholders for
-#'   missing sections), including customized student names, and summarizes
-#'   results at the level of the session and preferred student name.
-#'
-#'
-# # Load required packages
-# library(dplyr)
-#'
-#' # Create a simple sample data frame for testing
-#' sample_data <- tibble::tibble(
-#'   section = c("A", "A", "B"),
-#'   preferred_name = c("John Smith", "Jane Doe", "Bob Wilson"),
-#'   n = c(5, 3, 2),
-#'   duration = c(300, 180, 120),
-#'   wordcount = c(500, 300, 200)
-#' )
-#'
-#' # Test the function with the sample data
-#' make_transcripts_summary_df(sample_data)
+# Internal function - no documentation needed
 make_transcripts_summary_df <-
   function(transcripts_session_summary_df = NULL) {
     if (tibble::is_tibble(transcripts_session_summary_df)
