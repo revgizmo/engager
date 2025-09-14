@@ -69,12 +69,7 @@ NULL
   df
 }
 
-#' Read Lookup Safely
-#'
-#' Reads a lookup CSV safely: normalizes columns, coerces to UTF-8, and
-#' returns an empty (0-row) normalized data frame if the file is missing.
-#'
-#'
+# Internal function - no documentation needed
 read_lookup_safely <- function(path = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -94,14 +89,7 @@ read_lookup_safely <- function(path = NULL) {
   .normalize_lookup_df(df)
 }
 
-#' Merge Lookup Preserving Existing Rows
-#'
-#' Merges an additional lookup data frame into an existing one while
-#' preserving existing rows. New information fills only missing fields.
-#' Duplicates are removed deterministically by `transcript_name` keeping
-#' the first non-empty values per field.
-#'
-#'
+# Internal function - no documentation needed
 merge_lookup_preserve <- function(existing_df = NULL, add_df = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

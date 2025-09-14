@@ -54,12 +54,7 @@ hash_name_consistently <- function(names = NULL,
   as.character(hashes)
 }
 
-#' Normalize Name for Matching
-#'
-#' Internal function to normalize names for consistent matching.
-#' Handles common variations like case, punctuation, and formatting.
-#'
-#'
+# Internal function - no documentation needed
 normalize_name_for_matching <- function(names) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

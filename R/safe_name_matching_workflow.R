@@ -113,27 +113,7 @@ handle_unmatched_names <- function(unmatched_names,
   }
 }
 
-#' Process Transcript with Privacy
-#'
-#' Processes transcript data with privacy-aware name matching. This function
-#' implements the two-stage approach: matching with real names in memory,
-#' then applying privacy masking to outputs.
-#'
-#'
-#'
-#' # Process transcript with privacy
-#' transcript_data <- tibble::tibble(
-#'   transcript_name = c("Dr. Smith", "John Doe"),
-#'   message = c("Hello class", "Good morning")
-#' )
-#' roster_data <- tibble::tibble(
-#'   first_name = c("John"),
-#'   last_name = c("Doe")
-#' )
-#' processed <- process_transcript_with_privacy(
-#'   transcript_data = transcript_data,
-#'   roster_data = roster_data
-#' )
+# Internal function - no documentation needed
 process_transcript_with_privacy <- function(transcript_data = NULL,
                                             roster_data = NULL,
                                             name_mappings = NULL,

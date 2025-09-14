@@ -1,33 +1,4 @@
-#' Set Privacy Defaults
-#'
-#' Configure global privacy behavior for the package. The default on package
-#' load is `mask`, which replaces personally identifiable fields with
-#' FERPA-safe placeholders. Set to `"none"` to disable masking (not
-#' recommended).
-#'
-#'   Defaults to `"mask"`. Use `"ferpa_strict"` for maximum FERPA compliance.
-#'   One of `c("stop", "warn")`. Defaults to `"stop"` for maximum privacy protection.
-#'   Use `"warn"` for guided matching with user intervention.
-#'
-#'
-#'
-#' # Set privacy to mask (default)
-#' set_privacy_defaults("mask")
-#'
-#' # Set FERPA standard compliance
-#' set_privacy_defaults("ferpa_standard")
-#'
-#' # Set maximum FERPA compliance
-#' set_privacy_defaults("ferpa_strict")
-#'
-#' # Temporarily disable masking (will emit a warning)
-#' set_privacy_defaults("none")
-#'
-#' # Configure unmatched names behavior
-#' set_privacy_defaults(
-#'   privacy_level = "mask",
-#'   unmatched_names_action = "warn"
-#' )
+# Internal function - no documentation needed
 set_privacy_defaults <- function(privacy_level = c("ferpa_strict", "ferpa_standard", "mask", "none"),
                                  unmatched_names_action = c("stop", "warn")) {
   privacy_level <- match.arg(privacy_level)
