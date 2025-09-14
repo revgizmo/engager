@@ -86,12 +86,7 @@ validate_privacy_compliance <- function(data = NULL,
   TRUE
 }
 
-#' Extract Character Values from Data Object
-#'
-#' Internal function to extract all character values from various data types
-#' for privacy validation.
-#'
-#'
+# Internal function - no documentation needed
 extract_character_values <- function(data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -124,12 +119,7 @@ extract_character_values <- function(data) {
   character(0)
 }
 
-#' Detect Privacy Violations
-#'
-#' Internal function to detect privacy violations by checking for real names
-#' in character values.
-#'
-#'
+# Internal function - no documentation needed
 detect_privacy_violations <- function(character_values, real_names, privacy_level) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

@@ -161,26 +161,7 @@ generate_name_matching_guidance <- function(unmatched_names, privacy_level, incl
   paste(base_msg, privacy_msg, names_msg, instructions_msg, sep = "")
 }
 
-#' Detect Unmatched Names
-#'
-#' Identifies names in transcript data that are not matched against roster data
-#' or existing name mappings. This function works with real names in memory only
-#' and returns privacy-safe results.
-#'
-#'   `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
-#'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
-#'
-#'
-#' # Detect unmatched names
-#' transcript_df <- tibble::tibble(
-#'   transcript_name = c("Dr. Smith", "John Doe", "Guest1"),
-#'   course_section = c("101.A", "101.A", "101.A")
-#' )
-#' roster_df <- tibble::tibble(
-#'   first_last = c("John Doe", "Jane Smith"),
-#'   course_section = c("101.A", "101.A")
-#' )
-#' unmatched <- detect_unmatched_names(transcript_df, roster_df)
+# Internal function - no documentation needed
 detect_unmatched_names <- function(transcript_data = NULL,
                                    roster_data = NULL,
                                    name_mappings = NULL,
@@ -266,11 +247,7 @@ extract_transcript_names <- function(transcript_data) {
   names
 }
 
-#' Extract Roster Names
-#'
-#' Internal function to extract names from roster data.
-#'
-#'
+# Internal function - no documentation needed
 extract_roster_names <- function(roster_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -298,11 +275,7 @@ extract_roster_names <- function(roster_data) {
   names
 }
 
-#' Extract Mapped Names
-#'
-#' Internal function to extract names from name mappings.
-#'
-#'
+# Internal function - no documentation needed
 extract_mapped_names <- function(name_mappings) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

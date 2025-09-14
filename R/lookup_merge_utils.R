@@ -197,12 +197,7 @@ conditionally_write_lookup <- function(df = NULL, path = NULL, allow_write = FAL
   TRUE
 }
 
-#' Ensure Instructor Rows (Pure Merge)
-#'
-#' Returns a merged lookup that includes instructor rows for a given
-#' instructor name, preserving all existing rows. No side effects.
-#'
-#'
+# Internal function - no documentation needed
 ensure_instructor_rows <- function(existing_df = NULL, instructor_name = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
