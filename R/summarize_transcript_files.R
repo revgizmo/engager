@@ -47,7 +47,7 @@ summarize_transcript_files <-
       ncol(transcript_file_names) > 1
 
     if (tibble::is_tibble(transcript_file_names) &&
-      file.exists(transcripts_folder_path)
+        file.exists(transcripts_folder_path)
     ) {
       # Handle duplicate detection if requested
       if (deduplicate_content) {

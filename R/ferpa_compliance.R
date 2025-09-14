@@ -157,6 +157,8 @@ validate_ferpa_compliance <- function(data = NULL,
 #' @param hash_salt Salt value for hash-based anonymization
 #' @param aggregation_level Level of aggregation: "individual", "section", "course", or "institution"
 #' @return Anonymized data frame
+#' @importFrom magrittr %>%
+#' @export
 anonymize_educational_data <- function(data = NULL,
                                        method = c("mask", "hash", "pseudonymize", "aggregate"),
                                        preserve_columns = NULL,
@@ -202,12 +204,14 @@ anonymize_educational_data <- function(data = NULL,
     if (aggregation_level == "section" && "section" %in% names(data)) {
       data <- data %>%
         dplyr::group_by(section) %>%
-        dplyr::summarise(dplyr::across(dplyr::everything(), ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.))) %>%
+        dplyr::summarise(dplyr::across(dplyr::everything(), 
+                                       ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.))) %>%
         dplyr::ungroup()
     } else if (aggregation_level == "course" && "course" %in% names(data)) {
       data <- data %>%
         dplyr::group_by(course) %>%
-        dplyr::summarise(dplyr::across(dplyr::everything(), ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.))) %>%
+        dplyr::summarise(dplyr::across(dplyr::everything(), 
+                                       ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.))) %>%
         dplyr::ungroup()
     } else {
       # Individual level - just mask the PII columns

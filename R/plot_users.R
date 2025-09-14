@@ -66,7 +66,7 @@ validate_plot_users_inputs <- function(data, metric, student_col) {
     stop("Student column '", student_col, "' not found in data")
   }
 
-  return(list(data = data, metric = metric, student_col = student_col))
+  list(data = data, metric = metric, student_col = student_col)
 }
 
 # Helper function to apply privacy masking
@@ -93,5 +93,5 @@ apply_privacy_masking_plot <- function(data, privacy_level, student_col, mask_by
       data[[student_col]] <- paste0("Rank_", seq_len(nrow(data)))
     }
   }
-  return(data)
+  data
 }
