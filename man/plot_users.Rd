@@ -14,6 +14,24 @@ plot_users(
   metrics_lookup_df = NULL
 )
 }
+\arguments{
+\item{data}{A tibble containing the data to plot}
+
+\item{metric}{Column name for the metric to plot (default: "session_ct")}
+
+\item{student_col}{Column name for student identification (default: "name")}
+
+\item{facet_by}{Faceting option: "section", "transcript_file", or "none" (default: "section")}
+
+\item{mask_by}{Masking option: "name" or "rank" (default: "name")}
+
+\item{privacy_level}{Privacy level for data visualization (default: from global option)}
+
+\item{metrics_lookup_df}{Optional lookup table for metric names (default: NULL)}
+}
+\value{
+A ggplot2 object
+}
 \description{
 Unified plotting function for engagement metrics with privacy-aware options.
 }

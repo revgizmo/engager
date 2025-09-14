@@ -1,8 +1,14 @@
 #' Write Metrics
 #'
 #' Unified writer for engagement-related outputs with privacy enforcement.
+#' Parent directories are created if they do not exist.
 #'
-#'   Parent directories are created if they do not exist.
+#' @param data A tibble containing the data to write
+#' @param what Type of output: "engagement", "summary", or "session_summary" (default: "engagement")
+#' @param path File path where to write the output
+#' @param comments_format Format for comments: "text" or "count" (default: "text")
+#' @param privacy_level Privacy level for data export (default: from global option)
+#' @return No return value, writes data to file
 #'
 #' @export
 write_metrics <- function(

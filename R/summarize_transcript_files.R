@@ -1,7 +1,15 @@
 #' Summarize Transcript Files
 #'
-#'   If a tibble with additional columns beyond 'transcript_file' is provided, all metadata
-#'   columns will be preserved in the output.
+#' Summarize multiple transcript files and return aggregated metrics. If a tibble with additional columns beyond 'transcript_file' is provided, all metadata columns will be preserved in the output.
+#'
+#' @param transcript_file_names Vector of transcript file names or tibble with transcript_file column
+#' @param data_folder Base folder containing data files (default: ".")
+#' @param transcripts_folder Subfolder where transcript files are stored (default: "transcripts")
+#' @param names_to_exclude Vector of names to exclude from analysis (default: NULL)
+#' @param deduplicate_content Whether to detect and handle duplicate content (default: FALSE)
+#' @param similarity_threshold Similarity threshold for duplicate detection (default: 0.95)
+#' @param duplicate_method Method for duplicate detection: "hybrid", "content", or "metadata" (default: "hybrid")
+#' @return A tibble containing summarized transcript metrics
 #'
 
 #' # Create sample transcript file names

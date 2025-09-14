@@ -12,9 +12,21 @@ write_metrics(
   privacy_level = getOption("zoomstudentengagement.privacy_level", "mask")
 )
 }
+\arguments{
+\item{data}{A tibble containing the data to write}
+
+\item{what}{Type of output: "engagement", "summary", or "session_summary" (default: "engagement")}
+
+\item{path}{File path where to write the output}
+
+\item{comments_format}{Format for comments: "text" or "count" (default: "text")}
+
+\item{privacy_level}{Privacy level for data export (default: from global option)}
+}
+\value{
+No return value, writes data to file
+}
 \description{
 Unified writer for engagement-related outputs with privacy enforcement.
-}
-\details{
 Parent directories are created if they do not exist.
 }

@@ -2,31 +2,20 @@
 #'
 #' Process a Zoom recording transcript with given parameters and return tibble containing the consolidated and annotated
 #' comments.
-
 #'
 #' Original code posted by Conor Healy:
 #' https://ucbischool.slack.com/archives/C02A36407K9/p1631855705002000 Addition
 #' of `wordcount`, `wordcount_perc`, and `wpm` by Brooks Ambrose:
 #' https://gist.github.com/brooksambrose/1a8a673eb3bf884c1868ad4d80f08246
-
-
-
-
-#'   transcript.
-#'   from the same speaker with gaps of less than `max_pause_sec`. `FALSE`
-#'   returns the results from the raw transcript.  Defaults to `TRUE`
-#'   the raw comments from the Zoom recording transcript contain 2 consecutive
-#'   comments from the same speaker, and the time between the end of the first
-#'   comment and start of the second comment is less than `max_pause_sec`
-#'   seconds, then the comments will be consolidated.  If the time between the
-#'   comments is larger, they will not be consolidated. Defaults to 1.
-#'   transcribed comments, labeled with the `dead_air_name` provided (or the
-#'   default value of 'dead_air').  The resulting tibble will have rows
-#'   accounting for the time from the beginning of the first comment to the end
-#'   of the last one. Defaults to `TRUE`.
-#'   added for dead air. Defaults to 'dead_air'.
-#'   the transcript `name` is `NA`. Defaults to 'unknown'.
-#' of calling `load_zoom_transcript()`.
+#'
+#' @param transcript_file_path Path to the transcript file to process
+#' @param consolidate_comments Whether to consolidate consecutive comments from the same speaker (default: TRUE)
+#' @param max_pause_sec Maximum pause in seconds between comments to consolidate (default: 1)
+#' @param add_dead_air Whether to add dead air rows for gaps in transcript (default: TRUE)
+#' @param dead_air_name Name to use for dead air periods (default: 'dead_air')
+#' @param na_name Name to use for unknown speakers (default: 'unknown')
+#' @param transcript_df Pre-loaded transcript data frame (alternative to transcript_file_path)
+#' @return A tibble containing the processed transcript data
 #'
 #'
 #'

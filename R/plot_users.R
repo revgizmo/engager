@@ -2,6 +2,15 @@
 #'
 #' Unified plotting function for engagement metrics with privacy-aware options.
 #'
+#' @param data A tibble containing the data to plot
+#' @param metric Column name for the metric to plot (default: "session_ct")
+#' @param student_col Column name for student identification (default: "name")
+#' @param facet_by Faceting option: "section", "transcript_file", or "none" (default: "section")
+#' @param mask_by Masking option: "name" or "rank" (default: "name")
+#' @param privacy_level Privacy level for data visualization (default: from global option)
+#' @param metrics_lookup_df Optional lookup table for metric names (default: NULL)
+#' @return A ggplot2 object
+#'
 #' @export
 plot_users <- function(
     data = NULL,
