@@ -60,8 +60,8 @@ create_analysis_config <- function(
   }
 
   if (!is.numeric(scheduled_session_length_hours) ||
-        length(scheduled_session_length_hours) != 1 ||
-      scheduled_session_length_hours <= 0) {
+    length(scheduled_session_length_hours) != 1 ||
+    scheduled_session_length_hours <= 0) {
     stop("scheduled_session_length_hours must be a positive number")
   }
 

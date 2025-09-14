@@ -84,8 +84,11 @@ create_session_mapping <- function(
             # Find the first matching course in course_info_df
             # Match the pattern_name (e.g., "CS 101") against dept + course in course_info_df
             matching_courses <- course_info_df[
-                                               grepl(paste0("^", pattern_name, "$"),
-                    paste(course_info_df$dept, course_info_df$course)), ]
+              grepl(
+                paste0("^", pattern_name, "$"),
+                paste(course_info_df$dept, course_info_df$course)
+              ),
+            ]
             if (nrow(matching_courses) > 0) {
               first_match <- matching_courses[1, ]
               result$dept[i] <- first_match$dept

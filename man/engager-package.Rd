@@ -10,7 +10,10 @@ transcripts. This package provides tools for processing Zoom transcript files, m
 calculating engagement metrics, and generating privacy-aware visualizations and reports.
 }
 \details{
-The engager package is designed for educational researchers and instructors who want to analyze student participation patterns in online learning environments. The package prioritizes privacy and ethical considerations, with built-in data anonymization features and FERPA compliance tools.
+The engager package is designed for educational researchers and instructors who want to
+analyze student participation patterns in online learning environments. The package
+prioritizes privacy and ethical considerations, with built-in data anonymization
+features and FERPA compliance tools.
 
 ## Key Features
 

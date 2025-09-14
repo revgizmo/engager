@@ -5,9 +5,9 @@ load_zoom_recorded_sessions_list <-
            transcripts_folder = "transcripts",
            topic_split_pattern =
              paste0(
-              "^(?<dept>\\S+) (?<course_section>\\S+) - ",
-              "(?<day>[A-Za-z]+) (?<time>\\S+\\s*\\S+) (?<instructor>\\(.*?\\))"
-            ),
+               "^(?<dept>\\S+) (?<course_section>\\S+) - ",
+               "(?<day>[A-Za-z]+) (?<time>\\S+\\s*\\S+) (?<instructor>\\(.*?\\))"
+             ),
            zmrcrddsssnscsvnmspttrn =
              "zoomus_recordings__\\d{8}(?:\\s+copy\\s*\\d*)?\\.csv",
            zmrcrddsssnscsvclnms = paste(

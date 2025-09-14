@@ -42,7 +42,9 @@ prompt_name_matching <- function(unmatched_names = NULL,
 
   # If no unmatched names, return early
   if (length(unmatched_names) == 0) {
-    message("No unmatched names found. Name matching is complete.")
+    if (getOption("engager.verbose", FALSE)) {
+      message("No unmatched names found. Name matching is complete.")
+    }
     return(invisible(NULL))
   }
 
@@ -60,7 +62,9 @@ prompt_name_matching <- function(unmatched_names = NULL,
   )
 
   # Display guidance to user (quiet by default)
-  cat("\n", guidance, "\n", sep = "")
+  if (getOption("engager.verbose", FALSE)) {
+    cat("\n", guidance, "\n", sep = "")
+  }
 
   # Create the lookup file using existing function
   lookup_file_path <- file.path(data_folder, section_names_lookup_file)

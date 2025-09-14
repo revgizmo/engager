@@ -368,9 +368,9 @@ validation_status$test_output_validation <- show_progress(
               brace_count <- brace_count - 1
             }
             
-            # Check for TESTTHAT conditional or zoomse.verbose gating
+            # Check for TESTTHAT conditional or engager.verbose gating
             if (grepl('Sys.getenv("TESTTHAT") != "true"', line_content, fixed = TRUE) ||
-                grepl('getOption\\("zoomse\\.verbose"', line_content)) {
+                grepl('getOption\\("engager\\.verbose"', line_content)) {
               # If we're at brace level 0 or 1, we're in the conditional block
               if (brace_count <= 1) {
                 in_testthat_block <- TRUE
