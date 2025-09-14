@@ -8,36 +8,7 @@
 #' @name ferpa_compliance
 NULL
 
-#' Validate FERPA Compliance
-#'
-#' Validates data for FERPA compliance by checking for personally identifiable
-#' information (PII) and validating data handling procedures.
-#'
-#' **CRITICAL ETHICAL COMPLIANCE**: This function is essential for ensuring
-#' educational data protection and FERPA compliance. It helps institutions
-#' maintain legal compliance while using student data for educational improvement.
-#'
-#' "custom")`
-#'
-#'   - `compliant`: Logical indicating overall compliance
-#'   - `pii_detected`: Character vector of detected PII fields
-#'   - `recommendations`: Character vector of compliance recommendations
-#'   - `retention_check`: Data retention validation results (if requested)
-#'   - `institution_guidance`: Institution-specific recommendations
-#'
-#'
-#' # Validate sample data for FERPA compliance
-#' sample_data <- tibble::tibble(
-#'   student_id = c("12345", "67890"),
-#'   preferred_name = c("Alice Johnson", "Bob Smith"),
-#'   participation_score = c(85, 92)
-#' )
-#'
-#' validation_result <- validate_ferpa_compliance(sample_data)
-#' print(validation_result$compliant)
-#' print(validation_result$recommendations)
-#'
-#' @export
+# Internal function - no documentation needed
 validate_ferpa_compliance <- function(data = NULL,
                                       institution_type = c("educational", "research", "mixed"),
                                       check_retention = TRUE,

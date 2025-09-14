@@ -7,29 +7,7 @@
 #' @name ethical_compliance
 NULL
 
-#' Validate Ethical Use Compliance
-#'
-#' Validates that the package is being used for educational purposes that promote
-#' participation equity rather than surveillance. This function checks usage patterns
-#' and provides guidance for ethical implementation.
-#'
-#' "multi_institution")`
-#'
-#'   - `ethically_compliant`: Logical indicating overall ethical compliance
-#'   - `risk_level`: Risk level assessment (low, medium, high, critical)
-#'   - `recommendations`: Character vector of ethical recommendations
-#'   - `required_documentation`: Required documentation for compliance
-#'   - `institutional_guidance`: Institution-specific guidance
-#'
-#'
-#' # Validate ethical use for research
-#' validation <- validate_ethical_use(
-#'   usage_context = "research",
-#'   data_scope = "section",
-#'   purpose_statement = "Analyzing participation equity to improve teaching methods"
-#' )
-#' print(validation$ethically_compliant)
-#' print(validation$recommendations)
+# Internal function - no documentation needed
 validate_ethical_use <- function(usage_context = c("research", "teaching", "assessment", "intervention", "other"),
                                  data_scope = c("individual", "section", "course", "institution", "multi_institution"),
                                  purpose_statement = NULL,

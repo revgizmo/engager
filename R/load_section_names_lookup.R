@@ -26,10 +26,7 @@ load_section_names_lookup <- function(data_folder = ".",
   )
 }
 
-#' Validate Lookup File Format
-#'
-#' Internal function to validate the format of section names lookup files.
-#'
+# Internal function - no documentation needed
 validate_lookup_file_format <- function(data) {
   # Simplified validation for deprecated function
   TRUE
