@@ -397,7 +397,12 @@ generate_ferpa_report <- function(data = NULL,
 #' Validates data retention policies and identifies data that should be
 #' disposed of according to institutional policies.
 #'
-#' "custom")`
+#' @param data Data frame to check for retention policy compliance
+#' @param retention_period Retention period: "academic_year", "semester", "quarter", or "custom"
+#' @param custom_retention_days Custom retention period in days (for "custom" period)
+#' @param date_column Column name containing dates to check
+#' @param current_date Current date for comparison (default: Sys.Date())
+#' @return List containing compliance status and retention analysis
 #'
 #'
 #'

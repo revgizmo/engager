@@ -12,14 +12,20 @@ check_data_retention_policy(
   current_date = Sys.Date()
 )
 }
-\description{
-Validates data retention policies and identifies data that should be
-disposed of according to institutional policies.
+\arguments{
+\item{data}{Data frame to check for retention policy compliance}
+
+\item{retention_period}{Retention period: "academic_year", "semester", "quarter", or "custom"}
+
+\item{custom_retention_days}{Custom retention period in days (for "custom" period)}
+
+\item{date_column}{Column name containing dates to check}
+
+\item{current_date}{Current date for comparison (default: Sys.Date())}
 }
-\details{
-"custom")`
-}
-\section{Check data retention policy}{
+\value{
+List containing compliance status and retention analysisCheck data retention policy
+
 sample_data <- tibble::tibble(
 student_id = c("12345", "67890"),
 session_date = as.Date(c("2024-01-15", "2024-02-20")),
@@ -33,4 +39,7 @@ date_column = "session_date"
 )
 print(retention_check$compliant)
 }
-
+\description{
+Validates data retention policies and identifies data that should be
+disposed of according to institutional policies.
+}

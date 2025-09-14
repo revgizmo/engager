@@ -341,6 +341,12 @@ create_ethical_use_report <- function(usage_context = NULL,
 #' Analyzes usage patterns to detect potential ethical concerns and
 #' provides recommendations for improvement.
 #'
+#' @param function_calls Vector of function names that were called
+#' @param data_sizes Vector of data sizes processed
+#' @param privacy_settings Vector of privacy settings used
+#' @param time_period Time period for analysis in days (default: 30)
+#' @return Audit report with ethical usage analysis
+#'
 #'
 #'
 #'

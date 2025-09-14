@@ -221,6 +221,11 @@ make_clean_names_df <- function(data_folder = ".",
 #' Internal function to apply privacy-aware name matching using consistent hashing.
 #' This function enhances the existing matching logic with privacy-first design.
 #'
+#' @param result Data frame containing matching results
+#' @param section_names_lookup Lookup table for section names
+#' @param privacy_level Privacy level for data processing
+#' @return Enhanced matching results with privacy-aware processing
+#'
 #'
 apply_privacy_aware_matching <- function(result, section_names_lookup, privacy_level) {
   # DEPRECATED: This function will be removed in the next version

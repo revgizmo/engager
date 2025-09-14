@@ -11,11 +11,18 @@ audit_ethical_usage(
   time_period = 30
 )
 }
-\description{
-Analyzes usage patterns to detect potential ethical concerns and
-provides recommendations for improvement.
+\arguments{
+\item{function_calls}{Vector of function names that were called}
+
+\item{data_sizes}{Vector of data sizes processed}
+
+\item{privacy_settings}{Vector of privacy settings used}
+
+\item{time_period}{Time period for analysis in days (default: 30)}
 }
-\section{Audit usage patterns}{
+\value{
+Audit report with ethical usage analysisAudit usage patterns
+
 audit <- audit_ethical_usage(
 function_calls = c("analyze_transcripts", "plot_users", "write_metrics"),
 data_sizes = c(100, 150, 200),
@@ -23,4 +30,7 @@ privacy_settings = c("mask", "mask", "ferpa_strict"),
 time_period = 30
 )
 }
-
+\description{
+Analyzes usage patterns to detect potential ethical concerns and
+provides recommendations for improvement.
+}
