@@ -11,27 +11,30 @@ validate_privacy_compliance(
   stop_on_violation = TRUE
 )
 }
+\arguments{
+\item{data}{Data frame or object to validate for privacy compliance}
+
+\item{privacy_level}{Privacy level to validate against. One of \code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
+Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
+
+\item{real_names}{Vector of real names to check against. If NULL, uses common name patterns to detect potential violations.}
+
+\item{stop_on_violation}{Whether to stop processing if violations are found. Defaults to TRUE for maximum privacy protection.}
+}
+\value{
+Validation results with compliance status and any violations foundValidate privacy compliance
+
+df <- tibble::tibble(
+name = c("Student_01", "Student_02"),
+score = c(85, 92)
+)
+validate_privacy_compliance(df)Check with specific real names
+
+real_names <- c("John Smith", "Jane Doe")
+validate_privacy_compliance(df, real_names = real_names)
+}
 \description{
 Scans data objects to ensure no real names appear in outputs when privacy
 masking is enabled. This function performs exact matching to detect privacy
 violations and stops processing if real names are found.
 }
-\details{
-\code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
-Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.
-If NULL, uses common name patterns to detect potential violations.
-Defaults to TRUE for maximum privacy protection.
-}
-\section{Validate privacy compliance}{
-df <- tibble::tibble(
-name = c("Student_01", "Student_02"),
-score = c(85, 92)
-)
-validate_privacy_compliance(df)
-}
-
-\section{Check with specific real names}{
-real_names <- c("John Smith", "Jane Doe")
-validate_privacy_compliance(df, real_names = real_names)
-}
-

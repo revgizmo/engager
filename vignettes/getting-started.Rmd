@@ -63,9 +63,9 @@ summary_metrics <- summarize_transcript_metrics(
 # View the results (privacy-safe by default)
 head(summary_metrics)
 
-# Validate for FERPA compliance
-compliance_result <- validate_ferpa_compliance(summary_metrics)
-cat("FERPA Compliance:", ifelse(compliance_result$compliant, "✅ Compliant", "⚠️  Issues found"), "\n")
+# Check privacy compliance
+privacy_result <- privacy_audit(summary_metrics)
+cat("Privacy Check:", ifelse(nrow(privacy_result) == 0, "✅ No issues found", "⚠️  Issues found"), "\n")
 ```
 
 ## What the Package Does

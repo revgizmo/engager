@@ -1,8 +1,4 @@
-#' Write Transcripts Session Summary
-#'
-#' Deprecated: use `write_metrics(data, what = 'session_summary', path = ...)` instead.
-#'
-#'
+# Internal function - no documentation needed
 write_transcripts_session_summary <-
   function(transcripts_session_summary_df = NULL,
            data_folder = ".",

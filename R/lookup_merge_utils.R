@@ -113,12 +113,7 @@ merge_lookup_preserve <- function(existing_df = NULL, add_df = NULL) {
   )
 }
 
-#' Transactional Write with Backup
-#'
-#' Writes the lookup data frame to CSV with a timestamped backup of any
-#' existing file and an atomic replace (write to temp, then rename).
-#'
-#'
+# Internal function - no documentation needed
 write_lookup_transactional <- function(df = NULL, path = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

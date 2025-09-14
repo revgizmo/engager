@@ -6,11 +6,7 @@
 #' @name schema
 NULL
 
-#' Validate that a data frame contains required columns (and optionally types)
-#'
-#'
-#' df <- tibble::tibble(a = 1L, b = "x")
-#' validate_schema(df, c("a", "b"), types = list(a = "integer", b = "character"))
+# Internal function - no documentation needed
 validate_schema <- function(df = NULL, required_cols = NULL, types = NULL) {
   if (!is.data.frame(df)) {
     abort_zse("`df` must be a data.frame or tibble", class = "zse_schema_error")

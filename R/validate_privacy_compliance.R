@@ -4,11 +4,13 @@
 #' masking is enabled. This function performs exact matching to detect privacy
 #' violations and stops processing if real names are found.
 #'
-#'   `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
+#' @param data Data frame or object to validate for privacy compliance
+#' @param privacy_level Privacy level to validate against. One of `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
 #'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
-#'   If NULL, uses common name patterns to detect potential violations.
-#'   Defaults to TRUE for maximum privacy protection.
+#' @param real_names Vector of real names to check against. If NULL, uses common name patterns to detect potential violations.
+#' @param stop_on_violation Whether to stop processing if violations are found. Defaults to TRUE for maximum privacy protection.
 #'
+#' @return Validation results with compliance status and any violations found
 #'
 #' # Validate privacy compliance
 #' df <- tibble::tibble(

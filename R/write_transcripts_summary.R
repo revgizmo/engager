@@ -1,9 +1,4 @@
-#' Write Transcripts Summary
-#'
-#' Deprecated: use `write_metrics(data, what = 'summary', path = ...)` instead.
-#'
-#' student name.
-#'
+# Internal function - no documentation needed
 write_transcripts_summary <-
   function(transcripts_summary_df = NULL,
            data_folder = ".",
