@@ -584,3 +584,110 @@ test_that("make_transcripts_summary_df handles very small decimal values", {
   # Check WPM calculation with small values
   expect_equal(result$wpm, c(0.02 / 0.002, 0.01 / 0.001))
 })
+
+test_that("make_transcripts_summary_df handles edge case data types", {
+  # Test with different data types
+  df <- tibble::tibble(
+    section = c("A", "B"),
+    preferred_name = c("Alice", "Bob"),
+    n = c(2L, 1L),  # Integer
+    duration = c(60.5, 30.0),  # Numeric with decimals
+    wordcount = c(10L, 5L),  # Integer
+    n_perc = c(0.5, 0.25),
+    duration_perc = c(0.6, 0.3),
+    wordcount_perc = c(0.4, 0.2),
+    wpm = c(10.0, 10.0)
+  )
+  result <- make_transcripts_summary_df(df)
+  expect_s3_class(result, "tbl_df")
+  expect_equal(nrow(result), 2)
+})
+
+test_that("make_transcripts_summary_df handles special characters in names", {
+  # Test with special characters in names
+  df <- tibble::tibble(
+    section = c("A", "B"),
+    preferred_name = c("Alice O'Connor", "José María"),
+    n = c(2, 1),
+    duration = c(60, 30),
+    wordcount = c(10, 5),
+    n_perc = c(0.5, 0.25),
+    duration_perc = c(0.6, 0.3),
+    wordcount_perc = c(0.4, 0.2),
+    wpm = c(10, 10)
+  )
+  result <- make_transcripts_summary_df(df)
+  expect_s3_class(result, "tbl_df")
+  expect_equal(nrow(result), 2)
+  expect_true("Alice O'Connor" %in% result$preferred_name)
+  expect_true("José María" %in% result$preferred_name)
+})
+
+test_that("make_transcripts_summary_df handles zero values", {
+  # Test with zero values
+  df <- tibble::tibble(
+    section = c("A", "B"),
+    preferred_name = c("Alice", "Bob"),
+    n = c(0, 1),
+    duration = c(0, 30),
+    wordcount = c(0, 5),
+    n_perc = c(0, 0.25),
+    duration_perc = c(0, 0.3),
+    wordcount_perc = c(0, 0.2),
+    wpm = c(0, 10)
+  )
+  result <- make_transcripts_summary_df(df)
+  expect_s3_class(result, "tbl_df")
+  expect_equal(nrow(result), 2)
+})
+
+test_that("make_transcripts_summary_df handles negative values", {
+  # Test with negative values (edge case)
+  df <- tibble::tibble(
+    section = c("A", "B"),
+    preferred_name = c("Alice", "Bob"),
+    n = c(-1, 1),
+    duration = c(-60, 30),
+    wordcount = c(-10, 5),
+    n_perc = c(-0.5, 0.25),
+    duration_perc = c(-0.6, 0.3),
+    wordcount_perc = c(-0.4, 0.2),
+    wpm = c(-10, 10)
+  )
+  result <- make_transcripts_summary_df(df)
+  expect_s3_class(result, "tbl_df")
+  expect_equal(nrow(result), 2)
+})
+
+test_that("make_transcripts_summary_df handles very large numbers", {
+  # Test with very large numbers
+  df <- tibble::tibble(
+    section = c("A", "B"),
+    preferred_name = c("Alice", "Bob"),
+    n = c(1e6, 1),
+    duration = c(1e6, 30),
+    wordcount = c(1e6, 5),
+    n_perc = c(1.0, 0.25),
+    duration_perc = c(1.0, 0.3),
+    wordcount_perc = c(1.0, 0.2),
+    wpm = c(1e6, 10)
+  )
+  result <- make_transcripts_summary_df(df)
+  expect_s3_class(result, "tbl_df")
+  expect_equal(nrow(result), 2)
+})
+
+test_that("make_transcripts_summary_df handles missing columns gracefully", {
+  # Test with missing some columns (should still work)
+  df <- tibble::tibble(
+    section = c("A", "B"),
+    preferred_name = c("Alice", "Bob"),
+    n = c(2, 1),
+    duration = c(60, 30),
+    wordcount = c(10, 5)
+    # Missing some columns
+  )
+  result <- make_transcripts_summary_df(df)
+  expect_s3_class(result, "tbl_df")
+  expect_equal(nrow(result), 2)
+})
