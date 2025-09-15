@@ -54,5 +54,5 @@ jobs:
           cov <- covr::package_coverage()
           pct <- covr::percent_coverage(cov)
           cat(sprintf("coverage=%.2f\n", pct))
-          if (pct < 88) quit(status = 1)
+          if (pct < 90) quit(status = 1)
         shell: Rscript {0}
