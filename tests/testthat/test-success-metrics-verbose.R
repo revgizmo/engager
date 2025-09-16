@@ -95,3 +95,47 @@ test_that("success metrics respect quiet mode", {
   # Should be able to get target state without errors
   expect_error(get_target_state(), NA)
 })
+
+test_that("track_success_metrics returns structured report with progress", {
+  skip_on_cran()
+
+  captured_warnings <- character()
+  report <- withCallingHandlers(
+    track_success_metrics(),
+    warning = function(w) {
+      captured_warnings <<- c(captured_warnings, conditionMessage(w))
+      invokeRestart("muffleWarning")
+    }
+  )
+
+  expect_true(any(grepl("deprecated", captured_warnings)))
+
+  expect_true(is.list(report))
+  expect_true(all(c("timestamp", "framework", "baseline", "targets", "progress", "summary") %in% names(report)))
+  expect_s3_class(report$timestamp, "POSIXct")
+
+  baseline <- report$baseline
+  expect_true(is.list(baseline))
+  expect_true(all(c("functions", "documentation_files", "test_coverage", "open_issues", "timestamp") %in% names(baseline)))
+
+  expected_functions <- length(list.files("R/", pattern = "\\\.R$", full.names = FALSE))
+  expect_equal(baseline$functions, expected_functions)
+
+  expected_docs <- length(list.files("docs/", recursive = TRUE))
+  expect_equal(baseline$documentation_files, expected_docs)
+
+  expect_true(is.numeric(baseline$test_coverage) || is.na(baseline$test_coverage))
+
+  expect_true(is.list(report$progress))
+  expect_true(all(c("function_scope_ok", "test_coverage_ok", "documentation_ok") %in% names(report$summary)))
+
+  if (!is.null(report$progress$functions)) {
+    expect_equal(report$progress$functions$metric, "functions")
+    expect_equal(report$progress$functions$current, baseline$functions)
+  }
+
+  if (!is.null(report$progress$documentation)) {
+    expect_equal(report$progress$documentation$metric, "documentation")
+    expect_equal(report$progress$documentation$current, baseline$documentation_files)
+  }
+})

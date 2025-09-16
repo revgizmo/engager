@@ -1,3 +1,29 @@
+test_that("load_mapping_file reads mapping with required types", {
+  temp_file <- tempfile(fileext = ".csv")
+  on.exit(unlink(temp_file), add = TRUE)
+
+  sample <- tibble::tibble(
+    zoom_recording_id = c("recording1", "recording2"),
+    dept = c("MATH", "CS"),
+    course = c("101", "201"),
+    section = c("A", "B"),
+    session_date = as.Date(c("2024-01-15", "2024-01-16")),
+    session_time = c("09:00", "14:00"),
+    instructor = c("Dr. Smith", "Dr. Jones")
+  )
+  readr::write_csv(sample, temp_file)
+
+  loaded <- load_mapping_file(temp_file)
+  expect_s3_class(loaded, "tbl_df")
+  expect_true(all(names(sample) %in% names(loaded)))
+  expect_s3_class(loaded$session_date, "Date")
+  expect_type(loaded$session_time, "character")
+})
+
+test_that("load_mapping_file errors when file missing", {
+  expect_error(load_mapping_file("does_not_exist.csv"), class = "zse_input_error")
+})
+
 test_that("load_session_mapping loads mapping file correctly", {
   # Create a temporary mapping file
   temp_file <- tempfile(fileext = ".csv")

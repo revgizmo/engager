@@ -1,3 +1,70 @@
+test_that("read_lookup_safely returns normalized frame when file missing", {
+  tmp <- tempfile()
+  warnings <- character()
+  result <- withCallingHandlers(
+    read_lookup_safely(tmp),
+    warning = function(w) {
+      warnings <<- c(warnings, conditionMessage(w))
+      invokeRestart('muffleWarning')
+    }
+  )
+
+  expect_s3_class(result, 'data.frame')
+  expect_equal(nrow(result), 0)
+  expect_true(all(c('transcript_name', 'preferred_name', 'formal_name', 'participant_type', 'student_id', 'notes') %in% names(result)))
+  expect_true(any(grepl('deprecated', warnings)))
+})
+
+test_that("read_lookup_safely normalizes columns for existing file", {
+  tmp <- tempfile(fileext = '.csv')
+  on.exit(unlink(tmp), add = TRUE)
+  utils::write.csv(
+    data.frame(transcript_name = 'Alice', preferred_name = 'Alice', stringsAsFactors = FALSE),
+    tmp,
+    row.names = FALSE
+  )
+
+  warnings <- character()
+  result <- withCallingHandlers(
+    read_lookup_safely(tmp),
+    warning = function(w) {
+      warnings <<- c(warnings, conditionMessage(w))
+      invokeRestart('muffleWarning')
+    }
+  )
+
+  expect_s3_class(result, 'data.frame')
+  expect_equal(result$participant_type, 'unknown')
+  expect_equal(result$student_id, 'INSTRUCTOR')
+  expect_true(any(grepl('deprecated', warnings)))
+})
+
+test_that("write_lookup_transactional normalizes and writes lookup data", {
+  tmp <- tempfile(fileext = '.csv')
+  on.exit(unlink(tmp), add = TRUE)
+  lookup <- data.frame(transcript_name = 'Session 1', participant_type = NA_character_, stringsAsFactors = FALSE)
+
+  warnings <- character()
+  path_written <- withCallingHandlers(
+    write_lookup_transactional(lookup, path = tmp),
+    warning = function(w) {
+      warnings <<- c(warnings, conditionMessage(w))
+      invokeRestart('muffleWarning')
+    }
+  )
+
+  expect_equal(path_written, tmp)
+  expect_true(file.exists(tmp))
+
+  reloaded <- utils::read.csv(tmp, stringsAsFactors = FALSE)
+  expect_true(all(c('transcript_name', 'preferred_name', 'formal_name', 'participant_type', 'student_id', 'notes') %in% names(reloaded)))
+  expect_true(any(grepl('deprecated', warnings)))
+})
+
+test_that("write_lookup_transactional validates path input", {
+  expect_error(write_lookup_transactional(data.frame(), path = c('a', 'b')), 'path must be a single character string')
+})
+
 # Test file for lookup merge utility functions
 # Tests for merge_lookup_preserve and ensure_instructor_rows
 # NOTE: These functions are deprecated - tests focus on deprecation behavior

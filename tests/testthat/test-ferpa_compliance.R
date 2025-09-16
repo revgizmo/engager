@@ -1,3 +1,22 @@
+test_that("identify_anonymization_columns selects expected PII fields", {
+  data <- tibble::tibble(
+    student_id = c('1', '2'),
+    preferred_name = c('Alice', 'Bob'),
+    email_address = c('a@example.com', 'b@example.com'),
+    notes = c('ok', 'ok'),
+    section = c('A', 'B')
+  )
+
+  columns <- identify_anonymization_columns(data, preserve_columns = 'notes')
+  expect_setequal(columns, c('student_id', 'preferred_name', 'email_address'))
+})
+
+test_that("identify_anonymization_columns returns empty set when no PII detected", {
+  data <- tibble::tibble(section = c('A', 'B'), score = c(10, 20))
+  columns <- identify_anonymization_columns(data, preserve_columns = character())
+  expect_length(columns, 0L)
+})
+
 test_that("validate_ferpa_compliance works correctly", {
   # Test data with PII
   sample_data <- tibble::tibble(

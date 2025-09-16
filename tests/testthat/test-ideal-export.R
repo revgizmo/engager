@@ -275,3 +275,47 @@ test_that("Export functions follow package conventions", {
     unlink(temp_file)
   }
 })
+test_that("xprtdltrnscrptssmmry exports CSV summary with privacy", {
+  temp_dir <- withr::local_tempdir()
+  csv_path <- file.path(temp_dir, 'summary.csv')
+
+  warnings <- character()
+  result_path <- withCallingHandlers(
+    xprtdltrnscrptssmmry(test_data, file_path = csv_path, format = 'csv', privacy_level = 'mask'),
+    warning = function(w) {
+      warnings <<- c(warnings, conditionMessage(w))
+      invokeRestart('muffleWarning')
+    }
+  )
+
+  expect_equal(result_path, csv_path)
+  expect_true(file.exists(csv_path))
+
+  summary_df <- utils::read.csv(csv_path, stringsAsFactors = FALSE)
+  expect_true(all(c('total_rows', 'total_columns', 'unique_speakers', 'time_range', 'export_timestamp') %in% names(summary_df)))
+  expect_equal(summary_df$total_rows, nrow(test_data))
+  expect_true(any(grepl('deprecated', warnings)))
+})
+
+test_that("xprtdltrnscrptssmmry supports JSON export", {
+  temp_dir <- withr::local_tempdir()
+  json_path <- file.path(temp_dir, 'summary.json')
+
+  warnings <- character()
+  result_path <- withCallingHandlers(
+    xprtdltrnscrptssmmry(test_data, file_path = json_path, format = 'json', privacy_level = 'mask'),
+    warning = function(w) {
+      warnings <<- c(warnings, conditionMessage(w))
+      invokeRestart('muffleWarning')
+    }
+  )
+
+  expect_equal(result_path, json_path)
+  expect_true(file.exists(json_path))
+
+  json_content <- jsonlite::read_json(json_path)
+  expect_true('summary_data' %in% names(json_content))
+  expect_equal(json_content$summary_data$total_rows, nrow(test_data))
+  expect_true(any(grepl('deprecated', warnings)))
+})
+
