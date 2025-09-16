@@ -31,3 +31,34 @@ test_that("make_transcripts_summary_df aggregates and computes percentages", {
   expect_lt(abs(sum(s1$perc_duration) - 100), 1e-6)
   expect_lt(abs(sum(s1$perc_wordcount) - 100), 1e-6)
 })
+
+test_that("make_transcripts_summary_df handles zero and NA durations without NaNs", {
+  df <- tibble::tibble(
+    section = c("S1","S1","S2","S2"),
+    preferred_name = c("A","B","A","B"),
+    n = c(0,0,1,1),
+    duration = c(0,NA,0,10),
+    wordcount = c(0,0,0,100)
+  )
+  out <- make_transcripts_summary_df(df)
+  expect_s3_class(out, "tbl_df")
+  expect_true(all(is.finite(out$perc_n) | is.na(out$perc_n)))
+  expect_true(all(is.finite(out$perc_duration) | is.na(out$perc_duration)))
+  expect_true(all(is.finite(out$perc_wordcount) | is.na(out$perc_wordcount)))
+})
+
+test_that("make_transcripts_summary_df handles an all-zero section safely", {
+  df <- tibble::tibble(
+    section = c("Z","Z","Y"),
+    preferred_name = c("a","b","c"),
+    n = c(0,0,1),
+    duration = c(0,0,5),
+    wordcount = c(0,0,50)
+  )
+  out <- make_transcripts_summary_df(df)
+  expect_s3_class(out, "tbl_df")
+  z <- out[out$section=="Z",]
+  expect_true(all(is.na(z$perc_n) | is.finite(z$perc_n)))
+  expect_true(all(is.na(z$perc_duration) | is.finite(z$perc_duration)))
+  expect_true(all(is.na(z$perc_wordcount) | is.finite(z$perc_wordcount)))
+})
