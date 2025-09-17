@@ -118,7 +118,7 @@ test_that("track_success_metrics returns structured report with progress", {
   expect_true(is.list(baseline))
   expect_true(all(c("functions", "documentation_files", "test_coverage", "open_issues", "timestamp") %in% names(baseline)))
 
-  expected_functions <- length(list.files("R/", pattern = "\\\.R$", full.names = FALSE))
+  expected_functions <- length(list.files("R/", pattern = "\\.R$", full.names = FALSE))
   expect_equal(baseline$functions, expected_functions)
 
   expected_docs <- length(list.files("docs/", recursive = TRUE))
