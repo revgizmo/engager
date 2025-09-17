@@ -26,3 +26,5 @@ if (interactive()) {
   cat("🧪 Test framework ready\n")
   cat("📚 Documentation tools available\n")
 }
+
+if (file.exists("renv/activate.R")) source("renv/activate.R")

@@ -1,0 +1,5 @@
+renv::activate()
+styler::style_pkg()
+roxygen2::roxygenise()
+devtools::test()
+rcmdcheck::rcmdcheck(error_on = "warning")
