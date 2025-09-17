@@ -145,6 +145,7 @@ calc_content_similarity_matrix <- function(existing_files, existing_names,
 #'   similarity_threshold = 0.9
 #' )
 #'
+#' @seealso
 #' \code{\link{process_zoom_transcript}} for processing individual transcripts,
 #' \code{\link{summarize_transcript_metrics}} for analyzing transcript content
 #'
