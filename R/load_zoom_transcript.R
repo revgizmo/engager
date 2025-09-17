@@ -9,7 +9,7 @@
 #'
 #' @param transcript_file_path Path to the transcript file to load
 #' @return A tibble containing the transcript data, or NULL if the file is empty
-#'
+#' @examples
 #' # Load a sample transcript from the package's extdata directory
 #' transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
 #'   package = "engager"

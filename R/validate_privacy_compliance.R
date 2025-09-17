@@ -11,7 +11,8 @@
 #' @param stop_on_violation Whether to stop processing if violations are found. Defaults to TRUE for maximum privacy protection.
 #'
 #' @return Validation results with compliance status and any violations found
-#'
+#' @export
+#' @examples
 #' # Validate privacy compliance
 #' df <- tibble::tibble(
 #'   name = c("Student_01", "Student_02"),
@@ -90,15 +91,6 @@ validate_privacy_compliance <- function(data = NULL,
 
 # Internal function - no documentation needed
 extract_character_values <- function(data) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  if (Sys.getenv("TESTTHAT") != "true") {
-    warning(
-      "Function 'extract_character_values' is deprecated and will be removed in the next version. ",
-      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-      call. = FALSE
-    )
-  }
 
   # Handle different data types
   if (is.data.frame(data)) {
@@ -123,15 +115,6 @@ extract_character_values <- function(data) {
 
 # Internal function - no documentation needed
 detect_privacy_violations <- function(character_values, real_names, privacy_level) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  if (Sys.getenv("TESTTHAT") != "true") {
-    warning(
-      "Function 'detect_privacy_violations' is deprecated and will be removed in the next version. ",
-      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-      call. = FALSE
-    )
-  }
 
   violations <- character(0)
 

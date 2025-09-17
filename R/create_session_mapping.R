@@ -11,15 +11,6 @@ create_session_mapping <- function(
     ),
     interactive = FALSE,
     verbose = FALSE) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  if (Sys.getenv("TESTTHAT") != "true") {
-    warning(
-      "Function 'create_session_mapping' is deprecated and will be removed in the next version. ",
-      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-      call. = FALSE
-    )
-  }
 
   # Validate inputs
   if (is.null(zoom_recordings_df) || is.null(course_info_df)) {

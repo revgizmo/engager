@@ -202,7 +202,7 @@ Masked by default: `preferred_name`, `name`, `first_last`, `name_raw`, `student_
 
 See the vignette "Ethical & FERPA Guide" for details.
 
-## 🛠️ Development
+## Development
 
 ### Pull Request Review
 This project uses a lightweight PR review process focused on CRAN submission readiness and privacy compliance. See [CONTRIBUTING.md](CONTRIBUTING.md) for the review checklist and criteria.

@@ -7,13 +7,6 @@ prompt_name_matching <- function(unmatched_names = NULL,
                                  data_folder = ".",
                                  section_names_lookup_file = "section_names_lookup.csv",
                                  include_instructions = TRUE) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'prompt_name_matching' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
 
   # Validate inputs
   if (!is.character(unmatched_names)) {
@@ -84,13 +77,6 @@ prompt_name_matching <- function(unmatched_names = NULL,
 
 # Internal function - no documentation needed
 generate_name_matching_guidance <- function(unmatched_names, privacy_level, include_instructions) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'generate_name_matching_guidance' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
 
   # Count unmatched names
   n_unmatched <- length(unmatched_names)
@@ -197,13 +183,6 @@ detect_unmatched_names <- function(transcript_data = NULL,
 
 # Internal function - no documentation needed
 extract_transcript_names <- function(transcript_data) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'extract_transcript_names' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
 
   # Look for common name columns in transcript data
   name_columns <- c("transcript_name", "name", "speaker_name", "participant_name")
@@ -225,13 +204,6 @@ extract_transcript_names <- function(transcript_data) {
 
 # Internal function - no documentation needed
 extract_roster_names <- function(roster_data) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'extract_roster_names' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
 
   # Look for common name columns in roster data
   name_columns <- c("first_last", "preferred_name", "formal_name", "name", "student_name")
@@ -253,13 +225,6 @@ extract_roster_names <- function(roster_data) {
 
 # Internal function - no documentation needed
 extract_mapped_names <- function(name_mappings) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'extract_mapped_names' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
 
   # Look for common name columns in mappings
   name_columns <- c("preferred_name", "formal_name", "transcript_name", "name")
