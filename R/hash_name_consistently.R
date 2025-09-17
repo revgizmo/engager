@@ -56,7 +56,6 @@ hash_name_consistently <- function(names = NULL,
 
 # Internal function - no documentation needed
 normalize_name_for_matching <- function(names) {
-
   # Handle NA and empty values
   names[is.na(names)] <- ""
   names[nchar(trimws(names)) == 0] <- ""

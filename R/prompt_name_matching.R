@@ -7,7 +7,6 @@ prompt_name_matching <- function(unmatched_names = NULL,
                                  data_folder = ".",
                                  section_names_lookup_file = "section_names_lookup.csv",
                                  include_instructions = TRUE) {
-
   # Validate inputs
   if (!is.character(unmatched_names)) {
     stop("unmatched_names must be a character vector", call. = FALSE)
@@ -77,7 +76,6 @@ prompt_name_matching <- function(unmatched_names = NULL,
 
 # Internal function - no documentation needed
 generate_name_matching_guidance <- function(unmatched_names, privacy_level, include_instructions) {
-
   # Count unmatched names
   n_unmatched <- length(unmatched_names)
 
@@ -183,7 +181,6 @@ detect_unmatched_names <- function(transcript_data = NULL,
 
 # Internal function - no documentation needed
 extract_transcript_names <- function(transcript_data) {
-
   # Look for common name columns in transcript data
   name_columns <- c("transcript_name", "name", "speaker_name", "participant_name")
   found_columns <- intersect(name_columns, names(transcript_data))
@@ -204,7 +201,6 @@ extract_transcript_names <- function(transcript_data) {
 
 # Internal function - no documentation needed
 extract_roster_names <- function(roster_data) {
-
   # Look for common name columns in roster data
   name_columns <- c("first_last", "preferred_name", "formal_name", "name", "student_name")
   found_columns <- intersect(name_columns, names(roster_data))
@@ -225,7 +221,6 @@ extract_roster_names <- function(roster_data) {
 
 # Internal function - no documentation needed
 extract_mapped_names <- function(name_mappings) {
-
   # Look for common name columns in mappings
   name_columns <- c("preferred_name", "formal_name", "transcript_name", "name")
   found_columns <- intersect(name_columns, names(name_mappings))

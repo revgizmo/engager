@@ -4,7 +4,6 @@ join_transcripts_list <- function(
     df_zoom_recorded_sessions = NULL,
     df_transcript_files = NULL,
     df_cancelled_classes = NULL) {
-
   # Simplified deprecated function - just return empty tibble with correct structure
   tibble::tibble(
     section = character(),

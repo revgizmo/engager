@@ -284,7 +284,6 @@ generate_ferpa_report <- function(data = NULL,
                                   report_format = c("text", "html", "json"),
                                   include_audit_trail = TRUE,
                                   institution_info = NULL) {
-
   report_format <- match.arg(report_format)
 
   # Validate data
@@ -384,7 +383,6 @@ check_data_retention_policy <- function(data = NULL,
                                         custom_retention_days = NULL,
                                         date_column = NULL,
                                         current_date = Sys.Date()) {
-
   retention_period <- match.arg(retention_period)
 
   result <- list(
@@ -448,7 +446,6 @@ log_ferpa_compliance_check <- function(compliant,
                                        pii_detected,
                                        institution_type,
                                        timestamp = Sys.time()) {
-
   # Create log entry
   log_entry <- list(
     timestamp = timestamp,

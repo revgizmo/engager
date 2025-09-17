@@ -168,7 +168,6 @@ make_clean_names_df <- function(data_folder = ".",
 #'
 #'
 apply_privacy_aware_matching <- function(result, section_names_lookup, privacy_level) {
-
   # Extract transcript names for hashing
   transcript_names <- unique(result$transcript_name[!is.na(result$transcript_name)])
 

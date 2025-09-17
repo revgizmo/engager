@@ -71,7 +71,6 @@ NULL
 
 # Internal function - no documentation needed
 read_lookup_safely <- function(path = NULL) {
-
   if (!is.character(path) || length(path) != 1) {
     stop("path must be a single character string", call. = FALSE)
   }
@@ -84,7 +83,6 @@ read_lookup_safely <- function(path = NULL) {
 
 # Internal function - no documentation needed
 merge_lookup_preserve <- function(existing_df = NULL, add_df = NULL) {
-
   # Simplified deprecated function - return empty tibble with correct structure
   tibble::tibble(
     transcript_name = character(),
@@ -101,7 +99,6 @@ merge_lookup_preserve <- function(existing_df = NULL, add_df = NULL) {
 
 # Internal function - no documentation needed
 write_lookup_transactional <- function(df = NULL, path = NULL) {
-
   if (!is.character(path) || length(path) != 1) {
     stop("path must be a single character string", call. = FALSE)
   }
@@ -144,7 +141,6 @@ write_lookup_transactional <- function(df = NULL, path = NULL) {
 
 # Internal function - no documentation needed
 conditionally_write_lookup <- function(df = NULL, path = NULL, allow_write = FALSE) {
-
   if (!isTRUE(allow_write)) {
     return(FALSE)
   }
@@ -154,7 +150,6 @@ conditionally_write_lookup <- function(df = NULL, path = NULL, allow_write = FAL
 
 # Internal function - no documentation needed
 ensure_instructor_rows <- function(existing_df = NULL, instructor_name = NULL) {
-
   if (!is.character(instructor_name) || length(instructor_name) != 1) {
     stop("instructor_name must be a single character string", call. = FALSE)
   }
