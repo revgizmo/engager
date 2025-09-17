@@ -1,15 +1,15 @@
 #' Write Metrics
 #'
 #' Unified writer for engagement-related outputs with privacy enforcement.
+#' Parent directories are created if they do not exist.
 #'
-#' @param data A tibble to write.
-#' @param what One of c("engagement", "summary", "session_summary"). Controls default filename.
-#' @param path Output file path. If missing, a default name is chosen based on `what` in the current dir.
-#'   Parent directories are created if they do not exist.
-#' @param comments_format For list-like `comments` columns: one of c("text", "count"). Default: "text".
-#' @param privacy_level Privacy level forwarded to `ensure_privacy()`. Default from option.
+#' @param data A tibble containing the data to write
+#' @param what Type of output: "engagement", "summary", or "session_summary" (default: "engagement")
+#' @param path File path where to write the output
+#' @param comments_format Format for comments: "text" or "count" (default: "text")
+#' @param privacy_level Privacy level for data export (default: from global option)
+#' @return No return value, writes data to file
 #'
-#' @return Invisibly returns the written tibble (after privacy transformations and list conversions).
 #' @export
 write_metrics <- function(
     data = NULL,
@@ -36,7 +36,7 @@ write_metrics <- function(
 # Helper function to process data for export
 process_data_for_export <- function(data, privacy_level, comments_format) {
   # Enforce privacy (name masking)
-  export_data <- engager::ensure_privacy(data, privacy_level = privacy_level)
+  export_data <- ensure_privacy(data, privacy_level = privacy_level)
 
   # Handle list columns: specially treat `comments`
   if ("comments" %in% names(export_data) && is.list(export_data$comments)) {

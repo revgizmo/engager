@@ -4,34 +4,29 @@
 #' processing: Stage 1 (unmasked matching in memory) and Stage 2 (privacy masking
 #' for outputs). Provides configuration-driven behavior for unmatched names.
 #'
-#' @param transcript_file_path Path to transcript file to process
+#' @param transcript_file_path Path to the transcript file to process
 #' @param roster_data Data frame containing roster information
-#' @param privacy_level Privacy level for processing. One of
-#'   `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
+#' @param privacy_level Privacy level to apply. One of `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
 #'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
-#' @param unmatched_names_action Action to take when unmatched names are found.
-#'   One of `c("stop", "warn")`. Defaults to `getOption("zoomstudentengagement.unmatched_names_action", "stop")`.
-#' @param data_folder Data folder for saving lookup files
-#' @param section_names_lookup_file Name of the lookup file
+#' @param unmatched_names_action Action to take for unmatched names. One of `c("stop", "warn")`.
+#'   Defaults to `getOption("zoomstudentengagement.unmatched_names_action", "stop")`.
+#' @param data_folder Directory containing data files
+#' @param section_names_lookup_file Name of the section names lookup file
 #'
-#' @return Processed data with privacy applied
-#' @export
+#' @return Processed transcript data with privacy-aware name matching applied
 #'
-#' @examples
-#' \dontrun{
 #' # Default behavior (maximum privacy)
-#' result <- safe_name_matching_workflow(
-#'   transcript_file_path = "transcript.vtt",
-#'   roster_data = roster_df
-#' )
-#'
+#' # result <- safe_name_matching_workflow(
+#' #   transcript_file_path = "transcript.vtt",
+#' #   roster_data = roster_df
+#' # )
+#' #
 #' # Opt-in for convenience
-#' result <- safe_name_matching_workflow(
-#'   transcript_file_path = "transcript.vtt",
-#'   roster_data = roster_df,
-#'   unmatched_names_action = "warn"
-#' )
-#' }
+#' # result <- safe_name_matching_workflow(
+#' #   transcript_file_path = "transcript.vtt",
+#' #   roster_data = roster_df,
+#' #   unmatched_names_action = "warn"
+#' # )
 safe_name_matching_workflow <- function(transcript_file_path = NULL,
                                         roster_data = NULL,
                                         privacy_level = getOption(
@@ -51,7 +46,7 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
   )
 
   # Stage 1: Load and process with real names in memory (quiet by default)
-  diag_message("Stage 1: Loading transcript and performing name matching...")
+  # Stage 1: Loading transcript and performing name matching
 
   # Load and validate transcript
   transcript_data <- load_and_validate_transcript(transcript_file_path)
@@ -65,24 +60,13 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
     privacy_level, data_folder, section_names_lookup_file
   )
 
-  diag_message("Name matching workflow completed successfully.")
+  # Name matching workflow completed successfully
 
   # Return processed data
   processed_data
 }
 
-#' Handle Unmatched Names
-#'
-#' Internal function to handle unmatched names according to configuration.
-#'
-#' @param unmatched_names Character vector of unmatched names
-#' @param unmatched_names_action Action to take ("stop" or "warn")
-#' @param privacy_level Privacy level for the session
-#' @param data_folder Data folder path
-#' @param section_names_lookup_file Name of the lookup file
-#'
-#' @return Invisibly returns NULL
-#' @keywords internal
+# Internal function - no documentation needed
 handle_unmatched_names <- function(unmatched_names,
                                    unmatched_names_action,
                                    privacy_level,
@@ -135,34 +119,7 @@ handle_unmatched_names <- function(unmatched_names,
   }
 }
 
-#' Process Transcript with Privacy
-#'
-#' Processes transcript data with privacy-aware name matching. This function
-#' implements the two-stage approach: matching with real names in memory,
-#' then applying privacy masking to outputs.
-#'
-#' @param transcript_data Data frame containing transcript data
-#' @param roster_data Data frame containing roster data
-#' @param name_mappings Data frame containing name mappings
-#' @param privacy_level Privacy level for processing
-#'
-#' @return Processed data with privacy applied
-#' @export
-#'
-#' @examples
-#' # Process transcript with privacy
-#' transcript_data <- tibble::tibble(
-#'   transcript_name = c("Dr. Smith", "John Doe"),
-#'   message = c("Hello class", "Good morning")
-#' )
-#' roster_data <- tibble::tibble(
-#'   first_name = c("John"),
-#'   last_name = c("Doe")
-#' )
-#' processed <- process_transcript_with_privacy(
-#'   transcript_data = transcript_data,
-#'   roster_data = roster_data
-#' )
+# Internal function - no documentation needed
 process_transcript_with_privacy <- function(transcript_data = NULL,
                                             roster_data = NULL,
                                             name_mappings = NULL,
@@ -219,33 +176,7 @@ process_transcript_with_privacy <- function(transcript_data = NULL,
   matched_data
 }
 
-#' Match Names with Privacy
-#'
-#' Performs comprehensive name matching with privacy awareness. Uses consistent
-#' hashing for cross-session matching while maintaining privacy controls.
-#'
-#' @param transcript_data Data frame containing transcript data
-#' @param roster_data Data frame containing roster data
-#' @param name_mappings Data frame containing name mappings
-#' @param privacy_level Privacy level for processing
-#'
-#' @return Matched data with privacy controls applied
-#' @export
-#'
-#' @examples
-#' # Match names with privacy
-#' transcript_data <- tibble::tibble(
-#'   transcript_name = c("Dr. Smith", "John Doe"),
-#'   message = c("Hello class", "Good morning")
-#' )
-#' roster_data <- tibble::tibble(
-#'   first_name = c("John"),
-#'   last_name = c("Doe")
-#' )
-#' matched <- match_names_with_privacy(
-#'   transcript_data = transcript_data,
-#'   roster_data = roster_data
-#' )
+# Internal function - no documentation needed
 match_names_with_privacy <- function(transcript_data = NULL,
                                      roster_data = NULL,
                                      name_mappings = NULL,
@@ -308,16 +239,7 @@ match_names_with_privacy <- function(transcript_data = NULL,
   matched_data
 }
 
-#' Create Name Lookup
-#'
-#' Internal function to create a lookup table for name matching.
-#'
-#' @param transcript_names Character vector of transcript names
-#' @param roster_names Character vector of roster names
-#' @param name_mappings Data frame containing name mappings
-#'
-#' @return Data frame with name lookup information
-#' @keywords internal
+# Internal function - no documentation needed
 create_name_lookup <- function(transcript_names, roster_names, name_mappings) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -389,15 +311,7 @@ create_name_lookup <- function(transcript_names, roster_names, name_mappings) {
   lookup
 }
 
-#' Find Roster Match
-#'
-#' Internal function to find a matching name in the roster.
-#'
-#' @param transcript_name Character string of transcript name
-#' @param roster_names Character vector of roster names
-#'
-#' @return List with match information or NULL if no match
-#' @keywords internal
+# Internal function - no documentation needed
 find_roster_match <- function(transcript_name, roster_names) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -431,12 +345,11 @@ find_roster_match <- function(transcript_name, roster_names) {
 #'
 #' Internal function to apply name matching to transcript data.
 #'
-#' @param transcript_data Data frame containing transcript data
-#' @param name_lookup Data frame with name lookup information
-#' @param roster_data Data frame containing roster data
 #'
-#' @return Data frame with matched names
-#' @keywords internal
+#' @param transcript_data Transcript data to match
+#' @param name_lookup Name lookup table
+#' @param roster_data Roster data for matching
+#' @return Matched transcript data
 apply_name_matching <- function(transcript_data, name_lookup, roster_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -690,7 +603,7 @@ process_name_matching_workflow <- function(transcript_data, roster_data, name_ma
   }
 
   # Stage 2: Apply privacy masking to outputs (quiet by default)
-  diag_message("Stage 2: Applying privacy masking to outputs...")
+  # Stage 2: Applying privacy masking to outputs
 
   # Process transcript with privacy-aware matching
   processed_data <- process_transcript_with_privacy(

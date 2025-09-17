@@ -7,17 +7,16 @@
 apply_privacy_aware_matching(result, section_names_lookup, privacy_level)
 }
 \arguments{
-\item{result}{Data frame with transcript data}
+\item{result}{Data frame containing matching results}
 
-\item{section_names_lookup}{Data frame with name mappings}
+\item{section_names_lookup}{Lookup table for section names}
 
-\item{privacy_level}{Privacy level for processing}
+\item{privacy_level}{Privacy level for data processing}
 }
 \value{
-Data frame with enhanced name matching
+Enhanced matching results with privacy-aware processing
 }
 \description{
 Internal function to apply privacy-aware name matching using consistent hashing.
 This function enhances the existing matching logic with privacy-first design.
 }
-\keyword{internal}

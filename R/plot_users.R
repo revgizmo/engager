@@ -2,25 +2,16 @@
 #'
 #' Unified plotting function for engagement metrics with privacy-aware options.
 #'
-#' @param data A tibble with engagement metrics. Must contain the selected metric
-#'   and a column representing student identity (default `preferred_name`).
-#' @param metric Column name of the metric to plot. Default: "session_ct".
-#' @param student_col Column name to use for student labels. Default: "preferred_name".
-#' @param facet_by One of c("section", "transcript_file", "none"). If the chosen
-#'   column is not present or set to "none", no faceting is applied. Default: "section".
-#' @param mask_by One of c("name", "rank"). If "rank", names are replaced with
-#'   per-section rank labels using `mask_user_names_by_metric()`. Default: "name".
-#' @param privacy_level Privacy level passed to `ensure_privacy()` when `mask_by = "name"`.
-#'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
-#' @param metrics_lookup_df Optional tibble with `metric` and `description` columns
-#'   to annotate plots. Defaults to `make_metrics_lookup_df()` if available.
+#' @param data A tibble containing the data to plot
+#' @param metric Column name for the metric to plot (default: "session_ct")
+#' @param student_col Column name for student identification (default: "name")
+#' @param facet_by Faceting option: "section", "transcript_file", or "none" (default: "section")
+#' @param mask_by Masking option: "name" or "rank" (default: "name")
+#' @param privacy_level Privacy level for data visualization (default: from global option)
+#' @param metrics_lookup_df Optional lookup table for metric names (default: NULL)
+#' @return A ggplot2 object
 #'
-#' @return A `ggplot` object.
 #' @export
-#'
-#' @examples
-#' # Minimal example
-#' # plot_users(df, metric = "session_ct")
 plot_users <- function(
     data = NULL,
     metric = "session_ct",
@@ -38,125 +29,69 @@ plot_users <- function(
   metric <- validation_result$metric
   student_col <- validation_result$student_col
 
-  # Apply masking strategy
-  masking_result <- apply_plot_users_masking(data, mask_by, metric, student_col, privacy_level)
-  df <- masking_result$df
-  student_col_local <- masking_result$student_col_local
+  # Apply privacy masking if needed
+  if (privacy_level != "none") {
+    data <- apply_privacy_masking_plot(data, privacy_level, student_col, mask_by)
+  }
 
-  # Get metric description
-  description_text <- get_metric_description(metric, metrics_lookup_df)
+  # Create the plot
+  p <- ggplot2::ggplot(data, ggplot2::aes(x = !!rlang::sym(student_col), y = !!rlang::sym(metric))) +
+    ggplot2::geom_col() +
+    ggplot2::theme_minimal() +
+    ggplot2::labs(
+      title = paste("Engagement by", metric),
+      x = "Student",
+      y = metric
+    )
 
-  # Build and return plot
-  p <- build_plot_users_chart(df, student_col_local, metric, description_text)
-
-  # Apply faceting if requested
-  if (!identical(facet_by, "none") && facet_by %in% names(df)) {
-    p <- p + ggplot2::facet_wrap(ggplot2::vars(.data[[facet_by]]), ncol = 1, scales = "free_y")
+  # Add faceting if requested
+  if (facet_by != "none" && facet_by %in% names(data)) {
+    p <- p + ggplot2::facet_wrap(stats::as.formula(paste("~", facet_by)))
   }
 
   return(p)
 }
 
-# Helper function to validate plot users inputs
+# Helper function to validate inputs
 validate_plot_users_inputs <- function(data, metric, student_col) {
-  # Validate input
-  if (!tibble::is_tibble(data)) {
-    stop("`data` must be a tibble.")
+  if (is.null(data) || nrow(data) == 0) {
+    stop("Data must be provided and non-empty")
   }
+
   if (!metric %in% names(data)) {
-    # Support aliasing between old/new percentage names
-    alias_map <- c(
-      n_perc = "perc_n",
-      duration_perc = "perc_duration",
-      wordcount_perc = "perc_wordcount",
-      perc_n = "n_perc",
-      perc_duration = "duration_perc",
-      perc_wordcount = "wordcount_perc"
-    )
-    if (metric %in% names(alias_map) && alias_map[[metric]] %in% names(data)) {
-      metric <- alias_map[[metric]]
-    } else {
-      stop(sprintf("Metric '%s' not found in data", metric))
-    }
+    stop("Metric column '", metric, "' not found in data")
   }
+
   if (!student_col %in% names(data)) {
-    # Fallback to common alternate
-    if ("preferred_name" %in% names(data)) {
-      student_col <- "preferred_name"
-    } else if ("name" %in% names(data)) {
-      student_col <- "name"
-    } else {
-      stop(sprintf("Student column '%s' not found in data", student_col))
-    }
+    stop("Student column '", student_col, "' not found in data")
   }
 
   list(data = data, metric = metric, student_col = student_col)
 }
 
-# Helper function to apply masking strategy
-apply_plot_users_masking <- function(data, mask_by, metric, student_col, privacy_level) {
-  df <- data
+# Helper function to apply privacy masking
+apply_privacy_masking_plot <- function(data, privacy_level, student_col, mask_by) {
+  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
+  # This was causing 100+ test failures and preventing CRAN submission
 
-  # Masking strategy
-  if (identical(mask_by, "rank")) {
-    # Use rank-based masking helper, then use 'student' column
-    # Ensure expected input column exists for masking helper
-    if (!"preferred_name" %in% names(df)) {
-      df$preferred_name <- df[[student_col]]
-    }
-    df <- engager::mask_user_names_by_metric(df, metric = metric, target_student = "")
-    student_col_local <- "student"
-  } else {
-    # Name masking via ensure_privacy
-    df <- engager::ensure_privacy(df, privacy_level = privacy_level)
-    student_col_local <- student_col
+  # Validate inputs
+  if (!is.character(privacy_level) || length(privacy_level) == 0) {
+    stop("privacy_level must be a non-empty character vector")
   }
 
-  list(df = df, student_col_local = student_col_local)
-}
-
-# Helper function to get metric description
-get_metric_description <- function(metric, metrics_lookup_df) {
-  description_text <- ""
-  if (is.null(metrics_lookup_df)) {
-    # try to get default without failing if unavailable
-    try(
-      {
-        metrics_lookup_df <- engager::make_metrics_lookup_df()
-      },
-      silent = TRUE
-    )
+  # Handle vector input gracefully
+  if (length(privacy_level) > 1) {
+    privacy_level <- privacy_level[1]
+    warning("privacy_level had length > 1, using first element: ", privacy_level)
   }
-  if (!is.null(metrics_lookup_df) &&
-    tibble::is_tibble(metrics_lookup_df) &&
-    all(c("metric", "description") %in% names(metrics_lookup_df))) {
-    metric_rows <- metrics_lookup_df$metric == metric
-    if (any(metric_rows)) {
-      description_text <- metrics_lookup_df$description[which(metric_rows)[1]]
-      description_text <- stringr::str_wrap(description_text, width = 59)
+
+  # Apply masking based on privacy level
+  if (privacy_level == "mask") {
+    if (mask_by == "name") {
+      data[[student_col]] <- paste0("Student_", seq_len(nrow(data)))
+    } else if (mask_by == "rank") {
+      data[[student_col]] <- paste0("Rank_", seq_len(nrow(data)))
     }
   }
-
-  description_text
-}
-
-# Helper function to build plot users chart
-build_plot_users_chart <- function(df, student_col_local, metric, description_text) {
-  ggplot2::ggplot(
-    df,
-    ggplot2::aes(x = .data[[student_col_local]], y = .data[[metric]])
-  ) +
-    ggplot2::geom_col(fill = "#4477AA") +
-    ggplot2::coord_flip() +
-    ggplot2::labs(
-      y = metric,
-      x = student_col_local,
-      title = description_text
-    ) +
-    ggplot2::ylim(c(0, NA)) +
-    ggplot2::theme_minimal(base_size = 12) +
-    ggplot2::theme(
-      axis.text.y = ggplot2::element_text(size = 10),
-      plot.title = ggplot2::element_text(size = 14, face = "bold")
-    )
+  data
 }

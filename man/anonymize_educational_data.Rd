@@ -13,35 +13,37 @@ anonymize_educational_data(
 )
 }
 \arguments{
-\item{data}{A data frame or tibble to anonymize}
+\item{data}{Data frame or tibble containing educational data}
 
-\item{method}{Anonymization method. One of \code{c("mask", "hash", "pseudonymize", "aggregate")}}
+\item{method}{Anonymization method: "mask", "hash", "pseudonymize", or "aggregate"}
 
-\item{preserve_columns}{Character vector of column names to preserve unchanged}
+\item{preserve_columns}{Vector of column names to preserve unchanged}
 
-\item{hash_salt}{Salt for hash-based anonymization (optional)}
+\item{hash_salt}{Salt value for hash-based anonymization}
 
-\item{aggregation_level}{Level for aggregation. One of \code{c("individual", "section", "course", "institution")}}
+\item{aggregation_level}{Level of aggregation: "individual", "section", "course", or "institution"}
 }
 \value{
-The anonymized data frame with the same structure as input
+Anonymized data frame
 }
 \description{
 Advanced anonymization for educational data that preserves data utility
 while ensuring FERPA compliance.
 }
-\examples{
-# Anonymize sample data
+\section{Anonymize sample data}{
 sample_data <- tibble::tibble(
-  student_id = c("12345", "67890"),
-  preferred_name = c("Alice Johnson", "Bob Smith"),
-  section = c("A", "B"),
-  participation_score = c(85, 92)
+student_id = c("12345", "67890"),
+preferred_name = c("Alice Johnson", "Bob Smith"),
+section = c("A", "B"),
+participation_score = c(85, 92)
 )
+}
 
-# Mask method (default)
+\section{Mask method (default)}{
 anonymized <- anonymize_educational_data(sample_data, method = "mask")
+}
 
-# Hash method with salt
+\section{Hash method with salt}{
 hashed <- anonymize_educational_data(sample_data, method = "hash", hash_salt = "my_salt")
 }
+

@@ -14,70 +14,47 @@ detect_duplicate_transcripts(
 )
 }
 \arguments{
-\item{transcript_list}{A tibble containing transcript file information with a
-\code{transcript_file} column containing file names}
+\item{transcript_list}{A tibble with \code{transcript_file} column containing file names}
 
-\item{data_folder}{Overall data folder for your recordings and data. Defaults to "."}
+\item{data_folder}{Base folder containing data files (default: ".")}
 
-\item{transcripts_folder}{Specific subfolder of the data folder where transcript files
-are stored. Defaults to "transcripts"}
+\item{transcripts_folder}{Subfolder where transcript files are stored (default: "transcripts")}
 
-\item{similarity_threshold}{Threshold for considering transcripts as duplicates (0-1).
-Higher values require more similarity. Defaults to 0.95}
+\item{similarity_threshold}{Similarity threshold for duplicate detection (default: 0.95)}
 
-\item{method}{Method for detecting duplicates. One of:
-\itemize{
-\item "hybrid" (default): Combines metadata and content analysis
-\item "content": Analyzes actual transcript content
-\item "metadata": Compares file metadata only
-}}
+\item{method}{Detection method: "hybrid" (default), "content", or "metadata"}
 
-\item{names_to_exclude}{Character vector of names to exclude from content comparison.
-Defaults to c("dead_air") to ignore silence periods}
+\item{names_to_exclude}{Vector of names to exclude from comparison (default: c("dead_air"))}
 }
 \value{
-A list containing duplicate detection results with the following elements:
-\describe{
-\item{duplicate_groups}{List of groups containing duplicate file names}
-\item{similarity_matrix}{Matrix of similarity scores between all file pairs}
-\item{recommendations}{Character vector of recommendations for handling duplicates}
-\item{summary}{List with summary statistics: total_files, duplicate_groups, total_duplicates}
-}
+List containing duplicate groups, similarity matrix, and recommendationsCreate sample transcript list
+
+transcript_list <- tibble::tibble(
+transcript_file = c(
+"GMT20240115-100000_Recording.transcript.vtt",
+"GMT20240115-100000_Recording.cc.vtt",
+"GMT20240116-140000_Recording.transcript.vtt"
+)
+)Detect duplicates in a transcript list
+
+duplicates <- detect_duplicate_transcripts(transcript_list)View duplicate groups
+
+duplicates$duplicate_groupsView recommendations
+
+duplicates$recommendationsUse different detection method
+
+content_duplicates <- detect_duplicate_transcripts(
+transcript_list,
+method = "content",
+similarity_threshold = 0.9
+)
+
+\code{\link{process_zoom_transcript}} for processing individual transcripts,
+\code{\link{summarize_transcript_metrics}} for analyzing transcript content
 }
 \description{
 Identifies and analyzes duplicate Zoom transcript files using multiple detection methods.
 This function helps clean up transcript datasets by finding files that contain similar
 or identical content, which can occur when multiple transcript formats are generated
 for the same recording session.
-}
-\examples{
-# Create sample transcript list
-transcript_list <- tibble::tibble(
-  transcript_file = c(
-    "GMT20240115-100000_Recording.transcript.vtt",
-    "GMT20240115-100000_Recording.cc.vtt",
-    "GMT20240116-140000_Recording.transcript.vtt"
-  )
-)
-
-# Detect duplicates in a transcript list
-duplicates <- detect_duplicate_transcripts(transcript_list)
-
-# View duplicate groups
-duplicates$duplicate_groups
-
-# View recommendations
-duplicates$recommendations
-
-# Use different detection method
-content_duplicates <- detect_duplicate_transcripts(
-  transcript_list,
-  method = "content",
-  similarity_threshold = 0.9
-)
-
-}
-\seealso{
-\code{\link{process_zoom_transcript}} for processing individual transcripts,
-\code{\link{summarize_transcript_metrics}} for analyzing transcript content
 }

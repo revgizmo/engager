@@ -1,25 +1,12 @@
-#' Hash Names Consistently for Privacy-Aware Matching
-#'
-#' Creates consistent hashes for names to enable matching while maintaining privacy.
-#' This function normalizes names and generates deterministic hashes that can be
-#' used for cross-session matching without exposing real names.
-#'
-#' @param names Character vector of names to hash
-#' @param salt Character string to add to hashes for security (default: package name)
-#' @param normalize_names Logical, whether to normalize names before hashing (default: TRUE)
-#'
-#' @return Character vector of consistent hashes
-#' @export
-#'
-#' @examples
-#' # Basic usage
-#' hash_name_consistently(c("John Smith", "J. Smith", "Smith, John"))
-#'
-#' # With normalization (handles variations)
-#' hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = TRUE)
-#'
-#' # Without normalization (exact matching only)
-#' hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = FALSE)
+# Internal function - no documentation needed
+# # Basic usage
+# hash_name_consistently(c("John Smith", "J. Smith", "Smith, John"))
+#
+# # With normalization (handles variations)
+# hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = TRUE)
+#
+# # Without normalization (exact matching only)
+# hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = FALSE)
 hash_name_consistently <- function(names = NULL,
                                    salt = "zoomstudentengagement",
                                    normalize_names = TRUE) {
@@ -67,15 +54,7 @@ hash_name_consistently <- function(names = NULL,
   as.character(hashes)
 }
 
-#' Normalize Name for Matching
-#'
-#' Internal function to normalize names for consistent matching.
-#' Handles common variations like case, punctuation, and formatting.
-#'
-#' @param names Character vector of names to normalize
-#'
-#' @return Character vector of normalized names
-#' @keywords internal
+# Internal function - no documentation needed
 normalize_name_for_matching <- function(names) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

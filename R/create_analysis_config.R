@@ -1,76 +1,4 @@
-#' Create Analysis Configuration
-#'
-#' This function creates a validated configuration object for the zoomstudentengagement
-#' package analysis workflow. It groups related parameters logically and provides
-#' sensible defaults while allowing customization for different course setups.
-#'
-#' @param dept Department code (e.g., "LTF", "MATH", "CS"). Used to filter Zoom recordings.
-#' @param semester_start_mdy Semester start date in "MMM DD, YYYY" format (e.g., "Jan 01, 2024").
-#' @param scheduled_session_length_hours Scheduled length of each class session in hours.
-#' @param instructor_name Name of the instructor for filtering and reporting.
-#' @param data_folder Overall data folder for recordings and data files.
-#' @param transcripts_folder Subfolder within data_folder where transcript files are stored.
-#' @param roster_file Name of the CSV file containing student roster information.
-#' @param cancelled_classes_file Name of the CSV file containing cancelled class information.
-#' @param names_lookup_file Name of the CSV file containing section names lookup information.
-#' @param trnscrptssssnsmmryfl Name of the output CSV file for session-level summaries.
-#' @param transcripts_summary_file Name of the output CSV file for overall summaries.
-#' @param student_summary_report Base name for student summary report files.
-#' @param student_summary_report_folder Folder where student summary report templates are stored.
-#' @param topic_split_pattern Regex pattern to parse Zoom recording topics and extract course information.
-#' @param zmrcrddsssnscsvnmspttrn Regex pattern to match Zoom cloud recording CSV files.
-#' @param zmrcrddsssnscsvclnms Comma-separated column names for Zoom cloud recording CSVs.
-#' @param transcript_files_names_pattern Regex pattern to match transcript file names.
-#' @param dt_extract_pattern Regex pattern to extract date from transcript file names.
-#' @param trnscrptflxtnsnpttrn Regex pattern to identify transcript files.
-#' @param clsdcptnflxtnsnpttrn Regex pattern to identify closed caption files.
-#' @param recording_start_pattern Regex pattern to extract recording start time from file names.
-#' @param recording_start_format Format string for parsing recording start times.
-#' @param start_time_local_tzone Local timezone for recording start times.
-#' @param cancelled_classes_col_types Column types specification for cancelled classes CSV.
-#' @param section_names_lookup_col_types Column types specification for section names lookup CSV.
-#' @param names_to_exclude Character vector of names to exclude from analysis (e.g., "dead_air").
-#' @param use_session_mapping If TRUE, use session mapping approach instead of regex parsing
-#' @param session_mapping_file Path to session mapping CSV file (if use_session_mapping = TRUE)
-#'
-#' @return A list containing the configuration organized into logical groups:
-#'   - course: Course-specific information
-#'   - paths: File and folder paths
-#'   - patterns: Regex patterns for file matching and parsing
-#'   - reports: Report generation settings
-#'   - analysis: Analysis-specific parameters
-#'
-#' @export
-#'
-#' @examples
-#' # Basic configuration with defaults
-#' config <- create_analysis_config(
-#'   dept = "LTF",
-#'   instructor_name = "Dr. Smith",
-#'   data_folder = "data"
-#' )
-#'
-#' # Custom configuration for different course setup
-#' config <- create_analysis_config(
-#'   dept = "MATH",
-#'   semester_start_mdy = "Aug 28, 2024",
-#'   scheduled_session_length_hours = 2.0,
-#'   instructor_name = "Prof. Johnson",
-#'   data_folder = "math_101_data",
-#'   transcripts_folder = "zoom_recordings",
-#'   start_time_local_tzone = "America/New_York"
-#' )
-#'
-#' # Use configuration in analysis workflow
-#' zoom_recorded_sessions_df <- load_zoom_recorded_sessions_list(
-#'   data_folder = config$paths$data_folder,
-#'   transcripts_folder = config$paths$transcripts_folder,
-#'   topic_split_pattern = config$patterns$topic_split,
-#'   zmrcrddsssnscsvnmspttrn = config$patterns$zoom_recordings_csv,
-#'   dept = config$course$dept,
-#'   semester_start_mdy = config$course$semester_start,
-#'   scheduled_session_length_hours = config$course$session_length_hours
-#' )
+# Internal function - no documentation needed
 create_analysis_config <- function(
     # Course Information
     dept = "LTF",
@@ -131,7 +59,9 @@ create_analysis_config <- function(
     stop("semester_start_mdy must be a single character string")
   }
 
-  if (!is.numeric(scheduled_session_length_hours) || length(scheduled_session_length_hours) != 1 || scheduled_session_length_hours <= 0) {
+  if (!is.numeric(scheduled_session_length_hours) ||
+    length(scheduled_session_length_hours) != 1 ||
+    scheduled_session_length_hours <= 0) {
     stop("scheduled_session_length_hours must be a positive number")
   }
 

@@ -14,7 +14,6 @@
 #'   - notes (optional)
 #'
 #' @name lookup_merge_utils
-#' @family lookup_utils
 NULL
 
 .lookup_expected_columns <- function() {
@@ -70,15 +69,7 @@ NULL
   df
 }
 
-#' Read Lookup Safely
-#'
-#' Reads a lookup CSV safely: normalizes columns, coerces to UTF-8, and
-#' returns an empty (0-row) normalized data frame if the file is missing.
-#'
-#' @param path Character. Path to the lookup CSV file.
-#'
-#' @return A normalized data frame with expected columns.
-#' @export
+# Internal function - no documentation needed
 read_lookup_safely <- function(path = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -98,18 +89,7 @@ read_lookup_safely <- function(path = NULL) {
   .normalize_lookup_df(df)
 }
 
-#' Merge Lookup Preserving Existing Rows
-#'
-#' Merges an additional lookup data frame into an existing one while
-#' preserving existing rows. New information fills only missing fields.
-#' Duplicates are removed deterministically by `transcript_name` keeping
-#' the first non-empty values per field.
-#'
-#' @param existing_df Data frame. Existing normalized lookup.
-#' @param add_df Data frame. Additional rows to merge (will be normalized).
-#'
-#' @return A merged, normalized, de-duplicated data frame.
-#' @export
+# Internal function - no documentation needed
 merge_lookup_preserve <- function(existing_df = NULL, add_df = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -133,16 +113,7 @@ merge_lookup_preserve <- function(existing_df = NULL, add_df = NULL) {
   )
 }
 
-#' Transactional Write with Backup
-#'
-#' Writes the lookup data frame to CSV with a timestamped backup of any
-#' existing file and an atomic replace (write to temp, then rename).
-#'
-#' @param df Data frame. The lookup to write (will be normalized).
-#' @param path Character. Target CSV path.
-#'
-#' @return Invisibly returns the path written.
-#' @export
+# Internal function - no documentation needed
 write_lookup_transactional <- function(df = NULL, path = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -192,18 +163,7 @@ write_lookup_transactional <- function(df = NULL, path = NULL) {
   invisible(path)
 }
 
-#' Conditionally Write Lookup (Read-Only Gate)
-#'
-#' Helper that writes the lookup only when `allow_write` is TRUE. Useful for
-#' scripts and Rmds to prevent accidental overwrites. When `allow_write` is
-#' FALSE, performs no side effects and returns `FALSE`.
-#'
-#' @param df Data frame. Lookup to write (normalized internally).
-#' @param path Character. Target CSV path.
-#' @param allow_write Logical. Default `FALSE` (read-only).
-#'
-#' @return Logical indicating whether a write occurred.
-#' @export
+# Internal function - no documentation needed
 conditionally_write_lookup <- function(df = NULL, path = NULL, allow_write = FALSE) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -220,16 +180,7 @@ conditionally_write_lookup <- function(df = NULL, path = NULL, allow_write = FAL
   TRUE
 }
 
-#' Ensure Instructor Rows (Pure Merge)
-#'
-#' Returns a merged lookup that includes instructor rows for a given
-#' instructor name, preserving all existing rows. No side effects.
-#'
-#' @param existing_df Data frame. Existing lookup.
-#' @param instructor_name Character. Instructor display name.
-#'
-#' @return A merged lookup including instructor rows.
-#' @export
+# Internal function - no documentation needed
 ensure_instructor_rows <- function(existing_df = NULL, instructor_name = NULL) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

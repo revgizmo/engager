@@ -15,35 +15,30 @@ summarize_transcript_files(
 )
 }
 \arguments{
-\item{transcript_file_names}{A data.frame or character vector listing the transcript files.
-If a tibble with additional columns beyond 'transcript_file' is provided, all metadata
-columns will be preserved in the output.}
+\item{transcript_file_names}{Vector of transcript file names or tibble with transcript_file column}
 
-\item{data_folder}{Overall data folder for your recordings and data}
+\item{data_folder}{Base folder containing data files (default: ".")}
 
-\item{transcripts_folder}{specific subfolder of the data folder where you store transcripts}
+\item{transcripts_folder}{Subfolder where transcript files are stored (default: "transcripts")}
 
-\item{names_to_exclude}{Character vector of names to exclude from the results}
+\item{names_to_exclude}{Vector of names to exclude from analysis (default: NULL)}
 
-\item{deduplicate_content}{Logical. If TRUE, detect and handle duplicate transcripts}
+\item{deduplicate_content}{Whether to detect and handle duplicate content (default: FALSE)}
 
-\item{similarity_threshold}{Threshold for considering transcripts as duplicates (0-1)}
+\item{similarity_threshold}{Similarity threshold for duplicate detection (default: 0.95)}
 
-\item{duplicate_method}{Method for detecting duplicates}
+\item{duplicate_method}{Method for duplicate detection: "hybrid", "content", or "metadata" (default: "hybrid")}
 }
 \value{
-A tibble containing session details and summary metrics by speaker
+A tibble containing summarized transcript metricsCreate sample transcript file names
+
+transcript_files <- c(
+"GMT20240115-100000_Recording.transcript.vtt",
+"GMT20240116-140000_Recording.transcript.vtt"
+)Summarize transcript files
+
+summary <- summarize_transcript_files(transcript_file_names = transcript_files)
 }
 \description{
-Summarize Transcript Files
-}
-\examples{
-# Create sample transcript file names
-transcript_files <- c(
-  "GMT20240115-100000_Recording.transcript.vtt",
-  "GMT20240116-140000_Recording.transcript.vtt"
-)
-
-# Summarize transcript files
-summary <- summarize_transcript_files(transcript_file_names = transcript_files)
+Summarize multiple transcript files and return aggregated metrics. If a tibble with additional columns beyond 'transcript_file' is provided, all metadata columns will be preserved in the output.
 }

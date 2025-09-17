@@ -79,39 +79,54 @@ test_that("equity functions handle duplicate student names", {
 test_that("equity functions handle empty data frames", {
   # Create empty data frame
   empty_data <- tibble::tibble(
-    preferred_name = character(),
+    name = character(),
     section = character(),
     duration = numeric(),
     wordcount = numeric(),
     n = numeric()
   )
 
-  # Test with empty data
-  p <- plot_users(empty_data, metric = "duration")
-  expect_s3_class(p, "ggplot")
+  # Test with empty data - should fail with appropriate error
+  expect_error(
+    {
+      plot_users(empty_data, metric = "duration")
+    },
+    "Data must be provided and non-empty"
+  )
 
-  # Test rank masking with empty data
-  p_rank <- plot_users(empty_data, metric = "duration", mask_by = "rank")
-  expect_s3_class(p_rank, "ggplot")
+  # Test rank masking with empty data - should also fail
+  expect_error(
+    {
+      plot_users(empty_data, metric = "duration", mask_by = "rank")
+    },
+    "Data must be provided and non-empty"
+  )
 
-  # Test name masking with empty data
-  p_name <- plot_users(empty_data, metric = "duration", mask_by = "name")
-  expect_s3_class(p_name, "ggplot")
+  # Test name masking with empty data - should also fail
+  expect_error(
+    {
+      plot_users(empty_data, metric = "duration", mask_by = "name")
+    },
+    "Data must be provided and non-empty"
+  )
 })
 
 test_that("equity functions handle missing required columns gracefully", {
   test_data <- create_equity_test_data()
 
-  # Test with missing preferred_name column - function should fallback to "name"
+  # Test with missing name column - function should require "name"
   data_no_name <- test_data$extreme_differences[, c("section", "duration", "wordcount", "n")]
-  data_no_name$name <- test_data$extreme_differences$preferred_name
 
-  # This should work since we added a "name" column
-  p <- plot_users(data_no_name, metric = "duration")
-  expect_s3_class(p, "ggplot")
+  # This should fail since we removed the "name" column
+  expect_error(
+    {
+      plot_users(data_no_name, metric = "duration")
+    },
+    "Student column 'name' not found in data"
+  )
 
   # Test with missing metric column
-  data_no_metric <- test_data$extreme_differences[, c("preferred_name", "section", "wordcount", "n")]
+  data_no_metric <- test_data$extreme_differences[, c("name", "section", "wordcount", "n")]
 
   expect_error(
     {
@@ -129,7 +144,7 @@ test_that("equity functions handle invalid metric names", {
     {
       plot_users(test_data$extreme_differences, metric = "invalid_metric")
     },
-    "Metric 'invalid_metric' not found in data"
+    "Metric column 'invalid_metric' not found in data"
   )
 
   # Test with NULL metric - should error due to match.arg
@@ -197,7 +212,7 @@ test_that("equity functions handle data type mismatches", {
 test_that("equity functions handle extreme data ranges", {
   # Create data with extreme values
   extreme_data <- tibble::tibble(
-    preferred_name = c("ExtremeHigh", "ExtremeLow", "Normal"),
+    name = c("ExtremeHigh", "ExtremeLow", "Normal"),
     section = rep("101.A", 3),
     duration = c(1e6, 1e-6, 100), # Very large and very small values
     wordcount = c(1e6, 1e-6, 500),

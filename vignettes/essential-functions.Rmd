@@ -27,13 +27,14 @@ This vignette demonstrates the core functionality of the `engager` package using
 
 ## Essential Functions
 
-The package now exports these 26 essential functions:
+The package now exports these essential functions:
 
 ```{r essential-functions}
 library(engager)
 
-# Get list of essential functions
-essential_functions <- get_essential_functions()
+# Get list of exported functions (essential functions)
+exported_functions <- names(getNamespaceExports("engager"))
+essential_functions <- exported_functions[!exported_functions %in% c("%>%")] # Exclude pipe operator
 cat("Essential functions (", length(essential_functions), "):\n")
 cat(paste("-", essential_functions), sep = "\n")
 ```

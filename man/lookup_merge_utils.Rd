@@ -20,4 +20,3 @@ Expected columns in lookup data frame:
 \item notes (optional)
 }
 }
-\concept{lookup_utils}

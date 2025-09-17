@@ -114,3 +114,117 @@ test_that("ensure_privacy masks names under default mask level", {
   masked <- ensure_privacy(df, privacy_level = getOption("engager.privacy_level", "mask"))
   expect_true(all(masked$preferred_name != df$preferred_name))
 })
+
+test_that(".onLoad handles multiple privacy options", {
+  old_privacy <- getOption("engager.privacy_level", NULL)
+  old_verbose <- getOption("engager.verbose", NULL)
+
+  on.exit(
+    {
+      options(engager.privacy_level = old_privacy)
+      options(engager.verbose = old_verbose)
+    },
+    add = TRUE
+  )
+
+  # Test all options being set
+  options(engager.privacy_level = NULL)
+  options(engager.verbose = NULL)
+
+  engager:::.onLoad(NULL, NULL)
+
+  expect_identical(getOption("engager.privacy_level"), "mask")
+  expect_identical(getOption("engager.verbose"), FALSE)
+})
+
+test_that(".onLoad preserves existing multiple options", {
+  old_privacy <- getOption("engager.privacy_level", NULL)
+  old_verbose <- getOption("engager.verbose", NULL)
+
+  on.exit(
+    {
+      options(engager.privacy_level = old_privacy)
+      options(engager.verbose = old_verbose)
+    },
+    add = TRUE
+  )
+
+  # Set existing values
+  options(engager.privacy_level = "ferpa_strict")
+  options(engager.verbose = TRUE)
+
+  engager:::.onLoad(NULL, NULL)
+
+  # Should preserve existing values
+  expect_identical(getOption("engager.privacy_level"), "ferpa_strict")
+  expect_identical(getOption("engager.verbose"), TRUE)
+})
+
+test_that(".onLoad handles mixed option states", {
+  old_privacy <- getOption("engager.privacy_level", NULL)
+  old_verbose <- getOption("engager.verbose", NULL)
+
+  on.exit(
+    {
+      options(engager.privacy_level = old_privacy)
+      options(engager.verbose = old_verbose)
+    },
+    add = TRUE
+  )
+
+  # Set some options, leave others unset
+  options(engager.privacy_level = "mask")
+  options(engager.verbose = NULL)
+
+  engager:::.onLoad(NULL, NULL)
+
+  # Should preserve set options and set unset ones
+  expect_identical(getOption("engager.privacy_level"), "mask")
+  expect_identical(getOption("engager.verbose"), FALSE)
+})
+
+test_that(".onLoad handles invalid option values gracefully", {
+  old_privacy <- getOption("engager.privacy_level", NULL)
+  old_verbose <- getOption("engager.verbose", NULL)
+
+  on.exit(
+    {
+      options(engager.privacy_level = old_privacy)
+      options(engager.verbose = old_verbose)
+    },
+    add = TRUE
+  )
+
+  # Test with invalid values
+  options(engager.privacy_level = "invalid_level")
+  options(engager.verbose = "not_boolean")
+
+  engager:::.onLoad(NULL, NULL)
+
+  # Should preserve invalid values (validation happens elsewhere)
+  expect_identical(getOption("engager.privacy_level"), "invalid_level")
+  expect_identical(getOption("engager.verbose"), "not_boolean")
+})
+
+test_that(".onLoad handles package loading scenarios", {
+  old_privacy <- getOption("engager.privacy_level", NULL)
+  old_verbose <- getOption("engager.verbose", NULL)
+
+  on.exit(
+    {
+      options(engager.privacy_level = old_privacy)
+      options(engager.verbose = old_verbose)
+    },
+    add = TRUE
+  )
+
+  # Simulate fresh package load
+  options(engager.privacy_level = NULL)
+  options(engager.verbose = NULL)
+
+  # Simulate package loading with different libname and pkgname
+  engager:::.onLoad("engager", "engager")
+
+  expect_identical(getOption("engager.privacy_level"), "mask")
+  expect_identical(getOption("engager.verbose"), FALSE)
+})

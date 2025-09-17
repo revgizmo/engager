@@ -15,42 +15,25 @@ safe_name_matching_workflow(
 )
 }
 \arguments{
-\item{transcript_file_path}{Path to transcript file to process}
+\item{transcript_file_path}{Path to the transcript file to process}
 
 \item{roster_data}{Data frame containing roster information}
 
-\item{privacy_level}{Privacy level for processing. One of
-\code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
+\item{privacy_level}{Privacy level to apply. One of \code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
 Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
 
-\item{unmatched_names_action}{Action to take when unmatched names are found.
-One of \code{c("stop", "warn")}. Defaults to \code{getOption("zoomstudentengagement.unmatched_names_action", "stop")}.}
+\item{unmatched_names_action}{Action to take for unmatched names. One of \code{c("stop", "warn")}.
+Defaults to \code{getOption("zoomstudentengagement.unmatched_names_action", "stop")}.}
 
-\item{data_folder}{Data folder for saving lookup files}
+\item{data_folder}{Directory containing data files}
 
-\item{section_names_lookup_file}{Name of the lookup file}
+\item{section_names_lookup_file}{Name of the section names lookup file}
 }
 \value{
-Processed data with privacy applied
+Processed transcript data with privacy-aware name matching appliedDefault behavior (maximum privacy)result <- safe_name_matching_workflow(transcript_file_path = "transcript.vtt",roster_data = roster_df)Opt-in for convenienceresult <- safe_name_matching_workflow(transcript_file_path = "transcript.vtt",roster_data = roster_df,unmatched_names_action = "warn")
 }
 \description{
 Main workflow function for privacy-first name matching. Implements two-stage
 processing: Stage 1 (unmasked matching in memory) and Stage 2 (privacy masking
 for outputs). Provides configuration-driven behavior for unmatched names.
-}
-\examples{
-\dontrun{
-# Default behavior (maximum privacy)
-result <- safe_name_matching_workflow(
-  transcript_file_path = "transcript.vtt",
-  roster_data = roster_df
-)
-
-# Opt-in for convenience
-result <- safe_name_matching_workflow(
-  transcript_file_path = "transcript.vtt",
-  roster_data = roster_df,
-  unmatched_names_action = "warn"
-)
-}
 }

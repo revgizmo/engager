@@ -1,32 +1,4 @@
-#' Prompt User for Name Matching
-#'
-#' Provides safe user guidance for name matching when unmatched names are detected.
-#' This function maintains privacy by using the existing `make_blank_section_names_lookup_csv()`
-#' function and provides clear instructions for manual name mapping.
-#'
-#' @param unmatched_names Character vector of unmatched names that need mapping
-#' @param privacy_level Privacy level for the session. One of
-#'   `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
-#'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
-#' @param data_folder Data folder path for saving the lookup file
-#' @param section_names_lookup_file Name of the lookup file to create
-#' @param include_instructions Logical, whether to include detailed instructions
-#'   in the output. Defaults to TRUE.
-#'
-#' @return Invisibly returns the path to the created lookup file
-#' @export
-#'
-#' @examples
-#' # Prompt for name matching (privacy-safe). Write artifacts to tempdir().
-#' unmatched <- c("Dr. Smith", "Tom", "Guest1")
-#' prompt_name_matching(unmatched, data_folder = tempdir())
-#'
-#' # Create lookup file with custom settings
-#' prompt_name_matching(
-#'   unmatched_names = c("John Doe", "Jane Smith"),
-#'   data_folder = tempdir(),
-#'   section_names_lookup_file = "section_names_lookup.csv"
-#' )
+# Internal function - no documentation needed
 prompt_name_matching <- function(unmatched_names = NULL,
                                  privacy_level = getOption(
                                    "zoomstudentengagement.privacy_level",
@@ -70,14 +42,16 @@ prompt_name_matching <- function(unmatched_names = NULL,
 
   # If no unmatched names, return early
   if (length(unmatched_names) == 0) {
-    diag_message("No unmatched names found. Name matching is complete.")
+    if (getOption("engager.verbose", FALSE)) {
+      message("No unmatched names found. Name matching is complete.")
+    }
     return(invisible(NULL))
   }
 
   # Create data folder if it doesn't exist
   if (!dir.exists(data_folder)) {
     dir.create(data_folder, recursive = TRUE)
-    diag_message("Created data folder: ", data_folder)
+    # Created data folder
   }
 
   # Generate privacy-safe guidance
@@ -88,7 +62,9 @@ prompt_name_matching <- function(unmatched_names = NULL,
   )
 
   # Display guidance to user (quiet by default)
-  diag_cat("\n", guidance, "\n", sep = "")
+  if (getOption("engager.verbose", FALSE)) {
+    cat("\n", guidance, "\n", sep = "")
+  }
 
   # Create the lookup file using existing function
   lookup_file_path <- file.path(data_folder, section_names_lookup_file)
@@ -99,23 +75,14 @@ prompt_name_matching <- function(unmatched_names = NULL,
   # Save the template to the specified file
   readr::write_csv(lookup_template, lookup_file_path)
 
-  diag_message("\nCreated lookup file: ", lookup_file_path)
-  diag_message("Please edit this file to map the unmatched names, then re-run your analysis.")
+  # Created lookup file
+  # Please edit this file to map the unmatched names, then re-run your analysis.
 
   # Return the file path invisibly
   invisible(lookup_file_path)
 }
 
-#' Generate Name Matching Guidance
-#'
-#' Internal function to generate privacy-safe guidance for name matching.
-#'
-#' @param unmatched_names Character vector of unmatched names
-#' @param privacy_level Privacy level for the session
-#' @param include_instructions Whether to include detailed instructions
-#'
-#' @return Character string with guidance
-#' @keywords internal
+# Internal function - no documentation needed
 generate_name_matching_guidance <- function(unmatched_names, privacy_level, include_instructions) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -174,33 +141,7 @@ generate_name_matching_guidance <- function(unmatched_names, privacy_level, incl
   paste(base_msg, privacy_msg, names_msg, instructions_msg, sep = "")
 }
 
-#' Detect Unmatched Names
-#'
-#' Identifies names in transcript data that are not matched against roster data
-#' or existing name mappings. This function works with real names in memory only
-#' and returns privacy-safe results.
-#'
-#' @param transcript_data Data frame containing transcript data with name columns
-#' @param roster_data Data frame containing roster data with name columns
-#' @param name_mappings Data frame containing existing name mappings
-#' @param privacy_level Privacy level for the session. One of
-#'   `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
-#'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
-#'
-#' @return Character vector of unmatched names (real names only if privacy = "none")
-#' @export
-#'
-#' @examples
-#' # Detect unmatched names
-#' transcript_df <- tibble::tibble(
-#'   transcript_name = c("Dr. Smith", "John Doe", "Guest1"),
-#'   course_section = c("101.A", "101.A", "101.A")
-#' )
-#' roster_df <- tibble::tibble(
-#'   first_last = c("John Doe", "Jane Smith"),
-#'   course_section = c("101.A", "101.A")
-#' )
-#' unmatched <- detect_unmatched_names(transcript_df, roster_df)
+# Internal function - no documentation needed
 detect_unmatched_names <- function(transcript_data = NULL,
                                    roster_data = NULL,
                                    name_mappings = NULL,
@@ -254,14 +195,7 @@ detect_unmatched_names <- function(transcript_data = NULL,
   unique(unmatched_names)
 }
 
-#' Extract Transcript Names
-#'
-#' Internal function to extract names from transcript data.
-#'
-#' @param transcript_data Data frame containing transcript data
-#'
-#' @return Character vector of transcript names
-#' @keywords internal
+# Internal function - no documentation needed
 extract_transcript_names <- function(transcript_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -289,14 +223,7 @@ extract_transcript_names <- function(transcript_data) {
   names
 }
 
-#' Extract Roster Names
-#'
-#' Internal function to extract names from roster data.
-#'
-#' @param roster_data Data frame containing roster data
-#'
-#' @return Character vector of roster names
-#' @keywords internal
+# Internal function - no documentation needed
 extract_roster_names <- function(roster_data) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.
@@ -324,14 +251,7 @@ extract_roster_names <- function(roster_data) {
   names
 }
 
-#' Extract Mapped Names
-#'
-#' Internal function to extract names from name mappings.
-#'
-#' @param name_mappings Data frame containing name mappings
-#'
-#' @return Character vector of mapped names
-#' @keywords internal
+# Internal function - no documentation needed
 extract_mapped_names <- function(name_mappings) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

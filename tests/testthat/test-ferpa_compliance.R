@@ -240,6 +240,111 @@ test_that("set_privacy_defaults works with new FERPA levels", {
   set_privacy_defaults("mask")
 })
 
+test_that("set_privacy_defaults handles invalid privacy levels", {
+  old_opt <- getOption("engager.privacy_level", NULL)
+  on.exit(options(engager.privacy_level = old_opt), add = TRUE)
+
+  # Test with invalid privacy level
+  expect_error(set_privacy_defaults("invalid_level"), "should be one of")
+
+  # Test with NULL (should use default)
+  set_privacy_defaults(NULL)
+  expect_equal(getOption("engager.privacy_level"), "ferpa_strict")
+
+  # Test with empty string
+  expect_error(set_privacy_defaults(""), "should be one of")
+
+  # Test with numeric value
+  expect_error(set_privacy_defaults(123), "must be NULL or a character vector")
+
+  # Test with logical value
+  expect_error(set_privacy_defaults(TRUE), "must be NULL or a character vector")
+})
+
+test_that("set_privacy_defaults handles case sensitivity", {
+  old_opt <- getOption("engager.privacy_level", NULL)
+  on.exit(options(engager.privacy_level = old_opt), add = TRUE)
+
+  # Test with uppercase
+  expect_error(set_privacy_defaults("MASK"), "should be one of")
+
+  # Test with mixed case
+  expect_error(set_privacy_defaults("Ferpa_Strict"), "should be one of")
+
+  # Test with extra spaces
+  expect_error(set_privacy_defaults(" mask "), "should be one of")
+})
+
+test_that("set_privacy_defaults preserves existing options", {
+  old_privacy <- getOption("engager.privacy_level", NULL)
+  old_verbose <- getOption("engager.verbose", NULL)
+  old_startup <- getOption("engager.show_startup", NULL)
+
+  on.exit(
+    {
+      options(engager.privacy_level = old_privacy)
+      options(engager.verbose = old_verbose)
+      options(engager.show_startup = old_startup)
+    },
+    add = TRUE
+  )
+
+  # Set some other options
+  options(engager.verbose = TRUE)
+  options(engager.show_startup = FALSE)
+
+  # Change privacy level
+  set_privacy_defaults("ferpa_standard")
+
+  # Should preserve other options
+  expect_equal(getOption("engager.privacy_level"), "ferpa_standard")
+  expect_equal(getOption("engager.verbose"), TRUE)
+  expect_equal(getOption("engager.show_startup"), FALSE)
+})
+
+test_that("set_privacy_defaults handles multiple calls", {
+  old_opt <- getOption("engager.privacy_level", NULL)
+  on.exit(options(engager.privacy_level = old_opt), add = TRUE)
+
+  # Test multiple calls in sequence
+  set_privacy_defaults("mask")
+  expect_equal(getOption("engager.privacy_level"), "mask")
+
+  set_privacy_defaults("ferpa_standard")
+  expect_equal(getOption("engager.privacy_level"), "ferpa_standard")
+
+  set_privacy_defaults("ferpa_strict")
+  expect_equal(getOption("engager.privacy_level"), "ferpa_strict")
+
+  set_privacy_defaults("none")
+  expect_equal(getOption("engager.privacy_level"), "none")
+})
+
+test_that("set_privacy_defaults handles verbose option interactions", {
+  old_privacy <- getOption("engager.privacy_level", NULL)
+  old_verbose <- getOption("engager.verbose", NULL)
+
+  on.exit(
+    {
+      options(engager.privacy_level = old_privacy)
+      options(engager.verbose = old_verbose)
+    },
+    add = TRUE
+  )
+
+  # Test with verbose enabled
+  options(engager.verbose = TRUE)
+  expect_message(set_privacy_defaults("ferpa_strict"), "FERPA strict mode enabled")
+
+  # Test with verbose disabled
+  options(engager.verbose = FALSE)
+  expect_no_message(set_privacy_defaults("ferpa_standard"))
+
+  # Test with verbose unset (should default to FALSE)
+  options(engager.verbose = NULL)
+  expect_no_message(set_privacy_defaults("mask"))
+})
+
 test_that("FERPA compliance functions handle edge cases", {
   # Test with empty data frame
   empty_df <- tibble::tibble()

@@ -2,50 +2,30 @@
 #'
 #' Process a Zoom recording transcript with given parameters and return tibble containing the consolidated and annotated
 #' comments.
-
 #'
 #' Original code posted by Conor Healy:
 #' https://ucbischool.slack.com/archives/C02A36407K9/p1631855705002000 Addition
 #' of `wordcount`, `wordcount_perc`, and `wpm` by Brooks Ambrose:
 #' https://gist.github.com/brooksambrose/1a8a673eb3bf884c1868ad4d80f08246
-
-
-
-
-#' @param transcript_file_path File path of a .transcript.vtt file of a Zoom recording
-#'   transcript.
-#' @param consolidate_comments Set to `TRUE` to consolidate consecutive comments
-#'   from the same speaker with gaps of less than `max_pause_sec`. `FALSE`
-#'   returns the results from the raw transcript.  Defaults to `TRUE`
-#' @param max_pause_sec Maximum pause between comments to be consolidated.  If
-#'   the raw comments from the Zoom recording transcript contain 2 consecutive
-#'   comments from the same speaker, and the time between the end of the first
-#'   comment and start of the second comment is less than `max_pause_sec`
-#'   seconds, then the comments will be consolidated.  If the time between the
-#'   comments is larger, they will not be consolidated. Defaults to 1.
-#' @param add_dead_air Set to `TRUE` to adds rows for any time between
-#'   transcribed comments, labeled with the `dead_air_name` provided (or the
-#'   default value of 'dead_air').  The resulting tibble will have rows
-#'   accounting for the time from the beginning of the first comment to the end
-#'   of the last one. Defaults to `TRUE`.
-#' @param dead_air_name Character string to label the `name` column in any rows
-#'   added for dead air. Defaults to 'dead_air'.
-#' @param na_name Character string to label the `name` column in any rows where
-#'   the transcript `name` is `NA`. Defaults to 'unknown'.
-#' @param transcript_df Tibble containing the comments from a Zoom recording transcript (which is generally the result
-#' of calling `load_zoom_transcript()`.
 #'
-#' @return A tibble containing the comments from a Zoom recording transcript
+#' @param transcript_file_path Path to the transcript file to process
+#' @param consolidate_comments Whether to consolidate consecutive comments from the same speaker (default: TRUE)
+#' @param max_pause_sec Maximum pause in seconds between comments to consolidate (default: 1)
+#' @param add_dead_air Whether to add dead air rows for gaps in transcript (default: TRUE)
+#' @param dead_air_name Name to use for dead air periods (default: 'dead_air')
+#' @param na_name Name to use for unknown speakers (default: 'unknown')
+#' @param transcript_df Pre-loaded transcript data frame (alternative to transcript_file_path)
+#' @return A tibble containing the processed transcript data
 #'
-#' @export
 #'
-#' @examples
+#'
 #' # Load a sample transcript from the package's extdata directory
 #' transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
 #'   package = "engager"
 #' )
 #' process_zoom_transcript(transcript_file_path = transcript_file)
 #'
+#' @export
 process_zoom_transcript <- function(transcript_file_path = "",
                                     consolidate_comments = TRUE,
                                     max_pause_sec = 1,
@@ -90,7 +70,7 @@ process_zoom_transcript <- function(transcript_file_path = "",
     }
 
     if (add_dead_air) {
-      transcript_df <- engager::add_dead_air_rows(transcript_df,
+      transcript_df <- add_dead_air_rows(transcript_df,
         dead_air_name = dead_air_name
       )
     }

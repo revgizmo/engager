@@ -17,45 +17,33 @@ summarize_transcript_metrics(
 )
 }
 \arguments{
-\item{transcript_file_path}{File path of a .transcript.vtt file of a Zoom recording
-transcript.}
+\item{transcript_file_path}{Path to the transcript file to process}
 
-\item{names_exclude}{Character vector of names to exclude from the results.
-Defaults to 'c("dead_air")'}
+\item{names_exclude}{Vector of names to exclude from analysis (default: c("dead_air"))}
 
-\item{consolidate_comments}{Set to \code{TRUE} to consolidate consecutive comments
-from the same speaker with gaps of less than \code{max_pause_sec}. \code{FALSE}
-returns the results from the raw transcript.  Defaults to \code{TRUE}}
+\item{consolidate_comments}{Whether to consolidate consecutive comments (default: TRUE)}
 
-\item{max_pause_sec}{Maximum pause between comments to be consolidated.  If
-the raw comments from the Zoom recording transcript contain 2 consecutive
-comments from the same speaker, and the time between the end of the first
-comment and start of the second comment is less than \code{max_pause_sec}
-seconds, then the comments will be consolidated.  If the time between the
-comments is larger, they will not be consolidated. Defaults to 1.}
+\item{max_pause_sec}{Maximum pause in seconds between comments to consolidate (default: 1)}
 
-\item{add_dead_air}{Set to \code{TRUE} to adds rows for any time between
-transcribed comments, labeled with the \code{dead_air_name} provided (or the
-default value of 'dead_air').  The resulting tibble will have rows
-accounting for the time from the beginning of the first comment to the end
-of the last one. Defaults to \code{TRUE}.}
+\item{add_dead_air}{Whether to add dead air rows for gaps in transcript (default: TRUE)}
 
-\item{dead_air_name}{Character string to label the \code{name} column in any rows
-added for dead air. Defaults to 'dead_air'.}
+\item{dead_air_name}{Name to use for dead air periods (default: 'dead_air')}
 
-\item{na_name}{Character string to label the \code{name} column in any rows where
-the transcript \code{name} is \code{NA}. Defaults to 'unknown'.}
+\item{na_name}{Name to use for unknown speakers (default: 'unknown')}
 
-\item{transcript_df}{Tibble containing the comments from a Zoom recording transcript (which is generally the result
-of calling \code{process_zoom_transcript()}.}
+\item{transcript_df}{Pre-loaded transcript data frame (alternative to transcript_file_path)}
 
-\item{comments_format}{Character string specifying how to format the comments column.
-Options: "list" (default, preserves list structure), "text" (semicolon-separated text),
-or "count" (just the number of comments). Defaults to "list".}
+\item{comments_format}{Format for comments: "list", "text", or "count" (default: "list")}
 }
 \value{
-A tibble containing summary metrics by speaker from a Zoom recording
-transcript
+A tibble containing summary metrics by speaker
+
+transcriptLoad a sample transcript from the package's extdata directory
+
+transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+package = "engager"
+)
+summarize_transcript_metrics(transcript_file_path = transcript_file)
 }
 \description{
 Process a Zoom recording transcript and return summary metrics by speaker
@@ -65,12 +53,4 @@ Original code posted by Conor Healy:
 https://ucbischool.slack.com/archives/C02A36407K9/p1631855705002000 Addition
 of \code{wordcount}, \code{wordcount_perc}, and \code{wpm} by Brooks Ambrose:
 https://gist.github.com/brooksambrose/1a8a673eb3bf884c1868ad4d80f08246
-}
-\examples{
-# Load a sample transcript from the package's extdata directory
-transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-  package = "engager"
-)
-summarize_transcript_metrics(transcript_file_path = transcript_file)
-
 }

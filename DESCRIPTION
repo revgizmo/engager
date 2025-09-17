@@ -2,8 +2,10 @@ Package: engager
 Type: Package
 Title: Engager: Analyze Student Engagement from Zoom Transcripts
 Version: 0.1.0
-Author: Conor Healy
-Maintainer: Conor Healy <conorhealy@berkeley.edu>
+Authors@R: person(given = "Conor",
+                  family = "Healy",
+                  role = c("aut", "cre"),
+                  email = "conorhealy@berkeley.edu")
 Description: Takes Zoom transcripts and student rosters,
     converts them for analysis, and
     analyzes the results for student engagement, with a particular focus on participation equity.
@@ -20,7 +22,6 @@ Imports:
     jsonlite,
     lubridate,
     magrittr,
-    openxlsx,
     readr,
     rlang,
     stringr,
@@ -34,8 +35,7 @@ Suggests:
     purrr,
     microbenchmark,
     pryr,
-    gridExtra,
-    devtools
+    gridExtra
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 URL: https://github.com/revgizmo/engager

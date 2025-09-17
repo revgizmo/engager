@@ -27,12 +27,42 @@ Thank you for your interest in contributing to the zoomstudentengagement package
 We use the following branch structure:
 
 - `main`: Production-ready code
-- `develop`: Integration branch for features
+- `development`: Integration branch for features
 - `feature/*`: New features (e.g., `feature/improve-visualizations`)
 - `bugfix/*`: Bug fixes (e.g., `bugfix/fix-name-matching`)
 - `docs/*`: Documentation updates
 - `test/*`: Test-related changes
 - `release/*`: Release preparation
+
+### Versioning Strategy
+
+We follow [Semantic Versioning](https://semver.org/) (SemVer) for all releases:
+
+#### Version Format: MAJOR.MINOR.PATCH
+- **MAJOR**: Breaking changes to public API
+- **MINOR**: New features, backward compatible
+- **PATCH**: Bug fixes, backward compatible
+
+#### Version Progression
+- **0.1.0**: First official release (current)
+- **0.1.1**: Bug fixes and minor improvements
+- **0.2.0**: New features and enhancements
+- **1.0.0**: API stabilization and production readiness
+
+#### Release Process
+1. **Update CHANGELOG.md** with all changes
+2. **Update DESCRIPTION** version number
+3. **Create git tag** (e.g., `v0.1.1`)
+4. **Push tag** to GitHub
+5. **Create GitHub release** with release notes
+6. **Submit to CRAN** (for major releases)
+
+#### Version Guidelines
+- **Pre-release versions** (0.x.x): Development phase, API may change
+- **Stable versions** (1.x.x): Production ready, backward compatible
+- **Breaking changes**: Only in MAJOR versions
+- **New features**: MINOR versions only
+- **Bug fixes**: PATCH versions only
 
 ### Git Commit Messages
 

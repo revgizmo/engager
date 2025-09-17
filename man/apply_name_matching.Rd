@@ -7,16 +7,15 @@
 apply_name_matching(transcript_data, name_lookup, roster_data)
 }
 \arguments{
-\item{transcript_data}{Data frame containing transcript data}
+\item{transcript_data}{Transcript data to match}
 
-\item{name_lookup}{Data frame with name lookup information}
+\item{name_lookup}{Name lookup table}
 
-\item{roster_data}{Data frame containing roster data}
+\item{roster_data}{Roster data for matching}
 }
 \value{
-Data frame with matched names
+Matched transcript data
 }
 \description{
 Internal function to apply name matching to transcript data.
 }
-\keyword{internal}

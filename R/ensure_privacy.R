@@ -13,31 +13,20 @@
 #' `zoomstudentengagement.privacy_level`, which is set to "mask" on package
 #' load. Use `set_privacy_defaults()` to change at runtime.
 #'
-#' @param x An object to make privacy-safe. Currently supports `data.frame` or
-#'   `tibble`. Other object types are returned unchanged.
-#' @param privacy_level Privacy level to apply. One of `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
-#'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
-#'   **WARNING**: Setting to "none" disables privacy protection and may violate
-#'   FERPA requirements.
-#' @param id_columns Character vector of column names to treat as identifiers.
-#'   Defaults to common name/identifier columns.
-#' @param audit_log Whether to log privacy operations for compliance tracking.
-#'   Defaults to TRUE for maximum transparency.
+#' @param x Data object to apply privacy rules to (typically a `tibble`)
+#' @param privacy_level Privacy level: "mask", "ferpa_strict", "ferpa_standard", or "none"
+#' @param id_columns Vector of column names to treat as identifiers (default: common name columns)
+#' @param audit_log Whether to log privacy operations (default: TRUE)
+#' @return Privacy-compliant version of the input object
 #'
-#' @return The object with privacy rules applied. For data frames, the same
-#'   structure is preserved with identifying fields masked when appropriate.
-#'
-#' @seealso [set_privacy_defaults()], [validate_ethical_use()]
-#' @export
-#'
-#' @examples
-#' # Data frame masking example
 #' df <- tibble::tibble(
 #'   section = c("A", "A", "B"),
 #'   preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz"),
 #'   session_ct = c(3, 5, 2)
 #' )
 #' ensure_privacy(df)
+#'
+#' @export
 ensure_privacy <- function(x = NULL,
                            privacy_level = getOption(
                              "zoomstudentengagement.privacy_level",
@@ -57,6 +46,7 @@ ensure_privacy <- function(x = NULL,
     return(result$data)
   }
   id_columns <- result$id_columns
+  privacy_level <- result$privacy_level # Use scalarized privacy_level
 
   # Only handle tabular data for MVP; return other objects unchanged
   if (!is.data.frame(x)) {
@@ -76,6 +66,20 @@ ensure_privacy <- function(x = NULL,
 
 # Helper function to validate privacy level
 validate_privacy_level <- function(privacy_level) {
+  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
+  # This was causing 100+ test failures and preventing CRAN submission
+
+  # Validate inputs
+  if (!is.character(privacy_level) || length(privacy_level) == 0) {
+    stop("privacy_level must be a non-empty character vector")
+  }
+
+  # Handle vector input gracefully
+  if (length(privacy_level) > 1) {
+    privacy_level <- privacy_level[1]
+    warning("privacy_level had length > 1, using first element: ", privacy_level)
+  }
+
   valid_levels <- c("ferpa_strict", "ferpa_standard", "mask", "none")
   if (!privacy_level %in% valid_levels) {
     stop("Invalid privacy_level. Must be one of: ", paste(valid_levels, collapse = ", "), call. = FALSE)
@@ -84,6 +88,20 @@ validate_privacy_level <- function(privacy_level) {
 
 # Helper function to handle privacy level and get appropriate columns
 handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
+  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
+  # This was causing 100+ test failures and preventing CRAN submission
+
+  # Validate inputs
+  if (!is.character(privacy_level) || length(privacy_level) == 0) {
+    stop("privacy_level must be a non-empty character vector")
+  }
+
+  # Handle vector input gracefully
+  if (length(privacy_level) > 1) {
+    privacy_level <- privacy_level[1]
+    warning("privacy_level had length > 1, using first element: ", privacy_level)
+  }
+
   # If privacy is explicitly disabled, warn and return unmodified
   if (identical(privacy_level, "none")) {
     warning(
@@ -101,7 +119,7 @@ handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
       )
     }
 
-    return(list(early_return = TRUE, data = x, id_columns = NULL))
+    return(list(early_return = TRUE, data = x, id_columns = NULL, privacy_level = privacy_level))
   }
 
   # FERPA strict level - most comprehensive masking
@@ -128,11 +146,25 @@ handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
     )
   }
 
-  list(early_return = FALSE, data = NULL, id_columns = id_columns)
+  list(early_return = FALSE, data = NULL, id_columns = id_columns, privacy_level = privacy_level)
 }
 
 # Helper function to apply privacy masking
 apply_privacy_masking <- function(x, id_columns, privacy_level, audit_log) {
+  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
+  # This was causing 100+ test failures and preventing CRAN submission
+
+  # Validate inputs
+  if (!is.character(privacy_level) || length(privacy_level) == 0) {
+    stop("privacy_level must be a non-empty character vector")
+  }
+
+  # Handle vector input gracefully
+  if (length(privacy_level) > 1) {
+    privacy_level <- privacy_level[1]
+    warning("privacy_level had length > 1, using first element: ", privacy_level)
+  }
+
   # Log privacy operation for audit purposes
   if (audit_log) {
     log_privacy_operation(
@@ -168,7 +200,7 @@ apply_privacy_masking <- function(x, id_columns, privacy_level, audit_log) {
     }
     labels <- paste(
       "Student",
-      stringr::str_pad(seq_along(unique_vals), width = 2, pad = "0")
+      sprintf("%02d", seq_along(unique_vals))
     )
     mapping <- stats::setNames(labels, unique_vals)
     to_mask <- !is.na(chr) & nzchar(chr)
@@ -186,35 +218,14 @@ apply_privacy_masking <- function(x, id_columns, privacy_level, audit_log) {
   df
 }
 
-#' Log Privacy Operations
-#'
-#' Internal function to log privacy operations for audit and compliance purposes.
-#' This function maintains a record of privacy-related operations for institutional
-#' review and FERPA compliance.
-#'
-#' @param operation Type of operation performed
-#' @param privacy_level Privacy level used
-#' @param timestamp When the operation occurred
-#' @param data_rows Number of rows processed (if applicable)
-#' @param data_columns Number of columns processed (if applicable)
-#' @param warning_issued Whether a warning was issued
-#'
-#' @keywords internal
+# Internal function - no documentation needed
 log_privacy_operation <- function(operation,
                                   privacy_level,
                                   timestamp = Sys.time(),
                                   data_rows = NULL,
                                   data_columns = NULL,
                                   warning_issued = FALSE) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  if (Sys.getenv("TESTTHAT") != "true") {
-    warning(
-      "Function 'log_privacy_operation' is deprecated and will be removed in the next version. ",
-      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-      call. = FALSE
-    )
-  }
+  # This function is used by ensure_privacy() and is kept for compatibility
 
   # Create log entry
   log_entry <- list(

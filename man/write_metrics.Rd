@@ -13,20 +13,20 @@ write_metrics(
 )
 }
 \arguments{
-\item{data}{A tibble to write.}
+\item{data}{A tibble containing the data to write}
 
-\item{what}{One of c("engagement", "summary", "session_summary"). Controls default filename.}
+\item{what}{Type of output: "engagement", "summary", or "session_summary" (default: "engagement")}
 
-\item{path}{Output file path. If missing, a default name is chosen based on \code{what} in the current dir.
-Parent directories are created if they do not exist.}
+\item{path}{File path where to write the output}
 
-\item{comments_format}{For list-like \code{comments} columns: one of c("text", "count"). Default: "text".}
+\item{comments_format}{Format for comments: "text" or "count" (default: "text")}
 
-\item{privacy_level}{Privacy level forwarded to \code{ensure_privacy()}. Default from option.}
+\item{privacy_level}{Privacy level for data export (default: from global option)}
 }
 \value{
-Invisibly returns the written tibble (after privacy transformations and list conversions).
+No return value, writes data to file
 }
 \description{
 Unified writer for engagement-related outputs with privacy enforcement.
+Parent directories are created if they do not exist.
 }

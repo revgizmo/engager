@@ -4,48 +4,11 @@
 #' These functions help institutions maintain compliance with the Family
 #' Educational Rights and Privacy Act (FERPA) when using this package.
 #'
+#' @importFrom magrittr %>%
 #' @name ferpa_compliance
-#' @keywords internal
 NULL
 
-#' Validate FERPA Compliance
-#'
-#' Validates data for FERPA compliance by checking for personally identifiable
-#' information (PII) and validating data handling procedures.
-#'
-#' **CRITICAL ETHICAL COMPLIANCE**: This function is essential for ensuring
-#' educational data protection and FERPA compliance. It helps institutions
-#' maintain legal compliance while using student data for educational improvement.
-#'
-#' @param data A data frame or tibble to validate
-#' @param institution_type Type of institution. One of `c("educational", "research", "mixed")`
-#' @param check_retention Whether to check data retention policies
-#' @param retention_period Retention period to check against. One of `c("academic_year", "semester", "quarter",
-#' "custom")`
-#' @param custom_retention_days Custom retention period in days (used when retention_period = "custom")
-#' @param audit_log Whether to log compliance checks for institutional review
-#'
-#' @return A list containing compliance validation results with the following elements:
-#'   - `compliant`: Logical indicating overall compliance
-#'   - `pii_detected`: Character vector of detected PII fields
-#'   - `recommendations`: Character vector of compliance recommendations
-#'   - `retention_check`: Data retention validation results (if requested)
-#'   - `institution_guidance`: Institution-specific recommendations
-#'
-#' @export
-#'
-#' @examples
-#' # Validate sample data for FERPA compliance
-#' sample_data <- tibble::tibble(
-#'   student_id = c("12345", "67890"),
-#'   preferred_name = c("Alice Johnson", "Bob Smith"),
-#'   email = c("alice@university.edu", "bob@university.edu"),
-#'   participation_score = c(85, 92)
-#' )
-#'
-#' validation_result <- validate_ferpa_compliance(sample_data)
-#' print(validation_result$compliant)
-#' print(validation_result$recommendations)
+# Internal function - no documentation needed
 validate_ferpa_compliance <- function(data = NULL,
                                       institution_type = c("educational", "research", "mixed"),
                                       check_retention = TRUE,
@@ -171,17 +134,9 @@ validate_ferpa_compliance <- function(data = NULL,
 #' Advanced anonymization for educational data that preserves data utility
 #' while ensuring FERPA compliance.
 #'
-#' @param data A data frame or tibble to anonymize
-#' @param method Anonymization method. One of `c("mask", "hash", "pseudonymize", "aggregate")`
-#' @param preserve_columns Character vector of column names to preserve unchanged
-#' @param hash_salt Salt for hash-based anonymization (optional)
-#' @param aggregation_level Level for aggregation. One of `c("individual", "section", "course", "institution")`
 #'
-#' @return The anonymized data frame with the same structure as input
 #'
-#' @export
 #'
-#' @examples
 #' # Anonymize sample data
 #' sample_data <- tibble::tibble(
 #'   student_id = c("12345", "67890"),
@@ -195,6 +150,15 @@ validate_ferpa_compliance <- function(data = NULL,
 #'
 #' # Hash method with salt
 #' hashed <- anonymize_educational_data(sample_data, method = "hash", hash_salt = "my_salt")
+#'
+#' @param data Data frame or tibble containing educational data
+#' @param method Anonymization method: "mask", "hash", "pseudonymize", or "aggregate"
+#' @param preserve_columns Vector of column names to preserve unchanged
+#' @param hash_salt Salt value for hash-based anonymization
+#' @param aggregation_level Level of aggregation: "individual", "section", "course", or "institution"
+#' @return Anonymized data frame
+#' @importFrom magrittr %>%
+#' @export
 anonymize_educational_data <- function(data = NULL,
                                        method = c("mask", "hash", "pseudonymize", "aggregate"),
                                        preserve_columns = NULL,
@@ -211,14 +175,14 @@ anonymize_educational_data <- function(data = NULL,
   columns_to_anonymize <- identify_anonymization_columns(data, preserve_columns)
 
   if (length(columns_to_anonymize) == 0) {
-    diag_message("No PII columns found to anonymize")
+    # No PII columns found to anonymize
     return(data)
   }
 
   # Apply anonymization based on method
   if (method == "mask") {
     for (col in columns_to_anonymize) {
-      data[[col]] <- "[MASKED]"
+      data[[col]] <- paste0("Student_", seq_len(nrow(data)))
     }
   } else if (method == "hash") {
     if (is.null(hash_salt)) {
@@ -226,13 +190,13 @@ anonymize_educational_data <- function(data = NULL,
     }
     for (col in columns_to_anonymize) {
       data[[col]] <- sapply(data[[col]], function(x) {
-        digest::digest(paste0(x, hash_salt), algo = "sha256")
+        substr(digest::digest(paste0(x, hash_salt), algo = "sha256"), 1, 8)
       })
     }
   } else if (method == "pseudonymize") {
     for (col in columns_to_anonymize) {
       unique_values <- unique(data[[col]])
-      pseudonyms <- paste0("Student_", seq_along(unique_values))
+      pseudonyms <- paste0("PSEUDO_", seq_along(unique_values))
       data[[col]] <- pseudonyms[match(data[[col]], unique_values)]
     }
   } else if (method == "aggregate") {
@@ -240,12 +204,18 @@ anonymize_educational_data <- function(data = NULL,
     if (aggregation_level == "section" && "section" %in% names(data)) {
       data <- data %>%
         dplyr::group_by(section) %>%
-        dplyr::summarise(dplyr::across(dplyr::everything(), ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.))) %>%
+        dplyr::summarise(dplyr::across(
+          dplyr::everything(),
+          ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.)
+        )) %>%
         dplyr::ungroup()
     } else if (aggregation_level == "course" && "course" %in% names(data)) {
       data <- data %>%
         dplyr::group_by(course) %>%
-        dplyr::summarise(dplyr::across(dplyr::everything(), ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.))) %>%
+        dplyr::summarise(dplyr::across(
+          dplyr::everything(),
+          ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.)
+        )) %>%
         dplyr::ungroup()
     } else {
       # Individual level - just mask the PII columns
@@ -264,15 +234,7 @@ anonymize_educational_data <- function(data = NULL,
   data
 }
 
-#' Identify Columns to Anonymize
-#'
-#' Helper function to identify which columns in a dataset should be anonymized
-#' based on common PII column names.
-#'
-#' @param data Data frame to analyze for PII columns
-#' @param preserve_columns Character vector of column names to preserve (not anonymize)
-#' @return Character vector of column names that should be anonymized
-#' @export
+# Internal function - no documentation needed
 identify_anonymization_columns <- function(data, preserve_columns) {
   # Define PII columns to anonymize
   pii_columns <- c(
@@ -308,32 +270,7 @@ apply_hash_anonymization <- function(data, columns_to_anonymize, hash_salt) {
 }
 
 
-#' Generate FERPA Compliance Report
-#'
-#' Generates comprehensive FERPA compliance reports for educational data.
-#'
-#' @param data A data frame or tibble to analyze
-#' @param output_file Optional file path to save the report
-#' @param report_format Report format. One of `c("text", "html", "json")`
-#' @param include_audit_trail Whether to include audit trail information
-#' @param institution_info Optional list with institution information
-#'
-#' @return A list containing the compliance report
-#'
-#' # # @export (REMOVED - deprecated function) (REMOVED - deprecated function)
-#'
-#' @examples
-#' # Generate compliance report
-#' sample_data <- tibble::tibble(
-#'   student_id = c("12345", "67890"),
-#'   preferred_name = c("Alice Johnson", "Bob Smith"),
-#'   participation_score = c(85, 92)
-#' )
-#'
-#' report <- generate_ferpa_report(sample_data)
-#' print(report$summary)
-#' @export
-#' @keywords deprecated
+# Internal function - no documentation needed
 generate_ferpa_report <- function(data = NULL,
                                   output_file = NULL,
                                   report_format = c("text", "html", "json"),
@@ -420,19 +357,15 @@ generate_ferpa_report <- function(data = NULL,
 #' Validates data retention policies and identifies data that should be
 #' disposed of according to institutional policies.
 #'
-#' @param data A data frame or tibble to check
-#' @param retention_period Retention period to check against. One of `c("academic_year", "semester", "quarter",
-#' "custom")`
-#' @param custom_retention_days Custom retention period in days (used when retention_period = "custom")
-#' @param date_column Column name containing dates to check against
-#' @param current_date Current date for comparison (defaults to Sys.Date())
+#' @param data Data frame to check for retention policy compliance
+#' @param retention_period Retention period: "academic_year", "semester", "quarter", or "custom"
+#' @param custom_retention_days Custom retention period in days (for "custom" period)
+#' @param date_column Column name containing dates to check
+#' @param current_date Current date for comparison (default: Sys.Date())
+#' @return List containing compliance status and retention analysis
 #'
-#' @return A list containing retention validation results
 #'
-#' @export
-#' @keywords deprecated
 #'
-#' @examples
 #' # Check data retention policy
 #' sample_data <- tibble::tibble(
 #'   student_id = c("12345", "67890"),
@@ -519,17 +452,7 @@ check_data_retention_policy <- function(data = NULL,
   result
 }
 
-#' Log FERPA Compliance Check
-#'
-#' Internal function to log FERPA compliance checks for audit and institutional
-#' review purposes.
-#'
-#' @param compliant Whether the data is FERPA compliant
-#' @param pii_detected Number of PII fields detected
-#' @param institution_type Type of institution
-#' @param timestamp When the check was performed
-#'
-#' @keywords internal
+# Internal function - no documentation needed
 log_ferpa_compliance_check <- function(compliant,
                                        pii_detected,
                                        institution_type,

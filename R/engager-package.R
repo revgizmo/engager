@@ -1,12 +1,12 @@
 #' engager: Student Engagement Analysis Package
 #'
-#' @title Analyze Student Engagement from Zoom Transcripts
-#' @description A comprehensive R package for analyzing student engagement and participation equity from Zoom meeting
 #' transcripts. This package provides tools for processing Zoom transcript files, matching student names with rosters,
 #' calculating engagement metrics, and generating privacy-aware visualizations and reports.
 #'
-#' @details
-#' The engager package is designed for educational researchers and instructors who want to analyze student participation patterns in online learning environments. The package prioritizes privacy and ethical considerations, with built-in data anonymization features and FERPA compliance tools.
+#' The engager package is designed for educational researchers and instructors who want to
+#' analyze student participation patterns in online learning environments. The package
+#' prioritizes privacy and ethical considerations, with built-in data anonymization
+#' features and FERPA compliance tools.
 #'
 #' ## Key Features
 #'
@@ -68,36 +68,28 @@
 #' - **Intervention Planning**: Use data to inform teaching strategies
 #' - **Research Studies**: Support educational research with privacy protection
 #'
-#' @seealso
 #' \code{\link{analyze_transcripts}} for main analysis workflow
 #' \code{\link{load_zoom_transcript}} for loading transcript data
 #' \code{\link{ensure_privacy}} for privacy protection features
 #' \code{\link{plot_users}} for creating visualizations
 #' \code{\link{write_metrics}} for exporting results
 #'
-#' @examples
 #' # Basic workflow example
-#' \dontrun{
 #' # Load and process transcript
-#' transcript <- load_zoom_transcript("session_transcript.vtt")
-#'
+#' # transcript <- load_zoom_transcript("session_transcript.vtt")
+#' #
 #' # Analyze with privacy protection
-#' results <- analyze_transcripts(transcript)
-#'
+#' # results <- analyze_transcripts(transcript)
+#' #
 #' # Create privacy-aware visualization
-#' plot_users(results)
-#'
+#' # plot_users(results)
+#' #
 #' # Export results
-#' write_metrics(results, "engagement_report.csv")
-#' }
+#' # write_metrics(results, "engagement_report.csv")
 #'
-#' @docType package
-#' @name engager
-#' @keywords internal
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @importFrom magrittr %>%
 ## usethis namespace: end
 
 # CRAN compliance: suppress global variable notes for NSE/dplyr pipelines
@@ -177,7 +169,6 @@ if (getRversion() >= "2.15.1") {
 
 NULL
 
-#' @keywords internal
 .onLoad <- function(libname, pkgname) {
   # Set privacy option to mask by default if user has not set it
   current <- getOption("engager.privacy_level", default = NULL)

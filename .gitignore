@@ -137,3 +137,4 @@ scripts/real_world_testing/reports/*.rds
 scripts/real_world_testing/outputs/
 scripts/real_world_testing/test_reports/
 scripts/real_world_testing/.DS_Store
+.cursor/

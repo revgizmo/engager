@@ -15,24 +15,22 @@ analyze_multi_session_attendance(
 )
 }
 \arguments{
-\item{transcript_files}{Character vector of transcript file paths}
+\item{transcript_files}{Vector of transcript file paths to analyze}
 
 \item{roster_data}{Data frame containing student roster information}
 
-\item{data_folder}{Path to the data folder containing transcripts}
+\item{data_folder}{Base folder containing data files}
 
-\item{transcripts_folder}{Name of the transcripts subfolder (default: "transcripts")}
+\item{transcripts_folder}{Subfolder containing transcript files}
 
-\item{unmatched_names_action}{Action for unmatched names: "stop" (default) or "warn"}
+\item{unmatched_names_action}{Action to take for unmatched names: "stop" or "warn"}
 
-\item{privacy_level}{Privacy level for output masking: "ferpa_strict",
-"ferpa_standard", "mask", "none"}
+\item{privacy_level}{Privacy level: "ferpa_strict", "ferpa_standard", "mask", "none"}
 
-\item{min_attendance_threshold}{Minimum attendance percentage to be considered a
-"consistent attendee" (default: 0.5)}
+\item{min_attendance_threshold}{Minimum attendance threshold for "consistent attendee" (default: 0.5)}
 }
 \value{
-A list containing:
+List containing:
 \itemize{
 \item \code{attendance_matrix}: Data frame with participants as rows and sessions as columns
 \item \code{attendance_summary}: Summary statistics for each participant
@@ -46,20 +44,15 @@ Analyzes attendance patterns across multiple Zoom sessions, tracking who attende
 which sessions and identifying participation patterns while maintaining privacy compliance.
 }
 \examples{
-\dontrun{
 # Analyze attendance across multiple sessions
-transcript_files <- c("session1.vtt", "session2.vtt", "session3.vtt")
-roster_data <- load_roster(data_folder = "data/metadata", roster_file = "roster.csv")
-
-results <- analyze_multi_session_attendance(
-  transcript_files = transcript_files,
-  roster_data = roster_data,
-  data_folder = "data",
-  unmatched_names_action = "warn"
-)
-
-# View attendance summary
-print(results$attendance_summary)
-}
+# transcript_files <- c("session1.vtt", "session2.vtt", "session3.vtt")
+# roster_data <- load_roster(data_folder = "data/metadata", roster_file = "roster.csv")
+# results <- analyze_multi_session_attendance(
+#   transcript_files = transcript_files,
+#   roster_data = roster_data,
+#   data_folder = "data",
+#   unmatched_names_action = "warn"
+# )
+# print(results$attendance_summary)
 
 }

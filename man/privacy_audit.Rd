@@ -11,12 +11,12 @@ privacy_audit(
 )
 }
 \arguments{
-\item{data}{A tibble to audit.}
+\item{data}{A tibble containing the data to audit}
 
-\item{id_columns}{Columns treated as identifiers (same default as ensure_privacy).}
+\item{id_columns}{Vector of column names to check for identifiers (default: common name columns)}
 }
 \value{
-A tibble with columns: column, values, non_empty, masked_estimate.
+A tibble containing audit results with columns: column, values, non_empty, masked_estimate
 }
 \description{
 Summarize which identifier columns were present and how many values were masked.

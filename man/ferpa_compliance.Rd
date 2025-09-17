@@ -8,4 +8,3 @@ Functions to validate and ensure FERPA compliance for educational data.
 These functions help institutions maintain compliance with the Family
 Educational Rights and Privacy Act (FERPA) when using this package.
 }
-\keyword{internal}

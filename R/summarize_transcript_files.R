@@ -1,19 +1,17 @@
 #' Summarize Transcript Files
 #'
-#' @param transcript_file_names A data.frame or character vector listing the transcript files.
-#'   If a tibble with additional columns beyond 'transcript_file' is provided, all metadata
-#'   columns will be preserved in the output.
-#' @param data_folder Overall data folder for your recordings and data
-#' @param transcripts_folder specific subfolder of the data folder where you store transcripts
-#' @param names_to_exclude Character vector of names to exclude from the results
-#' @param deduplicate_content Logical. If TRUE, detect and handle duplicate transcripts
-#' @param similarity_threshold Threshold for considering transcripts as duplicates (0-1)
-#' @param duplicate_method Method for detecting duplicates
-#' @return A tibble containing session details and summary metrics by speaker
-#' @export
+#' Summarize multiple transcript files and return aggregated metrics. If a tibble with additional columns beyond 'transcript_file' is provided, all metadata columns will be preserved in the output.
+#'
+#' @param transcript_file_names Vector of transcript file names or tibble with transcript_file column
+#' @param data_folder Base folder containing data files (default: ".")
+#' @param transcripts_folder Subfolder where transcript files are stored (default: "transcripts")
+#' @param names_to_exclude Vector of names to exclude from analysis (default: NULL)
+#' @param deduplicate_content Whether to detect and handle duplicate content (default: FALSE)
+#' @param similarity_threshold Similarity threshold for duplicate detection (default: 0.95)
+#' @param duplicate_method Method for duplicate detection: "hybrid", "content", or "metadata" (default: "hybrid")
+#' @return A tibble containing summarized transcript metrics
 #'
 
-#' @examples
 #' # Create sample transcript file names
 #' transcript_files <- c(
 #'   "GMT20240115-100000_Recording.transcript.vtt",
@@ -22,6 +20,8 @@
 #'
 #' # Summarize transcript files
 #' summary <- summarize_transcript_files(transcript_file_names = transcript_files)
+#'
+#' @export
 summarize_transcript_files <-
   function(transcript_file_names = NULL,
            data_folder = ".",
@@ -172,11 +172,11 @@ process_and_return_results <- function(all_results, preserve_metadata, original_
             "Found", nrow(mismatches), "rows where transcript_file from summarize_transcript_metrics",
             "doesn't match the input file_name. This may indicate an issue in the processing pipeline."
           ))
-          if (is_verbose()) {
-            diag_message(paste(
-              utils::capture.output(utils::str(mismatches[, c("file_name", "transcript_file")])),
-              collapse = "\n"
-            ))
+          if (getOption("engager.verbose", FALSE)) {
+            # paste(
+            #   utils::capture.output(utils::str(mismatches[, c("file_name", "transcript_file")])),
+            #   collapse = "\n"
+            # )
           }
         }
       }

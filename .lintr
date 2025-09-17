@@ -1,7 +1,7 @@
 linters: linters_with_defaults(
     line_length_linter(120),
     object_usage_linter(),
-    cyclocomp_linter(complexity_limit = 20),
+    # cyclocomp_linter(complexity_limit = 20),  # Temporarily disabled - CI missing cyclocomp package
     commented_code_linter = NULL,
     seq_linter(),
     spaces_inside_linter(),

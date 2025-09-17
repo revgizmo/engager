@@ -7,7 +7,7 @@
 create_equity_test_data <- function() {
   # Single participant class
   single_student <- tibble::tibble(
-    preferred_name = "Alice",
+    name = "Alice",
     section = "101.A",
     duration = 100,
     wordcount = 500,
@@ -16,7 +16,7 @@ create_equity_test_data <- function() {
 
   # All equal participation
   equal_participation <- tibble::tibble(
-    preferred_name = c("Alice", "Bob", "Charlie", "Diana"),
+    name = c("Alice", "Bob", "Charlie", "Diana"),
     section = rep("101.A", 4),
     duration = rep(100, 4),
     wordcount = rep(500, 4),
@@ -25,7 +25,7 @@ create_equity_test_data <- function() {
 
   # Extreme differences
   extreme_differences <- tibble::tibble(
-    preferred_name = c("HighParticipant", "Alice", "Bob", "Charlie"),
+    name = c("HighParticipant", "Alice", "Bob", "Charlie"),
     section = rep("101.A", 4),
     duration = c(1000, 100, 90, 80),
     wordcount = c(5000, 500, 450, 400),
@@ -34,7 +34,7 @@ create_equity_test_data <- function() {
 
   # International names
   international_names <- tibble::tibble(
-    preferred_name = c("José García", "Ming Li", "Fatima Al-Zahra", "Oleksandr Kovalenko"),
+    name = c("José García", "Ming Li", "Fatima Al-Zahra", "Oleksandr Kovalenko"),
     section = rep("101.A", 4),
     duration = c(120, 110, 105, 95),
     wordcount = c(600, 550, 525, 475),
@@ -43,7 +43,7 @@ create_equity_test_data <- function() {
 
   # Large class
   large_class <- tibble::tibble(
-    preferred_name = paste0("Student", 1:60),
+    name = paste0("Student", 1:60),
     section = rep("101.A", 60),
     duration = sample(50:200, 60, replace = TRUE),
     wordcount = sample(250:1000, 60, replace = TRUE),
@@ -52,7 +52,7 @@ create_equity_test_data <- function() {
 
   # Problematic data
   problematic_data <- tibble::tibble(
-    preferred_name = c("Alice", "Bob", "Charlie", "Diana", "Eve"),
+    name = c("Alice", "Bob", "Charlie", "Diana", "Eve"),
     section = rep("101.A", 5),
     duration = c(100, NA, 0, -10, 50),
     wordcount = c(500, 400, 0, 200, NA),
@@ -61,7 +61,7 @@ create_equity_test_data <- function() {
 
   # Duplicate names
   duplicate_names <- tibble::tibble(
-    preferred_name = c("Alice Smith", "Alice Smith", "Bob Jones", "Bob Jones"),
+    name = c("Alice Smith", "Alice Smith", "Bob Jones", "Bob Jones"),
     section = rep("101.A", 4),
     duration = c(100, 95, 90, 85),
     wordcount = c(500, 475, 450, 425),
@@ -70,7 +70,7 @@ create_equity_test_data <- function() {
 
   # Multi-section data for comparison
   multi_section <- tibble::tibble(
-    preferred_name = c(
+    name = c(
       "Alice", "Bob", "Charlie", "Diana",
       "Eve", "Frank", "Grace", "Henry"
     ),
@@ -82,7 +82,7 @@ create_equity_test_data <- function() {
 
   # Edge case: very small differences
   small_differences <- tibble::tibble(
-    preferred_name = c("Alice", "Bob", "Charlie", "Diana"),
+    name = c("Alice", "Bob", "Charlie", "Diana"),
     section = rep("101.A", 4),
     duration = c(100, 99, 98, 97),
     wordcount = c(500, 498, 496, 494),
@@ -91,7 +91,7 @@ create_equity_test_data <- function() {
 
   # Edge case: all zeros
   all_zeros <- tibble::tibble(
-    preferred_name = c("Alice", "Bob", "Charlie"),
+    name = c("Alice", "Bob", "Charlie"),
     section = rep("101.A", 3),
     duration = c(0, 0, 0),
     wordcount = c(0, 0, 0),
@@ -100,7 +100,7 @@ create_equity_test_data <- function() {
 
   # Edge case: mixed data types
   mixed_data_types <- tibble::tibble(
-    preferred_name = c("Alice", "Bob", "Charlie"),
+    name = c("Alice", "Bob", "Charlie"),
     section = c("101.A", "101.A", "101.A"),
     duration = c(100, 90, 80),
     wordcount = c(500, 450, 400),
@@ -131,7 +131,7 @@ create_equity_test_data <- function() {
 create_equity_validation_data <- function() {
   # Participation gap analysis
   participation_gaps <- tibble::tibble(
-    preferred_name = c(
+    name = c(
       "HighParticipant1", "HighParticipant2", "HighParticipant3",
       "MediumParticipant1", "MediumParticipant2", "MediumParticipant3",
       "LowParticipant1", "LowParticipant2", "LowParticipant3"
@@ -144,7 +144,7 @@ create_equity_validation_data <- function() {
 
   # Gender-balanced participation (for equity analysis)
   gender_balanced <- tibble::tibble(
-    preferred_name = c(
+    name = c(
       "Alice", "Betty", "Carol", "Diana", "Eve",
       "Adam", "Bob", "Charlie", "David", "Frank"
     ),
@@ -156,7 +156,7 @@ create_equity_validation_data <- function() {
 
   # Section comparison for equity analysis
   section_comparison <- tibble::tibble(
-    preferred_name = c(
+    name = c(
       "Alice", "Bob", "Charlie", "Diana",
       "Eve", "Frank", "Grace", "Henry",
       "Ivy", "Jack", "Kate", "Liam"

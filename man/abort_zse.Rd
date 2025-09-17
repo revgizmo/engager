@@ -7,20 +7,14 @@
 abort_zse(message, class = character())
 }
 \arguments{
-\item{message}{Character message describing the error}
+\item{message}{Error message to display}
 
-\item{class}{Additional error class(es) appended after \code{"zse_error"}}
+\item{class}{Additional error class to add to the error}
 }
 \value{
-This function does not return; it signals an error.
+No return value, throws an error
 }
 \description{
 Provides a small wrapper around \code{rlang::abort()} to standardize
 error classes within the package for precise testing and user handling.
 }
-\examples{
-\dontrun{
-abort_zse("Invalid input", class = "zse_schema_error")
-}
-}
-\keyword{internal}

@@ -5,31 +5,13 @@
 #' provided (or the default value of 'dead_air'). The resulting tibble will have rows
 #' accounting for the time from the beginning of the first comment to the end of the last one.
 #'
-
-
-
-
-#' @param df A tibble containing the comments from a Zoom recording transcript.
-#' @param dead_air_name Character string to label the `name` column in the added rows.
-#'   Defaults to 'dead_air'.
-#'
-#' @return A tibble containing the comments from a Zoom recording transcript,
-#'   with rows added for dead air.
-#' @export
-#' @keywords deprecated
-#'
-#' @examples
-#' add_dead_air_rows(df = "NULL")
+#' @param df A tibble containing transcript comments with columns: name, start, end, comment
+#' @param dead_air_name Name to use for dead air periods. Defaults to 'dead_air'.
+#' @return A tibble with rows added for dead air periods
 #'
 # CRAN compliance: global variables handled in package file
 add_dead_air_rows <- function(df = NULL, dead_air_name = "dead_air") {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'add_dead_air_rows' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
+  # This function is used by process_zoom_transcript() and is kept for compatibility
 
   # Removed local NULL assignments; handled by globalVariables above.
 

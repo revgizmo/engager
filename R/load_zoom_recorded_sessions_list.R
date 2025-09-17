@@ -1,80 +1,5 @@
-#' Load Zoom Recorded Sessions List
-#'
-#' This function creates a tibble from a provided csv file of Zoom recordings.
-#'
-#' ## Download Zoom csv file with list of recordings and transcripts
-#'
-#' 1. Go to [https://www.zoom.us/recording](https://www.zoom.us/recording)
-#'
-#' 2. Export the Cloud Recordings
-#' 3. Copy the cloud recording csv (naming convention:
-#'    `zoomus_recordings__\\d{8}\.csv`) to `data/transcripts/`
-#'    (or whatever path you identify in the `data_folder` and
-#'    `transcripts_folder` parameters).
-#'
-#' @note The function handles several legacy and edge cases:
-#' - Trailing commas in CSV headers (common in Zoom exports)
-#' - Multiple recordings of the same session (takes the most recent)
-#' - Timezone handling for session start/end times
-#' - Department filtering for targeted recordings
-#' - Date format variations in Zoom exports
-#'
-#' @param data_folder overall data folder for your recordings
-#' @param transcripts_folder specific subfolder of the data folder where you
-#'   will store the cloud recording csvs
-#' @param topic_split_pattern REGEX pattern used to parse the `Topic` from the
-#'   csvs and extract useful columns. Defaults to
-#'   `paste0("^(?<dept>\\\\S+) (?<course_section>\\\\S+) - ",
-#'   "(?<day>[A-Za-z]+) (?<time>\\\\S+\\\\s*\\\\S+) (?<instructor>\\\\(.*?\\\\))")`
-#'   (Note: this REGEX pattern is formatted here as paste0() rather than a
-#'   single string to stay beneath the 90 character line limit in the code
-#'   checker. A single string works just as well as this combined one). Note:
-#'   The function now uses a generalized pattern that can handle various course
-#'   naming conventions including `DATASCI 201.006`, `LTF 101`, and
-#'   `MATH 250.001` formats.
-#' @param zmrcrddsssnscsvnmspttrn REGEX pattern used to parse
-#'   the csv file names from the cloud recording csvs and extract useful
-#'   columns. Defaults to
-#'   `zoomus_recordings__\\\\d{8}(?:\\\\s+copy\\\\s*\\\\d*)?\\\\.csv`
-#' @param zmrcrddsssnscsvclnms Comma separated string of column
-#'   names in the cloud recording csvs. Zoom tends to save the file with an
-#'   extra `,` at the end of the header row, causing a null column to be
-#'   imported. Defaults to
-#'   `Topic,ID,Start Time,File Size (MB),File Count,Total Views,Total Downloads,Last Accessed`
-#' @param dept the school department associated with the recordings to keep.
-#'   Zoom often captures unwanted recordings, and this is used to filter only
-#'   the targeted ones. This value is compared to the `dept` column extracted
-#'   from the `Topic` column extracted from cloud recording csvs. Defaults to
-#'   `LTF`
-#' @param semester_start_mdy date of the first class in the semester. Defaults
-#'   to `Jan 01, 2024`
-#' @param scheduled_session_length_hours scheduled length of each class session
-#'   in hours. Defaults to `1.5`
-#' @param verbose Logical flag to enable diagnostic output. Defaults to FALSE.
-#'
-#' @return A tibble listing the session recordings loaded from the cloud
-#'   recording csvs. Returns `NULL` if the transcripts folder doesn't exist,
-#'   or an empty tibble with the correct column structure if no matching
-#'   files are found.
-#'
-#' @export
-#'
-#' @examples
-#' # Show what happens when no data files exist (returns empty tibble)
-#' load_zoom_recorded_sessions_list(
-#'   data_folder = "nonexistent_folder",
-#'   transcripts_folder = "transcripts"
-#' )
-#'
-#' \dontrun{
-#' # Load actual Zoom recordings data (requires data files)
-#' # Requires a Zoom cloud recordings CSV in the appropriate folder, e.g.:
-#' # inst/extdata/transcripts/zoomus_recordings__20240124.csv
-#' load_zoom_recorded_sessions_list(
-#'   data_folder = system.file("extdata", package = "engager"),
-#'   transcripts_folder = "transcripts"
-#' )
-#' }
+#' @importFrom magrittr %>%
+# Internal function - no documentation needed
 load_zoom_recorded_sessions_list <-
   function(data_folder = ".",
            transcripts_folder = "transcripts",
@@ -189,10 +114,10 @@ create_empty_zoom_tibble <- function() {
 
 # Helper function to load and process zoom CSVs
 load_and_process_zoom_csvs <- function(setup_result, verbose) {
-  .verbose <- isTRUE(verbose) || is_verbose()
+  .verbose <- isTRUE(verbose)
   if (.verbose) {
-    diag_message("CSV files to process:")
-    diag_message(paste(setup_result$csv_names, collapse = "\n"))
+    # CSV files to process
+    # paste(setup_result$csv_names, collapse = "\n")
   }
 
   result <- setup_result$csv_names %>%
@@ -216,8 +141,8 @@ load_and_process_zoom_csvs <- function(setup_result, verbose) {
     )
 
   if (.verbose) {
-    diag_message("After reading CSV:")
-    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
+    # After reading CSV
+    # paste(utils::capture.output(utils::str(result)), collapse = "\n")
   }
 
   result
@@ -225,7 +150,7 @@ load_and_process_zoom_csvs <- function(setup_result, verbose) {
 
 # Helper function to aggregate zoom sessions data
 aggregate_zoom_sessions_data <- function(result, verbose) {
-  .verbose <- isTRUE(verbose) || is_verbose()
+  .verbose <- isTRUE(verbose)
 
   # Use base R operations instead of dplyr to avoid segmentation fault
   # Group by the specified columns and take max values
@@ -250,8 +175,8 @@ aggregate_zoom_sessions_data <- function(result, verbose) {
   result$group_id <- NULL # Remove the temporary group_id column
 
   if (.verbose) {
-    diag_message("After summarise:")
-    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
+    # After summarise
+    # paste(utils::capture.output(utils::str(result)), collapse = "\n")
   }
 
   result
@@ -259,7 +184,7 @@ aggregate_zoom_sessions_data <- function(result, verbose) {
 
 # Helper function to parse topic components
 parse_topic_components <- function(result, topic_split_pattern, verbose) {
-  .verbose <- isTRUE(verbose) || is_verbose()
+  .verbose <- isTRUE(verbose)
 
   # Convert named capture groups to plain groups for compatibility if needed
   pattern_plain <- gsub("\\(\\?<[^>]+>", "(", topic_split_pattern, perl = TRUE)
@@ -287,8 +212,8 @@ parse_topic_components <- function(result, topic_split_pattern, verbose) {
   result$section <- suppressWarnings(as.integer(result$section))
 
   if (.verbose) {
-    diag_message("After topic parsing:")
-    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
+    # After topic parsing
+    # paste(utils::capture.output(utils::str(result)), collapse = "\n")
   }
 
   result
@@ -296,13 +221,13 @@ parse_topic_components <- function(result, topic_split_pattern, verbose) {
 
 # Helper function to process session times
 process_session_times <- function(result, scheduled_session_length_hours, verbose) {
-  .verbose <- isTRUE(verbose) || is_verbose()
+  .verbose <- isTRUE(verbose)
 
   # Extract start time values as strings
   start_time_values <- result$`Start Time`
   if (.verbose) {
-    diag_message("Start Time values:")
-    diag_message(paste(start_time_values, collapse = "\n"))
+    # Start Time values
+    # paste(start_time_values, collapse = "\n")
   }
 
   # Parse dates using multiple formats in America/Los_Angeles tz
@@ -319,8 +244,8 @@ process_session_times <- function(result, scheduled_session_length_hours, verbos
     lubridate::dhours(scheduled_session_length_hours) + lubridate::dminutes(30)
 
   if (.verbose) {
-    diag_message("After date parsing:")
-    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
+    # After date parsing
+    # paste(utils::capture.output(utils::str(result)), collapse = "\n")
   }
 
   result
@@ -328,7 +253,7 @@ process_session_times <- function(result, scheduled_session_length_hours, verbos
 
 # Helper function to filter by department
 filter_by_department <- function(result, dept, verbose) {
-  .verbose <- isTRUE(verbose) || is_verbose()
+  .verbose <- isTRUE(verbose)
 
   # Optionally filter rows to those matching department, if provided
   if (!is.null(dept) && nzchar(dept)) {
@@ -336,8 +261,8 @@ filter_by_department <- function(result, dept, verbose) {
   }
 
   if (.verbose) {
-    diag_message("Final result after filtering:")
-    diag_message(paste(utils::capture.output(utils::str(result)), collapse = "\n"))
+    # Final result after filtering
+    # paste(utils::capture.output(utils::str(result)), collapse = "\n")
   }
 
   result

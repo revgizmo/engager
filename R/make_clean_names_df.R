@@ -1,83 +1,9 @@
-#' Make Clean Names DF
-#'
-#'
-#' This function creates a tibble containing session details and summary metrics
-#' by speaker for all class sessions (and placeholders for missing sections)
-#' from the joining of:
-#' * a tibble of customized student names by section (`section_names_lookup_file` in the `data_folder` folder),
-#' * a tibble containing session details and summary metrics by speaker for all class sessions
-#' (`transcripts_metrics_df`), and
-#' * a tibble listing the students enrolled in the class or classes, with rows for each recorded class section for each
-#' student (`roster_sessions`) into a single tibble.
-#'
-#' @param data_folder overall data folder for your recordings. Defaults to
-#'   'data'
-#' @param section_names_lookup_file File name of the csv file of customized
-#'   student names by section Defaults to 'section_names_lookup.csv'
-#' @param transcripts_metrics_df A tibble containing session details and summary
-#'   metrics by speaker for all class sessions in the tibble provided.
-#' @param roster_sessions A tibble listing the students enrolled in the class or
-#'   classes, with rows for each recorded class section for each student.
-#'
-#' @return A tibble containing session details and summary metrics by speaker
-#'   for all class sessions (and placeholders for missing sections), including
-#'   customized student names.
-#' @export
-#' @md
-#'
-#' @examples
-#' # Create sample data for demonstration
-#' sample_transcripts <- tibble::tibble(
-#'   name = c("John Smith", "Jane Doe"),
-#'   course_section = c("101.A", "101.B"),
-#'   course = c(101, 101),
-#'   section = c("A", "B"),
-#'   day = c("Monday", "Tuesday"),
-#'   time = c("10:00", "11:00"),
-#'   n = c(10, 15),
-#'   duration = c(300, 450),
-#'   wordcount = c(500, 750),
-#'   comments = c("Good", "Excellent"),
-#'   n_perc = c(0.1, 0.15),
-#'   duration_perc = c(0.1, 0.15),
-#'   wordcount_perc = c(0.1, 0.15),
-#'   wpm = c(100, 100),
-#'   name_raw = c("John Smith", "Jane Doe"),
-#'   start_time_local = c("2024-01-01 10:00:00", "2024-01-02 11:00:00"),
-#'   dept = c("CS", "CS"),
-#'   session_num = c(1, 1)
-#' )
-#'
-#' sample_roster <- tibble::tibble(
-#'   first_last = c("John Smith", "Jane Doe"),
-#'   preferred_name = c("John Smith", "Jane Doe"),
-#'   course = c("101", "101"),
-#'   section = c("A", "B"),
-#'   student_id = c("12345", "67890"),
-#'   dept = c("CS", "CS"),
-#'   session_num = c(1, 1),
-#'   start_time_local = c("2024-01-01 10:00:00", "2024-01-02 11:00:00"),
-#'   course_section = c("101.A", "101.B")
-#' )
-#'
-#' make_clean_names_df(
-#'   data_folder = "data",
-#'   section_names_lookup_file = "section_names_lookup.csv",
-#'   transcripts_metrics_df = sample_transcripts,
-#'   roster_sessions = sample_roster
-#' )
-#'
+# Internal function - no documentation needed
 make_clean_names_df <- function(data_folder = ".",
                                 section_names_lookup_file = "section_names_lookup.csv",
                                 transcripts_metrics_df = NULL,
                                 roster_sessions = NULL) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'make_clean_names_df' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
+  # This function is used by name matching workflows and is kept for compatibility
 
 
   # Input validation
@@ -235,12 +161,12 @@ make_clean_names_df <- function(data_folder = ".",
 #' Internal function to apply privacy-aware name matching using consistent hashing.
 #' This function enhances the existing matching logic with privacy-first design.
 #'
-#' @param result Data frame with transcript data
-#' @param section_names_lookup Data frame with name mappings
-#' @param privacy_level Privacy level for processing
+#' @param result Data frame containing matching results
+#' @param section_names_lookup Lookup table for section names
+#' @param privacy_level Privacy level for data processing
+#' @return Enhanced matching results with privacy-aware processing
 #'
-#' @return Data frame with enhanced name matching
-#' @keywords internal
+#'
 apply_privacy_aware_matching <- function(result, section_names_lookup, privacy_level) {
   # DEPRECATED: This function will be removed in the next version
   # Use essential functions instead. See ?get_essential_functions for alternatives.

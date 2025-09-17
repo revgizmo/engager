@@ -1,35 +1,4 @@
-#' Create Session Mapping from Zoom Recordings and Course Information
-#'
-#' This function creates a mapping between Zoom recordings and course information
-#' by matching recording topics with course patterns.
-#'
-#' @param zoom_recordings_df A tibble containing Zoom recording information with
-#'   columns: ID, Topic, Start Time
-#' @param course_info_df A tibble containing course information created by
-#'   `create_course_info()` with columns: dept, course, section, instructor,
-#'   session_length_hours
-#' @param output_file Optional file path to save the mapping CSV file
-#' @param semester_start_mdy Semester start date in "MMM DD, YYYY" format
-#' @param auto_assign_patterns List of patterns for automatic assignment
-#' @param interactive Whether to enable interactive assignment for unmatched recordings
-#'   (prompts only shown in interactive sessions). In non-interactive sessions,
-#'   a quiet fallback is used. Default is FALSE.
-#' @param verbose Logical flag to enable diagnostic output. Defaults to FALSE.
-#'
-#' @return A tibble with session mapping information
-#' @export
-#' @keywords deprecated
-#'
-#' @examples
-#' \dontrun{
-#' # Create session mapping
-#' session_mapping <- create_session_mapping(
-#'   zoom_recordings_df = zoom_recordings,
-#'   course_info_df = course_info,
-#'   output_file = "session_mapping.csv",
-#'   semester_start_mdy = "Jan 15, 2024"
-#' )
-#' }
+# Internal function - no documentation needed
 create_session_mapping <- function(
     zoom_recordings_df = NULL,
     course_info_df = NULL,
@@ -114,7 +83,12 @@ create_session_mapping <- function(
           if (grepl(pattern, topic)) {
             # Find the first matching course in course_info_df
             # Match the pattern_name (e.g., "CS 101") against dept + course in course_info_df
-            matching_courses <- course_info_df[grepl(paste0("^", pattern_name, "$"), paste(course_info_df$dept, course_info_df$course)), ]
+            matching_courses <- course_info_df[
+              grepl(
+                paste0("^", pattern_name, "$"),
+                paste(course_info_df$dept, course_info_df$course)
+              ),
+            ]
             if (nrow(matching_courses) > 0) {
               first_match <- matching_courses[1, ]
               result$dept[i] <- first_match$dept

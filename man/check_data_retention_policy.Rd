@@ -13,36 +13,33 @@ check_data_retention_policy(
 )
 }
 \arguments{
-\item{data}{A data frame or tibble to check}
+\item{data}{Data frame to check for retention policy compliance}
 
-\item{retention_period}{Retention period to check against. One of \code{c("academic_year", "semester", "quarter", "custom")}}
+\item{retention_period}{Retention period: "academic_year", "semester", "quarter", or "custom"}
 
-\item{custom_retention_days}{Custom retention period in days (used when retention_period = "custom")}
+\item{custom_retention_days}{Custom retention period in days (for "custom" period)}
 
-\item{date_column}{Column name containing dates to check against}
+\item{date_column}{Column name containing dates to check}
 
-\item{current_date}{Current date for comparison (defaults to Sys.Date())}
+\item{current_date}{Current date for comparison (default: Sys.Date())}
 }
 \value{
-A list containing retention validation results
+List containing compliance status and retention analysisCheck data retention policy
+
+sample_data <- tibble::tibble(
+student_id = c("12345", "67890"),
+session_date = as.Date(c("2024-01-15", "2024-02-20")),
+participation_score = c(85, 92)
+)
+
+retention_check <- check_data_retention_policy(
+sample_data,
+retention_period = "academic_year",
+date_column = "session_date"
+)
+print(retention_check$compliant)
 }
 \description{
 Validates data retention policies and identifies data that should be
 disposed of according to institutional policies.
 }
-\examples{
-# Check data retention policy
-sample_data <- tibble::tibble(
-  student_id = c("12345", "67890"),
-  session_date = as.Date(c("2024-01-15", "2024-02-20")),
-  participation_score = c(85, 92)
-)
-
-retention_check <- check_data_retention_policy(
-  sample_data,
-  retention_period = "academic_year",
-  date_column = "session_date"
-)
-print(retention_check$compliant)
-}
-\keyword{deprecated}
