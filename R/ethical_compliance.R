@@ -13,13 +13,6 @@ validate_ethical_use <- function(usage_context = c("research", "teaching", "asse
                                  purpose_statement = NULL,
                                  check_consent = TRUE,
                                  check_irb = TRUE) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'validate_ethical_use' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
 
   usage_context <- match.arg(usage_context)
   data_scope <- match.arg(data_scope)
@@ -172,13 +165,6 @@ create_ethical_use_report <- function(usage_context = NULL,
                                       institution_name = NULL,
                                       contact_person = NULL,
                                       include_guidance = TRUE) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'create_ethical_use_report' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
 
   # Validate ethical use
   validation <- validate_ethical_use(
@@ -323,15 +309,6 @@ audit_ethical_usage <- function(function_calls = NULL,
                                 data_sizes = NULL,
                                 privacy_settings = NULL,
                                 time_period = 30) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  if (Sys.getenv("TESTTHAT") != "true") {
-    warning(
-      "Function 'audit_ethical_usage' is deprecated and will be removed in the next version. ",
-      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-      call. = FALSE
-    )
-  }
 
   # Initialize results
   result <- list(

@@ -1,12 +1,5 @@
 # Internal function - no documentation needed
 make_transcripts_session_summary_df <- function(clean_names_df = NULL) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'make_transcripts_session_summary_df' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
 
   if (is.null(clean_names_df)) {
     return(NULL)

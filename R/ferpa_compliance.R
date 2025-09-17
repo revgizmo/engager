@@ -284,15 +284,6 @@ generate_ferpa_report <- function(data = NULL,
                                   report_format = c("text", "html", "json"),
                                   include_audit_trail = TRUE,
                                   institution_info = NULL) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  if (Sys.getenv("TESTTHAT") != "true") {
-    warning(
-      "Function 'generate_ferpa_report' is deprecated and will be removed in the next version. ",
-      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-      call. = FALSE
-    )
-  }
 
   report_format <- match.arg(report_format)
 
@@ -393,15 +384,6 @@ check_data_retention_policy <- function(data = NULL,
                                         custom_retention_days = NULL,
                                         date_column = NULL,
                                         current_date = Sys.Date()) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  if (Sys.getenv("TESTTHAT") != "true") {
-    warning(
-      "Function 'check_data_retention_policy' is deprecated and will be removed in the next version. ",
-      "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-      call. = FALSE
-    )
-  }
 
   retention_period <- match.arg(retention_period)
 
@@ -466,13 +448,6 @@ log_ferpa_compliance_check <- function(compliant,
                                        pii_detected,
                                        institution_type,
                                        timestamp = Sys.time()) {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'log_ferpa_compliance_check' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
 
   # Create log entry
   log_entry <- list(
