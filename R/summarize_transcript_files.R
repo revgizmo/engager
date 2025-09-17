@@ -10,8 +10,7 @@
 #' @param similarity_threshold Similarity threshold for duplicate detection (default: 0.95)
 #' @param duplicate_method Method for duplicate detection: "hybrid", "content", or "metadata" (default: "hybrid")
 #' @return A tibble containing summarized transcript metrics
-#'
-
+#' @examples
 #' # Create sample transcript file names
 #' transcript_files <- c(
 #'   "GMT20240115-100000_Recording.transcript.vtt",

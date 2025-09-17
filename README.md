@@ -25,7 +25,7 @@
     Workflow</a>
   - <a href="#-privacy-defaults" id="toc--privacy-defaults">🔒 Privacy
     Defaults</a>
-  - <a href="#️-development" id="toc-️-development">🛠️ Development</a>
+  - <a href="#development" id="toc-development">Development</a>
     - <a href="#pull-request-review" id="toc-pull-request-review">Pull Request
       Review</a>
   - <a href="#-contributing" id="toc--contributing">🤝 Contributing</a>
@@ -262,7 +262,7 @@ Masked by default: `preferred_name`, `name`, `first_last`, `name_raw`,
 
 See the vignette “Ethical & FERPA Guide” for details.
 
-## 🛠️ Development
+## Development
 
 ### Pull Request Review
 

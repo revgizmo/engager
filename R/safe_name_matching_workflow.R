@@ -14,7 +14,7 @@
 #' @param section_names_lookup_file Name of the section names lookup file
 #'
 #' @return Processed transcript data with privacy-aware name matching applied
-#'
+#' @examples
 #' # Default behavior (maximum privacy)
 #' # result <- safe_name_matching_workflow(
 #' #   transcript_file_path = "transcript.vtt",

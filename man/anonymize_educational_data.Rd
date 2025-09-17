@@ -47,3 +47,12 @@ anonymized <- anonymize_educational_data(sample_data, method = "mask")
 hashed <- anonymize_educational_data(sample_data, method = "hash", hash_salt = "my_salt")
 }
 
+\examples{
+sample_data <- tibble::tibble(
+  student_id = c("12345", "67890"),
+  preferred_name = c("Alice Johnson", "Bob Smith"),
+  section = c("A", "B"),
+  participation_score = c(85, 92)
+)
+anonymize_educational_data(sample_data)
+}

@@ -11,7 +11,8 @@
 #' @param stop_on_violation Whether to stop processing if violations are found. Defaults to TRUE for maximum privacy protection.
 #'
 #' @return Validation results with compliance status and any violations found
-#'
+#' @export
+#' @examples
 #' # Validate privacy compliance
 #' df <- tibble::tibble(
 #'   name = c("Student_01", "Student_02"),

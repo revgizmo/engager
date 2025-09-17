@@ -157,6 +157,14 @@ validate_ferpa_compliance <- function(data = NULL,
 #' @param hash_salt Salt value for hash-based anonymization
 #' @param aggregation_level Level of aggregation: "individual", "section", "course", or "institution"
 #' @return Anonymized data frame
+#' @examples
+#' sample_data <- tibble::tibble(
+#'   student_id = c("12345", "67890"),
+#'   preferred_name = c("Alice Johnson", "Bob Smith"),
+#'   section = c("A", "B"),
+#'   participation_score = c(85, 92)
+#' )
+#' anonymize_educational_data(sample_data)
 #' @importFrom magrittr %>%
 #' @export
 anonymize_educational_data <- function(data = NULL,
@@ -363,9 +371,9 @@ generate_ferpa_report <- function(data = NULL,
 #' @param date_column Column name containing dates to check
 #' @param current_date Current date for comparison (default: Sys.Date())
 #' @return List containing compliance status and retention analysis
-#'
-#'
-#'
+#' @keywords internal
+#' @examples
+#' \dontrun{
 #' # Check data retention policy
 #' sample_data <- tibble::tibble(
 #'   student_id = c("12345", "67890"),
@@ -379,6 +387,7 @@ generate_ferpa_report <- function(data = NULL,
 #'   date_column = "session_date"
 #' )
 #' print(retention_check$compliant)
+#' }
 check_data_retention_policy <- function(data = NULL,
                                         retention_period = c("academic_year", "semester", "quarter", "custom"),
                                         custom_retention_days = NULL,

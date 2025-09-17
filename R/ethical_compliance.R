@@ -308,10 +308,9 @@ create_ethical_use_report <- function(usage_context = NULL,
 #' @param privacy_settings Vector of privacy settings used
 #' @param time_period Time period for analysis in days (default: 30)
 #' @return Audit report with ethical usage analysis
-#'
-#'
-#'
-#'
+#' @keywords internal
+#' @examples
+#' \dontrun{
 #' # Audit usage patterns
 #' audit <- audit_ethical_usage(
 #'   function_calls = c("analyze_transcripts", "plot_users", "write_metrics"),
@@ -319,6 +318,7 @@ create_ethical_use_report <- function(usage_context = NULL,
 #'   privacy_settings = c("mask", "mask", "ferpa_strict"),
 #'   time_period = 30
 #' )
+#' }
 audit_ethical_usage <- function(function_calls = NULL,
                                 data_sizes = NULL,
                                 privacy_settings = NULL,

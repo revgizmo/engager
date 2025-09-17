@@ -24,22 +24,27 @@ check_data_retention_policy(
 \item{current_date}{Current date for comparison (default: Sys.Date())}
 }
 \value{
-List containing compliance status and retention analysisCheck data retention policy
-
-sample_data <- tibble::tibble(
-student_id = c("12345", "67890"),
-session_date = as.Date(c("2024-01-15", "2024-02-20")),
-participation_score = c(85, 92)
-)
-
-retention_check <- check_data_retention_policy(
-sample_data,
-retention_period = "academic_year",
-date_column = "session_date"
-)
-print(retention_check$compliant)
+List containing compliance status and retention analysis
 }
 \description{
 Validates data retention policies and identifies data that should be
 disposed of according to institutional policies.
 }
+\examples{
+\dontrun{
+# Check data retention policy
+sample_data <- tibble::tibble(
+  student_id = c("12345", "67890"),
+  session_date = as.Date(c("2024-01-15", "2024-02-20")),
+  participation_score = c(85, 92)
+)
+
+retention_check <- check_data_retention_policy(
+  sample_data,
+  retention_period = "academic_year",
+  date_column = "session_date"
+)
+print(retention_check$compliant)
+}
+}
+\keyword{internal}

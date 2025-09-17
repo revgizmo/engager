@@ -30,12 +30,7 @@ process_zoom_transcript(
 \item{transcript_df}{Pre-loaded transcript data frame (alternative to transcript_file_path)}
 }
 \value{
-A tibble containing the processed transcript dataLoad a sample transcript from the package's extdata directory
-
-transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-package = "engager"
-)
-process_zoom_transcript(transcript_file_path = transcript_file)
+A tibble containing the processed transcript data
 }
 \description{
 Process a Zoom recording transcript with given parameters and return tibble containing the consolidated and annotated
@@ -46,4 +41,12 @@ Original code posted by Conor Healy:
 https://ucbischool.slack.com/archives/C02A36407K9/p1631855705002000 Addition
 of \code{wordcount}, \code{wordcount_perc}, and \code{wpm} by Brooks Ambrose:
 https://gist.github.com/brooksambrose/1a8a673eb3bf884c1868ad4d80f08246
+}
+\examples{
+# Load a sample transcript from the package's extdata directory
+transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+  package = "engager"
+)
+process_zoom_transcript(transcript_file_path = transcript_file)
+
 }

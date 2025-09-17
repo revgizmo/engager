@@ -22,19 +22,22 @@ Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
 \item{stop_on_violation}{Whether to stop processing if violations are found. Defaults to TRUE for maximum privacy protection.}
 }
 \value{
-Validation results with compliance status and any violations foundValidate privacy compliance
-
-df <- tibble::tibble(
-name = c("Student_01", "Student_02"),
-score = c(85, 92)
-)
-validate_privacy_compliance(df)Check with specific real names
-
-real_names <- c("John Smith", "Jane Doe")
-validate_privacy_compliance(df, real_names = real_names)
+Validation results with compliance status and any violations found
 }
 \description{
 Scans data objects to ensure no real names appear in outputs when privacy
 masking is enabled. This function performs exact matching to detect privacy
 violations and stops processing if real names are found.
+}
+\examples{
+# Validate privacy compliance
+df <- tibble::tibble(
+  name = c("Student_01", "Student_02"),
+  score = c(85, 92)
+)
+validate_privacy_compliance(df)
+
+# Check with specific real names
+real_names <- c("John Smith", "Jane Doe")
+validate_privacy_compliance(df, real_names = real_names)
 }
