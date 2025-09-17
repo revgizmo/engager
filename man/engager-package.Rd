@@ -102,3 +102,7 @@ Useful links:
 }
 
 }
+\author{
+\strong{Maintainer}: Conor Healy \email{conorhealy@berkeley.edu}
+
+}

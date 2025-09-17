@@ -27,34 +27,42 @@ detect_duplicate_transcripts(
 \item{names_to_exclude}{Vector of names to exclude from comparison (default: c("dead_air"))}
 }
 \value{
-List containing duplicate groups, similarity matrix, and recommendationsCreate sample transcript list
-
-transcript_list <- tibble::tibble(
-transcript_file = c(
-"GMT20240115-100000_Recording.transcript.vtt",
-"GMT20240115-100000_Recording.cc.vtt",
-"GMT20240116-140000_Recording.transcript.vtt"
-)
-)Detect duplicates in a transcript list
-
-duplicates <- detect_duplicate_transcripts(transcript_list)View duplicate groups
-
-duplicates$duplicate_groupsView recommendations
-
-duplicates$recommendationsUse different detection method
-
-content_duplicates <- detect_duplicate_transcripts(
-transcript_list,
-method = "content",
-similarity_threshold = 0.9
-)
-
-\code{\link{process_zoom_transcript}} for processing individual transcripts,
-\code{\link{summarize_transcript_metrics}} for analyzing transcript content
+List containing duplicate groups, similarity matrix, and recommendations
 }
 \description{
 Identifies and analyzes duplicate Zoom transcript files using multiple detection methods.
 This function helps clean up transcript datasets by finding files that contain similar
 or identical content, which can occur when multiple transcript formats are generated
 for the same recording session.
+}
+\examples{
+# Create sample transcript list
+transcript_list <- tibble::tibble(
+  transcript_file = c(
+    "GMT20240115-100000_Recording.transcript.vtt",
+    "GMT20240115-100000_Recording.cc.vtt",
+    "GMT20240116-140000_Recording.transcript.vtt"
+  )
+)
+
+# Detect duplicates in a transcript list
+duplicates <- detect_duplicate_transcripts(transcript_list)
+
+# View duplicate groups
+duplicates$duplicate_groups
+
+# View recommendations
+duplicates$recommendations
+
+# Use different detection method
+content_duplicates <- detect_duplicate_transcripts(
+  transcript_list,
+  method = "content",
+  similarity_threshold = 0.9
+)
+
+}
+\seealso{
+\code{\link{process_zoom_transcript}} for processing individual transcripts,
+\code{\link{summarize_transcript_metrics}} for analyzing transcript content
 }
