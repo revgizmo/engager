@@ -180,7 +180,7 @@ test_that("load_section_names_lookup follows package conventions", {
 test_that("load_section_names_lookup handles file system operations", {
   # Test with various file system scenarios
   temp_dir <- tempdir()
-  
+
   # Test with empty directory
   result1 <- tryCatch(
     {
@@ -190,7 +190,7 @@ test_that("load_section_names_lookup handles file system operations", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Test with non-existent directory
   result2 <- tryCatch(
     {
@@ -200,7 +200,7 @@ test_that("load_section_names_lookup handles file system operations", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Test with relative path
   result3 <- tryCatch(
     {
@@ -210,7 +210,7 @@ test_that("load_section_names_lookup handles file system operations", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # All should return some result
   expect_true(is.data.frame(result1) || is.list(result1))
   expect_true(is.data.frame(result2) || is.list(result2))
@@ -227,7 +227,7 @@ test_that("load_section_names_lookup handles different file formats", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   result2 <- tryCatch(
     {
       load_section_names_lookup(file_name = "test.txt")
@@ -236,7 +236,7 @@ test_that("load_section_names_lookup handles different file formats", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   result3 <- tryCatch(
     {
       load_section_names_lookup(file_name = "test.xlsx")
@@ -245,7 +245,7 @@ test_that("load_section_names_lookup handles different file formats", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # All should return some result
   expect_true(is.data.frame(result1) || is.list(result1))
   expect_true(is.data.frame(result2) || is.list(result2))
@@ -256,13 +256,13 @@ test_that("load_section_names_lookup handles permission errors", {
   # Test with read-only directory (if possible)
   result <- tryCatch(
     {
-      load_section_names_lookup(data_folder = "/root")  # Usually restricted
+      load_section_names_lookup(data_folder = "/root") # Usually restricted
     },
     error = function(e) {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result))
 })
@@ -278,7 +278,7 @@ test_that("load_section_names_lookup handles large file scenarios", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Test with special characters in file name
   special_filename <- "test file with spaces & symbols!.csv"
   result2 <- tryCatch(
@@ -289,7 +289,7 @@ test_that("load_section_names_lookup handles large file scenarios", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Both should return some result
   expect_true(is.data.frame(result1) || is.list(result1))
   expect_true(is.data.frame(result2) || is.list(result2))

@@ -8,8 +8,8 @@ test_that("create_session_mapping returns empty-structure tibble when inputs are
   expect_s3_class(out, "tbl_df")
   expect_equal(nrow(out), 0)
   expect_true(all(c(
-    "recording_id","topic","start_time","dept","course","section",
-    "course_section","session_date","session_time","instructor","notes"
+    "recording_id", "topic", "start_time", "dept", "course", "section",
+    "course_section", "session_date", "session_time", "instructor", "notes"
   ) %in% names(out)))
 })
 
@@ -33,7 +33,7 @@ test_that("create_session_mapping with auto_assign_patterns = NULL falls back to
   ci <- tibble::tibble(dept = "CS", course = "101", section = "01", instructor = "Dr. Smith", session_length_hours = 1.5)
   out <- create_session_mapping(zr, ci, auto_assign_patterns = NULL, output_file = NULL)
   expect_true(out$dept[1] %in% c("CS", NA_character_))
-  expect_true(out$session_time[1] %in% c("10:00","09:00","21:00","14:00","Unknown"))
+  expect_true(out$session_time[1] %in% c("10:00", "09:00", "21:00", "14:00", "Unknown"))
 })
 
 test_that("create_session_mapping writes to file and parses Jan 17 date/time", {
@@ -44,5 +44,5 @@ test_that("create_session_mapping writes to file and parses Jan 17 date/time", {
   expect_true(file.exists(tmp))
   expect_s3_class(out, "tbl_df")
   # Jan 17 branch sets time to 14:00
-  expect_true(out$session_time[1] %in% c("14:00","Unknown"))
+  expect_true(out$session_time[1] %in% c("14:00", "Unknown"))
 })

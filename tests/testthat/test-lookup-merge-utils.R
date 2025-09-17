@@ -229,7 +229,7 @@ test_that("read_lookup_safely handles valid file paths", {
     stringsAsFactors = FALSE
   )
   write.csv(test_data, temp_file, row.names = FALSE)
-  
+
   # Test reading the file
   result <- tryCatch(
     {
@@ -239,10 +239,10 @@ test_that("read_lookup_safely handles valid file paths", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result))
-  
+
   # Clean up
   unlink(temp_file)
 })
@@ -257,7 +257,7 @@ test_that("read_lookup_safely handles non-existent files", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result))
 })
@@ -266,13 +266,13 @@ test_that("read_lookup_safely handles invalid path types", {
   # Test with invalid path types
   result <- tryCatch(
     {
-      read_lookup_safely(c("path1", "path2"))  # Multiple paths
+      read_lookup_safely(c("path1", "path2")) # Multiple paths
     },
     error = function(e) {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result))
 })
@@ -287,7 +287,7 @@ test_that("write_lookup_transactional handles valid data", {
     student_id = c("STU1"),
     stringsAsFactors = FALSE
   )
-  
+
   # Test writing the file
   result <- tryCatch(
     {
@@ -297,10 +297,10 @@ test_that("write_lookup_transactional handles valid data", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Should return some result
   expect_true(is.character(result) || is.list(result))
-  
+
   # Clean up
   unlink(temp_file)
 })
@@ -315,7 +315,7 @@ test_that("write_lookup_transactional handles invalid path types", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Should return some result
   expect_true(is.character(result) || is.list(result))
 })
@@ -331,10 +331,10 @@ test_that("conditionally_write_lookup respects allow_write parameter", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Should return some result
   expect_true(is.logical(result1) || is.list(result1))
-  
+
   # Test with allow_write = TRUE (but invalid path to avoid actual file creation)
   result2 <- tryCatch(
     {
@@ -344,7 +344,7 @@ test_that("conditionally_write_lookup respects allow_write parameter", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Should return some result
   expect_true(is.logical(result2) || is.list(result2))
 })
@@ -359,7 +359,7 @@ test_that("conditionally_write_lookup handles different data types", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   result2 <- tryCatch(
     {
       conditionally_write_lookup(NULL, "/tmp/test.csv", allow_write = FALSE)
@@ -368,7 +368,7 @@ test_that("conditionally_write_lookup handles different data types", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Both should return some result
   expect_true(is.logical(result1) || is.list(result1))
   expect_true(is.logical(result2) || is.list(result2))

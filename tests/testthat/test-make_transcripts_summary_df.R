@@ -590,9 +590,9 @@ test_that("make_transcripts_summary_df handles edge case data types", {
   df <- tibble::tibble(
     section = c("A", "B"),
     preferred_name = c("Alice", "Bob"),
-    n = c(2L, 1L),  # Integer
-    duration = c(60.5, 30.0),  # Numeric with decimals
-    wordcount = c(10L, 5L),  # Integer
+    n = c(2L, 1L), # Integer
+    duration = c(60.5, 30.0), # Numeric with decimals
+    wordcount = c(10L, 5L), # Integer
     n_perc = c(0.5, 0.25),
     duration_perc = c(0.6, 0.3),
     wordcount_perc = c(0.4, 0.2),

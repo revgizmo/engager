@@ -119,8 +119,7 @@ calc_content_similarity_matrix <- function(existing_files, existing_names,
 #' @param method Detection method: "hybrid" (default), "content", or "metadata"
 #' @param names_to_exclude Vector of names to exclude from comparison (default: c("dead_air"))
 #' @return List containing duplicate groups, similarity matrix, and recommendations
-#'
-#'
+#' @examples
 #' # Create sample transcript list
 #' transcript_list <- tibble::tibble(
 #'   transcript_file = c(

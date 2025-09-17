@@ -157,7 +157,7 @@ test_that("join_transcripts_list handles edge cases", {
     section = c("A", "B")
     # Missing time columns
   )
-  
+
   result1 <- tryCatch(
     {
       join_transcripts_list(incomplete_sessions, df_transcript_files, df_cancelled_classes)
@@ -166,14 +166,14 @@ test_that("join_transcripts_list handles edge cases", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Test with NA values
   na_sessions <- tibble::tibble(
     section = c("A", NA),
     match_start_time = as.POSIXct(c("2023-01-01 09:00", NA)),
     match_end_time = as.POSIXct(c("2023-01-01 10:00", NA))
   )
-  
+
   result2 <- tryCatch(
     {
       join_transcripts_list(na_sessions, df_transcript_files, df_cancelled_classes)
@@ -182,7 +182,7 @@ test_that("join_transcripts_list handles edge cases", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Both should return some result
   expect_true(is.data.frame(result1) || is.list(result1))
   expect_true(is.data.frame(result2) || is.list(result2))
@@ -195,7 +195,7 @@ test_that("join_transcripts_list handles different data frame structures", {
     start_time = as.POSIXct(c("2023-01-01 09:00", "2023-01-02 09:00")),
     end_time = as.POSIXct(c("2023-01-01 10:00", "2023-01-02 10:00"))
   )
-  
+
   result <- tryCatch(
     {
       join_transcripts_list(alt_sessions, df_transcript_files, df_cancelled_classes)
@@ -204,7 +204,7 @@ test_that("join_transcripts_list handles different data frame structures", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result))
 })
@@ -216,12 +216,12 @@ test_that("join_transcripts_list handles large datasets", {
     match_start_time = rep(as.POSIXct(c("2023-01-01 09:00", "2023-01-02 09:00", "2023-01-03 09:00")), 10),
     match_end_time = rep(as.POSIXct(c("2023-01-01 10:00", "2023-01-02 10:00", "2023-01-03 10:00")), 10)
   )
-  
+
   large_transcripts <- tibble::tibble(
     transcript_file = paste0("file", 1:30, ".vtt"),
     start_time_local = rep(as.POSIXct(c("2023-01-01 09:30", "2023-01-02 09:30", "2023-01-03 09:30")), 10)
   )
-  
+
   result <- tryCatch(
     {
       join_transcripts_list(large_sessions, large_transcripts, df_cancelled_classes)
@@ -230,7 +230,7 @@ test_that("join_transcripts_list handles large datasets", {
       list(status = "deprecated", error = e$message)
     }
   )
-  
+
   # Should return some result
   expect_true(is.data.frame(result) || is.list(result))
 })

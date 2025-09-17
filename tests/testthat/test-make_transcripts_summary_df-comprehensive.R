@@ -10,12 +10,14 @@ test_that("make_transcripts_summary_df handles complex grouping scenarios", {
     duration = c(10, 20, 30, 40, 50, 60, 70, 80),
     wordcount = c(100, 200, 300, 400, 500, 600, 700, 800)
   )
-  
+
   result <- make_transcripts_summary_df(complex_data)
   expect_s3_class(result, "tbl_df")
   expect_true(nrow(result) > 0)
-  expect_true(all(c("section", "preferred_name", "session_ct", "n", "duration", 
-                   "wordcount", "wpm", "perc_n", "perc_duration", "perc_wordcount") %in% names(result)))
+  expect_true(all(c(
+    "section", "preferred_name", "session_ct", "n", "duration",
+    "wordcount", "wpm", "perc_n", "perc_duration", "perc_wordcount"
+  ) %in% names(result)))
 })
 
 test_that("make_transcripts_summary_df handles NA values in calculations", {
@@ -27,11 +29,11 @@ test_that("make_transcripts_summary_df handles NA values in calculations", {
     duration = c(NA, 20, 30, NA),
     wordcount = c(100, 200, NA, 400)
   )
-  
+
   result <- make_transcripts_summary_df(na_data)
   expect_s3_class(result, "tbl_df")
   expect_true(nrow(result) > 0)
-  
+
   # Check that calculations handle NAs correctly
   expect_true(all(is.finite(result$n) | is.na(result$n)))
   expect_true(all(is.finite(result$duration) | is.na(result$duration)))
@@ -47,11 +49,11 @@ test_that("make_transcripts_summary_df handles zero values correctly", {
     duration = c(0, 10, 0, 20),
     wordcount = c(0, 100, 0, 200)
   )
-  
+
   result <- make_transcripts_summary_df(zero_data)
   expect_s3_class(result, "tbl_df")
   expect_true(nrow(result) > 0)
-  
+
   # Check that zero durations don't cause infinite wpm
   expect_true(all(is.finite(result$wpm) | is.na(result$wpm)))
 })
@@ -65,7 +67,7 @@ test_that("make_transcripts_summary_df handles single row inputs", {
     duration = 10,
     wordcount = 100
   )
-  
+
   result <- make_transcripts_summary_df(single_row)
   expect_s3_class(result, "tbl_df")
   expect_equal(nrow(result), 1)
@@ -83,11 +85,11 @@ test_that("make_transcripts_summary_df handles multiple sections efficiently", {
     duration = c(10, 20, 30, 40, 50, 60),
     wordcount = c(100, 200, 300, 400, 500, 600)
   )
-  
+
   result <- make_transcripts_summary_df(multi_section_data)
   expect_s3_class(result, "tbl_df")
   expect_true(nrow(result) > 0)
-  expect_true(nrow(result) <= 6)  # Should be grouped by section and name
+  expect_true(nrow(result) <= 6) # Should be grouped by section and name
 })
 
 test_that("make_transcripts_summary_df handles edge case group_id creation", {
@@ -99,7 +101,7 @@ test_that("make_transcripts_summary_df handles edge case group_id creation", {
     duration = c(10, 20, 30, 40),
     wordcount = c(100, 200, 300, 400)
   )
-  
+
   result <- make_transcripts_summary_df(special_data)
   expect_s3_class(result, "tbl_df")
   expect_true(nrow(result) > 0)
@@ -111,14 +113,14 @@ test_that("make_transcripts_summary_df handles sorting correctly", {
     section = c("A", "A", "A"),
     preferred_name = c("Alice", "Bob", "Charlie"),
     n = c(1, 2, 3),
-    duration = c(30, 10, 20),  # Alice should be first after sorting
+    duration = c(30, 10, 20), # Alice should be first after sorting
     wordcount = c(300, 100, 200)
   )
-  
+
   result <- make_transcripts_summary_df(sort_data)
   expect_s3_class(result, "tbl_df")
   expect_equal(nrow(result), 3)
-  expect_equal(result$preferred_name[1], "Alice")  # Highest duration first
+  expect_equal(result$preferred_name[1], "Alice") # Highest duration first
   expect_equal(result$duration[1], 30)
 })
 
@@ -126,7 +128,7 @@ test_that("make_transcripts_summary_df handles non-tibble inputs", {
   # Test with NULL input
   result1 <- make_transcripts_summary_df(NULL)
   expect_null(result1)
-  
+
   # Test with non-tibble data frame
   df_data <- data.frame(
     section = c("A", "A"),
@@ -135,9 +137,9 @@ test_that("make_transcripts_summary_df handles non-tibble inputs", {
     duration = c(10, 20),
     wordcount = c(100, 200)
   )
-  
+
   result2 <- make_transcripts_summary_df(df_data)
-  expect_null(result2)  # Function only works with tibbles
+  expect_null(result2) # Function only works with tibbles
 })
 
 test_that("make_transcripts_summary_df handles percentage calculations edge cases", {
@@ -149,11 +151,11 @@ test_that("make_transcripts_summary_df handles percentage calculations edge case
     duration = c(0, 0, 10, 20),
     wordcount = c(0, 0, 100, 200)
   )
-  
+
   result <- make_transcripts_summary_df(all_zero_data)
   expect_s3_class(result, "tbl_df")
   expect_true(nrow(result) > 0)
-  
+
   # Check that zero totals don't cause division by zero
   section_a_rows <- result[result$section == "A", ]
   if (nrow(section_a_rows) > 0) {
