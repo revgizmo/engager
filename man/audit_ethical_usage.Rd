@@ -21,16 +21,21 @@ audit_ethical_usage(
 \item{time_period}{Time period for analysis in days (default: 30)}
 }
 \value{
-Audit report with ethical usage analysisAudit usage patterns
-
-audit <- audit_ethical_usage(
-function_calls = c("analyze_transcripts", "plot_users", "write_metrics"),
-data_sizes = c(100, 150, 200),
-privacy_settings = c("mask", "mask", "ferpa_strict"),
-time_period = 30
-)
+Audit report with ethical usage analysis
 }
 \description{
 Analyzes usage patterns to detect potential ethical concerns and
 provides recommendations for improvement.
 }
+\examples{
+\dontrun{
+# Audit usage patterns
+audit <- audit_ethical_usage(
+  function_calls = c("analyze_transcripts", "plot_users", "write_metrics"),
+  data_sizes = c(100, 150, 200),
+  privacy_settings = c("mask", "mask", "ferpa_strict"),
+  time_period = 30
+)
+}
+}
+\keyword{internal}

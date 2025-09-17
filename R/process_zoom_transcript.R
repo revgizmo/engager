@@ -16,9 +16,7 @@
 #' @param na_name Name to use for unknown speakers (default: 'unknown')
 #' @param transcript_df Pre-loaded transcript data frame (alternative to transcript_file_path)
 #' @return A tibble containing the processed transcript data
-#'
-#'
-#'
+#' @examples
 #' # Load a sample transcript from the package's extdata directory
 #' transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
 #'   package = "engager"

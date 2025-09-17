@@ -30,10 +30,24 @@ Defaults to \code{getOption("zoomstudentengagement.unmatched_names_action", "sto
 \item{section_names_lookup_file}{Name of the section names lookup file}
 }
 \value{
-Processed transcript data with privacy-aware name matching appliedDefault behavior (maximum privacy)result <- safe_name_matching_workflow(transcript_file_path = "transcript.vtt",roster_data = roster_df)Opt-in for convenienceresult <- safe_name_matching_workflow(transcript_file_path = "transcript.vtt",roster_data = roster_df,unmatched_names_action = "warn")
+Processed transcript data with privacy-aware name matching applied
 }
 \description{
 Main workflow function for privacy-first name matching. Implements two-stage
 processing: Stage 1 (unmasked matching in memory) and Stage 2 (privacy masking
 for outputs). Provides configuration-driven behavior for unmatched names.
+}
+\examples{
+# Default behavior (maximum privacy)
+# result <- safe_name_matching_workflow(
+#   transcript_file_path = "transcript.vtt",
+#   roster_data = roster_df
+# )
+#
+# Opt-in for convenience
+# result <- safe_name_matching_workflow(
+#   transcript_file_path = "transcript.vtt",
+#   roster_data = roster_df,
+#   unmatched_names_action = "warn"
+# )
 }

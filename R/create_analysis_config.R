@@ -42,13 +42,6 @@ create_analysis_config <- function(
     # Session Mapping
     use_session_mapping = FALSE,
     session_mapping_file = "session_mapping.csv") {
-  # DEPRECATED: This function will be removed in the next version
-  # Use essential functions instead. See ?get_essential_functions for alternatives.
-  warning(
-    "Function 'create_analysis_config' is deprecated and will be removed in the next version. ",
-    "Please use the essential functions instead. See ?get_essential_functions for alternatives.",
-    call. = FALSE
-  )
 
   # Validate inputs
   if (!is.character(dept) || length(dept) != 1) {

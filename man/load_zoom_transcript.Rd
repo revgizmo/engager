@@ -10,12 +10,7 @@ load_zoom_transcript(transcript_file_path = NULL)
 \item{transcript_file_path}{Path to the transcript file to load}
 }
 \value{
-A tibble containing the transcript data, or NULL if the file is emptyLoad a sample transcript from the package's extdata directory
-
-transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-package = "engager"
-)
-load_zoom_transcript(transcript_file_path = transcript_file)
+A tibble containing the transcript data, or NULL if the file is empty
 }
 \description{
 Load a Zoom recording transcript and return tibble containing the comments from a Zoom recording transcript
@@ -25,4 +20,12 @@ Original code posted by Conor Healy:
 https://ucbischool.slack.com/archives/C02A36407K9/p1631855705002000 Addition
 of \code{wordcount} by Brooks Ambrose:
 https://gist.github.com/brooksambrose/1a8a673eb3bf884c1868ad4d80f08246
+}
+\examples{
+# Load a sample transcript from the package's extdata directory
+transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+  package = "engager"
+)
+load_zoom_transcript(transcript_file_path = transcript_file)
+
 }

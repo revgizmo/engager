@@ -4,7 +4,7 @@
 
 ## 🎯 **Instructions for AI Agent**
 
-When a user asks: **"Please make me a prompt for issue [NUMBER] [PHASE] with @AI_AGENT_PROMPT_GENERATOR.md"**
+When a user asks: **"`Please make me a prompt for issue [NUMBER] [PHASE] with @AI_AGENT_PROMPT_GENERATOR.md`"**
 
 **Complete these steps automatically:**
 
@@ -103,7 +103,7 @@ Context files to link:
 - @PROJECT.md (Project status and CRAN readiness)
 - @full-context.md (Complete project context)
 - @ISSUE_160_IMPLEMENTATION_GUIDE.md (MAIN IMPLEMENTATION GUIDE)
-- @dISSUE_160_CONSOLIDATED_PLAN.md (Overall plan)
+- @ISSUE_160_CONSOLIDATED_PLAN.md (Overall plan)
 
 Your task: Follow the implementation guide to complete Phase 2 of Issue #160.
 

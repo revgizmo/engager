@@ -50,6 +50,21 @@
 ^ISSUE_MANAGEMENT_QUICK_REFERENCE\.md$
 ^DOCUMENTATION\.md$
 ^backups/
+^AGENTS\.md$
+^AI_.*\.md$
+^BENCHMARKING_.*\.md$
+^COVERAGE_.*\.md$
+^CRAN_SUBMISSION_GUIDE\.md$
+^FINAL_PROJECT_.*\.md$
+^ISSUE_.*\.md$
+^ISSUES$
+^PR_.*\.md$
+^PROJECT_PROFILE_AND_CRAN_WEEK_PLAN\.md$
+^PROJECT_REVIEW_AND_UPDATED_PLAN_.*\.md$
+^SEGFAULT_.*\.md$
+^UAT_.*\.md$
+^ideal-course-transcripts\.md$
+^vignette_migration_map\.md$
 
 # Test and development scripts
 ^test_script\.R$
