@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Test file for hash_name_consistently function
 
 library(testthat)
@@ -135,7 +134,9 @@ test_that("hash_name_consistently handles mixed data types", {
 
   expect_type(hashes, "character")
   expect_length(hashes, 4)
-=======
+})
+
+# Additional tests from PR 522
 test_that("hash_name_consistently normalizes and hashes deterministically", {
   names <- c("John Smith", "Smith, John", " john   smith ")
   hashes <- hash_name_consistently(names, salt = "unit-test", normalize_names = TRUE)
@@ -168,5 +169,4 @@ test_that("hash_name_consistently validates inputs and handles missing values", 
   expect_true(is.na(hashes[2]))
   expect_true(is.na(hashes[3]))
   expect_equal(nchar(hashes[1]), 8)
->>>>>>> cf1c7ed (test(coverage): add tests for uncovered exports)
 })
