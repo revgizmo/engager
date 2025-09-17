@@ -98,9 +98,9 @@ Start with the review report and follow the comprehensive checklist.
 - Ensure backward compatibility
 - Review test coverage maintained
 
-### **Step 4: CRAN Compliance Verification**
+### **Step 4: Comprehensive Review Checklist**
 
-**Critical Requirements Checklist:**
+**CRAN Compliance:**
 - [ ] R CMD check passes with 0 errors, 0 warnings
 - [ ] All tests pass (`devtools::test()`)
 - [ ] Test coverage >90% (`covr::package_coverage()`)
@@ -112,9 +112,7 @@ Start with the review report and follow the comprehensive checklist.
 - [ ] Dependencies properly specified
 - [ ] License and metadata correct
 
-### **Step 5: Security and Privacy Review**
-
-**Privacy-First Assessment:**
+**Security and Privacy:**
 - [ ] No sensitive data exposed in logs or outputs
 - [ ] Proper data anonymization maintained
 - [ ] Input validation prevents injection attacks
@@ -122,9 +120,7 @@ Start with the review report and follow the comprehensive checklist.
 - [ ] No hardcoded credentials or secrets
 - [ ] GDPR compliance considerations addressed
 
-### **Step 6: Code Quality Review**
-
-**Style and Standards:**
+**Code Quality:**
 - [ ] Follows tidyverse style guide
 - [ ] Consistent naming conventions
 - [ ] Proper error handling and messages
@@ -132,7 +128,7 @@ Start with the review report and follow the comprehensive checklist.
 - [ ] No code duplication
 - [ ] Efficient algorithms and data structures
 
-### **Step 7: PR Quality Assessment**
+**PR Quality Assessment:**
 
 **Red Flags - Immediate Rejection Criteria:**
 - [ ] **CRAN Compliance Failures**: R CMD check errors, test failures, build issues
@@ -163,7 +159,7 @@ Start with the review report and follow the comprehensive checklist.
 
 ## 🎯 **Example Output**
 
-**User asks**: "Review and approve PR 45 with @PR_REVIEW_APPROVAL_GENERATOR.md"
+**User asks**: "Review and approve PR 45 with @AI_AGENT_PR_REVIEW_GENERATOR.md"
 
 **AI completes**:
 1. Creates `docs/development/PR_45_REVIEW_REPORT.md`
@@ -329,79 +325,24 @@ Start with the review report and follow the comprehensive checklist.
 - Verify fixes before re-approval
 - Update compliance documentation
 
-## 📝 **Bad PR Response Templates**
+## 📝 **PR Rejection Template**
 
-### **Template 1: Major Issues Requiring Complete Rework**
 ```
-## ⚠️ Major Issues Detected - PR Requires Significant Changes
+## [SEVERITY] [ISSUE_TYPE] - PR [ACTION]
 
-This PR has several critical issues that prevent approval:
+This PR has been [ACTION] due to [ISSUE_TYPE]:
 
-**Critical Problems:**
-- [Issue 1]: [Description with specific line numbers]
-- [Issue 2]: [Description with specific line numbers]
-- [Issue 3]: [Description with specific line numbers]
+**Issues:**
+- [Specific issue with line numbers]
+- [Specific issue with line numbers]
 
-**Impact Assessment:**
-- [How this affects CRAN compliance]
-- [How this affects security/privacy]
-- [How this affects functionality]
+**Impact:**
+- [How this affects CRAN compliance/security/privacy/functionality]
 
 **Required Actions:**
-1. [Specific action required]
-2. [Specific action required]
-3. [Specific action required]
-
-**Next Steps:**
-Please address all issues and resubmit. Consider breaking this into smaller PRs if the scope is too large.
-
-**Resources:**
-- [Relevant documentation links]
-- [Example implementations]
-- [Style guide references]
-```
-
-### **Template 2: Security/Privacy Violations**
-```
-## 🚨 SECURITY/PRIVACY VIOLATION - PR REJECTED
-
-This PR has been rejected due to security/privacy concerns:
-
-**Violations:**
-- [Specific violation with line numbers]
-- [Specific violation with line numbers]
-
-**Why This Is Critical:**
-- [Explanation of risk]
-- [Potential impact on users]
-- [Compliance implications]
-
-**Required Actions:**
-1. Remove all sensitive data handling
-2. Implement proper anonymization
-3. Add security validation
-4. Update privacy documentation
-
-**DO NOT MERGE** - This PR must be completely reworked.
-```
-
-### **Template 3: CRAN Compliance Failures**
-```
-## ❌ CRAN COMPLIANCE FAILURE - PR REJECTED
-
-This PR fails CRAN submission requirements:
-
-**Compliance Issues:**
-- [ ] R CMD check: [ERROR/WARNING details]
-- [ ] Test coverage: [Current % vs required 90%]
-- [ ] Documentation: [Missing/broken examples]
-- [ ] Build: [Build failure details]
-
-**Required Fixes:**
-1. Fix all R CMD check errors/warnings
-2. Achieve >90% test coverage
-3. Complete all documentation
-4. Ensure package builds successfully
+1. [Specific fix required]
+2. [Specific fix required]
+3. [Specific fix required]
 
 **Verification Commands:**
 ```r
@@ -410,33 +351,18 @@ covr::package_coverage()
 devtools::build()
 ```
 
-Please fix all issues before resubmitting.
-```
-
-### **Template 4: Code Quality Issues**
-```
-## ⚠️ Code Quality Issues - PR Needs Improvement
-
-This PR has code quality issues that need addressing:
-
-**Quality Problems:**
-- [Style violations with examples]
-- [Performance issues with details]
-- [Maintainability concerns]
-- [Error handling gaps]
-
-**Specific Improvements Needed:**
-1. [Specific improvement with example]
-2. [Specific improvement with example]
-3. [Specific improvement with example]
-
 **Resources:**
-- [Style guide link]
-- [Performance best practices]
-- [Error handling examples]
+- [Relevant documentation links]
+- [Style guide references]
 
-Please improve code quality before resubmission.
+[ACTION_MESSAGE]
 ```
+
+**Template Variables:**
+- `[SEVERITY]`: ⚠️, 🚨, ❌ (based on issue severity)
+- `[ISSUE_TYPE]`: Major Issues, Security/Privacy Violation, CRAN Compliance Failure, Code Quality Issues
+- `[ACTION]`: Requires Changes, REJECTED, REJECTED, Needs Improvement
+- `[ACTION_MESSAGE]`: Appropriate next steps based on severity
 
 ---
 
