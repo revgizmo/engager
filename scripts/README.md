@@ -2,7 +2,7 @@
 
 ## Overview
 
-The context capture system provides automated project status tracking and documentation updates for the zoomstudentengagement R package. It generates context files for AI agents and automatically updates PROJECT.md with current metrics.
+The context capture system provides automated project status tracking and documentation updates for the engager R package. It generates context files for AI agents and automatically updates PROJECT.md with current metrics.
 
 ## Scripts
 

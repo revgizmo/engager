@@ -82,8 +82,8 @@ setup() {
     fi
     
     # Check if package is installed
-    if ! Rscript -e "library(zoomstudentengagement)" &> /dev/null; then
-        error "zoomstudentengagement package not found. Please install the package first."
+    if ! Rscript -e "library(engager)" &> /dev/null; then
+        error "engager package not found. Please install the package first."
         exit 1
     fi
     
@@ -117,13 +117,13 @@ generate_report() {
 # FERPA Compliance Validation Report
 
 **Date**: $(date)
-**Package Version**: $(Rscript -e "cat(packageVersion('zoomstudentengagement'))")
+**Package Version**: $(Rscript -e "cat(packageVersion('engager'))")
 **Validation Script**: validate_ferpa_compliance.R
 **Log File**: $(basename "$LOG_FILE")
 
 ## Summary
 
-This report documents the results of comprehensive FERPA compliance validation testing for the zoomstudentengagement package.
+This report documents the results of comprehensive FERPA compliance validation testing for the engager package.
 
 ## Test Results
 
@@ -182,7 +182,7 @@ main() {
     echo "=== FERPA Compliance Validation ==="
     echo "Addressing Issue #153: Real-world FERPA compliance validation"
     echo "Date: $(date)"
-    echo "Package: zoomstudentengagement"
+    echo "Package: engager"
     echo ""
     
     # Run all steps

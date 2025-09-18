@@ -3,11 +3,11 @@
 echo "Testing minimal container startup..."
 
 # Build minimal container
-docker build -f Dockerfile.minimal -t zoomstudentengagement:minimal .
+docker build -f Dockerfile.minimal -t engager:minimal .
 
 # Test container startup
 start_time=$(date +%s)
-docker run --rm zoomstudentengagement:minimal R -e "cat('Container started successfully\n')"
+docker run --rm engager:minimal R -e "cat('Container started successfully\n')"
 end_time=$(date +%s)
 
 startup_time=$((end_time - start_time))

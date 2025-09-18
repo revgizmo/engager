@@ -1,7 +1,7 @@
-# Real-World Testing Plan for zoomstudentengagement
+# Real-World Testing Plan for engager
 
 ## Overview
-This document outlines the comprehensive testing plan for validating the zoomstudentengagement package with real confidential data in a production-like environment.
+This document outlines the comprehensive testing plan for validating the engager package with real confidential data in a production-like environment.
 
 ## Testing Environment Requirements
 

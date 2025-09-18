@@ -1,6 +1,6 @@
-# Test Transcript Examples for zoomstudentengagement Package
+# Test Transcript Examples for engager Package
 
-This directory contains realistic Zoom VTT transcript examples designed for testing the `zoomstudentengagement` R package. These transcripts simulate various educational scenarios with different participation patterns, course types, and engagement levels.
+This directory contains realistic Zoom VTT transcript examples designed for testing the `engager` R package. These transcripts simulate various educational scenarios with different participation patterns, course types, and engagement levels.
 
 ## File Structure
 
@@ -251,7 +251,7 @@ Another Speaker: More transcript content.
 
 ## Related Documentation
 
-- Package main documentation: `?zoomstudentengagement`
+- Package main documentation: `?engager`
 - Function documentation: `?analyze_engagement`, `?extract_participation`
 - Vignettes: `vignette("engagement_analysis")`
 - Privacy guidelines: `vignette("privacy_considerations")`

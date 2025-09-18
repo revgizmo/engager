@@ -2,7 +2,7 @@
 
 ## Overview
 
-The data export feature provides privacy-safe mechanisms for exporting analysis results from the `zoomstudentengagement` package. This feature ensures that all exported data maintains privacy protection while providing flexible output formats for reporting, analysis, and sharing.
+The data export feature provides privacy-safe mechanisms for exporting analysis results from the `engager` package. This feature ensures that all exported data maintains privacy protection while providing flexible output formats for reporting, analysis, and sharing.
 
 ## Key Functions
 

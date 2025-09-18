@@ -1,9 +1,9 @@
 #!/usr/bin/env Rscript
 
-# Performance Validation Script for zoomstudentengagement
+# Performance Validation Script for engager
 # Tests current performance state and identifies optimization opportunities
 
-library(zoomstudentengagement)
+library(engager)
 library(tibble)
 library(hms)
 
@@ -85,7 +85,7 @@ measure_performance <- function(expr, description, iterations = 1) {
 
 # Main validation function
 run_performance_validation <- function() {
-  cat("=== Performance Validation for zoomstudentengagement ===\n")
+  cat("=== Performance Validation for engager ===\n")
   
   # Test different dataset sizes
   sizes <- c(1000, 5000, 10000, 25000)

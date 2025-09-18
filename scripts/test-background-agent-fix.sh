@@ -71,7 +71,7 @@ docker run --rm test-background-agent-fixed R -e "cat('R environment test succes
 
 echo ""
 echo "Testing package functionality:"
-docker run --rm test-background-agent-fixed R -e "library(zoomstudentengagement); cat('Package loaded successfully\n')"
+docker run --rm test-background-agent-fixed R -e "library(engager); cat('Package loaded successfully\n')"
 echo ""
 
 # Test background agent specific scenarios

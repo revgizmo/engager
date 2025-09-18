@@ -1,11 +1,11 @@
-# Test Script for zoomstudentengagement Package
+# Test Script for engager Package
 # Using the provided test transcript examples
 
 # Load the package
-library(zoomstudentengagement)
+library(engager)
 
 # Set the path to test transcripts
-test_dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+test_dir <- system.file("extdata", "test_transcripts", package = "engager")
 
 # List available test files
 test_files <- list.files(test_dir, pattern = "\\.vtt$", full.names = TRUE)

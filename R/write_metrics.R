@@ -16,7 +16,7 @@ write_metrics <- function(
     what = c("engagement", "summary", "session_summary"),
     path = NULL,
     comments_format = c("text", "count"),
-    privacy_level = getOption("zoomstudentengagement.privacy_level", "mask")) {
+    privacy_level = getOption("engager.privacy_level", "mask")) {
   what <- match.arg(what)
   comments_format <- match.arg(comments_format)
 

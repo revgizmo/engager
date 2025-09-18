@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Context Script for zoomstudentengagement R Package
+# Context Script for engager R Package
 # Use this script to provide current project context to new Cursor chats
 # Run: ./scripts/context-for-new-chat.sh
 #
@@ -14,7 +14,7 @@
 set -eo pipefail  # Less strict error handling
 trap 'echo "❌ Script failed at line $LINENO"' ERR
 
-echo "🔍 Generating context for zoomstudentengagement R Package..."
+echo "🔍 Generating context for engager R Package..."
 echo "=================================================="
 
 # Validate dependencies
@@ -45,7 +45,7 @@ echo ""
 # 1. Project Status Summary
 echo "🎯 PROJECT STATUS SUMMARY"
 echo "------------------------"
-echo "Package: zoomstudentengagement (R package for Zoom transcript analysis)"
+echo "Package: engager (R package for Zoom transcript analysis)"
 echo "Goal: CRAN submission preparation"
 
 # Dynamic status check - read from PROJECT.md if available

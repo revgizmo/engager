@@ -6,7 +6,7 @@
 \usage{
 ensure_privacy(
   x = NULL,
-  privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
+  privacy_level = getOption("engager.privacy_level", "mask"),
   id_columns = c("preferred_name", "name", "first_last", "name_raw", "student_id",
     "email", "transcript_name", "formal_name"),
   audit_log = TRUE
@@ -43,6 +43,6 @@ outputs are automatically anonymized by default to protect student privacy
 and ensure FERPA compliance.
 
 The default behavior is controlled by the global option
-\code{zoomstudentengagement.privacy_level}, which is set to "mask" on package
+\code{engager.privacy_level}, which is set to "mask" on package
 load. Use \code{set_privacy_defaults()} to change at runtime.
 }

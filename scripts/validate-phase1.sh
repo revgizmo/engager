@@ -5,7 +5,7 @@ echo "Validating Phase 1 completion..."
 # Test 1: Container startup
 echo "Test 1: Container startup"
 start_time=$(date +%s)
-docker run --rm zoomstudentengagement:latest R -e "cat('started\n')" > /dev/null
+docker run --rm engager:latest R -e "cat('started\n')" > /dev/null
 end_time=$(date +%s)
 startup_time=$((end_time - start_time))
 
@@ -18,8 +18,8 @@ fi
 
 # Test 2: Package installation
 echo "Test 2: Package installation"
-docker run --rm zoomstudentengagement:latest \
-  R -e "library(zoomstudentengagement); cat('Package loads successfully\n')" > /dev/null
+docker run --rm engager:latest \
+  R -e "library(engager); cat('Package loads successfully\n')" > /dev/null
 
 if [ $? -eq 0 ]; then
     echo "✅ Package installs and loads successfully"
@@ -30,8 +30,8 @@ fi
 
 # Test 3: Basic functionality
 echo "Test 3: Basic functionality"
-docker run --rm zoomstudentengagement:latest \
-  R -e "ls(env = asNamespace('zoomstudentengagement'))" > /dev/null
+docker run --rm engager:latest \
+  R -e "ls(env = asNamespace('engager'))" > /dev/null
 
 if [ $? -eq 0 ]; then
     echo "✅ Basic functionality works"
@@ -42,7 +42,7 @@ fi
 
 # Test 4: Dependency audit
 echo "Test 4: Dependency audit"
-docker run --rm -v "$(pwd):/workspace" zoomstudentengagement:latest \
+docker run --rm -v "$(pwd):/workspace" engager:latest \
   Rscript /workspace/scripts/audit-dependencies.R > /dev/null
 
 if [ $? -eq 0 ]; then

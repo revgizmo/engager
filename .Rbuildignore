@@ -328,4 +328,4 @@ docs/analysis/lessons-learned/
 ^vignette_build\.log$
 ^vignette_build_updated\.log$
 ^vignette_migration_map\.md$
-^zoomstudentengagement_1\.0\.0\.tar\.gz$
+^engager_.*\.tar\.gz$

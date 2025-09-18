@@ -1,6 +1,6 @@
-# Function Dependencies Diagram for zoomstudentengagement Package
+# Function Dependencies Diagram for engager Package
 
-This diagram shows all exported functions and their dependencies on internal functions in the zoomstudentengagement R package.
+This diagram shows all exported functions and their dependencies on internal functions in the engager R package.
 
 ```mermaid
 graph TD

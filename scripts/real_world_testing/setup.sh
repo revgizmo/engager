@@ -94,25 +94,25 @@ check_r_packages() {
     fi
 }
 
-# Check zoomstudentengagement package
-check_zoomstudentengagement() {
-    print_status "info" "Checking zoomstudentengagement package..."
+# Check engager package
+check_engager() {
+    print_status "info" "Checking engager package..."
     
-    if ! Rscript -e "library(zoomstudentengagement, quietly = TRUE)" &> /dev/null; then
-        print_status "warning" "zoomstudentengagement package not found"
+    if ! Rscript -e "library(engager, quietly = TRUE)" &> /dev/null; then
+        print_status "warning" "engager package not found"
         print_status "info" "Attempting to install from parent directory..."
         
         if [ -f "../DESCRIPTION" ]; then
             Rscript -e "devtools::install_local('..')"
-            print_status "success" "zoomstudentengagement package installed"
+            print_status "success" "engager package installed"
         else
-            print_status "error" "Cannot find zoomstudentengagement package"
+            print_status "error" "Cannot find engager package"
             print_status "info" "Please ensure you're running this from the correct location"
             print_status "info" "The package should be in the parent directory"
             exit 1
         fi
     else
-        print_status "success" "zoomstudentengagement package is available"
+        print_status "success" "engager package is available"
     fi
 }
 
@@ -208,7 +208,7 @@ main() {
     
     check_r_installation
     check_r_packages
-    check_zoomstudentengagement
+    check_engager
     check_directory_structure
     check_test_data
     run_data_validation

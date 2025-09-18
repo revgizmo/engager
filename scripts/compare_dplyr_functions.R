@@ -5,7 +5,7 @@
 # Usage: Rscript scripts/compare_dplyr_functions.R
 
 suppressPackageStartupMessages({
-  library(zoomstudentengagement)
+  library(engager)
   library(dplyr)
   library(tibble)
   library(lubridate)

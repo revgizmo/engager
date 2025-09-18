@@ -6,7 +6,7 @@
 \usage{
 validate_privacy_compliance(
   data = NULL,
-  privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
+  privacy_level = getOption("engager.privacy_level", "mask"),
   real_names = NULL,
   stop_on_violation = TRUE
 )
@@ -15,7 +15,7 @@ validate_privacy_compliance(
 \item{data}{Data frame or object to validate for privacy compliance}
 
 \item{privacy_level}{Privacy level to validate against. One of \code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
-Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
+Defaults to \code{getOption("engager.privacy_level", "mask")}.}
 
 \item{real_names}{Vector of real names to check against. If NULL, uses common name patterns to detect potential violations.}
 

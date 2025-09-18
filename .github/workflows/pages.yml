@@ -39,8 +39,9 @@ jobs:
             any::devtools
       - name: Build pkgdown site
         run: |
-          Rscript -e "devtools::document();"
-          Rscript -e "pkgdown::build_site(lazy = TRUE, override = list(destination = 'docs'))"
+          Rscript -e "devtools::document()"
+          Rscript -e "pkgdown::clean_site(preview = FALSE)"
+          Rscript -e "pkgdown::build_site(lazy = FALSE, override = list(destination = 'docs'))"
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact

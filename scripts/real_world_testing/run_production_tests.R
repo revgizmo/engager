@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 # =============================================================================
-# Production Testing Script for zoomstudentengagement
+# Production Testing Script for engager
 # =============================================================================
 # This script tests the INSTALLED version of the package (not development)
 # Use this to validate that the package works correctly after installation
@@ -8,18 +8,18 @@
 # Usage:
 #   Rscript scripts/real_world_testing/run_production_tests.R
 #   # OR from any directory:
-#   Rscript /path/to/zoomstudentengagement/scripts/real_world_testing/run_production_tests.R
+#   Rscript /path/to/engager/scripts/real_world_testing/run_production_tests.R
 # =============================================================================
 
 cat("==========================================\n")
-cat("Production Testing for zoomstudentengagement\n")
+cat("Production Testing for engager\n")
 cat("==========================================\n")
 cat("Testing INSTALLED package version\n")
 cat("Start time:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n\n")
 
 # Load required libraries (installed version only)
 suppressPackageStartupMessages({
-  library(zoomstudentengagement)
+  library(engager)
   library(dplyr)
   library(readr)
   library(testthat)
@@ -41,7 +41,7 @@ setup_production_test_env <- function() {
   }
   
   # Copy test data if available
-  package_data_dir <- system.file("extdata", package = "zoomstudentengagement")
+  package_data_dir <- system.file("extdata", package = "engager")
   if (dir.exists(package_data_dir)) {
     cat("[INFO] Copying package test data...\n")
     file.copy(
@@ -75,7 +75,7 @@ test_basic_functionality <- function() {
   # Test package loading
   cat("Testing package loading... ")
   tryCatch({
-    library(zoomstudentengagement)
+    library(engager)
     cat("✓ PASSED\n")
   }, error = function(e) {
     cat("✗ FAILED:", e$message, "\n")
@@ -202,7 +202,7 @@ main <- function() {
   test_with_data_files()
   
   cat("\n=== Production Test Summary ===\n")
-  cat("Package version:", packageVersion("zoomstudentengagement"), "\n")
+  cat("Package version:", packageVersion("engager"), "\n")
   cat("R version:", R.version.string, "\n")
   cat("End time:", format(Sys.time(), "%Y-%m-%d %H:%M:%S"), "\n")
   cat("Production testing completed.\n")

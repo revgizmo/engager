@@ -1,8 +1,8 @@
-# Quick Start Guide for zoomstudentengagement
+# Quick Start Guide for engager
 
 ## 🚀 Getting Started in 5 Minutes
 
-This guide will help you get up and running with the zoomstudentengagement package quickly.
+This guide will help you get up and running with the engager package quickly.
 
 ### Prerequisites
 
@@ -14,10 +14,10 @@ This guide will help you get up and running with the zoomstudentengagement packa
 
 ```r
 # Install from GitHub
-devtools::install_github("revgizmo/zoomstudentengagement")
+devtools::install_github("revgizmo/engager")
 
 # Load the package
-library(zoomstudentengagement)
+library(engager)
 ```
 
 ### Step 2: Prepare Your Data
@@ -74,7 +74,7 @@ Check the generated files:
 - Check that files are in `data/transcripts/` directory
 
 **Issue: "Package not found"**
-- Run: `devtools::install_github("revgizmo/zoomstudentengagement")`
+- Run: `devtools::install_github("revgizmo/engager")`
 - Restart R session
 
 **Issue: "Roster file not found"**
@@ -90,7 +90,7 @@ Check the generated files:
 
 ### Getting Help
 
-- Check the package documentation: `?zoomstudentengagement`
+- Check the package documentation: `?engager`
 - Review the workflow comments for detailed explanations
 - Check the console output for progress and error messages
 
@@ -98,7 +98,7 @@ Check the generated files:
 
 ```r
 # Load package
-library(zoomstudentengagement)
+library(engager)
 
 # Set privacy level
 set_privacy_defaults("ferpa_standard")

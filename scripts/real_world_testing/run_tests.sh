@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Real-World Testing Runner for zoomstudentengagement
+# Real-World Testing Runner for engager
 #
 # This script sets up the environment and runs real-world tests
 # IMPORTANT: Run this script outside of Cursor/LLM environments to protect data privacy
@@ -59,8 +59,8 @@ check_dependencies() {
     fi
     
     # Check if the package is installed
-    if ! Rscript -e "library(zoomstudentengagement)" &> /dev/null; then
-        print_error "zoomstudentengagement package not found. Please install it first."
+    if ! Rscript -e "library(engager)" &> /dev/null; then
+        print_error "engager package not found. Please install it first."
         exit 1
     fi
     
@@ -168,7 +168,7 @@ show_results() {
 # Main execution
 main() {
     echo "=========================================="
-    echo "Real-World Testing for zoomstudentengagement"
+    echo "Real-World Testing for engager"
     echo "=========================================="
     echo
     

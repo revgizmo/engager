@@ -56,7 +56,7 @@ simplify_deprecated_tests <- function(test_file) {
     "# These tests focus on deprecation behavior rather than full functionality",
     "",
     "library(testthat)",
-    "library(zoomstudentengagement)",
+    "library(engager)",
     "",
     create_deprecated_test("process_ideal_course_batch"),
     create_deprecated_test("compare_ideal_sessions"), 

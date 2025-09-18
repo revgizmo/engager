@@ -10,7 +10,7 @@
 #' and ensure FERPA compliance.
 #'
 #' The default behavior is controlled by the global option
-#' `zoomstudentengagement.privacy_level`, which is set to "mask" on package
+#' `engager.privacy_level`, which is set to "mask" on package
 #' load. Use `set_privacy_defaults()` to change at runtime.
 #'
 #' @param x Data object to apply privacy rules to (typically a `tibble`)
@@ -29,7 +29,7 @@
 #' @export
 ensure_privacy <- function(x = NULL,
                            privacy_level = getOption(
-                             "zoomstudentengagement.privacy_level",
+                             "engager.privacy_level",
                              "mask"
                            ),
                            id_columns = c(
@@ -241,12 +241,12 @@ log_privacy_operation <- function(operation,
   # Store in package environment for session tracking (CRAN compliant)
   log_key <- paste0("zse_privacy_log_", format(timestamp, "%Y%m%d_%H%M%S"))
   # Simple in-memory storage for session tracking - use options() for CRAN compliance
-  current_logs <- getOption("zoomstudentengagement.privacy_logs", list())
+  current_logs <- getOption("engager.privacy_logs", list())
   current_logs[[log_key]] <- log_entry
-  options(zoomstudentengagement.privacy_logs = current_logs)
+  options(engager.privacy_logs = current_logs)
 
   # Optionally write to file if logging is enabled
-  log_file <- getOption("zoomstudentengagement.privacy_log_file", NULL)
+  log_file <- getOption("engager.privacy_log_file", NULL)
   if (!is.null(log_file) && is.character(log_file)) {
     tryCatch(
       {

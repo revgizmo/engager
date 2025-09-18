@@ -2,7 +2,7 @@
 # Success Metrics Framework Demonstration Script
 # 
 # This script demonstrates the success metrics framework for the
-# zoomstudentengagement R package.
+# engager R package.
 #
 # Usage: Rscript scripts/demo-success-metrics.R
 #

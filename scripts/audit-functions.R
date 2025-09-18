@@ -1,9 +1,9 @@
 #!/usr/bin/env Rscript
 
 # Comprehensive Function Audit Script
-# Analyzes all functions in the zoomstudentengagement package for scope crisis resolution
+# Analyzes all functions in the engager package for scope crisis resolution
 
-library(zoomstudentengagement)
+library(engager)
 
 cat("🔍 COMPREHENSIVE FUNCTION AUDIT\n")
 cat("================================\n\n")
@@ -12,8 +12,8 @@ cat("================================\n\n")
 devtools::load_all()
 
 # Get all available functions
-all_functions <- ls("package:zoomstudentengagement")
-exported_functions <- ls("package:zoomstudentengagement")
+all_functions <- ls("package:engager")
+exported_functions <- ls("package:engager")
 
 cat("📊 FUNCTION INVENTORY\n")
 cat("--------------------\n")

@@ -2,14 +2,14 @@
 # FERPA Compliance Validation Script
 # Addresses Issue #153: Real-world FERPA compliance validation
 #
-# This script validates that the zoomstudentengagement package maintains
+# This script validates that the engager package maintains
 # FERPA compliance when processing real educational data.
 #
 # CRITICAL: This script should be run in a secure environment with proper
 # data handling protocols. Never run in LLM/IDE environments.
 
 suppressPackageStartupMessages({
-  library(zoomstudentengagement)
+  library(engager)
   library(dplyr)
   library(tibble)
   library(testthat)
@@ -17,7 +17,7 @@ suppressPackageStartupMessages({
 
 # Configuration
 cat("=== FERPA Compliance Validation ===\n")
-cat("Package Version:", packageVersion("zoomstudentengagement"), "\n")
+cat("Package Version:", packageVersion("engager"), "\n")
 cat("Date:", Sys.time(), "\n\n")
 
 # Test 1: Basic FERPA Compliance Validation

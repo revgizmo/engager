@@ -1,4 +1,4 @@
-# AGENTS.md — Zoom Student Engagement (AI Agent Guide)
+# AGENTS.md — Engager (AI Agent Guide)
 
 These instructions guide automated or AI-assisted contributors. They apply to
 the entire repository unless a nested `AGENTS.md` overrides them.
@@ -49,7 +49,7 @@ the entire repository unless a nested `AGENTS.md` overrides them.
 - Use feature branches and keep commits focused. Commit messages follow
   `<type>(<scope>): <description>`.
 - Branch naming: `feature/<name>` or `bugfix/<issue-number>`.
-- PR titles: `[zoomstudentengagement] Short descriptive title`.
+- PR titles: `[engager] Short descriptive title`.
 - PR descriptions should state *what changed*, *why it matters*, and *how to
   test*.
 
@@ -63,7 +63,7 @@ the entire repository unless a nested `AGENTS.md` overrides them.
 
 ## External References
 - Full documentation: `README.md`
-- Issue tracker: <https://github.com/revgizmo/zoomstudentengagement/issues>
+- Issue tracker: <https://github.com/revgizmo/engager/issues>
 - Tidyverse style guide: <https://style.tidyverse.org/>
 
 ## Agent-Specific Notes

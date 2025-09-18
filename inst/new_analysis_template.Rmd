@@ -20,14 +20,14 @@ knitr::opts_chunk$set(
 
 
 
-# zoomstudentengagement
+# engager
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `zoomstudentengagement` is to allow instructors to gain insights into student engagement, with a particular focus on participation equity, from Zoom transcripts of recorded course sessions.  
+The goal of `engager` is to allow instructors to gain insights into student engagement, with a particular focus on participation equity, from Zoom transcripts of recorded course sessions.  
 
-In it's current form, the `zoomstudentengagement` library is useful for 4 related things:
+In it's current form, the `engager` library is useful for 4 related things:
 
 1. **Load Zoom transcripts**
     1. `load_zoom_transcript()` takes a Zoom transcript .vtt file and load it into a rectangular format without additions or modifications.
@@ -60,10 +60,10 @@ In it's current form, the `zoomstudentengagement` library is useful for 4 relate
 
 ## Installation
 
-You can install the development version of zoomstudentengagement like so:
+You can install the development version of engager like so:
 
 ``` r
-devtools::install_github("revgizmo/zoomstudentengagement")
+devtools::install_github("revgizmo/engager")
 ```
 
 ## Example
@@ -82,15 +82,15 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 library(dplyr)
 ```
 
-# Steps to use zoomstudentengagement
+# Steps to use engager
 
 
 ## 1. Define Inputs:
 
 ```{r results='asis'}
 
-# library(zoomstudentengagement)
-data_folder_input <- system.file("extdata", package = "zoomstudentengagement")
+# library(engager)
+data_folder_input <- system.file("extdata", package = "engager")
 
 
 
@@ -139,7 +139,7 @@ instructor_name_input <- "Conor Healy"
 
 ### student_summary_report
 student_summary_report_input <- "Zoom_Student_Engagement_Analysis_student_summary_report"
-student_summary_report_folder_input <- system.file("", package = "zoomstudentengagement")
+student_summary_report_folder_input <- system.file("", package = "engager")
 # student_summary_report used in run_student_reports()
 
 cat(paste0(
@@ -156,16 +156,16 @@ cat(paste0(
 
 
         
-## 2. Load the zoomstudentengagement library
+## 2. Load the engager library
 
-+ `*r devtools::install_github("revgizmo/zoomstudentengagement") `
-+ `*r library(zoomstudentengagement) `
++ `*r devtools::install_github("revgizmo/engager") `
++ `*r library(engager) `
     
 ```{r}
 
 devtools::load_all()
-# devtools::load_all('../zoomstudentengagement')
-# devtools::install_github("revgizmo/zoomstudentengagement")
+# devtools::load_all('../engager')
+# devtools::install_github("revgizmo/engager")
 ```
    
     
@@ -672,11 +672,11 @@ run_student_reports(
 )
 
 list.files(
-  system.file(package = "zoomstudentengagement")
+  system.file(package = "engager")
 )
 
 list.files(
-  system.file("extdata", package = "zoomstudentengagement")
+  system.file("extdata", package = "engager")
 )
 ```
 
@@ -780,7 +780,7 @@ fliwc_transcript_df
 
 
 
-# Steps to use zoomstudentengagement
+# Steps to use engager
 
 1. Define Inputs:
     + Current Term Inputs
@@ -789,9 +789,9 @@ fliwc_transcript_df
     + Other Constants
         + `names_exclude_input`
         + etc
-2. Load the zoomstudentengagement library
-    + ` *r devtools::install_github("revgizmo/zoomstudentengagement") `
-    + ` *r library(zoomstudentengagement) `
+2. Load the engager library
+    + ` *r devtools::install_github("revgizmo/engager") `
+    + ` *r library(engager) `
 3. Download the Zoom Recording Transcripts
     1. Download Zoom csv file with list of recordings and transcripts
         1. Go to [https://www.zoom.us/recording](https://www.zoom.us/recording)
@@ -808,7 +808,7 @@ fliwc_transcript_df
     1. Run `load_zoom_recorded_sessions_list()` to get a tibble from a provided csv file of Zoom recordings.
     
 ```{r}
-load_zoom_recorded_sessions_list(data_folder = system.file("extdata", package = "zoomstudentengagement"))
+load_zoom_recorded_sessions_list(data_folder = system.file("extdata", package = "engager"))
 ```
     
     

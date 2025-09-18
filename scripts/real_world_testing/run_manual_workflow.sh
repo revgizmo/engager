@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Manual Workflow Runner for zoomstudentengagement
+# Manual Workflow Runner for engager
 # This script helps users run the manual workflow R Markdown document
 
 set -e
 
-echo "📖 Manual Workflow Runner for zoomstudentengagement"
+echo "📖 Manual Workflow Runner for engager"
 echo "=================================================="
 echo ""
 

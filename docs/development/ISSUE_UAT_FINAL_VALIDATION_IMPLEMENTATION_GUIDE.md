@@ -24,11 +24,11 @@ Rscript -e "devtools::check()"
 Rscript -e "devtools::build()"
 
 # Test package loading
-Rscript -e "library(zoomstudentengagement); packageVersion('zoomstudentengagement')"
+Rscript -e "library(engager); packageVersion('engager')"
 
 # Test essential functions
 Rscript -e "
-library(zoomstudentengagement)
+library(engager)
 # Test basic functionality
 get_essential_functions()
 # Test privacy functions
@@ -79,8 +79,8 @@ head -30 vignettes/migration-guide.Rmd
 ```bash
 # Check all exported functions have documentation
 Rscript -e "
-library(zoomstudentengagement)
-exports <- getNamespaceExports('zoomstudentengagement')
+library(engager)
+exports <- getNamespaceExports('engager')
 cat('Exported functions:', length(exports), '\n')
 cat('Functions:', paste(exports[1:10], collapse=', '), '\n')
 "
@@ -127,7 +127,7 @@ grep -A 10 "CRAN SUBMISSION STATUS" PROJECT.md
 ```bash
 # Create comprehensive project summary
 cat > FINAL_PROJECT_SUMMARY.md << 'EOF'
-# Zoom Student Engagement Package - Final Project Summary
+# Engager Package - Final Project Summary
 
 ## 🎯 Project Completion Status
 - **CRAN Readiness**: ✅ READY FOR SUBMISSION
@@ -206,7 +206,7 @@ echo "=== Package Build ==="
 Rscript -e "devtools::build()" && echo "✅ Package builds"
 
 echo "=== Functionality Test ==="
-Rscript -e "library(zoomstudentengagement); get_essential_functions()" && echo "✅ Functions work"
+Rscript -e "library(engager); get_essential_functions()" && echo "✅ Functions work"
 
 echo "=== Vignette Build ==="
 Rscript -e "devtools::build_vignettes()" && echo "✅ Vignettes build"

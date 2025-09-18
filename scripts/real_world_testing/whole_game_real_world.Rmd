@@ -1,6 +1,6 @@
 ---
 title: "Whole Game: Real-World Workflow for Instructors"
-author: "zoomstudentengagement package"
+author: "engager package"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_document:
@@ -67,7 +67,7 @@ handle_error <- function(error, context = "Unknown") {
 
 ```{r load-packages}
 # Load required packages with error handling
-required_packages <- c("zoomstudentengagement", "dplyr", "ggplot2", "readr", "tibble", "lubridate", "jsonlite")
+required_packages <- c("engager", "dplyr", "ggplot2", "readr", "tibble", "lubridate", "jsonlite")
 
 for (pkg in required_packages) {
   tryCatch({

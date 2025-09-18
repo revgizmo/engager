@@ -1,8 +1,8 @@
 #!/usr/bin/env Rscript
-# Complete Dependency Verification for zoomstudentengagement
+# Complete Dependency Verification for engager
 # This script verifies ALL 136 packages including transitive dependencies
 
-cat("🔍 Complete Dependency Verification for zoomstudentengagement\n")
+cat("🔍 Complete Dependency Verification for engager\n")
 cat("===========================================================\n\n")
 
 # All 136 packages including transitive dependencies
@@ -168,8 +168,8 @@ cat("=====================\n")
 
 # Test if the main package can be loaded
 tryCatch({
-  if (requireNamespace("zoomstudentengagement", quietly = TRUE)) {
-    cat("✅ zoomstudentengagement package is available\n")
+  if (requireNamespace("engager", quietly = TRUE)) {
+    cat("✅ engager package is available\n")
     
     # Test if core functionality works
     if (all(imports_status)) {
@@ -177,11 +177,11 @@ tryCatch({
       
       # Try to load the package
       tryCatch({
-        library(zoomstudentengagement)
+        library(engager)
         cat("✅ Package loads successfully\n")
         
         # Check exported functions
-        exported_functions <- getNamespaceExports("zoomstudentengagement")
+        exported_functions <- getNamespaceExports("engager")
         cat("✅ Package exports", length(exported_functions), "functions\n")
         
       }, error = function(e) {
@@ -191,7 +191,7 @@ tryCatch({
       cat("❌ Some direct imports are missing\n")
     }
   } else {
-    cat("❌ zoomstudentengagement package is not installed\n")
+    cat("❌ engager package is not installed\n")
   }
 }, error = function(e) {
   cat("❌ Package verification failed:", e$message, "\n")

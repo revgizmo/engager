@@ -109,7 +109,7 @@ The repository lacks a comprehensive, root-level guide specifically designed for
 
 ### AGENTS.md Content Structure
 ```markdown
-# AGENTS.md — Zoom Student Engagement (AI Agent Guide)
+# AGENTS.md — Engager (AI Agent Guide)
 
 ## Project Overview
 - Purpose and key directories

@@ -178,7 +178,7 @@ summarize_transcript_metrics <- function(transcript_file_path = "",
       NA_character_
     }
     attr(result, "processing_timestamp") <- as.character(Sys.time())
-    attr(result, "privacy_level") <- getOption("zoomstudentengagement.privacy_level", "mask")
+    attr(result, "privacy_level") <- getOption("engager.privacy_level", "mask")
 
     # Apply privacy before returning
     return(engager::ensure_privacy(result))

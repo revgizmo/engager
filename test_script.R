@@ -1,8 +1,8 @@
 # Load the package
-library(zoomstudentengagement)
+library(engager)
 
 # Example: Let's see what functions are available
-help(package = "zoomstudentengagement")
+help(package = "engager")
 
 # You can use functions like:
 # - load_zoom_transcript() to load a Zoom transcript file
@@ -17,4 +17,4 @@ help(package = "zoomstudentengagement")
 # Your test code here
 # For example, you can use functions from the package
 # Check the documentation for available functions using:
-# ?zoomstudentengagement 
+# ?engager

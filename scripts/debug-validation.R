@@ -113,7 +113,7 @@ validation_status$function_signatures <- show_progress(
   "   🔄 Validating function signatures",
   function() {
     devtools::load_all()
-    exported_functions <- getNamespaceExports("zoomstudentengagement")
+    exported_functions <- getNamespaceExports("engager")
     ignore_functions <- c(
       "create_sample_roster", "create_sample_section_names_lookup",
       "create_sample_transcript", "create_sample_transcript_data",
@@ -126,7 +126,7 @@ validation_status$function_signatures <- show_progress(
       if (func_name %in% ignore_functions) next
       
       tryCatch({
-        func <- get(func_name, envir = asNamespace("zoomstudentengagement"))
+        func <- get(func_name, envir = asNamespace("engager"))
         if (!is.function(func)) next
         
         args <- formals(func)
@@ -153,7 +153,7 @@ cat("7. Data Validation:\n")
 validation_status$data_validation <- show_progress(
   "   🔄 Validating data loading",
   function() {
-    transcript_dir <- system.file("extdata", "transcripts", package = "zoomstudentengagement")
+    transcript_dir <- system.file("extdata", "transcripts", package = "engager")
     if (dir.exists(transcript_dir)) {
       transcript_files <- list.files(transcript_dir, pattern = "\\.(vtt|csv|txt)$")
       if (length(transcript_files) > 0) {
@@ -165,7 +165,7 @@ validation_status$data_validation <- show_progress(
       stop("Transcripts directory not found")
     }
     
-    sample_roster <- system.file("extdata", "roster.csv", package = "zoomstudentengagement")
+    sample_roster <- system.file("extdata", "roster.csv", package = "engager")
     if (file.exists(sample_roster)) {
       roster_data <- read.csv(sample_roster)
       if (nrow(roster_data) == 0) {
@@ -210,7 +210,7 @@ validation_status$package_check <- show_progress(
   "   🔄 Running lightweight package check",
   function() {
     devtools::load_all()
-    ns <- getNamespace("zoomstudentengagement")
+    ns <- getNamespace("engager")
     r_files <- list.files("R", pattern = "\\.R$", full.names = TRUE)
     
     for (file in r_files) {

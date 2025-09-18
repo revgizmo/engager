@@ -8,7 +8,7 @@ cat("🧪 Testing Name Matching and Participant Classification\n")
 cat("=====================================================\n\n")
 
 # Load the package
-library(zoomstudentengagement)
+library(engager)
 
 # Set up test data
 cat("📋 Setting up test data...\n")

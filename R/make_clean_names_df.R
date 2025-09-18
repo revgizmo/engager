@@ -80,7 +80,7 @@ make_clean_names_df <- function(data_folder = ".",
   }
 
   # Apply privacy-aware name matching if privacy is enabled
-  privacy_level <- getOption("zoomstudentengagement.privacy_level", "mask")
+  privacy_level <- getOption("engager.privacy_level", "mask")
   if (!identical(privacy_level, "none")) {
     # Use privacy-aware matching for better cross-session consistency
     result <- apply_privacy_aware_matching(result, section_names_lookup, privacy_level)
