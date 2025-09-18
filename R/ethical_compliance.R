@@ -13,7 +13,6 @@ validate_ethical_use <- function(usage_context = c("research", "teaching", "asse
                                  purpose_statement = NULL,
                                  check_consent = TRUE,
                                  check_irb = TRUE) {
-
   usage_context <- match.arg(usage_context)
   data_scope <- match.arg(data_scope)
 
@@ -165,7 +164,6 @@ create_ethical_use_report <- function(usage_context = NULL,
                                       institution_name = NULL,
                                       contact_person = NULL,
                                       include_guidance = TRUE) {
-
   # Validate ethical use
   validation <- validate_ethical_use(
     usage_context = usage_context,
@@ -309,7 +307,6 @@ audit_ethical_usage <- function(function_calls = NULL,
                                 data_sizes = NULL,
                                 privacy_settings = NULL,
                                 time_period = 30) {
-
   # Initialize results
   result <- list(
     usage_patterns = list(),

@@ -72,7 +72,6 @@ handle_unmatched_names <- function(unmatched_names,
                                    privacy_level,
                                    data_folder,
                                    section_names_lookup_file) {
-
   if (identical(unmatched_names_action, "stop")) {
     # Stop with error for maximum privacy protection
     stop(
@@ -120,7 +119,6 @@ process_transcript_with_privacy <- function(transcript_data = NULL,
                                               "zoomstudentengagement.privacy_level",
                                               "mask"
                                             )) {
-
   # Validate inputs
   if (!is.data.frame(transcript_data)) {
     stop("transcript_data must be a data frame", call. = FALSE)
@@ -170,7 +168,6 @@ match_names_with_privacy <- function(transcript_data = NULL,
                                        "zoomstudentengagement.privacy_level",
                                        "mask"
                                      )) {
-
   # Validate inputs
   if (!is.data.frame(transcript_data)) {
     stop("transcript_data must be a data frame", call. = FALSE)
@@ -220,7 +217,6 @@ match_names_with_privacy <- function(transcript_data = NULL,
 
 # Internal function - no documentation needed
 create_name_lookup <- function(transcript_names, roster_names, name_mappings) {
-
   # Handle empty transcript names gracefully
   if (length(transcript_names) == 0) {
     return(data.frame(
@@ -285,7 +281,6 @@ create_name_lookup <- function(transcript_names, roster_names, name_mappings) {
 
 # Internal function - no documentation needed
 find_roster_match <- function(transcript_name, roster_names) {
-
   # Normalize names for comparison
   normalized_transcript <- normalize_name_for_matching(transcript_name)
   normalized_roster <- normalize_name_for_matching(roster_names)
@@ -316,7 +311,6 @@ find_roster_match <- function(transcript_name, roster_names) {
 #' @param roster_data Roster data for matching
 #' @return Matched transcript data
 apply_name_matching <- function(transcript_data, name_lookup, roster_data) {
-
   # Create a copy of transcript data
   result <- transcript_data
 

@@ -42,7 +42,6 @@ create_analysis_config <- function(
     # Session Mapping
     use_session_mapping = FALSE,
     session_mapping_file = "session_mapping.csv") {
-
   # Validate inputs
   if (!is.character(dept) || length(dept) != 1) {
     stop("dept must be a single character string")

@@ -91,7 +91,6 @@ validate_privacy_compliance <- function(data = NULL,
 
 # Internal function - no documentation needed
 extract_character_values <- function(data) {
-
   # Handle different data types
   if (is.data.frame(data)) {
     # Extract character columns
@@ -115,7 +114,6 @@ extract_character_values <- function(data) {
 
 # Internal function - no documentation needed
 detect_privacy_violations <- function(character_values, real_names, privacy_level) {
-
   violations <- character(0)
 
   # If specific real names provided, check for exact matches

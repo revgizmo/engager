@@ -2,7 +2,6 @@
 load_section_names_lookup <- function(data_folder = ".",
                                       names_lookup_file = "section_names_lookup.csv",
                                       section_names_lookup_col_types = "ccccccccc") {
-
   # Simplified deprecated function - return empty tibble with correct structure
   tibble::tibble(
     section = character(),

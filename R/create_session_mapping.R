@@ -11,7 +11,6 @@ create_session_mapping <- function(
     ),
     interactive = FALSE,
     verbose = FALSE) {
-
   # Validate inputs
   if (is.null(zoom_recordings_df) || is.null(course_info_df)) {
     return(tibble::tibble(

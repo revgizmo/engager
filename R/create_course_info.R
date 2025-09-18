@@ -9,7 +9,6 @@ create_course_info <- function(
     semester_end_mdy = "May 15, 2024",
     session_days = NULL,
     session_times = NULL) {
-
   # Input validation
   if (length(unique(c(
     length(dept), length(course), length(section),

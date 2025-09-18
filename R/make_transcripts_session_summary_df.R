@@ -1,6 +1,5 @@
 # Internal function - no documentation needed
 make_transcripts_session_summary_df <- function(clean_names_df = NULL) {
-
   if (is.null(clean_names_df)) {
     return(NULL)
   }
