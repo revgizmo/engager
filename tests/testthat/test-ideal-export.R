@@ -275,3 +275,4 @@ test_that("Export functions follow package conventions", {
     unlink(temp_file)
   }
 })
+# Tests for xprtdltrnscrptssmmry removed - function was deleted in main branch
