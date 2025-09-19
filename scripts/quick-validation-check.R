@@ -65,8 +65,8 @@ tryCatch({
 # 4. Check namespace exports
 cat("\n4. Namespace Check:\n")
 tryCatch({
-  ns <- getNamespace("zoomstudentengagement")
-  exports <- getNamespaceExports("zoomstudentengagement")
+  ns <- getNamespace("engager")
+  exports <- getNamespaceExports("engager")
   cat("   ✅ Namespace loaded with", length(exports), "exports\n")
 }, error = function(e) {
   cat("   ❌ Namespace check failed:", e$message, "\n")

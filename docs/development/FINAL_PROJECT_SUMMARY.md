@@ -1,4 +1,4 @@
-# Zoom Student Engagement Package - Final Project Summary
+# Engager Package - Final Project Summary
 
 ## 🎯 Project Completion Status
 

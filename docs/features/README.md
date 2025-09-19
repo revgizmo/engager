@@ -1,8 +1,8 @@
-# Zoom Student Engagement Package - Feature Documentation
+# Engager Package - Feature Documentation
 
 ## Overview
 
-The `zoomstudentengagement` R package provides comprehensive tools for analyzing student engagement and participation equity from Zoom meeting transcripts. This documentation covers all features organized by functional categories.
+The `engager` R package provides comprehensive tools for analyzing student engagement and participation equity from Zoom meeting transcripts. This documentation covers all features organized by functional categories.
 
 ## Feature Categories
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `zoomstudentengagement` package provides comprehensive export functions for ideal course transcripts, supporting multiple formats and maintaining privacy compliance.
+The `engager` package provides comprehensive export functions for ideal course transcripts, supporting multiple formats and maintaining privacy compliance.
 
 ## Available Export Functions
 
@@ -196,7 +196,7 @@ export_ideal_transcripts_summary(transcript_data, "summary_report.xlsx", format 
 ### Privacy-Aware Export
 ```r
 # Set privacy level for sensitive data
-options(zoomstudentengagement.privacy_level = "full")
+options(engager.privacy_level = "full")
 
 # Export with full privacy protection
 export_ideal_transcripts_csv(transcript_data, "private_transcript.csv")

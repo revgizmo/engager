@@ -1,8 +1,8 @@
-# Troubleshooting Guide for zoomstudentengagement
+# Troubleshooting Guide for engager
 
 ## 🔧 Common Issues and Solutions
 
-This guide helps you resolve common issues when using the zoomstudentengagement workflow.
+This guide helps you resolve common issues when using the engager workflow.
 
 ### Package Installation Issues
 
@@ -14,12 +14,12 @@ Error: could not find function "read_lookup_safely"
 **Solution:**
 1. Reinstall the package:
    ```r
-   devtools::install_github("revgizmo/zoomstudentengagement")
+   devtools::install_github("revgizmo/engager")
    ```
 2. Restart your R session
 3. Load the package:
    ```r
-   library(zoomstudentengagement)
+   library(engager)
    ```
 
 **Issue: Package installation fails**
@@ -230,7 +230,7 @@ options(warn = 1)  # Convert warnings to errors
 
 **Check package version:**
 ```r
-packageVersion("zoomstudentengagement")
+packageVersion("engager")
 ```
 
 **Validate data files:**
@@ -261,7 +261,7 @@ set_privacy_defaults("ferpa_standard")
 
 **Check package documentation:**
 ```r
-?zoomstudentengagement
+?engager
 ?summarize_transcript_metrics
 ?classify_participants
 ```

@@ -1,7 +1,7 @@
 # Test Transcript Collection Summary
 
 ## Overview
-This collection contains **8 realistic Zoom VTT transcript examples** designed for testing the `zoomstudentengagement` R package. The transcripts simulate various educational scenarios with different participation patterns, course types, and engagement levels.
+This collection contains **8 realistic Zoom VTT transcript examples** designed for testing the `engager` R package. The transcripts simulate various educational scenarios with different participation patterns, course types, and engagement levels.
 
 ## Quick Reference
 

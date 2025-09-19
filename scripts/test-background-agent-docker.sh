@@ -12,7 +12,7 @@ fi
 
 # Test 2: Build agent Docker image
 echo "Building agent Docker image..."
-docker build -f Dockerfile.agent -t zoomstudentengagement:agent .
+docker build -f Dockerfile.agent -t engager:agent .
 
 if [ $? -eq 0 ]; then
     echo "✅ Agent Docker image built successfully"
@@ -23,7 +23,7 @@ fi
 
 # Test 3: Test basic functionality
 echo "Testing basic functionality..."
-docker run --rm zoomstudentengagement:agent R -e "cat('Background agent Docker test successful\n')"
+docker run --rm engager:agent R -e "cat('Background agent Docker test successful\n')"
 
 if [ $? -eq 0 ]; then
     echo "✅ Basic functionality test passed"
@@ -34,7 +34,7 @@ fi
 
 # Test 4: Test package loading
 echo "Testing package loading..."
-docker run --rm zoomstudentengagement:agent R -e "library(zoomstudentengagement); cat('Package loaded successfully\n')"
+docker run --rm engager:agent R -e "library(engager); cat('Package loaded successfully\n')"
 
 if [ $? -eq 0 ]; then
     echo "✅ Package loading test passed"

@@ -1,6 +1,6 @@
-# Contributing to zoomstudentengagement
+# Contributing to engager
 
-Thank you for your interest in contributing to the zoomstudentengagement package! This document outlines the development workflow and best practices.
+Thank you for your interest in contributing to the engager package! This document outlines the development workflow and best practices.
 
 ## Quick Start
 

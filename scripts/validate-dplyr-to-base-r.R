@@ -4,7 +4,7 @@
 # This script tests all functions that were converted from dplyr to base R
 # to ensure they maintain the same functionality and output structure
 
-library(zoomstudentengagement)
+library(engager)
 library(testthat)
 library(tibble)
 library(hms)

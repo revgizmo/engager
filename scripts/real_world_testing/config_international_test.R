@@ -3,7 +3,7 @@
 
 # Load required libraries
 suppressPackageStartupMessages({
-  library(zoomstudentengagement)
+  library(engager)
   library(dplyr)
   library(readr)
   library(testthat)
@@ -209,7 +209,7 @@ generate_comprehensive_report <- function() {
     "# Comprehensive Real-World Testing Report",
     "",
     paste("**Test Date**:", format(Sys.time(), "%Y-%m-%d %H:%M:%S")),
-    paste("**Package Version**:", packageVersion("zoomstudentengagement")),
+    paste("**Package Version**:", packageVersion("engager")),
     "",
     "## Test Configuration",
     "",

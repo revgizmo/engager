@@ -1,8 +1,8 @@
 #!/usr/bin/env Rscript
-# Comprehensive Dependency Analysis for zoomstudentengagement
+# Comprehensive Dependency Analysis for engager
 # This script analyzes ALL dependencies including transitive dependencies
 
-cat("🔍 Comprehensive Dependency Analysis for zoomstudentengagement\n")
+cat("🔍 Comprehensive Dependency Analysis for engager\n")
 cat("============================================================\n\n")
 
 # Function to get all dependencies recursively

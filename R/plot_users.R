@@ -18,7 +18,7 @@ plot_users <- function(
     student_col = "name",
     facet_by = c("section", "transcript_file", "none"),
     mask_by = c("name", "rank"),
-    privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
+    privacy_level = getOption("engager.privacy_level", "mask"),
     metrics_lookup_df = NULL) {
   facet_by <- match.arg(facet_by)
   mask_by <- match.arg(mask_by)

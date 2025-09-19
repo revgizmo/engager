@@ -37,7 +37,7 @@ readr::write_csv(roster,
 session1 <- tibble::tribble(
   ~start, ~end, ~speaker, ~text,
   "00:00:00.000", "00:00:02.000", "Professor Ed",
-  "Welcome to our zoomstudentengagement workshop.",
+  "Welcome to our engager workshop.",
   "00:00:02.000", "00:00:04.000", "Professor Ed",
   "This package helps analyze Zoom class participation.",
   "00:00:04.500", "00:00:05.500", "Tom Miller",

@@ -1,9 +1,9 @@
 # Development Guidelines
-## zoomstudentengagement R Package
+## engager R Package
 
 **Purpose**: Comprehensive development guidelines for AI-assisted R package development.
 
-**Audience**: Developers working on the zoomstudentengagement R package.
+**Audience**: Developers working on the engager R package.
 
 **Last Updated**: August 2025
 

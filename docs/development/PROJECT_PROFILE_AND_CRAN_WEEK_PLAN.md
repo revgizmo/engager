@@ -1,7 +1,7 @@
 # Project Profile and CRAN Week Plan
 
 ## 1) Executive Summary
-Zoom Student Engagement (`zoomstudentengagement`) converts Zoom `.vtt` transcripts and course rosters into privacy-aware engagement metrics and visualizations, supporting instructors in evaluating participation equity.
+Engager (`engager`) converts Zoom `.vtt` transcripts and course rosters into privacy-aware engagement metrics and visualizations, supporting instructors in evaluating participation equity.
 
 The package is functionally rich but has a broad public surface (80+ exports), complex dependencies, and heavy test fixtures. Missing R environment blocked test execution here, highlighting portability risk. Documentation and CI are mature, yet API scope and dependency minimization remain top concerns. Segfault history indicates platform sensitivity.
 
@@ -27,7 +27,7 @@ The package is functionally rich but has a broad public surface (80+ exports), c
 
 ## 3) Repository Snapshot
 ### DESCRIPTION
-- Package: zoomstudentengagement | Version: 1.0.0 | Title: Zoom Student Engagement | License: MIT + file LICENSE | Imports: digest, dplyr, ggplot2, hms, jsonlite, lubridate, magrittr, openxlsx, readr, rlang, stringr, tibble | Suggests: testthat, withr, covr, knitr, rmarkdown, purrr, microbenchmark, pryr【F:DESCRIPTION†L1-L32】
+- Package: engager | Version: 1.0.0 | Title: Engager | License: MIT + file LICENSE | Imports: digest, dplyr, ggplot2, hms, jsonlite, lubridate, magrittr, openxlsx, readr, rlang, stringr, tibble | Suggests: testthat, withr, covr, knitr, rmarkdown, purrr, microbenchmark, pryr【F:DESCRIPTION†L1-L32】
 
 ### Directory Map
 - `R/`, `man/`, `tests/`, `vignettes/`, `inst/`, `docs/`, `scripts/`, `.github/`
@@ -138,7 +138,7 @@ graph TD
 - No major refactors or API breaks before submission.
 - Skip long-running examples in CRAN docs.
 
-## 9) Rename Plan: `zoomstudentengagement` → `engager`
+## 9) Rename Plan: `engager` → `engager`
 **Recommendation:** Rename **before** CRAN submission to keep a single package identity and avoid the overhead of orphaning and resubmitting under a new name.
 
 1. Update `DESCRIPTION` Package field and references.

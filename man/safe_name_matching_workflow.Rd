@@ -7,9 +7,8 @@
 safe_name_matching_workflow(
   transcript_file_path = NULL,
   roster_data = NULL,
-  privacy_level = getOption("zoomstudentengagement.privacy_level", "mask"),
-  unmatched_names_action = getOption("zoomstudentengagement.unmatched_names_action",
-    "stop"),
+  privacy_level = getOption("engager.privacy_level", "mask"),
+  unmatched_names_action = getOption("engager.unmatched_names_action", "stop"),
   data_folder = ".",
   section_names_lookup_file = "section_names_lookup.csv"
 )
@@ -20,10 +19,10 @@ safe_name_matching_workflow(
 \item{roster_data}{Data frame containing roster information}
 
 \item{privacy_level}{Privacy level to apply. One of \code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
-Defaults to \code{getOption("zoomstudentengagement.privacy_level", "mask")}.}
+Defaults to \code{getOption("engager.privacy_level", "mask")}.}
 
 \item{unmatched_names_action}{Action to take for unmatched names. One of \code{c("stop", "warn")}.
-Defaults to \code{getOption("zoomstudentengagement.unmatched_names_action", "stop")}.}
+Defaults to \code{getOption("engager.unmatched_names_action", "stop")}.}
 
 \item{data_folder}{Directory containing data files}
 

@@ -3,7 +3,7 @@
 # Comprehensive Functionality Test
 # Verifies that all functions produce identical outputs after dplyr to base R conversion
 
-library(zoomstudentengagement)
+library(engager)
 library(tibble)
 library(dplyr)
 
@@ -42,7 +42,7 @@ cat("   ✅ make_names_to_clean_df works correctly\n\n")
 
 # Test 3: process_zoom_transcript
 cat("3. Testing process_zoom_transcript...\n")
-transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt", package = "zoomstudentengagement")
+transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt", package = "engager")
 result <- process_zoom_transcript(transcript_file_path = transcript_file)
 cat("   Output rows:", nrow(result), "\n")
 cat("   Output columns:", paste(names(result), collapse = ", "), "\n")
@@ -64,7 +64,7 @@ cat("   ✅ add_dead_air_rows works correctly\n\n")
 
 # Test 5: summarize_transcript_metrics
 cat("5. Testing summarize_transcript_metrics...\n")
-transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt", package = "zoomstudentengagement")
+transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt", package = "engager")
 result <- summarize_transcript_metrics(transcript_file_path = transcript_file)
 cat("   Output rows:", nrow(result), "\n")
 cat("   Student1 total n:", result$n[result$name == "Student1"], "\n")

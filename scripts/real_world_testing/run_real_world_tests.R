@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
-# Real-World Testing Script for zoomstudentengagement
+# Real-World Testing Script for engager
 # 
 # This script tests the package with real confidential data in a secure environment.
 # IMPORTANT: Run this script outside of Cursor/LLM environments to protect data privacy.
@@ -17,12 +17,12 @@ suppressPackageStartupMessages({
       cat("ℹ Loaded development version of package\n")
     } else {
       # We're in an external environment - load installed version
-      library(zoomstudentengagement)
+      library(engager)
       cat("ℹ Loaded installed version of package\n")
     }
   }, error = function(e) {
     # Fallback to installed version if anything fails
-    library(zoomstudentengagement)
+    library(engager)
     cat("ℹ Loaded installed version of package (fallback)\n")
   })
   
@@ -991,7 +991,7 @@ test_data_validation <- function() {
 
 # Main testing function
 run_all_tests <- function() {
-  cat("=== Real-World Testing for zoomstudentengagement ===\n")
+  cat("=== Real-World Testing for engager ===\n")
   cat(sprintf("Start time: %s\n", format(test_start_time, "%Y-%m-%d %H:%M:%S")))
   cat(sprintf("Data directory: %s\n", data_dir))
   cat(sprintf("Output directory: %s\n", output_dir))
@@ -1063,7 +1063,7 @@ generate_markdown_report <- function(report_file) {
     "# Real-World Testing Report",
     "",
     sprintf("**Test Date**: %s", format(test_start_time, "%Y-%m-%d %H:%M:%S")),
-    sprintf("**Package Version**: %s", packageVersion("zoomstudentengagement")),
+    sprintf("**Package Version**: %s", packageVersion("engager")),
     "",
     "## Test Results Summary",
     ""

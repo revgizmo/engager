@@ -1,6 +1,6 @@
 #!/bin/bash
 # =============================================================================
-# Production Testing Script for zoomstudentengagement
+# Production Testing Script for engager
 # =============================================================================
 # This script runs tests against the INSTALLED version of the package
 # Use this to validate production behavior before deployment
@@ -20,7 +20,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGE_DIR="$(dirname "$(dirname "$SCRIPT_DIR")")"
 
 echo -e "${BLUE}==========================================${NC}"
-echo -e "${BLUE}Production Testing for zoomstudentengagement${NC}"
+echo -e "${BLUE}Production Testing for engager${NC}"
 echo -e "${BLUE}==========================================${NC}"
 echo -e "${YELLOW}Testing INSTALLED package version${NC}"
 echo ""
@@ -32,9 +32,9 @@ if ! command -v R &> /dev/null; then
 fi
 
 # Check if the package is installed
-echo -e "${BLUE}[INFO]${NC} Checking if zoomstudentengagement is installed..."
-if ! R --slave -e "library(zoomstudentengagement)" &> /dev/null; then
-    echo -e "${RED}❌ zoomstudentengagement package is not installed${NC}"
+echo -e "${BLUE}[INFO]${NC} Checking if engager is installed..."
+if ! R --slave -e "library(engager)" &> /dev/null; then
+    echo -e "${RED}❌ engager package is not installed${NC}"
     echo -e "${YELLOW}Please install the package first:${NC}"
     echo "  R --slave -e \"devtools::install_local('$PACKAGE_DIR')\""
     exit 1

@@ -29,12 +29,12 @@ validate_ideal_transcripts_batch <- function(output_file = "validation_results.r
                                             save_detailed = TRUE) {
   
   # Load package
-  if (!requireNamespace("zoomstudentengagement", quietly = TRUE)) {
-    stop("zoomstudentengagement package is required")
+  if (!requireNamespace("engager", quietly = TRUE)) {
+    stop("engager package is required")
   }
   
   # Get ideal course transcript directory
-  transcript_dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  transcript_dir <- system.file("extdata", "test_transcripts", package = "engager")
   if (!dir.exists(transcript_dir)) {
     stop("Ideal course transcript directory not found")
   }

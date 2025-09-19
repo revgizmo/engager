@@ -9,7 +9,7 @@ args <- commandArgs(trailingOnly = TRUE)
 base_dir <- if (length(args) >= 1) args[[1]] else tempdir()
 
 sample <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-                      package = "zoomstudentengagement")
+                      package = "engager")
 if (sample == "") {
   stop("Sample transcript not found in installed package")
 }

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Enhanced Real-World Testing Setup Script
-# This script provides comprehensive environment validation and setup for the zoomstudentengagement workflow
+# This script provides comprehensive environment validation and setup for the engager workflow
 
 set -e
 
@@ -138,24 +138,24 @@ check_r_packages() {
     fi
 }
 
-# Check zoomstudentengagement package
-check_zoomstudentengagement() {
-    print_status "info" "Checking zoomstudentengagement package..."
+# Check engager package
+check_engager() {
+    print_status "info" "Checking engager package..."
     
-    if Rscript -e "library(zoomstudentengagement, quietly = TRUE)" &> /dev/null; then
-        PACKAGE_VERSION=$(Rscript -e "cat(packageVersion('zoomstudentengagement'))" 2>/dev/null)
-        print_status "success" "zoomstudentengagement package found: version $PACKAGE_VERSION"
+    if Rscript -e "library(engager, quietly = TRUE)" &> /dev/null; then
+        PACKAGE_VERSION=$(Rscript -e "cat(packageVersion('engager'))" 2>/dev/null)
+        print_status "success" "engager package found: version $PACKAGE_VERSION"
     else
-        print_status "warning" "zoomstudentengagement package not found"
+        print_status "warning" "engager package not found"
         print_status "info" "Installing from GitHub..."
-        Rscript -e "devtools::install_github('revgizmo/zoomstudentengagement')"
-        print_status "success" "zoomstudentengagement package installation completed"
+        Rscript -e "devtools::install_github('revgizmo/engager')"
+        print_status "success" "engager package installation completed"
     fi
 }
 
 check_r_installation
 check_r_packages
-check_zoomstudentengagement
+check_engager
 
 # Step 3: Directory Structure Setup
 print_status "step" "Step 3: Directory Structure Setup"
@@ -284,14 +284,14 @@ test_r_functions() {
     
     # Test function availability
     Rscript -e "
-    library(zoomstudentengagement)
+    library(engager)
     
     # Test key functions
     functions_to_test <- c('read_lookup_safely', 'ensure_instructor_rows', 
                           'classify_participants', 'summarize_transcript_metrics')
     
     for (func in functions_to_test) {
-        if (exists(func, where = asNamespace('zoomstudentengagement'))) {
+        if (exists(func, where = asNamespace('engager'))) {
             cat('✅ Function available:', func, '\n')
         } else {
             cat('❌ Function missing:', func, '\n')
@@ -334,7 +334,7 @@ print_status "step" "Step 9: Final Validation"
 print_status "info" "Running final validation test..."
 
 Rscript -e "
-library(zoomstudentengagement)
+library(engager)
 
 # Test basic functionality
 cat('Testing basic package functionality...\n')
@@ -402,5 +402,5 @@ echo "   - Quick Start Guide: scripts/real_world_testing/quick_start_guide.md"
 echo "   - Troubleshooting: scripts/real_world_testing/troubleshooting_guide.md"
 echo "   - Full Workflow: whole_game_real_world.Rmd"
 echo ""
-echo "✅ Your environment is ready for zoomstudentengagement analysis!"
+echo "✅ Your environment is ready for engager analysis!"
 echo ""

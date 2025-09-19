@@ -6,7 +6,7 @@
 #'
 #' @param data Data frame or object to validate for privacy compliance
 #' @param privacy_level Privacy level to validate against. One of `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
-#'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
+#'   Defaults to `getOption("engager.privacy_level", "mask")`.
 #' @param real_names Vector of real names to check against. If NULL, uses common name patterns to detect potential violations.
 #' @param stop_on_violation Whether to stop processing if violations are found. Defaults to TRUE for maximum privacy protection.
 #'
@@ -25,7 +25,7 @@
 #' validate_privacy_compliance(df, real_names = real_names)
 validate_privacy_compliance <- function(data = NULL,
                                         privacy_level = getOption(
-                                          "zoomstudentengagement.privacy_level",
+                                          "engager.privacy_level",
                                           "mask"
                                         ),
                                         real_names = NULL,

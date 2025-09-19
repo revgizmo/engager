@@ -2,7 +2,7 @@
 
 ## Overview
 
-The metrics calculation feature is the analytical core of the `zoomstudentengagement` package. It transforms processed transcript data into meaningful engagement metrics that quantify student participation patterns. This feature provides comprehensive metrics for analyzing participation equity, speaking patterns, and engagement levels across individual students and groups.
+The metrics calculation feature is the analytical core of the `engager` package. It transforms processed transcript data into meaningful engagement metrics that quantify student participation patterns. This feature provides comprehensive metrics for analyzing participation equity, speaking patterns, and engagement levels across individual students and groups.
 
 ## Key Functions
 
@@ -81,7 +81,7 @@ tibble(
 # Calculate metrics from transcript file
 transcript_file <- system.file(
   "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-  package = "zoomstudentengagement"
+  package = "engager"
 )
 metrics <- summarize_transcript_metrics(
   transcript_file_path = transcript_file,

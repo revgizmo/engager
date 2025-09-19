@@ -1,7 +1,7 @@
-# Performance Guidelines for Zoom Student Engagement Package
+# Performance Guidelines for the Engager Package
 
 ## Overview
-This document provides performance guidelines and optimization recommendations for the zoomstudentengagement R package, particularly for processing ideal course transcripts.
+This document provides performance guidelines and optimization recommendations for the engager R package, particularly for processing ideal course transcripts.
 
 ## Performance Benchmarks
 
@@ -16,7 +16,7 @@ The package includes comprehensive benchmarking tools:
 
 ```r
 # Run performance benchmarks
-library(zoomstudentengagement)
+library(engager)
 benchmark_ideal_transcripts(iterations = 5)
 
 # Run with custom parameters
@@ -237,4 +237,4 @@ Performance optimization is an ongoing process that requires:
 - Continuous optimization efforts
 - Clear performance guidelines and documentation
 
-By following these guidelines and using the provided tools, developers and users can ensure optimal performance of the zoomstudentengagement package.
+By following these guidelines and using the provided tools, developers and users can ensure optimal performance of the engager package.

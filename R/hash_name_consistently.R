@@ -8,7 +8,7 @@
 # # Without normalization (exact matching only)
 # hash_name_consistently(c("Tom", "Thomas", "Tommy"), normalize_names = FALSE)
 hash_name_consistently <- function(names = NULL,
-                                   salt = "zoomstudentengagement",
+                                   salt = "engager",
                                    normalize_names = TRUE) {
   # Input validation
   if (!is.character(names)) {

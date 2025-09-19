@@ -2,7 +2,7 @@
 
 ## Overview
 
-This index provides a comprehensive overview of all features in the `zoomstudentengagement` R package, organized by functional categories. Each feature is documented in detail in separate markdown files.
+This index provides a comprehensive overview of all features in the `engager` R package, organized by functional categories. Each feature is documented in detail in separate markdown files.
 
 ## Core Data Processing Features
 
@@ -185,7 +185,7 @@ This index provides a comprehensive overview of all features in the `zoomstudent
 
 ### [Package Documentation](package-documentation.md)
 **Purpose**: Package-level documentation and metadata
-- `zoomstudentengagement-package.R` - Package documentation
+- `engager-package.R` - Package documentation
 - `data.R` - Package data documentation
 - Package metadata and information
 

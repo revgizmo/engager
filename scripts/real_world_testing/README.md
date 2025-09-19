@@ -1,8 +1,8 @@
-# Real-World Testing Infrastructure for zoomstudentengagement
+# Real-World Testing Infrastructure for engager
 
 **Infrastructure files for creating standalone real-world testing environments.**
 
-This directory contains the testing infrastructure that can be copied to create standalone testing projects for validating the `zoomstudentengagement` package with real confidential data.
+This directory contains the testing infrastructure that can be copied to create standalone testing projects for validating the `engager` package with real confidential data.
 
 ## 🚀 Quick Setup
 
@@ -21,7 +21,7 @@ cd my_testing_project
 ### 2. Alternative: Test from Package Root
 ```bash
 # If you want to test the development version from the package root
-cd /path/to/zoomstudentengagement
+cd /path/to/engager
 ./scripts/real_world_testing/run_tests.sh
 ```
 
@@ -89,13 +89,13 @@ my_testing_project/                   # Standalone project root
 This infrastructure supports two testing approaches:
 
 1. **Development Testing** (from package root): Tests the latest development version
-   - Run from `/path/to/zoomstudentengagement`
+   - Run from `/path/to/engager`
    - Uses `devtools::load_all()` to load development code
    - Best for testing new features and fixes
 
 2. **Production Testing** (standalone environment): Tests the installed package version
    - Run from external directory (e.g., `/Users/piper/git/zse_secure_testing`)
-   - Uses `library(zoomstudentengagement)` to load installed package
+   - Uses `library(engager)` to load installed package
    - Best for validating production behavior with real data
 
 ### Manual Workflow vs Automated Testing
@@ -120,7 +120,7 @@ This infrastructure provides two approaches:
 The `setup.sh` script automatically:
 - ✅ Validates environment security
 - ✅ Checks R installation and packages
-- ✅ Installs the zoomstudentengagement package
+- ✅ Installs the engager package
 - ✅ Creates required directories
 - ✅ Validates test data availability
 - ✅ Runs data validation (if data is present)
@@ -322,7 +322,7 @@ chmod +x *.sh
 Rscript --version
 
 # Check package availability
-Rscript -e "library(zoomstudentengagement)"
+Rscript -e "library(engager)"
 ```
 
 ### Getting Help
@@ -367,4 +367,4 @@ For issues or questions:
 
 ## 📄 License
 
-This testing framework is part of the `zoomstudentengagement` package and is subject to the same MIT license terms. 
+This testing framework is part of the `engager` package and is subject to the same MIT license terms. 

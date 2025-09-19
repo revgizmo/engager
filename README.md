@@ -45,9 +45,9 @@ changes).
 [![coverage](https://img.shields.io/github/actions/workflow/status/revgizmo/engager/coverage.yaml?branch=main&label=coverage)](https://github.com/revgizmo/engager/actions/workflows/coverage.yaml)
 <!-- badges: end -->
 
-The goal of `zoomstudentengagement` is to allow instructors to gain
-insights into student engagement, with a particular focus on
-participation equity, from Zoom transcripts of recorded course sessions.
+The goal of `engager` is to allow instructors to gain insights into
+student engagement, with a particular focus on participation equity,
+from Zoom transcripts of recorded course sessions.
 
 ## 📚 Documentation
 

@@ -1,7 +1,7 @@
 # Internal function - no documentation needed
 prompt_name_matching <- function(unmatched_names = NULL,
                                  privacy_level = getOption(
-                                   "zoomstudentengagement.privacy_level",
+                                   "engager.privacy_level",
                                    "mask"
                                  ),
                                  data_folder = ".",
@@ -130,7 +130,7 @@ detect_unmatched_names <- function(transcript_data = NULL,
                                    roster_data = NULL,
                                    name_mappings = NULL,
                                    privacy_level = getOption(
-                                     "zoomstudentengagement.privacy_level",
+                                     "engager.privacy_level",
                                      "mask"
                                    )) {
   # Validate inputs

@@ -1,8 +1,8 @@
 #!/usr/bin/env Rscript
-# Docker Package Installation Script for zoomstudentengagement
+# Docker Package Installation Script for engager
 # This script provides all packages needed to run, build, test, and develop the package
 
-cat("📦 Package Installation Guide for zoomstudentengagement\n")
+cat("📦 Package Installation Guide for engager\n")
 cat("=====================================================\n\n")
 
 # Core package dependencies (from DESCRIPTION Imports)

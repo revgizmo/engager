@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-# Context Script for zoomstudentengagement R Package (R Version)
+# Context Script for engager R Package (R Version)
 # Use this script to provide R-specific context to new Cursor chats
 # Run: Rscript scripts/context-for-new-chat.R
 #
@@ -11,7 +11,7 @@
 # - Validation of package structure and dependencies
 # - Privacy/ethical compliance checks
 
-cat("🔍 Generating R-specific context for zoomstudentengagement R Package...\n")
+cat("🔍 Generating R-specific context for engager R Package...\n")
 cat("==================================================\n\n")
 
 # Load required packages (suppress warnings for context generation)
@@ -111,7 +111,7 @@ cat("\n")
 cat("🔧 EXPORTED FUNCTIONS\n")
 cat("-------------------\n")
 tryCatch({
-  if (require(zoomstudentengagement, quietly = TRUE)) {
+  if (require(engager, quietly = TRUE)) {
     # Get exported functions from NAMESPACE
     ns <- readLines("NAMESPACE")
     exports <- ns[grepl("^export\\(", ns)]

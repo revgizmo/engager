@@ -7,9 +7,9 @@
 #' @param transcript_file_path Path to the transcript file to process
 #' @param roster_data Data frame containing roster information
 #' @param privacy_level Privacy level to apply. One of `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
-#'   Defaults to `getOption("zoomstudentengagement.privacy_level", "mask")`.
+#'   Defaults to `getOption("engager.privacy_level", "mask")`.
 #' @param unmatched_names_action Action to take for unmatched names. One of `c("stop", "warn")`.
-#'   Defaults to `getOption("zoomstudentengagement.unmatched_names_action", "stop")`.
+#'   Defaults to `getOption("engager.unmatched_names_action", "stop")`.
 #' @param data_folder Directory containing data files
 #' @param section_names_lookup_file Name of the section names lookup file
 #'
@@ -30,11 +30,11 @@
 safe_name_matching_workflow <- function(transcript_file_path = NULL,
                                         roster_data = NULL,
                                         privacy_level = getOption(
-                                          "zoomstudentengagement.privacy_level",
+                                          "engager.privacy_level",
                                           "mask"
                                         ),
                                         unmatched_names_action = getOption(
-                                          "zoomstudentengagement.unmatched_names_action",
+                                          "engager.unmatched_names_action",
                                           "stop"
                                         ),
                                         data_folder = ".",
@@ -116,7 +116,7 @@ process_transcript_with_privacy <- function(transcript_data = NULL,
                                             roster_data = NULL,
                                             name_mappings = NULL,
                                             privacy_level = getOption(
-                                              "zoomstudentengagement.privacy_level",
+                                              "engager.privacy_level",
                                               "mask"
                                             )) {
   # Validate inputs
@@ -165,7 +165,7 @@ match_names_with_privacy <- function(transcript_data = NULL,
                                      roster_data = NULL,
                                      name_mappings = NULL,
                                      privacy_level = getOption(
-                                       "zoomstudentengagement.privacy_level",
+                                       "engager.privacy_level",
                                        "mask"
                                      )) {
   # Validate inputs
@@ -452,7 +452,7 @@ validate_safe_name_inputs <- function(transcript_file_path, roster_data, privacy
         paste(roster_name_columns, collapse = ", "),
         ".\n",
         "See vignette 'roster-cleaning' and example at ",
-        "system.file('extdata/roster.csv', package = 'zoomstudentengagement').\n",
+        "system.file('extdata/roster.csv', package = 'engager').\n",
         "Tip: You can construct a minimal roster with your own data using ",
         "columns like 'first_last' or 'preferred_name'."
       ),

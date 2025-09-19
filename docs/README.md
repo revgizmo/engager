@@ -1,5 +1,5 @@
 # Documentation Directory
-## zoomstudentengagement R Package
+## engager R Package
 
 This directory contains detailed documentation organized by purpose and audience.
 

@@ -3,7 +3,7 @@
 # Actual Functionality Comparison Test
 # Compares original dplyr versions with new base R versions to ensure identical outputs
 
-library(zoomstudentengagement)
+library(engager)
 library(tibble)
 library(dplyr)
 
@@ -344,7 +344,7 @@ original_process_zoom_transcript <- function(transcript_file_path = "", consolid
   na_name_ <- na_name
 
   if (file.exists(transcript_file_path)) {
-    transcript_df <- zoomstudentengagement::load_zoom_transcript(transcript_file_path)
+    transcript_df <- engager::load_zoom_transcript(transcript_file_path)
   }
 
   if (tibble::is_tibble(transcript_df)) {
@@ -377,12 +377,12 @@ original_process_zoom_transcript <- function(transcript_file_path = "", consolid
 
     if (consolidate_comments == TRUE) {
       transcript_df <- transcript_df %>%
-        zoomstudentengagement::consolidate_transcript(., max_pause_sec = max_pause_sec_)
+        engager::consolidate_transcript(., max_pause_sec = max_pause_sec_)
     }
 
     if (add_dead_air == TRUE) {
       transcript_df <- transcript_df %>%
-        zoomstudentengagement::add_dead_air_rows(dead_air_name = dead_air_name_)
+        engager::add_dead_air_rows(dead_air_name = dead_air_name_)
     }
 
     return_df <- transcript_df %>%
@@ -430,7 +430,7 @@ original_summarize_transcript_metrics <- function(transcript_file_path = "", nam
   na_name_ <- na_name
 
   if (file.exists(transcript_file_path)) {
-    transcript_df <- zoomstudentengagement::process_zoom_transcript(
+    transcript_df <- engager::process_zoom_transcript(
       transcript_file_path,
       consolidate_comments = consolidate_comments_,
       max_pause_sec = max_pause_sec_,
@@ -690,7 +690,7 @@ unlink(temp_file)
 cat("9. Testing load_zoom_transcript comparison...\n")
 
 # Use existing test VTT file
-test_vtt_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt", package = "zoomstudentengagement")
+test_vtt_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt", package = "engager")
 
 # Current base R version
 current_result <- load_zoom_transcript(test_vtt_file)
@@ -1072,11 +1072,11 @@ cat("   Current result (no match):", if(is.null(current_result_no_match)) "NULL"
 cat("13. Testing load_zoom_recorded_sessions_list comparison...\n")
 
 # Use existing test data file
-test_csv_file <- system.file("extdata/transcripts/zoomus_recordings__20240124.csv", package = "zoomstudentengagement")
+test_csv_file <- system.file("extdata/transcripts/zoomus_recordings__20240124.csv", package = "engager")
 
 # Current base R version
 current_result <- load_zoom_recorded_sessions_list(
-  data_folder = system.file("extdata", package = "zoomstudentengagement"),
+  data_folder = system.file("extdata", package = "engager"),
   transcripts_folder = "transcripts"
 )
 
@@ -1207,7 +1207,7 @@ original_load_zoom_recorded_sessions_list <- function(data_folder = "data",
 
 tryCatch({
   original_result <- original_load_zoom_recorded_sessions_list(
-    data_folder = system.file("extdata", package = "zoomstudentengagement"),
+    data_folder = system.file("extdata", package = "engager"),
     transcripts_folder = "transcripts"
   )
   compare_dataframes(original_result, current_result, "load_zoom_recorded_sessions_list")
@@ -1450,7 +1450,7 @@ test_transcript_files <- c("GMT20240124-202901_Recording.transcript.vtt")
 # Current base R version
 current_result <- summarize_transcript_files(
   transcript_file_names = test_transcript_files,
-  data_folder = system.file("extdata", package = "zoomstudentengagement"),
+  data_folder = system.file("extdata", package = "engager"),
   transcripts_folder = "transcripts"
 )
 
@@ -1579,7 +1579,7 @@ original_summarize_transcript_files <- function(transcript_file_names,
 tryCatch({
   original_result <- original_summarize_transcript_files(
     transcript_file_names = test_transcript_files,
-    data_folder = system.file("extdata", package = "zoomstudentengagement"),
+    data_folder = system.file("extdata", package = "engager"),
     transcripts_folder = "transcripts"
   )
   compare_dataframes(original_result, current_result, "summarize_transcript_files")

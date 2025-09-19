@@ -1,7 +1,7 @@
 # Issue 424: Performance Benchmarking Implementation Guide
 
 ## Overview
-This guide provides step-by-step instructions for implementing performance benchmarking tools for ideal course transcripts in the zoomstudentengagement R package.
+This guide provides step-by-step instructions for implementing performance benchmarking tools for ideal course transcripts in the engager R package.
 
 ## Prerequisites
 - R development environment with package development tools
@@ -44,7 +44,7 @@ benchmark_ideal_transcripts <- function(iterations = 5,
                                        include_profiling = FALSE) {
   
   # Load required packages
-  library(zoomstudentengagement)
+  library(engager)
   library(microbenchmark)
   library(pryr)
   
@@ -56,7 +56,7 @@ benchmark_ideal_transcripts <- function(iterations = 5,
   )
   
   # Get ideal course transcript paths
-  transcript_dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  transcript_dir <- system.file("extdata", "test_transcripts", package = "engager")
   session_files <- c(
     "ideal_course_session1.vtt",
     "ideal_course_session2.vtt", 
@@ -255,7 +255,7 @@ if (!interactive()) {
 # Tests for performance regression detection and benchmarking functions
 
 library(testthat)
-library(zoomstudentengagement)
+library(engager)
 
 # Performance thresholds (in milliseconds)
 PERFORMANCE_THRESHOLDS <- list(
@@ -269,7 +269,7 @@ test_that("individual transcript processing meets performance requirements", {
   skip_on_cran()
   
   # Get test transcript
-  transcript_dir <- system.file("extdata", "test_transcripts", package = "zoomstudentengagement")
+  transcript_dir <- system.file("extdata", "test_transcripts", package = "engager")
   test_file <- file.path(transcript_dir, "ideal_course_session1.vtt")
   
   # Measure processing time
@@ -364,10 +364,10 @@ test_that("benchmark results have expected structure", {
 
 **Implementation**:
 ```markdown
-# Performance Guidelines for Zoom Student Engagement Package
+# Performance Guidelines for Engager Package
 
 ## Overview
-This document provides performance guidelines and optimization recommendations for the zoomstudentengagement R package, particularly for processing ideal course transcripts.
+This document provides performance guidelines and optimization recommendations for the engager R package, particularly for processing ideal course transcripts.
 
 ## Performance Benchmarks
 
@@ -382,7 +382,7 @@ The package includes comprehensive benchmarking tools:
 
 ```r
 # Run performance benchmarks
-library(zoomstudentengagement)
+library(engager)
 benchmark_ideal_transcripts(iterations = 5)
 
 # Run with custom parameters

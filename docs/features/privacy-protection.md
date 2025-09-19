@@ -2,7 +2,7 @@
 
 ## Overview
 
-The privacy protection feature is a foundational component of the `zoomstudentengagement` package that ensures ethical and compliant handling of student data. This feature provides comprehensive data anonymization, FERPA compliance validation, and configurable privacy controls to protect student privacy while enabling meaningful engagement analysis.
+The privacy protection feature is a foundational component of the `engager` package that ensures ethical and compliant handling of student data. This feature provides comprehensive data anonymization, FERPA compliance validation, and configurable privacy controls to protect student privacy while enabling meaningful engagement analysis.
 
 ## Key Functions
 
@@ -79,8 +79,8 @@ ferpa_safe_df <- ensure_privacy(df, privacy_level = "ferpa_strict")
 - `unmatched_names_action` (character): Action for unmatched names ("stop", "warn")
 
 **Global Options**:
-- `zoomstudentengagement.privacy_level`: Controls default privacy behavior
-- `zoomstudentengagement.unmatched_names_action`: Controls unmatched name handling
+- `engager.privacy_level`: Controls default privacy behavior
+- `engager.unmatched_names_action`: Controls unmatched name handling
 
 **Configuration Examples**:
 ```r

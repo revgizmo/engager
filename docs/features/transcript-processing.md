@@ -2,7 +2,7 @@
 
 ## Overview
 
-The transcript processing feature is the core data ingestion component of the `zoomstudentengagement` package. It provides robust tools for loading, parsing, and processing Zoom transcript files (`.transcript.vtt` format) into structured data suitable for engagement analysis.
+The transcript processing feature is the core data ingestion component of the `engager` package. It provides robust tools for loading, parsing, and processing Zoom transcript files (`.transcript.vtt` format) into structured data suitable for engagement analysis.
 
 ## Key Functions
 
@@ -56,7 +56,7 @@ tibble(
 # Load a transcript file
 transcript_file <- system.file(
   "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
-  package = "zoomstudentengagement"
+  package = "engager"
 )
 raw_data <- load_zoom_transcript(transcript_file)
 ```

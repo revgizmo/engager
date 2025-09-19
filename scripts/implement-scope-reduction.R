@@ -28,7 +28,7 @@ cat("-------------------------------------\n")
 # Function to add deprecation warning wrapper
 add_deprecation_wrapper <- function(func_name) {
   # Get the original function
-  original_func <- get(func_name, envir = asNamespace("zoomstudentengagement"))
+  original_func <- get(func_name, envir = asNamespace("engager"))
   
   # Create deprecation warning wrapper
   wrapper <- function(...) {
@@ -46,7 +46,7 @@ add_deprecation_wrapper <- function(func_name) {
   attributes(wrapper) <- attributes(original_func)
   
   # Assign the wrapper back to the package namespace
-  assign(func_name, wrapper, envir = asNamespace("zoomstudentengagement"))
+  assign(func_name, wrapper, envir = asNamespace("engager"))
   
   cat("  ✓ Added deprecation warning to:", func_name, "\n")
 }
@@ -72,7 +72,7 @@ essential_test_results <- list()
 for (func_name in ESSENTIAL_FUNCTIONS) {
   tryCatch({
     # Check if function exists and is callable
-    func <- get(func_name, envir = asNamespace("zoomstudentengagement"))
+    func <- get(func_name, envir = asNamespace("engager"))
     if (is.function(func)) {
       essential_test_results[[func_name]] <- "OK"
       cat("  ✓", func_name, "- OK\n")
@@ -99,7 +99,7 @@ deprecated_test_results <- list()
 for (func_name in test_deprecated_functions) {
   tryCatch({
     # Check if function exists and is callable
-    func <- get(func_name, envir = asNamespace("zoomstudentengagement"))
+    func <- get(func_name, envir = asNamespace("engager"))
     if (is.function(func)) {
       deprecated_test_results[[func_name]] <- "OK_WITH_WARNING"
       cat("  ✓", func_name, "- OK (will show deprecation warning)\n")
@@ -149,13 +149,13 @@ cat("----------------------------------------\n")
 # Test that the package still loads correctly
 tryCatch({
   # Unload and reload the package
-  detach("package:zoomstudentengagement", unload = TRUE)
+  detach("package:engager", unload = TRUE)
   devtools::load_all()
   
   cat("  ✓ Package loaded successfully with deprecation warnings\n")
   
   # Test that essential functions are available
-  available_functions <- ls("package:zoomstudentengagement")
+  available_functions <- ls("package:engager")
   cat("  ✓ Available functions:", length(available_functions), "\n")
   
   # Check that essential functions are still there

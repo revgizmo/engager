@@ -7,7 +7,7 @@
 #
 # Usage:
 #   Rscript scripts/pre-pr-validation-background-agent.R
-#   docker run --rm -it -v $(pwd):/workspace zoomstudentengagement-r-dev R -e "source('scripts/pre-pr-validation-background-agent.R')"
+#   docker run --rm -it -v $(pwd):/workspace engager-r-dev R -e "source('scripts/pre-pr-validation-background-agent.R')"
 
 # Load required libraries
 suppressPackageStartupMessages({
@@ -19,7 +19,7 @@ suppressPackageStartupMessages({
 })
 
 # Configuration
-PACKAGE_NAME <- "zoomstudentengagement"
+PACKAGE_NAME <- "engager"
 TARGET_COVERAGE <- 90
 MAX_LINT_ISSUES <- 50  # Increased for background agent environment
 

@@ -21,7 +21,7 @@ for (dir in dirs) {
 
 # Copy transcript files
 transcript_files <- list.files(
-  system.file("extdata/transcripts", package = "zoomstudentengagement"),
+  system.file("extdata/transcripts", package = "engager"),
   full.names = TRUE,
   pattern = "\\.(vtt|txt|csv)$"
 )
@@ -41,7 +41,7 @@ metadata_files <- c(
 )
 
 for (file in metadata_files) {
-  src_file <- system.file("extdata", file, package = "zoomstudentengagement")
+  src_file <- system.file("extdata", file, package = "engager")
   if (file.exists(src_file)) {
     dest_file <- file.path("data/metadata", file)
     file.copy(src_file, dest_file, overwrite = TRUE)
@@ -50,7 +50,7 @@ for (file in metadata_files) {
 }
 
 # Copy section names lookup
-lookup_file <- system.file("extdata/section_names_lookup.csv", package = "zoomstudentengagement")
+lookup_file <- system.file("extdata/section_names_lookup.csv", package = "engager")
 if (file.exists(lookup_file)) {
   dest_file <- file.path("data", "section_names_lookup.csv")
   file.copy(lookup_file, dest_file, overwrite = TRUE)

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Quick context script for zoomstudentengagement
+# Quick context script for engager
 # Run both context scripts and provide clean output for Cursor chats
 # Usage: ./scripts/get-context.sh
 #
@@ -13,7 +13,7 @@
 set -euo pipefail  # Stricter error handling
 trap 'echo "❌ Script failed at line $LINENO"' ERR
 
-echo "🔍 Generating complete context for zoomstudentengagement..."
+echo "🔍 Generating complete context for engager..."
 echo "=================================================="
 echo ""
 

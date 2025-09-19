@@ -296,7 +296,7 @@ generate_ferpa_report <- function(data = NULL,
       data_rows = nrow(data),
       data_columns = ncol(data),
       pii_columns_detected = length(validation_result$pii_detected),
-      privacy_level = getOption("zoomstudentengagement.privacy_level", "mask")
+      privacy_level = getOption("engager.privacy_level", "mask")
     )
   } else {
     NULL
@@ -458,12 +458,12 @@ log_ferpa_compliance_check <- function(compliant,
   # Store in package environment for session tracking (CRAN compliant)
   log_key <- paste0("zse_ferpa_log_", format(timestamp, "%Y%m%d_%H%M%S"))
   # Simple in-memory storage for session tracking - use options() for CRAN compliance
-  current_logs <- getOption("zoomstudentengagement.ferpa_logs", list())
+  current_logs <- getOption("engager.ferpa_logs", list())
   current_logs[[log_key]] <- log_entry
-  options(zoomstudentengagement.ferpa_logs = current_logs)
+  options(engager.ferpa_logs = current_logs)
 
   # Optionally write to file if logging is enabled
-  log_file <- getOption("zoomstudentengagement.ferpa_log_file", NULL)
+  log_file <- getOption("engager.ferpa_log_file", NULL)
   if (!is.null(log_file) && is.character(log_file)) {
     tryCatch(
       {
