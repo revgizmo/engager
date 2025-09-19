@@ -25,6 +25,7 @@ The CI pipeline has multiple workflows that need to be stabilized and completed 
 ### **❌ Current Issues**
 - **Some CI runs failing** (X status in recent runs)
 - **Coverage workflow** needs completion and optimization
+- **Performance workflow** disabled due to CI timeouts (Issue #424)
 - **Benchmark budgets** need tuning (Issue #209)
 - **Linting issues** may be present
 - **Cross-platform compatibility** needs verification
@@ -40,6 +41,7 @@ The CI pipeline has multiple workflows that need to be stabilized and completed 
 ### **1. Fix Failing CI Workflows**
 - Identify and resolve R-CMD-check failures
 - Fix coverage workflow issues
+- **Implement performance CI strategy** (Issue #424)
 - Resolve linting problems
 - Ensure benchmarks complete successfully
 

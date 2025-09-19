@@ -19,65 +19,81 @@
 
 ## Implementation Plan
 
-### Phase 1: Core Benchmarking Infrastructure
+### **UPDATED: Regression-Based CI Strategy**
+
+Based on R development best practices and GitHub CI standards, we're implementing a sophisticated performance CI system with two-tier approach:
+
+### Phase 1: Infrastructure Setup
 **Timeline**: 2-3 days  
 **Files to Create**:
-- `scripts/benchmark-ideal-transcripts.R` - Main benchmarking script
-- `tests/testthat/test-performance.R` - Performance regression tests
-- `docs/performance-guidelines.md` - Performance documentation
+- `perf/baselines/linux-R-release.json` - Performance baselines
+- `perf/scripts/performance-test.R` - Fast performance tests
+- `perf/scripts/performance-profiling.R` - Comprehensive profiling
+- `perf/scripts/check-performance-regression.R` - Regression detection
+- `tests/testthat/test-performance.R` - CRAN-safe performance tests
 
 **Key Components**:
-1. **Processing Time Measurement**
-   - Benchmark individual transcript processing
-   - Measure batch processing performance
-   - Track processing time trends
+1. **Baseline Management System**
+   - Committed JSON baselines for different environments
+   - Auditable performance history
+   - Easy baseline updates via dedicated workflow
 
-2. **Memory Usage Analysis**
-   - Monitor memory consumption during processing
-   - Identify memory leaks or inefficiencies
-   - Report memory usage patterns
+2. **Two-Tier CI Approach**
+   - **PR Regression Guard**: Fast, blocking, compares to baseline
+   - **Weekly Profiling**: Comprehensive, non-blocking, trend tracking
 
-3. **Performance Profiling**
-   - Profile critical functions
-   - Identify bottlenecks
-   - Optimize slow operations
+3. **Real User Workflow Testing**
+   - Test `parse_vtt()` on small/medium/large transcripts
+   - Test `engagement_summary()` on parsed results
+   - Focus on actual user paths, not package loading
 
-### Phase 2: CI/CD Integration
+### Phase 2: PR Regression Guard
 **Timeline**: 1-2 days  
 **Components**:
-- Automated performance regression tests
-- Performance metrics tracking
-- CI/CD pipeline integration
+- Fast performance tests using `{bench}` package
+- Baseline comparison with regression thresholds (+20% time, +30% memory)
+- Blocking CI integration for PRs
+- Memory and GC tracking
 
-### Phase 3: Documentation and Guidelines
+### Phase 3: Weekly Profiling
+**Timeline**: 1-2 days  
+**Components**:
+- Comprehensive performance profiling
+- Large synthetic dataset testing
+- Performance trend tracking
+- Artifact upload for historical analysis
+
+### Phase 4: Baseline Management
 **Timeline**: 1 day  
 **Components**:
-- Performance guidelines documentation
-- Usage examples and best practices
-- Performance optimization recommendations
+- Automated baseline update workflow
+- Multi-environment baseline support
+- Baseline validation and testing
 
 ## Technical Requirements
 
-### Performance Metrics to Track
-- **Processing Time**: Time to process individual and batch transcripts
-- **Memory Usage**: Peak memory consumption and memory efficiency
-- **Scalability**: Performance with different transcript sizes
-- **Regression Detection**: Automated detection of performance regressions
+### **UPDATED: Performance Metrics to Track**
+- **Processing Time**: Median execution time using `{bench}` package
+- **Memory Usage**: Peak memory consumption and GC count
+- **Scalability**: Performance with small/medium/large transcript fixtures
+- **Regression Detection**: Automated baseline comparison with thresholds
+- **Memory Efficiency**: Memory allocations and peak usage tracking
 
-### CRAN Compliance Requirements
-- All code must follow R package standards
+### **UPDATED: CRAN Compliance Requirements**
+- All performance tests wrapped in `skip_on_cran()` for CRAN safety
+- CI workflows handle actual benchmarking (not in `tests/`)
+- No performance tests in CRAN submission
 - Proper error handling and edge cases
 - Comprehensive documentation with roxygen2
-- All tests must pass
-- No external dependencies beyond base R and tidyverse
 
-### Success Criteria
-- [ ] Benchmarking script measures processing time accurately
-- [ ] Memory usage is tracked and reported
-- [ ] Performance regression tests are automated
-- [ ] Performance guidelines are documented
-- [ ] Benchmarks run in CI/CD pipeline
-- [ ] Performance metrics are tracked over time
+### **UPDATED: Success Criteria**
+- [ ] **Baseline System**: Committed JSON baselines for different environments
+- [ ] **PR Regression Guard**: Fast, blocking CI integration
+- [ ] **Weekly Profiling**: Comprehensive, non-blocking trend tracking
+- [ ] **Memory Tracking**: GC count and memory allocation monitoring
+- [ ] **Real User Workflows**: Test actual transcript processing paths
+- [ ] **Baseline Management**: Automated baseline update workflow
+- [ ] **CRAN Safety**: Performance tests don't affect CRAN submission
 
 ## Risk Assessment
 - **Low Risk**: Performance benchmarking is well-defined and straightforward

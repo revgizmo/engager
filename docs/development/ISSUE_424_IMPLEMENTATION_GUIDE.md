@@ -1,26 +1,41 @@
 # Issue 424: Performance Benchmarking Implementation Guide
 
+## **UPDATED: Regression-Based CI Strategy**
+
 ## Overview
-This guide provides step-by-step instructions for implementing performance benchmarking tools for ideal course transcripts in the engager R package.
+This guide provides step-by-step instructions for implementing a sophisticated performance CI system with regression-based testing, baseline management, and two-tier CI approach.
 
 ## Prerequisites
 - R development environment with package development tools
 - Existing ideal course transcript data
 - Current transcript processing functions from Issue #423
+- GitHub Actions CI/CD pipeline
+- `{bench}` package for robust performance measurement
 
-## Implementation Steps
+## **UPDATED: Implementation Steps**
 
-### Step 1: Create Main Benchmarking Script
+### Step 1: Create Performance Infrastructure
 
-**File**: `scripts/benchmark-ideal-transcripts.R`
-
-**Purpose**: Main script for running performance benchmarks on ideal course transcripts
+**Directory Structure**:
+```
+perf/
+├── baselines/
+│   ├── linux-R-release.json
+│   ├── macos-R-release.json
+│   └── windows-R-release.json
+├── scripts/
+│   ├── performance-test.R
+│   ├── performance-profiling.R
+│   └── check-performance-regression.R
+└── reports/
+    └── weekly/
+```
 
 **Key Features**:
-- Processing time measurement
-- Memory usage tracking
-- Performance profiling
-- Results reporting
+- Baseline management system
+- Regression detection with thresholds
+- Two-tier CI approach (PR guard + weekly profiling)
+- CRAN-safe performance testing
 
 **Implementation**:
 ```r

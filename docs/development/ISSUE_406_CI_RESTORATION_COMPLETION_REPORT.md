@@ -40,6 +40,17 @@ The CI pipeline was failing due to deprecated GitHub Actions:
 - Made benchmark upload conditional with `if: always() && hashFiles('benchmark_results.rds') != ''`
 - Added conditional execution for benchmark script
 
+### 4. **UPDATED: Performance CI Strategy (Issue #424)**
+**Status**: Performance workflow currently disabled due to timeouts
+**Recommendation**: Implement regression-based CI strategy
+
+**Proposed Changes:**
+- **Two-tier approach**: PR regression guard + weekly profiling
+- **Baseline management**: Committed JSON baselines for different environments
+- **Real user workflows**: Test actual transcript processing paths
+- **CRAN safety**: Performance tests wrapped in `skip_on_cran()`
+- **Memory tracking**: GC count and memory allocation monitoring
+
 ## Results
 
 ### Before Fix
@@ -95,9 +106,11 @@ The CI pipeline was failing due to deprecated GitHub Actions:
 3. **Document** the CI restoration process for future reference
 
 ### Future Improvements
-1. **Performance Workflow**: Consider using a lighter base image or pre-built dependencies
+1. **Performance Workflow**: Implement regression-based CI strategy (Issue #424)
 2. **Monitoring**: Add workflow status monitoring and alerting
 3. **Documentation**: Update CI documentation with troubleshooting guide
+4. **Performance CI**: Add two-tier performance testing (PR guard + weekly profiling)
+5. **Baseline Management**: Implement committed performance baselines
 
 ## Files Modified
 
