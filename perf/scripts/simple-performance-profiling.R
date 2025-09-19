@@ -10,8 +10,17 @@
 #' @export
 run_simple_performance_profiling <- function(output_dir = "perf/reports/weekly") {
   
-  library(engager)
-  library(jsonlite)
+  # Set timeout for comprehensive profiling (10 minutes)
+  options(timeout = 600)
+  
+  # Load required packages with error handling
+  tryCatch({
+    library(engager)
+    library(jsonlite)
+  }, error = function(e) {
+    cat("ERROR: Failed to load required packages:", e$message, "\n")
+    quit(status = 1)
+  })
   
   # Create output directory
   dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
@@ -237,5 +246,11 @@ if (!interactive()) {
   args <- commandArgs(trailingOnly = TRUE)
   output_dir <- if (length(args) > 0) args[1] else "perf/reports/weekly"
   
-  run_simple_performance_profiling(output_dir)
+  # Run with error handling
+  tryCatch({
+    run_simple_performance_profiling(output_dir)
+  }, error = function(e) {
+    cat("ERROR: Performance profiling failed:", e$message, "\n")
+    quit(status = 1)
+  })
 }

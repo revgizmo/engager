@@ -33,7 +33,7 @@ jobs:
       
       - name: Run performance tests for baseline
         run: |
-          Rscript perf/scripts/performance-test.R 10 baseline_results.json
+          Rscript perf/scripts/simple-performance-test.R 10 baseline_results.json
       
       - name: Update baseline file
         run: |

@@ -1,0 +1,24 @@
+{
+  "timestamp": ["2025-09-19 16:38:50"],
+  "environment": {
+    "os": ["Darwin"],
+    "r_version": ["R version 4.1.1 (2021-08-10)"],
+    "platform": ["aarch64-apple-darwin20"]
+  },
+  "tests": {
+    "small_vtt_parse": {
+      "time_median_ms": [103.2472],
+      "time_mean_ms": [200.8357],
+      "memory_peak_mb": [0.2222],
+      "memory_median_mb": [3.8147e-06],
+      "iterations": [3]
+    },
+    "engagement_summary": {
+      "time_median_ms": [118.928],
+      "time_mean_ms": [118.928],
+      "memory_peak_mb": [0.0045],
+      "memory_median_mb": [0.0045],
+      "iterations": [1]
+    }
+  }
+}

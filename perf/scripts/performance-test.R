@@ -38,18 +38,22 @@ run_performance_tests <- function(iterations = 5, output_file = "perf_results.js
     small_file <- small_files[1]
     cat("Testing small transcript:", basename(small_file), "\n")
     
-    # Test parse_vtt on small file
+    # Test process_zoom_transcript on small file
     small_result <- bench::mark(
-      parse_vtt(small_file),
+      {
+        result <- process_zoom_transcript(small_file)
+        result
+      },
       iterations = iterations,
       memory = TRUE,
-      check = FALSE
+      check = FALSE,
+      filter_gc = FALSE
     )
     
     results$tests$small_vtt_parse <- list(
-      time_median_ms = as.numeric(median(small_result$time)) * 1000,
-      memory_peak_mb = as.numeric(median(small_result$memory)) / 1024^2,
-      gc_count = median(small_result$gc_count),
+      time_median_ms = as.numeric(median(small_result$time, na.rm = TRUE)) * 1000,
+      memory_peak_mb = as.numeric(median(small_result$memory, na.rm = TRUE)) / 1024^2,
+      gc_count = median(small_result$gc_count, na.rm = TRUE),
       iterations = iterations
     )
     
@@ -60,18 +64,20 @@ run_performance_tests <- function(iterations = 5, output_file = "perf_results.js
       
       summary_result <- bench::mark(
         {
-          parsed <- parse_vtt(medium_file)
-          engagement_summary(parsed)
+          parsed <- process_zoom_transcript(medium_file)
+          result <- summarize_transcript_metrics(transcript_df = parsed)
+          result
         },
         iterations = max(1, iterations - 2),  # Fewer iterations for complex operation
         memory = TRUE,
-        check = FALSE
+        check = FALSE,
+        filter_gc = FALSE
       )
       
       results$tests$engagement_summary <- list(
-        time_median_ms = as.numeric(median(summary_result$time)) * 1000,
-        memory_peak_mb = as.numeric(median(summary_result$memory)) / 1024^2,
-        gc_count = median(summary_result$gc_count),
+        time_median_ms = as.numeric(median(summary_result$time, na.rm = TRUE)) * 1000,
+        memory_peak_mb = as.numeric(median(summary_result$memory, na.rm = TRUE)) / 1024^2,
+        gc_count = median(summary_result$gc_count, na.rm = TRUE),
         iterations = max(1, iterations - 2)
       )
     }
@@ -96,13 +102,14 @@ run_performance_tests <- function(iterations = 5, output_file = "perf_results.js
       },
       iterations = iterations,
       memory = TRUE,
-      check = FALSE
+      check = FALSE,
+      filter_gc = FALSE
     )
     
     results$tests$synthetic_processing <- list(
-      time_median_ms = as.numeric(median(synthetic_result$time)) * 1000,
-      memory_peak_mb = as.numeric(median(synthetic_result$memory)) / 1024^2,
-      gc_count = median(synthetic_result$gc_count),
+      time_median_ms = as.numeric(median(synthetic_result$time, na.rm = TRUE)) * 1000,
+      memory_peak_mb = as.numeric(median(synthetic_result$memory, na.rm = TRUE)) / 1024^2,
+      gc_count = median(synthetic_result$gc_count, na.rm = TRUE),
       iterations = iterations
     )
   }
