@@ -8,8 +8,7 @@ safe_name_matching_workflow(
   transcript_file_path = NULL,
   roster_data = NULL,
   privacy_level = getOption("engager.privacy_level", "mask"),
-  unmatched_names_action = getOption("engager.unmatched_names_action",
-    "stop"),
+  unmatched_names_action = getOption("engager.unmatched_names_action", "stop"),
   data_folder = ".",
   section_names_lookup_file = "section_names_lookup.csv"
 )
