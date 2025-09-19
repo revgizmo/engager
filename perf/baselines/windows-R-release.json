@@ -1,0 +1,30 @@
+{
+  "environment": {
+    "os": "windows",
+    "r_version": "release",
+    "platform": "x86_64-w64-mingw32"
+  },
+  "baseline_date": "2025-09-19",
+  "performance_metrics": {
+    "small_vtt_parse": {
+      "time_median_ms": 180.0,
+      "memory_peak_mb": 30.0,
+      "gc_count": 3
+    },
+    "medium_vtt_parse": {
+      "time_median_ms": 520.0,
+      "memory_peak_mb": 85.0,
+      "gc_count": 6
+    },
+    "engagement_summary": {
+      "time_median_ms": 220.0,
+      "memory_peak_mb": 55.0,
+      "gc_count": 4
+    }
+  },
+  "regression_thresholds": {
+    "time_increase_percent": 20.0,
+    "memory_increase_percent": 30.0
+  },
+  "notes": "Initial baseline - will be updated with real measurements"
+}

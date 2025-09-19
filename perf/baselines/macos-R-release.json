@@ -1,0 +1,30 @@
+{
+  "environment": {
+    "os": "macos",
+    "r_version": "release",
+    "platform": "x86_64-apple-darwin20"
+  },
+  "baseline_date": "2025-09-19",
+  "performance_metrics": {
+    "small_vtt_parse": {
+      "time_median_ms": 120.0,
+      "memory_peak_mb": 20.0,
+      "gc_count": 1
+    },
+    "medium_vtt_parse": {
+      "time_median_ms": 380.0,
+      "memory_peak_mb": 65.0,
+      "gc_count": 4
+    },
+    "engagement_summary": {
+      "time_median_ms": 180.0,
+      "memory_peak_mb": 45.0,
+      "gc_count": 2
+    }
+  },
+  "regression_thresholds": {
+    "time_increase_percent": 20.0,
+    "memory_increase_percent": 30.0
+  },
+  "notes": "Initial baseline - will be updated with real measurements"
+}

@@ -1,0 +1,30 @@
+{
+  "environment": {
+    "os": "linux",
+    "r_version": "release",
+    "platform": "x86_64-pc-linux-gnu"
+  },
+  "baseline_date": "2025-09-19",
+  "performance_metrics": {
+    "small_vtt_parse": {
+      "time_median_ms": 150.0,
+      "memory_peak_mb": 25.0,
+      "gc_count": 2
+    },
+    "medium_vtt_parse": {
+      "time_median_ms": 450.0,
+      "memory_peak_mb": 75.0,
+      "gc_count": 5
+    },
+    "engagement_summary": {
+      "time_median_ms": 200.0,
+      "memory_peak_mb": 50.0,
+      "gc_count": 3
+    }
+  },
+  "regression_thresholds": {
+    "time_increase_percent": 20.0,
+    "memory_increase_percent": 30.0
+  },
+  "notes": "Initial baseline - will be updated with real measurements"
+}
