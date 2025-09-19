@@ -25,7 +25,7 @@ jobs:
       
       - name: Run comprehensive performance profiling
         run: |
-          Rscript perf/scripts/performance-profiling.R perf/reports/weekly
+          Rscript perf/scripts/simple-performance-profiling.R perf/reports/weekly
       
       - name: Upload profiling reports
         uses: actions/upload-artifact@v4
