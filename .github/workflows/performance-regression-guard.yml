@@ -25,11 +25,13 @@ jobs:
       
       - name: Run fast performance tests
         run: |
-          Rscript perf/scripts/performance-test.R 5 perf_results.json
+          Rscript perf/scripts/simple-performance-test.R 5 perf_results.json
       
       - name: Check for performance regressions
+        id: regression-check
         run: |
           Rscript perf/scripts/check-performance-regression.R perf_results.json perf/baselines/linux-R-release.json
+          echo "regression_detected=$?" >> $GITHUB_OUTPUT
       
       - name: Upload performance results
         if: always()
@@ -46,8 +48,15 @@ jobs:
             const fs = require('fs');
             if (fs.existsSync('perf_results.json')) {
               const results = JSON.parse(fs.readFileSync('perf_results.json', 'utf8'));
-              const comment = `## Performance Test Results
+              const regressionDetected = '${{ steps.regression-check.outputs.regression_detected }}' === '1';
               
+              const statusIcon = regressionDetected ? '❌' : '✅';
+              const statusText = regressionDetected ? 'REGRESSIONS DETECTED' : 'No regressions detected';
+              const statusColor = regressionDetected ? 'red' : 'green';
+              
+              const comment = `## ${statusIcon} Performance Test Results
+              
+              **Status**: ${statusText}
               **Environment**: ${results.environment.os} - ${results.environment.r_version}
               **Timestamp**: ${results.timestamp}
               
@@ -55,6 +64,15 @@ jobs:
               ${Object.entries(results.tests).map(([test, data]) => 
                 `- **${test}**: ${data.time_median_ms.toFixed(1)}ms, ${data.memory_peak_mb.toFixed(1)}MB, ${data.gc_count} GC`
               ).join('\n')}
+              
+              ${regressionDetected ? `
+              ### ⚠️ Performance Regressions
+              This PR has performance regressions that exceed the threshold:
+              - **Time regression**: +20% threshold
+              - **Memory regression**: +30% threshold
+              
+              **Action Required**: Optimize the code or update the baseline if the regression is acceptable.
+              ` : ''}
               
               <details>
               <summary>Raw Results</summary>
