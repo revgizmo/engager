@@ -12,7 +12,7 @@ This directory contains detailed documentation organized by purpose and audience
 - **[CURSOR_INTEGRATION.md](development/CURSOR_INTEGRATION.md)** - Cursor-specific guidelines and features
 - **[PRE_PR_VALIDATION.md](development/PRE_PR_VALIDATION.md)** - Pre-PR validation checklist and requirements
 - **[CRAN_SUBMISSION.md](development/CRAN_SUBMISSION.md)** - CRAN submission requirements and process
-- **[docs/development/docs/development/docs/development/ISSUE_MANAGEMENT_GUIDELINES.md](development/docs/development/docs/development/docs/development/ISSUE_MANAGEMENT_GUIDELINES.md)** - Comprehensive issue management practices
+- **[ISSUE_MANAGEMENT_GUIDELINES.md](development/ISSUE_MANAGEMENT_GUIDELINES.md)** - Comprehensive issue management practices
 - **[AUDIT_LOG.md](development/AUDIT_LOG.md)** - Codebase audit tracking and decisions
 
 ### `planning/` - Planning Documents
@@ -56,4 +56,4 @@ This directory contains detailed documentation organized by purpose and audience
 
 ---
 
-**Note**: For essential documentation and quick reference, see the files in the repository root, particularly [DOCUMENTATION.md](../DOCUMENTATION.md) for the complete documentation index. 
+**Note**: For essential documentation and quick reference, see the files in the repository root, particularly [CONTRIBUTING.md](../CONTRIBUTING.md) for contribution guidelines. 
