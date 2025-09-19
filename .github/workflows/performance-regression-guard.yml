@@ -2,7 +2,7 @@ name: Performance Regression Guard
 
 on:
   pull_request:
-    branches: [ main, develop ]
+    branches: [ main, develop, cran-submission-v0.1.0 ]
   workflow_dispatch:
 
 jobs:
