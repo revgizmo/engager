@@ -26,11 +26,12 @@ knitr::opts_chunk$set(
 [![coverage](https://img.shields.io/github/actions/workflow/status/revgizmo/engager/coverage.yaml?branch=main&label=coverage)](https://github.com/revgizmo/engager/actions/workflows/coverage.yaml)
 <!-- badges: end -->
 
-The goal of `engager` is to allow instructors to gain insights into student engagement, with a particular focus on participation equity, from Zoom transcripts of recorded course sessions.
+The goal of `zoomstudentengagement` is to allow instructors to gain insights into student engagement, with a particular focus on participation equity, from Zoom transcripts of recorded course sessions.
 
 ## 📚 Documentation
 
-- **[docs/README.md](docs/README.md)** - Complete documentation index
+- **[PROJECT.md](PROJECT.md)** - Current project status and CRAN readiness
+- **[DOCUMENTATION.md](DOCUMENTATION.md)** - Complete documentation index
 - **[docs/features/feature-index.md](docs/features/feature-index.md)** - Comprehensive feature documentation
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute
 - **[docs/development/ISSUE_MANAGEMENT_QUICK_REFERENCE.md](docs/development/ISSUE_MANAGEMENT_QUICK_REFERENCE.md)** - Quick guide for issue management
@@ -43,6 +44,24 @@ The goal of `engager` is to allow instructors to gain insights into student enga
 devtools::install_github("revgizmo/engager")
 ```
 
+### Development with Cursor Background Agents
+
+For developers using Cursor IDE with background agents:
+
+```{bash eval = FALSE}
+# 1. Clone the repository
+git clone https://github.com/revgizmo/engager.git
+cd engager
+
+# 2. Use "Develop in Agent" workflow in Cursor
+# The background agent will use the standard R development environment
+```
+
+**Development Documentation:**
+- **[R Package Development Guide](docs/development/CURSOR_BACKGROUND_AGENT_R_DEVELOPMENT.md)** - Complete workflow guide
+- **[Troubleshooting Guide](docs/development/CURSOR_BACKGROUND_AGENT_TROUBLESHOOTING.md)** - Common issues and solutions
+
+**Note**: Docker development work is isolated in feature branches. For Docker-specific development, see the Docker isolation framework in `docs/development/`.
 
 ### 5-minute whole-game example
 
@@ -188,6 +207,8 @@ See the vignette "Ethical & FERPA Guide" for details.
 ### Pull Request Review
 This project uses a lightweight PR review process focused on CRAN submission readiness and privacy compliance. See [CONTRIBUTING.md](CONTRIBUTING.md) for the review checklist and criteria.
 
+For complex PRs or detailed evaluation, the project includes an AI-assisted PR review system (see `PR_REVIEW_PROMPT_GENERATOR_OPTIMIZED.md`).
+
 ## 🤝 Contributing
 
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
@@ -201,7 +222,7 @@ and the full text in [LICENSE.md](LICENSE.md).
 
 - **GitHub Repository**: https://github.com/revgizmo/engager
 - **Issues**: https://github.com/revgizmo/engager/issues
-- **Project Status**: [docs/development/PROJECT.md](docs/development/PROJECT.md)
+- **Project Status**: [PROJECT.md](PROJECT.md)
 
 
 

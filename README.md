@@ -3,9 +3,6 @@
   - <a href="#-documentation" id="toc--documentation">📚 Documentation</a>
   - <a href="#-quick-start" id="toc--quick-start">🚀 Quick Start</a>
     - <a href="#installation" id="toc-installation">Installation</a>
-    - <a href="#development-with-cursor-background-agents"
-      id="toc-development-with-cursor-background-agents">Development with
-      Cursor Background Agents</a>
     - <a href="#5-minute-whole-game-example"
       id="toc-5-minute-whole-game-example">5-minute whole-game example</a>
     - <a href="#basic-example" id="toc-basic-example">Basic Example</a>
@@ -54,10 +51,7 @@ participation equity, from Zoom transcripts of recorded course sessions.
 
 ## 📚 Documentation
 
-- **[PROJECT.md](PROJECT.md)** - Current project status and CRAN
-  readiness
-- **[DOCUMENTATION.md](DOCUMENTATION.md)** - Complete documentation
-  index
+- **[docs/README.md](docs/README.md)** - Complete documentation index
 - **[docs/features/feature-index.md](docs/features/feature-index.md)** -
   Comprehensive feature documentation
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute
@@ -71,29 +65,6 @@ participation equity, from Zoom transcripts of recorded course sessions.
 ``` r
 devtools::install_github("revgizmo/engager")
 ```
-
-### Development with Cursor Background Agents
-
-For developers using Cursor IDE with background agents:
-
-``` bash
-# 1. Clone the repository
-git clone https://github.com/revgizmo/engager.git
-cd engager
-
-# 2. Use "Develop in Agent" workflow in Cursor
-# The background agent will use the standard R development environment
-```
-
-**Development Documentation:** - **[R Package Development
-Guide](docs/development/CURSOR_BACKGROUND_AGENT_R_DEVELOPMENT.md)** -
-Complete workflow guide - **[Troubleshooting
-Guide](docs/development/CURSOR_BACKGROUND_AGENT_TROUBLESHOOTING.md)** -
-Common issues and solutions
-
-**Note**: Docker development work is isolated in feature branches. For
-Docker-specific development, see the Docker isolation framework in
-`docs/development/`.
 
 ### 5-minute whole-game example
 
@@ -271,10 +242,6 @@ submission readiness and privacy compliance. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for the review checklist and
 criteria.
 
-For complex PRs or detailed evaluation, the project includes an
-AI-assisted PR review system (see
-`PR_REVIEW_PROMPT_GENERATOR_OPTIMIZED.md`).
-
 ## 🤝 Contributing
 
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md)
@@ -289,4 +256,5 @@ This package is licensed under the MIT License. See the CRAN stub in
 
 - **GitHub Repository**: <https://github.com/revgizmo/engager>
 - **Issues**: <https://github.com/revgizmo/engager/issues>
-- **Project Status**: [PROJECT.md](PROJECT.md)
+- **Project Status**:
+  [docs/development/PROJECT.md](docs/development/PROJECT.md)

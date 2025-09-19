@@ -329,3 +329,10 @@ docs/analysis/lessons-learned/
 ^vignette_build_updated\.log$
 ^vignette_migration_map\.md$
 ^engager_.*\.tar\.gz$
+^zoomstudentengagement_1\.0\.0\.tar\.gz$
+
+# Development artifacts and cleanup
+^dev/
+^backups/
+^scripts/maintenance/
+^docs/checklists/
