@@ -6,20 +6,15 @@
   },
   "baseline_date": "2025-09-19",
   "performance_metrics": {
-    "small_vtt_parse": {
-      "time_median_ms": 150.0,
-      "memory_peak_mb": 25.0,
-      "gc_count": 2
+    "basic_operations": {
+      "time_median_ms": 30.0,
+      "memory_peak_mb": 0.001,
+      "gc_count": 1
     },
-    "medium_vtt_parse": {
-      "time_median_ms": 450.0,
-      "memory_peak_mb": 75.0,
-      "gc_count": 5
-    },
-    "engagement_summary": {
-      "time_median_ms": 200.0,
-      "memory_peak_mb": 50.0,
-      "gc_count": 3
+    "string_processing": {
+      "time_median_ms": 17.0,
+      "memory_peak_mb": 0.0003,
+      "gc_count": 1
     }
   },
   "regression_thresholds": {

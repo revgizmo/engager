@@ -1,0 +1,13 @@
+pandoc: 2.19.2
+pkgdown: 2.0.9
+pkgdown_sha: ~
+articles:
+  essential-functions: essential-functions.html
+  ferpa-ethics: ferpa-ethics.html
+  getting-started: getting-started.html
+  plotting: plotting.html
+last_built: 2025-09-21T00:12Z
+urls:
+  reference: https://revgizmo.github.io/engager/reference
+  article: https://revgizmo.github.io/engager/articles
+

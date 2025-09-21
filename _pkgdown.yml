@@ -11,26 +11,53 @@ navbar:
     right: [search]
 
 reference:
-- title: Loaders
+- title: Core Functions
   contents:
-  - starts_with("load_")
-- title: Transformations
-  contents:
-  - starts_with("make_")
-  - starts_with("summarize_")
-- title: Writers
-  contents:
-  - starts_with("write_")
-- title: Plotting
-  contents:
-  - starts_with("plot_")
+  - analyze_transcripts
+  - consolidate_transcript
+  - detect_duplicate_transcripts
+  - load_zoom_transcript
+  - process_zoom_transcript
+  - summarize_transcript_files
+  - summarize_transcript_metrics
 - title: Privacy and Compliance
   contents:
-  - contains("privacy")
-  - contains("ferpa")
-- title: Pipelines and Utilities
+  - anonymize_educational_data
+  - ensure_privacy
+  - privacy_audit
+  - validate_privacy_compliance
+- title: Visualization and Output
   contents:
-  - starts_with("process_")
-  - starts_with("create_")
+  - plot_users
+  - write_metrics
+- title: Internal Functions
+  contents:
+  - starts_with("abort_")
+  - starts_with("add_")
+  - starts_with("analyze_")
+  - starts_with("apply_")
+  - starts_with("basic_")
+  - starts_with("batch_")
+  - starts_with("calculate_")
+  - starts_with("convert_")
+  - starts_with("data")
+  - starts_with("engager-")
+  - starts_with("ethical_")
+  - starts_with("ferpa_")
+  - starts_with("find_")
+  - starts_with("get_")
+  - starts_with("load_")
+  - starts_with("lookup_")
+  - starts_with("make_")
+  - starts_with("plot_")
+  - starts_with("quick_")
+  - starts_with("run_")
+  - starts_with("safe_")
+  - starts_with("schema")
+  - starts_with("set_")
+  - starts_with("show_")
+  - starts_with("ux_")
+  - starts_with("user_")
   - starts_with("validate_")
-  - starts_with("ensure_")
+  - starts_with("zse_")
+  - "%>%"
