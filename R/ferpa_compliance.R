@@ -214,7 +214,7 @@ anonymize_educational_data <- function(data = NULL,
         dplyr::group_by(section) %>%
         dplyr::summarise(dplyr::across(
           dplyr::everything(),
-          ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.)
+          ~ if (is.numeric(.)) mean(., na.rm = TRUE) else dplyr::first(.)
         )) %>%
         dplyr::ungroup()
     } else if (aggregation_level == "course" && "course" %in% names(data)) {
@@ -222,7 +222,7 @@ anonymize_educational_data <- function(data = NULL,
         dplyr::group_by(course) %>%
         dplyr::summarise(dplyr::across(
           dplyr::everything(),
-          ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.)
+          ~ if (is.numeric(.)) mean(., na.rm = TRUE) else dplyr::first(.)
         )) %>%
         dplyr::ungroup()
     } else {
@@ -384,6 +384,10 @@ check_data_retention_policy <- function(data = NULL,
                                         date_column = NULL,
                                         current_date = Sys.Date()) {
   retention_period <- match.arg(retention_period)
+
+  if (!is.data.frame(data)) {
+    stop("Data must be a data frame or tibble", call. = FALSE)
+  }
 
   result <- list(
     compliant = TRUE,
