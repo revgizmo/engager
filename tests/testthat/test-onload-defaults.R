@@ -91,6 +91,22 @@ test_that(".onLoad behavior is consistent across multiple calls", {
   expect_identical(first_call, "mask")
 })
 
+test_that(".onAttach suppresses startup message when globally disabled", {
+  old <- getOption("engager.show_startup", NULL)
+  on.exit(options(engager.show_startup = old), add = TRUE)
+  options(engager.show_startup = FALSE)
+
+  expect_silent(engager:::.onAttach(NULL, "engager"))
+})
+
+test_that(".onAttach displays helpful startup guidance when enabled", {
+  old <- getOption("engager.show_startup", NULL)
+  on.exit(options(engager.show_startup = old), add = TRUE)
+  options(engager.show_startup = TRUE)
+
+  expect_message(engager:::.onAttach(NULL, "engager"), "Welcome to engager!")
+})
+
 # Additional tests for related privacy functionality to ensure comprehensive coverage
 
 test_that("calculate_content_similarity returns 1 for identical simple inputs", {
