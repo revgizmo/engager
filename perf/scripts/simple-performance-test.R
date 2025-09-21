@@ -16,6 +16,14 @@ run_simple_performance_tests <- function(iterations = 5, output_file = "perf_res
   
   # Load required packages with error handling
   tryCatch({
+    # Try to load engager package, if not available, use devtools::load_all()
+    if (!requireNamespace("engager", quietly = TRUE)) {
+      if (requireNamespace("devtools", quietly = TRUE)) {
+        devtools::load_all(".")
+      } else {
+        stop("engager package not available and devtools not installed")
+      }
+    }
     library(engager)
     library(jsonlite)
   }, error = function(e) {

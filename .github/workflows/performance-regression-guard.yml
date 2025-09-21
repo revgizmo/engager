@@ -20,7 +20,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "bench", "jsonlite"))
+          install.packages(c("remotes", "bench", "jsonlite", "devtools"))
           remotes::install_deps(dependencies = TRUE)
       
       - name: Run fast performance tests
