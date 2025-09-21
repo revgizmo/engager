@@ -31,8 +31,10 @@ Removed empty directory ‘engager/backups’
 Removed empty directory ‘engager/cran’
 Removed empty directory ‘engager/debug_output’
 Removed empty directory ‘engager/dev’
+Removed empty directory ‘engager/perf’
 Removed empty directory ‘engager/revdep’
 Removed empty directory ‘engager/scripts’
+Removed empty directory ‘engager/tests/testthat/_snaps’
 Removed empty directory ‘engager/zoom_real_world_testing’
 * building ‘engager_0.1.0.tar.gz’
 
@@ -44,7 +46,7 @@ Setting env vars:
 • _R_CHECK_PACKAGES_USED_IGNORE_UNUSED_IMPORTS_: FALSE
 • NOT_CRAN                                     : true
 ── R CMD check ─────────────────────────────────────────────────────────────────
-* using log directory ‘/private/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T/RtmpTyjj8E/fileeadc3aeb02ed/engager.Rcheck’
+* using log directory ‘/private/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T/RtmprOn1CG/file185a37214d8f2/engager.Rcheck’
 * using R version 4.1.1 (2021-08-10)
 * using platform: aarch64-apple-darwin20 (64-bit)
 * using session charset: UTF-8
@@ -69,10 +71,7 @@ Setting env vars:
 unable to verify current time
 * checking ‘build’ directory ... OK
 * checking DESCRIPTION meta-information ... OK
-* checking top-level files ... NOTE
-Non-standard files/directories found at top level:
-  ‘CHANGELOG.md’ ‘check_output.txt’ ‘final_check_output.txt’
-  ‘final_cran_check.txt’ ‘final_ux_test.txt’
+* checking top-level files ... OK
 * checking for left-over files ... OK
 * checking index information ... OK
 * checking package subdirectories ... OK
@@ -111,20 +110,15 @@ Non-standard files/directories found at top level:
 * checking for detritus in the temp directory ... OK
 * DONE
 
-Status: 2 NOTEs
+Status: 1 NOTE
 See
-  ‘/private/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T/RtmpTyjj8E/fileeadc3aeb02ed/engager.Rcheck/00check.log’
+  ‘/private/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T/RtmprOn1CG/file185a37214d8f2/engager.Rcheck/00check.log’
 for details.
 
 ── R CMD check results ────────────────────────────────────── engager 0.1.0 ────
-Duration: 41s
+Duration: 41.4s
 
 ❯ checking for future file timestamps ... NOTE
   unable to verify current time
 
-❯ checking top-level files ... NOTE
-  Non-standard files/directories found at top level:
-    ‘CHANGELOG.md’ ‘check_output.txt’ ‘final_check_output.txt’
-    ‘final_cran_check.txt’ ‘final_ux_test.txt’
-
-0 errors ✔ | 0 warnings ✔ | 2 notes ✖
+0 errors ✔ | 0 warnings ✔ | 1 note ✖

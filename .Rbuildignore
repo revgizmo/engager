@@ -336,3 +336,15 @@ docs/analysis/lessons-learned/
 ^backups/
 ^scripts/maintenance/
 ^docs/checklists/
+
+# Build artifacts and test outputs
+^.*\.txt$
+^.*\.json$
+^test_.*\.sh$
+^.*_results\.json$
+^.*_output\.txt$
+^.*_check\.txt$
+^.*_test\.txt$
+^.*_ci\.md$
+^.*_performance.*\.md$
+^perf/
