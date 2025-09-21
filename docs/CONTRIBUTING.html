@@ -201,7 +201,16 @@ docs(readme): update installation instructions</code></pre>
 <input type="checkbox" disabled><strong>Merge Readiness</strong>: Conflicts resolved, CI passing</li>
 <li>
 <input type="checkbox" disabled><strong>Project Alignment</strong>: Supports CRAN submission goals</li>
+</ul><div class="section level4">
+<h4 id="temporary-ci-policy-until-ci-is-unblocked--see-issue-406">Temporary CI Policy (until CI is unblocked) — see Issue #406<a class="anchor" aria-label="anchor" href="#temporary-ci-policy-until-ci-is-unblocked--see-issue-406"></a></h4>
+<ul><li>CI is currently blocked. During this period, maintainers may self-merge their own PRs if BOTH of the following succeed locally:
+<ul><li><code>Rscript scripts/pre-pr-validation.R</code></li>
+<li><code>./scripts/save-context.sh</code></li>
+</ul></li>
+<li>Document the successful runs in the PR description or as a review comment.</li>
+<li>When CI is restored, this temporary policy will be removed and normal CI gating will resume. Track at Issue #406.</li>
 </ul></div>
+</div>
 <div class="section level3">
 <h3 id="decision-criteria">Decision Criteria<a class="anchor" aria-label="anchor" href="#decision-criteria"></a></h3>
 <ul><li>
@@ -220,7 +229,7 @@ docs(readme): update installation instructions</code></pre>
 <li>
 <strong>Branch Protection</strong>: Use admin override when appropriate</li>
 <li>
-<strong>CI Pending</strong>: Acceptable for documentation, require fixes for code changes</li>
+<strong>CI Pending / Blocked</strong>: While CI is blocked (Issue #406), self-merge is allowed if <code>scripts/pre-pr-validation.R</code> and <code>scripts/save-context.sh</code> both complete successfully locally and results are recorded in the PR.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="time-estimates">Time Estimates<a class="anchor" aria-label="anchor" href="#time-estimates"></a></h3>
