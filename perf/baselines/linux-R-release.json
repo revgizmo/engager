@@ -1,0 +1,25 @@
+{
+  "environment": {
+    "os": "linux",
+    "r_version": "release",
+    "platform": "x86_64-pc-linux-gnu"
+  },
+  "baseline_date": "2025-09-19",
+  "performance_metrics": {
+    "basic_operations": {
+      "time_median_ms": 30.0,
+      "memory_peak_mb": 0.001,
+      "gc_count": 1
+    },
+    "string_processing": {
+      "time_median_ms": 17.0,
+      "memory_peak_mb": 0.0003,
+      "gc_count": 1
+    }
+  },
+  "regression_thresholds": {
+    "time_increase_percent": 20.0,
+    "memory_increase_percent": 30.0
+  },
+  "notes": "Initial baseline - will be updated with real measurements"
+}

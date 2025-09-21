@@ -1,0 +1,107 @@
+name: Update Performance Baseline
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to update baseline for'
+        required: true
+        default: 'linux-R-release'
+        type: choice
+        options:
+          - linux-R-release
+          - macos-R-release
+          - windows-R-release
+
+jobs:
+  update-baseline:
+    runs-on: ${{ github.event.inputs.environment == 'macos-R-release' && 'macos-latest' || github.event.inputs.environment == 'windows-R-release' && 'windows-latest' || 'ubuntu-latest' }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+      
+      - name: Install dependencies
+        run: |
+          install.packages(c("remotes", "bench", "jsonlite"))
+          remotes::install_deps(dependencies = TRUE)
+      
+      - name: Run performance tests for baseline
+        run: |
+          Rscript perf/scripts/simple-performance-test.R 10 baseline_results.json
+      
+      - name: Update baseline file
+        run: |
+          # Load current baseline
+          baseline_file="perf/baselines/${{ github.event.inputs.environment }}.json"
+          current_baseline=$(cat "$baseline_file")
+          
+          # Load new results
+          new_results=$(cat baseline_results.json)
+          
+          # Update baseline with new results
+          echo "$current_baseline" | jq --argjson new "$new_results" '
+            .baseline_date = ($new.timestamp | split("T")[0]) |
+            .performance_metrics = {
+              small_vtt_parse: {
+                time_median_ms: $new.tests.small_vtt_parse.time_median_ms,
+                memory_peak_mb: $new.tests.small_vtt_parse.memory_peak_mb,
+                gc_count: $new.tests.small_vtt_parse.gc_count
+              },
+              medium_vtt_parse: {
+                time_median_ms: $new.tests.medium_vtt_parse.time_median_ms,
+                memory_peak_mb: $new.tests.medium_vtt_parse.memory_peak_mb,
+                gc_count: $new.tests.medium_vtt_parse.gc_count
+              },
+              engagement_summary: {
+                time_median_ms: $new.tests.engagement_summary.time_median_ms,
+                memory_peak_mb: $new.tests.engagement_summary.memory_peak_mb,
+                gc_count: $new.tests.engagement_summary.gc_count
+              }
+            } |
+            .notes = "Updated baseline from performance test run on " + ($new.timestamp | split("T")[0])
+          ' > updated_baseline.json
+          
+          # Replace original baseline
+          mv updated_baseline.json "$baseline_file"
+          
+          echo "Updated baseline for ${{ github.event.inputs.environment }}"
+          cat "$baseline_file"
+      
+      - name: Commit updated baseline
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add perf/baselines/${{ github.event.inputs.environment }}.json
+          git commit -m "update: performance baseline for ${{ github.event.inputs.environment }}
+          
+          - Updated baseline from performance test run
+          - Environment: ${{ github.event.inputs.environment }}
+          - Date: $(date)
+          - Triggered by: ${{ github.actor }}"
+          git push
+      
+      - name: Create baseline update summary
+        run: |
+          echo "## Performance Baseline Updated" > baseline_update_summary.md
+          echo "" >> baseline_update_summary.md
+          echo "**Environment**: ${{ github.event.inputs.environment }}" >> baseline_update_summary.md
+          echo "**Date**: $(date)" >> baseline_update_summary.md
+          echo "**Triggered by**: ${{ github.actor }}" >> baseline_update_summary.md
+          echo "" >> baseline_update_summary.md
+          echo "### Updated Metrics:" >> baseline_update_summary.md
+          echo "\`\`\`json" >> baseline_update_summary.md
+          cat perf/baselines/${{ github.event.inputs.environment }}.json >> baseline_update_summary.md
+          echo "\`\`\`" >> baseline_update_summary.md
+      
+      - name: Upload baseline update summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: baseline-update-${{ github.event.inputs.environment }}-${{ github.run_number }}
+          path: baseline_update_summary.md
+          retention-days: 30

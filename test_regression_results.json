@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-09-19T16:11:22",
+  "environment": {
+    "os": "Darwin",
+    "r_version": "R version 4.1.1 (2021-08-10)",
+    "platform": "aarch64-apple-darwin20"
+  },
+  "tests": {
+    "small_vtt_parse": {
+      "time_median_ms": 200.0,
+      "memory_peak_mb": 50.0,
+      "gc_count": 5,
+      "iterations": 3
+    },
+    "engagement_summary": {
+      "time_median_ms": 250.0,
+      "memory_peak_mb": 30.0,
+      "gc_count": 3,
+      "iterations": 1
+    }
+  }
+}

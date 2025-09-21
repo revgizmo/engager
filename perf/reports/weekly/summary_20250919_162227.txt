@@ -1,0 +1,20 @@
+Performance Profiling Summary - 2025-09-19 16:22:27
+Environment: Darwin R version 4.1.1 (2021-08-10)
+
+Test Results:
+   small_transcript :
+    Time (median): 89.5 ms
+    Memory (peak): 0.2 MB
+
+   medium_transcript :
+    Time (median): 100.0 ms
+    Memory (peak): 0.0 MB
+
+   large_synthetic :
+    Time (median): 27.6 ms
+    Memory (peak): 0.0 MB
+
+   memory_stress :
+    Time (median): 53.0 ms
+    Memory (peak): 0.0 MB
+

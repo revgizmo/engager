@@ -1,0 +1,60 @@
+{
+  "timestamp": ["2025-09-19 16:38:38"],
+  "environment": {
+    "os": ["Darwin"],
+    "r_version": ["R version 4.1.1 (2021-08-10)"],
+    "platform": ["aarch64-apple-darwin20"],
+    "memory_limit": ["N/A"]
+  },
+  "profiling": {
+    "small_transcript": {
+      "time_stats": {
+        "median_ms": [143.6185],
+        "mean_ms": [333.9665],
+        "p95_ms": [1068.8434],
+        "min_ms": [93.3461],
+        "max_ms": [1611.0821]
+      },
+      "memory_stats": {
+        "median_mb": [3.8147e-06],
+        "mean_mb": [0.0222],
+        "peak_mb": [0.2221]
+      },
+      "file_size_kb": [12.6826]
+    },
+    "medium_transcript": {
+      "time_stats": {
+        "median_ms": [118.196],
+        "mean_ms": [129.4972],
+        "p95_ms": [175.0365]
+      },
+      "memory_stats": {
+        "median_mb": [3.8147e-06],
+        "peak_mb": [0]
+      },
+      "file_size_kb": [14.3574]
+    },
+    "large_synthetic": {
+      "time_stats": {
+        "median_ms": [32.9032],
+        "mean_ms": [33.6786],
+        "p95_ms": [39.7618]
+      },
+      "memory_stats": {
+        "median_mb": [0],
+        "peak_mb": [0.0003]
+      },
+      "dataset_size": [5000]
+    },
+    "memory_stress": {
+      "time_stats": {
+        "median_ms": [60.333],
+        "mean_ms": [58.755]
+      },
+      "memory_stats": {
+        "median_mb": [0],
+        "peak_mb": [0.001]
+      }
+    }
+  }
+}

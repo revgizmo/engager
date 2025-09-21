@@ -32,11 +32,9 @@ jobs:
         with:
           use-public-rspm: true
       - name: Install dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          packages: |
-            any::pkgdown
-            any::devtools
+        run: |
+          Rscript -e "install.packages(c('pkgdown', 'devtools', 'remotes'))"
+          Rscript -e "remotes::install_deps(dependencies = TRUE)"
       - name: Build pkgdown site
         run: |
           Rscript -e "devtools::document()"

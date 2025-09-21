@@ -1,7 +1,7 @@
 # UX System Global Variables
 UX_ESSENTIAL_FUNCTIONS <- c(
   "basic_transcript_analysis",
-  "quick_analysis", 
+  "quick_analysis",
   "batch_basic_analysis",
   "show_getting_started",
   "show_available_functions",
@@ -10,7 +10,7 @@ UX_ESSENTIAL_FUNCTIONS <- c(
 
 UX_COMMON_FUNCTIONS <- c(
   "load_zoom_transcript",
-  "process_zoom_transcript", 
+  "process_zoom_transcript",
   "analyze_transcripts",
   "plot_users",
   "write_metrics",
@@ -29,7 +29,7 @@ UX_ADVANCED_FUNCTIONS <- c(
 
 UX_EXPERT_FUNCTIONS <- c(
   "hash_name_consistently",
-  "anonymize_educational_data", 
+  "anonymize_educational_data",
   "validate_privacy_compliance",
   "write_lookup_transactional",
   "safe_name_matching_workflow"
@@ -38,7 +38,7 @@ UX_EXPERT_FUNCTIONS <- c(
 # UX Function Descriptions
 UX_FUNCTION_DESCRIPTIONS <- list(
   "basic_transcript_analysis" = "Complete analysis workflow for new users",
-  "quick_analysis" = "Fast analysis for single transcripts", 
+  "quick_analysis" = "Fast analysis for single transcripts",
   "batch_basic_analysis" = "Process multiple transcripts at once",
   "show_getting_started" = "Display getting started guide",
   "show_available_functions" = "Show functions at your skill level",

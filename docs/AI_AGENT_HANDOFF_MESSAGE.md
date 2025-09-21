@@ -1,1 +1,0 @@
-The synthetic "ideal course" transcripts are implemented but R tooling could not be executed. Please review `docs/Project_Handoff_2025-08-29_ideal-course-transcripts.md` and complete styling, linting, and testing once R is available.
