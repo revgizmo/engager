@@ -8,6 +8,7 @@
 #' @param df A tibble containing transcript comments with columns: name, start, end, comment
 #' @param dead_air_name Name to use for dead air periods. Defaults to 'dead_air'.
 #' @return A tibble with rows added for dead air periods
+#' @keywords internal
 #'
 # CRAN compliance: global variables handled in package file
 add_dead_air_rows <- function(df = NULL, dead_air_name = "dead_air") {

@@ -25,7 +25,7 @@ jobs:
       
       - name: Run fast performance tests
         run: |
-          Rscript perf/scripts/simple-performance-test.R 5 perf_results.json
+          Rscript perf/scripts/ci-performance-test.R 5 perf_results.json
       
       - name: Check for performance regressions
         id: regression-check
