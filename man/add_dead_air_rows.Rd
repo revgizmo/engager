@@ -20,3 +20,4 @@ that adds rows for any time between transcribed comments, labeled with the \code
 provided (or the default value of 'dead_air'). The resulting tibble will have rows
 accounting for the time from the beginning of the first comment to the end of the last one.
 }
+\keyword{internal}
