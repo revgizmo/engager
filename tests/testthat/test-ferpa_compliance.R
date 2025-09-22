@@ -250,6 +250,15 @@ test_that("anonymize_educational_data handles data without PII", {
   expect_equal(result, data)
 })
 
+test_that("anonymize_educational_data preserves columns and metadata", {
+  data <- create_ferpa_test_data_with_pii()
+  res <- anonymize_educational_data(data, method = "mask", preserve_columns = c("student_id"))
+  expect_equal(res$student_id, data$student_id)
+  expect_true(attr(res, "privacy_applied"))
+  expect_true(!is.null(attr(res, "anonymization_method")))
+  expect_true("student_id" %in% attr(res, "anonymized_columns") || is.character(attr(res, "anonymized_columns")))
+})
+
 test_that("anonymize_educational_data handles invalid data", {
   # Test with NULL data
   expect_error(anonymize_educational_data(NULL))

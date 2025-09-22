@@ -61,7 +61,7 @@ jobs:
           library(engager)
           cov <- covr::package_coverage()
           overall <- covr::percent_coverage(cov)
-          df <- covr::tally_coverage(cov)
+          df <- as.data.frame(cov)
           df <- df[!is.na(df$functions) & nzchar(df$functions), ]
           # Strategic exported API we promise to support
           targets <- c(
@@ -73,7 +73,12 @@ jobs:
           )
           exports <- intersect(getNamespaceExports("engager"), targets)
           filtered <- df[df$functions %in% exports, , drop = FALSE]
-          exp_cov <- if (nrow(filtered) > 0) round(100 * sum(filtered$covered, na.rm = TRUE) / sum(filtered$n, na.rm = TRUE) * 100, 2) else NA_real_
+          if (nrow(filtered) > 0) {
+            covered_by_fun <- stats::aggregate(list(covered = filtered$value > 0, total = filtered$value >= 0), by = list(functions = filtered$functions), FUN = sum)
+            exp_cov <- round(100 * sum(covered_by_fun$covered, na.rm = TRUE) / sum(covered_by_fun$total, na.rm = TRUE), 2)
+          } else {
+            exp_cov <- NA_real_
+          }
           cat(sprintf("overall_coverage=%.2f\n", overall))
           cat(sprintf("exported_coverage=%.2f\n", exp_cov))
           if (is.na(exp_cov)) stop("Exported coverage could not be computed")

@@ -1,5 +1,3 @@
-
-
 test_that("basic_transcript_analysis errors when file missing", {
   missing <- tempfile(fileext = ".vtt")
   expect_false(file.exists(missing))
@@ -72,8 +70,10 @@ test_that("quick_analysis delegates to basic_transcript_analysis", {
       if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
       expect_equal(transcript_file, tf)
       expect_equal(output_dir, "quick_output")
-      list(analysis = tibble::tibble(), plots = list(), output_dir = output_dir,
-           transcript_file = transcript_file, privacy_level = privacy_level)
+      list(
+        analysis = tibble::tibble(), plots = list(), output_dir = output_dir,
+        transcript_file = transcript_file, privacy_level = privacy_level
+      )
     },
     {
       res <- quick_analysis(tf)

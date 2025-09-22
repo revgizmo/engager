@@ -349,6 +349,7 @@ docs/analysis/lessons-learned/
 ^docs/internal/NAMESPACE_BACKUP$
 ^docs/internal/NAMESPACE_CURRENT$
 ^docs/internal/NAMESPACE_STRATEGIC$
+^docs/release/PROJECT\.md$
 
 # Build artifacts and test outputs
 ^.*\.txt$

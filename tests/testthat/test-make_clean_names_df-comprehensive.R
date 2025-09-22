@@ -251,12 +251,12 @@ test_that("make_clean_names_df handles different transcripts_metrics_df structur
     duration = c(100, 80)
   )
 
-result1 <- expect_error(
+  result1 <- expect_error(
     make_clean_names_df(
       transcripts_metrics_df = basic_transcripts,
       roster_sessions = valid_roster
     ),
-  regexp = "incompatible size|Can't recycle input of size 0|Assigned data"
+    regexp = "incompatible size|Can't recycle input of size 0|Assigned data"
   )
   expect_true(is.list(result1) || is.null(result1))
 
@@ -270,12 +270,12 @@ result1 <- expect_error(
     transcript_file = c("file1.vtt", "file2.vtt")
   )
 
-result2 <- expect_error(
+  result2 <- expect_error(
     make_clean_names_df(
       transcripts_metrics_df = extended_transcripts,
       roster_sessions = valid_roster
     ),
-  regexp = "incompatible size|Can't recycle input of size 0|Assigned data"
+    regexp = "incompatible size|Can't recycle input of size 0|Assigned data"
   )
   expect_true(is.list(result2) || is.null(result2))
 })
@@ -289,12 +289,12 @@ test_that("make_clean_names_df handles edge cases", {
     student_id = character()
   )
 
-result1 <- expect_error(
+  result1 <- expect_error(
     make_clean_names_df(
       transcripts_metrics_df = empty_transcripts,
       roster_sessions = empty_roster
     ),
-  regexp = "'by' must specify uniquely valid columns|Unknown or uninitialised column"
+    regexp = "'by' must specify uniquely valid columns|Unknown or uninitialised column"
   )
   expect_true(is.list(result1) || is.null(result1))
 
@@ -306,12 +306,12 @@ result1 <- expect_error(
     student_id = "123"
   )
 
-result2 <- expect_error(
+  result2 <- expect_error(
     make_clean_names_df(
       transcripts_metrics_df = single_transcript,
       roster_sessions = single_roster
     ),
-  regexp = "'by' must specify uniquely valid columns|Unknown or uninitialised column|incompatible size|Can't recycle input of size 0|Assigned data"
+    regexp = "'by' must specify uniquely valid columns|Unknown or uninitialised column|incompatible size|Can't recycle input of size 0|Assigned data"
   )
   expect_true(is.list(result2) || is.null(result2))
 
