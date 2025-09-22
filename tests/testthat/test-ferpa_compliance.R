@@ -177,6 +177,14 @@ test_that("anonymize_educational_data handles hash method", {
   expect_equal(result$participation_data, data$participation_data)
 })
 
+test_that("anonymize_educational_data hashes with default salt when none provided", {
+  data <- create_ferpa_test_data_with_pii()
+  result <- anonymize_educational_data(data, method = "hash")
+  expect_true(all(nchar(result$student_id) == 8))
+  expect_true(all(nchar(result$preferred_name) == 8))
+  expect_true(all(nchar(result$email) == 8))
+})
+
 test_that("anonymize_educational_data handles pseudonymize method", {
   data <- create_ferpa_test_data_with_pii()
   result <- anonymize_educational_data(data, method = "pseudonymize")
@@ -219,6 +227,19 @@ test_that("anonymize_educational_data handles preserve_columns", {
   # Should mask other PII columns
   expect_true(all(grepl("^Student_", result$preferred_name)))
   expect_true(all(grepl("^Student_", result$email)))
+})
+
+test_that("anonymize_educational_data aggregate with non-group level falls back to marking aggregated", {
+  data <- create_ferpa_test_data_with_pii()
+  result <- anonymize_educational_data(data, method = "aggregate", aggregation_level = "institution")
+  expect_true(all(result$student_id == "[AGGREGATED]"))
+  expect_true(all(result$preferred_name == "[AGGREGATED]"))
+  expect_true(all(result$email == "[AGGREGATED]"))
+})
+
+test_that("anonymize_educational_data handles invalid method argument", {
+  data <- create_ferpa_test_data_with_pii()
+  expect_error(anonymize_educational_data(data, method = "invalid"))
 })
 
 test_that("anonymize_educational_data handles data without PII", {
