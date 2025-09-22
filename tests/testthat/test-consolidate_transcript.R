@@ -24,6 +24,23 @@ test_that("consolidate_transcript handles empty tibble", {
   expect_s3_class(result, "tbl_df")
 })
 
+test_that("consolidate_transcript handles empty tibble without transcript_file column", {
+  empty_df <- tibble::tibble(
+    name = character(0),
+    comment = character(0),
+    start = hms::as_hms(character(0)),
+    end = hms::as_hms(character(0))
+  )
+
+  result <- consolidate_transcript(empty_df)
+  expect_s3_class(result, "tbl_df")
+  expect_equal(nrow(result), 0)
+  expect_setequal(
+    names(result),
+    c("name", "comment", "start", "end", "duration", "wordcount")
+  )
+})
+
 test_that("consolidate_transcript handles single comment", {
   single_comment <- tibble::tibble(
     transcript_file = "test.vtt",
@@ -112,6 +129,23 @@ test_that("consolidate_transcript handles multiple consolidation scenarios", {
 
   result <- consolidate_transcript(complex_data, max_pause_sec = 2)
   expect_equal(nrow(result), 3) # Should consolidate into 3 groups
+})
+
+test_that("consolidate_transcript consolidates data without transcript_file column", {
+  comments <- tibble::tibble(
+    name = c("Speaker1", "Speaker1", "Speaker2"),
+    comment = c("Hello", "world", "Bye"),
+    start = hms::as_hms(c("00:00:00", "00:00:02", "00:00:05")),
+    end = hms::as_hms(c("00:00:02", "00:00:04", "00:00:07"))
+  )
+
+  result <- consolidate_transcript(comments, max_pause_sec = 2)
+  expect_s3_class(result, "tbl_df")
+  expect_equal(nrow(result), 2)
+  expect_equal(result$name, c("Speaker1", "Speaker2"))
+  expect_equal(result$comment[1], "Hello world")
+  expect_equal(result$duration, c(4, 2))
+  expect_equal(result$wordcount, c(2, 1))
 })
 
 test_that("consolidate_transcript handles edge cases with timing", {
