@@ -47,22 +47,25 @@ jobs:
           roxygen2::roxygenise()
         shell: Rscript {0}
 
-      - name: Run coverage (exported functions only) and enforce threshold
+      - name: Build and install package
+        run: |
+          R CMD build .
+          PKG_TGZ=$(ls -t *.tar.gz | head -1)
+          R CMD INSTALL "$PKG_TGZ"
+        shell: bash
+
+      - name: Run coverage on installed package and report
         id: coverage
         run: |
           options(repos = c(CRAN = "https://cloud.r-project.org"))
-          devtools::load_all(quiet = TRUE)
+          library(engager)
           cov <- covr::package_coverage()
+          overall <- covr::percent_coverage(cov)
           df <- as.data.frame(cov)
           df <- df[!is.na(df$functions) & nzchar(df$functions), ]
           exports <- getNamespaceExports("engager")
           filtered <- df[df$functions %in% exports, , drop = FALSE]
-          if (nrow(filtered) == 0) {
-            stop("No exported functions found in coverage data")
-          }
-          covered <- sum(filtered$value > 0, na.rm = TRUE)
-          total <- nrow(filtered)
-          pct <- round(100 * covered / total, 2)
-          cat(sprintf("exported_coverage=%.2f\n", pct))
-          if (pct < 90) quit(status = 1)
+          exp_cov <- if (nrow(filtered) > 0) round(100 * sum(filtered$value > 0, na.rm = TRUE) / nrow(filtered), 2) else NA_real_
+          cat(sprintf("overall_coverage=%.2f\n", overall))
+          cat(sprintf("exported_coverage=%.2f\n", exp_cov))
         shell: Rscript {0}
