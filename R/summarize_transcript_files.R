@@ -71,7 +71,7 @@ summarize_transcript_files <-
 handle_duplicate_detection <- function(transcript_file_names, data_folder, transcripts_folder,
                                        similarity_threshold, duplicate_method, names_to_exclude) {
   # Detect duplicates
-  duplicates <- detect_duplicate_transcripts(
+  duplicates <- engager:::detect_duplicate_transcripts(
     transcript_file_names,
     data_folder = data_folder,
     transcripts_folder = transcripts_folder,

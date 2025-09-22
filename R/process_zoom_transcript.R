@@ -62,13 +62,13 @@ process_zoom_transcript <- function(transcript_file_path = "",
 
 
     if (consolidate_comments) {
-      transcript_df <- engager::consolidate_transcript(transcript_df,
+      transcript_df <- engager:::consolidate_transcript(transcript_df,
         max_pause_sec = max_pause_sec
       )
     }
 
     if (add_dead_air) {
-      transcript_df <- add_dead_air_rows(transcript_df,
+      transcript_df <- engager:::add_dead_air_rows(transcript_df,
         dead_air_name = dead_air_name
       )
     }

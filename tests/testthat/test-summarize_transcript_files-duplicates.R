@@ -11,10 +11,10 @@ test_that("summarize_transcript_files triggers duplicate diagnostics path (quiet
     )
   }
 
-  # Temporarily override detect_duplicate_transcripts
-  orig <- engager::detect_duplicate_transcripts
+  # Temporarily override detect_duplicate_transcripts (internal)
+  orig <- getFromNamespace("detect_duplicate_transcripts", "engager")
   assignInNamespace("detect_duplicate_transcripts", stub_detect, ns = "engager")
-  on.exit(assignInNamespace("detect_duplicate_transcripts", orig, ns = "engager"))
+  on.exit(assignInNamespace("detect_duplicate_transcripts", orig, ns = "engager"), add = TRUE)
 
   # Create a fake transcripts folder to pass folder existence check
   dir.create("test_transcripts", showWarnings = FALSE)

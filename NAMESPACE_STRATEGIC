@@ -27,5 +27,3 @@ export(analyze_transcripts)
 
 # Import pipe operator
 importFrom(magrittr,"%>%")
-export(set_privacy_defaults)
-export(basic_transcript_analysis)
