@@ -68,4 +68,9 @@ jobs:
           exp_cov <- if (nrow(filtered) > 0) round(100 * sum(filtered$value > 0, na.rm = TRUE) / nrow(filtered), 2) else NA_real_
           cat(sprintf("overall_coverage=%.2f\n", overall))
           cat(sprintf("exported_coverage=%.2f\n", exp_cov))
+          if (is.na(exp_cov)) stop("Exported coverage could not be computed")
+          if (exp_cov < 90) {
+            message(sprintf("Exported coverage %.2f%% below threshold 90%%", exp_cov))
+            quit(status = 1)
+          }
         shell: Rscript {0}
