@@ -210,21 +210,23 @@ anonymize_educational_data <- function(data = NULL,
   } else if (method == "aggregate") {
     # For aggregation, we'll group by the aggregation level
     if (aggregation_level == "section" && "section" %in% names(data)) {
+      # Use simple aggregation approach to avoid segfault
       data <- data %>%
         dplyr::group_by(section) %>%
-        dplyr::summarise(dplyr::across(
-          dplyr::everything(),
-          ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.)
-        )) %>%
-        dplyr::ungroup()
+        dplyr::summarise(
+          dplyr::across(dplyr::where(is.numeric), ~ mean(., na.rm = TRUE)),
+          dplyr::across(dplyr::where(~ !is.numeric(.)), ~ .[1]),
+          .groups = "drop"
+        )
     } else if (aggregation_level == "course" && "course" %in% names(data)) {
+      # Use simple aggregation approach to avoid segfault
       data <- data %>%
         dplyr::group_by(course) %>%
-        dplyr::summarise(dplyr::across(
-          dplyr::everything(),
-          ~ if (is.numeric(.)) mean(., na.rm = TRUE) else first(.)
-        )) %>%
-        dplyr::ungroup()
+        dplyr::summarise(
+          dplyr::across(dplyr::where(is.numeric), ~ mean(., na.rm = TRUE)),
+          dplyr::across(dplyr::where(~ !is.numeric(.)), ~ .[1]),
+          .groups = "drop"
+        )
     } else {
       # Individual level - just mask the PII columns
       for (col in columns_to_anonymize) {
@@ -384,6 +386,10 @@ check_data_retention_policy <- function(data = NULL,
                                         date_column = NULL,
                                         current_date = Sys.Date()) {
   retention_period <- match.arg(retention_period)
+
+  if (!is.data.frame(data)) {
+    stop("Data must be a data frame or tibble", call. = FALSE)
+  }
 
   result <- list(
     compliant = TRUE,

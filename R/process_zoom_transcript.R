@@ -62,7 +62,7 @@ process_zoom_transcript <- function(transcript_file_path = "",
 
 
     if (consolidate_comments) {
-      transcript_df <- engager::consolidate_transcript(transcript_df,
+      transcript_df <- consolidate_transcript(transcript_df,
         max_pause_sec = max_pause_sec
       )
     }

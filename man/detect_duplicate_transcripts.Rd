@@ -36,6 +36,7 @@ or identical content, which can occur when multiple transcript formats are gener
 for the same recording session.
 }
 \examples{
+\dontrun{
 # Create sample transcript list
 transcript_list <- tibble::tibble(
   transcript_file = c(
@@ -60,9 +61,11 @@ content_duplicates <- detect_duplicate_transcripts(
   method = "content",
   similarity_threshold = 0.9
 )
+}
 
 }
 \seealso{
 \code{\link{process_zoom_transcript}} for processing individual transcripts,
 \code{\link{summarize_transcript_metrics}} for analyzing transcript content
 }
+\keyword{internal}

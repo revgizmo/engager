@@ -1,0 +1,14 @@
+FERPA Compliance Report
+Generated: 2025-09-21 20:20:03
+Compliant: No
+PII Detected: student_id, name
+
+Recommendations:
+- PII detected in columns: student_id, name
+- Consider using ensure_privacy() to mask identifiable data
+- Review institutional FERPA policies for data handling
+- Ensure data access is limited to authorized personnel
+- Use set_privacy_defaults('mask') for privacy-safe outputs
+- Implement secure data storage and transmission
+- Train personnel on FERPA compliance requirements
+- Maintain audit trails for data access and modifications

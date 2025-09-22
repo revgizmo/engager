@@ -9,6 +9,9 @@ test_that("make_transcripts_summary_df returns empty tibble for empty input", {
   expect_s3_class(out, "tbl_df")
   expect_equal(nrow(out), 0)
   expect_true(all(c("section", "preferred_name", "session_ct", "n", "duration", "wordcount", "wpm", "perc_n", "perc_duration", "perc_wordcount") %in% names(out)))
+  # Missing columns path
+  df2 <- tibble::tibble(section = c("A","A"), preferred_name = c("X","Y"))
+  expect_warning(make_transcripts_summary_df(df2))
 })
 
 test_that("make_transcripts_summary_df aggregates and computes percentages", {

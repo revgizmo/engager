@@ -336,3 +336,29 @@ docs/analysis/lessons-learned/
 ^backups/
 ^scripts/maintenance/
 ^docs/checklists/
+
+# Newly moved docs (explicitly ignore docs/ top-level already present)
+^docs/architecture/ARCHITECTURE_DIAGRAM\.md$
+^docs/architecture/STRATEGIC_EXPORT_ANALYSIS\.md$
+^docs/release/CRAN_COMPLIANCE_CHECKLIST\.md$
+^docs/release/CRAN_SUBMISSION_READINESS_PLAN\.md$
+^docs/analysis/FUNCTION_USAGE_ANALYSIS\.md$
+^docs/analysis/HIGH_IMPACT_FUNCTIONS_ANALYSIS\.md$
+^docs/testing/TESTING_BEST_PRACTICES\.md$
+^docs/testing/TEST_REUSABILITY_PATTERNS\.md$
+^docs/internal/NAMESPACE_BACKUP$
+^docs/internal/NAMESPACE_CURRENT$
+^docs/internal/NAMESPACE_STRATEGIC$
+^docs/release/PROJECT\.md$
+
+# Build artifacts and test outputs
+^.*\.txt$
+^.*\.json$
+^test_.*\.sh$
+^.*_results\.json$
+^.*_output\.txt$
+^.*_check\.txt$
+^.*_test\.txt$
+^.*_ci\.md$
+^.*_performance.*\.md$
+^perf/
