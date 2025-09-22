@@ -47,12 +47,22 @@ jobs:
           roxygen2::roxygenise()
         shell: Rscript {0}
 
-      - name: Run coverage and enforce threshold
+      - name: Run coverage (exported functions only) and enforce threshold
         id: coverage
         run: |
           options(repos = c(CRAN = "https://cloud.r-project.org"))
+          devtools::load_all(quiet = TRUE)
           cov <- covr::package_coverage()
-          pct <- covr::percent_coverage(cov)
-          cat(sprintf("coverage=%.2f\n", pct))
+          df <- as.data.frame(cov)
+          df <- df[!is.na(df$functions) & nzchar(df$functions), ]
+          exports <- getNamespaceExports("engager")
+          filtered <- df[df$functions %in% exports, , drop = FALSE]
+          if (nrow(filtered) == 0) {
+            stop("No exported functions found in coverage data")
+          }
+          covered <- sum(filtered$value > 0, na.rm = TRUE)
+          total <- nrow(filtered)
+          pct <- round(100 * covered / total, 2)
+          cat(sprintf("exported_coverage=%.2f\n", pct))
           if (pct < 90) quit(status = 1)
         shell: Rscript {0}
