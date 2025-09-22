@@ -11,7 +11,7 @@ test_that("performance tests are skipped on CRAN", {
 
 test_that("performance test infrastructure exists", {
   skip_on_cran()
-  
+
   # Skip if performance infrastructure is not available
   # This can happen in build environments where perf/ directory is not included
   if (!dir.exists("../../perf")) {
@@ -27,7 +27,7 @@ test_that("performance test infrastructure exists", {
 
 test_that("performance baselines exist", {
   skip_on_cran()
-  
+
   # Skip if performance infrastructure is not available
   if (!dir.exists("../../perf")) {
     skip("Performance infrastructure not available in this environment")
@@ -42,7 +42,7 @@ test_that("performance baselines exist", {
 
 test_that("performance test functions are available", {
   skip_on_cran()
-  
+
   # Skip if performance infrastructure is not available
   if (!dir.exists("../../perf")) {
     skip("Performance infrastructure not available in this environment")
@@ -66,7 +66,7 @@ test_that("performance test functions are available", {
 
 test_that("performance test data structure is valid", {
   skip_on_cran()
-  
+
   # Skip if performance infrastructure is not available
   if (!dir.exists("../../perf")) {
     skip("Performance infrastructure not available in this environment")
