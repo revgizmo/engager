@@ -65,7 +65,7 @@ MORE RESOURCES:
 #' }
 show_function_help <- function(function_name) {
   # Check if function exists
-  if (!exists(function_name, envir = asNamespace("zoomstudentengagement"))) {
+  if (!exists(function_name, envir = asNamespace("engager"))) {
     cat("ERROR: Function '", function_name, "' not found\n")
     cat("TIP: Try: show_available_functions() to see available functions\n")
     cat("TIP: Or: find_function_for_task('what you want to do')\n")
