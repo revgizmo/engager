@@ -12,7 +12,9 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE
 )
 ```
 
@@ -29,7 +31,7 @@ This vignette demonstrates the core functionality of the `engager` package using
 
 The package now exports these essential functions:
 
-```{r essential-functions, results='asis', echo=FALSE}
+```{r essential-functions, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
 library(engager)
 
 # Try to derive exported functions dynamically; fall back to a curated list
