@@ -2,6 +2,12 @@
 
 # These helpers are intentionally not exported.
 
+#' Null-coalescing helper
+#' @keywords internal
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
+}
+
 #' Normalize a human name to a canonical form (UTF-8)
 #'
 #' Applies ICU-backed normalization pipeline using stringi:

@@ -22,7 +22,7 @@ detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) 
     dplyr::group_by(name_hash, reason, guidance) |>
     dplyr::summarise(
       occurrence_n = dplyr::n(),
-      first_seen_at = dplyr::first(.data$timestamp %||% NA),
+      first_seen_at = suppressWarnings(dplyr::first(if ("timestamp" %in% names(res$unresolved)) res$unresolved$timestamp else NA)),
       .groups = "drop"
     ) |>
     dplyr::select(name_hash, occurrence_n, first_seen_at, reason, guidance)
