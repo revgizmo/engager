@@ -10,11 +10,11 @@ When a user asks: **"`Please make me a prompt for issue [NUMBER] [PHASE] with @A
 
 ### **Step 1: Create Planning Documents**
 
-1. **Create Consolidated Plan**: `docs/development/ISSUE_[NUMBER]_CONSOLIDATED_PLAN.md`
+1. **Create Consolidated Plan**: `project-docs/development/ISSUE_[NUMBER]_CONSOLIDATED_PLAN.md`
    - Document current status and accomplishments
    - Plan remaining phases with timelines
    - Include technical requirements and success criteria
-   - Save the file to the appropriate location for this project if it is not `docs/development/`
+   - Save the file to the appropriate location for this project if it is not `project-docs/development/`
 
 2. **Create Implementation Guide**: `ISSUE_[NUMBER]_IMPLEMENTATION_GUIDE.md`
    - Provide step-by-step implementation plan
@@ -88,7 +88,7 @@ Start with the implementation guide and follow the step-by-step plan.
 **User asks**: "Make me a prompt for issue 160 phase 2 with @AI_AGENT_PROMPT_TEMPLATE.md"
 
 **AI completes**:
-1. Creates `docs/development/ISSUE_160_CONSOLIDATED_PLAN.md`
+1. Creates `project-docs/development/ISSUE_160_CONSOLIDATED_PLAN.md`
 2. Creates `ISSUE_160_IMPLEMENTATION_GUIDE.md`
 3. Provides this short message:
 

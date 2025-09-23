@@ -56,7 +56,7 @@ A comprehensive security and performance review was completed with **EXCELLENT r
 **Integration Status**: ✅ **COMPLETED** - All review recommendations integrated into project plan and GitHub issues.
 
 ### 🚨 **Critical Ethical Research Findings**
-A comprehensive ethical analysis conducted on 2025-08-04 revealed **CATASTROPHIC risks** that must be addressed before CRAN submission, despite excellent technical metrics. See `docs/development/ethical-issues-research/ETHICAL_ISSUES_ANALYSIS.md` for complete analysis.
+A comprehensive ethical analysis conducted on 2025-08-04 revealed **CATASTROPHIC risks** that must be addressed before CRAN submission, despite excellent technical metrics. See `project-docs/development/ethical-issues-research/ETHICAL_ISSUES_ANALYSIS.md` for complete analysis.
 
 **Key Findings:**
 - **Privacy & Ethical Issues**: CATASTROPHIC risk - Could result in CRAN removal and academic backlash
@@ -262,7 +262,7 @@ A comprehensive premortem analysis was conducted on Issue #483 (UAT Framework Im
 - ✅ **Documentation**: Comprehensive troubleshooting and examples
 
 **Implementation Timeline**: 1 week  
-**Documentation**: `docs/development/implementation-guides/docs/development/implementation-guides/docs/development/implementation-guides/ISSUE_160_CONSOLIDATED_PLAN.md` (consolidated plan ready)
+**Documentation**: `project-docs/development/implementation-guides/project-docs/development/implementation-guides/project-docs/development/implementation-guides/ISSUE_160_CONSOLIDATED_PLAN.md` (consolidated plan ready)
 
 ### What's Working ✅
 - **Core Functionality**: All 42 exported functions implemented and functional
@@ -306,7 +306,7 @@ A comprehensive premortem analysis was conducted on Issue #483 (UAT Framework Im
 ## 🚨 **Premortem Analysis and Action Plan (August 2025)**
 
 ### **Critical Findings**
-A comprehensive premortem analysis conducted on 2025-08-04 revealed fundamental gaps in our CRAN submission approach. See `docs/development/PREMORTEM_SUMMARY.md` for executive summary.
+A comprehensive premortem analysis conducted on 2025-08-04 revealed fundamental gaps in our CRAN submission approach. See `project-docs/development/PREMORTEM_SUMMARY.md` for executive summary.
 
 ### **Action Plan Documents**
 - **`PREMORTEM_SUMMARY.md`**: Executive summary with key findings and recommendations
@@ -589,7 +589,7 @@ We've created comprehensive context scripts to provide current project status to
 ```
 
 ### Documentation
-- **Complete Guide**: `docs/development/CONTEXT_SCRIPTS_DOCUMENTATION.md`
+- **Complete Guide**: `project-docs/development/CONTEXT_SCRIPTS_DOCUMENTATION.md`
 - **Quick Reference**: `scripts/README.md`
 
 ## Pre-CRAN Development Workflow
@@ -597,10 +597,10 @@ We've created comprehensive context scripts to provide current project status to
 ### AI Agent Workflow Integration
 The project now includes a comprehensive AI Agent Workflow for AI-assisted development:
 
-- **[AI Agent Workflow](docs/development/AI_AGENT_WORKFLOW.md)**: Complete workflow reference
-- **[AI Agent Training](docs/development/AI_AGENT_TRAINING.md)**: Step-by-step training guide  
-- **[AI Agent Examples](docs/development/AI_AGENT_EXAMPLES.md)**: Real-world usage examples
-- **[AI Agent Prompt Generator](docs/development/AI_AGENT_PROMPT_GENERATOR.md)**: Create prompts for new AI agents
+- **[AI Agent Workflow](project-docs/development/AI_AGENT_WORKFLOW.md)**: Complete workflow reference
+- **[AI Agent Training](project-docs/development/AI_AGENT_TRAINING.md)**: Step-by-step training guide  
+- **[AI Agent Examples](project-docs/development/AI_AGENT_EXAMPLES.md)**: Real-world usage examples
+- **[AI Agent Prompt Generator](project-docs/development/AI_AGENT_PROMPT_GENERATOR.md)**: Create prompts for new AI agents
 
 AI agents should follow this workflow to ensure consistent, high-quality contributions while maintaining CRAN compliance standards.
 

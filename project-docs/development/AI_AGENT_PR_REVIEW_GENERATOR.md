@@ -18,7 +18,7 @@ When a user asks: **"`Please review and approve PR [NUMBER] with @AI_AGENT_PR_RE
    - Assess impact: Determine if changes are user-facing, internal, or infrastructure
    - Check for parallel work conflicts
 
-2. **Create Review Report**: `docs/development/PR_[NUMBER]_REVIEW_REPORT.md`
+2. **Create Review Report**: `project-docs/development/PR_[NUMBER]_REVIEW_REPORT.md`
    - Document PR scope and key changes
    - Document code quality assessment
    - Verify CRAN compliance requirements
@@ -162,7 +162,7 @@ Start with the review report and follow the comprehensive checklist.
 **User asks**: "Review and approve PR 45 with @AI_AGENT_PR_REVIEW_GENERATOR.md"
 
 **AI completes**:
-1. Creates `docs/development/PR_45_REVIEW_REPORT.md`
+1. Creates `project-docs/development/PR_45_REVIEW_REPORT.md`
 2. Creates `PR_45_APPROVAL_CHECKLIST.md`
 3. Provides this review prompt:
 

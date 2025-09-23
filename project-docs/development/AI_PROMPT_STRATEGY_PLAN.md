@@ -6,9 +6,9 @@ Project: zoomstudentengagement
 Define a comprehensive, standardized strategy for memorializing, organizing, optimizing, and maintaining AI agent prompts used across this repository. Aligns with CRAN-bound, privacy-first development.
 
 ### Current Prompt Inventory (Initial)
-- `docs/development/docs/development/docs/development/AI_AGENT_PROMPT_GENERATOR.md`: Prompt generation workflow
+- `project-docs/development/project-docs/development/project-docs/development/AI_AGENT_PROMPT_GENERATOR.md`: Prompt generation workflow
 - `AI_AGENT_REVIEW_PROMPT.md`: Prompt review workflow
-- docs/development/process/organization-prompt*.md: Organization prompts
+- project-docs/development/process/organization-prompt*.md: Organization prompts
 - Additional planning prompts within docs/development and planning
 
 ### Goals and Success Metrics
@@ -24,7 +24,7 @@ Define a comprehensive, standardized strategy for memorializing, organizing, opt
 - Keep copyable agent messages ≤150 lines, concise and actionable
 
 ### Version Control and Change Tracking
-- Store prompts in `docs/development/` or root named files
+- Store prompts in `project-docs/development/` or root named files
 - Use semantic version tags in each prompt header: `Version: X.Y.Z`
 - Record changes in a "Changelog" section at bottom
 
@@ -39,7 +39,7 @@ Define a comprehensive, standardized strategy for memorializing, organizing, opt
 ### Organization Structure
 - Primary index: `docs/README.md` and `DOCUMENTATION.md`
 - Strategy docs: this file and implementation guide
-- Operational prompts grouped under `docs/development/process/`
+- Operational prompts grouped under `project-docs/development/process/`
 
 ### Roadmap Phases
 1. Foundation: Audit and categorize; adopt templates
@@ -53,7 +53,7 @@ Define a comprehensive, standardized strategy for memorializing, organizing, opt
 - **Advanced Prompt Optimization**: A/B testing and performance analytics
 
 ### Links
-- See `docs/development/implementation-guides/docs/development/implementation-guides/docs/development/implementation-guides/AI_PROMPT_OPTIMIZATION_IMPLEMENTATION_GUIDE.md` for step-by-step actions
+- See `project-docs/development/implementation-guides/project-docs/development/implementation-guides/project-docs/development/implementation-guides/AI_PROMPT_OPTIMIZATION_IMPLEMENTATION_GUIDE.md` for step-by-step actions
 - See `FUTURE_AI_COMPLEXITY_ASSESSMENT_FRAMEWORK.md` for post-CRAN enhancement plan
 
 ### Strategic Recommendations
@@ -62,7 +62,7 @@ Define a comprehensive, standardized strategy for memorializing, organizing, opt
 - Prompt Categorization System: Classify prompts by purpose (generation, review, planning, process) and scope (repo-wide vs issue-specific).
 - Template Standardization: Use a single template with headings: Mission, Context files, Your task, Focus, Key requirements, Success criteria, Start here.
 - Version Control Strategy: Include `Version: X.Y.Z` in header; maintain a Changelog section per file; link PRs and issues.
-- Documentation Standards: Place strategic docs under `docs/development/`; operational prompts under `docs/development/process/`; keep `docs/README.md` as the index.
+- Documentation Standards: Place strategic docs under `project-docs/development/`; operational prompts under `project-docs/development/process/`; keep `docs/README.md` as the index.
 
 #### B. Prompt Effectiveness Optimization
 - Performance Metrics: Track success rate, user satisfaction, error reduction, and time-to-outcome per prompt.
@@ -77,7 +77,7 @@ Define a comprehensive, standardized strategy for memorializing, organizing, opt
 - Scalability: Keep prompts modular; prefer links to canonical docs over duplicating long guidance.
 
 #### D. Technical Implementation
-- File Organization: Root for top-level prompts; strategy and process under `docs/development/`.
+- File Organization: Root for top-level prompts; strategy and process under `project-docs/development/`.
 - Integration Strategy: Cross-link prompts with `PROJECT.md`, pre-PR validation, CRAN, and privacy docs.
 - Automation Opportunities: Script linting of prompt sections and presence of required headings; auto-generate inventories.
 - Quality Assurance: Add validation in pre-PR checklist to ensure prompts follow template and link to latest standards.

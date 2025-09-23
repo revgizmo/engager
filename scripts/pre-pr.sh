@@ -42,7 +42,7 @@ generate_ai_review_prompt() {
   echo "📋 Review Context Available:"
   echo "   - .cursor/ai-review-context.md (current project state)"
   echo "   - .cursor/metrics.json (current metrics)"
-  echo "   - docs/release/PROJECT.md (current strategic content)"
+  echo "   - project-docs/release/PROJECT.md (current strategic content)"
   echo ""
 }
 
@@ -105,7 +105,7 @@ validate_ai_review_requirements() {
   
   # Check required files
   [[ -f ".cursor/metrics.json" ]] || missing_files+=(".cursor/metrics.json")
-  [[ -f "docs/release/PROJECT.md" ]] || missing_files+=("docs/release/PROJECT.md")
+  [[ -f "project-docs/release/PROJECT.md" ]] || missing_files+=("project-docs/release/PROJECT.md")
   [[ -f ".cursor/ai-review-context.md" ]] || missing_files+=(".cursor/ai-review-context.md")
   
   if [[ ${#missing_files[@]} -gt 0 ]]; then
@@ -132,7 +132,7 @@ echo "🔄 Refreshing context files..."
 ./scripts/save-context.sh
 
 echo ""
-echo "🔧 PROJECT.md is maintained at docs/release/PROJECT.md"
+echo "🔧 PROJECT.md is maintained at project-docs/release/PROJECT.md"
 echo "   Skipping automated update (root PROJECT.md no longer used)"
 
 echo ""

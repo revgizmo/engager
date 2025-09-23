@@ -110,7 +110,8 @@ for the same recording session.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create sample transcript list</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># Create sample transcript list</span></span></span>
 <span class="r-in"><span><span class="va">transcript_list</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  transcript_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="st">"GMT20240115-100000_Recording.transcript.vtt"</span>,</span></span>
@@ -121,15 +122,12 @@ for the same recording session.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Detect duplicates in a transcript list</span></span></span>
 <span class="r-in"><span><span class="va">duplicates</span> <span class="op">&lt;-</span> <span class="fu">detect_duplicate_transcripts</span><span class="op">(</span><span class="va">transcript_list</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No transcript files found in the specified directory</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># View duplicate groups</span></span></span>
 <span class="r-in"><span><span class="va">duplicates</span><span class="op">$</span><span class="va">duplicate_groups</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> list()</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># View recommendations</span></span></span>
 <span class="r-in"><span><span class="va">duplicates</span><span class="op">$</span><span class="va">recommendations</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use different detection method</span></span></span>
 <span class="r-in"><span><span class="va">content_duplicates</span> <span class="op">&lt;-</span> <span class="fu">detect_duplicate_transcripts</span><span class="op">(</span></span></span>
@@ -137,7 +135,7 @@ for the same recording session.</p>
 <span class="r-in"><span>  method <span class="op">=</span> <span class="st">"content"</span>,</span></span>
 <span class="r-in"><span>  similarity_threshold <span class="op">=</span> <span class="fl">0.9</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No transcript files found in the specified directory</span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -146,7 +144,7 @@ for the same recording session.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Conor Healy.</p>
+  <p>engager</p>
 </div>
 
 <div class="pkgdown-footer-right">

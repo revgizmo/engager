@@ -24,7 +24,7 @@ When a user asks: **"Please create a plan for memorializing and optimizing my AI
 
 ### **Step 2: Create Comprehensive Optimization Plan**
 
-1. **Create Prompt Strategy Document**: `docs/development/AI_PROMPT_STRATEGY_PLAN.md`
+1. **Create Prompt Strategy Document**: `project-docs/development/AI_PROMPT_STRATEGY_PLAN.md`
    - Document current prompt inventory and categorization
    - Define prompt optimization goals and success metrics
    - Create prompt standardization guidelines
@@ -129,7 +129,7 @@ Start with the strategy plan and follow the step-by-step implementation guide.
 **User asks**: "Create a plan for memorializing and optimizing my AI agent prompts"
 
 **AI completes**:
-1. Creates `docs/development/AI_PROMPT_STRATEGY_PLAN.md`
+1. Creates `project-docs/development/AI_PROMPT_STRATEGY_PLAN.md`
 2. Creates `AI_PROMPT_OPTIMIZATION_IMPLEMENTATION_GUIDE.md`
 3. Provides strategic recommendations and implementation roadmap
 4. Generates short copyable message for new AI agent

@@ -175,7 +175,7 @@ test_that("process_large_transcript handles memory efficiently", {
 
 ### **Documentation Structure**
 ```
-docs/development/
+project-docs/development/
 ├── AI_AGENT_WORKFLOW.md          # Complete workflow reference
 ├── AI_AGENT_TRAINING.md          # Step-by-step training guide
 ├── AI_AGENT_EXAMPLES.md          # Real-world examples (this file)
@@ -188,12 +188,12 @@ docs/development/
 # In CONTRIBUTING.md
 ## AI Agent Workflow
 
-For AI-assisted development, follow the [AI Agent Workflow](docs/development/AI_AGENT_WORKFLOW.md):
+For AI-assisted development, follow the [AI Agent Workflow](project-docs/development/AI_AGENT_WORKFLOW.md):
 
-1. **Training**: Complete the [AI Agent Training](docs/development/AI_AGENT_TRAINING.md)
-2. **Workflow**: Follow the [AI Agent Workflow](docs/development/AI_AGENT_WORKFLOW.md)
-3. **Examples**: Review [AI Agent Examples](docs/development/AI_AGENT_EXAMPLES.md)
-4. **Prompts**: Use the [AI Agent Prompt Generator](docs/development/AI_AGENT_PROMPT_GENERATOR.md)
+1. **Training**: Complete the [AI Agent Training](project-docs/development/AI_AGENT_TRAINING.md)
+2. **Workflow**: Follow the [AI Agent Workflow](project-docs/development/AI_AGENT_WORKFLOW.md)
+3. **Examples**: Review [AI Agent Examples](project-docs/development/AI_AGENT_EXAMPLES.md)
+4. **Prompts**: Use the [AI Agent Prompt Generator](project-docs/development/AI_AGENT_PROMPT_GENERATOR.md)
 ```
 
 ### **Lessons Learned**
