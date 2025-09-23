@@ -1124,6 +1124,16 @@ Track the following metrics:
 - **Stage 4:** Add automated documentation builds (pkgdown)
 - **Stage 5:** Expand to multiple OSes (macOS, Windows) and R versions as needed
 
+#### Pages deployment fix (2025-09-23)
+- Fixed failing GitHub Pages deploy by:
+  - Installing system libraries: `libfontconfig1-dev`, `libfreetype6-dev`, `libcurl4-openssl-dev`
+  - Using `r-lib/actions/setup-r-dependencies@v2` for R package installation
+  - Adding `r-lib/actions/setup-pandoc@v2`
+  - Updating `pkgdown::clean_site()` call to match pkgdown 2.x API (removed `preview` arg)
+- Workflow: `.github/workflows/pages.yml`
+- Successful run: 17947614054 (Pages workflow green)
+- Issues: closed #219; implemented via #546
+
 ### GitHub Actions Optimization
 - **Current Issues:**
   - Long dependency installation times (7+ minutes)
