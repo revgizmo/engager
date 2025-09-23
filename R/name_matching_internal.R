@@ -16,7 +16,9 @@
 #'
 #' @keywords internal
 normalize_name <- function(x) {
-  if (is.null(x)) return(NA_character_)
+  if (is.null(x)) {
+    return(NA_character_)
+  }
   x <- as.character(x)
   # Ensure UTF-8
   x <- stringi::stri_enc_toutf8(x)
@@ -83,7 +85,9 @@ hash_canonical_name <- function(canonical_name,
   vapply(
     X = as.character(canonical_name),
     FUN = function(elem) {
-      if (is.na(elem) || identical(elem, "")) return(NA_character_)
+      if (is.na(elem) || identical(elem, "")) {
+        return(NA_character_)
+      }
       if (is.null(key)) {
         # plain SHA-256
         as.character(openssl::sha256(elem))
@@ -218,5 +222,3 @@ build_match_audit <- function(roster_spec, hmac_used, icu_version, algo = "sha25
     spec = roster_spec
   )
 }
-
-

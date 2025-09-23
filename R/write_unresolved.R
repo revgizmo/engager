@@ -30,7 +30,8 @@ write_unresolved <- function(unresolved_tbl,
 
   if (!overwrite && file.exists(path)) {
     rlang::abort(sprintf("File exists: %s (set overwrite=TRUE to replace)", path),
-                 class = "engager_schema_error")
+      class = "engager_schema_error"
+    )
   }
 
   tbl <- tibble::as_tibble(unresolved_tbl)
@@ -47,5 +48,3 @@ write_unresolved <- function(unresolved_tbl,
   readr::write_csv(tbl, path)
   invisible(path)
 }
-
-

@@ -12,5 +12,3 @@ test_that("write_unresolved blocks raw export unless option enabled", {
   p <- write_unresolved(tbl, out, include_raw = FALSE, overwrite = TRUE)
   expect_true(file.exists(p))
 })
-
-

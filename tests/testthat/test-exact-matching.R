@@ -19,5 +19,3 @@ test_that("exact matching assigns student_id and reports unresolved", {
   expect_true(all(c("reason", "guidance") %in% names(res$unresolved)))
   expect_equal(sum(!is.na(res$transcripts_with_ids$student_id)), 1)
 })
-
-

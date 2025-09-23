@@ -37,7 +37,7 @@
 #' @export
 #' @family name-matching
 load_roster <- function(path,
-                        ..., 
+                        ...,
                         schema = "engager_v1",
                         key = NULL,
                         delimiter = ";",
@@ -75,7 +75,7 @@ load_roster <- function(path,
   if (isTRUE(include_formal_as_alias) && "formal_name" %in% names(ro)) {
     if (!("aliases" %in% names(ro))) ro$aliases <- list()
     add_formal <- normalize_name(ro$formal_name)
-    ro$aliases <- purrr::map2(ro$aliases, add_formal, ~unique(c(.x, .y)))
+    ro$aliases <- purrr::map2(ro$aliases, add_formal, ~ unique(c(.x, .y)))
   }
 
   # Parse aliases into list<chr>
@@ -84,7 +84,9 @@ load_roster <- function(path,
   } else {
     delim <- delimiter
     parse_aliases <- function(x) {
-      if (is.na(x) || identical(x, "")) return(character(0))
+      if (is.na(x) || identical(x, "")) {
+        return(character(0))
+      }
       parts <- stringr::str_split(x, pattern = sprintf("[%s,|]", stringr::str_replace_all(delim, "\\|", "\\\\|")), n = Inf)[[1]]
       parts <- stringr::str_trim(parts)
       parts <- parts[parts != ""]
