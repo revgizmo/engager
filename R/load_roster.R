@@ -17,8 +17,86 @@ load_roster <- function(path,
                         key = NULL,
                         delimiter = ";",
                         include_formal_as_alias = FALSE) {
-  rlang::abort("load_roster() not yet implemented in MVP scaffolding.",
-               class = "engager_not_implemented_error")
+  if (!identical(schema, "engager_v1")) {
+    rlang::abort(sprintf("Unsupported schema: %s", schema), class = "engager_schema_error")
+  }
+  ro <- readr::read_csv(path, show_col_types = FALSE, ...)
+  ro <- tibble::as_tibble(ro)
+
+  required <- c("preferred_name")
+  optional <- c("student_id", "formal_name", "transcript_name", "aliases")
+  missing_req <- setdiff(required, names(ro))
+  if (length(missing_req) > 0) {
+    rlang::abort(
+      message = sprintf("Missing required columns: %s", paste(missing_req, collapse = ", ")),
+      class = "engager_schema_error"
+    )
+  }
+  if (any(is.na(ro$preferred_name) | ro$preferred_name == "")) {
+    rlang::abort("preferred_name must be non-empty for all rows.", class = "engager_schema_error")
+  }
+  if ("student_id" %in% names(ro)) {
+    dup_id <- any(duplicated(ro$student_id[!is.na(ro$student_id)]))
+    if (dup_id) {
+      rlang::abort("student_id must be unique when present.", class = "engager_schema_error")
+    }
+  } else {
+    ro$student_id <- NA_character_
+  }
+
+  # Normalize preferred/formal/transcript
+  ro$canonical_name <- normalize_name(ro$preferred_name)
+
+  if (isTRUE(include_formal_as_alias) && "formal_name" %in% names(ro)) {
+    if (!("aliases" %in% names(ro))) ro$aliases <- list()
+    add_formal <- normalize_name(ro$formal_name)
+    ro$aliases <- purrr::map2(ro$aliases, add_formal, ~unique(c(.x, .y)))
+  }
+
+  # Parse aliases into list<chr>
+  if (!("aliases" %in% names(ro))) {
+    ro$aliases <- vector("list", nrow(ro))
+  } else {
+    delim <- delimiter
+    parse_aliases <- function(x) {
+      if (is.na(x) || identical(x, "")) return(character(0))
+      parts <- stringr::str_split(x, pattern = sprintf("[%s,|]", stringr::str_replace_all(delim, "\\|", "\\\\|")), n = Inf)[[1]]
+      parts <- stringr::str_trim(parts)
+      parts <- parts[parts != ""]
+      normalize_name(parts)
+    }
+    ro$aliases <- lapply(ro$aliases, parse_aliases)
+  }
+
+  # Hashes
+  resolved_key <- resolve_name_hash_key(key)
+  ro$name_hash <- hash_canonical_name(ro$canonical_name, key = resolved_key)
+  ro$alias_hashes <- lapply(ro$aliases, hash_canonical_name, key = resolved_key)
+  ro$all_name_hashes <- mapply(
+    function(h, hs) unique(c(h, hs)), ro$name_hash, ro$alias_hashes,
+    SIMPLIFY = FALSE
+  )
+
+  # Collision detection in roster
+  idx <- build_roster_hash_index(ro)
+  if (any(idx$collision)) {
+    # Note: strict policy—do not assign matches for colliding hashes
+    # Collisions are flagged and will cause unresolved in workflow
+    # We continue but attach a warning message
+    warning("Detected ambiguous name hash collisions in roster; affected hashes will be unresolved.")
+  }
+
+  # Attach spec attributes
+  spec <- list(
+    schema = schema,
+    norm_chain = "nfkd->strip_marks->casefold(full)->trim->collapse_ws->nfc",
+    hash_algo = "sha256",
+    hmac_used = !is.null(resolved_key),
+    icu_version = stringi::stri_info()[["ICUversion"]],
+    spec_version = "1"
+  )
+  attr(ro, "engager_spec") <- spec
+  ro
 }
 
 # Internal function - no documentation needed

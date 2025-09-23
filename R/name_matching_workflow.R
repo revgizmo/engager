@@ -9,13 +9,27 @@
 #' @export
 #' @family name-matching
 detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) {
-  rlang::check_installed("tibble")
   match_strategy <- options$match_strategy %||% "exact"
+  include_name_hash <- isTRUE(options$include_name_hash %||% FALSE)
+  key <- options$key %||% NULL
   if (!identical(match_strategy, "exact")) {
     match_names_fuzzy()
   }
-  rlang::abort("detect_unmatched_names() not yet implemented in MVP scaffolding.",
-               class = "engager_not_implemented_error")
+  prepped <- prepare_transcript_names(transcripts_df, key = key)
+  idx <- build_roster_hash_index(roster_df)
+  res <- match_names_exact(prepped, idx, include_name_hash = TRUE)
+  unresolved <- res$unresolved |>
+    dplyr::group_by(name_hash, reason, guidance) |>
+    dplyr::summarise(
+      occurrence_n = dplyr::n(),
+      first_seen_at = dplyr::first(.data$timestamp %||% NA),
+      .groups = "drop"
+    ) |>
+    dplyr::select(name_hash, occurrence_n, first_seen_at, reason, guidance)
+  if (!include_name_hash) {
+    unresolved$name_hash <- NULL
+  }
+  unresolved
 }
 
 #' Safe name matching workflow (privacy-first)
@@ -30,11 +44,37 @@ detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) 
 #' @family name-matching
 safe_name_matching_workflow <- function(transcripts_df, roster_df, options = list()) {
   match_strategy <- options$match_strategy %||% "exact"
+  include_name_hash <- isTRUE(options$include_name_hash %||% FALSE)
+  key <- options$key %||% NULL
   if (!identical(match_strategy, "exact")) {
     match_names_fuzzy()
   }
-  rlang::abort("safe_name_matching_workflow() not yet implemented in MVP scaffolding.",
-               class = "engager_not_implemented_error")
+  prepped <- prepare_transcript_names(transcripts_df, key = key)
+  idx <- build_roster_hash_index(roster_df)
+  match_res <- match_names_exact(prepped, idx, include_name_hash = include_name_hash)
+
+  twi <- match_res$transcripts_with_ids
+  unresolved <- match_res$unresolved
+  audit <- build_match_audit(
+    roster_spec = attr(roster_df, "engager_spec"),
+    hmac_used = !is.null(resolve_name_hash_key(key)),
+    icu_version = stringi::stri_info()[["ICUversion"]]
+  )
+
+  obj <- list(
+    transcripts_with_ids = twi,
+    unresolved = unresolved,
+    audit = audit,
+    .__n_total = nrow(prepped),
+    .__n_matched = sum(!is.na(twi$student_id)),
+    .__n_unresolved = nrow(unresolved)
+  )
+  class(obj) <- c("engager_match", class(obj))
+  message(sprintf(
+    "Matched %s/%s transcript speakers (%s unresolved).",
+    obj$.__n_matched, obj$.__n_total, obj$.__n_unresolved
+  ))
+  obj
 }
 
 #' @export
