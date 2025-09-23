@@ -2,13 +2,38 @@
 
 #' Load a roster and compute canonical names and hashes
 #'
-#' @param path Path to a CSV roster file
-#' @param schema Schema name, default 'engager_v1'
-#' @param key Optional override key for name hashing
-#' @param delimiter Delimiter for aliases parsing autodetect/override
-#' @param include_formal_as_alias Logical; include formal_name as alias
-#' @param ... Additional arguments passed to readr::read_csv
-#' @return A tibble with schema-enforced columns and attributes
+#' Enforces the `engager_v1` schema: requires `preferred_name`; optional
+#' `student_id` (unique if present), `formal_name`, `transcript_name`, and
+#' `aliases`. Aliases are parsed into a list column (no row explosion), names
+#' are normalized with ICU-backed rules, and hashes are computed using
+#' SHA-256 or HMAC-SHA-256 based on key precedence.
+#'
+#' @param path Path to a CSV roster file.
+#' @param schema Schema name, default `'engager_v1'`.
+#' @param key Optional override key for name hashing (HMAC). If `NULL`, falls
+#'   back to `Sys.getenv("ENGAGER_NAME_HASH_KEY")` then
+#'   `getOption("engager.name_hash_key")`.
+#' @param delimiter Character used to split `aliases`. Default `";"`. Common
+#'   delimiters like `,` and `|` are also supported when present.
+#' @param include_formal_as_alias Logical; if `TRUE`, includes normalized
+#'   `formal_name` as an additional alias.
+#' @param ... Additional arguments passed to `readr::read_csv()`.
+#'
+#' @return A tibble with columns including `canonical_name`, `name_hash`,
+#'   `alias_hashes` (list<chr>), and `all_name_hashes` (list<chr>). An
+#'   `engager_spec` attribute is attached describing hashing and normalization.
+#'
+#' @examples
+#' tmp <- tempfile(fileext = ".csv")
+#' dat <- tibble::tibble(
+#'   preferred_name = c("Alice Smith", "Bob Jones"),
+#'   student_id = c("S1", "S2"),
+#'   aliases = c("A Smith; Alice S", NA_character_)
+#' )
+#' readr::write_csv(dat, tmp)
+#' ro <- load_roster(tmp)
+#' names(ro)
+#'
 #' @export
 #' @family name-matching
 load_roster <- function(path,

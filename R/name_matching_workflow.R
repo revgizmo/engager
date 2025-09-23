@@ -2,10 +2,12 @@
 
 #' Detect unmatched names from transcripts against a roster
 #'
-#' @param transcripts_df Tibble/data.frame of transcript speakers
-#' @param roster_df Tibble/data.frame returned by load_roster()
-#' @param options List of options; supports match_strategy (default 'exact')
-#' @return Tibble with columns: name_hash, occurrence_n, first_seen_at, reason, guidance
+#' @param transcripts_df Tibble/data.frame with at least a `speaker` column.
+#' @param roster_df Tibble/data.frame returned by `load_roster()`.
+#' @param options List of options; supports `match_strategy` (default `'exact'`)
+#'   and `include_name_hash` (default `FALSE`).
+#' @return Tibble with columns: `name_hash`, `occurrence_n`, `first_seen_at`,
+#'   `reason`, `guidance`. `name_hash` omitted unless `include_name_hash = TRUE`.
 #' @export
 #' @family name-matching
 detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) {
@@ -36,10 +38,13 @@ detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) 
 #'
 #' Returns an object of class 'engager_match' with redacted print/summary.
 #'
-#' @param transcripts_df Tibble/data.frame of transcript speakers
-#' @param roster_df Tibble/data.frame returned by load_roster()
-#' @param options List of options; supports match_strategy (default 'exact')
-#' @return A list with elements transcripts_with_ids, unresolved, audit
+#' @param transcripts_df Tibble/data.frame with at least a `speaker` column.
+#' @param roster_df Tibble/data.frame returned by `load_roster()`.
+#' @param options List of options; supports `match_strategy` (default `'exact'`)
+#'   and `include_name_hash` (default `FALSE`).
+#' @return A list with elements `transcripts_with_ids`, `unresolved`, and
+#'   `audit`. Returns an object of class `'engager_match'` with redacted
+#'   `print()` and `summary()` methods.
 #' @export
 #' @family name-matching
 safe_name_matching_workflow <- function(transcripts_df, roster_df, options = list()) {

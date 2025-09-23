@@ -2,11 +2,16 @@
 
 #' Write unresolved matches to disk with privacy guardrails
 #'
-#' @param unresolved_tbl Tibble returned by detect_unmatched_names()
-#' @param path Output file path
-#' @param include_raw Logical; include raw names if TRUE and allowed
-#' @param overwrite Logical; overwrite existing file if TRUE
-#' @return Invisibly, the path written
+#' By default, writes only hashed columns (no raw names). To include raw
+#' names, both conditions must be met: `include_raw = TRUE` and
+#' `options(engager.allow_raw_name_exports = TRUE)` is set. Otherwise, the
+#' function aborts with class `engager_privacy_error`.
+#'
+#' @param unresolved_tbl Tibble returned by `detect_unmatched_names()`.
+#' @param path Output file path.
+#' @param include_raw Logical; include raw names if `TRUE` and allowed.
+#' @param overwrite Logical; overwrite existing file if `TRUE`.
+#' @return Invisibly, the path written.
 #' @export
 #' @family name-matching
 write_unresolved <- function(unresolved_tbl,
