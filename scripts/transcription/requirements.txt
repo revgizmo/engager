@@ -1,0 +1,9 @@
+# Base dependencies for the local transcription workflow.
+# Install torch/torchaudio separately using the instructions at https://pytorch.org/get-started/locally/
+# before installing the rest of this file.
+openai-whisper>=20231117
+pyannote.audio>=3.1.1
+pyyaml>=6.0
+ffmpeg-python>=0.2.0
+soundfile>=0.12.1
+numpy>=1.24
