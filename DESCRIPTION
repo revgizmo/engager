@@ -1,12 +1,12 @@
 Package: engager
 Type: Package
-Title: Engager: Analyze Student Engagement from Zoom Transcripts
+Title: Engager: Analyze Student Engagement from Zoom and other WebVTT Transcripts
 Version: 0.1.0
 Authors@R: person(given = "Conor",
                   family = "Healy",
                   role = c("aut", "cre"),
                   email = "conorhealy@berkeley.edu")
-Description: Takes Zoom transcripts and student rosters,
+Description: Takes Zoom and other WebVTT transcripts and student rosters,
     converts them for analysis, and
     analyzes the results for student engagement, with a particular focus on participation equity.
 License: MIT + file LICENSE

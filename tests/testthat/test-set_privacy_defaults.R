@@ -18,8 +18,6 @@ test_that("set_privacy_defaults sets options and handles levels", {
 test_that("set_privacy_defaults arg matching works", {
   # default args choose first of each
   cfg <- set_privacy_defaults()
-  expect_true(cfg$privacy_level %in% c("ferpa_strict","ferpa_standard","mask","none"))
-  expect_true(cfg$unmatched_names_action %in% c("stop","warn"))
+  expect_true(cfg$privacy_level %in% c("ferpa_strict", "ferpa_standard", "mask", "none"))
+  expect_true(cfg$unmatched_names_action %in% c("stop", "warn"))
 })
-
-
