@@ -29,12 +29,29 @@ This vignette demonstrates the core functionality of the `engager` package using
 
 The package now exports these essential functions:
 
-```{r essential-functions, results='asis'}
+```{r essential-functions, results='asis', echo=FALSE}
 library(engager)
 
-# Get list of exported functions (essential functions)
-exported_functions <- names(getNamespaceExports("engager"))
-essential_functions <- exported_functions[!exported_functions %in% c("%>%")] # Exclude pipe operator
+# Try to derive exported functions dynamically; fall back to a curated list
+safe_exports <- tryCatch(names(getNamespaceExports("engager")), error = function(e) character(0))
+essential_functions <- setdiff(safe_exports, c("%>%"))
+
+if (length(essential_functions) == 0) {
+  # Fallback list aligned with current exported API
+  essential_functions <- c(
+    "load_zoom_transcript",
+    "process_zoom_transcript",
+    "consolidate_transcript",
+    "summarize_transcript_files",
+    "analyze_transcripts",
+    "summarize_transcript_metrics",
+    "ensure_privacy",
+    "privacy_audit",
+    "validate_privacy_compliance",
+    "plot_users",
+    "write_metrics"
+  )
+}
 
 # Emit a markdown list with autolinkable inline code items
 cat("Essential functions (", length(essential_functions), "):\n\n")
