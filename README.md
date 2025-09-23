@@ -257,4 +257,4 @@ This package is licensed under the MIT License. See the CRAN stub in
 - **GitHub Repository**: <https://github.com/revgizmo/engager>
 - **Issues**: <https://github.com/revgizmo/engager/issues>
 - **Project Status**:
-  [docs/development/PROJECT.md](docs/development/PROJECT.md)
+  [project-docs/PROJECT.md](project-docs/PROJECT.md)
