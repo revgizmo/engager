@@ -75,12 +75,7 @@ safe_name_matching_workflow <- function(transcripts_df, roster_df, options = lis
     .__n_unresolved = nrow(unresolved)
   )
   class(obj) <- c("engager_match", class(obj))
-  if (isTRUE(getOption("engager.matching_quiet", TRUE)) == FALSE) {
-    message(sprintf(
-      "Matched %s/%s transcript speakers (%s unresolved).",
-      obj$.__n_matched, obj$.__n_total, obj$.__n_unresolved
-    ))
-  }
+  # Silent by default; users can inspect the object for counts
   obj
 }
 
@@ -90,12 +85,7 @@ print.engager_match <- function(x, ...) {
   n_total <- x$.__n_total %||% NA_integer_
   n_matched <- x$.__n_matched %||% NA_integer_
   n_unresolved <- x$.__n_unresolved %||% NA_integer_
-  if (isTRUE(getOption("engager.matching_quiet", TRUE)) == FALSE) {
-    message(sprintf(
-      "engager_match: %s total, %s matched, %s unresolved",
-      n_total, n_matched, n_unresolved
-    ))
-  }
+  # Silent by default; users can inspect the object for counts
   invisible(x)
 }
 
