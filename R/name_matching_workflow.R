@@ -90,10 +90,12 @@ print.engager_match <- function(x, ...) {
   n_total <- x$.__n_total %||% NA_integer_
   n_matched <- x$.__n_matched %||% NA_integer_
   n_unresolved <- x$.__n_unresolved %||% NA_integer_
-  message(sprintf(
-    "engager_match: %s total, %s matched, %s unresolved",
-    n_total, n_matched, n_unresolved
-  ))
+  if (isTRUE(getOption("engager.matching_quiet", TRUE)) == FALSE) {
+    message(sprintf(
+      "engager_match: %s total, %s matched, %s unresolved",
+      n_total, n_matched, n_unresolved
+    ))
+  }
   invisible(x)
 }
 
