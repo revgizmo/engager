@@ -19,11 +19,13 @@ Imports:
     dplyr,
     ggplot2,
     hms,
+    openssl,
     jsonlite,
     lubridate,
     magrittr,
     readr,
     rlang,
+    stringi,
     stringr,
     tibble
 Suggests:
