@@ -44,7 +44,7 @@ jobs:
           needs: website
       - name: Build pkgdown site
         run: |
-          Rscript -e "pkgdown::clean_site(preview = FALSE)"
+          Rscript -e "pkgdown::clean_site()"
           Rscript -e "pkgdown::build_site(lazy = FALSE, override = list(destination = 'docs'))"
       - name: Setup Pages
         uses: actions/configure-pages@v4
