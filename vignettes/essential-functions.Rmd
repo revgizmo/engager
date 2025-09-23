@@ -29,14 +29,16 @@ This vignette demonstrates the core functionality of the `engager` package using
 
 The package now exports these essential functions:
 
-```{r essential-functions}
+```{r essential-functions, results='asis'}
 library(engager)
 
 # Get list of exported functions (essential functions)
 exported_functions <- names(getNamespaceExports("engager"))
 essential_functions <- exported_functions[!exported_functions %in% c("%>%")] # Exclude pipe operator
-cat("Essential functions (", length(essential_functions), "):\n")
-cat(paste("-", essential_functions), sep = "\n")
+
+# Emit a markdown list with autolinkable inline code items
+cat("Essential functions (", length(essential_functions), "):\n\n")
+cat(paste0("- `", essential_functions, "()`"), sep = "\n")
 ```
 
 ## Core Workflow
@@ -98,31 +100,23 @@ cat("validate_privacy_compliance() and validate_ferpa_compliance() ensure FERPA 
 - `load_zoom_transcript()` - Load Zoom transcript files
 - `process_zoom_transcript()` - Process and clean transcripts
 - `consolidate_transcript()` - Consolidate consecutive comments
-- `add_dead_air_rows()` - Add gaps between comments
+- `summarize_transcript_files()` - Summarize transcripts at file level
 
 ### Analysis
 - `analyze_transcripts()` - Main analysis function
 - `summarize_transcript_metrics()` - Calculate engagement metrics
-- `analyze_multi_session_attendance()` - Multi-session analysis
-- `generate_attendance_report()` - Generate attendance reports
 
 ### Privacy & Compliance
 - `ensure_privacy()` - Apply privacy protection
-- `set_privacy_defaults()` - Configure privacy settings
 - `privacy_audit()` - Audit privacy compliance
 - `validate_privacy_compliance()` - Validate privacy settings
-- `validate_ferpa_compliance()` - FERPA compliance check
 
 ### Name Matching
-- `load_roster()` - Load student roster
-- `safe_name_matching_workflow()` - Safe name matching
-- `detect_unmatched_names()` - Find unmatched names
-- `detect_duplicate_transcripts()` - Find duplicate files
+<!-- The core name-matching helpers are currently internal/non-exported. Public workflows will be linked here when exported. -->
 
 ### Utilities
 - `plot_users()` - Plot user engagement
 - `write_metrics()` - Export metrics
-- `validate_schema()` - Validate data structure
 
 ## Benefits of Scope Reduction
 
