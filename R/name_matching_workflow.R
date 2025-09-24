@@ -34,7 +34,7 @@ detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) 
   unresolved
 }
 
-#' Safe name matching workflow (privacy-first)
+#' Match names workflow (privacy-first)
 #'
 #' Returns an object of class 'engager_match' with redacted print/summary.
 #'
@@ -47,7 +47,7 @@ detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) 
 #'   `print()` and `summary()` methods.
 #' @export
 #' @family name-matching
-safe_name_matching_workflow <- function(transcripts_df, roster_df, options = list()) {
+match_names_workflow <- function(transcripts_df, roster_df, options = list()) {
   match_strategy <- options$match_strategy %||% "exact"
   include_name_hash <- isTRUE(options$include_name_hash %||% FALSE)
   key <- options$key %||% NULL

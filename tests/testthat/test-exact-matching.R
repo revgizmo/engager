@@ -13,7 +13,7 @@ test_that("exact matching assigns student_id and reports unresolved", {
     speaker = c("alice smith", "Carol"),
     timestamp = as.POSIXct(c("2025-01-01 10:00:00", "2025-01-01 10:01:00"), tz = "UTC")
   )
-  res <- safe_name_matching_workflow(transcripts, ro, options = list(match_strategy = "exact"))
+  res <- match_names_workflow(transcripts, ro, options = list(match_strategy = "exact"))
   expect_s3_class(res, "engager_match")
   expect_equal(nrow(res$unresolved), 1)
   expect_true(all(c("reason", "guidance") %in% names(res$unresolved)))

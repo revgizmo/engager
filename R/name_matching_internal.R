@@ -32,7 +32,7 @@ normalize_name <- function(x) {
     opts_regex = stringi::stri_opts_regex(case_insensitive = FALSE)
   )
   # Full casefold (locale-independent)
-  x <- stringi::stri_trans_casefold(x, type = "full")
+  x <- stringi::stri_trans_casefold(x)
   # Trim
   x <- stringi::stri_trim_both(x)
   # Collapse internal whitespace to single spaces
