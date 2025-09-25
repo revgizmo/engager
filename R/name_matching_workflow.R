@@ -18,6 +18,8 @@ detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) 
     match_names_fuzzy()
   }
   prepped <- prepare_transcript_names(transcripts_df, key = key)
+  roster_df <- validate_roster_for_matching(roster_df, key = key)
+  roster_df <- compute_roster_hashes(roster_df, key = key)
   idx <- build_roster_hash_index(roster_df)
   res <- match_names_exact(prepped, idx, include_name_hash = TRUE)
   # Use base R aggregation instead of dplyr to avoid segfault

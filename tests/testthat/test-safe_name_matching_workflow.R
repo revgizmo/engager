@@ -320,6 +320,7 @@ test_that("handle_unmatched_names works correctly", {
   expect_error(
     handle_unmatched_names(
       unmatched_names = c("Dr. Smith", "Guest1"),
+      transcript_data = tibble::tibble(speaker = c("Dr. Smith", "Guest1")),
       unmatched_names_action = "stop",
       privacy_level = "mask",
       data_folder = "data",
@@ -335,6 +336,7 @@ test_that("handle_unmatched_names works correctly", {
       expect_error(
         handle_unmatched_names(
           unmatched_names = c("Dr. Smith"),
+          transcript_data = tibble::tibble(speaker = c("Dr. Smith")),
           unmatched_names_action = "warn",
           privacy_level = "mask",
           data_folder = "data",

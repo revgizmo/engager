@@ -1,6 +1,7 @@
 test_that("exact matching handles hash collisions as ambiguous", {
+  # Create names that will definitely normalize to the same value
   roster <- tibble::tibble(
-    preferred_name = c("Alice Smith", "Alic<U+00E9> Smith"),
+    preferred_name = c("John Smith", "JOHN SMITH"),  # Case difference
     student_id = c("S1", "S2"),
     aliases = c(NA_character_, NA_character_)
   )
