@@ -20,14 +20,49 @@ detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) 
   prepped <- prepare_transcript_names(transcripts_df, key = key)
   idx <- build_roster_hash_index(roster_df)
   res <- match_names_exact(prepped, idx, include_name_hash = TRUE)
-  unresolved <- res$unresolved |>
-    dplyr::group_by(name_hash, reason, guidance) |>
-    dplyr::summarise(
-      occurrence_n = dplyr::n(),
-      first_seen_at = suppressWarnings(dplyr::first(if ("timestamp" %in% names(res$unresolved)) res$unresolved$timestamp else NA)),
-      .groups = "drop"
-    ) |>
-    dplyr::select(name_hash, occurrence_n, first_seen_at, reason, guidance)
+  # Use base R aggregation instead of dplyr to avoid segfault
+  if (nrow(res$unresolved) > 0) {
+    # Group by name_hash, reason, guidance using base R
+    group_keys <- paste(res$unresolved$name_hash, res$unresolved$reason, res$unresolved$guidance, sep = "|")
+    unique_groups <- unique(group_keys)
+    
+    unresolved_list <- lapply(unique_groups, function(key) {
+      mask <- group_keys == key
+      group_data <- res$unresolved[mask, ]
+      
+      list(
+        name_hash = group_data$name_hash[1],
+        occurrence_n = sum(mask),
+        first_seen_at = if ("timestamp" %in% names(group_data)) {
+          suppressWarnings(group_data$timestamp[1])
+        } else {
+          NA
+        },
+        reason = group_data$reason[1],
+        guidance = group_data$guidance[1]
+      )
+    })
+    
+    unresolved <- do.call(rbind, lapply(unresolved_list, function(x) {
+      data.frame(
+        name_hash = x$name_hash,
+        occurrence_n = x$occurrence_n,
+        first_seen_at = x$first_seen_at,
+        reason = x$reason,
+        guidance = x$guidance,
+        stringsAsFactors = FALSE
+      )
+    }))
+  } else {
+    unresolved <- data.frame(
+      name_hash = character(0),
+      occurrence_n = integer(0),
+      first_seen_at = as.POSIXct(character(0)),
+      reason = character(0),
+      guidance = character(0),
+      stringsAsFactors = FALSE
+    )
+  }
   if (!include_name_hash) {
     unresolved$name_hash <- NULL
   }

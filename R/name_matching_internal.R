@@ -138,7 +138,7 @@ build_roster_hash_index <- function(roster_df) {
     mask <- name_hash_vec == hash
     student_ids_for_hash <- student_ids[mask]
     non_na_students <- student_ids_for_hash[!is.na(student_ids_for_hash)]
-    
+
     list(
       name_hash = hash,
       n = sum(mask),
@@ -150,7 +150,7 @@ build_roster_hash_index <- function(roster_df) {
       collision = sum(mask) > 1 & length(unique(non_na_students)) == 0
     )
   })
-  
+
   idx <- do.call(rbind, lapply(idx_list, function(x) {
     data.frame(
       name_hash = x$name_hash,
@@ -202,34 +202,52 @@ prepare_transcript_names <- function(transcripts_df, key = NULL) {
 #' Returns list(transcripts_with_ids, unresolved)
 #' @keywords internal
 match_names_exact <- function(prepped_transcripts, roster_index, include_name_hash = FALSE) {
-  joined <- dplyr::left_join(
+  # Use base R merge instead of dplyr::left_join to avoid segfault
+  joined <- merge(
     prepped_transcripts,
     roster_index,
-    by = dplyr::join_by(name_hash)
+    by = "name_hash",
+    all.x = TRUE,
+    all.y = FALSE
   )
-  # Unresolved reasons
-  unresolved <- dplyr::filter(joined, is.na(student_id) | collision)
-  unresolved <- dplyr::mutate(
-    unresolved,
-    reason = dplyr::case_when(
-      isTRUE(collision) ~ "collision_ambiguous",
-      is.na(student_id) ~ "no_candidate",
-      TRUE ~ "unknown"
-    ),
-    guidance = dplyr::case_when(
-      reason == "collision_ambiguous" ~ "Refine roster aliases or use future fuzzy tools",
-      reason == "no_candidate" ~ "Add alias to roster or correct transcript",
-      TRUE ~ NA_character_
+  
+  # Identify unresolved entries using base R
+  unresolved_mask <- is.na(joined$student_id) | joined$collision
+  unresolved <- joined[unresolved_mask, ]
+  
+  # Add reason and guidance columns using base R
+  unresolved$reason <- ifelse(
+    isTRUE(unresolved$collision),
+    "collision_ambiguous",
+    ifelse(
+      is.na(unresolved$student_id),
+      "no_candidate",
+      "unknown"
     )
-  ) |>
-    dplyr::select(name_hash, reason, guidance, dplyr::any_of(c("timestamp")))
-
-  # Redact name_hash in transcripts unless requested
-  twi <- dplyr::transmute(
-    joined,
-    dplyr::across(-dplyr::any_of(c("canonical_name", "name_hash", "collision"))),
-    student_id = student_id
   )
+  
+  unresolved$guidance <- ifelse(
+    unresolved$reason == "collision_ambiguous",
+    "Refine roster aliases or use future fuzzy tools",
+    ifelse(
+      unresolved$reason == "no_candidate",
+      "Add alias to roster or correct transcript",
+      NA_character_
+    )
+  )
+  
+  # Select only needed columns for unresolved
+  unresolved_cols <- c("name_hash", "reason", "guidance")
+  if ("timestamp" %in% names(unresolved)) {
+    unresolved_cols <- c(unresolved_cols, "timestamp")
+  }
+  unresolved <- unresolved[, unresolved_cols, drop = FALSE]
+
+  # Create transcripts_with_ids by removing sensitive columns
+  twi <- joined
+  sensitive_cols <- c("canonical_name", "name_hash", "collision")
+  twi <- twi[, !names(twi) %in% sensitive_cols, drop = FALSE]
+  
   if (include_name_hash) {
     twi$name_hash <- joined$name_hash
   }
