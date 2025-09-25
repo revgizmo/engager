@@ -267,7 +267,8 @@ test_that("safe_name_matching_workflow handles name mapping file issues", {
     transcript_file_path = test_data$transcript_file,
     roster_data = test_data$roster,
     data_folder = tempdir(),
-    section_names_lookup_file = "nonexistent_mapping.csv"
+    section_names_lookup_file = "nonexistent_mapping.csv",
+    unmatched_names_action = "warn"
   )
 
   expect_s3_class(result, "tbl_df")
@@ -325,7 +326,8 @@ test_that("safe_name_matching_workflow handles memory cleanup", {
   result <- safe_name_matching_workflow(
     transcript_file_path = test_data$transcript_file,
     roster_data = test_data$roster,
-    privacy_level = "none"
+    privacy_level = "none",
+    unmatched_names_action = "warn"
   )
 
   expect_s3_class(result, "tbl_df")
@@ -634,11 +636,13 @@ test_that("apply_name_matching handles edge cases", {
 # Test handle_unmatched_names function
 test_that("handle_unmatched_names handles different actions", {
   unmatched_names <- c("Unknown Student 1", "Unknown Student 2")
+  transcript_data <- tibble::tibble(speaker = c("Unknown Student 1", "Unknown Student 2"))
 
   # Test with stop action
   expect_error(
     handle_unmatched_names(
       unmatched_names = unmatched_names,
+      transcript_data = transcript_data,
       unmatched_names_action = "stop",
       privacy_level = "mask",
       data_folder = ".",
