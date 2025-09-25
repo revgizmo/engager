@@ -4,12 +4,7 @@
 \alias{detect_unmatched_names}
 \title{Detect unmatched names from transcripts against a roster}
 \usage{
-detect_unmatched_names(
-  transcript_data = NULL,
-  roster_data = NULL,
-  name_mappings = NULL,
-  privacy_level = getOption("engager.privacy_level", "mask")
-)
+detect_unmatched_names(transcripts_df, roster_df, options = list())
 }
 \arguments{
 \item{transcripts_df}{Tibble/data.frame with at least a \code{speaker} column.}
