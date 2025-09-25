@@ -667,10 +667,9 @@ test_that("detect_unmatched_names handles edge cases", {
   name_mappings <- tibble::tibble()
 
   result <- detect_unmatched_names(
-    transcript_data = empty_transcript,
-    roster_data = roster,
-    name_mappings = name_mappings,
-    privacy_level = "none"
+    transcripts_df = empty_transcript,
+    roster_df = roster,
+    options = list()
   )
 
   expect_equal(length(result), 0)
@@ -682,10 +681,9 @@ test_that("detect_unmatched_names handles edge cases", {
   )
 
   result <- detect_unmatched_names(
-    transcript_data = transcript_no_name,
-    roster_data = roster,
-    name_mappings = name_mappings,
-    privacy_level = "none"
+    transcripts_df = transcript_no_name,
+    roster_df = roster,
+    options = list()
   )
 
   expect_equal(length(result), 0)

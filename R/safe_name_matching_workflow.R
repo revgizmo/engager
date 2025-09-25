@@ -537,10 +537,9 @@ process_name_matching_workflow <- function(transcript_data, roster_data, name_ma
                                            data_folder, section_names_lookup_file) {
   # Detect unmatched names
   unmatched_names <- detect_unmatched_names(
-    transcript_data = transcript_data,
-    roster_data = roster_data,
-    name_mappings = name_mappings,
-    privacy_level = "none" # Need real names for detection
+    transcripts_df = transcript_data,
+    roster_df = roster_data,
+    options = list()
   )
 
   # Handle unmatched names according to configuration
