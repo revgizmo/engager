@@ -10,8 +10,8 @@ load_roster <- function(
     roster_file = "roster.csv",
     strict_errors = FALSE) {
   # Handle case where first argument is a direct file path
-  if (is.character(data_folder) && length(data_folder) == 1 && 
-      file.exists(data_folder) && !dir.exists(data_folder)) {
+  if (is.character(data_folder) && length(data_folder) == 1 &&
+    file.exists(data_folder) && !dir.exists(data_folder)) {
     roster_file_path <- data_folder
   } else {
     roster_file_path <- file.path(data_folder, roster_file)
@@ -33,9 +33,9 @@ load_roster <- function(
   } else {
     if (strict_errors) {
       # Throw error when file doesn't exist for enhanced error handling
-      abort_zse(paste0("Roster file not found at `", roster_file_path, "`"), class = "zse_input_error")                                                         
+      abort_zse(paste0("Roster file not found at `", roster_file_path, "`"), class = "zse_input_error")
     } else {
-      # Return empty tibble with expected structure when file doesn't exist (backward compatibility)                                                            
+      # Return empty tibble with expected structure when file doesn't exist (backward compatibility)
       return(tibble::tibble())
     }
   }

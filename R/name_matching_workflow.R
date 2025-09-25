@@ -54,11 +54,11 @@ match_names_workflow <- function(transcripts_df, roster_df, options = list()) {
   if (!identical(match_strategy, "exact")) {
     match_names_fuzzy()
   }
-  
+
   # Validate and prepare roster for matching
   roster_df <- validate_roster_for_matching(roster_df, key = key)
   roster_df <- compute_roster_hashes(roster_df, key = key)
-  
+
   prepped <- prepare_transcript_names(transcripts_df, key = key)
   idx <- build_roster_hash_index(roster_df)
   match_res <- match_names_exact(prepped, idx, include_name_hash = include_name_hash)
