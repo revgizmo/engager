@@ -155,7 +155,8 @@ test_that("safe_name_matching_workflow works with valid data", {
   result <- safe_name_matching_workflow(
     transcript_file_path = test_data$transcript_file,
     roster_data = test_data$roster,
-    privacy_level = "none"
+    privacy_level = "none",
+    unmatched_names_action = "warn"
   )
 
   expect_s3_class(result, "tbl_df")
@@ -344,7 +345,8 @@ test_that("safe_name_matching_workflow handles diagnostic messages", {
     expect_message(
       result <- safe_name_matching_workflow(
         transcript_file_path = test_data$transcript_file,
-        roster_data = test_data$roster
+        roster_data = test_data$roster,
+        unmatched_names_action = "warn"
       ),
       regexp = "Stage 1: Loading transcript"
     )
@@ -352,7 +354,8 @@ test_that("safe_name_matching_workflow handles diagnostic messages", {
     # In test environment, just verify it works
     result <- safe_name_matching_workflow(
       transcript_file_path = test_data$transcript_file,
-      roster_data = test_data$roster
+      roster_data = test_data$roster,
+      unmatched_names_action = "warn"
     )
     expect_s3_class(result, "tbl_df")
   }
@@ -389,7 +392,8 @@ test_that("safe_name_matching_workflow handles complex name matching scenarios",
   result <- safe_name_matching_workflow(
     transcript_file_path = test_transcript,
     roster_data = complex_roster,
-    privacy_level = "none"
+    privacy_level = "none",
+    unmatched_names_action = "warn"
   )
 
   expect_s3_class(result, "tbl_df")
@@ -428,7 +432,8 @@ test_that("safe_name_matching_workflow handles international names", {
   result <- safe_name_matching_workflow(
     transcript_file_path = test_transcript,
     roster_data = international_roster,
-    privacy_level = "none"
+    privacy_level = "none",
+    unmatched_names_action = "warn"
   )
 
   expect_s3_class(result, "tbl_df")
@@ -457,7 +462,8 @@ test_that("safe_name_matching_workflow handles transcript validation", {
     result <- safe_name_matching_workflow(
       transcript_file_path = tmp,
       roster_data = roster,
-      privacy_level = "none"
+      privacy_level = "none",
+      unmatched_names_action = "warn"
     ),
     regexp = "Missing columns in transcript data"
   )
