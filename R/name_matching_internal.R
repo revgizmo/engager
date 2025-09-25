@@ -219,26 +219,28 @@ match_names_exact <- function(prepped_transcripts, roster_index, include_name_ha
   unresolved_mask <- is.na(joined$student_id) | joined$collision
   unresolved <- joined[unresolved_mask, ]
 
-  # Add reason and guidance columns using base R
-  unresolved$reason <- ifelse(
-    isTRUE(unresolved$collision),
-    "collision_ambiguous",
-    ifelse(
-      is.na(unresolved$student_id),
-      "no_candidate",
-      "unknown"
+  # Add reason and guidance columns using base R (only if unresolved has rows)
+  if (nrow(unresolved) > 0) {
+    unresolved$reason <- ifelse(
+      isTRUE(unresolved$collision),
+      "collision_ambiguous",
+      ifelse(
+        is.na(unresolved$student_id),
+        "no_candidate",
+        "unknown"
+      )
     )
-  )
 
-  unresolved$guidance <- ifelse(
-    unresolved$reason == "collision_ambiguous",
-    "Refine roster aliases or use future fuzzy tools",
-    ifelse(
-      unresolved$reason == "no_candidate",
-      "Add alias to roster or correct transcript",
-      NA_character_
+    unresolved$guidance <- ifelse(
+      unresolved$reason == "collision_ambiguous",
+      "Refine roster aliases or use future fuzzy tools",
+      ifelse(
+        unresolved$reason == "no_candidate",
+        "Add alias to roster or correct transcript",
+        NA_character_
+      )
     )
-  )
+  }
 
   # Select only needed columns for unresolved
   unresolved_cols <- c("name_hash", "reason", "guidance")
@@ -308,7 +310,7 @@ compute_roster_hashes <- function(roster_df, key = NULL, delimiter = ";", includ
   } else {
     delim <- delimiter
     parse_aliases <- function(x) {
-      if (is.na(x) || identical(x, "")) {
+      if (is.null(x) || is.na(x) || identical(x, "")) {
         return(character(0))
       }
       parts <- stringr::str_split(x, pattern = sprintf("[%s,|]", stringr::str_replace_all(delim, "\\|", "\\\\|")), n = Inf)[[1]]

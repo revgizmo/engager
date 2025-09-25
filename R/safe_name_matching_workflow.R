@@ -71,7 +71,7 @@ extract_unmatched_names_from_transcript <- function(unmatched_names, transcript_
   # Extract actual names from transcript data for unmatched entries only
   # unmatched_names is a data frame with name_hash, we need to get the actual names
   actual_names <- character(0)
-  if (nrow(unmatched_names) > 0 && "speaker" %in% names(transcript_data)) {
+  if (!is.null(nrow(unmatched_names)) && nrow(unmatched_names) > 0 && "speaker" %in% names(transcript_data)) {
     # Get the unmatched name hashes
     unmatched_hashes <- unmatched_names$name_hash
     
