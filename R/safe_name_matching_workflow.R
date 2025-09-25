@@ -540,6 +540,10 @@ load_name_mappings <- function(data_folder, section_names_lookup_file) {
 process_name_matching_workflow <- function(transcript_data, roster_data, name_mappings,
                                            unmatched_names_action, privacy_level,
                                            data_folder, section_names_lookup_file) {
+  # Prepare roster data for matching (validate schema and compute hashes)
+  roster_data <- validate_roster_for_matching(roster_data)
+  roster_data <- compute_roster_hashes(roster_data)
+  
   # Detect unmatched names
   unmatched_names <- detect_unmatched_names(
     transcripts_df = transcript_data,
