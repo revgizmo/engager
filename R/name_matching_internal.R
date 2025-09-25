@@ -132,19 +132,33 @@ build_roster_hash_index <- function(roster_df) {
     student_id = student_ids,
     name_hash = name_hash_vec
   )
-  idx <- expanded |>
-    dplyr::group_by(name_hash) |>
-    dplyr::summarise(
-      n = dplyr::n(),
-      student_id = if (dplyr::n_distinct(student_id[!is.na(student_id)]) == 1) {
-        unique(student_id[!is.na(student_id)])
+  # Use base R aggregation to avoid dplyr segfault
+  unique_hashes <- unique(name_hash_vec)
+  idx_list <- lapply(unique_hashes, function(hash) {
+    mask <- name_hash_vec == hash
+    student_ids_for_hash <- student_ids[mask]
+    non_na_students <- student_ids_for_hash[!is.na(student_ids_for_hash)]
+    
+    list(
+      name_hash = hash,
+      n = sum(mask),
+      student_id = if (length(unique(non_na_students)) == 1) {
+        unique(non_na_students)[1]
       } else {
         NA_character_
       },
-      .groups = "drop"
-    ) |>
-    dplyr::mutate(collision = n > 1 & is.na(student_id)) |>
-    dplyr::select(name_hash, student_id, collision)
+      collision = sum(mask) > 1 & length(unique(non_na_students)) == 0
+    )
+  })
+  
+  idx <- do.call(rbind, lapply(idx_list, function(x) {
+    data.frame(
+      name_hash = x$name_hash,
+      student_id = x$student_id,
+      collision = x$collision,
+      stringsAsFactors = FALSE
+    )
+  }))
   idx
 }
 
