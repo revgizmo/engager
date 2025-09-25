@@ -507,10 +507,7 @@ load_and_validate_transcript <- function(transcript_file_path) {
 
   # Ensure a 'speaker' column exists for downstream normalization
   if (!("speaker" %in% names(transcript_data))) {
-    present <- intersect(transcript_name_columns, names(transcript_data))
-    if (length(present) >= 1) {
-      transcript_data$speaker <- transcript_data[[present[[1]]]]
-    }
+    transcript_data <- derive_speaker_column(transcript_data)
   }
 
   transcript_data

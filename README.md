@@ -12,6 +12,8 @@
   - <a href="#-key-functions" id="toc--key-functions">🔧 Key Functions</a>
     - <a href="#core-processing" id="toc-core-processing">Core Processing</a>
     - <a href="#data-management" id="toc-data-management">Data Management</a>
+    - <a href="#name-matching-exact-mvp" id="toc-name-matching-exact-mvp">Name
+      Matching (Exact MVP)</a>
     - <a href="#analysis-and-visualization"
       id="toc-analysis-and-visualization">Analysis and Visualization</a>
     - <a href="#reporting" id="toc-reporting">Reporting</a>
@@ -157,6 +159,25 @@ currently supported but may be added in future versions.
 - `load_roster()` - Load student enrollment data
 - `make_clean_names_df()` - Match transcript names to student records
 - `create_session_mapping()` - Map recordings to courses (advanced)
+
+### Name Matching (Exact MVP)
+
+Use `match_names_workflow()` for exact hash-based matching:
+
+``` r
+library(engager)
+roster <- tibble::tibble(
+  preferred_name = c("Alice Smith", "Bob Jones"),
+  student_id = c("S1", "S2"),
+  aliases = c("A Smith; Alice S", NA_character_)
+)
+transcripts <- tibble::tibble(
+  speaker = c("alice smith", "carol"),
+  timestamp = as.POSIXct(c("2025-01-01 10:00:00", "2025-01-01 10:01:00"), tz = "UTC")
+)
+res <- match_names_workflow(transcripts, roster, options = list(match_strategy = "exact"))
+res
+```
 
 ### Analysis and Visualization
 

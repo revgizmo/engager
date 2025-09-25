@@ -178,17 +178,7 @@ aliases_long <- function(roster_df) {
 #' @keywords internal
 prepare_transcript_names <- function(transcripts_df, key = NULL) {
   if (!("speaker" %in% names(transcripts_df))) {
-    # Try to derive a speaker column from known alternatives
-    candidate_cols <- c(
-      "speaker", "user_name", "name", "speaker_name", "participant_name", "transcript_name"
-    )
-    present <- intersect(candidate_cols, names(transcripts_df))
-    if (length(present) >= 1) {
-      src <- present[[1]]
-      transcripts_df$speaker <- transcripts_df[[src]]
-    } else {
-      rlang::abort("transcripts_df must have a 'speaker' column.", class = "engager_schema_error")
-    }
+    transcripts_df <- derive_speaker_column(transcripts_df)
   }
   canon <- normalize_name(transcripts_df$speaker)
   name_hash <- hash_canonical_name(canon, key = key)
@@ -196,6 +186,20 @@ prepare_transcript_names <- function(transcripts_df, key = NULL) {
   out$canonical_name <- canon
   out$name_hash <- name_hash
   out
+}
+
+#' Derive a 'speaker' column from common alternatives
+#' @keywords internal
+derive_speaker_column <- function(df) {
+  candidate_cols <- c(
+    "speaker", "user_name", "name", "speaker_name", "participant_name", "transcript_name"
+  )
+  present <- intersect(candidate_cols, names(df))
+  if (length(present) >= 1) {
+    df$speaker <- df[[present[[1]]]]
+    return(df)
+  }
+  rlang::abort("transcripts_df must have a 'speaker' column.", class = "engager_schema_error")
 }
 
 #' Perform exact matching by name_hash against roster index
@@ -210,11 +214,11 @@ match_names_exact <- function(prepped_transcripts, roster_index, include_name_ha
     all.x = TRUE,
     all.y = FALSE
   )
-  
+
   # Identify unresolved entries using base R
   unresolved_mask <- is.na(joined$student_id) | joined$collision
   unresolved <- joined[unresolved_mask, ]
-  
+
   # Add reason and guidance columns using base R
   unresolved$reason <- ifelse(
     isTRUE(unresolved$collision),
@@ -225,7 +229,7 @@ match_names_exact <- function(prepped_transcripts, roster_index, include_name_ha
       "unknown"
     )
   )
-  
+
   unresolved$guidance <- ifelse(
     unresolved$reason == "collision_ambiguous",
     "Refine roster aliases or use future fuzzy tools",
@@ -235,7 +239,7 @@ match_names_exact <- function(prepped_transcripts, roster_index, include_name_ha
       NA_character_
     )
   )
-  
+
   # Select only needed columns for unresolved
   unresolved_cols <- c("name_hash", "reason", "guidance")
   if ("timestamp" %in% names(unresolved)) {
@@ -247,7 +251,7 @@ match_names_exact <- function(prepped_transcripts, roster_index, include_name_ha
   twi <- joined
   sensitive_cols <- c("canonical_name", "name_hash", "collision")
   twi <- twi[, !names(twi) %in% sensitive_cols, drop = FALSE]
-  
+
   if (include_name_hash) {
     twi$name_hash <- joined$name_hash
   }
