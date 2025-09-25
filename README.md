@@ -12,6 +12,8 @@
   - <a href="#-key-functions" id="toc--key-functions">🔧 Key Functions</a>
     - <a href="#core-processing" id="toc-core-processing">Core Processing</a>
     - <a href="#data-management" id="toc-data-management">Data Management</a>
+    - <a href="#name-matching-exact-mvp" id="toc-name-matching-exact-mvp">Name
+      Matching (Exact MVP)</a>
     - <a href="#analysis-and-visualization"
       id="toc-analysis-and-visualization">Analysis and Visualization</a>
     - <a href="#reporting" id="toc-reporting">Reporting</a>
@@ -112,23 +114,17 @@ head(metrics)
 
 For detailed workflows and examples, see the package vignettes:
 
-- **[Getting
-  Started](https://revgizmo.github.io/engager/getting-started.html)** -
-  Basic setup and workflow overview
-- **[Whole Game](https://revgizmo.github.io/engager/whole-game.html)** -
-  Complete workflow for new instructors
-- **[Transcript
-  Processing](https://revgizmo.github.io/engager/transcript-processing.html)** -
-  Load, process, and analyze transcripts
-- **[Roster
-  Management](https://revgizmo.github.io/engager/roster-cleaning.html)** -
-  Manage student rosters and clean name mismatches
-- **[Plotting and
-  Analysis](https://revgizmo.github.io/engager/plotting.html)** - Create
-  visualizations and analyze engagement patterns
-- **[Session
-  Mapping](https://revgizmo.github.io/engager/session-mapping.html)** -
-  Handle complex scenarios with multiple courses/sections
+- **Getting Started**: see
+  `vignette("getting-started", package = "engager")`
+- **Whole Game**: see `vignette("whole-game", package = "engager")`
+- **Transcript Processing**: see
+  `vignette("transcript-processing", package = "engager")`
+- **Roster Management**: see
+  `vignette("roster-cleaning", package = "engager")`
+- **Plotting and Analysis**: see
+  `vignette("plotting", package = "engager")`
+- **Session Mapping**: see
+  `vignette("session-mapping", package = "engager")`
 
 ## 🎯 What the Package Does
 
@@ -163,6 +159,25 @@ currently supported but may be added in future versions.
 - `load_roster()` - Load student enrollment data
 - `make_clean_names_df()` - Match transcript names to student records
 - `create_session_mapping()` - Map recordings to courses (advanced)
+
+### Name Matching (Exact MVP)
+
+Use `match_names_workflow()` for exact hash-based matching:
+
+``` r
+library(engager)
+roster <- tibble::tibble(
+  preferred_name = c("Alice Smith", "Bob Jones"),
+  student_id = c("S1", "S2"),
+  aliases = c("A Smith; Alice S", NA_character_)
+)
+transcripts <- tibble::tibble(
+  speaker = c("alice smith", "carol"),
+  timestamp = as.POSIXct(c("2025-01-01 10:00:00", "2025-01-01 10:01:00"), tz = "UTC")
+)
+res <- match_names_workflow(transcripts, roster, options = list(match_strategy = "exact"))
+res
+```
 
 ### Analysis and Visualization
 

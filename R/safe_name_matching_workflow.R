@@ -67,20 +67,50 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
 }
 
 # Internal function - no documentation needed
+extract_unmatched_names_from_transcript <- function(unmatched_names, transcript_data) {
+  # Extract actual names from transcript data for unmatched entries only
+  # unmatched_names is a data frame with name_hash, we need to get the actual names
+  actual_names <- character(0)
+  if (!is.null(nrow(unmatched_names)) && nrow(unmatched_names) > 0 && "speaker" %in% names(transcript_data)) {
+    # Get the unmatched name hashes
+    unmatched_hashes <- unmatched_names$name_hash
+    
+    # Find corresponding actual names by matching hashes
+    # We need to re-compute hashes from transcript data to find matches
+    transcript_speakers <- transcript_data$speaker
+    transcript_speakers <- transcript_speakers[!is.na(transcript_speakers) & nchar(trimws(transcript_speakers)) > 0]
+    
+    # Compute hashes for transcript speakers
+    transcript_hashes <- vapply(transcript_speakers, function(name) {
+      normalize_name(name)
+    }, character(1), USE.NAMES = FALSE)
+    
+    # Find which transcript speakers have unmatched hashes
+    matched_indices <- transcript_hashes %in% unmatched_hashes
+    actual_names <- unique(transcript_speakers[matched_indices])
+  }
+  actual_names
+}
+
+# Internal function - no documentation needed
 handle_unmatched_names <- function(unmatched_names,
+                                   transcript_data,
                                    unmatched_names_action,
                                    privacy_level,
                                    data_folder,
                                    section_names_lookup_file) {
+  # Extract actual names from transcript data for unmatched entries only
+  actual_names <- extract_unmatched_names_from_transcript(unmatched_names, transcript_data)
+
   if (identical(unmatched_names_action, "stop")) {
     # Stop with error for maximum privacy protection
     stop(
       paste0(
-        "Found unmatched names: ", paste(unmatched_names, collapse = ", "), "\n",
+        "Found unmatched names: ", paste(actual_names, collapse = ", "), "\n",
         "Please update your section_names_lookup.csv file with these mappings.\n",
         "See vignette('name-matching-troubleshooting') for detailed instructions.\n",
         "Example mappings:\n",
-        paste(sapply(unmatched_names, function(name) {
+        paste(sapply(actual_names, function(name) {
           paste0("  ", name, " -> [Your roster name]")
         }), collapse = "\n"), "\n",
         "Lookup file path: ", file.path(data_folder, section_names_lookup_file), "\n",
@@ -97,7 +127,7 @@ handle_unmatched_names <- function(unmatched_names,
 
     # Prompt user for name matching
     prompt_name_matching(
-      unmatched_names = unmatched_names,
+      unmatched_names = actual_names,
       privacy_level = privacy_level,
       data_folder = data_folder,
       section_names_lookup_file = section_names_lookup_file
@@ -477,7 +507,7 @@ load_and_validate_transcript <- function(transcript_file_path) {
 
   # Validate transcript has a usable name column
   transcript_name_columns <- c(
-    "transcript_name", "name", "speaker_name", "participant_name"
+    "speaker", "user_name", "transcript_name", "name", "speaker_name", "participant_name"
   )
   has_transcript_name_col <- any(transcript_name_columns %in% names(transcript_data))
   if (!has_transcript_name_col) {
@@ -503,6 +533,11 @@ load_and_validate_transcript <- function(transcript_file_path) {
       "This may affect processing. Expected columns: ", paste(required_columns, collapse = ", "),
       call. = FALSE
     )
+  }
+
+  # Ensure a 'speaker' column exists for downstream normalization
+  if (!("speaker" %in% names(transcript_data))) {
+    transcript_data <- derive_speaker_column(transcript_data)
   }
 
   transcript_data
@@ -535,18 +570,22 @@ load_name_mappings <- function(data_folder, section_names_lookup_file) {
 process_name_matching_workflow <- function(transcript_data, roster_data, name_mappings,
                                            unmatched_names_action, privacy_level,
                                            data_folder, section_names_lookup_file) {
+  # Prepare roster data for matching (validate schema and compute hashes)
+  roster_data <- validate_roster_for_matching(roster_data)
+  roster_data <- compute_roster_hashes(roster_data)
+
   # Detect unmatched names
   unmatched_names <- detect_unmatched_names(
-    transcript_data = transcript_data,
-    roster_data = roster_data,
-    name_mappings = name_mappings,
-    privacy_level = "none" # Need real names for detection
+    transcripts_df = transcript_data,
+    roster_df = roster_data,
+    options = list()
   )
 
   # Handle unmatched names according to configuration
   if (length(unmatched_names) > 0) {
     handle_unmatched_names(
       unmatched_names = unmatched_names,
+      transcript_data = transcript_data,
       unmatched_names_action = unmatched_names_action,
       privacy_level = privacy_level,
       data_folder = data_folder,

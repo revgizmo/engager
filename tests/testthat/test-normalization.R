@@ -1,0 +1,32 @@
+context("Normalization and hashing")
+
+test_that("normalize_name handles diacritics and casefolding deterministically", {
+  # José composed vs decomposed (E + combining acute U+0301)
+  expect_equal(normalize_name("José"), normalize_name("JOSE\u0301"))
+  # Zoë composed vs decomposed diaeresis (e U+0065 + U+0308)
+  expect_equal(normalize_name("Zo\u00EB"), normalize_name("ZO\u0065\u0308"))
+  expect_equal(normalize_name("  Anna   Maria  "), "anna maria")
+})
+
+test_that("Turkish and German edge cases are stable", {
+  # Turkish dotted I (U+0130) equals i + combining dot above after normalization
+  expect_equal(normalize_name("\u0130"), normalize_name("i\u0307"))
+  # German ß (U+00DF) vs SS after casefold; both normalize to "ss"
+  expect_equal(normalize_name("STRASSE"), normalize_name("Stra\u00DFe"))
+})
+
+test_that("hash_canonical_name is deterministic with and without key", {
+  x <- c("anna", "maria")
+  canon <- normalize_name(x)
+  h1 <- hash_canonical_name(canon)
+  h2 <- hash_canonical_name(canon)
+  expect_identical(h1, h2)
+
+  old <- getOption("engager.name_hash_key")
+  on.exit(options(engager.name_hash_key = old), add = TRUE)
+  options(engager.name_hash_key = "secret")
+  h3 <- hash_canonical_name(canon)
+  h4 <- hash_canonical_name(canon)
+  expect_identical(h3, h4)
+  expect_false(identical(h1, h3))
+})

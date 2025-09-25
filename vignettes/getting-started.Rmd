@@ -150,20 +150,20 @@ custom_mappings <- data.frame(
 
 For detailed troubleshooting guidance:
 - **See the troubleshooting vignette**: `vignette("name-matching-troubleshooting")`
-- **Check the package documentation**: `?safe_name_matching_workflow`
+- **Check the package documentation**: `?match_names_workflow`
 - **Review example files**: See `inst/extdata/example_section_names_lookup.csv`
 
 ## Next Steps
 
-- **For transcript processing**: See the [Transcript Processing](transcript-processing.html) vignette
-- **For roster management**: See the [Roster Cleaning](roster-cleaning.html) vignette  
-- **For visualization**: See the [Plotting and Analysis](plotting.html) vignette
-- **For advanced workflows**: See the [Session Mapping](session-mapping.html) vignette
-- **For name matching help**: See the [Name Matching Troubleshooting](name-matching-troubleshooting.html) vignette
-- **For FERPA compliance**: See the [FERPA Compliance & Ethical Use](ferpa-ethics.html) vignette
+- **For transcript processing**: see `vignette("transcript-processing")`
+- **For roster management**: see `vignette("roster-cleaning")`  
+- **For visualization**: see `vignette("plotting")`
+- **For advanced workflows**: see `vignette("session-mapping")`
+- **For name matching help**: see `vignette("name-matching-troubleshooting")`
+- **For FERPA compliance**: see `vignette("ferpa-ethics")`
 
 ## Getting Help
 
-- Check the [package documentation](https://revgizmo.github.io/engager/)
-- Review the [PROJECT.md](https://github.com/revgizmo/engager/blob/main/PROJECT.md) for current development status
-- Report issues on [GitHub](https://github.com/revgizmo/engager/issues)
+- Check package documentation with `help(package = "engager")`
+- Open vignettes with `browseVignettes(package = "engager")`
+- Report issues on GitHub at `https://github.com/revgizmo/engager/issues`

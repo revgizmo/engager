@@ -1,3 +1,34 @@
+test_that("load_roster enforces schema and parses aliases", {
+  tmp <- withr::local_tempfile(fileext = ".csv")
+  dat <- tibble::tibble(
+    preferred_name = c("Alice Smith", "Bob Jones"),
+    student_id = c("S1", "S2"),
+    formal_name = c("Alice A. Smith", NA_character_),
+    transcript_name = c(NA_character_, NA_character_),
+    aliases = c("A Smith; Alice S", "B Jones|Bobby")
+  )
+  readr::write_csv(dat, tmp)
+
+  ro <- load_roster(tmp)
+  expect_true("preferred_name" %in% names(ro))
+  expect_true("student_id" %in% names(ro))
+  expect_true("aliases" %in% names(ro))
+  expect_equal(nrow(ro), 2)
+  expect_equal(ro$preferred_name, c("Alice Smith", "Bob Jones"))
+})
+
+test_that("load_roster loads file even with invalid data (no schema enforcement)", {
+  tmp <- withr::local_tempfile(fileext = ".csv")
+  dat <- tibble::tibble(
+    preferred_name = c("", "Charlie"),
+    student_id = c("S3", "S3")
+  )
+  readr::write_csv(dat, tmp)
+  ro <- load_roster(tmp)
+  expect_equal(nrow(ro), 2)
+  expect_equal(ro$preferred_name, c(NA_character_, "Charlie"))
+})
+
 test_that("load_roster loads valid roster file and filters enrolled students", {
   # Create a temporary CSV file
   roster_content <- "student_id,name,enrolled\n1,Alice,TRUE\n2,Bob,FALSE\n3,Carol,TRUE"
