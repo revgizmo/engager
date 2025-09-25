@@ -477,7 +477,7 @@ load_and_validate_transcript <- function(transcript_file_path) {
 
   # Validate transcript has a usable name column
   transcript_name_columns <- c(
-    "transcript_name", "name", "speaker_name", "participant_name"
+    "speaker", "user_name", "transcript_name", "name", "speaker_name", "participant_name"
   )
   has_transcript_name_col <- any(transcript_name_columns %in% names(transcript_data))
   if (!has_transcript_name_col) {
@@ -503,6 +503,14 @@ load_and_validate_transcript <- function(transcript_file_path) {
       "This may affect processing. Expected columns: ", paste(required_columns, collapse = ", "),
       call. = FALSE
     )
+  }
+
+  # Ensure a 'speaker' column exists for downstream normalization
+  if (!("speaker" %in% names(transcript_data))) {
+    present <- intersect(transcript_name_columns, names(transcript_data))
+    if (length(present) >= 1) {
+      transcript_data$speaker <- transcript_data[[present[[1]]]]
+    }
   }
 
   transcript_data

@@ -125,15 +125,13 @@ build_roster_hash_index <- function(roster_df) {
     rlang::abort("Expected list<chr> in all_name_hashes.", class = "engager_schema_error")
   }
   # Expand student_id to match the number of hashes
-  student_ids <- rep(
-    if (is.null(roster_df$student_id)) NA_character_ else roster_df$student_id,
-    lengths(hashes)
-  )
+  base_student_ids <- if ("student_id" %in% names(roster_df)) roster_df$student_id else NA_character_
+  student_ids <- as.character(rep(base_student_ids, lengths(hashes)))
+  name_hash_vec <- as.character(unlist(hashes, use.names = FALSE))
   expanded <- tibble::tibble(
     student_id = student_ids,
-    name_hash = unlist(hashes, use.names = FALSE)
+    name_hash = name_hash_vec
   )
-  expanded <- dplyr::mutate(expanded, student_id = as.character(student_id))
   idx <- expanded |>
     dplyr::group_by(name_hash) |>
     dplyr::summarise(
@@ -166,7 +164,17 @@ aliases_long <- function(roster_df) {
 #' @keywords internal
 prepare_transcript_names <- function(transcripts_df, key = NULL) {
   if (!("speaker" %in% names(transcripts_df))) {
-    rlang::abort("transcripts_df must have a 'speaker' column.", class = "engager_schema_error")
+    # Try to derive a speaker column from known alternatives
+    candidate_cols <- c(
+      "speaker", "user_name", "name", "speaker_name", "participant_name", "transcript_name"
+    )
+    present <- intersect(candidate_cols, names(transcripts_df))
+    if (length(present) >= 1) {
+      src <- present[[1]]
+      transcripts_df$speaker <- transcripts_df[[src]]
+    } else {
+      rlang::abort("transcripts_df must have a 'speaker' column.", class = "engager_schema_error")
+    }
   }
   canon <- normalize_name(transcripts_df$speaker)
   name_hash <- hash_canonical_name(canon, key = key)
