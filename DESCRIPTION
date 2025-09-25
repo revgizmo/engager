@@ -23,6 +23,7 @@ Imports:
     jsonlite,
     lubridate,
     magrittr,
+    tidyr,
     readr,
     rlang,
     stringi,

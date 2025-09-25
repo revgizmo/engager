@@ -11,9 +11,9 @@
 #' @export
 #' @family name-matching
 detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) {
-  match_strategy <- options$match_strategy %||% "exact"
-  include_name_hash <- isTRUE(options$include_name_hash %||% FALSE)
-  key <- options$key %||% NULL
+  match_strategy <- if (is.null(options$match_strategy)) "exact" else options$match_strategy
+  include_name_hash <- isTRUE(if (is.null(options$include_name_hash)) FALSE else options$include_name_hash)
+  key <- if (is.null(options$key)) NULL else options$key
   if (!identical(match_strategy, "exact")) {
     match_names_fuzzy()
   }
@@ -48,9 +48,9 @@ detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) 
 #' @export
 #' @family name-matching
 match_names_workflow <- function(transcripts_df, roster_df, options = list()) {
-  match_strategy <- options$match_strategy %||% "exact"
-  include_name_hash <- isTRUE(options$include_name_hash %||% FALSE)
-  key <- options$key %||% NULL
+  match_strategy <- if (is.null(options$match_strategy)) "exact" else options$match_strategy
+  include_name_hash <- isTRUE(if (is.null(options$include_name_hash)) FALSE else options$include_name_hash)
+  key <- if (is.null(options$key)) NULL else options$key
   if (!identical(match_strategy, "exact")) {
     match_names_fuzzy()
   }
@@ -87,9 +87,9 @@ match_names_workflow <- function(transcripts_df, roster_df, options = list()) {
 #' @export
 print.engager_match <- function(x, ...) {
   # Redacted printing: counts only
-  n_total <- x$.__n_total %||% NA_integer_
-  n_matched <- x$.__n_matched %||% NA_integer_
-  n_unresolved <- x$.__n_unresolved %||% NA_integer_
+  n_total <- if (is.null(x$.__n_total)) NA_integer_ else x$.__n_total
+  n_matched <- if (is.null(x$.__n_matched)) NA_integer_ else x$.__n_matched
+  n_unresolved <- if (is.null(x$.__n_unresolved)) NA_integer_ else x$.__n_unresolved
   # Silent by default; users can inspect the object for counts
   invisible(x)
 }
@@ -98,9 +98,9 @@ print.engager_match <- function(x, ...) {
 summary.engager_match <- function(object, ...) {
   # Redacted summary; future fields can be added without revealing PII
   res <- list(
-    total = object$.__n_total %||% NA_integer_,
-    matched = object$.__n_matched %||% NA_integer_,
-    unresolved = object$.__n_unresolved %||% NA_integer_
+    total = if (is.null(object$.__n_total)) NA_integer_ else object$.__n_total,
+    matched = if (is.null(object$.__n_matched)) NA_integer_ else object$.__n_matched,
+    unresolved = if (is.null(object$.__n_unresolved)) NA_integer_ else object$.__n_unresolved
   )
   class(res) <- "summary.engager_match"
   res

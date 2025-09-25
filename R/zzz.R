@@ -35,6 +35,11 @@ UX_EXPERT_FUNCTIONS <- c(
   "match_names_workflow"
 )
 
+# Declare globals to silence NSE notes in CRAN checks
+utils::globalVariables(c(
+  "aliases", "name_hash", "collision", "reason", "guidance"
+))
+
 # UX Function Descriptions
 UX_FUNCTION_DESCRIPTIONS <- list(
   "basic_transcript_analysis" = "Complete analysis workflow for new users",

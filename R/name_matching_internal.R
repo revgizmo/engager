@@ -4,9 +4,7 @@
 
 #' Null-coalescing helper
 #' @keywords internal
-`%||%` <- function(x, y) {
-  if (is.null(x)) y else x
-}
+## removed custom %||% helper in favor of explicit null checks at call sites
 
 #' Normalize a human name to a canonical form (UTF-8)
 #'
@@ -127,7 +125,10 @@ build_roster_hash_index <- function(roster_df) {
     rlang::abort("Expected list<chr> in all_name_hashes.", class = "engager_schema_error")
   }
   # Expand student_id to match the number of hashes
-  student_ids <- rep(roster_df$student_id %||% NA_character_, lengths(hashes))
+  student_ids <- rep(
+    if (is.null(roster_df$student_id)) NA_character_ else roster_df$student_id,
+    lengths(hashes)
+  )
   expanded <- tibble::tibble(
     student_id = student_ids,
     name_hash = unlist(hashes, use.names = FALSE)
