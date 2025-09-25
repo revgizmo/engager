@@ -362,3 +362,7 @@ docs/analysis/lessons-learned/
 ^.*_ci\.md$
 ^.*_performance.*\.md$
 ^perf/
+
+# Non-standard top-level files for CRAN compliance
+^project-docs/
+^test_patterns\.R$
