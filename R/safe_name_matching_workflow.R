@@ -67,12 +67,7 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
 }
 
 # Internal function - no documentation needed
-handle_unmatched_names <- function(unmatched_names,
-                                   transcript_data,
-                                   unmatched_names_action,
-                                   privacy_level,
-                                   data_folder,
-                                   section_names_lookup_file) {
+extract_unmatched_names_from_transcript <- function(unmatched_names, transcript_data) {
   # Extract actual names from transcript data for unmatched entries only
   # unmatched_names is a data frame with name_hash, we need to get the actual names
   actual_names <- character(0)
@@ -94,6 +89,18 @@ handle_unmatched_names <- function(unmatched_names,
     matched_indices <- transcript_hashes %in% unmatched_hashes
     actual_names <- unique(transcript_speakers[matched_indices])
   }
+  actual_names
+}
+
+# Internal function - no documentation needed
+handle_unmatched_names <- function(unmatched_names,
+                                   transcript_data,
+                                   unmatched_names_action,
+                                   privacy_level,
+                                   data_folder,
+                                   section_names_lookup_file) {
+  # Extract actual names from transcript data for unmatched entries only
+  actual_names <- extract_unmatched_names_from_transcript(unmatched_names, transcript_data)
 
   if (identical(unmatched_names_action, "stop")) {
     # Stop with error for maximum privacy protection
@@ -566,7 +573,7 @@ process_name_matching_workflow <- function(transcript_data, roster_data, name_ma
   # Prepare roster data for matching (validate schema and compute hashes)
   roster_data <- validate_roster_for_matching(roster_data)
   roster_data <- compute_roster_hashes(roster_data)
-  
+
   # Detect unmatched names
   unmatched_names <- detect_unmatched_names(
     transcripts_df = transcript_data,
