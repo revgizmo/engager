@@ -670,10 +670,9 @@ test_that("handle_unmatched_names handles different actions", {
 
 # Test detect_unmatched_names function
 test_that("detect_unmatched_names handles edge cases", {
-  # Test with empty transcript data
-  empty_transcript <- tibble::tibble()
+  # Test with empty transcript data (but with required speaker column)
+  empty_transcript <- tibble::tibble(speaker = character(0))
   roster <- tibble::tibble(first_last = "Test", preferred_name = "Test")
-  name_mappings <- tibble::tibble()
 
   result <- detect_unmatched_names(
     transcripts_df = empty_transcript,
@@ -685,6 +684,7 @@ test_that("detect_unmatched_names handles edge cases", {
 
   # Test with transcript missing name column
   transcript_no_name <- tibble::tibble(
+    speaker = c("John", "Jane"),
     message = c("Hello", "World"),
     timestamp = c("00:00:01", "00:00:02")
   )
