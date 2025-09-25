@@ -1,6 +1,6 @@
 test_that("exact matching handles hash collisions as ambiguous", {
   roster <- tibble::tibble(
-    preferred_name = c("Alice Smith", "Alicé Smith"),
+    preferred_name = c("Alice Smith", "Alic<U+00E9> Smith"),
     student_id = c("S1", "S2"),
     aliases = c(NA_character_, NA_character_)
   )
@@ -14,4 +14,3 @@ test_that("exact matching handles hash collisions as ambiguous", {
   collisions <- idx[idx$collision, , drop = FALSE]
   expect_true(nrow(collisions) >= 1)
 })
-

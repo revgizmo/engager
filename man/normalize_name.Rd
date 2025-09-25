@@ -2,13 +2,36 @@
 % Please edit documentation in R/name_matching_internal.R
 \name{normalize_name}
 \alias{normalize_name}
-\title{Normalize a human name to a canonical form (UTF-8)}
+\title{Null-coalescing helper}
 \usage{
 normalize_name(x)
 }
 \description{
-Applies ICU-backed normalization pipeline using stringi:
-NFKD -> strip combining marks -> full casefold -> trim ->
-collapse internal whitespace -> NFC.
+Null-coalescing helper
 }
+\keyword{(UTF-8)}
+\keyword{->}
+\keyword{Applies}
+\keyword{ICU-backed}
+\keyword{NFC.}
+\keyword{NFKD}
+\keyword{Normalize}
+\keyword{a}
+\keyword{canonical}
+\keyword{casefold}
+\keyword{collapse}
+\keyword{combining}
+\keyword{form}
+\keyword{full}
+\keyword{human}
 \keyword{internal}
+\keyword{marks}
+\keyword{name}
+\keyword{normalization}
+\keyword{pipeline}
+\keyword{stringi:}
+\keyword{strip}
+\keyword{to}
+\keyword{trim}
+\keyword{using}
+\keyword{whitespace}

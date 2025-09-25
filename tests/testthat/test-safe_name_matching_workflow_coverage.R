@@ -411,21 +411,21 @@ test_that("safe_name_matching_workflow handles international names", {
     "",
     "1",
     "00:00:01.000 --> 00:00:05.000",
-    "Dr. 李教授: 欢迎来到今天的课程。",
+    "Dr. <U+674E><U+6559><U+6388>: <U+6B22><U+8FCE><U+6765><U+5230><U+4ECA><U+5929><U+7684><U+8BFE><U+7A0B><U+3002>",
     "",
     "2",
     "00:00:06.000 --> 00:00:10.000",
-    "José María López: Buenos días, profesor.",
+    "Jos<U+00E9> Mar<U+00ED>a L<U+00F3>pez: Buenos d<U+00ED>as, profesor.",
     "",
     "3",
     "00:00:11.000 --> 00:00:15.000",
-    "Anna-Karin Andersson: Hej, hur mår du?"
+    "Anna-Karin Andersson: Hej, hur m<U+00E5>r du?"
   ), test_transcript)
 
   international_roster <- tibble::tibble(
-    first_last = c("Dr. 李教授", "José María López", "Anna-Karin Andersson"),
+    first_last = c("Dr. <U+674E><U+6559><U+6388>", "Jos<U+00E9> Mar<U+00ED>a L<U+00F3>pez", "Anna-Karin Andersson"),
     student_id = c("INSTRUCTOR", "12345", "67890"),
-    preferred_name = c("Dr. Li", "José", "Anna")
+    preferred_name = c("Dr. Li", "Jos<U+00E9>", "Anna")
   )
 
   on.exit(unlink(test_transcript))

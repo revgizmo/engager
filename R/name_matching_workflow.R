@@ -25,11 +25,11 @@ detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) 
     # Group by name_hash, reason, guidance using base R
     group_keys <- paste(res$unresolved$name_hash, res$unresolved$reason, res$unresolved$guidance, sep = "|")
     unique_groups <- unique(group_keys)
-    
+
     unresolved_list <- lapply(unique_groups, function(key) {
       mask <- group_keys == key
       group_data <- res$unresolved[mask, ]
-      
+
       list(
         name_hash = group_data$name_hash[1],
         occurrence_n = sum(mask),
@@ -42,7 +42,7 @@ detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) 
         guidance = group_data$guidance[1]
       )
     })
-    
+
     unresolved <- do.call(rbind, lapply(unresolved_list, function(x) {
       data.frame(
         name_hash = x$name_hash,
