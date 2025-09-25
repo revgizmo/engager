@@ -28,8 +28,7 @@ Detect unmatched names from transcripts against a roster
 }
 \seealso{
 Other name-matching: 
-\code{\link{load_roster}()},
-\code{\link{safe_name_matching_workflow}()},
+\code{\link{match_names_workflow}()},
 \code{\link{write_unresolved}()}
 }
 \concept{name-matching}

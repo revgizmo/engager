@@ -222,3 +222,74 @@ build_match_audit <- function(roster_spec, hmac_used, icu_version, algo = "sha25
     spec = roster_spec
   )
 }
+
+# Internal function to validate roster schema for name matching
+validate_roster_for_matching <- function(roster_df, key = NULL) {
+  required <- c("preferred_name")
+  optional <- c("student_id", "formal_name", "transcript_name", "aliases")
+  missing_req <- setdiff(required, names(roster_df))
+  
+  if (length(missing_req) > 0) {
+    rlang::abort(
+      message = sprintf("Missing required columns for name matching: %s", paste(missing_req, collapse = ", ")),
+      class = "engager_schema_error"
+    )
+  }
+  
+  if (any(is.na(roster_df$preferred_name) | roster_df$preferred_name == "")) {
+    rlang::abort("preferred_name must be non-empty for all rows.", class = "engager_schema_error")
+  }
+  
+  if ("student_id" %in% names(roster_df)) {
+    dup_id <- any(duplicated(roster_df$student_id[!is.na(roster_df$student_id)]))
+    if (dup_id) {
+      rlang::abort("student_id must be unique when present.", class = "engager_schema_error")
+    }
+  }
+  
+  roster_df
+}
+
+# Internal function to compute roster hashes for name matching
+compute_roster_hashes <- function(roster_df, key = NULL, delimiter = ";", include_formal_as_alias = FALSE) {
+  # Compute canonical name (normalized preferred_name)
+  roster_df$canonical_name <- normalize_name(roster_df$preferred_name)
+  
+  # Parse aliases into list<chr>
+  if (!("aliases" %in% names(roster_df))) {
+    roster_df$aliases <- vector("list", nrow(roster_df))
+  } else {
+    delim <- delimiter
+    parse_aliases <- function(x) {
+      if (is.na(x) || identical(x, "")) {
+        return(character(0))
+      }
+      parts <- stringr::str_split(x, pattern = sprintf("[%s,|]", stringr::str_replace_all(delim, "\\|", "\\\\|")), n = Inf)[[1]]
+      parts <- stringr::str_trim(parts)
+      parts <- parts[parts != ""]
+      normalize_name(parts)
+    }
+    roster_df$aliases <- lapply(roster_df$aliases, parse_aliases)
+  }
+  
+  # Hashes
+  resolved_key <- resolve_name_hash_key(key)
+  roster_df$name_hash <- hash_canonical_name(roster_df$canonical_name, key = resolved_key)
+  roster_df$alias_hashes <- lapply(roster_df$aliases, hash_canonical_name, key = resolved_key)
+  roster_df$all_name_hashes <- mapply(
+    function(h, hs) unique(c(h, hs)), roster_df$name_hash, roster_df$alias_hashes,
+    SIMPLIFY = FALSE
+  )
+  
+  # Attach spec attributes
+  spec <- list(
+    schema = "engager_v1",
+    norm_chain = "nfkd->strip_marks->casefold(full)->trim->collapse_ws->nfc",
+    hash_algo = if (is.null(resolved_key)) "SHA-256" else "HMAC-SHA-256",
+    icu_version = stringi::stri_info()[["ICUversion"]],
+    collision_detected = FALSE  # Will be updated by build_roster_hash_index
+  )
+  attr(roster_df, "engager_spec") <- spec
+  
+  roster_df
+}

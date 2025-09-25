@@ -27,7 +27,6 @@ function aborts with class \code{engager_privacy_error}.
 \seealso{
 Other name-matching: 
 \code{\link{detect_unmatched_names}()},
-\code{\link{load_roster}()},
-\code{\link{safe_name_matching_workflow}()}
+\code{\link{match_names_workflow}()}
 }
 \concept{name-matching}

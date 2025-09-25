@@ -2,7 +2,7 @@
 % Please edit documentation in R/load_roster.R
 \name{load_roster}
 \alias{load_roster}
-\title{Load a roster and compute canonical names and hashes}
+\title{Load a roster file}
 \usage{
 load_roster(
   data_folder = ".",
@@ -11,50 +11,15 @@ load_roster(
 )
 }
 \arguments{
-\item{path}{Path to a CSV roster file.}
+\item{data_folder}{Directory containing the roster file}
 
-\item{schema}{Schema name, default \code{'engager_v1'}.}
+\item{roster_file}{Name of the roster CSV file}
 
-\item{key}{Optional override key for name hashing (HMAC). If \code{NULL}, falls
-back to \code{Sys.getenv("ENGAGER_NAME_HASH_KEY")} then
-\code{getOption("engager.name_hash_key")}.}
-
-\item{delimiter}{Character used to split \code{aliases}. Default \code{";"}. Common
-delimiters like \verb{,} and \code{|} are also supported when present.}
-
-\item{include_formal_as_alias}{Logical; if \code{TRUE}, includes normalized
-\code{formal_name} as an additional alias.}
-
-\item{...}{Additional arguments passed to \code{readr::read_csv()}.}
+\item{strict_errors}{Logical; if TRUE, throw error when file doesn't exist}
 }
 \value{
-A tibble with columns including \code{canonical_name}, \code{name_hash},
-\code{alias_hashes} (list\if{html}{\out{<chr>}}), and \code{all_name_hashes} (list\if{html}{\out{<chr>}}). An
-\code{engager_spec} attribute is attached describing hashing and normalization.
+A tibble with roster data, filtered by enrolled status if applicable
 }
 \description{
-Enforces the \code{engager_v1} schema: requires \code{preferred_name}; optional
-\code{student_id} (unique if present), \code{formal_name}, \code{transcript_name}, and
-\code{aliases}. Aliases are parsed into a list column (no row explosion), names
-are normalized with ICU-backed rules, and hashes are computed using
-SHA-256 or HMAC-SHA-256 based on key precedence.
+Load a roster file
 }
-\examples{
-tmp <- tempfile(fileext = ".csv")
-dat <- tibble::tibble(
-  preferred_name = c("Alice Smith", "Bob Jones"),
-  student_id = c("S1", "S2"),
-  aliases = c("A Smith; Alice S", NA_character_)
-)
-readr::write_csv(dat, tmp)
-ro <- load_roster(tmp)
-names(ro)
-
-}
-\seealso{
-Other name-matching: 
-\code{\link{detect_unmatched_names}()},
-\code{\link{safe_name_matching_workflow}()},
-\code{\link{write_unresolved}()}
-}
-\concept{name-matching}
