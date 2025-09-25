@@ -68,19 +68,29 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
 
 # Internal function - no documentation needed
 handle_unmatched_names <- function(unmatched_names,
+                                   transcript_data,
                                    unmatched_names_action,
                                    privacy_level,
                                    data_folder,
                                    section_names_lookup_file) {
+  # Extract actual names from transcript data
+  # unmatched_names is a data frame with name_hash, we need to get the actual names
+  actual_names <- character(0)
+  if (nrow(unmatched_names) > 0 && "speaker" %in% names(transcript_data)) {
+    # Get unique speaker names from transcript data
+    actual_names <- unique(transcript_data$speaker)
+    actual_names <- actual_names[!is.na(actual_names) & nchar(trimws(actual_names)) > 0]
+  }
+
   if (identical(unmatched_names_action, "stop")) {
     # Stop with error for maximum privacy protection
     stop(
       paste0(
-        "Found unmatched names: ", paste(unmatched_names, collapse = ", "), "\n",
+        "Found unmatched names: ", paste(actual_names, collapse = ", "), "\n",
         "Please update your section_names_lookup.csv file with these mappings.\n",
         "See vignette('name-matching-troubleshooting') for detailed instructions.\n",
         "Example mappings:\n",
-        paste(sapply(unmatched_names, function(name) {
+        paste(sapply(actual_names, function(name) {
           paste0("  ", name, " -> [Your roster name]")
         }), collapse = "\n"), "\n",
         "Lookup file path: ", file.path(data_folder, section_names_lookup_file), "\n",
@@ -97,7 +107,7 @@ handle_unmatched_names <- function(unmatched_names,
 
     # Prompt user for name matching
     prompt_name_matching(
-      unmatched_names = unmatched_names,
+      unmatched_names = actual_names,
       privacy_level = privacy_level,
       data_folder = data_folder,
       section_names_lookup_file = section_names_lookup_file
@@ -555,6 +565,7 @@ process_name_matching_workflow <- function(transcript_data, roster_data, name_ma
   if (length(unmatched_names) > 0) {
     handle_unmatched_names(
       unmatched_names = unmatched_names,
+      transcript_data = transcript_data,
       unmatched_names_action = unmatched_names_action,
       privacy_level = privacy_level,
       data_folder = data_folder,
