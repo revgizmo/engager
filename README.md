@@ -112,23 +112,17 @@ head(metrics)
 
 For detailed workflows and examples, see the package vignettes:
 
-- **[Getting
-  Started](https://revgizmo.github.io/engager/getting-started.html)** -
-  Basic setup and workflow overview
-- **[Whole Game](https://revgizmo.github.io/engager/whole-game.html)** -
-  Complete workflow for new instructors
-- **[Transcript
-  Processing](https://revgizmo.github.io/engager/transcript-processing.html)** -
-  Load, process, and analyze transcripts
-- **[Roster
-  Management](https://revgizmo.github.io/engager/roster-cleaning.html)** -
-  Manage student rosters and clean name mismatches
-- **[Plotting and
-  Analysis](https://revgizmo.github.io/engager/plotting.html)** - Create
-  visualizations and analyze engagement patterns
-- **[Session
-  Mapping](https://revgizmo.github.io/engager/session-mapping.html)** -
-  Handle complex scenarios with multiple courses/sections
+- **Getting Started**: see
+  `vignette("getting-started", package = "engager")`
+- **Whole Game**: see `vignette("whole-game", package = "engager")`
+- **Transcript Processing**: see
+  `vignette("transcript-processing", package = "engager")`
+- **Roster Management**: see
+  `vignette("roster-cleaning", package = "engager")`
+- **Plotting and Analysis**: see
+  `vignette("plotting", package = "engager")`
+- **Session Mapping**: see
+  `vignette("session-mapping", package = "engager")`
 
 ## 🎯 What the Package Does
 
