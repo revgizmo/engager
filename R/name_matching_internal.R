@@ -126,7 +126,8 @@ build_roster_hash_index <- function(roster_df) {
   }
   # Expand student_id to match the number of hashes
   base_student_ids <- if ("student_id" %in% names(roster_df)) roster_df$student_id else NA_character_
-  student_ids <- as.character(rep(base_student_ids, lengths(hashes)))
+  # Use mapply to properly expand each student_id by its corresponding hash length
+  student_ids <- as.character(unlist(mapply(rep, base_student_ids, lengths(hashes), SIMPLIFY = FALSE)))
   name_hash_vec <- as.character(unlist(hashes, use.names = FALSE))
   expanded <- tibble::tibble(
     student_id = student_ids,
@@ -242,12 +243,14 @@ match_names_exact <- function(prepped_transcripts, roster_index, include_name_ha
     )
   }
 
-  # Select only needed columns for unresolved
-  unresolved_cols <- c("name_hash", "reason", "guidance")
-  if ("timestamp" %in% names(unresolved)) {
-    unresolved_cols <- c(unresolved_cols, "timestamp")
+  # Select only needed columns for unresolved (only if it has rows)
+  if (nrow(unresolved) > 0) {
+    unresolved_cols <- c("name_hash", "reason", "guidance")
+    if ("timestamp" %in% names(unresolved)) {
+      unresolved_cols <- c(unresolved_cols, "timestamp")
+    }
+    unresolved <- unresolved[, unresolved_cols, drop = FALSE]
   }
-  unresolved <- unresolved[, unresolved_cols, drop = FALSE]
 
   # Create transcripts_with_ids by removing sensitive columns
   twi <- joined
