@@ -128,7 +128,9 @@ perform_aggregation <- function(df, by_columns) {
     },
     FUN = function(x) {
       # For character columns (name, comment), keep vector and paste later for comment
-      if (is.character(x)) return(x)
+      if (is.character(x)) {
+        return(x)
+      }
       # For hms or numeric time columns, keep full vector for post-processing
       x
     },
