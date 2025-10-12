@@ -1,5 +1,55 @@
-# Comprehensive tests for ensure_privacy function
-# Tests to improve coverage
+# Test file for ensure_privacy function
+
+library(testthat)
+library(engager)
+
+# Test data setup
+create_privacy_test_data <- function() {
+  tibble::tibble(
+    section = c("A", "A", "B"),
+    preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz"),
+    student_id = c("STU001", "STU002", "STU003"),
+    email = c("alice@university.edu", "bob@university.edu", "cara@university.edu"),
+    session_ct = c(3, 5, 2)
+  )
+}
+
+create_privacy_test_data_with_pii <- function() {
+  tibble::tibble(
+    section = c("A", "A", "B"),
+    preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz"),
+    student_id = c("STU001", "STU002", "STU003"),
+    email = c("alice@university.edu", "bob@university.edu", "cara@university.edu"),
+    phone = c("555-1234", "555-5678", "555-9012"),
+    address = c("123 Main St", "456 Oak Ave", "789 Pine St"),
+    session_ct = c(3, 5, 2)
+  )
+}
+
+create_empty_privacy_data <- function() {
+  tibble::tibble(
+    section = character(),
+    preferred_name = character(),
+    student_id = character(),
+    email = character(),
+    session_ct = numeric()
+  )
+}
+
+# Basic tests
+test_that("ensure_privacy returns proper structure", {
+  data <- create_privacy_test_data()
+  result <- ensure_privacy(data)
+
+  expect_s3_class(result, "tbl_df")
+  expect_equal(nrow(result), nrow(data))
+  expect_equal(ncol(result), ncol(data))
+  expect_true("section" %in% names(result))
+  expect_true("preferred_name" %in% names(result))
+  expect_true("student_id" %in% names(result))
+  expect_true("email" %in% names(result))
+  expect_true("session_ct" %in% names(result))
+})
 
 test_that("ensure_privacy handles NULL input", {
   result <- ensure_privacy(NULL)
@@ -7,337 +57,236 @@ test_that("ensure_privacy handles NULL input", {
 })
 
 test_that("ensure_privacy handles non-data.frame input", {
-  # Test with character vector
-  result1 <- ensure_privacy(c("test", "data"))
-  expect_equal(result1, c("test", "data"))
+  result <- ensure_privacy("not a data frame")
+  expect_equal(result, "not a data frame")
 
-  # Test with list
-  result2 <- ensure_privacy(list(a = 1, b = 2))
-  expect_equal(result2, list(a = 1, b = 2))
+  result <- ensure_privacy(123)
+  expect_equal(result, 123)
 
-  # Test with numeric
-  result3 <- ensure_privacy(123)
-  expect_equal(result3, 123)
+  result <- ensure_privacy(list())
+  expect_equal(result, list())
 })
 
-test_that("ensure_privacy handles empty tibble", {
-  empty_tibble <- tibble::tibble(
-    name = character(0),
-    comment = character(0)
-  )
+test_that("ensure_privacy handles empty data", {
+  data <- create_empty_privacy_data()
+  result <- ensure_privacy(data)
 
-  result <- ensure_privacy(empty_tibble)
+  expect_s3_class(result, "tbl_df")
   expect_equal(nrow(result), 0)
-  expect_equal(names(result), names(empty_tibble))
+  expect_equal(ncol(result), ncol(data))
 })
 
 test_that("ensure_privacy handles different privacy levels", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", "Jane Doe"),
-    comment = c("Hello", "Hi there"),
-    student_id = c("12345", "67890")
-  )
+  data <- create_privacy_test_data()
 
-  # Test mask privacy level
-  result1 <- ensure_privacy(test_data, privacy_level = "mask")
-  expect_s3_class(result1, "tbl_df")
-  expect_equal(nrow(result1), 2)
+  # Test mask level (default)
+  result_mask <- ensure_privacy(data, privacy_level = "mask")
+  expect_s3_class(result_mask, "tbl_df")
+  expect_equal(nrow(result_mask), nrow(data))
 
-  # Test ferpa_standard privacy level
-  result2 <- ensure_privacy(test_data, privacy_level = "ferpa_standard")
-  expect_s3_class(result2, "tbl_df")
-  expect_equal(nrow(result2), 2)
+  # Test ferpa_standard level
+  result_standard <- ensure_privacy(data, privacy_level = "ferpa_standard")
+  expect_s3_class(result_standard, "tbl_df")
+  expect_equal(nrow(result_standard), nrow(data))
 
-  # Test ferpa_strict privacy level
-  result3 <- ensure_privacy(test_data, privacy_level = "ferpa_strict")
-  expect_s3_class(result3, "tbl_df")
-  expect_equal(nrow(result3), 2)
+  # Test ferpa_strict level
+  result_strict <- ensure_privacy(data, privacy_level = "ferpa_strict")
+  expect_s3_class(result_strict, "tbl_df")
+  expect_equal(nrow(result_strict), nrow(data))
 
-  # Test ferpa_standard privacy level (duplicate removed)
-  result4 <- ensure_privacy(test_data, privacy_level = "ferpa_standard")
-  expect_s3_class(result4, "tbl_df")
-  expect_equal(nrow(result4), 2)
-
-  # Test ferpa_strict privacy level (duplicate removed)
-  result5 <- ensure_privacy(test_data, privacy_level = "ferpa_strict")
-  expect_s3_class(result5, "tbl_df")
-  expect_equal(nrow(result5), 2)
-
-  # Test none privacy level
-  result6 <- ensure_privacy(test_data, privacy_level = "none")
-  expect_s3_class(result6, "tbl_df")
-  expect_equal(nrow(result6), 2)
+  # Test none level
+  result_none <- ensure_privacy(data, privacy_level = "none")
+  expect_s3_class(result_none, "tbl_df")
+  expect_equal(nrow(result_none), nrow(data))
 })
 
 test_that("ensure_privacy handles custom id_columns", {
-  test_data <- tibble::tibble(
-    student_name = c("John Smith", "Jane Doe"),
-    comment = c("Hello", "Hi there"),
-    user_id = c("12345", "67890")
-  )
+  data <- create_privacy_test_data()
 
-  result <- ensure_privacy(test_data, id_columns = c("student_name", "user_id"))
+  custom_columns <- c("preferred_name", "student_id")
+  result <- ensure_privacy(data, id_columns = custom_columns)
+
   expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 2)
+  expect_equal(nrow(result), nrow(data))
+  expect_equal(ncol(result), ncol(data))
 })
 
-test_that("ensure_privacy handles data without name columns", {
-  test_data <- tibble::tibble(
-    comment = c("Hello", "Hi there"),
-    duration = c(5, 10),
-    wordcount = c(1, 2)
-  )
+test_that("ensure_privacy handles audit logging", {
+  data <- create_privacy_test_data()
 
-  result <- ensure_privacy(test_data)
+  # Test with audit logging enabled
+  result_with_log <- ensure_privacy(data, audit_log = TRUE)
+  expect_s3_class(result_with_log, "tbl_df")
+  expect_equal(nrow(result_with_log), nrow(data))
+
+  # Test with audit logging disabled
+  result_without_log <- ensure_privacy(data, audit_log = FALSE)
+  expect_s3_class(result_without_log, "tbl_df")
+  expect_equal(nrow(result_without_log), nrow(data))
+})
+
+test_that("ensure_privacy handles invalid privacy levels", {
+  data <- create_privacy_test_data()
+
+  expect_error(ensure_privacy(data, privacy_level = "invalid"))
+  expect_error(ensure_privacy(data, privacy_level = NULL))
+  expect_error(ensure_privacy(data, privacy_level = character(0)))
+  expect_error(ensure_privacy(data, privacy_level = 123))
+})
+
+test_that("ensure_privacy handles vector privacy levels", {
+  data <- create_privacy_test_data()
+
+  # Test with vector privacy level (should use first element)
+  result <- ensure_privacy(data, privacy_level = c("mask", "ferpa_standard"))
   expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 2)
-  expect_equal(names(result), names(test_data))
+  expect_equal(nrow(result), nrow(data))
 })
 
-test_that("ensure_privacy handles data with mixed column types", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", "Jane Doe"),
-    comment = c("Hello", "Hi there"),
-    duration = hms::as_hms(c("00:00:05", "00:00:10")),
-    wordcount = c(1, 2),
-    is_student = c(TRUE, FALSE),
-    score = c(85.5, 92.0)
-  )
+test_that("ensure_privacy handles data with PII", {
+  data <- create_privacy_test_data_with_pii()
 
-  result <- ensure_privacy(test_data)
+  result <- ensure_privacy(data, privacy_level = "ferpa_strict")
   expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 2)
-  expect_equal(names(result), names(test_data))
+  expect_equal(nrow(result), nrow(data))
+  expect_equal(ncol(result), ncol(data))
 })
 
-test_that("ensure_privacy handles audit_log parameter", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", "Jane Doe"),
-    comment = c("Hello", "Hi there")
+test_that("ensure_privacy handles data without PII columns", {
+  data <- tibble::tibble(
+    section = c("A", "A", "B"),
+    session_ct = c(3, 5, 2),
+    score = c(85, 92, 78)
   )
 
-  # Test with audit_log = TRUE
-  result1 <- ensure_privacy(test_data, audit_log = TRUE)
-  expect_s3_class(result1, "tbl_df")
-
-  # Test with audit_log = FALSE
-  result2 <- ensure_privacy(test_data, audit_log = FALSE)
-  expect_s3_class(result2, "tbl_df")
-})
-
-test_that("ensure_privacy handles invalid privacy_level gracefully", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", "Jane Doe"),
-    comment = c("Hello", "Hi there")
-  )
-
-  # Should throw an error for invalid privacy level
-  expect_error(
-    ensure_privacy(test_data, privacy_level = "invalid"),
-    "Invalid privacy_level. Must be one of: ferpa_strict, ferpa_standard, mask, none"
-  )
-})
-
-test_that("ensure_privacy preserves data structure", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", "Jane Doe"),
-    comment = c("Hello", "Hi there"),
-    metadata = list(list(type = "student"), list(type = "instructor"))
-  )
-
-  result <- ensure_privacy(test_data)
+  result <- ensure_privacy(data)
   expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 2)
-  expect_equal(ncol(result), 3)
-  expect_true("metadata" %in% names(result))
+  expect_equal(nrow(result), nrow(data))
+  expect_equal(ncol(result), ncol(data))
 })
 
-test_that("ensure_privacy handles large datasets", {
-  # Create a larger dataset
-  large_data <- tibble::tibble(
-    name = paste("Student", 1:100),
-    comment = paste("Comment", 1:100),
-    duration = rep(hms::as_hms("00:00:05"), 100)
+test_that("ensure_privacy handles factor columns", {
+  data <- tibble::tibble(
+    section = c("A", "A", "B"),
+    preferred_name = factor(c("Alice Johnson", "Bob Lee", "Cara Diaz")),
+    student_id = c("STU001", "STU002", "STU003"),
+    session_ct = c(3, 5, 2)
   )
 
-  result <- ensure_privacy(large_data)
+  result <- ensure_privacy(data)
   expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 100)
-  expect_equal(ncol(result), 3)
+  expect_equal(nrow(result), nrow(data))
+  expect_equal(ncol(result), ncol(data))
 })
 
-test_that("ensure_privacy handles special characters in names", {
-  test_data <- tibble::tibble(
-    name = c("José García", "François Müller", "李小明"),
-    comment = c("Hello", "Bonjour", "你好")
+test_that("ensure_privacy handles missing values", {
+  data <- tibble::tibble(
+    section = c("A", "A", "B"),
+    preferred_name = c("Alice Johnson", NA, "Cara Diaz"),
+    student_id = c("STU001", "STU002", NA),
+    email = c("alice@university.edu", "bob@university.edu", "cara@university.edu"),
+    session_ct = c(3, 5, 2)
   )
 
-  result <- ensure_privacy(test_data)
+  result <- ensure_privacy(data)
   expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 3)
-})
-
-test_that("ensure_privacy handles NA values", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", NA, "Jane Doe"),
-    comment = c("Hello", "Hi", NA),
-    student_id = c("12345", "67890", NA)
-  )
-
-  result <- ensure_privacy(test_data)
-  expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 3)
+  expect_equal(nrow(result), nrow(data))
+  expect_equal(ncol(result), ncol(data))
 })
 
 test_that("ensure_privacy handles empty strings", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", "", "Jane Doe"),
-    comment = c("Hello", "", "Hi there"),
-    student_id = c("12345", "", "67890")
+  data <- tibble::tibble(
+    section = c("A", "A", "B"),
+    preferred_name = c("Alice Johnson", "", "Cara Diaz"),
+    student_id = c("STU001", "STU002", "STU003"),
+    email = c("alice@university.edu", "bob@university.edu", "cara@university.edu"),
+    session_ct = c(3, 5, 2)
   )
 
-  result <- ensure_privacy(test_data)
+  result <- ensure_privacy(data)
   expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 3)
+  expect_equal(nrow(result), nrow(data))
+  expect_equal(ncol(result), ncol(data))
 })
 
-test_that("ensure_privacy handles data.frame input", {
-  test_data <- data.frame(
-    name = c("John Smith", "Jane Doe"),
-    comment = c("Hello", "Hi there"),
-    stringsAsFactors = FALSE
-  )
+test_that("ensure_privacy handles single row data", {
+  data <- create_privacy_test_data()[1, ]
 
-  result <- ensure_privacy(test_data)
-  expect_s3_class(result, "data.frame")
-  expect_equal(nrow(result), 2)
-})
-
-test_that("ensure_privacy handles edge case privacy levels", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", "Jane Doe"),
-    comment = c("Hello", "Hi there")
-  )
-
-  # Test with invalid privacy level (should error)
-  expect_error(ensure_privacy(test_data, privacy_level = "invalid_level"), "Invalid privacy_level")
-
-  # Test with NULL privacy level (should error)
-  expect_error(ensure_privacy(test_data, privacy_level = NULL), "privacy_level must be a non-empty character vector")
-})
-
-test_that("ensure_privacy handles special characters in names", {
-  test_data <- tibble::tibble(
-    name = c("José María", "O'Connor", "测试名字"),
-    comment = c("Hello", "Hi", "你好")
-  )
-
-  result <- ensure_privacy(test_data, privacy_level = "mask")
+  result <- ensure_privacy(data)
   expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 3)
+  expect_equal(nrow(result), 1)
+  expect_equal(ncol(result), ncol(data))
 })
 
-test_that("ensure_privacy handles very long names", {
-  long_name <- paste(rep("A", 1000), collapse = "")
-  test_data <- tibble::tibble(
-    name = c("John Smith", long_name),
-    comment = c("Hello", "Hi")
+test_that("ensure_privacy handles single column data", {
+  data <- tibble::tibble(
+    preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz")
   )
 
-  result <- ensure_privacy(test_data, privacy_level = "mask")
+  result <- ensure_privacy(data)
   expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 2)
+  expect_equal(nrow(result), nrow(data))
+  expect_equal(ncol(result), ncol(data))
 })
 
-test_that("ensure_privacy handles NA values in names", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", NA, "Jane Doe"),
-    comment = c("Hello", "Hi", "Hey")
+test_that("ensure_privacy handles comprehensive parameters", {
+  data <- create_privacy_test_data()
+
+  param_combinations <- list(
+    list(x = data, privacy_level = "mask"),
+    list(x = data, privacy_level = "ferpa_standard"),
+    list(x = data, privacy_level = "ferpa_strict"),
+    list(x = data, privacy_level = "none"),
+    list(x = data, privacy_level = "mask", id_columns = c("preferred_name", "student_id")),
+    list(x = data, privacy_level = "mask", audit_log = TRUE),
+    list(x = data, privacy_level = "mask", audit_log = FALSE)
   )
 
-  result <- ensure_privacy(test_data, privacy_level = "mask")
-  expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 3)
+  for (params in param_combinations) {
+    result <- do.call(ensure_privacy, params)
+    expect_s3_class(result, "tbl_df")
+    expect_equal(nrow(result), nrow(data))
+  }
 })
 
-test_that("ensure_privacy handles empty strings in names", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", "", "Jane Doe"),
-    comment = c("Hello", "Hi", "Hey")
+test_that("ensure_privacy handles edge cases", {
+  # Test with all NA values
+  data_na <- tibble::tibble(
+    section = c("A", "A", "B"),
+    preferred_name = c(NA, NA, NA),
+    student_id = c(NA, NA, NA),
+    email = c(NA, NA, NA),
+    session_ct = c(3, 5, 2)
   )
 
-  result <- ensure_privacy(test_data, privacy_level = "mask")
+  result <- ensure_privacy(data_na)
   expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 3)
+  expect_equal(nrow(result), nrow(data_na))
+
+  # Test with all empty strings
+  data_empty <- tibble::tibble(
+    section = c("A", "A", "B"),
+    preferred_name = c("", "", ""),
+    student_id = c("", "", ""),
+    email = c("", "", ""),
+    session_ct = c(3, 5, 2)
+  )
+
+  result <- ensure_privacy(data_empty)
+  expect_s3_class(result, "tbl_df")
+  expect_equal(nrow(result), nrow(data_empty))
 })
 
-test_that("ensure_privacy handles numeric columns", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", "Jane Doe"),
-    age = c(25, 30),
-    grade = c(85, 92)
-  )
+test_that("ensure_privacy handles errors gracefully", {
+  data <- create_privacy_test_data()
 
-  result <- ensure_privacy(test_data, privacy_level = "mask")
-  expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 2)
-  expect_true("age" %in% names(result))
-  expect_true("grade" %in% names(result))
-})
+  # Test with invalid privacy levels
+  expect_error(ensure_privacy(data, privacy_level = "invalid"))
+  expect_error(ensure_privacy(data, privacy_level = NULL))
+  expect_error(ensure_privacy(data, privacy_level = character(0)))
+  expect_error(ensure_privacy(data, privacy_level = 123))
 
-test_that("ensure_privacy handles logical columns", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", "Jane Doe"),
-    active = c(TRUE, FALSE),
-    enrolled = c(FALSE, TRUE)
-  )
-
-  result <- ensure_privacy(test_data, privacy_level = "mask")
-  expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 2)
-  expect_true("active" %in% names(result))
-  expect_true("enrolled" %in% names(result))
-})
-
-test_that("ensure_privacy handles date columns", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", "Jane Doe"),
-    enrollment_date = as.Date(c("2023-01-01", "2023-02-01")),
-    last_login = as.POSIXct(c("2023-01-15 10:00:00", "2023-02-15 14:30:00"))
-  )
-
-  result <- ensure_privacy(test_data, privacy_level = "mask")
-  expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 2)
-  expect_true("enrollment_date" %in% names(result))
-  expect_true("last_login" %in% names(result))
-})
-
-test_that("ensure_privacy handles mixed data types", {
-  test_data <- tibble::tibble(
-    name = c("John Smith", "Jane Doe"),
-    age = c(25L, 30L),
-    active = c(TRUE, FALSE),
-    score = c(85.5, 92.0),
-    comments = c("Good", "Excellent")
-  )
-
-  result <- ensure_privacy(test_data, privacy_level = "mask")
-  expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 2)
-  expect_equal(ncol(result), 5)
-})
-
-test_that("ensure_privacy handles large datasets", {
-  # Create a larger dataset
-  large_data <- tibble::tibble(
-    name = paste("Student", 1:100),
-    comment = paste("Comment", 1:100),
-    grade = runif(100, 0, 100)
-  )
-
-  result <- ensure_privacy(large_data, privacy_level = "mask")
-  expect_s3_class(result, "tbl_df")
-  expect_equal(nrow(result), 100)
-  expect_equal(ncol(result), 3)
+  # Test with invalid audit_log
+  expect_error(ensure_privacy(data, audit_log = "invalid"))
+  expect_error(ensure_privacy(data, audit_log = NULL))
 })

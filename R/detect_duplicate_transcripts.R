@@ -120,6 +120,7 @@ calc_content_similarity_matrix <- function(existing_files, existing_names,
 #' @param names_to_exclude Vector of names to exclude from comparison (default: c("dead_air"))
 #' @return List containing duplicate groups, similarity matrix, and recommendations
 #' @examples
+#' \dontrun{
 #' # Create sample transcript list
 #' transcript_list <- tibble::tibble(
 #'   transcript_file = c(
@@ -144,12 +145,13 @@ calc_content_similarity_matrix <- function(existing_files, existing_names,
 #'   method = "content",
 #'   similarity_threshold = 0.9
 #' )
+#' }
 #'
 #' @seealso
 #' \code{\link{process_zoom_transcript}} for processing individual transcripts,
 #' \code{\link{summarize_transcript_metrics}} for analyzing transcript content
 #'
-#' @export
+#' @keywords internal
 detect_duplicate_transcripts <- function(
     transcript_list = NULL,
     data_folder = ".",

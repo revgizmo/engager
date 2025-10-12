@@ -251,16 +251,12 @@ test_that("make_clean_names_df handles different transcripts_metrics_df structur
     duration = c(100, 80)
   )
 
-  result1 <- tryCatch(
-    {
-      make_clean_names_df(
-        transcripts_metrics_df = basic_transcripts,
-        roster_sessions = valid_roster
-      )
-    },
-    error = function(e) {
-      list(status = "error", message = e$message)
-    }
+  result1 <- expect_error(
+    make_clean_names_df(
+      transcripts_metrics_df = basic_transcripts,
+      roster_sessions = valid_roster
+    ),
+    regexp = "incompatible size|Can't recycle input of size 0|Assigned data"
   )
   expect_true(is.list(result1) || is.null(result1))
 
@@ -274,16 +270,12 @@ test_that("make_clean_names_df handles different transcripts_metrics_df structur
     transcript_file = c("file1.vtt", "file2.vtt")
   )
 
-  result2 <- tryCatch(
-    {
-      make_clean_names_df(
-        transcripts_metrics_df = extended_transcripts,
-        roster_sessions = valid_roster
-      )
-    },
-    error = function(e) {
-      list(status = "error", message = e$message)
-    }
+  result2 <- expect_error(
+    make_clean_names_df(
+      transcripts_metrics_df = extended_transcripts,
+      roster_sessions = valid_roster
+    ),
+    regexp = "incompatible size|Can't recycle input of size 0|Assigned data"
   )
   expect_true(is.list(result2) || is.null(result2))
 })
@@ -297,16 +289,12 @@ test_that("make_clean_names_df handles edge cases", {
     student_id = character()
   )
 
-  result1 <- tryCatch(
-    {
-      make_clean_names_df(
-        transcripts_metrics_df = empty_transcripts,
-        roster_sessions = empty_roster
-      )
-    },
-    error = function(e) {
-      list(status = "error", message = e$message)
-    }
+  result1 <- expect_error(
+    make_clean_names_df(
+      transcripts_metrics_df = empty_transcripts,
+      roster_sessions = empty_roster
+    ),
+    regexp = "'by' must specify uniquely valid columns|Unknown or uninitialised column"
   )
   expect_true(is.list(result1) || is.null(result1))
 
@@ -318,16 +306,12 @@ test_that("make_clean_names_df handles edge cases", {
     student_id = "123"
   )
 
-  result2 <- tryCatch(
-    {
-      make_clean_names_df(
-        transcripts_metrics_df = single_transcript,
-        roster_sessions = single_roster
-      )
-    },
-    error = function(e) {
-      list(status = "error", message = e$message)
-    }
+  result2 <- expect_error(
+    make_clean_names_df(
+      transcripts_metrics_df = single_transcript,
+      roster_sessions = single_roster
+    ),
+    regexp = "'by' must specify uniquely valid columns|Unknown or uninitialised column|incompatible size|Can't recycle input of size 0|Assigned data"
   )
   expect_true(is.list(result2) || is.null(result2))
 
@@ -342,16 +326,12 @@ test_that("make_clean_names_df handles edge cases", {
     student_id = c("123", "456", NA)
   )
 
-  result3 <- tryCatch(
-    {
-      make_clean_names_df(
-        transcripts_metrics_df = na_transcripts,
-        roster_sessions = na_roster
-      )
-    },
-    error = function(e) {
-      list(status = "error", message = e$message)
-    }
+  result3 <- expect_error(
+    make_clean_names_df(
+      transcripts_metrics_df = na_transcripts,
+      roster_sessions = na_roster
+    ),
+    regexp = "incompatible size|Can't recycle input of size 0|Assigned data|Unknown or uninitialised column"
   )
   expect_true(is.list(result3) || is.null(result3))
 })

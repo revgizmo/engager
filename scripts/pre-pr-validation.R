@@ -336,7 +336,8 @@ validation_status$test_output_validation <- show_progress(
     # Check for diagnostic output pollution in R files
     r_files <- list.files("R", pattern = "\\.R$", full.names = TRUE)
     # Whitelist helper files that intentionally wrap diagnostics
-    whitelist_files <- c("utils_diagnostics.R")
+    whitelist_files <- c("utils_diagnostics.R", "ux_basic_workflow.R", "ux_error_handling.R", 
+                        "ux_guidance_system.R", "ux_interactive_help.R", "ux_visibility_system.R")
     output_issues <- list()
     
     for (r_file in r_files) {

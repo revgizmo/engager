@@ -1,3 +1,5 @@
+title: engager
+
 template:
   bootstrap: 5
 
@@ -6,9 +8,16 @@ destination: docs
 url: https://revgizmo.github.io/engager/
 
 navbar:
+  title: engager
   structure:
     left: [reference, articles]
     right: [search]
+
+footer:
+  structure:
+    left: [text]
+  components:
+    text: "engager"
 
 reference:
 - title: Core Functions
