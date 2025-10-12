@@ -362,3 +362,7 @@ docs/analysis/lessons-learned/
 ^.*_ci\.md$
 ^.*_performance.*\.md$
 ^perf/
+
+# Additional non-standard top-level files
+^project-docs/
+^test_patterns\.R$
