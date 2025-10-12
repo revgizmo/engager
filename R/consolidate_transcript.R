@@ -85,25 +85,25 @@ aggregate_transcript_data <- function(df) {
     # Group by both transcript_file and comment_num
     agg_result <- perform_aggregation(df, c("transcript_file", "comment_num"))
 
-    # Extract the aggregated values
+    # Extract the aggregated values preserving first name/start and last end
     data.frame(
       transcript_file = agg_result$transcript_file,
-      name = unlist(agg_result$name),
+      name = vapply(agg_result$name, function(x) x[1], FUN.VALUE = character(1)),
       comment = unlist(agg_result$comment),
-      start = unlist(agg_result$start),
-      end = unlist(agg_result$end),
+      start = vapply(agg_result$start, function(x) x[1], FUN.VALUE = hms::hms(0)),
+      end = vapply(agg_result$end, function(x) x[length(x)], FUN.VALUE = hms::hms(0)),
       stringsAsFactors = FALSE
     )
   } else {
     # Group by comment_num only
     agg_result <- perform_aggregation(df, "comment_num")
 
-    # Extract the aggregated values
+    # Extract the aggregated values preserving first name/start and last end
     data.frame(
-      name = unlist(agg_result$name),
+      name = vapply(agg_result$name, function(x) x[1], FUN.VALUE = character(1)),
       comment = unlist(agg_result$comment),
-      start = unlist(agg_result$start),
-      end = unlist(agg_result$end),
+      start = vapply(agg_result$start, function(x) x[1], FUN.VALUE = hms::hms(0)),
+      end = vapply(agg_result$end, function(x) x[length(x)], FUN.VALUE = hms::hms(0)),
       stringsAsFactors = FALSE
     )
   }
@@ -127,19 +127,10 @@ perform_aggregation <- function(df, by_columns) {
       )
     },
     FUN = function(x) {
-      if (length(x) == 1) {
-        return(x)
-      }
-      # For comments, paste them together
-      if (is.character(x) && all(sapply(x, is.character))) {
-        return(paste(x, collapse = " "))
-      }
-      # For other columns, take first/last as appropriate
-      if (is.character(x) || is.numeric(x)) {
-        return(x[1]) # Take first for name, start
-      }
-      # For end times, take the last one
-      x[length(x)]
+      # For character columns (name, comment), keep vector and paste later for comment
+      if (is.character(x)) return(x)
+      # For hms or numeric time columns, keep full vector for post-processing
+      x
     },
     simplify = FALSE
   )

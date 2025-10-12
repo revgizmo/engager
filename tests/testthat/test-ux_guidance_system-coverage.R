@@ -30,15 +30,15 @@ test_that("show_troubleshooting provides actionable suggestions", {
 
 test_that("show_function_help handles unknown functions gracefully", {
   dummy_ns <- new.env(parent = emptyenv())
-  # Mock the zoomstudentengagement namespace lookup so we can exercise
-  # show_function_help() logic without requiring the external package.
+  # Mock the engager namespace lookup so we can exercise
+  # show_function_help() logic without depending on real namespace contents.
   output <- testthat::with_mocked_bindings(
     capture.output(show_function_help("totally_missing")),
     asNamespace = function(ns) {
-      expect_equal(ns, "zoomstudentengagement")
+      expect_equal(ns, "engager")
       dummy_ns
     },
-    .package = "engager"
+    .package = "base"
   )
   expect_true(any(grepl("ERROR: Function 'totally_missing' not found", output, fixed = TRUE)))
   expect_true(any(grepl("TIP: Try: show_available_functions()", output, fixed = TRUE)))
@@ -47,14 +47,14 @@ test_that("show_function_help handles unknown functions gracefully", {
 test_that("show_function_help categorizes essential functions", {
   dummy_ns <- new.env(parent = emptyenv())
   dummy_ns$basic_transcript_analysis <- function(...) NULL
-  # Reuse mocked namespace binding to avoid depending on the external package.
+  # Reuse mocked namespace binding to avoid depending on the actual package namespace.
   output <- testthat::with_mocked_bindings(
     capture.output(show_function_help("basic_transcript_analysis")),
     asNamespace = function(ns) {
-      expect_equal(ns, "zoomstudentengagement")
+      expect_equal(ns, "engager")
       dummy_ns
     },
-    .package = "engager"
+    .package = "base"
   )
   expect_true(any(grepl("Essential Function", output, fixed = TRUE)))
   expect_true(any(grepl("TIP: Usage Examples", output, fixed = TRUE)))
@@ -64,14 +64,14 @@ test_that("show_function_help categorizes essential functions", {
 test_that("show_function_help falls back to generic labeling when uncategorized", {
   dummy_ns <- new.env(parent = emptyenv())
   dummy_ns$custom_helper <- function(...) NULL
-  # Reuse mocked namespace binding to avoid depending on the external package.
+  # Reuse mocked namespace binding to avoid depending on the actual package namespace.
   output <- testthat::with_mocked_bindings(
     capture.output(show_function_help("custom_helper")),
     asNamespace = function(ns) {
-      expect_equal(ns, "zoomstudentengagement")
+      expect_equal(ns, "engager")
       dummy_ns
     },
-    .package = "engager"
+    .package = "base"
   )
   expect_true(any(grepl("Function:\\s+custom_helper", output)))
   expect_true(any(grepl("No documentation available", output, fixed = TRUE)))
