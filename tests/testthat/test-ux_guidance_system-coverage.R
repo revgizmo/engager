@@ -30,6 +30,8 @@ test_that("show_troubleshooting provides actionable suggestions", {
 
 test_that("show_function_help handles unknown functions gracefully", {
   dummy_ns <- new.env(parent = emptyenv())
+  # Mock the zoomstudentengagement namespace lookup so we can exercise
+  # show_function_help() logic without requiring the external package.
   output <- testthat::with_mocked_bindings(
     capture.output(show_function_help("totally_missing")),
     asNamespace = function(ns) {
@@ -38,13 +40,14 @@ test_that("show_function_help handles unknown functions gracefully", {
     },
     .package = "engager"
   )
-  expect_true(any(grepl("Function 'totally_missing' not found", output, fixed = TRUE)))
+  expect_true(any(grepl("ERROR: Function 'totally_missing' not found", output, fixed = TRUE)))
   expect_true(any(grepl("TIP: Try: show_available_functions()", output, fixed = TRUE)))
 })
 
 test_that("show_function_help categorizes essential functions", {
   dummy_ns <- new.env(parent = emptyenv())
   dummy_ns$basic_transcript_analysis <- function(...) NULL
+  # Reuse mocked namespace binding to avoid depending on the external package.
   output <- testthat::with_mocked_bindings(
     capture.output(show_function_help("basic_transcript_analysis")),
     asNamespace = function(ns) {
@@ -55,11 +58,13 @@ test_that("show_function_help categorizes essential functions", {
   )
   expect_true(any(grepl("Essential Function", output, fixed = TRUE)))
   expect_true(any(grepl("TIP: Usage Examples", output, fixed = TRUE)))
+  expect_true(any(grepl("No documentation available", output, fixed = TRUE)))
 })
 
 test_that("show_function_help falls back to generic labeling when uncategorized", {
   dummy_ns <- new.env(parent = emptyenv())
   dummy_ns$custom_helper <- function(...) NULL
+  # Reuse mocked namespace binding to avoid depending on the external package.
   output <- testthat::with_mocked_bindings(
     capture.output(show_function_help("custom_helper")),
     asNamespace = function(ns) {
@@ -68,5 +73,6 @@ test_that("show_function_help falls back to generic labeling when uncategorized"
     },
     .package = "engager"
   )
-  expect_true(any(grepl("Function:  custom_helper", output, fixed = TRUE)))
+  expect_true(any(grepl("Function:\\s+custom_helper", output)))
+  expect_true(any(grepl("No documentation available", output, fixed = TRUE)))
 })
