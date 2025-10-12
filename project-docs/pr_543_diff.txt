@@ -1,0 +1,186 @@
+diff --git a/tests/testthat/test-consolidate_transcript.R b/tests/testthat/test-consolidate_transcript.R
+index 1b11644..49eb8df 100644
+--- a/tests/testthat/test-consolidate_transcript.R
++++ b/tests/testthat/test-consolidate_transcript.R
+@@ -24,6 +24,23 @@ test_that("consolidate_transcript handles empty tibble", {
+   expect_s3_class(result, "tbl_df")
+ })
+ 
++test_that("consolidate_transcript handles empty tibble without transcript_file column", {
++  empty_df <- tibble::tibble(
++    name = character(0),
++    comment = character(0),
++    start = hms::as_hms(character(0)),
++    end = hms::as_hms(character(0))
++  )
++
++  result <- consolidate_transcript(empty_df)
++  expect_s3_class(result, "tbl_df")
++  expect_equal(nrow(result), 0)
++  expect_setequal(
++    names(result),
++    c("name", "comment", "start", "end", "duration", "wordcount")
++  )
++})
++
+ test_that("consolidate_transcript handles single comment", {
+   single_comment <- tibble::tibble(
+     transcript_file = "test.vtt",
+@@ -114,6 +131,23 @@ test_that("consolidate_transcript handles multiple consolidation scenarios", {
+   expect_equal(nrow(result), 3) # Should consolidate into 3 groups
+ })
+ 
++test_that("consolidate_transcript consolidates data without transcript_file column", {
++  comments <- tibble::tibble(
++    name = c("Speaker1", "Speaker1", "Speaker2"),
++    comment = c("Hello", "world", "Bye"),
++    start = hms::as_hms(c("00:00:00", "00:00:02", "00:00:05")),
++    end = hms::as_hms(c("00:00:02", "00:00:04", "00:00:07"))
++  )
++
++  result <- consolidate_transcript(comments, max_pause_sec = 2)
++  expect_s3_class(result, "tbl_df")
++  expect_equal(nrow(result), 2)
++  expect_equal(result$name, c("Speaker1", "Speaker2"))
++  expect_equal(result$comment[1], "Hello world")
++  expect_equal(result$duration, c(4, 2))
++  expect_equal(result$wordcount, c(2, 1))
++})
++
+ test_that("consolidate_transcript handles edge cases with timing", {
+   edge_case_data <- tibble::tibble(
+     transcript_file = c("test.vtt", "test.vtt"),
+diff --git a/tests/testthat/test-make_transcripts_summary_df-coverage.R b/tests/testthat/test-make_transcripts_summary_df-coverage.R
+index b3ba984..bfb254c 100644
+--- a/tests/testthat/test-make_transcripts_summary_df-coverage.R
++++ b/tests/testthat/test-make_transcripts_summary_df-coverage.R
+@@ -11,6 +11,24 @@ test_that("make_transcripts_summary_df returns empty tibble for empty input", {
+   expect_true(all(c("section", "preferred_name", "session_ct", "n", "duration", "wordcount", "wpm", "perc_n", "perc_duration", "perc_wordcount") %in% names(out)))
+ })
+ 
++test_that("make_transcripts_summary_df returns typed columns for schema-only input", {
++  empty_schema <- tibble::tibble(
++    section = character(),
++    preferred_name = character(),
++    n = numeric(),
++    duration = numeric(),
++    wordcount = numeric()
++  )
++
++  out <- make_transcripts_summary_df(empty_schema)
++  expect_s3_class(out, "tbl_df")
++  expect_equal(nrow(out), 0)
++  expect_identical(
++    names(out),
++    c("section", "preferred_name", "session_ct", "n", "duration", "wordcount", "wpm", "perc_n", "perc_duration", "perc_wordcount")
++  )
++})
++
+ test_that("make_transcripts_summary_df aggregates and computes percentages", {
+   df <- tibble::tibble(
+     section = c("S1", "S1", "S1", "S2"),
+diff --git a/tests/testthat/test-onload-defaults.R b/tests/testthat/test-onload-defaults.R
+index f3f9e1c..792135a 100644
+--- a/tests/testthat/test-onload-defaults.R
++++ b/tests/testthat/test-onload-defaults.R
+@@ -91,6 +91,22 @@ test_that(".onLoad behavior is consistent across multiple calls", {
+   expect_identical(first_call, "mask")
+ })
+ 
++test_that(".onAttach suppresses startup message when globally disabled", {
++  old <- getOption("engager.show_startup", NULL)
++  on.exit(options(engager.show_startup = old), add = TRUE)
++  options(engager.show_startup = FALSE)
++
++  expect_silent(engager:::.onAttach(NULL, "engager"))
++})
++
++test_that(".onAttach displays helpful startup guidance when enabled", {
++  old <- getOption("engager.show_startup", NULL)
++  on.exit(options(engager.show_startup = old), add = TRUE)
++  options(engager.show_startup = TRUE)
++
++  expect_message(engager:::.onAttach(NULL, "engager"), "Welcome to engager!")
++})
++
+ # Additional tests for related privacy functionality to ensure comprehensive coverage
+ 
+ test_that("calculate_content_similarity returns 1 for identical simple inputs", {
+diff --git a/tests/testthat/test-ux_guidance_system-coverage.R b/tests/testthat/test-ux_guidance_system-coverage.R
+new file mode 100644
+index 0000000..dac5b15
+--- /dev/null
++++ b/tests/testthat/test-ux_guidance_system-coverage.R
+@@ -0,0 +1,72 @@
++# Coverage-focused tests for UX guidance helpers
++
++test_that("show_getting_started prints key onboarding guidance", {
++  output <- capture.output(show_getting_started())
++  expect_true(any(grepl("Getting Started", output, fixed = TRUE)))
++  expect_true(any(grepl("BASIC WORKFLOW", output, fixed = TRUE)))
++  expect_true(any(grepl("QUICK START", output, fixed = TRUE)))
++})
++
++test_that("show_workflow_help lists multiple workflow options", {
++  output <- capture.output(show_workflow_help())
++  expect_true(any(grepl("Available Workflows", output, fixed = TRUE)))
++  expect_true(any(grepl("Batch Workflow", output, fixed = TRUE)))
++  expect_true(any(grepl("Advanced Workflows", output, fixed = TRUE)))
++})
++
++test_that("show_privacy_guidance emphasizes privacy best practices", {
++  output <- capture.output(show_privacy_guidance())
++  expect_true(any(grepl("Privacy & Ethics Guidance", output, fixed = TRUE)))
++  expect_true(any(grepl("ensure_privacy()", output, fixed = TRUE)))
++  expect_true(any(grepl("FERPA", output)))
++})
++
++test_that("show_troubleshooting provides actionable suggestions", {
++  output <- capture.output(show_troubleshooting())
++  expect_true(any(grepl("Troubleshooting Guide", output, fixed = TRUE)))
++  expect_true(any(grepl("Common Issues", output, fixed = TRUE)))
++  expect_true(any(grepl("Getting More Help", output, fixed = TRUE)))
++})
++
++test_that("show_function_help handles unknown functions gracefully", {
++  dummy_ns <- new.env(parent = emptyenv())
++  output <- testthat::with_mocked_bindings(
++    capture.output(show_function_help("totally_missing")),
++    asNamespace = function(ns) {
++      expect_equal(ns, "zoomstudentengagement")
++      dummy_ns
++    },
++    .package = "engager"
++  )
++  expect_true(any(grepl("Function 'totally_missing' not found", output, fixed = TRUE)))
++  expect_true(any(grepl("TIP: Try: show_available_functions()", output, fixed = TRUE)))
++})
++
++test_that("show_function_help categorizes essential functions", {
++  dummy_ns <- new.env(parent = emptyenv())
++  dummy_ns$basic_transcript_analysis <- function(...) NULL
++  output <- testthat::with_mocked_bindings(
++    capture.output(show_function_help("basic_transcript_analysis")),
++    asNamespace = function(ns) {
++      expect_equal(ns, "zoomstudentengagement")
++      dummy_ns
++    },
++    .package = "engager"
++  )
++  expect_true(any(grepl("Essential Function", output, fixed = TRUE)))
++  expect_true(any(grepl("TIP: Usage Examples", output, fixed = TRUE)))
++})
++
++test_that("show_function_help falls back to generic labeling when uncategorized", {
++  dummy_ns <- new.env(parent = emptyenv())
++  dummy_ns$custom_helper <- function(...) NULL
++  output <- testthat::with_mocked_bindings(
++    capture.output(show_function_help("custom_helper")),
++    asNamespace = function(ns) {
++      expect_equal(ns, "zoomstudentengagement")
++      dummy_ns
++    },
++    .package = "engager"
++  )
++  expect_true(any(grepl("Function:  custom_helper", output, fixed = TRUE)))
++})
