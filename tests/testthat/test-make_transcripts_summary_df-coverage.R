@@ -11,6 +11,24 @@ test_that("make_transcripts_summary_df returns empty tibble for empty input", {
   expect_true(all(c("section", "preferred_name", "session_ct", "n", "duration", "wordcount", "wpm", "perc_n", "perc_duration", "perc_wordcount") %in% names(out)))
 })
 
+test_that("make_transcripts_summary_df returns typed columns for schema-only input", {
+  empty_schema <- tibble::tibble(
+    section = character(),
+    preferred_name = character(),
+    n = numeric(),
+    duration = numeric(),
+    wordcount = numeric()
+  )
+
+  out <- make_transcripts_summary_df(empty_schema)
+  expect_s3_class(out, "tbl_df")
+  expect_equal(nrow(out), 0)
+  expect_identical(
+    names(out),
+    c("section", "preferred_name", "session_ct", "n", "duration", "wordcount", "wpm", "perc_n", "perc_duration", "perc_wordcount")
+  )
+})
+
 test_that("make_transcripts_summary_df aggregates and computes percentages", {
   df <- tibble::tibble(
     section = c("S1", "S1", "S1", "S2"),
