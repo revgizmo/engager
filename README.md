@@ -1,26 +1,33 @@
 
-- [engager](#engager)
-  - [📚 Documentation](#books-documentation)
-  - [🚀 Quick Start](#rocket-quick-start)
-    - [Installation](#installation)
-    - [5-minute whole-game example](#5-minute-whole-game-example)
-    - [Basic Example](#basic-example)
-  - [📖 Vignettes](#open_book-vignettes)
-  - [🎯 What the Package Does](#dart-what-the-package-does)
-  - [🔧 Key Functions](#wrench-key-functions)
-    - [Core Processing](#core-processing)
-    - [Data Management](#data-management)
-    - [Analysis and Visualization](#analysis-and-visualization)
-    - [Reporting](#reporting)
-    - [Diagnostics and interactive
-      prompts](#diagnostics-and-interactive-prompts)
-  - [📊 Typical Workflow](#bar_chart-typical-workflow)
-  - [🔒 Privacy Defaults](#lock-privacy-defaults)
-  - [Development](#development)
-    - [Pull Request Review](#pull-request-review)
-  - [🤝 Contributing](#handshake-contributing)
-  - [📄 License](#page_facing_up-license)
-  - [🔗 Links](#link-links)
+- <a href="#engager" id="toc-engager">engager</a>
+  - <a href="#-documentation" id="toc--documentation">📚 Documentation</a>
+  - <a href="#-quick-start" id="toc--quick-start">🚀 Quick Start</a>
+    - <a href="#installation" id="toc-installation">Installation</a>
+    - <a href="#5-minute-whole-game-example"
+      id="toc-5-minute-whole-game-example">5-minute whole-game example</a>
+    - <a href="#basic-example" id="toc-basic-example">Basic Example</a>
+  - <a href="#-vignettes" id="toc--vignettes">📖 Vignettes</a>
+  - <a href="#-what-the-package-does" id="toc--what-the-package-does">🎯
+    What the Package Does</a>
+  - <a href="#-key-functions" id="toc--key-functions">🔧 Key Functions</a>
+    - <a href="#core-processing" id="toc-core-processing">Core Processing</a>
+    - <a href="#data-management" id="toc-data-management">Data Management</a>
+    - <a href="#analysis-and-visualization"
+      id="toc-analysis-and-visualization">Analysis and Visualization</a>
+    - <a href="#reporting" id="toc-reporting">Reporting</a>
+    - <a href="#diagnostics-and-interactive-prompts"
+      id="toc-diagnostics-and-interactive-prompts">Diagnostics and interactive
+      prompts</a>
+  - <a href="#-typical-workflow" id="toc--typical-workflow">📊 Typical
+    Workflow</a>
+  - <a href="#-privacy-defaults" id="toc--privacy-defaults">🔒 Privacy
+    Defaults</a>
+  - <a href="#development" id="toc-development">Development</a>
+    - <a href="#pull-request-review" id="toc-pull-request-review">Pull Request
+      Review</a>
+  - <a href="#-contributing" id="toc--contributing">🤝 Contributing</a>
+  - <a href="#-license" id="toc--license">📄 License</a>
+  - <a href="#-links" id="toc--links">🔗 Links</a>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 

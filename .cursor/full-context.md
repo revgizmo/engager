@@ -1,9 +1,9 @@
 🔍 Generating context for engager R Package...
 ==================================================
 🔍 Validating dependencies...
-📅 Date: 2025-09-23 04:16:27 UTC
-🌿 Branch: feature/issue-544-branding-docs
-📊 Uncommitted changes: 9
+📅 Date: 2025-10-13 21:16:54 UTC
+🌿 Branch: fix/vignettes-row-mismatch
+📊 Uncommitted changes: 2
 
 🎯 PROJECT STATUS SUMMARY
 ------------------------
@@ -14,11 +14,11 @@ Current Status: PROJECT.md not found
 📈 KEY METRICS
 -------------
 🔍 Checking test status...
-Test Status: FAILING (0 failures, 70 warnings, 2356 passed, 13 skipped)
+Test Status: FAILING (2 failures, 70 warnings, 2352 passed, 13 skipped)
 🔍 Checking R CMD check status...
-R CMD Check: 0 errors, 0 warnings, 2 notes
+R CMD Check: Failed (run manually with devtools::check())
 🔍 Checking test coverage...
-Test Coverage: 83.89% (target: 90%)
+Test Coverage: N/A (covr not available)
 🔍 Counting exported functions...
 Exported Functions: 29
 
@@ -53,11 +53,11 @@ Exported Functions: 29
 
 🕒 RECENT ACTIVITY (Last 5 Issues)
 --------------------------------
-#544: docs(pkgdown): update site branding from 'zoomstudentengagement' to 'engager' and rebuild Pages (OPEN) - 2025-09-23
 #493: docs: add repository branch analysis and user profiles/use cases (OPEN) - 2025-09-07
 #471: Performance Benchmarking Implementation - CRAN Readiness Metrics (OPEN) - 2025-09-04
 #469: Final Scope Reduction Optimization - Complete Issue #393 Phase 2 (OPEN) - 2025-09-04
 #453: enhancement: Investigate alternative Excel export libraries to replace openxlsx (OPEN) - 2025-09-01
+#441: Batch Export Capabilities (OPEN) - 2025-08-30
 
 📁 ESSENTIAL FILES TO REVIEW
 ---------------------------
@@ -72,8 +72,6 @@ Exported Functions: 29
 ---------------------------
 1. High Priority Issues (12 issues)
 2. CRAN Submission Blockers (14 issues)
-3. Test Coverage Improvement (83.89% → 90%)
-4. R CMD Check Issues (0 errors, 0 warnings, 2 notes)
 5. Documentation and Testing
 6. Real-world Testing
 
@@ -93,7 +91,7 @@ gh issue view <ISSUE_NUMBER>
 📂 PROJECT STRUCTURE
 -------------------
 R/ - Core functions (29 exported)
-tests/ - Test suite (86 test files)
+tests/ - Test suite (87 test files)
 man/ - Documentation (53 files)
 vignettes/ - Usage examples (4 files)
 inst/extdata/ - Sample data
@@ -113,13 +111,11 @@ scripts/ - Development utilities
 📦 CRAN READINESS STATUS
 ----------------------
 ❌ Test Suite: FAILING
-✅ R CMD Check: PASSING (0 errors, 0 warnings)
-⚠️  Test Coverage: 83.89% (need 90%)
-⚠️  R CMD Notes: 2 minor notes
+❌ R CMD Check: FAILING ( errors,  warnings)
+⚠️  Test Coverage: Unable to check
 
 🎯 IMMEDIATE NEXT STEPS
 ---------------------
-2. Improve test coverage to 90% (currently 83.89%)
 3. Address high priority issues (12 issues)
 4. Resolve CRAN submission blockers (14 issues)
 5. Update documentation and examples
@@ -147,10 +143,22 @@ scripts/ - Development utilities
 📊 TEST COVERAGE
 ---------------
 🔍 Calculating coverage...
-📈 Coverage: 83.89 %
-   Target: 90%
-   ⚠️  Below target - needs improvement
-   💡 Run 'covr::file_coverage()' for detailed file breakdown
+❌ Coverage check failed:  Failure in `/private/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T/Rtmp8MvUXy/R_LIBS88ca473ae78a/engager/engager-tests/testthat.Rout.fail`
+pe 'character'
+Backtrace:
+    ▆
+ 1. └─engager:::aggregate_transcript_data(with_file_df) at test-consolidate_transcript-comprehensive.R:136:3
+ 2.   ├─base::data.frame(...)
+ 3.   └─base::vapply(agg_result$start, function(x) x[1], FUN.VALUE = hms::hms(0))
+── Failure ('test-consolidate_transcript.R:76:3'): consolidate_transcript consolidates consecutive comments from same speaker ──
+as.numeric(result$start) (`actual`) not equal to 3 (`expected`).
+
+  `actual`: 0.0
+`expected`: 3.0
+
+[ FAIL 2 | WARN 68 | SKIP 31 | PASS 2287 ]
+Error: Test failures
+Execution halted 
 
 🔍 R CMD CHECK STATUS
 -------------------
@@ -166,7 +174,7 @@ Note: Full R CMD check takes time. Run manually with:
 📂 PACKAGE STRUCTURE
 ------------------
 R/ functions: 54 
-Tests: 86 
+Tests: 87 
 Vignettes: 4 
 Documentation: 53 
 
@@ -265,23 +273,23 @@ devtools::build()
 ⚠️  IMPORTANT: PROJECT.md is outdated and needs manual update
 
 📊 Current Metrics (from R context above):
-   • Test Coverage: 83.89 % (PROJECT.md claims 78.15 %)
-   • Test Suite: 2150 tests (PROJECT.md claims 450 )
+   • Test Coverage: 93.82% (PROJECT.md claims 78.15 %)
+   • Test Suite: 1065 tests (PROJECT.md claims 450 )
    • R CMD Check: 2 notes (PROJECT.md claims 3 )
    • Status: EXCELLENT (PROJECT.md claims CRITICAL BLOCKERS )
 
 🎯 ACTION REQUIRED:
    • Manually update PROJECT.md with current metrics above
    • Update status from 'CRITICAL BLOCKERS' to 'EXCELLENT - Very Close to CRAN Ready'
-   • Update last modified date to 2025-09-22 
+   • Update last modified date to 2025-10-13 
    • Update issue count from 31 to 30
 
 📝 Update these lines in PROJECT.md:
-   • Line 13: 'Updated: 2025-09-22 '
+   • Line 13: 'Updated: 2025-10-13 '
    • Line 15: 'Package Status: EXCELLENT - Very Close to CRAN Ready'
-   • Line 37: 'Test Suite: 2150 tests passing'
+   • Line 37: 'Test Suite: 1065 tests passing'
    • Line 38: 'R CMD Check: 0 errors, 0 warnings, 2 notes'
-   • Line 39: 'Test Coverage: 83.89 % (target achieved)'
+   • Line 39: 'Test Coverage: 93.82% (target achieved)'
 ==================================================
 💾 Metrics JSON written to .cursor/metrics.json
 
@@ -309,7 +317,7 @@ devtools::build()
 
 🎯 SUCCESS CRITERIA:
    ✅ PROJECT.md matches current metrics from context above
-   ✅ Date updated to 2025-09-22 
+   ✅ Date updated to 2025-10-13 
    ✅ No more discrepancy warnings in context scripts
 
 ⚠️  DO NOT PROCEED WITH ANY OTHER WORK until PROJECT.md is updated!
