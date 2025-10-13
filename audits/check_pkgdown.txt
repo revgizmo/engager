@@ -1,0 +1,100 @@
+R> pkgdown::build_site(preview=FALSE)
+-- Installing package engager into temporary library ---------------------------
+-- Building pkgdown site for package engager -----------------------------------
+Reading from: /Users/piper/git/zoomstudentengagement
+Writing to: /Users/piper/git/zoomstudentengagement/docs
+-- Initialising site -----------------------------------------------------------
+-- Building home ---------------------------------------------------------------
+Reading COVERAGE_ANALYSIS_REPORT.md
+Reading COVERAGE_RECOVERY_SUMMARY.md
+Reading COVERAGE_RESOLUTION_PLAN.md
+Reading ISSUE_540_PHASE_1_COMPLETION_SUMMARY.md
+Reading ISSUE_544_IMPLEMENTATION_GUIDE.md
+Writing `404.html`
+-- Building function reference -------------------------------------------------
+Welcome to engager!
+- Start with: vignette('getting-started', package='engager')
+- Core functions: vignette('essential-functions', package='engager')
+- Sample data: system.file('extdata/transcripts', package='engager')
+- Quick example: example(summarize_transcript_metrics)
+
+To suppress this message: options(engager.show_startup = FALSE)
+Reading man/abort_zse.Rd
+Reading man/add_dead_air_rows.Rd
+Reading man/analyze_multi_session_attendance.Rd
+Reading man/analyze_transcripts.Rd
+Reading man/anonymize_educational_data.Rd
+Writing `reference/anonymize_educational_data.html`
+Reading man/apply_name_matching.Rd
+Reading man/apply_privacy_aware_matching.Rd
+Reading man/audit_ethical_usage.Rd
+Reading man/basic_transcript_analysis.Rd
+Reading man/batch_basic_analysis.Rd
+Reading man/calculate_content_similarity.Rd
+Reading man/check_data_retention_policy.Rd
+Reading man/consolidate_transcript.Rd
+Reading man/convert_error_to_user_friendly.Rd
+Reading man/data.Rd
+Reading man/detect_duplicate_transcripts.Rd
+Reading man/engager-package.Rd
+Reading man/ensure_privacy.Rd
+Reading man/ethical_compliance.Rd
+Reading man/ferpa_compliance.Rd
+Reading man/find_function_for_task.Rd
+Reading man/get_next_level.Rd
+Reading man/get_smart_recommendations.Rd
+Reading man/get_ux_level.Rd
+Reading man/get_visible_functions.Rd
+Reading man/grapes-greater-than-grapes.Rd
+Reading man/load_zoom_transcript.Rd
+Writing `reference/load_zoom_transcript.html`
+Reading man/lookup_merge_utils.Rd
+Reading man/make_blank_cancelled_classes_df.Rd
+Reading man/make_blank_section_names_lookup_csv.Rd
+Reading man/plot_users.Rd
+Reading man/privacy_audit.Rd
+Reading man/process_zoom_transcript.Rd
+Writing `reference/process_zoom_transcript.html`
+Reading man/quick_analysis.Rd
+Reading man/safe_name_matching_workflow.Rd
+Reading man/schema.Rd
+Reading man/set_ux_level.Rd
+Reading man/show_available_functions.Rd
+Reading man/show_error_recovery.Rd
+Reading man/show_function_categories.Rd
+Reading man/show_function_help.Rd
+Reading man/show_getting_started.Rd
+Reading man/show_privacy_guidance.Rd
+Reading man/show_troubleshooting.Rd
+Reading man/show_workflow_help.Rd
+Reading man/summarize_transcript_files.Rd
+Reading man/summarize_transcript_metrics.Rd
+Writing `reference/summarize_transcript_metrics.html`
+Reading man/user_friendly_error.Rd
+Reading man/validate_directory_argument.Rd
+Reading man/validate_file_argument.Rd
+Reading man/validate_privacy_compliance.Rd
+Reading man/write_metrics.Rd
+Reading man/zse_schema.Rd
+-- Building articles -----------------------------------------------------------
+Reading vignettes/essential-functions.Rmd
+Writing `articles/essential-functions.html`
+Reading vignettes/ferpa-ethics.Rmd
+Reading vignettes/getting-started.Rmd
+Writing `articles/getting-started.html`
+Reading vignettes/plotting.Rmd
+Writing `articles/plotting.html`
+Writing sitemap.xml
+-- Building search index -------------------------------------------------------
+-- Finished building pkgdown site for package engager --------------------------
+Messages d'avis :
+1: Dans file.exists(file.path(input_dir, path)) :
+  unable to translate '/Users/piper/git/zoomstudentengagement/vignettes/<U+2705> No issues found' to native encoding
+2: Dans file.exists(file.path(input_dir, path)) :
+  unable to translate '/Users/piper/git/zoomstudentengagement/vignettes/<U+26A0><U+FE0F>  Issues found' to native encoding
+-- Finished building pkgdown site for package engager --------------------------
+Message d'avis :
+Dans readLines(con, warn = readLines.warn) :
+  ligne finale incompl`ete trouv'ee dans './_pkgdown.yml'
+R> 
+R> 

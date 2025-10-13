@@ -1,0 +1,10 @@
+-  2025-09-25 21:06:15 -0700 docs: add master task document for name-matching MVP
+-  2025-09-23 08:11:51 -0700 docs(vignette): hide messages/warnings; ensure headings render cleanly; keep autolink list
+-  2025-09-23 08:00:59 -0700 docs(vignette): fix empty exports rendering; add curated fallback essential list (fix #548)
+-  2025-09-23 07:37:00 -0700 Merge pull request #549 from revgizmo/docs/issue-548-autolink-essential-functions
+-  2025-09-23 06:54:04 -0700 docs(vignette): autolink essential functions; align list with exported API (refs #548)
+-  2025-09-23 06:50:55 -0700 docs(project): document Pages deploy fix and successful run 17947614054 (close #219)
+-  2025-09-23 06:23:19 -0700 ci(pages): drop preview arg for pkgdown::clean_site() to match pkgdown 2.x API
+-  2025-09-22 22:38:41 -0700 ci(pages): use setup-r-dependencies and remove devtools::document() to fix build
+-  2025-09-22 22:14:00 -0700 fix: Add system dependencies to Pages workflow for R package builds
+-  2025-09-22 21:42:19 -0700 Merge pull request #545 from revgizmo/feature/issue-544-branding-docs
