@@ -68,8 +68,20 @@ privacy_result <- privacy_audit(summary_metrics)
 cat("Privacy Check:", ifelse(nrow(privacy_result) == 0, "✅ No issues found", "⚠️  Issues found"), "\n")
 ```
 
+cat("Processed transcript column lengths:\n")
+for (col in names(processed_transcript)) {
+  cat(col, ":", length(processed_transcript[[col]]), "\n")
+}
+cat("Column names:", paste(names(processed_transcript), collapse = ", "), "\n")
+cat("Dimensions:", paste(dim(processed_transcript), collapse = " x "), "\n")
 ## What the Package Does
 
+cat("Summary metrics column lengths:\n")
+for (col in names(summary_metrics)) {
+  cat(col, ":", length(summary_metrics[[col]]), "\n")
+}
+cat("Column names:", paste(names(summary_metrics), collapse = ", "), "\n")
+cat("Dimensions:", paste(dim(summary_metrics), collapse = " x "), "\n")
 The `engager` package provides tools for:
 
 1. **Loading and Processing Zoom Transcripts**: Convert Zoom VTT files into analyzable data

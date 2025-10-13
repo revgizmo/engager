@@ -86,6 +86,13 @@ processed <- process_zoom_transcript(
 )
 
 cat("Processed transcript has", nrow(processed), "rows\n")
+# Diagnostic: Print column lengths and structure
+cat("Column lengths:\n")
+for (col in names(processed)) {
+  cat(col, ":", length(processed[[col]]), "\n")
+}
+cat("Column names:", paste(names(processed), collapse = ", "), "\n")
+cat("Dimensions:", paste(dim(processed), collapse = " x "), "\n")
 ```
 
 ### 3. Analyze Engagement
