@@ -124,7 +124,7 @@ perform_aggregation <- function(df, by_columns) {
       )
     },
     FUN = function(x) {
-      # Keep full vectors; collapse/first/last is handled in post-processing
+      # Keep full vectors; collapsing (e.g., selecting first/last, concatenating) is handled in calculate_final_metrics()
       x
     },
     simplify = FALSE
