@@ -79,7 +79,8 @@ process_transcript_timing <- function(df, max_pause_sec) {
 
 # Helper function to aggregate transcript data
 aggregate_transcript_data <- function(df) {
-  # Use aggregate() for efficient grouping operations; keep full vectors for post-processing
+  # Use aggregate() for efficient grouping operations; keep full vectors for post-processing:
+  # specifically, collapsing comments into a single string and selecting the first/last timestamps per group.
   if ("transcript_file" %in% names(df)) {
     agg_result <- perform_aggregation(df, c("transcript_file", "comment_num"))
 
