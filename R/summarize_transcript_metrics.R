@@ -181,6 +181,13 @@ summarize_transcript_metrics <- function(transcript_file_path = "",
     attr(result, "privacy_level") <- getOption("engager.privacy_level", "mask")
 
     # Apply privacy before returning
-    return(engager::ensure_privacy(result))
+      # Diagnostic: Print column lengths and structure before returning
+      cat("summarize_transcript_metrics: column lengths before return:\n")
+      for (col in names(result)) {
+        cat(col, ":", length(result[[col]]), "\n")
+      }
+      cat("Column names:", paste(names(result), collapse = ", "), "\n")
+      cat("Dimensions:", paste(dim(result), collapse = " x "), "\n")
+      return(engager::ensure_privacy(result))
   }
 }
