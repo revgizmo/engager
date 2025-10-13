@@ -21,5 +21,5 @@ test_that("process_zoom_transcript returns consistent column lengths", {
   proc <- process_zoom_transcript(transcript_file_path = tf, consolidate_comments = TRUE, add_dead_air = TRUE)
   expect_s3_class(proc, "tbl_df")
   expect_true(all(vapply(proc, length, integer(1)) == nrow(proc)))
-  expect_true(all(c("name","comment","start","end") %in% names(proc)))
+  expect_true(all(c("name", "comment", "start", "end") %in% names(proc)))
 })
