@@ -88,8 +88,8 @@ aggregate_transcript_data <- function(df) {
       transcript_file = agg_result$transcript_file,
       name = vapply(agg_result$name, function(x) x[1], FUN.VALUE = character(1)),
       comment = vapply(agg_result$comment, function(x) paste(x, collapse = " "), FUN.VALUE = character(1)),
-      start = vapply(agg_result$start, function(x) x[1], FUN.VALUE = hms::hms(0)),
-      end = vapply(agg_result$end, function(x) x[length(x)], FUN.VALUE = hms::hms(0)),
+      start = vapply(agg_result$start, function(x) hms::as_hms(x[1]), FUN.VALUE = hms::hms(0)),
+      end = vapply(agg_result$end, function(x) hms::as_hms(x[length(x)]), FUN.VALUE = hms::hms(0)),
       stringsAsFactors = FALSE
     )
   } else {
@@ -98,8 +98,8 @@ aggregate_transcript_data <- function(df) {
     data.frame(
       name = vapply(agg_result$name, function(x) x[1], FUN.VALUE = character(1)),
       comment = vapply(agg_result$comment, function(x) paste(x, collapse = " "), FUN.VALUE = character(1)),
-      start = vapply(agg_result$start, function(x) x[1], FUN.VALUE = hms::hms(0)),
-      end = vapply(agg_result$end, function(x) x[length(x)], FUN.VALUE = hms::hms(0)),
+      start = vapply(agg_result$start, function(x) hms::as_hms(x[1]), FUN.VALUE = hms::hms(0)),
+      end = vapply(agg_result$end, function(x) hms::as_hms(x[length(x)]), FUN.VALUE = hms::hms(0)),
       stringsAsFactors = FALSE
     )
   }

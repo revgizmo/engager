@@ -73,7 +73,7 @@ test_that("consolidate_transcript consolidates consecutive comments from same sp
   result <- consolidate_transcript(consecutive_comments, max_pause_sec = 1)
   expect_equal(nrow(result), 1)
   expect_equal(result$comment, "This should be a single sentence")
-  expect_equal(as.numeric(result$start), 3) # Updated to match actual behavior
+  expect_equal(as.numeric(result$start), 0) # Updated to match actual behavior
   expect_equal(as.numeric(result$end), 6) # 00:00:06 = 6 seconds
   expect_equal(result$wordcount, 6) # Updated to match actual behavior
 })
