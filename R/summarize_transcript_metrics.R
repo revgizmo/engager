@@ -182,12 +182,14 @@ summarize_transcript_metrics <- function(transcript_file_path = "",
 
     # Apply privacy before returning
     # Diagnostic: Print column lengths and structure before returning
-    cat("summarize_transcript_metrics: column lengths before return:\n")
-    for (col in names(result)) {
-      cat(col, ":", length(result[[col]]), "\n")
+    if (getOption("engager.verbose", FALSE) && Sys.getenv("TESTTHAT") != "true") {
+      cat("summarize_transcript_metrics: column lengths before return:\n")
+      for (col in names(result)) {
+        cat(col, ":", length(result[[col]]), "\n")
+      }
+      cat("Column names:", paste(names(result), collapse = ", "), "\n")
+      cat("Dimensions:", paste(dim(result), collapse = " x "), "\n")
     }
-    cat("Column names:", paste(names(result), collapse = ", "), "\n")
-    cat("Dimensions:", paste(dim(result), collapse = " x "), "\n")
     return(engager::ensure_privacy(result))
   }
 }
