@@ -1,0 +1,89 @@
+R> sessionInfo(); stringi::stri_info()
+R version 4.1.1 (2021-08-10)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS 15.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/lib/libRlapack.dylib
+
+locale:
+[1] C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+[1] compiler_4.1.1
+$Unicode.version
+[1] "15.1"
+
+$ICU.version
+[1] "74.1"
+
+$Locale
+$Locale$Language
+[1] "en"
+
+$Locale$Country
+[1] "US"
+
+$Locale$Variant
+[1] "POSIX"
+
+$Locale$Name
+[1] "en_US_POSIX"
+
+
+$Charset.internal
+[1] "UTF-8"  "UTF-16"
+
+$Charset.native
+$Charset.native$Name.friendly
+[1] "US-ASCII"
+
+$Charset.native$Name.ICU
+[1] "US-ASCII"
+
+$Charset.native$Name.UTR22
+[1] NA
+
+$Charset.native$Name.IBM
+[1] "ibm-367"
+
+$Charset.native$Name.WINDOWS
+[1] "windows-20127"
+
+$Charset.native$Name.JAVA
+[1] "ASCII"
+
+$Charset.native$Name.IANA
+[1] "ANSI_X3.4-1968"
+
+$Charset.native$Name.MIME
+[1] "US-ASCII"
+
+$Charset.native$ASCII.subset
+[1] TRUE
+
+$Charset.native$Unicode.1to1
+[1] TRUE
+
+$Charset.native$CharSize.8bit
+[1] TRUE
+
+$Charset.native$CharSize.min
+[1] 1
+
+$Charset.native$CharSize.max
+[1] 1
+
+
+$ICU.system
+[1] FALSE
+
+$ICU.UTF8
+[1] FALSE
+
+R> 
+R> 

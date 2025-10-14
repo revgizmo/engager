@@ -84,6 +84,13 @@ process_zoom_transcript <- function(transcript_file_path = "",
     return_df$name <- ifelse(is.na(return_df$name), na_name, return_df$name)
 
     # Convert to tibble to maintain expected return type
+    # Diagnostic: Print column lengths and structure before returning
+    cat("process_zoom_transcript: column lengths before return:\n")
+    for (col in names(return_df)) {
+      cat(col, ":", length(return_df[[col]]), "\n")
+    }
+    cat("Column names:", paste(names(return_df), collapse = ", "), "\n")
+    cat("Dimensions:", paste(dim(return_df), collapse = " x "), "\n")
     return(tibble::as_tibble(return_df))
   }
   NULL
