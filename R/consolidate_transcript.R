@@ -79,31 +79,28 @@ process_transcript_timing <- function(df, max_pause_sec) {
 
 # Helper function to aggregate transcript data
 aggregate_transcript_data <- function(df) {
-  # Highly optimized aggregation using vectorized operations
-  # Use aggregate() for efficient grouping operations
+  # Use aggregate() for efficient grouping operations; keep full vectors for post-processing:
+  # specifically, collapsing comments into a single string and selecting the first/last timestamps per group.
   if ("transcript_file" %in% names(df)) {
-    # Group by both transcript_file and comment_num
     agg_result <- perform_aggregation(df, c("transcript_file", "comment_num"))
 
-    # Extract the aggregated values preserving first name/start and last end
+    # Post-process to get one row per group with consistent lengths
     data.frame(
       transcript_file = agg_result$transcript_file,
       name = vapply(agg_result$name, function(x) x[1], FUN.VALUE = character(1)),
-      comment = unlist(agg_result$comment),
-      start = vapply(agg_result$start, function(x) x[1], FUN.VALUE = hms::hms(0)),
-      end = vapply(agg_result$end, function(x) x[length(x)], FUN.VALUE = hms::hms(0)),
+      comment = vapply(agg_result$comment, function(x) paste(x, collapse = " "), FUN.VALUE = character(1)),
+      start = vapply(agg_result$start, function(x) hms::as_hms(x[1]), FUN.VALUE = hms::hms(0)),
+      end = vapply(agg_result$end, function(x) hms::as_hms(x[length(x)]), FUN.VALUE = hms::hms(0)),
       stringsAsFactors = FALSE
     )
   } else {
-    # Group by comment_num only
     agg_result <- perform_aggregation(df, "comment_num")
 
-    # Extract the aggregated values preserving first name/start and last end
     data.frame(
       name = vapply(agg_result$name, function(x) x[1], FUN.VALUE = character(1)),
-      comment = unlist(agg_result$comment),
-      start = vapply(agg_result$start, function(x) x[1], FUN.VALUE = hms::hms(0)),
-      end = vapply(agg_result$end, function(x) x[length(x)], FUN.VALUE = hms::hms(0)),
+      comment = vapply(agg_result$comment, function(x) paste(x, collapse = " "), FUN.VALUE = character(1)),
+      start = vapply(agg_result$start, function(x) hms::as_hms(x[1]), FUN.VALUE = hms::hms(0)),
+      end = vapply(agg_result$end, function(x) hms::as_hms(x[length(x)]), FUN.VALUE = hms::hms(0)),
       stringsAsFactors = FALSE
     )
   }
@@ -127,11 +124,7 @@ perform_aggregation <- function(df, by_columns) {
       )
     },
     FUN = function(x) {
-      # For character columns (name, comment), keep vector and paste later for comment
-      if (is.character(x)) {
-        return(x)
-      }
-      # For hms or numeric time columns, keep full vector for post-processing
+      # Keep full vectors; collapsing (e.g., selecting first/last, concatenating) is handled in aggregate_transcript_data()
       x
     },
     simplify = FALSE
