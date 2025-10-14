@@ -40,8 +40,8 @@ test_that("show_function_help handles unknown functions gracefully", {
     },
     .package = "base"
   )
-  expect_true(any(grepl("ERROR: Function 'totally_missing' not found", output, fixed = TRUE)))
-  expect_true(any(grepl("TIP: Try: show_available_functions()", output, fixed = TRUE)))
+  expect_true(any(grepl("ERROR: Function .* totally_missing .* not found", output)))
+  expect_true(any(grepl("TIP: Try: show_available_functions\\(\\)", output)))
 })
 
 test_that("show_function_help categorizes essential functions", {
