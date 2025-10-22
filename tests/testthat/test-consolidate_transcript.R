@@ -142,10 +142,19 @@ test_that("consolidate_transcript consolidates data without transcript_file colu
   result <- consolidate_transcript(comments, max_pause_sec = 2)
   expect_s3_class(result, "tbl_df")
   expect_equal(nrow(result), 2)
-  expect_equal(result$name, c("Speaker1", "Speaker2"))
-  expect_equal(result$comment[1], "Hello world")
-  expect_equal(result$duration, c(4, 2))
-  expect_equal(result$wordcount, c(2, 1))
+  expect_setequal(result$name, c("Speaker1", "Speaker2"))
+
+  speaker1 <- result[result$name == "Speaker1", , drop = FALSE]
+  expect_equal(nrow(speaker1), 1)
+  expect_equal(speaker1$comment, "Hello world")
+  expect_equal(speaker1$duration, 4)
+  expect_equal(speaker1$wordcount, 2)
+
+  speaker2 <- result[result$name == "Speaker2", , drop = FALSE]
+  expect_equal(nrow(speaker2), 1)
+  expect_equal(speaker2$comment, "Bye")
+  expect_equal(speaker2$duration, 2)
+  expect_equal(speaker2$wordcount, 1)
 })
 
 test_that("consolidate_transcript handles edge cases with timing", {
