@@ -1,0 +1,312 @@
+R> testthat::test_dir('tests/testthat', reporter = 'summary')
+Welcome to engager!
+- Start with: vignette('getting-started', package='engager')
+- Core functions: vignette('essential-functions', package='engager')
+- Sample data: system.file('extdata/transcripts', package='engager')
+- Quick example: example(summarize_transcript_metrics)
+
+To suppress this message: options(engager.show_startup = FALSE)
+
+Attachement du package : 'lubridate'
+
+Les objets suivants sont masqu'es depuis 'package:base':
+
+    date, intersect, setdiff, union
+
+analyze_multi_session_attendance: 123W4
+analyze_transcripts: ...................S....S56.....S..........S.......S......S........S
+basic_transcript_analysis: .7.89a
+calculate_content_similarity: bcdef
+consolidate_transcript-comprehensive: .............ghijk.........
+consolidate_transcript: ..............................
+consolidate_transcript_segfault: SS
+create_analysis_config: lmnop
+create_course_info: qrstu
+create_session_mapping-coverage: vwxyz
+create_session_mapping: AB.......CDEFGHIJK.LMNO......
+detect_duplicate_transcripts: ..................PQ.....................................................................................................SW...................
+ensure_privacy-coverage: ...
+ensure_privacy: .....................W.............WW.............................W..................
+equity-boundary-cases: ...............................................
+equity-failure-modes: ...................................
+equity-validation: ...............................................................
+ethical_compliance: RSTUVWXYZEEEEEEEE
+ferpa_compliance-issue310: EEES
+ferpa_compliance: EEEEE....E...........................S................EE....EE....EE........E
+hash_name_consistently-comprehensive: EEEEEEEEEEEE
+hash_name_consistently-coverage: EE
+hash_name_consistently: EEEEEEEEEEEEEEEEEE
+ideal-course-integration: .....................
+ideal-export: .............
+ideal_course_transcripts: ..........Rows: 7 Columns: 4
+-- Column specification --------------------------------------------------------
+Delimiter: ","
+chr (3): formal_name, preferred_name, transcript_names
+num (1): attends_sessions
+
+i Use `spec()` to retrieve the full column specification for this data.
+i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+..
+load_cancelled_classes-coverage: EE
+load_cancelled_classes: EEES
+load_roster-schema: EE
+load_roster: EEEEE
+load_session_mapping-comprehensive: EEEEEEEEE
+load_session_mapping: EEEEEEEEEES
+load_transcript_files_list: EEEEE
+load_zoom_recorded_sessions_list: EEEEE
+load_zoom_transcript-schema: ..
+load_zoom_transcript: ......................
+lookup_merge_utils-comprehensive: EEEEEEEEE
+lookup_merge_utils: ..................................................................................................
+make_blank_cancelled_classes_df: E
+make_blank_section_names_lookup_csv: E
+make_clean_names_df-comprehensive: .E.........EE...
+make_clean_names_df: EEEEEEEEE
+make_student_roster_sessions: EEEEESSEE
+make_students_only_transcripts_summary_df: EEEE
+make_transcripts_session_summary_df: EEEEEE
+make_transcripts_summary_df-comprehensive: EEEEEEEEE
+make_transcripts_summary_df-coverage: EEEEE
+make_transcripts_summary_df: EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+mask_user_names_by_metric: EEEE
+name-matching: EEEE
+no-artifacts: ...
+normalize_name_for_matching: .........
+onload-defaults: ...........S....EE..........
+participant-classification: .............
+performance-optimization: SSSSS
+performance: SSSSS
+plot_users: ..
+privacy_audit-issue310: ...
+privacy_audit: ..
+process_zoom_transcript: ........E
+prompt_name_matching: SEEEEEEE
+rmd-readonly-gate: .E
+safe_name_matching_workflow: EEEEEEEEEEEEE
+safe_name_matching_workflow_coverage: EEEEEEEEEEEEEEEEEEEEEEE
+schema-comprehensive: EEEEEEEE
+schema: EEE
+set_privacy_defaults: EE
+startup: ...F
+summarize_transcript_files-comprehensive: ............E.EE.....
+summarize_transcript_files-duplicates: .
+summarize_transcript_files: ..........................................
+summarize_transcript_metrics: .........W....WW.WW..
+summarize_transcript_metrics_segfault: SS
+ux_guidance_system-coverage: EEEEEEE
+validate_privacy_compliance-comprehensive: ...............EEEEE....
+validate_privacy_compliance: ............EE
+write_metrics-comprehensive: ................W......WW.
+write_metrics-dir: ..
+write_metrics-issue310: .....
+write_metrics: ...
+write_section_names_lookup: EEE
+write_transcripts_session_summary: EEE
+write_transcripts_summary: EEE
+
+== Skipped =====================================================================
+1. analyze_transcripts basic functionality ('test-analyze_transcripts.R:90:1') - Reason: empty test
+
+2. analyze_transcripts error handling ('test-analyze_transcripts.R:231:1') - Reason: empty test
+
+3. analyze_transcripts integration ('test-analyze_transcripts.R:286:1') - Reason: empty test
+
+4. analyze_transcripts edge cases ('test-analyze_transcripts.R:386:1') - Reason: empty test
+
+5. analyze_transcripts real-world scenarios ('test-analyze_transcripts.R:478:1') - Reason: empty test
+
+6. analyze_transcripts performance characteristics ('test-analyze_transcripts.R:565:1') - Reason: empty test
+
+7. analyze_transcripts cleanup and validation ('test-analyze_transcripts.R:610:1') - Reason: empty test
+
+8. consolidate_transcript minimal test with logging ('test-consolidate_transcript_segfault.R:6:3') - Reason: On CRAN
+
+9. consolidate_transcript with rlang::syms debugging ('test-consolidate_transcript_segfault.R:66:3') - Reason: On CRAN
+
+10. detect_duplicate_transcripts shows warning when no files found outside test environment ('test-detect_duplicate_transcripts.R:679:3') - Reason: On CRAN
+
+11. anonymize_educational_data supports mask, hash, pseudonymize, and aggregate modes ('test-ferpa_compliance-issue310.R:69:3') - Reason: On CRAN
+
+12. anonymize_educational_data handles aggregate method ('test-ferpa_compliance.R:204:3') - Reason: Temporarily disabled due to segfault issue in dplyr::across
+
+13. load_cancelled_classes creates blank file when write_blank_cancelled_classes is TRUE ('test-load_cancelled_classes.R:50:3') - Reason: On CRAN
+
+14. load_session_mapping shows validation warnings outside test environment ('test-load_session_mapping.R:258:3') - Reason: On CRAN
+
+15. make_student_roster_sessions shows warning when empty input provided outside test environment ('test-make_student_roster_sessions.R:104:3') - Reason: On CRAN
+
+16. make_student_roster_sessions shows warning when no matches found outside test environment ('test-make_student_roster_sessions.R:146:3') - Reason: On CRAN
+
+17. .onLoad integrates correctly with set_privacy_defaults ('test-onload-defaults.R:66:3') - Reason: On CRAN
+
+18. consolidate_transcript performance with large datasets ('test-performance-optimization.R:10:3') - Reason: On CRAN
+
+19. summarize_transcript_metrics performance with large datasets ('test-performance-optimization.R:44:3') - Reason: On CRAN
+
+20. consolidate_transcript handles edge cases efficiently ('test-performance-optimization.R:78:3') - Reason: On CRAN
+
+21. consolidate_transcript maintains linear time complexity ('test-performance-optimization.R:110:3') - Reason: On CRAN
+
+22. consolidate_transcript memory usage is reasonable ('test-performance-optimization.R:149:3') - Reason: On CRAN
+
+23. performance tests are skipped on CRAN ('test-performance.R:5:3') - Reason: On CRAN
+
+24. performance test infrastructure exists ('test-performance.R:13:3') - Reason: On CRAN
+
+25. performance baselines exist ('test-performance.R:29:3') - Reason: On CRAN
+
+26. performance test functions are available ('test-performance.R:44:3') - Reason: On CRAN
+
+27. performance test data structure is valid ('test-performance.R:68:3') - Reason: On CRAN
+
+28. prompt_name_matching works correctly ('test-prompt_name_matching.R:2:3') - Reason: On CRAN
+
+29. summarize_transcript_metrics minimal test with logging ('test-summarize_transcript_metrics_segfault.R:6:3') - Reason: On CRAN
+
+30. summarize_transcript_metrics with rlang::syms debugging ('test-summarize_transcript_metrics_segfault.R:66:3') - Reason: On CRAN
+
+== Warnings ====================================================================
+1. multi-session analysis maintains privacy compliance ('test-analyze_multi_session_attendance.R:155:3') - '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpEp6dVP/transcripts' already exists
+
+2. detect_duplicate_transcripts handles transcript loading errors gracefully ('test-detect_duplicate_transcripts.R:743:3') - Could not load transcript: test1.vtt - Invalid VTT: expected 'WEBVTT', got 'This is not a valid VTT file'
+
+3. ensure_privacy handles different privacy levels ('test-ensure_privacy.R:98:3') - CRITICAL: Privacy disabled; outputs may contain identifiable data and violate FERPA requirements.
+
+4. ensure_privacy handles vector privacy levels ('test-ensure_privacy.R:141:3') - privacy_level had length > 1, using first element: mask
+
+5. ensure_privacy handles vector privacy levels ('test-ensure_privacy.R:141:3') - privacy_level had length > 1, using first element: mask
+
+6. ensure_privacy handles comprehensive parameters ('test-ensure_privacy.R:246:5') - CRITICAL: Privacy disabled; outputs may contain identifiable data and violate FERPA requirements.
+
+7. summarize_transcript_metrics works with different scenarios ('test-summarize_transcript_metrics.R:130:9') - Unknown or uninitialised column: `name`.
+
+8. summarize_transcript_metrics handles edge cases ('test-summarize_transcript_metrics.R:168:9') - Unknown or uninitialised column: `duration`.
+
+9. summarize_transcript_metrics handles edge cases ('test-summarize_transcript_metrics.R:168:9') - Unknown or uninitialised column: `wordcount`.
+
+10. summarize_transcript_metrics handles edge cases ('test-summarize_transcript_metrics.R:168:9') - Unknown or uninitialised column: `wordcount`.
+
+11. summarize_transcript_metrics handles edge cases ('test-summarize_transcript_metrics.R:168:9') - Unknown or uninitialised column: `comment`.
+
+12. write_metrics handles data with list columns ('test-write_metrics-comprehensive.R:151:3') - Converting list columns to JSON strings: metadata
+
+13. write_metrics handles file write errors gracefully ('test-write_metrics-comprehensive.R:202:3') - 'raw = FALSE' but '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpEp6dVP' is not a regular file
+
+14. write_metrics handles file write errors gracefully ('test-write_metrics-comprehensive.R:202:3') - cannot open file '/var/folders/gm/wnk5gljx6yd_ffmqb8vf48qh0000gn/T//RtmpEp6dVP': Is a directory
+
+== Failed ======================================================================
+-- 1. Error ('test-analyze_multi_session_attendance.R:5:3'): analyze_multi_sessi
+Error in `analyze_multi_session_attendance(transcript_files = "single_file.vtt", 
+    roster_data = data.frame(name = "Test"))`: could not find function "analyze_multi_session_attendance"
+Backtrace:
+    x
+ 1. \-testthat::expect_error(...) at test-analyze_multi_session_attendance.R:5:3
+ 2.   \-testthat:::expect_condition_matching(...)
+ 3.     \-testthat:::quasi_capture(...)
+ 4.       +-testthat (local) .capture(...)
+ 5.       | \-base::withCallingHandlers(...)
+ 6.       \-rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+
+-- 2. Error ('test-analyze_multi_session_attendance.R:57:3'): analyze_multi_sess
+Error in `dev_package()`: No packages loaded with pkgload
+Backtrace:
+    x
+ 1. \-testthat::with_mocked_bindings(...) at test-analyze_multi_session_attendance.R:57:3
+ 2.   \-testthat::local_mocked_bindings(..., .package = .package)
+ 3.     +-.package %||% dev_package()
+ 4.     \-testthat:::dev_package()
+ 5.       \-cli::cli_abort("No packages loaded with pkgload")
+ 6.         \-rlang::abort(...)
+
+-- 3. Error ('test-analyze_multi_session_attendance.R:140:3'): generate_attendan
+Error in `generate_attendance_report(mock_results)`: could not find function "generate_attendance_report"
+
+-- 4. Error ('test-analyze_multi_session_attendance.R:175:3'): multi-session ana
+Error in `dev_package()`: No packages loaded with pkgload
+Backtrace:
+    x
+ 1. \-testthat::with_mocked_bindings(...) at test-analyze_multi_session_attendance.R:175:3
+ 2.   \-testthat::local_mocked_bindings(..., .package = .package)
+ 3.     +-.package %||% dev_package()
+ 4.     \-testthat:::dev_package()
+ 5.       \-cli::cli_abort("No packages loaded with pkgload")
+ 6.         \-rlang::abort(...)
+
+-- 5. Error ('test-analyze_transcripts.R:294:7'): analyze_transcripts integrates
+Error in `dev_package()`: No packages loaded with pkgload
+Backtrace:
+    x
+ 1. \-with_test_directory(...) at test-analyze_transcripts.R:292:5
+ 2.   \-test_function() at test-analyze_transcripts.R:86:3
+ 3.     \-testthat::with_mocked_bindings(...) at test-analyze_transcripts.R:294:7
+ 4.       \-testthat::local_mocked_bindings(..., .package = .package)
+ 5.         +-.package %||% dev_package()
+ 6.         \-testthat:::dev_package()
+ 7.           \-cli::cli_abort("No packages loaded with pkgload")
+ 8.             \-rlang::abort(...)
+
+-- 6. Error ('test-analyze_transcripts.R:339:7'): analyze_transcripts integrates
+Error in `dev_package()`: No packages loaded with pkgload
+Backtrace:
+    x
+ 1. \-with_test_directory(...) at test-analyze_transcripts.R:337:5
+ 2.   \-test_function() at test-analyze_transcripts.R:86:3
+ 3.     \-testthat::with_mocked_bindings(...) at test-analyze_transcripts.R:339:7
+ 4.       \-testthat::local_mocked_bindings(..., .package = .package)
+ 5.         +-.package %||% dev_package()
+ 6.         \-testthat:::dev_package()
+ 7.           \-cli::cli_abort("No packages loaded with pkgload")
+ 8.             \-rlang::abort(...)
+
+-- 7. Error ('test-basic_transcript_analysis.R:4:3'): basic_transcript_analysis 
+Error in `basic_transcript_analysis(missing, tempfile())`: could not find function "basic_transcript_analysis"
+Backtrace:
+    x
+ 1. \-testthat::expect_error(...) at test-basic_transcript_analysis.R:4:3
+ 2.   \-testthat:::expect_condition_matching(...)
+ 3.     \-testthat:::quasi_capture(...)
+ 4.       +-testthat (local) .capture(...)
+ 5.       | \-base::withCallingHandlers(...)
+ 6.       \-rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+
+-- 8. Error ('test-basic_transcript_analysis.R:29:3'): basic_transcript_analysis
+Error in `dev_package()`: No packages loaded with pkgload
+Backtrace:
+    x
+ 1. \-testthat::with_mocked_bindings(...) at test-basic_transcript_analysis.R:29:3
+ 2.   \-testthat::local_mocked_bindings(..., .package = .package)
+ 3.     +-.package %||% dev_package()
+ 4.     \-testthat:::dev_package()
+ 5.       \-cli::cli_abort("No packages loaded with pkgload")
+ 6.         \-rlang::abort(...)
+
+-- 9. Error ('test-basic_transcript_analysis.R:67:3'): quick_analysis delegates 
+Error in `dev_package()`: No packages loaded with pkgload
+Backtrace:
+    x
+ 1. \-testthat::with_mocked_bindings(...) at test-basic_transcript_analysis.R:67:3
+ 2.   \-testthat::local_mocked_bindings(..., .package = .package)
+ 3.     +-.package %||% dev_package()
+ 4.     \-testthat:::dev_package()
+ 5.       \-cli::cli_abort("No packages loaded with pkgload")
+ 6.         \-rlang::abort(...)
+
+-- 10. Error ('test-basic_transcript_analysis.R:93:3'): batch_basic_analysis val
+Error in `dev_package()`: No packages loaded with pkgload
+Backtrace:
+    x
+ 1. \-testthat::with_mocked_bindings(...) at test-basic_transcript_analysis.R:93:3
+ 2.   \-testthat::local_mocked_bindings(..., .package = .package)
+ 3.     +-.package %||% dev_package()
+ 4.     \-testthat:::dev_package()
+ 5.       \-cli::cli_abort("No packages loaded with pkgload")
+ 6.         \-rlang::abort(...)
+  ... and 328 more
+
+
+Maximum number of 10 failures reached, some test results may be missing.
+
+== DONE ========================================================================
+Erreur : Test failures
+?e

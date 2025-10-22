@@ -4,31 +4,22 @@
     <loc>https://revgizmo.github.io/engager/404.html</loc>
   </url>
   <url>
-    <loc>https://revgizmo.github.io/engager/CHANGELOG.html</loc>
+    <loc>https://revgizmo.github.io/engager/COVERAGE_ANALYSIS_REPORT.html</loc>
   </url>
   <url>
-    <loc>https://revgizmo.github.io/engager/CONTRIBUTING.html</loc>
+    <loc>https://revgizmo.github.io/engager/COVERAGE_RECOVERY_SUMMARY.html</loc>
+  </url>
+  <url>
+    <loc>https://revgizmo.github.io/engager/COVERAGE_RESOLUTION_PLAN.html</loc>
+  </url>
+  <url>
+    <loc>https://revgizmo.github.io/engager/ISSUE_540_PHASE_1_COMPLETION_SUMMARY.html</loc>
+  </url>
+  <url>
+    <loc>https://revgizmo.github.io/engager/ISSUE_544_IMPLEMENTATION_GUIDE.html</loc>
   </url>
   <url>
     <loc>https://revgizmo.github.io/engager/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://revgizmo.github.io/engager/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://revgizmo.github.io/engager/PR_405_APPROVAL_CHECKLIST.html</loc>
-  </url>
-  <url>
-    <loc>https://revgizmo.github.io/engager/PR_476_CHANGES_SUMMARY.html</loc>
-  </url>
-  <url>
-    <loc>https://revgizmo.github.io/engager/PR_476_IMPLEMENTATION_GUIDE.html</loc>
-  </url>
-  <url>
-    <loc>https://revgizmo.github.io/engager/PR_476_STRATEGY_SUMMARY.html</loc>
-  </url>
-  <url>
-    <loc>https://revgizmo.github.io/engager/PR_534_APPROVAL_CHECKLIST.html</loc>
   </url>
   <url>
     <loc>https://revgizmo.github.io/engager/articles/essential-functions.html</loc>
@@ -50,9 +41,6 @@
   </url>
   <url>
     <loc>https://revgizmo.github.io/engager/index.html</loc>
-  </url>
-  <url>
-    <loc>https://revgizmo.github.io/engager/news/index.html</loc>
   </url>
   <url>
     <loc>https://revgizmo.github.io/engager/reference/abort_zse.html</loc>
@@ -215,8 +203,5 @@
   </url>
   <url>
     <loc>https://revgizmo.github.io/engager/reference/zse_schema.html</loc>
-  </url>
-  <url>
-    <loc>https://revgizmo.github.io/engager/test-performance-ci.html</loc>
   </url>
 </urlset>

@@ -34,7 +34,7 @@ show_progress <- function(message, operation, estimated_time = NULL, fail_fast =
   } else {
     cat(message, "\n")
   }
-  
+
   start_time <- Sys.time()
   result <- tryCatch({
     operation()
@@ -46,13 +46,13 @@ show_progress <- function(message, operation, estimated_time = NULL, fail_fast =
     end_time <- Sys.time()
     duration <- round(as.numeric(difftime(end_time, start_time, units = "secs")), 1)
     cat("   ❌ Failed after", duration, "seconds:", e$message, "\n")
-    
+
     if (fail_fast) {
       cat("\n🚨 VALIDATION FAILED - Stopping at first error\n")
       cat("   Fix this issue and run validation again\n\n")
       stop("Validation failed: ", e$message)
     }
-    
+
     FALSE
   })
   return(result)
@@ -86,18 +86,18 @@ validation_status$linting <- show_progress(
     # Only lint the R/ directory to avoid template and documentation issues
     # This gives us a clean view of actual code quality issues
     lint_results <- lintr::lint_dir("R")
-    
+
     if (length(lint_results) > 0) {
       cat("   ⚠️  Linting issues found:", length(lint_results), "\n")
-      
+
       # Show first few issues for context
       for (i in 1:min(5, length(lint_results))) {
         cat("      -", lint_results[[i]]$message, "at", lint_results[[i]]$filename, ":", lint_results[[i]]$line_number, "\n")
       }
-      
+
       # Progressive linting approach - adjusted for current development stage
       critical_issues <- length(lint_results)
-      
+
       if (critical_issues > 500) {
         cat("   🚨 Critical: Too many linting issues (", critical_issues, "). Please fix before PR.\n")
         cat("   💡 Consider running: styler::style_pkg() to fix formatting issues\n")
@@ -150,16 +150,16 @@ validation_status$function_signatures <- show_progress(
   function() {
     # Load package and check function signatures
     devtools::load_all()
-    
+
     # Get only exported symbols from this package, not imported ones
     exported_functions <- getNamespaceExports("engager")
-    
+
     # Check for common issues
     issues_found <- FALSE
-    
+
     # Track specific function signature issues
     function_signature_issues <- list()
-    
+
     # Functions to ignore (test helpers or not applicable here)
     ignore_functions <- c(
       "create_sample_roster", "create_sample_section_names_lookup",
@@ -167,42 +167,42 @@ validation_status$function_signatures <- show_progress(
       "create_test_data", "create_test_transcript",
       "create_test_roster", "create_test_section_names_lookup"
     )
-    
+
     # Check each exported function
     for (func_name in exported_functions) {
       if (func_name %in% ignore_functions) next
-      
+
       tryCatch({
         func <- get(func_name, envir = asNamespace("engager"))
-        
+
         # Check if it's a function
         if (!is.function(func)) next
-        
+
         # Get function arguments
         args <- formals(func)
-        
+
         # Only check for truly problematic issues
         # Functions with no arguments are normal in R
         # Required parameters without defaults are normal for core functions
-        
+
         # Check for malformed function signatures (very rare)
         if (is.null(args) && !is.null(formals(func))) {
           cat("   ⚠️  Function", func_name, "has malformed signature\n")
           issues_found <- TRUE
         }
-        
+
       }, error = function(e) {
         cat("   ⚠️  Could not analyze function", func_name, ":", e$message, "\n")
         issues_found <- TRUE
       })
     }
-    
+
     if (!issues_found) {
       cat("   ✅ All function signatures validated\n")
     } else {
       stop("Function signature issues found")
     }
-    
+
     if (DEBUG_MODE) {
       cat("   🔍 DEBUG: Function signatures validation status:", validation_status$function_signatures, "\n")
     }
@@ -217,7 +217,7 @@ validation_status$data_validation <- show_progress(
   function() {
     # Test loading sample data
     devtools::load_all()
-    
+
     # Test transcript loading
     sample_transcript <- system.file("extdata", "transcripts", "sample_transcript.vtt", package = "engager")
     if (file.exists(sample_transcript)) {
@@ -236,7 +236,7 @@ validation_status$data_validation <- show_progress(
         cat("   ⚠️  Transcripts directory not found\n")
       }
     }
-    
+
     # Test roster loading
     sample_roster <- system.file("extdata", "roster.csv", package = "engager")
     if (file.exists(sample_roster)) {
@@ -259,16 +259,16 @@ show_progress(
   function() {
     # Check for common mathematical errors in vignettes
     vignette_files <- list.files("vignettes", pattern = "\\.Rmd$", full.names = TRUE)
-    
+
     for (vignette_file in vignette_files) {
       vignette_content <- readLines(vignette_file)
-      
+
       # Check for Gini coefficient formula errors
       gini_patterns <- c(
         "1 - \\(?2 \\* sum\\(?rank\\(?\\.\\*\\) \\* \\.*\\) / \\(?n\\(?\\) \\* sum\\(?\\.\\*\\)\\)\\) - 1/n\\(?\\)",
         "gini_coefficient.*1 -"
       )
-      
+
       for (pattern in gini_patterns) {
         matches <- grep(pattern, vignette_content, value = TRUE)
         if (length(matches) > 0) {
@@ -277,7 +277,7 @@ show_progress(
         }
       }
     }
-    
+
     cat("   ✅ Mathematical formula validation completed\n")
   },
   "5-10 seconds"
@@ -301,8 +301,8 @@ cat("      - microbenchmark available:", ifelse(microbenchmark_available, "yes",
 if (do_benchmarks && platform_safe && microbenchmark_available) {
   cat("      - Benchmarking: ENABLED (all conditions met)\n")
 } else {
-  cat("      - Benchmarking: DISABLED (", 
-      if (!do_benchmarks) "flag not set" 
+  cat("      - Benchmarking: DISABLED (",
+      if (!do_benchmarks) "flag not set"
       else if (!platform_safe) "platform not supported"
       else "microbenchmark not available", ")\n")
 }
@@ -320,7 +320,7 @@ validation_status$testing <- show_progress(
       # Set environment variable for this R session
       Sys.setenv("PREPR_DO_BENCH" = "0")
     }
-    
+
     # Run tests with timeout and error handling
     test_results <- devtools::test(reporter = "stop")
     cat("   ✅ All tests pass\n")
@@ -336,9 +336,10 @@ validation_status$test_output_validation <- show_progress(
     # Check for diagnostic output pollution in R files
     r_files <- list.files("R", pattern = "\\.R$", full.names = TRUE)
     # Whitelist helper files that intentionally wrap diagnostics
-    whitelist_files <- c("utils_diagnostics.R")
+    whitelist_files <- c("utils_diagnostics.R", "ux_basic_workflow.R", "ux_error_handling.R",
+                        "ux_guidance_system.R", "ux_interactive_help.R", "ux_visibility_system.R")
     output_issues <- list()
-    
+
     for (r_file in r_files) {
       if (basename(r_file) %in% whitelist_files) next
       content <- readLines(r_file)
@@ -347,27 +348,27 @@ validation_status$test_output_validation <- show_progress(
         line <- content[i]
         # Skip commented lines (including roxygen)
         if (grepl("^\\s*#", line)) next
-        
+
         # Check for output functions
         if (grepl("\\b(print|cat|message)\\s*\\(", line)) {
           # Check if this line is inside a TESTTHAT conditional
           in_testthat_block <- FALSE
-          
+
           # Look backwards for TESTTHAT check with proper scope detection
           brace_count <- 0
           for (j in i:1) {
             line_content <- content[j]
-            
+
             # Count closing braces
             if (grepl("^\\s*}", line_content)) {
               brace_count <- brace_count + 1
             }
-            
+
             # Count opening braces
             if (grepl("\\{\\s*$", line_content)) {
               brace_count <- brace_count - 1
             }
-            
+
             # Check for TESTTHAT conditional or engager.verbose gating
             if (grepl('Sys.getenv("TESTTHAT") != "true"', line_content, fixed = TRUE) ||
                 grepl('getOption\\("engager\\.verbose"', line_content)) {
@@ -377,21 +378,21 @@ validation_status$test_output_validation <- show_progress(
               }
               break
             }
-            
+
             # If we've gone too far back without finding the conditional, stop
             if (j < max(1, i - 50)) {
               break
             }
           }
-          
+
           if (!in_testthat_block) {
-            output_issues[[basename(r_file)]] <- c(output_issues[[basename(r_file)]], 
+            output_issues[[basename(r_file)]] <- c(output_issues[[basename(r_file)]],
                                                   paste("Line", i, ":", trimws(line)))
           }
         }
       }
     }
-    
+
     if (length(output_issues) > 0) {
       cat("   ⚠️  Diagnostic output found in R files:\n")
       for (file in names(output_issues)) {
@@ -412,20 +413,20 @@ show_progress(
   function() {
     # Check if shell scripts are executable and have proper shebangs
     shell_scripts <- list.files("scripts", pattern = "\\.sh$", full.names = TRUE)
-    
+
     for (script in shell_scripts) {
       # Check if executable
       if (file.access(script, mode = 1) == -1) {
         cat("   ⚠️  Shell script", basename(script), "is not executable\n")
       }
-      
+
       # Check shebang
       first_line <- readLines(script, n = 1)
       if (!grepl("^#!/", first_line)) {
         cat("   ⚠️  Shell script", basename(script), "missing shebang\n")
       }
     }
-    
+
     cat("   ✅ Shell script validation completed\n")
   },
   "2-5 seconds"
@@ -439,12 +440,12 @@ show_progress(
     # Check for parameters that are validated but not used
     r_files <- list.files("R", pattern = "\\.R$", full.names = TRUE)
     issues_found <- FALSE
-    
+
     for (file in r_files) {
       content <- readLines(file)
       # Look for match.arg() calls
       match_args <- grep("match\\.arg\\(", content)
-      
+
       for (line_num in match_args) {
         line <- content[line_num]
         # Extract parameter name from match.arg() call
@@ -452,16 +453,16 @@ show_progress(
         if (param_match > 0) {
           param_name <- substr(line, param_match + 10, param_match + attr(param_match, "match.length") - 1)
           param_name <- gsub("^\\s+|\\s+$", "", param_name) # trim whitespace
-          
+
           # Check if parameter is actually used in the function
           function_start <- max(1, line_num - 50) # Look back 50 lines for function start
           function_end <- min(length(content), line_num + 100) # Look forward 100 lines
           function_content <- content[function_start:function_end]
-          
+
           # Look for parameter usage (excluding the match.arg line itself)
           usage_lines <- grep(paste0("\\b", param_name, "\\b"), function_content)
           usage_lines <- usage_lines[usage_lines != (line_num - function_start + 1)] # Exclude match.arg line
-          
+
           if (length(usage_lines) == 0) {
             cat("   ⚠️  Parameter", param_name, "validated but not used in", basename(file), "\n")
             issues_found <- TRUE
@@ -469,13 +470,13 @@ show_progress(
         }
       }
     }
-    
+
     if (!issues_found) {
       cat("   ✅ Parameter usage validation completed\n")
     } else {
       stop("Parameter usage issues found")
     }
-    
+
     if (DEBUG_MODE) {
       cat("   🔍 DEBUG: Parameter usage validation status:", validation_status$test_output_validation, "\n")
     }
@@ -490,25 +491,25 @@ validation_status$package_check <- show_progress(
   function() {
     # Use lighter checks instead of full devtools::check()
     # This prevents timeouts while still validating critical aspects
-    
+
     # Check package loads
     devtools::load_all()
     cat("   ✅ Package loads successfully\n")
-    
+
     # Check namespace
     ns <- getNamespace("engager")
     cat("   ✅ Namespace loaded correctly\n")
-    
+
     # Check for obvious issues
     r_files <- list.files("R", pattern = "\\.R$", full.names = TRUE)
     cat("   ✅ R files found:", length(r_files), "\n")
-    
+
     # Quick syntax check
     for (file in r_files) {
       parse(file)  # This will error if syntax is invalid
     }
     cat("   ✅ All R files have valid syntax\n")
-    
+
     cat("   ✅ Lightweight package check completed\n")
   },
   "10-30 seconds"
@@ -568,4 +569,4 @@ if (failed_checks == 0) {
   cat("✅ Ready to create PR!\n")
 } else {
   cat("5. Run validation again after fixes\n")
-} 
+}

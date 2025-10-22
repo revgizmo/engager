@@ -1,0 +1,4 @@
+recording_id,topic,start_time,dept,course,section,course_section,session_date,session_time,instructor,notes
+123456789,CS 101 Lecture 1,"Jan 15, 2024 10:00 AM",CS,101,01,CS.101.01,2024-01-15,10:00,Dr. Smith,NA
+987654321,MATH 250 Discussion,"Jan 16, 2024 09:00 AM",MATH,250,01,MATH.250.01,2024-01-16,09:00,Dr. Johnson,NA
+456789123,LTF 201 Lab,"Jan 17, 2024 02:00 PM",LTF,201,01,LTF.201.01,2024-01-17,14:00,Dr. Brown,NA

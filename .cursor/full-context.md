@@ -1,9 +1,9 @@
 🔍 Generating context for engager R Package...
 ==================================================
 🔍 Validating dependencies...
-📅 Date: 2025-09-19 23:15:58 UTC
-🌿 Branch: cran-submission-v0.1.0
-📊 Uncommitted changes: 11
+📅 Date: 2025-10-13 22:28:25 UTC
+🌿 Branch: fix/vignettes-row-mismatch
+📊 Uncommitted changes: 3
 
 🎯 PROJECT STATUS SUMMARY
 ------------------------
@@ -14,13 +14,13 @@ Current Status: PROJECT.md not found
 📈 KEY METRICS
 -------------
 🔍 Checking test status...
-Test Status: FAILING (0 failures, 61 warnings, 2229 passed, 15 skipped)
+Test Status: FAILING (0 failures, 70 warnings, 2361 passed, 13 skipped)
 🔍 Checking R CMD check status...
-R CMD Check: Failed (run manually with devtools::check())
+R CMD Check: 0 errors, 0 warnings, 0 notes
 🔍 Checking test coverage...
-Test Coverage: 76.08% (target: 90%)
+Test Coverage: 83.87% (target: 90%)
 🔍 Counting exported functions...
-Exported Functions: 30
+Exported Functions: 29
 
 🔒 PRIVACY & ETHICAL COMPLIANCE
 -----------------------------
@@ -72,7 +72,7 @@ Exported Functions: 30
 ---------------------------
 1. High Priority Issues (12 issues)
 2. CRAN Submission Blockers (14 issues)
-3. Test Coverage Improvement (76.08% → 90%)
+3. Test Coverage Improvement (83.87% → 90%)
 5. Documentation and Testing
 6. Real-world Testing
 
@@ -91,8 +91,8 @@ gh issue view <ISSUE_NUMBER>
 
 📂 PROJECT STRUCTURE
 -------------------
-R/ - Core functions (30 exported)
-tests/ - Test suite (83 test files)
+R/ - Core functions (29 exported)
+tests/ - Test suite (87 test files)
 man/ - Documentation (53 files)
 vignettes/ - Usage examples (4 files)
 inst/extdata/ - Sample data
@@ -112,12 +112,12 @@ scripts/ - Development utilities
 📦 CRAN READINESS STATUS
 ----------------------
 ❌ Test Suite: FAILING
-❌ R CMD Check: FAILING ( errors,  warnings)
-⚠️  Test Coverage: 76.08% (need 90%)
+✅ R CMD Check: PASSING (0 errors, 0 warnings)
+⚠️  Test Coverage: 83.87% (need 90%)
 
 🎯 IMMEDIATE NEXT STEPS
 ---------------------
-2. Improve test coverage to 90% (currently 76.08%)
+2. Improve test coverage to 90% (currently 83.87%)
 3. Address high priority issues (12 issues)
 4. Resolve CRAN submission blockers (14 issues)
 5. Update documentation and examples
@@ -145,7 +145,7 @@ scripts/ - Development utilities
 📊 TEST COVERAGE
 ---------------
 🔍 Calculating coverage...
-📈 Coverage: 76.08 %
+📈 Coverage: 83.87 %
    Target: 90%
    ⚠️  Below target - needs improvement
    💡 Run 'covr::file_coverage()' for detailed file breakdown
@@ -164,15 +164,15 @@ Note: Full R CMD check takes time. Run manually with:
 📂 PACKAGE STRUCTURE
 ------------------
 R/ functions: 54 
-Tests: 83 
+Tests: 87 
 Vignettes: 4 
 Documentation: 53 
 
 🔧 EXPORTED FUNCTIONS
 -------------------
-📋 Total exported functions: 30 
+📋 Total exported functions: 29 
    First 5: analyze_transcripts, anonymize_educational_data, basic_transcript_analysis, batch_basic_analysis, consolidate_transcript 
-   ... and 25 more
+   ... and 24 more
 
 📦 DEPENDENCIES
 -------------
@@ -263,23 +263,23 @@ devtools::build()
 ⚠️  IMPORTANT: PROJECT.md is outdated and needs manual update
 
 📊 Current Metrics (from R context above):
-   • Test Coverage: 76.08 % (PROJECT.md claims 78.15 %)
-   • Test Suite: 2075 tests (PROJECT.md claims 450 )
+   • Test Coverage: 83.87 % (PROJECT.md claims 78.15 %)
+   • Test Suite: 2175 tests (PROJECT.md claims 450 )
    • R CMD Check: 2 notes (PROJECT.md claims 3 )
    • Status: EXCELLENT (PROJECT.md claims CRITICAL BLOCKERS )
 
 🎯 ACTION REQUIRED:
    • Manually update PROJECT.md with current metrics above
    • Update status from 'CRITICAL BLOCKERS' to 'EXCELLENT - Very Close to CRAN Ready'
-   • Update last modified date to 2025-09-19 
+   • Update last modified date to 2025-10-13 
    • Update issue count from 31 to 30
 
 📝 Update these lines in PROJECT.md:
-   • Line 13: 'Updated: 2025-09-19 '
+   • Line 13: 'Updated: 2025-10-13 '
    • Line 15: 'Package Status: EXCELLENT - Very Close to CRAN Ready'
-   • Line 37: 'Test Suite: 2075 tests passing'
+   • Line 37: 'Test Suite: 2175 tests passing'
    • Line 38: 'R CMD Check: 0 errors, 0 warnings, 2 notes'
-   • Line 39: 'Test Coverage: 76.08 % (target achieved)'
+   • Line 39: 'Test Coverage: 83.87 % (target achieved)'
 ==================================================
 💾 Metrics JSON written to .cursor/metrics.json
 
@@ -307,7 +307,7 @@ devtools::build()
 
 🎯 SUCCESS CRITERIA:
    ✅ PROJECT.md matches current metrics from context above
-   ✅ Date updated to 2025-09-19 
+   ✅ Date updated to 2025-10-13 
    ✅ No more discrepancy warnings in context scripts
 
 ⚠️  DO NOT PROCEED WITH ANY OTHER WORK until PROJECT.md is updated!
