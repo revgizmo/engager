@@ -366,3 +366,8 @@ docs/analysis/lessons-learned/
 # Non-standard top-level files for CRAN compliance
 ^project-docs/
 ^test_patterns\.R$
+
+# Audits and temporary test files
+^audits/
+^test_main_branch\.R$
+^test_your_branch\.R$

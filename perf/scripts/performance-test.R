@@ -51,9 +51,9 @@ run_performance_tests <- function(iterations = 5, output_file = "perf_results.js
     )
     
     results$tests$small_vtt_parse <- list(
-      time_median_ms = as.numeric(median(small_result$time, na.rm = TRUE)) * 1000,
-      memory_peak_mb = as.numeric(median(small_result$memory, na.rm = TRUE)) / 1024^2,
-      gc_count = median(small_result$gc_count, na.rm = TRUE),
+      time_median_ms = as.numeric(summary(small_result)$median) * 1000,
+      memory_peak_mb = as.numeric(summary(small_result)$mem_alloc) / 1024^2,
+      gc_count = sum(small_result$gc[[1]][, "level2"]), # Approximate GC count from list column
       iterations = iterations
     )
     
@@ -75,9 +75,9 @@ run_performance_tests <- function(iterations = 5, output_file = "perf_results.js
       )
       
       results$tests$engagement_summary <- list(
-        time_median_ms = as.numeric(median(summary_result$time, na.rm = TRUE)) * 1000,
-        memory_peak_mb = as.numeric(median(summary_result$memory, na.rm = TRUE)) / 1024^2,
-        gc_count = median(summary_result$gc_count, na.rm = TRUE),
+        time_median_ms = as.numeric(summary(summary_result)$median) * 1000,
+        memory_peak_mb = as.numeric(summary(summary_result)$mem_alloc) / 1024^2,
+        gc_count = sum(summary_result$gc[[1]][, "level2"]),
         iterations = max(1, iterations - 2)
       )
     }
@@ -107,9 +107,9 @@ run_performance_tests <- function(iterations = 5, output_file = "perf_results.js
     )
     
     results$tests$synthetic_processing <- list(
-      time_median_ms = as.numeric(median(synthetic_result$time, na.rm = TRUE)) * 1000,
-      memory_peak_mb = as.numeric(median(synthetic_result$memory, na.rm = TRUE)) / 1024^2,
-      gc_count = median(synthetic_result$gc_count, na.rm = TRUE),
+      time_median_ms = as.numeric(summary(synthetic_result)$median) * 1000,
+      memory_peak_mb = as.numeric(summary(synthetic_result)$mem_alloc) / 1024^2,
+      gc_count = sum(synthetic_result$gc[[1]][, "level2"]),
       iterations = iterations
     )
   }
