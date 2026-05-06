@@ -69,7 +69,9 @@ jobs:
             "summarize_transcript_files","load_roster","make_clean_names_df","create_session_mapping",
             "plot_users","make_transcripts_summary_df","ensure_privacy","privacy_audit",
             "validate_privacy_compliance","anonymize_educational_data","write_metrics",
-            "analyze_transcripts","set_privacy_defaults","basic_transcript_analysis"
+            "analyze_transcripts","set_privacy_defaults","basic_transcript_analysis",
+            "detect_unmatched_names","match_names_workflow","write_unresolved",
+            "analyze_multi_session_attendance","generate_attendance_report"
           )
           exports <- intersect(getNamespaceExports("engager"), targets)
           filtered <- df[df$functions %in% exports, , drop = FALSE]

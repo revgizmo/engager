@@ -71,7 +71,7 @@ detect_unmatched_names <- function(transcripts_df, roster_df, options = list()) 
   unresolved
 }
 
-#' Match names workflow (privacy-first)
+#' Match names workflow with privacy-supporting defaults
 #'
 #' Returns an object of class 'engager_match' with redacted print/summary.
 #'
@@ -117,7 +117,6 @@ match_names_workflow <- function(transcripts_df, roster_df, options = list()) {
     .__n_unresolved = nrow(unresolved)
   )
   class(obj) <- c("engager_match", class(obj))
-  # Silent by default; users can inspect the object for counts
   obj
 }
 
@@ -127,7 +126,12 @@ print.engager_match <- function(x, ...) {
   n_total <- if (is.null(x$.__n_total)) NA_integer_ else x$.__n_total
   n_matched <- if (is.null(x$.__n_matched)) NA_integer_ else x$.__n_matched
   n_unresolved <- if (is.null(x$.__n_unresolved)) NA_integer_ else x$.__n_unresolved
-  # Silent by default; users can inspect the object for counts
+  cat(
+    "engager_match: ",
+    n_matched, "/", n_total, " matched; ",
+    n_unresolved, " unresolved\n",
+    sep = ""
+  )
   invisible(x)
 }
 

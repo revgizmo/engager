@@ -131,30 +131,33 @@ test_that("detect_unmatched_names works correctly", {
 
   roster_df <- tibble::tibble(
     preferred_name = c("John Doe", "Jane Smith"),
+    student_id = c("S1", "S2"),
     course_section = c("101.A", "101.A")
   )
 
-  # Test with privacy enabled (should return hashed names)
-  unmatched <- detect_unmatched_names(transcript_df, roster_df)
-  expect_equal(length(unmatched), 2) # Dr. Smith and Guest1 should be unmatched
-  expect_true(all(grepl("^[a-f0-9]{8}$", unmatched))) # Should be hashed
-
-  # Test with privacy disabled (should return real names)
-  unmatched <- detect_unmatched_names(transcript_df, roster_df, privacy_level = "none")
-  expect_equal(length(unmatched), 2)
-  expect_true(all(unmatched %in% c("Dr. Smith", "Guest1")))
-
-  # Test with name mappings
-  mappings_df <- tibble::tibble(
-    transcript_name = c("Dr. Smith"),
-    preferred_name = c("Dr. Smith"),
-    formal_name = c("Dr. Smith"),
-    participant_type = c("instructor"),
-    student_id = c("")
+  # Default public API returns privacy-safe metadata without raw names
+  unmatched <- detect_unmatched_names(
+    transcript_df,
+    roster_df,
+    options = list(include_name_hash = TRUE)
   )
+  expect_equal(nrow(unmatched), 2) # Dr. Smith and Guest1 should be unmatched
+  expect_true(all(grepl("^[a-f0-9]{64}$", unmatched$name_hash)))
 
-  unmatched <- detect_unmatched_names(transcript_df, roster_df, mappings_df)
-  expect_equal(length(unmatched), 1) # Only Guest1 should be unmatched
+  # By default, hashes are omitted from the public unresolved report.
+  unmatched_no_hash <- detect_unmatched_names(transcript_df, roster_df)
+  expect_equal(nrow(unmatched_no_hash), 2)
+  expect_false("name_hash" %in% names(unmatched_no_hash))
+
+  # Test with roster alias support
+  roster_with_alias <- tibble::tibble(
+    preferred_name = c("John Doe", "Jane Smith"),
+    student_id = c("S1", "S2"),
+    course_section = c("101.A", "101.A"),
+    aliases = c("Dr. Smith", NA_character_)
+  )
+  unmatched <- detect_unmatched_names(transcript_df, roster_with_alias)
+  expect_equal(nrow(unmatched), 1) # Only Guest1 should be unmatched
 })
 
 test_that("detect_unmatched_names validates inputs correctly", {

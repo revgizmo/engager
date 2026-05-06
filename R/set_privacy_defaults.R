@@ -16,7 +16,7 @@ set_privacy_defaults <- function(privacy_level = c("ferpa_strict", "ferpa_standa
     }
   } else if (identical(privacy_level, "ferpa_standard")) {
     if (getOption("engager.verbose", FALSE)) {
-      message("FERPA standard mode enabled; educational compliance protection applied.")
+      message("FERPA standard mode enabled; educational privacy defaults applied.")
     }
   }
 

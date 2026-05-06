@@ -22,7 +22,11 @@ write_unresolved <- function(unresolved_tbl,
     allow_raw <- getOption("engager.allow_raw_name_exports", FALSE)
     if (!isTRUE(allow_raw)) {
       rlang::abort(
-        message = "Raw name export is disabled. Set options(engager.allow_raw_name_exports=TRUE) to allow and call with include_raw=TRUE.",
+        message = paste(
+          "Raw name export is disabled.",
+          "Set options(engager.allow_raw_name_exports=TRUE)",
+          "and call with include_raw=TRUE."
+        ),
         class = "engager_privacy_error"
       )
     }

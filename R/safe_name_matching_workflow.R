@@ -1,6 +1,6 @@
 #' Safe Name Matching Workflow
 #'
-#' Main workflow function for privacy-first name matching. Implements two-stage
+#' Main workflow function for privacy-supporting name matching. Implements two-stage
 #' processing: Stage 1 (unmasked matching in memory) and Stage 2 (privacy masking
 #' for outputs). Provides configuration-driven behavior for unmatched names.
 #'
@@ -74,17 +74,17 @@ extract_unmatched_names_from_transcript <- function(unmatched_names, transcript_
   if (!is.null(nrow(unmatched_names)) && nrow(unmatched_names) > 0 && "speaker" %in% names(transcript_data)) {
     # Get the unmatched name hashes
     unmatched_hashes <- unmatched_names$name_hash
-    
+
     # Find corresponding actual names by matching hashes
     # We need to re-compute hashes from transcript data to find matches
     transcript_speakers <- transcript_data$speaker
     transcript_speakers <- transcript_speakers[!is.na(transcript_speakers) & nchar(trimws(transcript_speakers)) > 0]
-    
+
     # Compute hashes for transcript speakers
     transcript_hashes <- vapply(transcript_speakers, function(name) {
       normalize_name(name)
     }, character(1), USE.NAMES = FALSE)
-    
+
     # Find which transcript speakers have unmatched hashes
     matched_indices <- transcript_hashes %in% unmatched_hashes
     actual_names <- unique(transcript_speakers[matched_indices])
@@ -108,7 +108,7 @@ handle_unmatched_names <- function(unmatched_names,
       paste0(
         "Found unmatched names: ", paste(actual_names, collapse = ", "), "\n",
         "Please update your section_names_lookup.csv file with these mappings.\n",
-        "See vignette('name-matching-troubleshooting') for detailed instructions.\n",
+        "See ?match_names_workflow and ?write_unresolved for detailed instructions.\n",
         "Example mappings:\n",
         paste(sapply(actual_names, function(name) {
           paste0("  ", name, " -> [Your roster name]")
@@ -575,10 +575,11 @@ process_name_matching_workflow <- function(transcript_data, roster_data, name_ma
   roster_data <- compute_roster_hashes(roster_data)
 
   # Detect unmatched names
-  unmatched_names <- detect_unmatched_names(
+  unmatched_names <- detect_unmatched_names_legacy(
     transcripts_df = transcript_data,
     roster_df = roster_data,
-    options = list()
+    name_mappings = name_mappings,
+    privacy_level = privacy_level
   )
 
   # Handle unmatched names according to configuration

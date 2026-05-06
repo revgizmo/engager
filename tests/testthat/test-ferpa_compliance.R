@@ -78,7 +78,7 @@ test_that("validate_ferpa_compliance handles different institution types", {
 
   # Test educational institution
   result_edu <- validate_ferpa_compliance(data, institution_type = "educational")
-  expect_true("Educational institutions must comply with FERPA regulations" %in% result_edu$institution_guidance)
+  expect_true("Educational institutions should review FERPA requirements" %in% result_edu$institution_guidance)
 
   # Test research institution
   result_research <- validate_ferpa_compliance(data, institution_type = "research")
@@ -86,7 +86,7 @@ test_that("validate_ferpa_compliance handles different institution types", {
 
   # Test mixed institution
   result_mixed <- validate_ferpa_compliance(data, institution_type = "mixed")
-  expect_true("Mixed institutions must comply with both FERPA and research ethics" %in% result_mixed$institution_guidance)
+  expect_true("Mixed institutions should review both FERPA and research ethics" %in% result_mixed$institution_guidance)
 })
 
 test_that("validate_ferpa_compliance handles different retention periods", {

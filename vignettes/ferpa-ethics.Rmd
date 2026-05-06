@@ -1,8 +1,8 @@
 ---
-title: "FERPA Compliance & Ethical Use Guide"
+title: "Privacy and Ethical Use Guide"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{FERPA Compliance & Ethical Use Guide}
+  %\VignetteIndexEntry{Privacy and Ethical Use Guide}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -11,13 +11,13 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-# FERPA Compliance & Ethical Use Guide
+# Privacy and Ethical Use Guide
 
-This vignette provides comprehensive guidance on using the `engager` package in compliance with the Family Educational Rights and Privacy Act (FERPA) and ethical best practices for educational data analysis.
+This vignette provides guidance for using the `engager` package with FERPA-oriented privacy defaults and ethical practices for educational data analysis. It is not legal advice, and the package does not guarantee FERPA compliance. Users and institutions remain responsible for policy review, authorization, disclosure decisions, retention, and legal compliance.
 
 ## FERPA Overview
 
-The Family Educational Rights and Privacy Act (FERPA) is a federal law that protects the privacy of student education records. When using this package with student data, you must ensure compliance with FERPA requirements.
+The Family Educational Rights and Privacy Act (FERPA) is a federal law that protects the privacy of student education records. When using this package with student data, you should review institutional FERPA requirements and confirm that your workflow is authorized.
 
 ### Key FERPA Requirements
 
@@ -27,9 +27,9 @@ The Family Educational Rights and Privacy Act (FERPA) is a federal law that prot
 - **Data Security**: Institutions must protect student data from unauthorized access
 - **Data Retention**: Institutions must establish and follow data retention policies
 
-## Privacy-First Design
+## Privacy-Supporting Design
 
-The package implements privacy-first defaults to help ensure FERPA compliance:
+The package implements privacy-supporting defaults to reduce accidental exposure of student identifiers:
 
 ```r
 library(engager)
@@ -45,7 +45,7 @@ By default, the package sets privacy level to `"mask"`, which automatically mask
 The package supports multiple privacy levels to accommodate different institutional requirements:
 
 ### 1. FERPA Strict (`"ferpa_strict"`)
-Maximum privacy protection for institutions requiring the highest level of compliance:
+Maximum privacy protection for institutions requiring the strongest default masking:
 
 ```r
 set_privacy_defaults("ferpa_strict")
@@ -62,7 +62,7 @@ This level masks:
 - Instructor names and IDs
 
 ### 2. FERPA Standard (`"ferpa_standard"`)
-Standard educational compliance for most institutions:
+Standard educational privacy defaults for most instructional workflows:
 
 ```r
 set_privacy_defaults("ferpa_standard")
@@ -92,13 +92,13 @@ Disables privacy protection (not recommended):
 set_privacy_defaults("none")  # Will emit a warning
 ```
 
-## FERPA Compliance Functions
+## Privacy Review Functions
 
-The package provides specialized functions to help ensure FERPA compliance:
+The package provides specialized functions to support FERPA-oriented privacy review:
 
 ### Data Validation
 
-Validate your data for FERPA compliance:
+Review your data for possible privacy risks:
 
 ```r
 # Sample data with PII
@@ -109,7 +109,7 @@ sample_data <- tibble::tibble(
   participation_score = c(85, 92)
 )
 
-# Validate for FERPA compliance
+# Run FERPA-oriented privacy review
 validation_result <- validate_ferpa_compliance(sample_data)
 print(validation_result$compliant)
 print(validation_result$recommendations)
@@ -133,18 +133,18 @@ pseudonymized_data <- anonymize_educational_data(sample_data, method = "pseudony
 aggregated_data <- anonymize_educational_data(sample_data, method = "aggregate", aggregation_level = "section")
 ```
 
-### Compliance Reporting
+### Privacy Reporting
 
-Generate comprehensive FERPA compliance reports:
+Generate privacy review reports:
 
 ```r
-# Generate compliance report
+# Generate privacy review report
 report <- generate_ferpa_report(sample_data)
 
 # Save report to file
 generate_ferpa_report(
   sample_data, 
-  output_file = "ferpa_compliance_report.json",
+  output_file = "ferpa_privacy_review_report.json",
   report_format = "json"
 )
 ```
@@ -169,7 +169,7 @@ print(retention_check$compliant)
 print(retention_check$recommendations)
 ```
 
-## Institutional Compliance Guidelines
+## Institutional Review Guidelines
 
 ### Educational Institutions
 
@@ -262,7 +262,7 @@ Follow proper data disposal procedures:
 ### During Analysis
 
 1. **Use Privacy Defaults**: Always use privacy-safe settings
-2. **Validate Data**: Use compliance functions to check your data
+2. **Review Data**: Use privacy review functions to check your data
 3. **Limit Access**: Restrict access to only necessary personnel
 4. **Monitor Usage**: Track how data is being used
 
@@ -273,9 +273,9 @@ Follow proper data disposal procedures:
 3. **Dispose of Data**: Follow institutional disposal procedures
 4. **Document Process**: Maintain records of your analysis
 
-## Institutional Compliance Checklist
+## Institutional Review Checklist
 
-Use this checklist to ensure FERPA compliance:
+Use this checklist to support institutional FERPA review:
 
 ### Pre-Analysis
 - [ ] Review institutional FERPA policies
@@ -285,7 +285,7 @@ Use this checklist to ensure FERPA compliance:
 
 ### During Analysis
 - [ ] Use privacy-safe functions
-- [ ] Validate data for compliance
+- [ ] Review data for privacy risks
 - [ ] Limit data access
 - [ ] Monitor data usage
 
@@ -296,7 +296,7 @@ Use this checklist to ensure FERPA compliance:
 - [ ] Document procedures
 
 ### Ongoing
-- [ ] Regular compliance audits
+- [ ] Regular privacy audits
 - [ ] Staff training updates
 - [ ] Policy reviews
 - [ ] Security assessments
@@ -319,9 +319,9 @@ test_data <- tibble::tibble(name = "Test Student")
 ensure_privacy(test_data)
 ```
 
-### Compliance Validation Failing
+### Privacy Validation Failing
 
-If compliance validation is failing:
+If privacy validation is flagging issues:
 
 ```r
 # Check what PII was detected
@@ -405,12 +405,11 @@ Ensure data use benefits students:
 ### Package Resources
 - Package documentation: `?engager`
 - Privacy functions: `?ensure_privacy`, `?set_privacy_defaults`
-- FERPA functions: `?validate_ferpa_compliance`, `?anonymize_educational_data`
+- Privacy review functions: `?validate_ferpa_compliance`, `?anonymize_educational_data`
 - Report generation: `?generate_ferpa_report`
 
 ## Conclusion
 
-FERPA compliance is essential when working with student data. This package provides tools to help ensure compliance, but ultimate responsibility lies with the user and their institution. Always review institutional policies and consult with compliance officers when in doubt.
+FERPA-oriented privacy review is essential when working with student data. This package provides tools that support privacy-conscious workflows, but ultimate responsibility lies with the user and their institution. Always review institutional policies and consult compliance officers when in doubt.
 
 Remember: **Privacy by design, ethical by default.**
-

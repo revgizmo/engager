@@ -374,8 +374,8 @@ audit_ethical_usage <- function(function_calls = NULL,
     result$recommendations <- c(
       result$recommendations,
       "Good ethical usage patterns detected",
-      "Continue to maintain privacy-first approach",
-      "Regularly review usage patterns for compliance"
+      "Continue to maintain privacy-supporting defaults",
+      "Regularly review usage patterns for policy alignment"
     )
   }
 

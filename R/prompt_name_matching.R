@@ -125,12 +125,50 @@ generate_name_matching_guidance <- function(unmatched_names, privacy_level, incl
   paste(base_msg, privacy_msg, names_msg, instructions_msg, sep = "")
 }
 
-# Note: detect_unmatched_names is now defined in R/name_matching_workflow.R
+# Compatibility helper for the legacy safe-name-matching workflow. The public
+# detect_unmatched_names() API is defined in R/name_matching_workflow.R and
+# returns a privacy-safe data frame.
+detect_unmatched_names_legacy <- function(transcripts_df,
+                                          roster_df,
+                                          name_mappings = NULL,
+                                          privacy_level = getOption(
+                                            "engager.privacy_level",
+                                            "mask"
+                                          )) {
+  if (!is.data.frame(transcripts_df)) {
+    stop("transcripts_df must be a data frame", call. = FALSE)
+  }
+  if (!is.data.frame(roster_df)) {
+    stop("roster_df must be a data frame", call. = FALSE)
+  }
+
+  transcript_names <- unique(extract_transcript_names(transcripts_df))
+  if (length(transcript_names) == 0) {
+    stop("transcripts_df must have a recognized speaker/name column", call. = FALSE)
+  }
+
+  roster_names <- unique(extract_roster_names(roster_df))
+  mapped_names <- if (is.null(name_mappings)) {
+    character(0)
+  } else {
+    unique(extract_mapped_names(name_mappings))
+  }
+
+  unmatched <- setdiff(transcript_names, unique(c(roster_names, mapped_names)))
+  if (!identical(privacy_level, "none")) {
+    unmatched <- hash_name_consistently(unmatched)
+  }
+
+  unmatched
+}
 
 # Internal function - no documentation needed
 extract_transcript_names <- function(transcript_data) {
   # Look for common name columns in transcript data
-  name_columns <- c("transcript_name", "name", "speaker_name", "participant_name")
+  name_columns <- c(
+    "speaker", "user_name", "transcript_name", "name", "speaker_name",
+    "participant_name"
+  )
   found_columns <- intersect(name_columns, names(transcript_data))
 
   if (length(found_columns) == 0) {
@@ -170,7 +208,7 @@ extract_roster_names <- function(roster_data) {
 # Internal function - no documentation needed
 extract_mapped_names <- function(name_mappings) {
   # Look for common name columns in mappings
-  name_columns <- c("preferred_name", "formal_name", "transcript_name", "name")
+  name_columns <- c("transcript_name", "preferred_name", "formal_name", "name")
   found_columns <- intersect(name_columns, names(name_mappings))
 
   if (length(found_columns) == 0) {

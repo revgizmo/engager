@@ -366,6 +366,13 @@ docs/analysis/lessons-learned/
 # Non-standard top-level files for CRAN compliance
 ^project-docs/
 ^test_patterns\.R$
+^\.codex/
+^perf_results\.json$
+^vignettes/.*\.disabled$
+^.*/\.Rproj\.user/
+^tests/testthat/ideal_transcript_.*\.csv$
+^tests/testthat/section_names_lookup\.csv$
+^tests/testthat/session_mapping\.csv$
 
 # Audits and temporary test files
 ^audits/

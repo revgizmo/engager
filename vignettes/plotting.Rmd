@@ -287,7 +287,7 @@ ggplot(transcripts_summary_df, aes(x = duration, y = wordcount)) +
 
 - Use masked names when sharing results
 - Consider aggregating data for small groups
-- Be mindful of FERPA compliance requirements
+- Review FERPA and institutional privacy requirements before sharing outputs
 
 ### Visualization Tips
 

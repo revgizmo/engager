@@ -32,7 +32,7 @@ Defaults to \code{getOption("engager.unmatched_names_action", "stop")}.}
 Processed transcript data with privacy-aware name matching applied
 }
 \description{
-Main workflow function for privacy-first name matching. Implements two-stage
+Main workflow function for privacy-supporting name matching. Implements two-stage
 processing: Stage 1 (unmasked matching in memory) and Stage 2 (privacy masking
 for outputs). Provides configuration-driven behavior for unmatched names.
 }

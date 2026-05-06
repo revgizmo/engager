@@ -1,6 +1,8 @@
 name: Roadmap Progress Tracking
 
 on:
+  # Schedule is disabled for the CRAN release branch because this workflow still
+  # targets a legacy repository and creates unrelated main-branch failure noise.
   workflow_dispatch:
     inputs:
       phase:
@@ -11,8 +13,6 @@ on:
         description: Update ACTIVE_ROADMAP_CHECKLIST.md
         required: false
         default: 'true'
-  schedule:
-    - cron: '0 9 * * 1'  # Every Monday at 9 AM
 
 jobs:
   track-progress:

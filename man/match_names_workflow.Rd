@@ -2,7 +2,7 @@
 % Please edit documentation in R/name_matching_workflow.R
 \name{match_names_workflow}
 \alias{match_names_workflow}
-\title{Match names workflow (privacy-first)}
+\title{Match names workflow with privacy-supporting defaults}
 \usage{
 match_names_workflow(transcripts_df, roster_df, options = list())
 }

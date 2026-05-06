@@ -1,4 +1,4 @@
-# Internal helpers for privacy-first name matching
+# Internal helpers for privacy-supporting name matching
 
 # These helpers are intentionally not exported.
 
@@ -129,26 +129,24 @@ build_roster_hash_index <- function(roster_df) {
   # Use mapply to properly expand each student_id by its corresponding hash length
   student_ids <- as.character(unlist(mapply(rep, base_student_ids, lengths(hashes), SIMPLIFY = FALSE)))
   name_hash_vec <- as.character(unlist(hashes, use.names = FALSE))
-  expanded <- tibble::tibble(
-    student_id = student_ids,
-    name_hash = name_hash_vec
-  )
   # Use base R aggregation to avoid dplyr segfault
   unique_hashes <- unique(name_hash_vec)
   idx_list <- lapply(unique_hashes, function(hash) {
     mask <- name_hash_vec == hash
     student_ids_for_hash <- student_ids[mask]
     non_na_students <- student_ids_for_hash[!is.na(student_ids_for_hash)]
+    unique_students <- unique(non_na_students)
+    collision <- sum(mask) > 1 && length(unique_students) != 1
 
     list(
       name_hash = hash,
       n = sum(mask),
-      student_id = if (length(unique(non_na_students)) == 1) {
-        unique(non_na_students)[1]
+      student_id = if (!collision && length(unique_students) == 1) {
+        unique_students[1]
       } else {
         NA_character_
       },
-      collision = sum(mask) > 1 & length(unique(non_na_students)) == 0
+      collision = collision
     )
   })
 
@@ -278,7 +276,6 @@ build_match_audit <- function(roster_spec, hmac_used, icu_version, algo = "sha25
 # Internal function to validate roster schema for name matching
 validate_roster_for_matching <- function(roster_df, key = NULL) {
   required <- c("preferred_name")
-  optional <- c("student_id", "formal_name", "transcript_name", "aliases")
   missing_req <- setdiff(required, names(roster_df))
 
   if (length(missing_req) > 0) {

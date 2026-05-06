@@ -1,8 +1,8 @@
-#' FERPA Compliance Functions
+#' FERPA-Oriented Privacy Review Functions
 #'
-#' Functions to validate and ensure FERPA compliance for educational data.
-#' These functions help institutions maintain compliance with the Family
-#' Educational Rights and Privacy Act (FERPA) when using this package.
+#' Functions to support FERPA-oriented privacy review for educational data.
+#' These helpers do not guarantee legal compliance; institutions remain
+#' responsible for policy review and authorization.
 #'
 #' @importFrom magrittr %>%
 #' @name ferpa_compliance
@@ -63,7 +63,7 @@ validate_ferpa_compliance <- function(data = NULL,
     )
   }
 
-  # Log FERPA compliance check for audit purposes
+  # Log FERPA-oriented privacy review for audit purposes
   if (audit_log) {
     log_ferpa_compliance_check(
       compliant = result$compliant,
@@ -77,7 +77,7 @@ validate_ferpa_compliance <- function(data = NULL,
   if (institution_type == "educational") {
     result$institution_guidance <- c(
       result$institution_guidance,
-      "Educational institutions must comply with FERPA regulations",
+      "Educational institutions should review FERPA requirements",
       "Student records must be protected from unauthorized access",
       "Consider implementing role-based access controls",
       "Document all data access and usage procedures"
@@ -93,7 +93,7 @@ validate_ferpa_compliance <- function(data = NULL,
   } else if (institution_type == "mixed") {
     result$institution_guidance <- c(
       result$institution_guidance,
-      "Mixed institutions must comply with both FERPA and research ethics",
+      "Mixed institutions should review both FERPA and research ethics",
       "Implement separate procedures for educational vs. research data",
       "Ensure clear data classification and handling procedures",
       "Review both FERPA and IRB requirements"
@@ -117,12 +117,12 @@ validate_ferpa_compliance <- function(data = NULL,
     }
   }
 
-  # Additional compliance recommendations
+  # Additional privacy review recommendations
   result$recommendations <- c(
     result$recommendations,
     "Use set_privacy_defaults('mask') for privacy-safe outputs",
     "Implement secure data storage and transmission",
-    "Train personnel on FERPA compliance requirements",
+    "Train personnel on FERPA-oriented privacy requirements",
     "Maintain audit trails for data access and modifications"
   )
 
@@ -132,7 +132,7 @@ validate_ferpa_compliance <- function(data = NULL,
 #' Anonymize Educational Data
 #'
 #' Advanced anonymization for educational data that preserves data utility
-#' while ensuring FERPA compliance.
+#' while supporting FERPA-oriented privacy review.
 #'
 #'
 #'

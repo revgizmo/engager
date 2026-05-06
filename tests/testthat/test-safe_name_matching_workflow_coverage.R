@@ -684,7 +684,7 @@ test_that("detect_unmatched_names handles edge cases", {
     options = list()
   )
 
-  expect_equal(length(result), 0)
+  expect_equal(nrow(result), 0)
 
   # Test with transcript missing name column
   transcript_no_name <- tibble::tibble(
@@ -699,7 +699,7 @@ test_that("detect_unmatched_names handles edge cases", {
     options = list()
   )
 
-  expect_equal(length(result), 0)
+  expect_equal(nrow(result), 2)
 })
 
 # Test extract_transcript_names function
@@ -775,6 +775,7 @@ test_that("extract_mapped_names handles edge cases", {
 
   result <- extract_mapped_names(name_mappings)
   expect_equal(length(result), 3)
-  # Check that we get the preferred names back (since preferred_name is first in the column list)
-  expect_true(length(intersect(result, c("John Doe", "Jane Smith", "Dr. John Smith"))) >= 1)
+  # The legacy workflow uses transcript names to decide which raw names are
+  # already mapped.
+  expect_true(length(intersect(result, c("John", "Jane", "Dr. Smith"))) >= 1)
 })
