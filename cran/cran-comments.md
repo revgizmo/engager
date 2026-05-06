@@ -7,7 +7,7 @@
 
 ## Test Environments
 - **Local**: macOS Tahoe 26.4.1, R 4.5.3 (2026-03-11), aarch64-apple-darwin20
-- **GitHub Actions**: Ubuntu, Windows, macOS (R release; pending release PR validation)
+- **GitHub Actions**: Ubuntu, Windows, macOS (R release; release PR #557)
 
 ## R CMD Check Results
 - **Errors**: 0
@@ -26,6 +26,7 @@ The single local note was:
 - Initial CRAN submission as `engager`
 - Local tests: 2,395 pass, 0 fail, 71 warnings, 6 skips
 - Local coverage: 83.30% overall; 92.31% strategic exported API coverage
+- Release PR CI: Ubuntu, Windows, and macOS R CMD check pass; coverage, lint, and build validation pass
 - Privacy-supporting defaults mask common student identifiers by default
 - FERPA-oriented documentation is guidance only; institutional review remains required
 
@@ -35,5 +36,5 @@ The single local note was:
 - [x] Examples working under local R CMD check
 - [x] Documentation complete
 - [x] Local source build and tarball inspection complete
-- [ ] Release PR CI completed
+- [x] Release PR CI completed
 - [ ] Ready for CRAN submission

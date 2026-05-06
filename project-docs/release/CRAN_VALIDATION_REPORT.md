@@ -21,7 +21,7 @@
 | R CMD check | Pass locally | 0 errors, 0 warnings, 1 note (`unable to verify current time`) |
 | Build/tarball inspection | Pass locally | `R CMD build .` succeeded; no local release docs, `.codex`, disabled vignettes, perf artifacts, `.github`, `docs/`, `.Rcheck`, or generated test output patterns found |
 | Benchmarks | Complete locally | Transcript and synthetic name-matching benchmarks recorded below |
-| CI | Pending | Release PR must run R-CMD-check, coverage, lint, and build validation |
+| CI | Pass on release PR | PR #557 passes Ubuntu, Windows, and macOS R-CMD-check; coverage; lint; and build validation |
 
 ## Local Benchmark Results
 
@@ -43,4 +43,5 @@ speculative optimization before CRAN.
 
 - Overall coverage will be reported separately from the strategic exported API
   gate.
-- CRAN submission should wait until the release PR is green and reviewed.
+- Release PR #557 is green. CRAN submission should still wait for maintainer
+  review and any optional external checks the maintainer wants to run.
