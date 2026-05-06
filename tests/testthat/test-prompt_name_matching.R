@@ -125,12 +125,12 @@ test_that("generate_name_matching_guidance works correctly", {
 test_that("detect_unmatched_names works correctly", {
   # Create test data
   transcript_df <- tibble::tibble(
-    transcript_name = c("Dr. Smith", "John Doe", "Guest1"),
+    speaker = c("Dr. Smith", "John Doe", "Guest1"),
     course_section = c("101.A", "101.A", "101.A")
   )
 
   roster_df <- tibble::tibble(
-    first_last = c("John Doe", "Jane Smith"),
+    preferred_name = c("John Doe", "Jane Smith"),
     course_section = c("101.A", "101.A")
   )
 
@@ -158,22 +158,10 @@ test_that("detect_unmatched_names works correctly", {
 })
 
 test_that("detect_unmatched_names validates inputs correctly", {
-  # Test invalid transcript_data
+  # Test missing speaker column
   expect_error(
-    detect_unmatched_names("invalid", tibble::tibble()),
-    "transcript_data must be a data frame"
-  )
-
-  # Test invalid roster_data
-  expect_error(
-    detect_unmatched_names(tibble::tibble(), "invalid"),
-    "roster_data must be a data frame"
-  )
-
-  # Test invalid privacy_level
-  expect_error(
-    detect_unmatched_names(tibble::tibble(), tibble::tibble(), privacy_level = "invalid"),
-    "Invalid privacy_level"
+    detect_unmatched_names(tibble::tibble(), tibble::tibble()),
+    "transcripts_df must have a 'speaker' column"
   )
 })
 

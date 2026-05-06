@@ -32,8 +32,13 @@ UX_EXPERT_FUNCTIONS <- c(
   "anonymize_educational_data",
   "validate_privacy_compliance",
   "write_lookup_transactional",
-  "safe_name_matching_workflow"
+  "match_names_workflow"
 )
+
+# Declare globals to silence NSE notes in CRAN checks
+utils::globalVariables(c(
+  "aliases", "name_hash", "collision", "reason", "guidance"
+))
 
 # UX Function Descriptions
 UX_FUNCTION_DESCRIPTIONS <- list(
@@ -60,7 +65,7 @@ UX_FUNCTION_DESCRIPTIONS <- list(
   "anonymize_educational_data" = "Anonymize sensitive data",
   "validate_privacy_compliance" = "Check privacy compliance",
   "write_lookup_transactional" = "Write lookup data safely",
-  "safe_name_matching_workflow" = "Safe name matching process"
+  "match_names_workflow" = "Safe name matching process"
 )
 
 .onAttach <- function(libname, pkgname) {

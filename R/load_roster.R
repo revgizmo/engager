@@ -1,9 +1,21 @@
-# Internal function - no documentation needed
+#' Load a roster file
+#'
+#' @param data_folder Directory containing the roster file
+#' @param roster_file Name of the roster CSV file
+#' @param strict_errors Logical; if TRUE, throw error when file doesn't exist
+#' @return A tibble with roster data, filtered by enrolled status if applicable
+#' @export
 load_roster <- function(
     data_folder = ".",
     roster_file = "roster.csv",
     strict_errors = FALSE) {
-  roster_file_path <- file.path(data_folder, roster_file)
+  # Handle case where first argument is a direct file path
+  if (is.character(data_folder) && length(data_folder) == 1 &&
+    file.exists(data_folder) && !dir.exists(data_folder)) {
+    roster_file_path <- data_folder
+  } else {
+    roster_file_path <- file.path(data_folder, roster_file)
+  }
 
   if (file.exists(roster_file_path)) {
     roster_data <- readr::read_csv(roster_file_path, show_col_types = FALSE)

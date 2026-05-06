@@ -41,18 +41,18 @@ setup_test_data <- function() {
 test_that("safe_name_matching_workflow validates inputs correctly", {
   # Test invalid transcript_file_path
   expect_error(
-    safe_name_matching_workflow(123, tibble::tibble(first_last = "Test")),
+    safe_name_matching_workflow(123, tibble::tibble(first_last = "Test", preferred_name = "Test")),
     "transcript_file_path must be a single character string"
   )
 
   expect_error(
-    safe_name_matching_workflow(c("file1.vtt", "file2.vtt"), tibble::tibble(first_last = "Test")),
+    safe_name_matching_workflow(c("file1.vtt", "file2.vtt"), tibble::tibble(first_last = "Test", preferred_name = "Test")),
     "transcript_file_path must be a single character string"
   )
 
   # Test non-existent file
   expect_error(
-    safe_name_matching_workflow("nonexistent.vtt", tibble::tibble(first_last = "Test")),
+    safe_name_matching_workflow("nonexistent.vtt", tibble::tibble(first_last = "Test", preferred_name = "Test")),
     "Transcript file not found"
   )
 
@@ -68,25 +68,25 @@ test_that("safe_name_matching_workflow validates inputs correctly", {
 
   # Test invalid privacy_level
   expect_error(
-    safe_name_matching_workflow(tmp, tibble::tibble(first_last = "Test"), privacy_level = "invalid"),
+    safe_name_matching_workflow(tmp, tibble::tibble(first_last = "Test", preferred_name = "Test"), privacy_level = "invalid"),
     "Invalid privacy_level"
   )
 
   # Test invalid unmatched_names_action
   expect_error(
-    safe_name_matching_workflow(tmp, tibble::tibble(first_last = "Test"), unmatched_names_action = "invalid"),
+    safe_name_matching_workflow(tmp, tibble::tibble(first_last = "Test", preferred_name = "Test"), unmatched_names_action = "invalid"),
     "Invalid unmatched_names_action"
   )
 
   # Test invalid data_folder
   expect_error(
-    safe_name_matching_workflow(tmp, tibble::tibble(first_last = "Test"), data_folder = 123),
+    safe_name_matching_workflow(tmp, tibble::tibble(first_last = "Test", preferred_name = "Test"), data_folder = 123),
     "data_folder must be a single character string"
   )
 
   # Test invalid section_names_lookup_file
   expect_error(
-    safe_name_matching_workflow(tmp, tibble::tibble(first_last = "Test"), section_names_lookup_file = 123),
+    safe_name_matching_workflow(tmp, tibble::tibble(first_last = "Test", preferred_name = "Test"), section_names_lookup_file = 123),
     "section_names_lookup_file must be a single character string"
   )
 })
@@ -155,7 +155,8 @@ test_that("safe_name_matching_workflow works with valid data", {
   result <- safe_name_matching_workflow(
     transcript_file_path = test_data$transcript_file,
     roster_data = test_data$roster,
-    privacy_level = "none"
+    privacy_level = "none",
+    unmatched_names_action = "warn"
   )
 
   expect_s3_class(result, "tbl_df")
@@ -237,7 +238,7 @@ test_that("safe_name_matching_workflow handles file system issues", {
   expect_error(
     safe_name_matching_workflow(
       "nonexistent.vtt",
-      tibble::tibble(first_last = "Test")
+      tibble::tibble(first_last = "Test", preferred_name = "Test")
     ),
     "Transcript file not found"
   )
@@ -250,7 +251,7 @@ test_that("safe_name_matching_workflow handles file system issues", {
   expect_error(
     safe_name_matching_workflow(
       transcript_file_path = tmp,
-      roster_data = tibble::tibble(first_last = "Test")
+      roster_data = tibble::tibble(first_last = "Test", preferred_name = "Test")
     ),
     "Invalid VTT"
   )
@@ -266,7 +267,8 @@ test_that("safe_name_matching_workflow handles name mapping file issues", {
     transcript_file_path = test_data$transcript_file,
     roster_data = test_data$roster,
     data_folder = tempdir(),
-    section_names_lookup_file = "nonexistent_mapping.csv"
+    section_names_lookup_file = "nonexistent_mapping.csv",
+    unmatched_names_action = "warn"
   )
 
   expect_s3_class(result, "tbl_df")
@@ -283,7 +285,7 @@ test_that("safe_name_matching_workflow handles data type validation", {
   expect_error(
     safe_name_matching_workflow(
       transcript_file_path = 123,
-      roster_data = tibble::tibble(first_last = "Test")
+      roster_data = tibble::tibble(first_last = "Test", preferred_name = "Test")
     ),
     "transcript_file_path must be a single character string"
   )
@@ -299,7 +301,7 @@ test_that("safe_name_matching_workflow handles data type validation", {
   expect_error(
     safe_name_matching_workflow(
       transcript_file_path = tmp,
-      roster_data = tibble::tibble(first_last = "Test"),
+      roster_data = tibble::tibble(first_last = "Test", preferred_name = "Test"),
       privacy_level = 123
     ),
     "Invalid privacy_level"
@@ -308,7 +310,7 @@ test_that("safe_name_matching_workflow handles data type validation", {
   expect_error(
     safe_name_matching_workflow(
       transcript_file_path = tmp,
-      roster_data = tibble::tibble(first_last = "Test"),
+      roster_data = tibble::tibble(first_last = "Test", preferred_name = "Test"),
       unmatched_names_action = 123
     ),
     "Invalid unmatched_names_action"
@@ -324,7 +326,8 @@ test_that("safe_name_matching_workflow handles memory cleanup", {
   result <- safe_name_matching_workflow(
     transcript_file_path = test_data$transcript_file,
     roster_data = test_data$roster,
-    privacy_level = "none"
+    privacy_level = "none",
+    unmatched_names_action = "warn"
   )
 
   expect_s3_class(result, "tbl_df")
@@ -344,7 +347,8 @@ test_that("safe_name_matching_workflow handles diagnostic messages", {
     expect_message(
       result <- safe_name_matching_workflow(
         transcript_file_path = test_data$transcript_file,
-        roster_data = test_data$roster
+        roster_data = test_data$roster,
+        unmatched_names_action = "warn"
       ),
       regexp = "Stage 1: Loading transcript"
     )
@@ -352,7 +356,8 @@ test_that("safe_name_matching_workflow handles diagnostic messages", {
     # In test environment, just verify it works
     result <- safe_name_matching_workflow(
       transcript_file_path = test_data$transcript_file,
-      roster_data = test_data$roster
+      roster_data = test_data$roster,
+      unmatched_names_action = "warn"
     )
     expect_s3_class(result, "tbl_df")
   }
@@ -389,7 +394,8 @@ test_that("safe_name_matching_workflow handles complex name matching scenarios",
   result <- safe_name_matching_workflow(
     transcript_file_path = test_transcript,
     roster_data = complex_roster,
-    privacy_level = "none"
+    privacy_level = "none",
+    unmatched_names_action = "warn"
   )
 
   expect_s3_class(result, "tbl_df")
@@ -405,21 +411,21 @@ test_that("safe_name_matching_workflow handles international names", {
     "",
     "1",
     "00:00:01.000 --> 00:00:05.000",
-    "Dr. 李教授: 欢迎来到今天的课程。",
+    "Dr. <U+674E><U+6559><U+6388>: <U+6B22><U+8FCE><U+6765><U+5230><U+4ECA><U+5929><U+7684><U+8BFE><U+7A0B><U+3002>",
     "",
     "2",
     "00:00:06.000 --> 00:00:10.000",
-    "José María López: Buenos días, profesor.",
+    "Jos<U+00E9> Mar<U+00ED>a L<U+00F3>pez: Buenos d<U+00ED>as, profesor.",
     "",
     "3",
     "00:00:11.000 --> 00:00:15.000",
-    "Anna-Karin Andersson: Hej, hur mår du?"
+    "Anna-Karin Andersson: Hej, hur m<U+00E5>r du?"
   ), test_transcript)
 
   international_roster <- tibble::tibble(
-    first_last = c("Dr. 李教授", "José María López", "Anna-Karin Andersson"),
+    first_last = c("Dr. <U+674E><U+6559><U+6388>", "Jos<U+00E9> Mar<U+00ED>a L<U+00F3>pez", "Anna-Karin Andersson"),
     student_id = c("INSTRUCTOR", "12345", "67890"),
-    preferred_name = c("Dr. Li", "José", "Anna")
+    preferred_name = c("Dr. Li", "Jos<U+00E9>", "Anna")
   )
 
   on.exit(unlink(test_transcript))
@@ -428,7 +434,8 @@ test_that("safe_name_matching_workflow handles international names", {
   result <- safe_name_matching_workflow(
     transcript_file_path = test_transcript,
     roster_data = international_roster,
-    privacy_level = "none"
+    privacy_level = "none",
+    unmatched_names_action = "warn"
   )
 
   expect_s3_class(result, "tbl_df")
@@ -447,14 +454,18 @@ test_that("safe_name_matching_workflow handles transcript validation", {
     "Dr. Smith: Hello class"
   ), tmp)
 
-  roster <- tibble::tibble(first_last = "Dr. Smith")
+  roster <- tibble::tibble(
+    first_last = "Dr. Smith",
+    preferred_name = "Dr. Smith"
+  )
 
   # This should work but show a warning about missing columns
   expect_warning(
     result <- safe_name_matching_workflow(
       transcript_file_path = tmp,
       roster_data = roster,
-      privacy_level = "none"
+      privacy_level = "none",
+      unmatched_names_action = "warn"
     ),
     regexp = "Missing columns in transcript data"
   )
@@ -468,7 +479,7 @@ test_that("safe_name_matching_workflow handles transcript validation", {
 test_that("process_transcript_with_privacy handles edge cases", {
   # Test with empty transcript data
   empty_transcript <- tibble::tibble()
-  roster <- tibble::tibble(first_last = "Test")
+  roster <- tibble::tibble(first_last = "Test", preferred_name = "Test")
 
   expect_error(
     process_transcript_with_privacy(empty_transcript, roster),
@@ -509,7 +520,7 @@ test_that("match_names_with_privacy handles edge cases", {
     transcript_name = character(0),
     message = character(0)
   )
-  roster <- tibble::tibble(first_last = "Test")
+  roster <- tibble::tibble(first_last = "Test", preferred_name = "Test")
 
   expect_error(
     match_names_with_privacy(transcript_empty_names, roster),
@@ -601,7 +612,7 @@ test_that("apply_name_matching handles edge cases", {
     student_id = "12345"
   )
 
-  roster <- tibble::tibble(first_last = "Test")
+  roster <- tibble::tibble(first_last = "Test", preferred_name = "Test")
 
   expect_error(
     apply_name_matching(transcript_no_name, name_lookup, roster),
@@ -625,11 +636,13 @@ test_that("apply_name_matching handles edge cases", {
 # Test handle_unmatched_names function
 test_that("handle_unmatched_names handles different actions", {
   unmatched_names <- c("Unknown Student 1", "Unknown Student 2")
+  transcript_data <- tibble::tibble(speaker = c("Unknown Student 1", "Unknown Student 2"))
 
   # Test with stop action
   expect_error(
     handle_unmatched_names(
       unmatched_names = unmatched_names,
+      transcript_data = transcript_data,
       unmatched_names_action = "stop",
       privacy_level = "mask",
       data_folder = ".",
@@ -661,31 +674,29 @@ test_that("handle_unmatched_names handles different actions", {
 
 # Test detect_unmatched_names function
 test_that("detect_unmatched_names handles edge cases", {
-  # Test with empty transcript data
-  empty_transcript <- tibble::tibble()
-  roster <- tibble::tibble(first_last = "Test")
-  name_mappings <- tibble::tibble()
+  # Test with empty transcript data (but with required speaker column)
+  empty_transcript <- tibble::tibble(speaker = character(0))
+  roster <- tibble::tibble(first_last = "Test", preferred_name = "Test")
 
   result <- detect_unmatched_names(
-    transcript_data = empty_transcript,
-    roster_data = roster,
-    name_mappings = name_mappings,
-    privacy_level = "none"
+    transcripts_df = empty_transcript,
+    roster_df = roster,
+    options = list()
   )
 
   expect_equal(length(result), 0)
 
   # Test with transcript missing name column
   transcript_no_name <- tibble::tibble(
+    speaker = c("John", "Jane"),
     message = c("Hello", "World"),
     timestamp = c("00:00:01", "00:00:02")
   )
 
   result <- detect_unmatched_names(
-    transcript_data = transcript_no_name,
-    roster_data = roster,
-    name_mappings = name_mappings,
-    privacy_level = "none"
+    transcripts_df = transcript_no_name,
+    roster_df = roster,
+    options = list()
   )
 
   expect_equal(length(result), 0)

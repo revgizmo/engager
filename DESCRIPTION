@@ -1,6 +1,6 @@
 Package: engager
 Type: Package
-Title: Engager: Analyze Student Engagement from Zoom and other WebVTT Transcripts
+Title: Engager: Analyze Student Engagement from Zoom and Other WebVTT Transcripts
 Version: 0.1.0
 Authors@R: person(given = "Conor",
                   family = "Healy",
@@ -10,6 +10,7 @@ Description: Takes Zoom and other WebVTT transcripts and student rosters,
     converts them for analysis, and
     analyzes the results for student engagement, with a particular focus on participation equity.
 License: MIT + file LICENSE
+Depends: R (>= 4.1.0)
 Language: en-US
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -19,11 +20,14 @@ Imports:
     dplyr,
     ggplot2,
     hms,
+    openssl,
     jsonlite,
     lubridate,
     magrittr,
+    tidyr,
     readr,
     rlang,
+    stringi,
     stringr,
     tibble
 Suggests:
