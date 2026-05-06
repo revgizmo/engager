@@ -19,31 +19,21 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Cache R packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.local/share/R
-            ~/.cache/R
-          key: ${{ runner.os }}-coverage-${{ hashFiles('.github/workflows/coverage.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-coverage-
-
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
 
-      - name: Install dependencies
-        run: |
-          options(repos = c(CRAN = "https://cloud.r-project.org"))
-          install.packages(c("remotes", "covr", "roxygen2"))
-          remotes::install_deps(dependencies = TRUE)
-        shell: Rscript {0}
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          needs: coverage
+          extra-packages: |
+            any::covr
+            any::roxygen2
 
       - name: Generate documentation
         run: |
-          options(repos = c(CRAN = "https://cloud.r-project.org"))
           roxygen2::roxygenise()
         shell: Rscript {0}
 
@@ -57,7 +47,6 @@ jobs:
       - name: Run coverage on installed package and report (exported API gate)
         id: coverage
         run: |
-          options(repos = c(CRAN = "https://cloud.r-project.org"))
           library(engager)
           cov <- covr::package_coverage()
           overall <- covr::percent_coverage(cov)

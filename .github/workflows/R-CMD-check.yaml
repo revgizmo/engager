@@ -31,16 +31,6 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Cache R packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.local/share/R
-            ~/.cache/R
-          key: ${{ runner.os }}-${{ matrix.config.r }}-${{ hashFiles('.github/workflows/R-CMD-check.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.config.r }}-
-
       - name: Install system dependencies (Linux only)
         if: runner.os == 'Linux'
         run: |
@@ -48,29 +38,30 @@ jobs:
           sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev libgit2-dev \
             libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
 
-      - name: Install dependencies
-        run: |
-          options(repos = c(CRAN = "https://cloud.r-project.org"))
-          install.packages(c("remotes", "rcmdcheck", "roxygen2", "lintr", "styler"))
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran(c("knitr", "rmarkdown"))
-        shell: Rscript {0}
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          needs: check
+          extra-packages: |
+            any::knitr
+            any::lintr
+            any::rcmdcheck
+            any::rmarkdown
+            any::roxygen2
+            any::styler
 
       - name: Lint
         run: |
-          options(repos = c(CRAN = "https://cloud.r-project.org"))
           lintr::lint_package()
         shell: Rscript {0}
 
       - name: Generate documentation (roxygenise)
         run: |
-          options(repos = c(CRAN = "https://cloud.r-project.org"))
           roxygen2::roxygenise()
         shell: Rscript {0}
 
       - name: Check
         run: |
-          options(repos = c(CRAN = "https://cloud.r-project.org"))
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
