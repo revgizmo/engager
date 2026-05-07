@@ -49,3 +49,28 @@ test_that("alias parsing preserves comma and pipe fallback delimiters", {
     engager:::normalize_name(c("B Jones", "Bobby", "Robert"))
   )
 })
+
+test_that("exact matching preserves transcript row order", {
+  roster <- tibble::tibble(
+    preferred_name = c("Zoey Alpha", "Amir Beta", "Mina Gamma"),
+    student_id = c("S1", "S2", "S3")
+  )
+
+  transcripts <- tibble::tibble(
+    speaker = c("Mina Gamma", "Zoey Alpha", "Amir Beta", "Zoey Alpha"),
+    timestamp = as.POSIXct(
+      c(
+        "2025-01-01 10:03:00",
+        "2025-01-01 10:01:00",
+        "2025-01-01 10:02:00",
+        "2025-01-01 10:04:00"
+      ),
+      tz = "UTC"
+    )
+  )
+
+  res <- match_names_workflow(transcripts, roster, options = list(match_strategy = "exact"))
+
+  expect_equal(res$transcripts_with_ids$speaker, transcripts$speaker)
+  expect_equal(res$transcripts_with_ids$timestamp, transcripts$timestamp)
+})

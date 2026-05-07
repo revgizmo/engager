@@ -15,7 +15,7 @@
 | Metadata cleanup | Complete locally | `DESCRIPTION` set to `0.1.0`; `pryr` removed; PR #550 imports retained where used |
 | Release docs | Complete locally | `NEWS.md`, `cran/cran-comments.md`, and release docs added/updated |
 | Privacy wording | Complete locally | Active CRAN-facing docs reworded to privacy-supporting / FERPA-oriented language |
-| Tests | Pass locally | `devtools::test()`: 2,397 pass, 0 fail, 71 warnings, 6 skips |
+| Tests | Pass locally | `devtools::test()`: 2,402 pass, 0 fail, 71 warnings, 6 skips |
 | Coverage | Pass locally | Overall 83.30%; strategic exported API 92.31% |
 | Lint | Non-blocking debt remains | `lintr::lint_package()`: 54 existing style/object-usage findings |
 | R CMD check | Pass locally | 0 errors, 0 warnings, 0 notes |

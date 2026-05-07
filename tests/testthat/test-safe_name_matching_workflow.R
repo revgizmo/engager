@@ -317,7 +317,7 @@ test_that("apply_name_matching handles missing name column", {
 
 test_that("handle_unmatched_names works correctly", {
   # Test with stop action
-  expect_error(
+  err <- expect_error(
     handle_unmatched_names(
       unmatched_names = c("Dr. Smith", "Guest1"),
       transcript_data = tibble::tibble(speaker = c("Dr. Smith", "Guest1")),
@@ -328,15 +328,21 @@ test_that("handle_unmatched_names works correctly", {
     ),
     "Found unmatched names"
   )
+  expect_match(err$message, "Dr\\. Smith")
+  expect_match(err$message, "Guest1")
 
   # Test with warn action
+  captured_unmatched_names <- NULL
   with_mocked_bindings(
-    prompt_name_matching = function(...) TRUE,
+    prompt_name_matching = function(unmatched_names, ...) {
+      captured_unmatched_names <<- unmatched_names
+      TRUE
+    },
     {
       expect_error(
         handle_unmatched_names(
-          unmatched_names = c("Dr. Smith"),
-          transcript_data = tibble::tibble(speaker = c("Dr. Smith")),
+          unmatched_names = c("Dr. Smith", "Guest1"),
+          transcript_data = tibble::tibble(speaker = c("Dr. Smith", "Guest1")),
           unmatched_names_action = "warn",
           privacy_level = "mask",
           data_folder = "data",
@@ -346,4 +352,5 @@ test_that("handle_unmatched_names works correctly", {
       )
     }
   )
+  expect_equal(captured_unmatched_names, c("Dr. Smith", "Guest1"))
 })

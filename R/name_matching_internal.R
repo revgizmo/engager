@@ -236,14 +236,18 @@ derive_speaker_column <- function(df) {
 #' Returns list(transcripts_with_ids, unresolved)
 #' @keywords internal
 match_names_exact <- function(prepped_transcripts, roster_index, include_name_hash = FALSE) {
+  prepped_transcripts$.__engager_row_order <- seq_len(nrow(prepped_transcripts))
+
   # Use base R merge instead of dplyr::left_join to avoid segfault
   joined <- merge(
     prepped_transcripts,
     roster_index,
     by = "name_hash",
     all.x = TRUE,
-    all.y = FALSE
+    all.y = FALSE,
+    sort = FALSE
   )
+  joined <- joined[order(joined$.__engager_row_order), , drop = FALSE]
 
   # Identify unresolved entries using base R
   unresolved_mask <- is.na(joined$student_id) | joined$collision
@@ -283,7 +287,7 @@ match_names_exact <- function(prepped_transcripts, roster_index, include_name_ha
 
   # Create transcripts_with_ids by removing sensitive columns
   twi <- joined
-  sensitive_cols <- c("canonical_name", "name_hash", "collision")
+  sensitive_cols <- c("canonical_name", "name_hash", "collision", ".__engager_row_order")
   twi <- twi[, !names(twi) %in% sensitive_cols, drop = FALSE]
 
   if (include_name_hash) {

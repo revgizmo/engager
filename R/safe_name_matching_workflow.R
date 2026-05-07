@@ -69,27 +69,24 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
 # Internal function - no documentation needed
 extract_unmatched_names_from_transcript <- function(unmatched_names, transcript_data) {
   # Extract actual names from transcript data for unmatched entries only
-  # unmatched_names is a data frame with name_hash, we need to get the actual names
-  actual_names <- character(0)
-  if (!is.null(nrow(unmatched_names)) && nrow(unmatched_names) > 0 && "speaker" %in% names(transcript_data)) {
-    # Get the unmatched name hashes
-    unmatched_hashes <- unmatched_names$name_hash
-
-    # Find corresponding actual names by matching hashes
-    # We need to re-compute hashes from transcript data to find matches
-    transcript_speakers <- transcript_data$speaker
-    transcript_speakers <- transcript_speakers[!is.na(transcript_speakers) & nchar(trimws(transcript_speakers)) > 0]
-
-    # Compute hashes for transcript speakers
-    transcript_hashes <- vapply(transcript_speakers, function(name) {
-      normalize_name(name)
-    }, character(1), USE.NAMES = FALSE)
-
-    # Find which transcript speakers have unmatched hashes
-    matched_indices <- transcript_hashes %in% unmatched_hashes
-    actual_names <- unique(transcript_speakers[matched_indices])
+  if (is.character(unmatched_names)) {
+    unmatched_names <- unmatched_names[!is.na(unmatched_names) & nzchar(trimws(unmatched_names))]
+    return(unique(unmatched_names))
   }
-  actual_names
+
+  if (is.null(nrow(unmatched_names)) ||
+    nrow(unmatched_names) == 0 ||
+    !("speaker" %in% names(transcript_data)) ||
+    !("name_hash" %in% names(unmatched_names))) {
+    return(character(0))
+  }
+
+  unmatched_hashes <- unmatched_names$name_hash
+  transcript_speakers <- transcript_data$speaker
+  transcript_speakers <- transcript_speakers[!is.na(transcript_speakers) & nchar(trimws(transcript_speakers)) > 0]
+  transcript_hashes <- hash_canonical_name(normalize_name(transcript_speakers))
+  matched_indices <- transcript_hashes %in% unmatched_hashes
+  unique(transcript_speakers[matched_indices])
 }
 
 # Internal function - no documentation needed
