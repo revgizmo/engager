@@ -9,7 +9,7 @@ This file records how the backlog normalization artifacts were produced. It is i
 Source command:
 
 ```sh
-gh issue list --state open --limit 200 --json number,title,url,labels,milestone,assignees,createdAt,updatedAt
+gh issue list --repo revgizmo/engager --state open --limit 200 --json number,title,url,labels,milestone,assignees,createdAt,updatedAt
 ```
 
 Snapshot assumptions:
@@ -18,7 +18,7 @@ Snapshot assumptions:
 - Branch: `codex/backlog-normalization-control`
 - Base branch: `main`
 - Open issue count: 128
-- Release evidence anchor: PR `#557`
+- Release evidence anchor: PR `#557` (`https://github.com/revgizmo/engager/pull/557`)
 
 ## Generated Artifacts
 

@@ -6,11 +6,11 @@ This directory is the control surface for normalizing the open `engager` GitHub 
 
 ## Source Provenance
 
-- Source command: `gh issue list --state open --limit 200 --json number,title,url,labels,milestone,assignees,createdAt,updatedAt`
+- Source command: `gh issue list --repo revgizmo/engager --state open --limit 200 --json number,title,url,labels,milestone,assignees,createdAt,updatedAt`
 - Snapshot date: 2026-05-07
-- Repository state: branch `codex/backlog-normalization-control`, based on `main` after PR `#557`
+- Repository state: branch `codex/backlog-normalization-control`, based on `main` after PR `#557` (`https://github.com/revgizmo/engager/pull/557`)
 - Issue count at snapshot: 128 open issues
-- Release evidence assumption: PR `#557` is treated as the canonical release-prep integration point until contradicted by fresh validation.
+- Release evidence assumption: PR `#557` (`https://github.com/revgizmo/engager/pull/557`) is treated as the canonical release-prep integration point until contradicted by fresh validation.
 
 ## Goals
 
@@ -71,7 +71,7 @@ Pre-CRAN work stays narrow:
 - `#153`: real-world FERPA/privacy validation.
 - `#154`: institutional adoption guide, unless explicitly deferred.
 
-Likely stale or superseded by PR `#557` unless fresh evidence contradicts it:
+Likely stale or superseded by PR `#557` (`https://github.com/revgizmo/engager/pull/557`) unless fresh evidence contradicts it:
 
 - `#215`, `#220`, `#228`, `#229`, `#277`, `#282`, `#300`, `#301`, `#394`, `#469`, `#471`.
 - `#288`, `#296`, `#297` are optional external validation unless required by the release owner.
