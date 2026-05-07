@@ -19,3 +19,33 @@ test_that("exact matching assigns student_id and reports unresolved", {
   expect_true(all(c("reason", "guidance") %in% names(res$unresolved)))
   expect_equal(sum(!is.na(res$transcripts_with_ids$student_id)), 1)
 })
+
+test_that("alias parsing handles regex metacharacter delimiters safely", {
+  roster <- tibble::tibble(
+    preferred_name = "Alice Smith",
+    student_id = "S1",
+    aliases = "A Smith[Ally^Alice S"
+  )
+
+  hashed <- engager:::compute_roster_hashes(roster, delimiter = "[^")
+
+  expect_equal(
+    hashed$aliases[[1]],
+    engager:::normalize_name(c("A Smith", "Ally", "Alice S"))
+  )
+})
+
+test_that("alias parsing preserves comma and pipe fallback delimiters", {
+  roster <- tibble::tibble(
+    preferred_name = "Bob Jones",
+    student_id = "S2",
+    aliases = "B Jones,Bobby|Robert"
+  )
+
+  hashed <- engager:::compute_roster_hashes(roster, delimiter = "[")
+
+  expect_equal(
+    hashed$aliases[[1]],
+    engager:::normalize_name(c("B Jones", "Bobby", "Robert"))
+  )
+})

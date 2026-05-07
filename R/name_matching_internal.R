@@ -172,6 +172,37 @@ aliases_long <- function(roster_df) {
     tidyr::unnest_longer(aliases, values_to = "alias", indices_include = FALSE)
 }
 
+# Split a roster alias string by fixed delimiter characters.
+split_aliases <- function(x, delimiter = ";") {
+  if (is.null(x) || is.na(x) || identical(x, "")) {
+    return(character(0))
+  }
+
+  delimiter_values <- as.character(delimiter)
+  delimiter_values <- delimiter_values[!is.na(delimiter_values)]
+  delimiter_chars <- unlist(
+    stringi::stri_split_boundaries(delimiter_values, type = "character"),
+    use.names = FALSE
+  )
+  delimiter_chars <- unique(c(delimiter_chars, ",", "|"))
+  delimiter_chars <- delimiter_chars[!is.na(delimiter_chars) & nzchar(delimiter_chars)]
+
+  split_value <- as.character(x)
+  sentinel <- "\001"
+  for (delimiter_char in delimiter_chars) {
+    split_value <- stringi::stri_replace_all_fixed(
+      split_value,
+      delimiter_char,
+      sentinel,
+      vectorize_all = FALSE
+    )
+  }
+
+  parts <- stringi::stri_split_fixed(split_value, sentinel, omit_empty = FALSE)[[1]]
+  parts <- stringr::str_trim(parts)
+  parts[parts != ""]
+}
+
 #' Prepare transcript names: normalize and hash speaker names
 #' Expects column 'speaker'. Optional 'timestamp'.
 #' @keywords internal
@@ -308,14 +339,8 @@ compute_roster_hashes <- function(roster_df, key = NULL, delimiter = ";", includ
   if (!("aliases" %in% names(roster_df))) {
     roster_df$aliases <- vector("list", nrow(roster_df))
   } else {
-    delim <- delimiter
     parse_aliases <- function(x) {
-      if (is.null(x) || is.na(x) || identical(x, "")) {
-        return(character(0))
-      }
-      parts <- stringr::str_split(x, pattern = sprintf("[%s,|]", stringr::str_replace_all(delim, "\\|", "\\\\|")), n = Inf)[[1]]
-      parts <- stringr::str_trim(parts)
-      parts <- parts[parts != ""]
+      parts <- split_aliases(x, delimiter = delimiter)
       normalize_name(parts)
     }
     roster_df$aliases <- lapply(roster_df$aliases, parse_aliases)
