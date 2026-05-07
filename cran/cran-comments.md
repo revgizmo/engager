@@ -12,11 +12,7 @@
 ## R CMD Check Results
 - **Errors**: 0
 - **Warnings**: 0
-- **Notes**: 1
-
-The single local note was:
-
-- `checking for future file timestamps ... NOTE`: unable to verify current time
+- **Notes**: 0
 
 ## Reverse Dependencies
 - **None** (new package)
@@ -24,7 +20,7 @@ The single local note was:
 ## Additional Notes
 - Package renamed for better clarity and branding
 - Initial CRAN submission as `engager`
-- Local tests: 2,395 pass, 0 fail, 71 warnings, 6 skips
+- Local tests: 2,397 pass, 0 fail, 71 warnings, 6 skips
 - Local coverage: 83.30% overall; 92.31% strategic exported API coverage
 - Release PR CI: Ubuntu, Windows, and macOS R CMD check pass; coverage, lint, and build validation pass
 - Privacy-supporting defaults mask common student identifiers by default
