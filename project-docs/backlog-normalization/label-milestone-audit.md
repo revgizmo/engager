@@ -85,7 +85,7 @@ This audit is a dry-run proposal for normalizing the open GitHub issue backlog. 
 | `refactor` | 14 |
 | `status:superseded-candidate` | 14 |
 | `ci` | 12 |
-| `priority:low` | 9 |
+| `priority:low` | 8 |
 | `bug` | 3 |
 | `CRAN-blocker` | 2 |
 | `epic` | 2 |
