@@ -18,5 +18,5 @@ Enhanced matching results with privacy-aware processing
 }
 \description{
 Internal function to apply privacy-aware name matching using consistent hashing.
-This function enhances the existing matching logic with privacy-first design.
+This function enhances the existing matching logic with privacy-supporting design.
 }

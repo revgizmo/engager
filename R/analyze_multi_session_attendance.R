@@ -29,6 +29,7 @@
 #' # )
 #' # print(results$attendance_summary)
 #'
+#' @export
 analyze_multi_session_attendance <- function(
     transcript_files = NULL,
     roster_data = NULL,
@@ -207,7 +208,13 @@ analyze_multi_session_attendance <- function(
   return(result)
 }
 
-# Internal function - no documentation needed
+#' Generate Attendance Report
+#'
+#' @param analysis_results Results from `analyze_multi_session_attendance()`
+#' @param output_file Optional file path to save the report
+#' @param include_charts Boolean to include charts (default: FALSE)
+#' @return Report content as character vector
+#' @export
 generate_attendance_report <- function(
     analysis_results = NULL,
     output_file = NULL,

@@ -87,7 +87,7 @@ with_test_directory <- function(test_data, test_function) {
 }
 
 # Test context
-test_that("analyze_transcripts basic functionality", {
+# Test context: analyze_transcripts basic functionality
   # Test 1: Valid folder processing
   test_that("analyze_transcripts processes valid folder correctly", {
     test_data <- create_sample_transcript_files()
@@ -225,10 +225,10 @@ Student2: Hi there"
       }
     })
   })
-})
+
 
 # Error handling tests
-test_that("analyze_transcripts error handling", {
+# Error handling tests
   # Test 1: Invalid folder path
   test_that("analyze_transcripts handles invalid folder path", {
     expect_error(
@@ -280,10 +280,10 @@ test_that("analyze_transcripts error handling", {
       "No .transcript.vtt files found in the provided folder"
     )
   })
-})
+
 
 # Integration tests
-test_that("analyze_transcripts integration", {
+# Integration tests
   # Test 1: Integration with summarize_transcript_files
   test_that("analyze_transcripts integrates with summarize_transcript_files", {
     test_data <- create_sample_transcript_files()
@@ -380,10 +380,10 @@ test_that("analyze_transcripts integration", {
       }
     })
   })
-})
+
 
 # Edge cases and advanced scenarios
-test_that("analyze_transcripts edge cases", {
+# Edge cases and advanced scenarios
   # Test 1: Multiple transcript files with different content
   test_that("analyze_transcripts handles multiple files with different content", {
     test_data <- create_sample_transcript_files()
@@ -472,10 +472,10 @@ Student%d: Response from file %d", i, i, i + 1, i)
       expect_true(nrow(result) > 0)
     })
   })
-})
+
 
 # Real-world scenario tests
-test_that("analyze_transcripts real-world scenarios", {
+# Real-world scenario tests
   # Test 1: Using actual sample transcript from package
   test_that("analyze_transcripts works with actual sample transcript", {
     # Use the actual sample transcript from the package
@@ -559,10 +559,10 @@ test_that("analyze_transcripts real-world scenarios", {
       any(grepl("User\\s+\\d+", content_text)) ||
       length(grep("\\b[A-Z][a-z]+\\s+[A-Z][a-z]+\\b", content_text)) == 0)
   })
-})
+
 
 # Performance and memory tests
-test_that("analyze_transcripts performance characteristics", {
+# Performance and memory tests
   # Test 1: Memory usage with multiple files
   test_that("analyze_transcripts handles memory efficiently", {
     test_data <- create_sample_transcript_files()
@@ -604,10 +604,10 @@ test_that("analyze_transcripts performance characteristics", {
       expect_true(processing_time < 30)
     })
   })
-})
+
 
 # Cleanup and final validation
-test_that("analyze_transcripts cleanup and validation", {
+# Cleanup and final validation
   # Test 1: Proper cleanup of temporary resources
   test_that("analyze_transcripts cleans up temporary resources", {
     test_data <- create_sample_transcript_files()
@@ -658,4 +658,4 @@ test_that("analyze_transcripts cleanup and validation", {
       # column name or the data would need to be transformed first.
     })
   })
-})
+

@@ -28,6 +28,33 @@ run_performance_tests <- function(iterations = 5, output_file = "perf_results.js
     ),
     tests = list()
   )
+
+  summarize_bench <- function(result, iterations) {
+    result_summary <- summary(result)
+    list(
+      time_median_ms = as.numeric(result_summary$median) * 1000,
+      memory_peak_mb = as.numeric(result_summary$mem_alloc) / 1024^2,
+      gc_count = sum(result$gc[[1]][, "level2"]),
+      iterations = iterations
+    )
+  }
+
+  make_name_matching_fixture <- function(n) {
+    names <- sprintf("Student %05d", seq_len(n))
+    list(
+      transcripts = data.frame(
+        speaker = names,
+        timestamp = as.POSIXct("2025-01-01 10:00:00", tz = "UTC") +
+          seq_len(n),
+        stringsAsFactors = FALSE
+      ),
+      roster = data.frame(
+        preferred_name = names,
+        student_id = sprintf("S%05d", seq_len(n)),
+        stringsAsFactors = FALSE
+      )
+    )
+  }
   
   # Test fixtures - use actual transcript files if available
   transcript_dir <- system.file("extdata", "transcripts", package = "engager")
@@ -50,12 +77,7 @@ run_performance_tests <- function(iterations = 5, output_file = "perf_results.js
       filter_gc = FALSE
     )
     
-    results$tests$small_vtt_parse <- list(
-      time_median_ms = as.numeric(median(small_result$time, na.rm = TRUE)) * 1000,
-      memory_peak_mb = as.numeric(median(small_result$memory, na.rm = TRUE)) / 1024^2,
-      gc_count = median(small_result$gc_count, na.rm = TRUE),
-      iterations = iterations
-    )
+    results$tests$small_vtt_parse <- summarize_bench(small_result, iterations)
     
     # Test engagement_summary if we have parsed data
     if (length(small_files) > 1) {
@@ -74,11 +96,9 @@ run_performance_tests <- function(iterations = 5, output_file = "perf_results.js
         filter_gc = FALSE
       )
       
-      results$tests$engagement_summary <- list(
-        time_median_ms = as.numeric(median(summary_result$time, na.rm = TRUE)) * 1000,
-        memory_peak_mb = as.numeric(median(summary_result$memory, na.rm = TRUE)) / 1024^2,
-        gc_count = median(summary_result$gc_count, na.rm = TRUE),
-        iterations = max(1, iterations - 2)
+      results$tests$engagement_summary <- summarize_bench(
+        summary_result,
+        max(1, iterations - 2)
       )
     }
   } else {
@@ -106,11 +126,36 @@ run_performance_tests <- function(iterations = 5, output_file = "perf_results.js
       filter_gc = FALSE
     )
     
-    results$tests$synthetic_processing <- list(
-      time_median_ms = as.numeric(median(synthetic_result$time, na.rm = TRUE)) * 1000,
-      memory_peak_mb = as.numeric(median(synthetic_result$memory, na.rm = TRUE)) / 1024^2,
-      gc_count = median(synthetic_result$gc_count, na.rm = TRUE),
-      iterations = iterations
+    results$tests$synthetic_processing <- summarize_bench(
+      synthetic_result,
+      iterations
+    )
+  }
+
+  for (n in c(100, 1000, 5000)) {
+    fixture <- make_name_matching_fixture(n)
+    test_iterations <- if (n >= 5000) max(1, min(3, iterations)) else iterations
+    test_name <- paste0("name_matching_", n)
+    cat("Testing name matching:", n, "speakers\n")
+
+    name_match_result <- bench::mark(
+      {
+        result <- match_names_workflow(
+          fixture$transcripts,
+          fixture$roster,
+          options = list(match_strategy = "exact")
+        )
+        summary(result)
+      },
+      iterations = test_iterations,
+      memory = TRUE,
+      check = FALSE,
+      filter_gc = FALSE
+    )
+
+    results$tests[[test_name]] <- summarize_bench(
+      name_match_result,
+      test_iterations
     )
   }
   

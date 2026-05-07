@@ -2,9 +2,9 @@
 % Please edit documentation in R/ferpa_compliance.R
 \name{ferpa_compliance}
 \alias{ferpa_compliance}
-\title{FERPA Compliance Functions}
+\title{FERPA-Oriented Privacy Review Functions}
 \description{
-Functions to validate and ensure FERPA compliance for educational data.
-These functions help institutions maintain compliance with the Family
-Educational Rights and Privacy Act (FERPA) when using this package.
+Functions to support FERPA-oriented privacy review for educational data.
+These helpers do not guarantee legal compliance; institutions remain
+responsible for policy review and authorization.
 }

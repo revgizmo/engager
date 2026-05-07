@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main, develop ]
 
+permissions:
+  contents: read
+  statuses: write
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -39,3 +43,22 @@ jobs:
           options(repos = c(CRAN = "https://cloud.r-project.org"))
           lintr::lint_package()
         shell: Rscript {0}
+
+      - name: Report required Lint status
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STATUS_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            state="success"
+            description="Lint passed"
+          else
+            state="failure"
+            description="Lint did not pass"
+          fi
+          gh api "repos/$GITHUB_REPOSITORY/statuses/$STATUS_SHA" \
+            -f state="$state" \
+            -f context="Lint" \
+            -f description="$description" \
+            -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"

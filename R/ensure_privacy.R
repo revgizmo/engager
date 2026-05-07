@@ -2,12 +2,12 @@
 #'
 #' Applies privacy rules to objects before they are returned, written, or
 #' plotted. By default, masks personally identifiable information in tabular
-#' data to FERPA-safe placeholders.
+#' data to privacy-supporting placeholders.
 #'
-#' **CRITICAL ETHICAL COMPLIANCE**: This function is designed to promote
-#' participation equity and educational improvement, NOT surveillance. All
-#' outputs are automatically anonymized by default to protect student privacy
-#' and ensure FERPA compliance.
+#' **CRITICAL ETHICAL USE**: This function is designed to promote
+#' participation equity and educational improvement, NOT surveillance. Outputs
+#' are masked by default to support student privacy review; institutional
+#' compliance review remains the user's responsibility.
 #'
 #' The default behavior is controlled by the global option
 #' `engager.privacy_level`, which is set to "mask" on package
@@ -34,7 +34,9 @@ ensure_privacy <- function(x = NULL,
                            ),
                            id_columns = c(
                              "preferred_name", "name", "first_last",
-                             "name_raw", "student_id", "email", "transcript_name", "formal_name"
+                             "name_raw", "student_id", "email",
+                             "transcript_name", "formal_name", "user_name",
+                             "speaker"
                            ),
                            audit_log = TRUE) {
   # Validate privacy level

@@ -1,33 +1,26 @@
 
-- <a href="#engager" id="toc-engager">engager</a>
-  - <a href="#-documentation" id="toc--documentation">📚 Documentation</a>
-  - <a href="#-quick-start" id="toc--quick-start">🚀 Quick Start</a>
-    - <a href="#installation" id="toc-installation">Installation</a>
-    - <a href="#5-minute-whole-game-example"
-      id="toc-5-minute-whole-game-example">5-minute whole-game example</a>
-    - <a href="#basic-example" id="toc-basic-example">Basic Example</a>
-  - <a href="#-vignettes" id="toc--vignettes">📖 Vignettes</a>
-  - <a href="#-what-the-package-does" id="toc--what-the-package-does">🎯
-    What the Package Does</a>
-  - <a href="#-key-functions" id="toc--key-functions">🔧 Key Functions</a>
-    - <a href="#core-processing" id="toc-core-processing">Core Processing</a>
-    - <a href="#data-management" id="toc-data-management">Data Management</a>
-    - <a href="#analysis-and-visualization"
-      id="toc-analysis-and-visualization">Analysis and Visualization</a>
-    - <a href="#reporting" id="toc-reporting">Reporting</a>
-    - <a href="#diagnostics-and-interactive-prompts"
-      id="toc-diagnostics-and-interactive-prompts">Diagnostics and interactive
-      prompts</a>
-  - <a href="#-typical-workflow" id="toc--typical-workflow">📊 Typical
-    Workflow</a>
-  - <a href="#-privacy-defaults" id="toc--privacy-defaults">🔒 Privacy
-    Defaults</a>
-  - <a href="#development" id="toc-development">Development</a>
-    - <a href="#pull-request-review" id="toc-pull-request-review">Pull Request
-      Review</a>
-  - <a href="#-contributing" id="toc--contributing">🤝 Contributing</a>
-  - <a href="#-license" id="toc--license">📄 License</a>
-  - <a href="#-links" id="toc--links">🔗 Links</a>
+- [engager](#engager)
+  - [📚 Documentation](#books-documentation)
+  - [🚀 Quick Start](#rocket-quick-start)
+    - [Installation](#installation)
+    - [5-minute whole-game example](#5-minute-whole-game-example)
+    - [Basic Example](#basic-example)
+  - [📖 Vignettes](#open_book-vignettes)
+  - [🎯 What the Package Does](#dart-what-the-package-does)
+  - [🔧 Key Functions](#wrench-key-functions)
+    - [Core Processing](#core-processing)
+    - [Data Management](#data-management)
+    - [Name Matching (Exact MVP)](#name-matching-exact-mvp)
+    - [Analysis and Visualization](#analysis-and-visualization)
+    - [Diagnostics and interactive
+      prompts](#diagnostics-and-interactive-prompts)
+  - [📊 Typical Workflow](#bar_chart-typical-workflow)
+  - [🔒 Privacy Defaults](#lock-privacy-defaults)
+  - [Development](#development)
+    - [Pull Request Review](#pull-request-review)
+  - [🤝 Contributing](#handshake-contributing)
+  - [📄 License](#page_facing_up-license)
+  - [🔗 Links](#link-links)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -78,7 +71,7 @@ transcript_file <- system.file(
 )
 metrics <- summarize_transcript_metrics(transcript_file_path = transcript_file)
 
-# 2) Plot one metric with privacy-first defaults
+# 2) Plot one metric with privacy-supporting defaults
 #    (outputs a bar chart with a minimal theme)
 plot <- plot_users(metrics, metric = "session_ct", facet_by = "none", mask_by = "name")
 print(plot)
@@ -112,23 +105,14 @@ head(metrics)
 
 For detailed workflows and examples, see the package vignettes:
 
-- **[Getting
-  Started](https://revgizmo.github.io/engager/getting-started.html)** -
-  Basic setup and workflow overview
-- **[Whole Game](https://revgizmo.github.io/engager/whole-game.html)** -
-  Complete workflow for new instructors
-- **[Transcript
-  Processing](https://revgizmo.github.io/engager/transcript-processing.html)** -
-  Load, process, and analyze transcripts
-- **[Roster
-  Management](https://revgizmo.github.io/engager/roster-cleaning.html)** -
-  Manage student rosters and clean name mismatches
-- **[Plotting and
-  Analysis](https://revgizmo.github.io/engager/plotting.html)** - Create
-  visualizations and analyze engagement patterns
-- **[Session
-  Mapping](https://revgizmo.github.io/engager/session-mapping.html)** -
-  Handle complex scenarios with multiple courses/sections
+- **Getting Started**: see
+  `vignette("getting-started", package = "engager")`
+- **Plotting and Analysis**: see
+  `vignette("plotting", package = "engager")`
+- **Essential Functions**: see
+  `vignette("essential-functions", package = "engager")`
+- **Privacy and Ethical Use**: see
+  `vignette("ferpa-ethics", package = "engager")`
 
 ## 🎯 What the Package Does
 
@@ -164,17 +148,29 @@ currently supported but may be added in future versions.
 - `make_clean_names_df()` - Match transcript names to student records
 - `create_session_mapping()` - Map recordings to courses (advanced)
 
+### Name Matching (Exact MVP)
+
+Use `match_names_workflow()` for exact hash-based matching:
+
+``` r
+library(engager)
+roster <- tibble::tibble(
+  preferred_name = c("Alice Smith", "Bob Jones"),
+  student_id = c("S1", "S2"),
+  aliases = c("A Smith; Alice S", NA_character_)
+)
+transcripts <- tibble::tibble(
+  speaker = c("alice smith", "carol"),
+  timestamp = as.POSIXct(c("2025-01-01 10:00:00", "2025-01-01 10:01:00"), tz = "UTC")
+)
+res <- match_names_workflow(transcripts, roster, options = list(match_strategy = "exact"))
+res
+```
+
 ### Analysis and Visualization
 
 - `plot_users()` - Unified plotting with privacy-aware options
-- `plot_users_by_metric()` - Legacy plotting API (still available)
-- `plot_users_masked_section_by_metric()` - Legacy plotting API (still
-  available)
 - `make_transcripts_summary_df()` - Generate summary statistics
-
-### Reporting
-
-- `run_student_reports()` - Render per-student summary reports
 
 ### Diagnostics and interactive prompts
 
@@ -214,10 +210,10 @@ See also: `CONTRIBUTING.md` Diagnostic Output Policy.
 
 ## 🔒 Privacy Defaults
 
-This package is privacy-first by default. On load, it sets the global
-option `engager.privacy_level` to `"mask"` (unless you set it yourself).
-This means identifiers like names and student IDs are masked to labels
-such as `Student 01` in summaries, plots, and writers.
+This package uses privacy-supporting defaults. On load, it sets the
+global option `engager.privacy_level` to `"mask"` (unless you set it
+yourself). This means identifiers like names and student IDs are masked
+to labels such as `Student 01` in summaries, plots, and writers.
 
 To change behavior temporarily (not recommended for student data):
 
@@ -231,14 +227,15 @@ set_privacy_defaults("mask")  # restore safe default
 Masked by default: `preferred_name`, `name`, `first_last`, `name_raw`,
 `student_id`, `email`.
 
-See the vignette “Ethical & FERPA Guide” for details.
+See `vignette("ferpa-ethics", package = "engager")` for privacy and
+ethical use guidance.
 
 ## Development
 
 ### Pull Request Review
 
 This project uses a lightweight PR review process focused on CRAN
-submission readiness and privacy compliance. See
+submission readiness and privacy risk review. See
 [CONTRIBUTING.md](CONTRIBUTING.md) for the review checklist and
 criteria.
 

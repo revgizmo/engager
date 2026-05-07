@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 This vignette demonstrates the core functionality of the `engager` package using only the essential functions. After scope reduction, the package now exports **26 essential functions** focused on:
 
 - **Transcript Processing**: Loading and processing Zoom transcripts
-- **Privacy Protection**: Ensuring FERPA compliance and data privacy
+- **Privacy Protection**: Applying privacy-supporting defaults and FERPA-oriented review
 - **Analysis**: Core engagement metrics and analysis
 - **Name Matching**: Safe student name matching workflows
 
@@ -105,19 +105,19 @@ cat("analyze_transcripts() would analyze all .vtt files in the specified folder\
 cat("Function signature: analyze_transcripts(transcripts_folder, names_to_exclude, write, output_path)\n")
 ```
 
-### 4. Privacy and Compliance
+### 4. Privacy Review
 
 ```{r privacy-compliance}
-# Check privacy compliance with synthetic data
+# Check privacy risk with synthetic data
 synthetic_data <- data.frame(
   name = c("Student A", "Student B", "Instructor"),
   message = c("Hello", "Good morning", "Welcome to class"),
   timestamp = c("00:01:00", "00:02:00", "00:00:30")
 )
 
-# Note: Privacy compliance functions would check for real names in data
-cat("Privacy compliance functions validate that no real names are exposed\n")
-cat("validate_privacy_compliance() and validate_ferpa_compliance() ensure FERPA compliance\n")
+# Note: Privacy review functions check for real names in data
+cat("Privacy review functions check whether real names are exposed\n")
+cat("validate_privacy_compliance() and validate_ferpa_compliance() support FERPA-oriented review\n")
 ```
 
 ## Function Categories
@@ -132,10 +132,10 @@ cat("validate_privacy_compliance() and validate_ferpa_compliance() ensure FERPA 
 - `analyze_transcripts()` - Main analysis function
 - `summarize_transcript_metrics()` - Calculate engagement metrics
 
-### Privacy & Compliance
+### Privacy Review
 - `ensure_privacy()` - Apply privacy protection
-- `privacy_audit()` - Audit privacy compliance
-- `validate_privacy_compliance()` - Validate privacy settings
+- `privacy_audit()` - Audit privacy risks
+- `validate_privacy_compliance()` - Review privacy settings
 
 ### Name Matching
 <!-- The core name-matching helpers are currently internal/non-exported. Public workflows will be linked here when exported. -->
@@ -150,7 +150,7 @@ cat("validate_privacy_compliance() and validate_ferpa_compliance() ensure FERPA 
 2. **Easier Maintenance**: Smaller codebase to maintain
 3. **Better User Experience**: Clear, focused API
 4. **CRAN Ready**: Minimal function surface for submission
-5. **Privacy First**: All functions prioritize data protection
+5. **Privacy Supporting**: All functions prioritize data protection
 
 ## Next Steps
 
@@ -161,4 +161,4 @@ With the scope reduction complete, the package is now ready for:
 3. **Documentation Updates**: Focus on core workflows
 4. **UX Simplification**: Streamlined user experience
 
-The package now provides a clean, focused API for analyzing student engagement from Zoom transcripts while maintaining strong privacy protection and FERPA compliance.
+The package now provides a clean, focused API for analyzing student engagement from Zoom transcripts while maintaining strong privacy-supporting defaults and FERPA-oriented review helpers.

@@ -138,3 +138,8 @@ scripts/real_world_testing/outputs/
 scripts/real_world_testing/test_reports/
 scripts/real_world_testing/.DS_Store
 .cursor/
+
+# Local Codex and performance artifacts
+.codex/
+perf_results.json
+*_results.json

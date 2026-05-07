@@ -2,8 +2,8 @@
 #'
 #' Tools for processing Zoom transcripts, matching names with rosters,
 #' computing engagement metrics, and creating privacy-aware visualizations
-#' and reports. The package emphasizes a privacy-first design with FERPA
-#' support and masked outputs by default.
+#' and reports. The package emphasizes privacy-supporting defaults,
+#' FERPA-oriented review helpers, and masked outputs by default.
 #'
 "_PACKAGE"
 

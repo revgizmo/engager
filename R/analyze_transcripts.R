@@ -37,7 +37,11 @@ analyze_transcripts <- function(
   )
 
   if (isTRUE(write)) {
-    write_metrics(metrics, what = "engagement", path = output_path %||% "engagement_metrics.csv")
+    write_metrics(
+      metrics,
+      what = "engagement",
+      path = if (is.null(output_path)) "engagement_metrics.csv" else output_path
+    )
   }
 
   metrics
@@ -45,4 +49,3 @@ analyze_transcripts <- function(
 
 # Safe infix for defaults (using backticks for special operator names)
 # nolint: object_name_linter
-`%||%` <- function(a, b) if (is.null(a)) b else a

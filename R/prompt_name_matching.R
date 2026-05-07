@@ -125,64 +125,50 @@ generate_name_matching_guidance <- function(unmatched_names, privacy_level, incl
   paste(base_msg, privacy_msg, names_msg, instructions_msg, sep = "")
 }
 
-# Internal function - no documentation needed
-detect_unmatched_names <- function(transcript_data = NULL,
-                                   roster_data = NULL,
-                                   name_mappings = NULL,
-                                   privacy_level = getOption(
-                                     "engager.privacy_level",
-                                     "mask"
-                                   )) {
-  # Validate inputs
-  if (!is.data.frame(transcript_data)) {
-    stop("transcript_data must be a data frame", call. = FALSE)
+# Compatibility helper for the legacy safe-name-matching workflow. The public
+# detect_unmatched_names() API is defined in R/name_matching_workflow.R and
+# returns a privacy-safe data frame.
+detect_unmatched_names_legacy <- function(transcripts_df,
+                                          roster_df,
+                                          name_mappings = NULL,
+                                          privacy_level = getOption(
+                                            "engager.privacy_level",
+                                            "mask"
+                                          )) {
+  if (!is.data.frame(transcripts_df)) {
+    stop("transcripts_df must be a data frame", call. = FALSE)
   }
-  if (!is.data.frame(roster_data)) {
-    stop("roster_data must be a data frame", call. = FALSE)
-  }
-
-  valid_levels <- c("ferpa_strict", "ferpa_standard", "mask", "none")
-  if (!privacy_level %in% valid_levels) {
-    stop("Invalid privacy_level. Must be one of: ",
-      paste(valid_levels, collapse = ", "),
-      call. = FALSE
-    )
+  if (!is.data.frame(roster_df)) {
+    stop("roster_df must be a data frame", call. = FALSE)
   }
 
-  # Extract transcript names
-  transcript_names <- extract_transcript_names(transcript_data)
-
-  # Extract roster names
-  roster_names <- extract_roster_names(roster_data)
-
-  # Extract mapped names (if provided)
-  mapped_names <- character(0)
-  if (!is.null(name_mappings) && is.data.frame(name_mappings)) {
-    mapped_names <- extract_mapped_names(name_mappings)
+  transcript_names <- unique(extract_transcript_names(transcripts_df))
+  if (length(transcript_names) == 0) {
+    stop("transcripts_df must have a recognized speaker/name column", call. = FALSE)
   }
 
-  # Combine all known names
-  known_names <- unique(c(roster_names, mapped_names))
+  roster_names <- unique(extract_roster_names(roster_df))
+  mapped_names <- if (is.null(name_mappings)) {
+    character(0)
+  } else {
+    unique(extract_mapped_names(name_mappings))
+  }
 
-  # Find unmatched names
-  unmatched_names <- setdiff(transcript_names, known_names)
-
-  # Remove empty or NA names
-  unmatched_names <- unmatched_names[!is.na(unmatched_names) & nchar(trimws(unmatched_names)) > 0]
-
-  # If privacy is enabled, return hashed versions
+  unmatched <- setdiff(transcript_names, unique(c(roster_names, mapped_names)))
   if (!identical(privacy_level, "none")) {
-    unmatched_names <- hash_name_consistently(unmatched_names)
+    unmatched <- hash_name_consistently(unmatched)
   }
 
-  # Return unique unmatched names
-  unique(unmatched_names)
+  unmatched
 }
 
 # Internal function - no documentation needed
 extract_transcript_names <- function(transcript_data) {
   # Look for common name columns in transcript data
-  name_columns <- c("transcript_name", "name", "speaker_name", "participant_name")
+  name_columns <- c(
+    "speaker", "user_name", "transcript_name", "name", "speaker_name",
+    "participant_name"
+  )
   found_columns <- intersect(name_columns, names(transcript_data))
 
   if (length(found_columns) == 0) {
@@ -222,7 +208,7 @@ extract_roster_names <- function(roster_data) {
 # Internal function - no documentation needed
 extract_mapped_names <- function(name_mappings) {
   # Look for common name columns in mappings
-  name_columns <- c("preferred_name", "formal_name", "transcript_name", "name")
+  name_columns <- c("transcript_name", "preferred_name", "formal_name", "name")
   found_columns <- intersect(name_columns, names(name_mappings))
 
   if (length(found_columns) == 0) {

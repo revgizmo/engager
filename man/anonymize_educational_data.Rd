@@ -28,7 +28,7 @@ Anonymized data frame
 }
 \description{
 Advanced anonymization for educational data that preserves data utility
-while ensuring FERPA compliance.
+while supporting FERPA-oriented privacy review.
 }
 \section{Anonymize sample data}{
 sample_data <- tibble::tibble(
