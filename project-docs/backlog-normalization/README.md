@@ -31,6 +31,8 @@ This directory is the control surface for normalizing the open `engager` GitHub 
 
 Use explicit model settings for all future subagents:
 
+These are Codex runtime model override IDs for this backlog-normalization workflow, not generic OpenAI Platform API model names. If a future Codex runtime does not expose one of these exact overrides, use the closest available Codex model with the same role fit and reasoning tier, and record the substitution in `batch-review-log.md`.
+
 | Work | Model | Reasoning |
 |---|---|---|
 | Issue scouts and metadata extraction | `gpt-5.3-codex-spark` | low |
