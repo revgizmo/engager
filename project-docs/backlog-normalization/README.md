@@ -53,11 +53,15 @@ Every subagent prompt must include: `Read-only; do not edit files; do not mutate
 
 ## Mutation Safety
 
-The manifest uses three safety classes:
+The manifest uses exactly these `safety_class` tokens:
 
-- Safe after PR approval: labels, milestones, and triage comments.
-- Review required: body edits, priority changes, blocked/in-progress status changes.
-- Human only: close, supersede, duplicate marking, label deletion.
+| Token | Meaning |
+|---|---|
+| `safe-after-pr-approval` | Low-risk metadata or triage-comment operations after this PR and the dry-run manifest are approved. |
+| `review-required` | Operations that need a separate human review pass, including blocked/in-progress status changes, body edits, or priority changes. |
+| `human-only` | Closure, supersession, duplicate marking, label deletion, or any other irreversible/noisy operation. |
+
+Each JSONL row also has `proposed_actions`, an explicit ordered list of operations. A row with `proposed_action: "comment"` must have `proposed_actions: ["comment"]`; any labels, milestone, or status on those rows are context for reviewers, not authorization to apply metadata changes.
 
 The current manifest does not authorize live writes. It is a dry-run proposal for review.
 
@@ -90,5 +94,5 @@ Likely stale or superseded by PR `#557` (`https://github.com/revgizmo/engager/pu
 ## Validation Commands
 
 ```sh
-ruby -rcsv -rjson -e 'required=%w[number title url current_labels proposed_labels current_milestone proposed_milestone lane proposed_status proposed_action confidence evidence_summary canonical_issue_or_pr updated_at]; rows=CSV.read("project-docs/backlog-normalization/issue-normalization-register.csv", headers:true); abort("bad count") unless rows.length==128; abort("duplicate issues") unless rows["number"].uniq.length==rows.length; missing=required-rows.headers; abort("missing columns: #{missing.join(",")}") unless missing.empty?; rows.each{|r| abort("missing canonical for ##{r["number"]}") if r["proposed_action"]=="supersede-candidate" && r["canonical_issue_or_pr"].to_s.empty?}; File.foreach("project-docs/backlog-normalization/github-mutation-plan.jsonl"){|line| JSON.parse(line)}; puts "ok rows=#{rows.length} jsonl=valid"'
+ruby -rcsv -rjson -e 'required=%w[number title url current_labels proposed_labels current_milestone proposed_milestone lane proposed_status proposed_action confidence evidence_summary canonical_issue_or_pr updated_at]; rows=CSV.read("project-docs/backlog-normalization/issue-normalization-register.csv", headers:true); abort("bad count") unless rows.length==128; abort("duplicate issues") unless rows["number"].uniq.length==rows.length; missing=required-rows.headers; abort("missing columns: #{missing.join(",")}") unless missing.empty?; rows.each{|r| abort("missing canonical for ##{r["number"]}") if r["proposed_action"]=="supersede-candidate" && r["canonical_issue_or_pr"].to_s.empty?}; allowed=%w[safe-after-pr-approval review-required human-only]; File.foreach("project-docs/backlog-normalization/github-mutation-plan.jsonl"){|line| j=JSON.parse(line); abort("unknown safety_class #{j["safety_class"]}") unless allowed.include?(j["safety_class"]); abort("comment row has extra actions for ##{j["issue"]}") if j["proposed_action"]=="comment" && j["proposed_actions"] != ["comment"]}; puts "ok rows=#{rows.length} jsonl=valid"'
 ```

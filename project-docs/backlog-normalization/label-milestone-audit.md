@@ -63,14 +63,14 @@ This audit is a dry-run proposal for normalizing the open GitHub issue backlog. 
 | `test` | `area:testing` |
 | `priority: high` | `priority:high` |
 | `priority: medium` | `priority:medium` |
-| `FERPA` | `privacy` |
+| `FERPA` | retain `FERPA`; also add `privacy` |
 
 ## Proposed Canonical Label Counts
 
 | Label | Count |
 |---|---:|
 | `status:ready` | 96 |
-| `priority:medium` | 93 |
+| `priority:medium` | 91 |
 | `enhancement` | 57 |
 | `documentation` | 48 |
 | `area:documentation` | 43 |
@@ -88,6 +88,7 @@ This audit is a dry-run proposal for normalizing the open GitHub issue backlog. 
 | `priority:low` | 8 |
 | `bug` | 3 |
 | `CRAN-blocker` | 2 |
+| `FERPA` | 2 |
 | `epic` | 2 |
 | `status:blocked` | 2 |
 | `CRAN:review` | 1 |
