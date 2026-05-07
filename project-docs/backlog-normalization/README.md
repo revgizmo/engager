@@ -96,5 +96,34 @@ Likely stale or superseded by PR `#557` (`https://github.com/revgizmo/engager/pu
 ## Validation Commands
 
 ```sh
-ruby -rcsv -rjson -e 'required=%w[number title url current_labels proposed_labels current_milestone proposed_milestone lane proposed_status proposed_action proposed_disposition confidence evidence_summary canonical_issue_or_pr updated_at]; rows=CSV.read("project-docs/backlog-normalization/issue-normalization-register.csv", headers:true); abort("bad count") unless rows.length==128; abort("duplicate issues") unless rows["number"].uniq.length==rows.length; missing=required-rows.headers; abort("missing columns: #{missing.join(",")}") unless missing.empty?; rows.each{|r| abort("missing canonical for ##{r["number"]}") if r["proposed_action"]=="supersede-candidate" && r["canonical_issue_or_pr"].to_s.empty?}; allowed=%w[safe-after-pr-approval review-required human-only]; File.foreach("project-docs/backlog-normalization/github-mutation-plan.jsonl"){|line| j=JSON.parse(line); abort("unknown safety_class #{j["safety_class"]}") unless allowed.include?(j["safety_class"]); abort("comment row has extra actions for ##{j["issue"]}") if j["proposed_action"]=="comment" && j["proposed_actions"] != ["comment"]; abort("non-comment row marked safe for ##{j["issue"]}") if j["safety_class"]=="safe-after-pr-approval" && j["proposed_actions"] != ["comment"]; abort("keep action leaked into manifest") if j["proposed_action"]=="keep"}; puts "ok rows=#{rows.length} jsonl=valid"'
+ruby -rcsv -rjson -e '
+required = %w[number title url current_labels proposed_labels current_milestone proposed_milestone lane proposed_status proposed_action proposed_disposition confidence evidence_summary canonical_issue_or_pr updated_at]
+rows = CSV.read("project-docs/backlog-normalization/issue-normalization-register.csv", headers: true)
+abort("bad count") unless rows.length == 128
+abort("duplicate CSV issues") unless rows["number"].uniq.length == rows.length
+missing = required - rows.headers
+abort("missing columns: #{missing.join(",")}") unless missing.empty?
+
+json = File.readlines("project-docs/backlog-normalization/github-mutation-plan.jsonl").map { |line| JSON.parse(line) }
+abort("bad JSONL count") unless json.length == rows.length
+json_issues = json.map { |j| j["issue"] }
+csv_issues = rows["number"].map(&:to_i)
+abort("duplicate JSONL issues") unless json_issues.uniq.length == json_issues.length
+abort("CSV/JSONL issue mismatch") unless csv_issues.sort == json_issues.sort
+
+rows.each do |r|
+  abort("missing canonical for ##{r["number"]}") if r["proposed_action"] == "supersede-candidate" && r["canonical_issue_or_pr"].to_s.empty?
+end
+
+allowed = %w[safe-after-pr-approval review-required human-only]
+json.each do |j|
+  abort("manifest row is not dry-run for ##{j["issue"]}") unless j["dry_run"] == true
+  abort("unknown safety_class #{j["safety_class"]}") unless allowed.include?(j["safety_class"])
+  abort("comment row has extra actions for ##{j["issue"]}") if j["proposed_action"] == "comment" && j["proposed_actions"] != ["comment"]
+  abort("non-comment row marked safe for ##{j["issue"]}") if j["safety_class"] == "safe-after-pr-approval" && j["proposed_actions"] != ["comment"]
+  abort("keep action leaked into manifest") if j["proposed_action"] == "keep"
+end
+
+puts "ok rows=#{rows.length} jsonl=valid"
+'
 ```
