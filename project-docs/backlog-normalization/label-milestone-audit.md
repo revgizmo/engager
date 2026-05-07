@@ -117,9 +117,17 @@ This audit is a dry-run proposal for normalizing the open GitHub issue backlog. 
 | Action | Count |
 |---|---:|
 | `comment` | 18 |
-| `keep` | 3 |
-| `relabel` | 93 |
+| `relabel` | 96 |
 | `supersede-candidate` | 14 |
+
+## Proposed Disposition Counts
+
+| Disposition | Count |
+|---|---:|
+| `keep-active` | 3 |
+| `needs-triage-comment` | 18 |
+| `normalize-metadata` | 93 |
+| `superseded-candidate` | 14 |
 
 ## Proposed Milestone Counts
 
