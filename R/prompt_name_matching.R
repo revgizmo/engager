@@ -12,7 +12,7 @@ prompt_name_matching <- function(unmatched_names = NULL,
     stop("unmatched_names must be a character vector", call. = FALSE)
   }
 
-  valid_levels <- c("ferpa_strict", "ferpa_standard", "mask", "none")
+  valid_levels <- c("privacy_strict", "privacy_standard", "mask", "none")
   if (!privacy_level %in% valid_levels) {
     stop("Invalid privacy_level. Must be one of: ",
       paste(valid_levels, collapse = ", "),

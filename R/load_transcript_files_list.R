@@ -34,6 +34,8 @@ load_transcript_files_list <-
 
     # Extract date
     df$date_extract <- stringr::str_extract(df$file_name, dt_extract_pattern)
+    missing_date <- is.na(df$date_extract) | !nzchar(df$date_extract)
+    df$date_extract[missing_date] <- tools::file_path_sans_ext(df$file_name[missing_date])
 
     # Determine file type
     df$file_type <- ifelse(
@@ -42,7 +44,11 @@ load_transcript_files_list <-
       ifelse(
         grepl(clsdcptnflxtnsnpttrn, df$file_name, fixed = FALSE),
         "closed_caption_file",
-        "chat_file"
+        ifelse(
+          grepl("[.]chat[.]", df$file_name),
+          "chat_file",
+          "transcript_file"
+        )
       )
     )
 
@@ -50,6 +56,14 @@ load_transcript_files_list <-
     recording_start_str <- stringr::str_extract(df$file_name, recording_start_pattern)
     df$recording_start <- lubridate::parse_date_time(recording_start_str, orders = recording_start_format)
     df$recording_start <- as.POSIXct(df$recording_start, tz = "UTC")
+    missing_start <- is.na(df$recording_start)
+    if (any(missing_start)) {
+      df$recording_start[missing_start] <- as.POSIXct(
+        seq_len(sum(missing_start)),
+        origin = "1970-01-01",
+        tz = "UTC"
+      )
+    }
     df$start_time_local <- lubridate::with_tz(df$recording_start, tzone = start_time_local_tzone)
 
     # Pivot to wide format per recording using base R

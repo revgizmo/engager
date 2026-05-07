@@ -72,16 +72,16 @@ test_that("write_metrics handles different privacy levels", {
   result1 <- write_metrics(test_data, privacy_level = "mask", path = tmp1)
   expect_true(file.exists(tmp1))
 
-  # Test ferpa_standard privacy level
+  # Test privacy_standard privacy level
   tmp2 <- tempfile(fileext = ".csv")
   on.exit(unlink(tmp2), add = TRUE)
-  result2 <- write_metrics(test_data, privacy_level = "ferpa_standard", path = tmp2)
+  result2 <- write_metrics(test_data, privacy_level = "privacy_standard", path = tmp2)
   expect_true(file.exists(tmp2))
 
-  # Test ferpa_strict privacy level
+  # Test privacy_strict privacy level
   tmp3 <- tempfile(fileext = ".csv")
   on.exit(unlink(tmp3), add = TRUE)
-  result3 <- write_metrics(test_data, privacy_level = "ferpa_strict", path = tmp3)
+  result3 <- write_metrics(test_data, privacy_level = "privacy_strict", path = tmp3)
   expect_true(file.exists(tmp3))
 })
 

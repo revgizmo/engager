@@ -202,7 +202,7 @@ test_that("multi-session analysis maintains privacy compliance", {
         transcript_files = c("session1.transcript.vtt", "session2.transcript.vtt"),
         roster_data = roster_data,
         data_folder = temp_dir,
-        privacy_level = "ferpa_strict",
+        privacy_level = "privacy_strict",
         unmatched_names_action = "warn"
       )
 

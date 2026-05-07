@@ -14,7 +14,7 @@
 #' load. Use `set_privacy_defaults()` to change at runtime.
 #'
 #' @param x Data object to apply privacy rules to (typically a `tibble`)
-#' @param privacy_level Privacy level: "mask", "ferpa_strict", "ferpa_standard", or "none"
+#' @param privacy_level Privacy level: "mask", "privacy_strict", "privacy_standard", or "none"
 #' @param id_columns Vector of column names to treat as identifiers (default: common name columns)
 #' @param audit_log Whether to log privacy operations (default: TRUE)
 #' @return Privacy-compliant version of the input object
@@ -82,7 +82,7 @@ validate_privacy_level <- function(privacy_level) {
     warning("privacy_level had length > 1, using first element: ", privacy_level)
   }
 
-  valid_levels <- c("ferpa_strict", "ferpa_standard", "mask", "none")
+  valid_levels <- c("privacy_strict", "privacy_standard", "mask", "none")
   if (!privacy_level %in% valid_levels) {
     stop("Invalid privacy_level. Must be one of: ", paste(valid_levels, collapse = ", "), call. = FALSE)
   }
@@ -107,7 +107,10 @@ handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
   # If privacy is explicitly disabled, warn and return unmodified
   if (identical(privacy_level, "none")) {
     warning(
-      "CRITICAL: Privacy disabled; outputs may contain identifiable data and violate FERPA requirements.",
+      paste(
+        "CRITICAL: Privacy disabled; outputs may contain identifiable data.",
+        "Confirm this is authorized before sharing outputs."
+      ),
       call. = FALSE
     )
 
@@ -124,8 +127,8 @@ handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
     return(list(early_return = TRUE, data = x, id_columns = NULL, privacy_level = privacy_level))
   }
 
-  # FERPA strict level - most comprehensive masking
-  if (identical(privacy_level, "ferpa_strict")) {
+  # Privacy strict level - most comprehensive masking
+  if (identical(privacy_level, "privacy_strict")) {
     id_columns <- c(
       id_columns,
       "email", "email_address", "e_mail",
@@ -138,8 +141,8 @@ handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
     )
   }
 
-  # FERPA standard level - standard educational compliance
-  if (identical(privacy_level, "ferpa_standard")) {
+  # Privacy standard level - standard educational privacy masking
+  if (identical(privacy_level, "privacy_standard")) {
     id_columns <- c(
       id_columns,
       "email", "email_address", "e_mail",

@@ -182,21 +182,21 @@ test_that("safe_name_matching_workflow handles different privacy levels", {
   expect_s3_class(result_mask, "tbl_df")
   expect_true(nrow(result_mask) > 0)
 
-  # Test with privacy level "ferpa_strict"
+  # Test with privacy level "privacy_strict"
   result_ferpa <- safe_name_matching_workflow(
     transcript_file_path = test_data$transcript_file,
     roster_data = test_data$roster,
-    privacy_level = "ferpa_strict"
+    privacy_level = "privacy_strict"
   )
 
   expect_s3_class(result_ferpa, "tbl_df")
   expect_true(nrow(result_ferpa) > 0)
 
-  # Test with privacy level "ferpa_standard"
+  # Test with privacy level "privacy_standard"
   result_ferpa_std <- safe_name_matching_workflow(
     transcript_file_path = test_data$transcript_file,
     roster_data = test_data$roster,
-    privacy_level = "ferpa_standard"
+    privacy_level = "privacy_standard"
   )
 
   expect_s3_class(result_ferpa_std, "tbl_df")

@@ -84,13 +84,13 @@ test_that("ensure_privacy handles different privacy levels", {
   expect_s3_class(result_mask, "tbl_df")
   expect_equal(nrow(result_mask), nrow(data))
 
-  # Test ferpa_standard level
-  result_standard <- ensure_privacy(data, privacy_level = "ferpa_standard")
+  # Test privacy_standard level
+  result_standard <- ensure_privacy(data, privacy_level = "privacy_standard")
   expect_s3_class(result_standard, "tbl_df")
   expect_equal(nrow(result_standard), nrow(data))
 
-  # Test ferpa_strict level
-  result_strict <- ensure_privacy(data, privacy_level = "ferpa_strict")
+  # Test privacy_strict level
+  result_strict <- ensure_privacy(data, privacy_level = "privacy_strict")
   expect_s3_class(result_strict, "tbl_df")
   expect_equal(nrow(result_strict), nrow(data))
 
@@ -138,7 +138,7 @@ test_that("ensure_privacy handles vector privacy levels", {
   data <- create_privacy_test_data()
 
   # Test with vector privacy level (should use first element)
-  result <- ensure_privacy(data, privacy_level = c("mask", "ferpa_standard"))
+  result <- ensure_privacy(data, privacy_level = c("mask", "privacy_standard"))
   expect_s3_class(result, "tbl_df")
   expect_equal(nrow(result), nrow(data))
 })
@@ -146,7 +146,7 @@ test_that("ensure_privacy handles vector privacy levels", {
 test_that("ensure_privacy handles data with PII", {
   data <- create_privacy_test_data_with_pii()
 
-  result <- ensure_privacy(data, privacy_level = "ferpa_strict")
+  result <- ensure_privacy(data, privacy_level = "privacy_strict")
   expect_s3_class(result, "tbl_df")
   expect_equal(nrow(result), nrow(data))
   expect_equal(ncol(result), ncol(data))
@@ -234,8 +234,8 @@ test_that("ensure_privacy handles comprehensive parameters", {
 
   param_combinations <- list(
     list(x = data, privacy_level = "mask"),
-    list(x = data, privacy_level = "ferpa_standard"),
-    list(x = data, privacy_level = "ferpa_strict"),
+    list(x = data, privacy_level = "privacy_standard"),
+    list(x = data, privacy_level = "privacy_strict"),
     list(x = data, privacy_level = "none"),
     list(x = data, privacy_level = "mask", id_columns = c("preferred_name", "student_id")),
     list(x = data, privacy_level = "mask", audit_log = TRUE),

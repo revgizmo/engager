@@ -77,7 +77,7 @@ UX_FUNCTION_DESCRIPTIONS <- list(
       "Welcome to engager!\n",
       "- Start with: vignette('getting-started', package='engager')\n",
       "- Core functions: vignette('essential-functions', package='engager')\n",
-      "- Sample data: system.file('extdata/transcripts', package='engager')\n",
+      "- Sample data: system.file('extdata/test_transcripts', package='engager')\n",
       "- Quick example: example(summarize_transcript_metrics)\n",
       "\n",
       "To suppress this message: options(engager.show_startup = FALSE)"

@@ -185,12 +185,12 @@ The privacy-first workflow ensures student data protection:
 # Pure participant classification prior to metrics
 lookup_path <- "section_names_lookup.csv"
 lookup_df <- read_lookup_safely(lookup_path)
-set_privacy_defaults(privacy_level = "ferpa_standard")
+set_privacy_defaults(privacy_level = "privacy_standard")
 classified <- classify_participants(
   transcript_df = transcript_data,
   roster_df = roster,
   lookup_df = lookup_df,
-  privacy_level = "ferpa_standard"
+  privacy_level = "privacy_standard"
 )
 
 cat("Classification completed. Records:", nrow(classified), "\n")

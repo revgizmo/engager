@@ -43,7 +43,7 @@ Here's a minimal example to get you started:
 ```{r quick-start}
 # Load a sample transcript
 transcript_file <- system.file(
-  "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+  "extdata/test_transcripts/intro_statistics_week1.vtt",
   package = "engager"
 )
 

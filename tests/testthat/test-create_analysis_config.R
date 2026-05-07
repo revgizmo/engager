@@ -9,7 +9,7 @@ test_that("create_analysis_config creates valid configuration with defaults", {
   expect_equal(config$course$dept, "LTF")
   expect_equal(config$course$semester_start, "Jan 01, 2024")
   expect_equal(config$course$session_length_hours, 1.5)
-  expect_equal(config$course$instructor_name, "Conor Healy")
+  expect_equal(config$course$instructor_name, "Instructor")
 
   # Check paths section
   expect_named(config$paths, c(
@@ -17,8 +17,9 @@ test_that("create_analysis_config creates valid configuration with defaults", {
     "cancelled_classes_file", "names_lookup_file",
     "transcripts_session_summary_file", "transcripts_summary_file"
   ))
-  expect_equal(config$paths$transcripts_folder, "transcripts")
-  expect_equal(config$paths$roster_file, "roster.csv")
+  expect_equal(config$paths$transcripts_folder, "test_transcripts")
+  expect_equal(config$paths$roster_file, "test_transcripts/ideal_course_roster.csv")
+  expect_equal(config$paths$names_lookup_file, "example_section_names_lookup.csv")
 
   # Check patterns section
   expect_named(config$patterns, c(
@@ -28,9 +29,12 @@ test_that("create_analysis_config creates valid configuration with defaults", {
     "start_time_local_tzone"
   ))
   expect_equal(config$patterns$start_time_local_tzone, "America/Los_Angeles")
+  expect_equal(config$patterns$transcript_files_names, "[.]vtt$")
 
   # Check reports section
   expect_named(config$reports, c("student_summary_report", "student_summary_report_folder"))
+  expect_null(config$reports$student_summary_report)
+  expect_null(config$reports$student_summary_report_folder)
 
   # Check analysis section
   expect_named(config$analysis, c("cancelled_classes_col_types", "section_names_lookup_col_types", "names_to_exclude"))
@@ -83,6 +87,31 @@ test_that("create_analysis_config validates input parameters", {
 
   # Test invalid start_time_local_tzone
   expect_error(create_analysis_config(start_time_local_tzone = c("America/Los_Angeles", "UTC")), "start_time_local_tzone must be a single character string")
+
+  # Test invalid report template settings
+  expect_error(create_analysis_config(student_summary_report = c("a", "b")), "student_summary_report must be NULL or a single character string")
+  expect_error(create_analysis_config(student_summary_report_folder = c("a", "b")), "student_summary_report_folder must be NULL or a single character string")
+})
+
+test_that("create_analysis_config defaults discover bundled synthetic transcripts", {
+  config <- create_analysis_config()
+
+  transcript_files <- load_transcript_files_list(
+    data_folder = config$paths$data_folder,
+    transcripts_folder = config$paths$transcripts_folder,
+    transcript_files_names_pattern = config$patterns$transcript_files_names,
+    dt_extract_pattern = config$patterns$dt_extract,
+    trnscrptflxtnsnpttrn = config$patterns$transcript_file_extension,
+    clsdcptnflxtnsnpttrn = config$patterns$closed_caption_file_extension,
+    recording_start_pattern = config$patterns$recording_start,
+    recording_start_format = config$patterns$recording_start_format,
+    start_time_local_tzone = config$patterns$start_time_local_tzone
+  )
+
+  expect_gt(nrow(transcript_files), 0)
+  expect_true("transcript_file" %in% names(transcript_files))
+  expect_true(any(transcript_files$transcript_file == "intro_statistics_week1.vtt"))
+  expect_false(any(is.na(transcript_files$recording_start)))
 })
 
 test_that("create_analysis_config works with edge cases", {

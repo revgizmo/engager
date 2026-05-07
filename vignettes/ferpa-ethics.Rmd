@@ -13,19 +13,26 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 # Privacy and Ethical Use Guide
 
-This vignette provides guidance for using the `engager` package with FERPA-oriented privacy defaults and ethical practices for educational data analysis. It is not legal advice, and the package does not guarantee FERPA compliance. Users and institutions remain responsible for policy review, authorization, disclosure decisions, retention, and legal compliance.
+This vignette provides guidance for using the `engager` package with privacy-supporting defaults and ethical practices for educational data analysis. It is not a FERPA source, it is not legal advice, and the package does not guarantee FERPA compliance. Users and institutions remain responsible for policy review, authorization, disclosure decisions, retention, and legal compliance.
 
-## FERPA Overview
+## External FERPA References
 
-The Family Educational Rights and Privacy Act (FERPA) is a federal law that protects the privacy of student education records. When using this package with student data, you should review institutional FERPA requirements and confirm that your workflow is authorized.
+Do not rely on this vignette as a summary of FERPA requirements. For FERPA
+interpretation, start with official U.S. Department of Education resources and
+your institution's policies:
 
-### Key FERPA Requirements
+- Student Privacy Policy Office FERPA overview:
+  `https://studentprivacy.ed.gov/ferpa`
+- "What is FERPA?" FAQ:
+  `https://studentprivacy.ed.gov/faq/what-ferpa`
+- Directory information FAQ:
+  `https://studentprivacy.ed.gov/faq/may-educational-agency-or-institution-disclose-directory-information-without-prior-consent`
+- School official and legitimate educational interest FAQ:
+  `https://studentprivacy.ed.gov/faq/under-ferpa-may-educational-agency-or-institution-disclose-education-records-any-its-employees`
 
-- **Student Consent**: Generally, written consent is required to disclose personally identifiable information from education records
-- **Directory Information**: Some information may be disclosed without consent if designated as "directory information"
-- **Legitimate Educational Interest**: Faculty and staff may access student records for legitimate educational purposes
-- **Data Security**: Institutions must protect student data from unauthorized access
-- **Data Retention**: Institutions must establish and follow data retention policies
+When using this package with student data, confirm through local policy review
+that your workflow, data access, disclosure decisions, retention plan, and
+output sharing are authorized.
 
 ## Privacy-Supporting Design
 
@@ -44,11 +51,11 @@ By default, the package sets privacy level to `"mask"`, which automatically mask
 
 The package supports multiple privacy levels to accommodate different institutional requirements:
 
-### 1. FERPA Strict (`"ferpa_strict"`)
+### 1. Privacy Strict (`"privacy_strict"`)
 Maximum privacy protection for institutions requiring the strongest default masking:
 
 ```r
-set_privacy_defaults("ferpa_strict")
+set_privacy_defaults("privacy_strict")
 ```
 
 This level masks:
@@ -61,11 +68,11 @@ This level masks:
 - Parent/guardian names
 - Instructor names and IDs
 
-### 2. FERPA Standard (`"ferpa_standard"`)
+### 2. Privacy Standard (`"privacy_standard"`)
 Standard educational privacy defaults for most instructional workflows:
 
 ```r
-set_privacy_defaults("ferpa_standard")
+set_privacy_defaults("privacy_standard")
 ```
 
 This level masks:
@@ -94,7 +101,9 @@ set_privacy_defaults("none")  # Will emit a warning
 
 ## Privacy Review Functions
 
-The package provides specialized functions to support FERPA-oriented privacy review:
+The package provides functions that can support privacy review. These functions
+identify common risks and apply masking or anonymization, but they do not make a
+legal determination.
 
 ### Data Validation
 
@@ -109,7 +118,7 @@ sample_data <- tibble::tibble(
   participation_score = c(85, 92)
 )
 
-# Run FERPA-oriented privacy review
+# Run a privacy-oriented technical review
 validation_result <- validate_ferpa_compliance(sample_data)
 print(validation_result$compliant)
 print(validation_result$recommendations)
@@ -275,10 +284,10 @@ Follow proper data disposal procedures:
 
 ## Institutional Review Checklist
 
-Use this checklist to support institutional FERPA review:
+Use this checklist to support institutional privacy review:
 
 ### Pre-Analysis
-- [ ] Review institutional FERPA policies
+- [ ] Review official FERPA sources and institutional policies
 - [ ] Obtain necessary permissions
 - [ ] Set up secure data environment
 - [ ] Configure privacy defaults
@@ -300,6 +309,99 @@ Use this checklist to support institutional FERPA review:
 - [ ] Staff training updates
 - [ ] Policy reviews
 - [ ] Security assessments
+
+## Institutional Adoption Guide
+
+This package is intended to support institutionally authorized educational
+analysis. Before using it with transcripts, rosters, or other student records,
+confirm that the planned workflow has been reviewed under your local policies.
+The package can reduce accidental disclosure through masking and review helpers,
+but it does not determine whether a use is legally permitted.
+
+### 1. Confirm Authorization
+
+Before importing data:
+
+- Identify the educational purpose for the analysis.
+- Confirm who is authorized to access the transcript and roster data.
+- Review whether students, instructors, teaching assistants, or guests are
+  represented in the data.
+- Confirm whether additional institutional review is needed for research,
+  assessment, reporting, or cross-course comparison.
+- Document the local approval path without storing sensitive raw data in the
+  package project or public repositories.
+
+### 2. Prepare a Local Data Environment
+
+Use local storage and access controls that match your institution's data
+classification:
+
+- Keep raw transcripts and rosters outside package source directories.
+- Avoid committing raw transcripts, rosters, generated summaries, review logs,
+  or analysis outputs that include identifiers.
+- Use institution-approved storage, encryption, retention, and sharing
+  practices for raw data and intermediate outputs.
+- Limit access to people with a documented educational need.
+
+### 3. Configure Privacy Defaults
+
+Before processing data, set and record the intended privacy level:
+
+```r
+library(engager)
+
+set_privacy_defaults("mask")
+getOption("engager.privacy_level")
+```
+
+Use `"privacy_standard"` or `"privacy_strict"` when your local review calls for
+broader masking. These are package setting names, not compliance labels. Use
+`"none"` only for a documented, authorized reason and review all outputs before
+sharing them.
+
+### 4. Review Inputs and Outputs
+
+Use the package's privacy review helpers as a technical check, not as a legal
+determination:
+
+```r
+validation <- validate_ferpa_compliance(your_data)
+validation$recommendations
+```
+
+Before sharing or storing results outside the restricted working environment:
+
+- Inspect output files for names, email addresses, student IDs, meeting IDs,
+  course identifiers, and small-cell disclosure risks.
+- Prefer masked, aggregated, or pseudonymized outputs for routine sharing.
+- Review generated plots and reports, not just CSV files.
+- Record a non-sensitive summary of the review decision.
+
+### 5. Retain and Dispose of Data
+
+Follow local policy for retention and disposal:
+
+- Keep raw transcripts and rosters only as long as authorized.
+- Remove local generated outputs when they are no longer needed.
+- Do not use package examples, vignettes, test fixtures, or repositories as
+  storage locations for real student data.
+- Preserve only non-sensitive validation evidence in release or project notes.
+
+### 6. Suggested Local Sign-Off Record
+
+For a CRAN release or institutional deployment, maintain a local record that
+answers these questions without including raw student data:
+
+- What data source was reviewed?
+- Who performed the privacy review?
+- Which privacy level and masking workflow were used?
+- Were raw identifiers found in shared outputs?
+- What retention or disposal action is required?
+- Who approved use under institutional policy?
+
+This sign-off record should remain with the institution or release owner. It
+should not be submitted to CRAN and should not be used to claim that the package
+guarantees legal compliance.
 
 ## Troubleshooting Common Issues
 
@@ -392,9 +494,10 @@ Ensure data use benefits students:
 ## Resources
 
 ### FERPA Resources
-- FERPA Regulations: `https://studentprivacy.ed.gov/`  
-- FERPA Guidance for Educational Institutions: `https://studentprivacy.ed.gov/`
-- FERPA and Research: `https://studentprivacy.ed.gov/`  
+- Student Privacy Policy Office FERPA overview: `https://studentprivacy.ed.gov/ferpa`
+- What is FERPA? FAQ: `https://studentprivacy.ed.gov/faq/what-ferpa`
+- Directory information FAQ: `https://studentprivacy.ed.gov/faq/may-educational-agency-or-institution-disclose-directory-information-without-prior-consent`
+- School official and legitimate educational interest FAQ: `https://studentprivacy.ed.gov/faq/under-ferpa-may-educational-agency-or-institution-disclose-education-records-any-its-employees`
 
 ### Institutional Resources
 - Contact your institution's FERPA compliance officer
@@ -410,6 +513,6 @@ Ensure data use benefits students:
 
 ## Conclusion
 
-FERPA-oriented privacy review is essential when working with student data. This package provides tools that support privacy-conscious workflows, but ultimate responsibility lies with the user and their institution. Always review institutional policies and consult compliance officers when in doubt.
+Privacy review is essential when working with student data. This package provides tools that support privacy-conscious workflows, but responsibility for authorization, legal interpretation, and institutional policy compliance remains with the user and their institution. Always review official sources and institutional policies, and consult appropriate institutional officials when needed.
 
 Remember: **Privacy by design, ethical by default.**

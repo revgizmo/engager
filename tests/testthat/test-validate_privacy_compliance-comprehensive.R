@@ -5,8 +5,8 @@ test_that("validate_privacy_compliance handles different privacy levels", {
   # Test with valid privacy levels
   test_data <- tibble::tibble(name = c("Student_01", "Student_02"))
 
-  expect_true(validate_privacy_compliance(test_data, privacy_level = "ferpa_strict"))
-  expect_true(validate_privacy_compliance(test_data, privacy_level = "ferpa_standard"))
+  expect_true(validate_privacy_compliance(test_data, privacy_level = "privacy_strict"))
+  expect_true(validate_privacy_compliance(test_data, privacy_level = "privacy_standard"))
   expect_true(validate_privacy_compliance(test_data, privacy_level = "mask"))
   expect_true(validate_privacy_compliance(test_data, privacy_level = "none"))
 
@@ -29,7 +29,7 @@ test_that("validate_privacy_compliance handles stop_on_violation parameter", {
 test_that("validate_privacy_compliance handles NULL and empty data", {
   # Test with NULL data
   expect_true(validate_privacy_compliance(NULL))
-  expect_true(validate_privacy_compliance(NULL, privacy_level = "ferpa_strict"))
+  expect_true(validate_privacy_compliance(NULL, privacy_level = "privacy_strict"))
 
   # Test with empty data frame
   empty_df <- tibble::tibble()
@@ -107,14 +107,14 @@ test_that("detect_privacy_violations handles real names matching", {
   character_values <- c("John Smith", "Student_01", "Jane Doe")
   real_names <- c("John Smith", "Jane Doe")
 
-  result <- detect_privacy_violations(character_values, real_names, "ferpa_strict")
+  result <- detect_privacy_violations(character_values, real_names, "privacy_strict")
   expect_type(result, "character")
   expect_true("John Smith" %in% result)
   expect_true("Jane Doe" %in% result)
   expect_false("Student_01" %in% result)
 
   # Test with NULL real names
-  result2 <- detect_privacy_violations(character_values, NULL, "ferpa_strict")
+  result2 <- detect_privacy_violations(character_values, NULL, "privacy_strict")
   expect_type(result2, "character")
 })
 
@@ -129,7 +129,7 @@ test_that("detect_privacy_violations handles name pattern matching", {
     "Alice B. Cooper" # Should match
   )
 
-  result <- detect_privacy_violations(character_values, NULL, "ferpa_strict")
+  result <- detect_privacy_violations(character_values, NULL, "privacy_strict")
   expect_type(result, "character")
   expect_true("John Smith" %in% result)
   expect_true("Dr. Jane Doe" %in% result)
@@ -139,19 +139,19 @@ test_that("detect_privacy_violations handles name pattern matching", {
 
 test_that("detect_privacy_violations handles edge cases", {
   # Test with empty character values
-  result1 <- detect_privacy_violations(character(0), NULL, "ferpa_strict")
+  result1 <- detect_privacy_violations(character(0), NULL, "privacy_strict")
   expect_type(result1, "character")
   expect_equal(length(result1), 0)
 
   # Test with only masked names
   masked_values <- c("Student_01", "Guest_02", "Instructor_03")
-  result2 <- detect_privacy_violations(masked_values, NULL, "ferpa_strict")
+  result2 <- detect_privacy_violations(masked_values, NULL, "privacy_strict")
   expect_type(result2, "character")
   expect_equal(length(result2), 0)
 
   # Test with only common phrases
   phrase_values <- c("Data Analysis", "Report Summary", "Test Results")
-  result3 <- detect_privacy_violations(phrase_values, NULL, "ferpa_strict")
+  result3 <- detect_privacy_violations(phrase_values, NULL, "privacy_strict")
   expect_type(result3, "character")
   # Note: Some phrases might still match patterns, so we just check it's a character vector
   expect_true(length(result3) >= 0)

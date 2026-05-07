@@ -1,6 +1,6 @@
 test_that("write_metrics writes CSV with masking", {
   transcript_file <- system.file(
-    "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+    "extdata/test_transcripts/intro_statistics_week1.vtt",
     package = "engager"
   )
   skip_if(transcript_file == "", "Sample transcript not available")

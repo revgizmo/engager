@@ -14,12 +14,15 @@ validate_privacy_compliance(
 \arguments{
 \item{data}{Data frame or object to validate for privacy compliance}
 
-\item{privacy_level}{Privacy level to validate against. One of \code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
+\item{privacy_level}{Privacy level to validate against. One of
+\code{c("privacy_strict", "privacy_standard", "mask", "none")}.
 Defaults to \code{getOption("engager.privacy_level", "mask")}.}
 
-\item{real_names}{Vector of real names to check against. If NULL, uses common name patterns to detect potential violations.}
+\item{real_names}{Vector of real names to check against. If NULL, uses
+common name patterns to detect potential violations.}
 
-\item{stop_on_violation}{Whether to stop processing if violations are found. Defaults to TRUE for maximum privacy protection.}
+\item{stop_on_violation}{Whether to stop processing if violations are found.
+Defaults to TRUE for maximum privacy protection.}
 }
 \value{
 Validation results with compliance status and any violations found

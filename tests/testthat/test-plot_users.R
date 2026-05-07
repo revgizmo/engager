@@ -1,6 +1,6 @@
 test_that("plot_users produces a ggplot with default masking and no facet", {
   transcript_file <- system.file(
-    "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+    "extdata/test_transcripts/intro_statistics_week1.vtt",
     package = "engager"
   )
   skip_if(transcript_file == "", "Sample transcript not available")
@@ -12,7 +12,7 @@ test_that("plot_users produces a ggplot with default masking and no facet", {
 
 test_that("plot_users can facet by section and mask by rank", {
   transcript_file <- system.file(
-    "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+    "extdata/test_transcripts/intro_statistics_week1.vtt",
     package = "engager"
   )
   skip_if(transcript_file == "", "Sample transcript not available")

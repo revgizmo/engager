@@ -15,7 +15,7 @@ ensure_privacy(
 \arguments{
 \item{x}{Data object to apply privacy rules to (typically a \code{tibble})}
 
-\item{privacy_level}{Privacy level: "mask", "ferpa_strict", "ferpa_standard", or "none"}
+\item{privacy_level}{Privacy level: "mask", "privacy_strict", "privacy_standard", or "none"}
 
 \item{id_columns}{Vector of column names to treat as identifiers (default: common name columns)}
 
