@@ -21,3 +21,19 @@ test_that("set_privacy_defaults arg matching works", {
   expect_true(cfg$privacy_level %in% c("privacy_strict", "privacy_standard", "mask", "none"))
   expect_true(cfg$unmatched_names_action %in% c("stop", "warn"))
 })
+
+test_that("set_privacy_defaults supports deprecated FERPA aliases", {
+  expect_warning(
+    cfg <- set_privacy_defaults("ferpa_strict"),
+    "deprecated"
+  )
+  expect_equal(cfg$privacy_level, "privacy_strict")
+  expect_equal(getOption("engager.privacy_level"), "privacy_strict")
+
+  expect_warning(
+    cfg <- set_privacy_defaults("ferpa_standard"),
+    "deprecated"
+  )
+  expect_equal(cfg$privacy_level, "privacy_standard")
+  expect_equal(getOption("engager.privacy_level"), "privacy_standard")
+})

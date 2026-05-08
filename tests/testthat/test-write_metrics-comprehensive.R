@@ -200,6 +200,27 @@ test_that("write_metrics handles different privacy levels", {
   expect_false(any(grepl("John Smith|Jane Doe", readLines(tmp3, warn = FALSE))))
 })
 
+test_that("write_metrics supports deprecated FERPA privacy aliases", {
+  test_data <- tibble::tibble(
+    name = "John Smith",
+    comments = list(c("John Smith named Jane Doe out loud")),
+    comment_count = 1
+  )
+
+  tmp <- tempfile(fileext = ".csv")
+  on.exit(unlink(tmp), add = TRUE)
+
+  expect_warning(
+    result <- write_metrics(test_data, privacy_level = "ferpa_strict", path = tmp),
+    "deprecated"
+  )
+  written <- readr::read_csv(tmp, show_col_types = FALSE)
+
+  expect_s3_class(result, "tbl_df")
+  expect_false("comments" %in% names(written))
+  expect_false(any(grepl("John Smith|Jane Doe", readLines(tmp, warn = FALSE))))
+})
+
 test_that("write_metrics creates parent directories", {
   test_data <- tibble::tibble(
     name = "Student1",

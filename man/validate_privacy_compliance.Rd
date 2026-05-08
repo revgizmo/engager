@@ -16,7 +16,8 @@ validate_privacy_compliance(
 
 \item{privacy_level}{Privacy level to validate against. One of
 \code{c("privacy_strict", "privacy_standard", "mask", "none")}.
-Defaults to \code{getOption("engager.privacy_level", "mask")}.}
+Defaults to \code{getOption("engager.privacy_level", "mask")}. Deprecated
+aliases "ferpa_strict" and "ferpa_standard" are accepted with a warning.}
 
 \item{real_names}{Vector of real names to check against. If NULL, uses
 common name patterns to detect potential violations.}

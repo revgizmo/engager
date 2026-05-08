@@ -53,25 +53,7 @@ write_metrics <- function(
 
 # Helper function to normalize privacy level before comment policy decisions
 normalize_export_privacy_level <- function(privacy_level) {
-  if (!is.character(privacy_level) || length(privacy_level) == 0) {
-    stop("privacy_level must be a non-empty character vector")
-  }
-
-  if (length(privacy_level) > 1) {
-    privacy_level <- privacy_level[1]
-    warning("privacy_level had length > 1, using first element: ", privacy_level)
-  }
-
-  valid_levels <- c("privacy_strict", "privacy_standard", "mask", "none")
-  if (!privacy_level %in% valid_levels) {
-    stop(
-      "Invalid privacy_level. Must be one of: ",
-      paste(valid_levels, collapse = ", "),
-      call. = FALSE
-    )
-  }
-
-  privacy_level
+  normalize_privacy_level(privacy_level)
 }
 
 # Helper function to resolve comment export policy

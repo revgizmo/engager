@@ -100,6 +100,24 @@ test_that("ensure_privacy handles different privacy levels", {
   expect_equal(nrow(result_none), nrow(data))
 })
 
+test_that("ensure_privacy supports deprecated FERPA privacy aliases", {
+  data <- create_privacy_test_data()
+
+  expect_warning(
+    result_strict <- ensure_privacy(data, privacy_level = "ferpa_strict"),
+    "deprecated"
+  )
+  expect_s3_class(result_strict, "tbl_df")
+  expect_equal(nrow(result_strict), nrow(data))
+
+  expect_warning(
+    result_standard <- ensure_privacy(data, privacy_level = "ferpa_standard"),
+    "deprecated"
+  )
+  expect_s3_class(result_standard, "tbl_df")
+  expect_equal(nrow(result_standard), nrow(data))
+})
+
 test_that("ensure_privacy handles custom id_columns", {
   data <- create_privacy_test_data()
 

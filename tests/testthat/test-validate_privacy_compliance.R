@@ -75,6 +75,22 @@ test_that("validate_privacy_compliance validates inputs correctly", {
   )
 })
 
+test_that("validate_privacy_compliance supports deprecated FERPA privacy aliases", {
+  safe_df <- tibble::tibble(
+    name = c("Student_01", "Student_02"),
+    score = c(85, 92)
+  )
+
+  expect_warning(
+    expect_true(validate_privacy_compliance(safe_df, privacy_level = "ferpa_strict")),
+    "deprecated"
+  )
+  expect_warning(
+    expect_true(validate_privacy_compliance(safe_df, privacy_level = "ferpa_standard")),
+    "deprecated"
+  )
+})
+
 test_that("extract_character_values works correctly", {
   # Test with data frame
   df <- tibble::tibble(

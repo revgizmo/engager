@@ -20,8 +20,8 @@
 ## Additional Notes
 - Package renamed for better clarity and branding
 - Initial CRAN submission as `engager`
-- Local tests: 2,461 pass, 0 fail, 68 warnings, 6 skips
-- Local coverage: 83.74% overall; 92.34% strategic exported API coverage
+- Local tests: 2,481 pass, 0 fail, 67 warnings, 6 skips
+- Local coverage: 83.93% overall; 92.31% strategic exported API coverage
 - Release PR CI: Ubuntu, Windows, and macOS R CMD check pass; coverage, lint, and build validation pass
 - Privacy-supporting defaults mask common student identifiers by default
 - Privacy-safe metric CSV exports omit raw transcript/comment text by default
