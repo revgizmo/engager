@@ -8,7 +8,8 @@ write_metrics(
   data = NULL,
   what = c("engagement", "summary", "session_summary"),
   path = NULL,
-  comments_format = c("text", "count"),
+  comments_policy = c("auto", "omit", "count", "text"),
+  comments_format = NULL,
   privacy_level = getOption("engager.privacy_level", "mask")
 )
 }
@@ -19,14 +20,27 @@ write_metrics(
 
 \item{path}{File path where to write the output}
 
-\item{comments_format}{Format for comments: "text" or "count" (default: "text")}
+\item{comments_policy}{Export policy for the \code{comments} column: "auto", "omit",
+"count", or "text" (default: "auto"). "auto" resolves to "omit" so raw
+transcript text is never exported accidentally. "text" is allowed only
+with \code{privacy_level = "none"} and emits a warning.}
+
+\item{comments_format}{Deprecated alias for \code{comments_policy}. Use
+\code{comments_policy = "count"} or \code{comments_policy = "text"} instead.}
 
 \item{privacy_level}{Privacy level for data export (default: from global option)}
 }
 \value{
-No return value, writes data to file
+Invisibly returns the exported tibble after privacy and export
+policies are applied.
 }
 \description{
 Unified writer for engagement-related outputs with privacy enforcement.
 Parent directories are created if they do not exist.
+}
+\details{
+\code{write_metrics()} is the privacy-safe CSV export path. It applies
+structured identifier masking with \code{ensure_privacy()} and then omits raw
+free-text comments by default. \code{ensure_privacy()} does not redact identifiers
+embedded inside comment text.
 }

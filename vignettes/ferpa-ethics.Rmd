@@ -373,6 +373,9 @@ Before sharing or storing results outside the restricted working environment:
 
 - Inspect output files for names, email addresses, student IDs, meeting IDs,
   course identifiers, and small-cell disclosure risks.
+- Use `write_metrics()` for CSV exports; it omits raw transcript/comment text by
+  default because free-text comments can include spoken names or contextual
+  identifiers.
 - Prefer masked, aggregated, or pseudonymized outputs for routine sharing.
 - Review generated plots and reports, not just CSV files.
 - Record a non-sensitive summary of the review decision.

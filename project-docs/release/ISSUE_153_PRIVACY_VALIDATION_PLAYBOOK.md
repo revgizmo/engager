@@ -110,25 +110,36 @@ Run a small transcript processing pass:
 ```r
 processed <- lapply(transcript_files, function(path) {
   raw <- load_zoom_transcript(path)
-  processed <- process_zoom_transcript(raw)
-  metrics <- summarize_transcript_metrics(processed)
-  ensure_privacy(metrics, privacy_level = "privacy_strict")
+  processed_transcript <- process_zoom_transcript(transcript_df = raw)
+  summarize_transcript_metrics(transcript_df = processed_transcript)
 })
 
 names(processed) <- basename(transcript_files)
 ```
 
-Write outputs only to the private validation output directory:
+Write outputs only to the private validation output directory through
+`write_metrics()`. This is the privacy-safe export path. By default it masks
+structured identifier columns and omits raw transcript/comment text from CSV
+exports.
 
 ```r
 for (nm in names(processed)) {
   safe_name <- gsub("[^A-Za-z0-9_.-]", "_", nm)
-  readr::write_csv(
+  write_metrics(
     processed[[nm]],
-    file.path(output_dir, paste0(safe_name, "_metrics.csv"))
+    what = "engagement",
+    path = file.path(output_dir, paste0(safe_name, "_metrics.csv")),
+    privacy_level = "privacy_strict",
+    comments_policy = "auto"
   )
 }
 ```
+
+Do not approve issue #153 from CSV exports that contain a `comments` column or
+raw transcript text. Raw comments are permitted only for a separate, explicitly
+authorized local diagnostic run using `comments_policy = "text"` and
+`privacy_level = "none"`. Treat that diagnostic output as sensitive source data,
+not as a privacy-safe export.
 
 Run privacy checks on generated objects:
 
@@ -181,6 +192,7 @@ Check for:
 - Small-cell outputs, especially counts of 1 or 2.
 - Raw transcript text that includes identifiable context.
 - Logs or temp files containing raw rows.
+- A `comments` column in any CSV intended to be privacy-safe.
 
 Useful local scan:
 
@@ -204,6 +216,11 @@ subset(scan_results, hit)
 ```
 
 A clean scan is helpful but not sufficient. Manual review is still required.
+
+Optional local model review can supplement manual review. Record only a
+non-sensitive summary, such as the number of files reviewed, whether direct PII
+was reported, and any residual risk. Do not paste raw rows or model excerpts
+containing transcript text into GitHub, CRAN materials, or package files.
 
 ## 7. Confirm Package Surface Is Clean
 
@@ -281,6 +298,7 @@ I confirm:
 - Raw transcripts and rosters were kept outside the package repository.
 - Generated outputs were reviewed for direct identifiers.
 - Generated outputs were reviewed for indirect or small-cell disclosure risks.
+- Privacy-safe CSV exports did not include raw transcript/comment text.
 - CSVs, plots/reports if generated, logs, and temporary outputs were considered.
 - Sensitive validation evidence remains outside GitHub, CRAN, and the package repository.
 - The package tarball was checked for raw or institution-specific data.

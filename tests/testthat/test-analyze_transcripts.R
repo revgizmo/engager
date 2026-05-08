@@ -151,6 +151,12 @@ with_test_directory <- function(test_data, test_function) {
       # Verify the output file contains data
       file_content <- readLines(output_file, warn = FALSE)
       expect_true(length(file_content) > 1) # Header + at least one data row
+      written <- readr::read_csv(output_file, show_col_types = FALSE)
+      expect_false("comments" %in% names(written))
+      expect_false(any(grepl(
+        "Hello everyone|Hi there|José García|Anna Kowalski|Buenos días",
+        file_content
+      )))
     })
   })
 

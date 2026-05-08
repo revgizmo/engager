@@ -15,7 +15,7 @@ test_that("write_metrics handles comments count and list column JSON conversion"
   # Expect warning for non-comments list column JSON conversion
   expect_warning(
     {
-      out <- write_metrics(df, what = "engagement", path = tmp, comments_format = "count")
+      out <- write_metrics(df, what = "engagement", path = tmp, comments_policy = "count")
     },
     "Converting list columns to JSON strings:"
   )
@@ -23,9 +23,10 @@ test_that("write_metrics handles comments count and list column JSON conversion"
   expect_true(file.exists(tmp))
   expect_s3_class(out, "tbl_df")
 
-  # Validate that comments were converted to counts (2 and 0)
+  # Validate that comments were converted to counts (2 and 0) without raw text
   out_read <- readr::read_csv(tmp, show_col_types = FALSE)
-  expect_true(all(out_read$comments %in% c(0, 2)))
+  expect_false("comments" %in% names(out_read))
+  expect_equal(out_read$comments_count, c(2L, 0L))
   # Validate that extras became JSON strings
   expect_type(out_read$extras, "character")
 })
