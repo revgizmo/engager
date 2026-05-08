@@ -122,6 +122,46 @@ test_that("load_zoom_transcript handles comments without names", {
   unlink(temp_file)
 })
 
+test_that("load_zoom_transcript handles standard WebVTT voice cues", {
+  vtt_content <- c(
+    "WEBVTT",
+    "",
+    "00:00:00.000 --> 00:00:03.000",
+    "<v Student A>Hello from a voice cue.",
+    "",
+    "00:00:03.000 --> 00:00:07.000 align:start position:0%",
+    "<v Instructor>Second cue with settings."
+  )
+
+  temp_file <- tempfile(fileext = ".vtt")
+  writeLines(vtt_content, temp_file)
+  on.exit(unlink(temp_file), add = TRUE)
+
+  result <- load_zoom_transcript(temp_file)
+
+  expect_s3_class(result, "tbl_df")
+  expect_equal(nrow(result), 2)
+  expect_equal(result$name, c("Student A", "Instructor"))
+  expect_equal(result$comment, c("Hello from a voice cue.", "Second cue with settings."))
+  expect_equal(as.numeric(result$duration), c(3, 4))
+})
+
+test_that("load_zoom_transcript handles bundled synthetic transcript fixtures", {
+  transcript_file <- system.file(
+    "extdata/test_transcripts/intro_statistics_week1.vtt",
+    package = "engager"
+  )
+
+  result <- load_zoom_transcript(transcript_file)
+
+  expect_s3_class(result, "tbl_df")
+  expect_gt(nrow(result), 0)
+  expect_true(all(c("Professor Smith", "Student A", "Student B", "Student C") %in% unique(result$name)))
+  expect_false(any(is.na(result$name)))
+  expect_false(any(grepl("^<v ", result$comment)))
+  expect_true(all(result$wordcount > 0))
+})
+
 test_that("load_zoom_transcript handles VTT file with insufficient entries", {
   # Create a VTT file with only 1 line after WEBVTT header (not enough for a complete entry)
   temp_file <- tempfile(fileext = ".vtt")

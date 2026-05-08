@@ -30,56 +30,18 @@ load_zoom_transcript <- function(transcript_file_path = NULL) {
 
   transcript_file <- basename(transcript_file_path)
 
-  # Read the transcript file with explicit column specification to avoid warnings
-  transcript_vtt <- readr::read_tsv(
-    transcript_file_path,
-    col_names = "WEBVTT",
-    skip = 1, # Skip the "WEBVTT" header row
-    show_col_types = FALSE
-  )
+  transcript_lines <- readLines(transcript_file_path, warn = FALSE)
+  transcript_lines <- sub("\r$", "", transcript_lines)
 
   # Return NULL for empty files
-  if (nrow(transcript_vtt) == 0) {
+  if (length(transcript_lines) <= 1) {
     return(NULL)
   }
 
-  # Process the transcript
-
-  # Calculate how many complete entries we have
-  n_entries <- floor(nrow(transcript_vtt) / 3)
-  if (n_entries == 0) {
+  transcript_df <- parse_webvtt_cues(transcript_lines[-1], transcript_file)
+  if (nrow(transcript_df) == 0) {
     return(NULL)
   }
-
-  # Create a data frame with the correct number of rows
-  transcript_df <- tibble::tibble(
-    transcript_file = transcript_file,
-    comment_num = character(n_entries),
-    timestamp = character(n_entries),
-    comment = character(n_entries)
-  )
-
-  # Fill in the data
-  for (i in 1:n_entries) {
-    start_idx <- (i - 1) * 3 + 1
-    transcript_df$comment_num[i] <- transcript_vtt$WEBVTT[start_idx]
-    transcript_df$timestamp[i] <- transcript_vtt$WEBVTT[start_idx + 1]
-    transcript_df$comment[i] <- transcript_vtt$WEBVTT[start_idx + 2]
-  }
-
-  # Process the data using base R to avoid segmentation faults
-  # Split comment into name and text more efficiently
-  name_comment_split <- strsplit(transcript_df$comment, ": ", fixed = TRUE)
-  transcript_df$name <- sapply(name_comment_split, function(x) if (length(x) > 1) x[1] else NA_character_)
-  transcript_df$comment <- sapply(
-    name_comment_split,
-    function(x) if (length(x) > 1) paste(x[-1], collapse = ": ") else x[1]
-  )
-
-  # Split timestamp more efficiently
-  time_split <- strsplit(transcript_df$timestamp, " --> ", fixed = TRUE)
-  transcript_df$start <- sapply(time_split, function(x) if (length(x) == 2) x[1] else NA_character_)
-  transcript_df$end <- sapply(time_split, function(x) if (length(x) == 2) x[2] else NA_character_)
 
   # Convert to hms with error handling and calculate duration
   safe_as_hms <- function(x) {
@@ -125,4 +87,118 @@ load_zoom_transcript <- function(transcript_file_path = NULL) {
     "start", "end", "duration", "wordcount"
   )), silent = TRUE)
   return(result)
+}
+
+# Internal helper to parse blank-separated WebVTT cues.
+parse_webvtt_cues <- function(lines, transcript_file) {
+  lines <- lines[!grepl("^NOTE($|[[:space:]])", lines)]
+  timestamp_indices <- grep(" --> ", lines, fixed = TRUE)
+  if (length(timestamp_indices) == 0) {
+    return(tibble::tibble(
+      transcript_file = character(),
+      comment_num = character(),
+      name = character(),
+      comment = character(),
+      start = character(),
+      end = character()
+    ))
+  }
+
+  rows <- list()
+  for (i in seq_along(timestamp_indices)) {
+    timestamp_idx <- timestamp_indices[i]
+    next_timestamp_idx <- if (i < length(timestamp_indices)) timestamp_indices[i + 1] else length(lines) + 1L
+
+    cue_id_idx <- timestamp_idx - 1L
+    has_cue_id <- cue_id_idx >= 1L &&
+      nzchar(lines[cue_id_idx]) &&
+      !grepl(" --> ", lines[cue_id_idx], fixed = TRUE)
+
+    comment_start <- timestamp_idx + 1L
+    comment_end <- next_timestamp_idx - 1L
+    if (comment_end >= comment_start && comment_end >= 1L && !nzchar(lines[comment_end])) {
+      comment_end <- comment_end - 1L
+    }
+    if (comment_end >= comment_start && comment_end >= 1L && is_probable_cue_identifier(lines[comment_end])) {
+      comment_end <- comment_end - 1L
+    }
+
+    comment_lines <- if (comment_start <= comment_end) {
+      lines[comment_start:comment_end]
+    } else {
+      character()
+    }
+    comment_lines <- comment_lines[nzchar(comment_lines)]
+    if (length(comment_lines) == 0) {
+      next
+    }
+
+    comment_num <- if (has_cue_id) {
+      lines[cue_id_idx]
+    } else {
+      as.character(length(rows) + 1L)
+    }
+
+    comment <- paste(comment_lines, collapse = " ")
+    speaker_comment <- split_webvtt_speaker(comment)
+    time_parts <- split_webvtt_timestamp(lines[timestamp_idx])
+
+    rows[[length(rows) + 1L]] <- tibble::tibble(
+      transcript_file = transcript_file,
+      comment_num = comment_num,
+      name = speaker_comment$name,
+      comment = speaker_comment$comment,
+      start = time_parts$start,
+      end = time_parts$end
+    )
+  }
+
+  if (length(rows) == 0) {
+    return(tibble::tibble(
+      transcript_file = character(),
+      comment_num = character(),
+      name = character(),
+      comment = character(),
+      start = character(),
+      end = character()
+    ))
+  }
+
+  do.call(rbind, rows)
+}
+
+# Internal helper to identify cue identifiers before the next timestamp.
+is_probable_cue_identifier <- function(line) {
+  line <- trimws(line)
+  nzchar(line) &&
+    !grepl(":", line, fixed = TRUE) &&
+    !grepl("^<v[[:space:]]+", line) &&
+    !grepl("[.?!]$", line)
+}
+
+# Internal helper to split WebVTT timestamps and drop cue settings.
+split_webvtt_timestamp <- function(timestamp) {
+  time_split <- strsplit(timestamp, " --> ", fixed = TRUE)[[1]]
+  start <- if (length(time_split) >= 1) trimws(time_split[1]) else NA_character_
+  end <- if (length(time_split) >= 2) trimws(strsplit(time_split[2], "[[:space:]]+")[[1]][1]) else NA_character_
+  list(start = start, end = end)
+}
+
+# Internal helper to extract speaker labels from WebVTT voice spans or Zoom text.
+split_webvtt_speaker <- function(comment) {
+  voice_match <- regexec("^<v[[:space:]]+([^>]+)>(.*)$", comment)
+  voice_parts <- regmatches(comment, voice_match)[[1]]
+  if (length(voice_parts) == 3) {
+    return(list(name = trimws(voice_parts[2]), comment = trimws(voice_parts[3])))
+  }
+
+  name_comment_split <- strsplit(comment, ": ", fixed = TRUE)[[1]]
+  if (length(name_comment_split) > 1) {
+    return(list(
+      name = name_comment_split[1],
+      comment = paste(name_comment_split[-1], collapse = ": ")
+    ))
+  }
+
+  list(name = NA_character_, comment = comment)
 }
