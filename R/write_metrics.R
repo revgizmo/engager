@@ -77,16 +77,7 @@ normalize_export_privacy_level <- function(privacy_level) {
 # Helper function to resolve comment export policy
 resolve_comments_policy <- function(comments_policy, comments_format, privacy_level) {
   if (!is.null(comments_format)) {
-    if (!is.character(comments_format) || length(comments_format) == 0) {
-      stop("`comments_format` must be one of: text, count", call. = FALSE)
-    }
-
-    comments_format <- tryCatch(
-      match.arg(comments_format, c("text", "count")),
-      error = function(e) {
-        stop("`comments_format` must be one of: text, count", call. = FALSE)
-      }
-    )
+    comments_format <- match.arg(comments_format, c("text", "count"))
 
     warning(
       "`comments_format` is deprecated; use `comments_policy` instead.",
