@@ -1,13 +1,8 @@
 # Internal function - no documentation needed
 set_privacy_defaults <- function(privacy_level = c("privacy_strict", "privacy_standard", "mask", "none"),
                                  unmatched_names_action = c("stop", "warn")) {
-  privacy_level <- if (length(privacy_level) > 1) {
-    match.arg(privacy_level)
-  } else {
-    match.arg(privacy_level, c(
-      "privacy_strict", "privacy_standard", "mask", "none",
-      "ferpa_strict", "ferpa_standard"
-    ))
+  if (missing(privacy_level)) {
+    privacy_level <- "privacy_strict"
   }
   privacy_level <- normalize_privacy_level(privacy_level)
   unmatched_names_action <- match.arg(unmatched_names_action)

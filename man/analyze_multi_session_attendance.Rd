@@ -25,7 +25,8 @@ analyze_multi_session_attendance(
 
 \item{unmatched_names_action}{Action to take for unmatched names: "stop" or "warn"}
 
-\item{privacy_level}{Privacy level: "privacy_strict", "privacy_standard", "mask", "none"}
+\item{privacy_level}{Privacy level: "privacy_strict", "privacy_standard", "mask", "none".
+Deprecated aliases "ferpa_strict" and "ferpa_standard" are accepted with a warning.}
 
 \item{min_attendance_threshold}{Minimum attendance threshold for "consistent attendee" (default: 0.5)}
 }

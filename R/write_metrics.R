@@ -6,13 +6,14 @@
 #' @param data A tibble containing the data to write
 #' @param what Type of output: "engagement", "summary", or "session_summary" (default: "engagement")
 #' @param path File path where to write the output
+#' @param comments_format Deprecated alias for `comments_policy`. Use
+#'   `comments_policy = "count"` or `comments_policy = "text"` instead.
+#'   Retained before `privacy_level` to preserve positional compatibility.
+#' @param privacy_level Privacy level for data export (default: from global option)
 #' @param comments_policy Export policy for the `comments` column: "auto", "omit",
 #'   "count", or "text" (default: "auto"). "auto" resolves to "omit" so raw
 #'   transcript text is never exported accidentally. "text" is allowed only
 #'   with `privacy_level = "none"` and emits a warning.
-#' @param comments_format Deprecated alias for `comments_policy`. Use
-#'   `comments_policy = "count"` or `comments_policy = "text"` instead.
-#' @param privacy_level Privacy level for data export (default: from global option)
 #' @return Invisibly returns the exported tibble after privacy and export
 #'   policies are applied.
 #'
@@ -26,9 +27,9 @@ write_metrics <- function(
     data = NULL,
     what = c("engagement", "summary", "session_summary"),
     path = NULL,
-    comments_policy = c("auto", "omit", "count", "text"),
     comments_format = NULL,
-    privacy_level = getOption("engager.privacy_level", "mask")) {
+    privacy_level = getOption("engager.privacy_level", "mask"),
+    comments_policy = c("auto", "omit", "count", "text")) {
   what <- match.arg(what)
   comments_policy <- match.arg(comments_policy)
   privacy_level <- normalize_export_privacy_level(privacy_level)
@@ -130,24 +131,25 @@ apply_comments_export_policy <- function(export_data, comments_policy) {
   }
 
   if (identical(comments_policy, "count")) {
-    export_data$comments_count <- vapply(
-      export_data$comments,
-      comment_entry_count,
-      FUN.VALUE = integer(1)
-    )
+    export_data$comments_count <- comment_entry_counts(export_data$comments)
     export_data$comments <- NULL
     return(export_data)
   }
 
   if (identical(comments_policy, "text")) {
-    export_data$comments <- vapply(
-      export_data$comments,
-      flatten_comment_entry,
-      FUN.VALUE = character(1)
-    )
+    export_data$comments <- flatten_comment_entries(export_data$comments)
   }
 
   export_data
+}
+
+# Helper function to count comments from a vector or list column
+comment_entry_counts <- function(x) {
+  if (is.list(x)) {
+    return(vapply(x, comment_entry_count, FUN.VALUE = integer(1)))
+  }
+
+  as.integer(!is.na(x) & nzchar(as.character(x)))
 }
 
 # Helper function to count comments from list or scalar entries
@@ -157,6 +159,17 @@ comment_entry_count <- function(x) {
   }
 
   length(unlist(x, use.names = FALSE))
+}
+
+# Helper function to flatten comments from a vector or list column
+flatten_comment_entries <- function(x) {
+  if (is.list(x)) {
+    return(vapply(x, flatten_comment_entry, FUN.VALUE = character(1)))
+  }
+
+  out <- as.character(x)
+  out[is.na(out)] <- ""
+  out
 }
 
 # Helper function to flatten comments only for explicit raw-text exports

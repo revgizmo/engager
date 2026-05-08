@@ -62,6 +62,30 @@ test_that("write_metrics omits raw comments by default", {
   expect_false(grepl("Alice Johnson|Bob Lee|How are you\\?|Thanks", file_text))
 })
 
+test_that("write_metrics preserves positional comments_format and privacy_level calls", {
+  test_data <- tibble::tibble(
+    name = "Alice Johnson",
+    comments = list(c("Alice Johnson spoke")),
+    comment_count = 1
+  )
+
+  tmp <- tempfile(fileext = ".csv")
+  on.exit(unlink(tmp), add = TRUE)
+
+  expect_warning(
+    expect_warning(
+      result <- write_metrics(test_data, "engagement", tmp, "count", "none"),
+      "Privacy disabled"
+    ),
+    "deprecated"
+  )
+
+  written <- readr::read_csv(tmp, show_col_types = FALSE)
+  expect_s3_class(result, "tbl_df")
+  expect_true("comments_count" %in% names(written))
+  expect_false("comments" %in% names(written))
+})
+
 test_that("write_metrics supports explicit comments_count exports", {
   test_data <- tibble::tibble(
     name = c("Student1", "Student2"),
@@ -83,6 +107,23 @@ test_that("write_metrics supports explicit comments_count exports", {
   expect_false(grepl("Hello|How are you", file_text))
 })
 
+test_that("write_metrics counts scalar comments robustly", {
+  test_data <- tibble::tibble(
+    name = c("Student1", "Student2", "Student3"),
+    comments = c("One scalar comment", "", NA_character_)
+  )
+
+  tmp <- tempfile(fileext = ".csv")
+  on.exit(unlink(tmp), add = TRUE)
+
+  result <- write_metrics(test_data, comments_policy = "count", path = tmp)
+  written <- readr::read_csv(tmp, show_col_types = FALSE)
+
+  expect_s3_class(result, "tbl_df")
+  expect_false("comments" %in% names(written))
+  expect_equal(written$comments_count, c(1L, 0L, 0L))
+})
+
 test_that("write_metrics blocks raw comment text for privacy-safe levels", {
   test_data <- tibble::tibble(
     name = "Student1",
@@ -92,7 +133,6 @@ test_that("write_metrics blocks raw comment text for privacy-safe levels", {
 
   for (level in c("mask", "privacy_standard", "privacy_strict")) {
     tmp <- tempfile(fileext = ".csv")
-    on.exit(unlink(tmp), add = TRUE)
 
     expect_error(
       write_metrics(
@@ -103,6 +143,8 @@ test_that("write_metrics blocks raw comment text for privacy-safe levels", {
       ),
       "only allowed when `privacy_level = \"none\"`"
     )
+
+    unlink(tmp)
   }
 })
 

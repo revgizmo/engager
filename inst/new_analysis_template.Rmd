@@ -133,7 +133,7 @@ transcripts_summary_file_input <- "transcripts_summary.csv"
 
 
 ### instructor_name_input
-instructor_name_input <- "Professor Smith"
+instructor_name_input <- "Instructor"
 # instructor_name_input used in make_students_only_transcripts_summary_df()
 
 
@@ -839,7 +839,6 @@ plot(pressure)
 ```
 
 In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
-
 
 
 

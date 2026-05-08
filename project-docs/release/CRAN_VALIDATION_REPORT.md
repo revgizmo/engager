@@ -18,8 +18,8 @@
 | Privacy wording | Complete locally | Active CRAN-facing docs reworded to privacy-supporting / FERPA-oriented language; no legal compliance guarantee claimed |
 | Issue #153 privacy validation | Approved locally | Real-world, institutionally authorized validation rendered on commit `e4a78da`: 4 outputs, no `comments` column, 0 blocking identifier scan hits, 0 metadata identifier scan hits, clean tarball check; approval limited to privacy-safe CSV export surface |
 | Issue #154 adoption guidance | Complete locally | `vignettes/ferpa-ethics.Rmd` provides institutional adoption guidance with privacy-supporting caveats |
-| Tests | Pass locally | `devtools::test()`: 2,481 pass, 0 fail, 67 warnings, 6 skips |
-| Coverage | Pass locally | Overall 83.93%; strategic exported API 92.31% |
+| Tests | Pass locally | `devtools::test()`: 2,501 pass, 0 fail, 67 warnings, 6 skips |
+| Coverage | Pass locally | Overall 83.82%; strategic exported API 92.34% |
 | Lint | Non-blocking debt remains | `lintr::lint_package()`: 52 existing style/object-usage findings |
 | R CMD check | Pass locally | 0 errors, 0 warnings, 0 notes |
 | Build/tarball inspection | Pass locally | `R CMD build .` succeeded; tarball has 267 files and no local release docs, project-only docs, private transcript data, `.Rcheck`, `.DS_Store`, backup files, generated outputs, or excluded extdata paths |

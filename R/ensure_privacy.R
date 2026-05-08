@@ -70,7 +70,10 @@ ensure_privacy <- function(x = NULL,
 # Helper function to normalize privacy level aliases
 normalize_privacy_level <- function(privacy_level) {
   if (!is.character(privacy_level) || length(privacy_level) == 0) {
-    stop("privacy_level must be a non-empty character vector")
+    stop(
+      "Invalid privacy_level. Must be one of: privacy_strict, privacy_standard, mask, none",
+      call. = FALSE
+    )
   }
 
   if (length(privacy_level) > 1) {

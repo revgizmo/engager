@@ -8,9 +8,9 @@ write_metrics(
   data = NULL,
   what = c("engagement", "summary", "session_summary"),
   path = NULL,
-  comments_policy = c("auto", "omit", "count", "text"),
   comments_format = NULL,
-  privacy_level = getOption("engager.privacy_level", "mask")
+  privacy_level = getOption("engager.privacy_level", "mask"),
+  comments_policy = c("auto", "omit", "count", "text")
 )
 }
 \arguments{
@@ -20,15 +20,16 @@ write_metrics(
 
 \item{path}{File path where to write the output}
 
+\item{comments_format}{Deprecated alias for \code{comments_policy}. Use
+\code{comments_policy = "count"} or \code{comments_policy = "text"} instead.
+Retained before \code{privacy_level} to preserve positional compatibility.}
+
+\item{privacy_level}{Privacy level for data export (default: from global option)}
+
 \item{comments_policy}{Export policy for the \code{comments} column: "auto", "omit",
 "count", or "text" (default: "auto"). "auto" resolves to "omit" so raw
 transcript text is never exported accidentally. "text" is allowed only
 with \code{privacy_level = "none"} and emits a warning.}
-
-\item{comments_format}{Deprecated alias for \code{comments_policy}. Use
-\code{comments_policy = "count"} or \code{comments_policy = "text"} instead.}
-
-\item{privacy_level}{Privacy level for data export (default: from global option)}
 }
 \value{
 Invisibly returns the exported tibble after privacy and export

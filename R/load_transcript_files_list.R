@@ -35,7 +35,7 @@ load_transcript_files_list <-
     # Extract date
     df$date_extract <- stringr::str_extract(df$file_name, dt_extract_pattern)
     missing_date <- is.na(df$date_extract) | !nzchar(df$date_extract)
-    df$date_extract[missing_date] <- tools::file_path_sans_ext(df$file_name[missing_date])
+    df$date_extract[missing_date] <- derive_transcript_session_key(df$file_name[missing_date])
 
     # Determine file type
     df$file_type <- ifelse(
@@ -58,8 +58,15 @@ load_transcript_files_list <-
     df$recording_start <- as.POSIXct(df$recording_start, tz = "UTC")
     missing_start <- is.na(df$recording_start)
     if (any(missing_start)) {
+      fallback_session_keys <- unique(df$date_extract[missing_start])
+      fallback_recording_start <- as.POSIXct(
+        seq_along(fallback_session_keys),
+        origin = "1970-01-01",
+        tz = "UTC"
+      )
+      names(fallback_recording_start) <- fallback_session_keys
       df$recording_start[missing_start] <- as.POSIXct(
-        seq_len(sum(missing_start)),
+        fallback_recording_start[df$date_extract[missing_start]],
         origin = "1970-01-01",
         tz = "UTC"
       )
@@ -96,3 +103,12 @@ load_transcript_files_list <-
 
     return(tibble::as_tibble(result))
   }
+
+# Internal helper to derive a shared session key for non-Zoom fixture names
+derive_transcript_session_key <- function(file_name) {
+  session_key <- tools::file_path_sans_ext(file_name)
+  session_key <- sub("[.]transcript$", "", session_key)
+  session_key <- sub("[.]cc$", "", session_key)
+  session_key <- sub("[.]chat$", "", session_key)
+  session_key
+}

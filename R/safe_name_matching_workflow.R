@@ -154,13 +154,7 @@ process_transcript_with_privacy <- function(transcript_data = NULL,
     stop("roster_data must be a data frame", call. = FALSE)
   }
 
-  valid_levels <- c("privacy_strict", "privacy_standard", "mask", "none")
-  if (!privacy_level %in% valid_levels) {
-    stop("Invalid privacy_level. Must be one of: ",
-      paste(valid_levels, collapse = ", "),
-      call. = FALSE
-    )
-  }
+  privacy_level <- normalize_privacy_level(privacy_level)
 
   # Ensure transcript has a usable name column before proceeding
   transcript_name_columns <- c(
@@ -203,13 +197,7 @@ match_names_with_privacy <- function(transcript_data = NULL,
     stop("roster_data must be a data frame", call. = FALSE)
   }
 
-  valid_levels <- c("privacy_strict", "privacy_standard", "mask", "none")
-  if (!privacy_level %in% valid_levels) {
-    stop("Invalid privacy_level. Must be one of: ",
-      paste(valid_levels, collapse = ", "),
-      call. = FALSE
-    )
-  }
+  privacy_level <- normalize_privacy_level(privacy_level)
 
   # Extract names for matching
   transcript_names <- extract_transcript_names(transcript_data)
@@ -433,13 +421,7 @@ validate_safe_name_inputs <- function(transcript_file_path, roster_data, privacy
     stop("roster_data must be a data frame", call. = FALSE)
   }
 
-  valid_levels <- c("privacy_strict", "privacy_standard", "mask", "none")
-  if (!privacy_level %in% valid_levels) {
-    stop("Invalid privacy_level. Must be one of: ",
-      paste(valid_levels, collapse = ", "),
-      call. = FALSE
-    )
-  }
+  normalize_privacy_level(privacy_level)
 
   valid_actions <- c("stop", "warn")
   if (!unmatched_names_action %in% valid_actions) {

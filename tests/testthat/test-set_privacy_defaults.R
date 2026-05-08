@@ -37,3 +37,16 @@ test_that("set_privacy_defaults supports deprecated FERPA aliases", {
   expect_equal(cfg$privacy_level, "privacy_standard")
   expect_equal(getOption("engager.privacy_level"), "privacy_standard")
 })
+
+test_that("set_privacy_defaults normalizes deprecated aliases in explicit vectors", {
+  expect_warning(
+    expect_warning(
+      cfg <- set_privacy_defaults(c("ferpa_strict", "privacy_standard")),
+      "deprecated"
+    ),
+    "length > 1"
+  )
+
+  expect_equal(cfg$privacy_level, "privacy_strict")
+  expect_equal(getOption("engager.privacy_level"), "privacy_strict")
+})
