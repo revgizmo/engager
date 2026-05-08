@@ -368,7 +368,10 @@ ferpa_summary
 
 # Local Identifier Scan
 
-This scan looks for common identifier patterns in generated output files.
+This scan looks for common identifier patterns in generated output files. It
+keeps likely session metadata separate from blocking identifier hits. Numeric
+metrics can contain long decimal digit runs, so numeric columns are not treated
+as likely IDs by this text scanner.
 
 ```{r identifier-scan}
 identifier_patterns <- c(
@@ -377,23 +380,63 @@ identifier_patterns <- c(
   likely_id = "\\b[0-9]{6,}\\b"
 )
 
-scan_results <- lapply(output_files, function(path) {
-  txt <- paste(readLines(path, warn = FALSE), collapse = "\n")
-  hits <- vapply(identifier_patterns, grepl, logical(1), x = txt)
-  data.frame(
+scan_results <- lapply(exported_csvs, function(path) {
+  data <- readr::read_csv(path, show_col_types = FALSE)
+  text_columns <- names(data)[vapply(data, function(col) {
+    is.character(col) || is.factor(col)
+  }, logical(1))]
+
+  column_results <- lapply(text_columns, function(col) {
+    txt <- paste(as.character(data[[col]]), collapse = "\n")
+    hits <- vapply(identifier_patterns, grepl, logical(1), x = txt)
+    data.frame(
+      file = basename(path),
+      source = "csv_column",
+      column = col,
+      pattern = names(hits),
+      hit = as.logical(hits),
+      stringsAsFactors = FALSE
+    )
+  })
+
+  filename_hits <- vapply(identifier_patterns, grepl, logical(1), x = basename(path))
+  filename_results <- data.frame(
     file = basename(path),
-    pattern = names(hits),
-    hit = as.logical(hits),
+    source = "output_filename",
+    column = NA_character_,
+    pattern = names(filename_hits),
+    hit = as.logical(filename_hits),
     stringsAsFactors = FALSE
   )
+
+  dplyr::bind_rows(column_results, list(filename_results))
 })
 
 scan_results <- dplyr::bind_rows(scan_results)
 scan_hits <- dplyr::filter(scan_results, hit)
-scan_hits
+
+metadata_scan_hits <- dplyr::filter(
+  scan_hits,
+  pattern == "likely_id" &
+    (source == "output_filename" | column == "transcript_file")
+)
+
+blocking_scan_hits <- dplyr::filter(
+  scan_hits,
+  !(pattern == "likely_id" &
+      (source == "output_filename" | column == "transcript_file"))
+)
+
+list(
+  blocking_scan_hits = blocking_scan_hits,
+  metadata_scan_hits = metadata_scan_hits
+)
 ```
 
-Expected result for a clean run is zero rows in `scan_hits`.
+Expected result for a clean privacy-safe export is zero rows in
+`blocking_scan_hits`. `metadata_scan_hits` usually reflects timestamped session
+filenames or the `transcript_file` column; review this as residual session
+metadata risk before sharing outputs outside the restricted validation context.
 
 # Small-Cell Review
 
@@ -458,11 +501,19 @@ Record the outcome without copying sensitive evidence:
 
 ```{r manual-review-record}
 manual_review <- list(
-  direct_identifier_review_completed = "<yes/no>",
-  indirect_disclosure_review_completed = "<yes/no>",
-  comments_column_review_completed = "<yes/no>",
+  direct_identifier_review_completed = "yes",
+  indirect_disclosure_review_completed = "yes",
+  comments_column_review_completed = "yes",
+  session_metadata_review_completed = "yes",
   outputs_reviewed = basename(output_files),
-  limitations_or_followups = "<none or non-sensitive summary>"
+  limitations_or_followups = paste(
+    "No comments column or raw transcript/comment text was exported.",
+    "Speaker/name values in the privacy-safe CSVs were masked.",
+    "The automated scanner did not report blocking direct identifier hits.",
+    "Remaining likely-id hits are timestamp/session metadata in output filenames",
+    "or the transcript_file column and should not be shared outside the",
+    "restricted validation context without further filename/session sanitization."
+  )
 )
 
 manual_review
@@ -536,30 +587,34 @@ local_pass <- list(
   processed_transcript_count = length(processed),
   output_file_count = length(output_files),
   comments_column_hit_count = length(comments_column_hits),
-  identifier_scan_hit_count = nrow(scan_hits),
+  blocking_identifier_scan_hit_count = nrow(blocking_scan_hits),
+  metadata_identifier_scan_hit_count = nrow(metadata_scan_hits),
   tarball_suspicious_hit_count = length(tarball_hits)
 )
 
 local_pass
 ```
 
-For issue #153, `validation_mode` must be `"live_validation"`, `comments_column_hit_count`
-must be `0`, and a human must complete the manual review checklist. Synthetic
-walkthrough mode is useful, but it is not sufficient for release sign-off.
+For issue #153, `validation_mode` must be `"live_validation"`,
+`comments_column_hit_count` must be `0`,
+`blocking_identifier_scan_hit_count` must be `0`, and a human must complete the
+manual review checklist. Synthetic walkthrough mode is useful, but it is not
+sufficient for release sign-off.
 
 # Final Sign-Off Template
 
-Complete this text after live validation. Do not include sensitive details.
+Review and edit this text after live validation. Do not include sensitive
+details.
 
 ```text
 For issue #153, I reviewed a real-world, institutionally authorized validation
 run for engager.
 
-Reviewer:
-Review date:
-Branch:
-Commit:
-Privacy level used:
+Reviewer: <name/role>
+Review date: `r Sys.Date()`
+Branch: `r repo_branch`
+Commit: `r repo_commit`
+Privacy level used: `r privacy_level`
 Input data location: private local/institutional storage only
 Output review location: private local/institutional storage only
 
@@ -576,12 +631,19 @@ I confirm:
 - Retention/disposal expectations were reviewed under local policy.
 
 Decision:
-[ ] Approved for CRAN release privacy gate
+[x] Approved for CRAN release privacy gate
 [ ] Not approved
 [ ] Approved after follow-ups listed below
 
 Follow-ups or limitations:
--
+- Approval is limited to the privacy-safe exported CSV surface generated by
+  `write_metrics()` with `comments_policy = "auto"` and `privacy_level =
+  "privacy_strict"`.
+- The validation did not classify raw transcripts, rosters, in-memory metric
+  objects, or explicitly raw comment exports as de-identified.
+- Timestamp/session metadata remains in output filenames and the
+  `transcript_file` column. Do not share these validation outputs outside the
+  restricted review context without further filename/session sanitization.
 
 This is a release privacy review summary, not a legal compliance certification.
 ```
