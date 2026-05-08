@@ -1,0 +1,574 @@
+---
+title: "engager Issue #153 Privacy Validation Walkthrough"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+date: "`r Sys.Date()`"
+params:
+  validation_mode: "live_validation"
+  validation_dir: "~/engager-153-validation"
+  reviewer: "<name/role>"
+  institution_or_unit: "<non-sensitive unit name or omit>"
+  data_authorized: "yes - course owner approved local validation"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  error = FALSE,
+  warning = TRUE,
+  message = TRUE
+)
+```
+
+# Purpose
+
+This notebook supports the `engager` issue #153 privacy validation gate. It is
+designed to be run by a competent R user who may not know this project.
+
+The goal is to validate that `engager` can run on an institutionally authorized
+real-world dataset without leaking raw or identifiable data into package files,
+CRAN artifacts, or shareable outputs.
+
+This is a privacy-oriented release validation. It is not legal advice and does
+not certify FERPA compliance.
+
+# How To Use This Notebook
+
+There are two modes:
+
+- `validation_mode <- "synthetic_walkthrough"` uses public synthetic package
+  fixtures. This verifies the notebook and package workflow, but it does **not**
+  satisfy issue #153.
+- `validation_mode <- "live_validation"` uses real institutionally authorized
+  files in `private-inputs/`. This is the mode needed for #153 sign-off.
+
+Do not copy real transcripts, rosters, outputs, screenshots, or named rows into
+the repository, GitHub, CRAN, Slack, email, or this rendered HTML if it will be
+shared outside authorized channels.
+
+# Reviewer Inputs
+
+Edit this chunk before running.
+
+```{r reviewer-inputs}
+validation_mode <- params$validation_mode
+
+repo_dir <- path.expand("~/git/zoomstudentengagement")
+validation_dir <- path.expand(params$validation_dir)
+private_input_dir <- file.path(validation_dir, "private-inputs")
+output_dir <- file.path(validation_dir, "outputs")
+
+reviewer <- params$reviewer
+institution_or_unit <- params$institution_or_unit
+data_authorized <- params$data_authorized
+
+privacy_level <- "privacy_strict"
+
+# Optional: set expected live filenames. Leave as defaults unless your files use
+# different names.
+live_roster_file <- file.path(private_input_dir, "roster.csv")
+live_transcript_pattern <- "[.]vtt$"
+```
+
+# Safety Checks
+
+Create local folders outside the repository and verify the repository branch.
+
+```{r safety-checks}
+stopifnot(dir.exists(repo_dir))
+dir.create(validation_dir, recursive = TRUE, showWarnings = FALSE)
+dir.create(private_input_dir, recursive = TRUE, showWarnings = FALSE)
+dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+
+old_wd <- getwd()
+setwd(repo_dir)
+
+repo_branch <- system("git branch --show-current", intern = TRUE)
+repo_commit <- system("git rev-parse HEAD", intern = TRUE)
+repo_status <- system("git status --short", intern = TRUE)
+
+list(
+  repo_dir = repo_dir,
+  repo_branch = repo_branch,
+  repo_commit = repo_commit,
+  repo_status = repo_status
+)
+```
+
+Expected branch for this release work:
+
+```{r branch-expectation}
+expected_branch <- "codex/cran-gate-reconciliation"
+if (!identical(repo_branch, expected_branch)) {
+  warning("Expected branch ", expected_branch, " but found ", repo_branch)
+}
+```
+
+For live validation, `git status --short` should not show raw data or generated
+validation outputs inside the repository. A clean repo is preferred before
+starting live validation.
+
+# Load Package
+
+This notebook does not install packages automatically. If dependencies are
+missing, run this once from a terminal:
+
+```sh
+cd ~/git/zoomstudentengagement
+Rscript -e 'install.packages(c("devtools", "testthat", "readr", "dplyr", "tibble"), repos = "https://cloud.r-project.org")'
+```
+
+Then run:
+
+```{r load-package}
+required_packages <- c("devtools", "readr", "dplyr", "tibble")
+missing_packages <- required_packages[!vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)]
+if (length(missing_packages) > 0) {
+  stop(
+    "Missing packages: ", paste(missing_packages, collapse = ", "),
+    ". Install them before continuing."
+  )
+}
+
+devtools::load_all(repo_dir, quiet = TRUE)
+library(engager)
+set_privacy_defaults(privacy_level)
+```
+
+# Select Validation Inputs
+
+## Synthetic Walkthrough Mode
+
+Synthetic walkthrough mode uses fixtures already included in the package. This
+is useful for checking that the notebook and package flow are working.
+
+```{r synthetic-inputs}
+synthetic_data_dir <- system.file("extdata/test_transcripts", package = "engager")
+synthetic_transcript_files <- list.files(
+  synthetic_data_dir,
+  pattern = "[.]vtt$",
+  full.names = TRUE
+)
+synthetic_roster_file <- file.path(synthetic_data_dir, "ideal_course_roster.csv")
+
+list(
+  synthetic_data_dir = synthetic_data_dir,
+  transcript_count = length(synthetic_transcript_files),
+  roster_exists = file.exists(synthetic_roster_file)
+)
+```
+
+## Live Validation Mode
+
+For #153 sign-off, place institutionally authorized files here:
+
+```text
+~/engager-153-validation/private-inputs/
+  session1.vtt
+  session2.vtt
+  roster.csv
+```
+
+Do not place these files inside the repository.
+
+```{r select-inputs}
+if (identical(validation_mode, "synthetic_walkthrough")) {
+  transcript_files <- synthetic_transcript_files
+  roster_file <- synthetic_roster_file
+} else if (identical(validation_mode, "live_validation")) {
+  transcript_files <- list.files(
+    private_input_dir,
+    pattern = live_transcript_pattern,
+    full.names = TRUE
+  )
+  roster_file <- live_roster_file
+} else {
+  stop("Unknown validation_mode: ", validation_mode)
+}
+
+input_summary <- list(
+  validation_mode = validation_mode,
+  transcript_count = length(transcript_files),
+  roster_file_exists = file.exists(roster_file)
+)
+input_summary
+```
+
+Stop if required inputs are missing:
+
+```{r input-guards}
+if (length(transcript_files) == 0) {
+  stop("No transcript .vtt files found for validation_mode = ", validation_mode)
+}
+
+if (!file.exists(roster_file)) {
+  stop("Roster file not found: ", roster_file)
+}
+```
+
+# Non-Sensitive Run Metadata
+
+This record can be copied into a sign-off summary if it does not contain
+sensitive names or paths.
+
+```{r validation-record}
+validation_record <- list(
+  reviewer = reviewer,
+  review_date = as.character(Sys.Date()),
+  institution_or_unit = institution_or_unit,
+  validation_mode = validation_mode,
+  repo_branch = repo_branch,
+  repo_commit = repo_commit,
+  data_authorized = data_authorized,
+  privacy_level = privacy_level,
+  transcript_count = length(transcript_files),
+  output_location = "private local validation directory"
+)
+
+str(validation_record)
+```
+
+# Process Transcripts
+
+This creates per-transcript metrics in memory. The in-memory metrics may include
+raw comment text for analysis compatibility. Only the export step below should
+be used to create privacy-safe CSVs.
+
+```{r process-transcripts}
+roster <- readr::read_csv(roster_file, show_col_types = FALSE)
+
+processed <- lapply(transcript_files, function(path) {
+  metrics <- summarize_transcript_metrics(transcript_file_path = path)
+  if (is.null(metrics)) {
+    stop("Could not summarize transcript: ", path)
+  }
+  metrics
+})
+
+names(processed) <- basename(transcript_files)
+
+processed_summary <- data.frame(
+  transcript = names(processed),
+  rows = vapply(processed, nrow, integer(1)),
+  columns = vapply(processed, ncol, integer(1)),
+  stringsAsFactors = FALSE
+)
+
+processed_summary
+```
+
+Write outputs only to the private validation output directory through
+`write_metrics()`. This is the privacy-safe export path. By default it masks
+structured identifier columns and omits raw transcript/comment text from CSV
+exports.
+
+```{r write-private-outputs}
+for (nm in names(processed)) {
+  safe_name <- gsub("[^A-Za-z0-9_.-]", "_", nm)
+  write_metrics(
+    processed[[nm]],
+    what = "engagement",
+    path = file.path(output_dir, paste0(safe_name, "_metrics.csv")),
+    privacy_level = privacy_level,
+    comments_policy = "auto"
+  )
+}
+
+output_files <- list.files(output_dir, recursive = TRUE, full.names = TRUE)
+basename(output_files)
+```
+
+```{r export-surface-guard}
+exported_csvs <- output_files[grepl("[.]csv$", output_files)]
+export_columns <- lapply(exported_csvs, function(path) {
+  names(readr::read_csv(path, show_col_types = FALSE, n_max = 0))
+})
+names(export_columns) <- basename(exported_csvs)
+
+comments_column_hits <- names(export_columns)[vapply(
+  export_columns,
+  function(cols) "comments" %in% cols,
+  logical(1)
+)]
+
+comments_column_hits
+```
+
+Expected `comments_column_hits` is `character(0)`. Do not approve issue #153
+from CSV exports that contain a `comments` column or raw transcript text.
+
+# Automated Privacy Checks
+
+These checks are useful but not sufficient. A human must still inspect outputs.
+Run them against exported CSVs, not the in-memory metric objects, because
+in-memory objects may preserve comments for analysis compatibility.
+
+```{r privacy-compliance-checks}
+exported_data <- lapply(exported_csvs, readr::read_csv, show_col_types = FALSE)
+names(exported_data) <- basename(exported_csvs)
+
+privacy_checks <- lapply(exported_data, function(x) {
+  tryCatch(
+    validate_privacy_compliance(
+      x,
+      privacy_level = privacy_level,
+      stop_on_violation = FALSE
+    ),
+    warning = function(w) {
+      list(result = TRUE, warning = conditionMessage(w))
+    },
+    error = function(e) {
+      list(result = FALSE, error = conditionMessage(e))
+    }
+  )
+})
+
+privacy_checks
+```
+
+```{r ferpa-oriented-helper-checks}
+ferpa_reviews <- lapply(exported_data, function(x) {
+  validate_ferpa_compliance(x)
+})
+
+ferpa_summary <- data.frame(
+  file = names(ferpa_reviews),
+  compliant = vapply(ferpa_reviews, function(x) isTRUE(x$compliant), logical(1)),
+  pii_detected = vapply(
+    ferpa_reviews,
+    function(x) paste(x$pii_detected, collapse = "; "),
+    character(1)
+  ),
+  stringsAsFactors = FALSE
+)
+
+ferpa_summary
+```
+
+# Local Identifier Scan
+
+This scan looks for common identifier patterns in generated output files.
+
+```{r identifier-scan}
+identifier_patterns <- c(
+  email = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}",
+  phone = "\\b\\(?[0-9]{3}\\)?[-. ]?[0-9]{3}[-. ]?[0-9]{4}\\b",
+  likely_id = "\\b[0-9]{6,}\\b"
+)
+
+scan_results <- lapply(output_files, function(path) {
+  txt <- paste(readLines(path, warn = FALSE), collapse = "\n")
+  hits <- vapply(identifier_patterns, grepl, logical(1), x = txt)
+  data.frame(
+    file = basename(path),
+    pattern = names(hits),
+    hit = as.logical(hits),
+    stringsAsFactors = FALSE
+  )
+})
+
+scan_results <- dplyr::bind_rows(scan_results)
+scan_hits <- dplyr::filter(scan_results, hit)
+scan_hits
+```
+
+Expected result for a clean run is zero rows in `scan_hits`.
+
+# Small-Cell Review
+
+Small cells are not automatically wrong, but they need human review before
+sharing outputs.
+
+```{r small-cell-review}
+numeric_small_cells <- lapply(exported_data, function(x) {
+  numeric_cols <- names(x)[vapply(x, is.numeric, logical(1))]
+  if (length(numeric_cols) == 0) {
+    return(data.frame())
+  }
+  out <- lapply(numeric_cols, function(col) {
+    vals <- x[[col]]
+    data.frame(
+      column = col,
+      count_1_or_2 = sum(vals %in% c(1, 2), na.rm = TRUE),
+      stringsAsFactors = FALSE
+    )
+  })
+  dplyr::bind_rows(out)
+})
+
+small_cell_summary <- dplyr::bind_rows(
+  lapply(names(numeric_small_cells), function(nm) {
+    cbind(file = nm, numeric_small_cells[[nm]])
+  })
+)
+
+dplyr::filter(small_cell_summary, count_1_or_2 > 0)
+```
+
+# Manual Output Review Checklist
+
+The reviewer must inspect every generated output file under:
+
+```{r output-dir-display}
+output_dir
+```
+
+Check for:
+
+- Student names.
+- Instructor names, if not intended for sharing.
+- Email addresses.
+- Student IDs or SIS/LMS IDs.
+- Meeting IDs.
+- Phone numbers.
+- Addresses.
+- Course section identifiers that would expose a small group.
+- Small-cell outputs, especially counts of 1 or 2.
+- Raw transcript text that includes identifiable context.
+- A `comments` column in any CSV intended to be privacy-safe.
+- Logs or temp files containing raw rows.
+
+Optional local model review can supplement manual review. Record only a
+non-sensitive summary, such as the number of files reviewed, whether direct PII
+was reported, and residual risk. Do not paste raw rows or model excerpts
+containing transcript text into GitHub, CRAN materials, or package files.
+
+Record the outcome without copying sensitive evidence:
+
+```{r manual-review-record}
+manual_review <- list(
+  direct_identifier_review_completed = "<yes/no>",
+  indirect_disclosure_review_completed = "<yes/no>",
+  comments_column_review_completed = "<yes/no>",
+  outputs_reviewed = basename(output_files),
+  limitations_or_followups = "<none or non-sensitive summary>"
+)
+
+manual_review
+```
+
+# Confirm Package Surface Is Clean
+
+Build and inspect the source tarball. This checks that raw/institution-specific
+data is not included in the package artifact.
+
+```{r build-tarball}
+setwd(repo_dir)
+build_output <- system("R CMD build .", intern = TRUE)
+tail(build_output, 20)
+```
+
+```{r inspect-tarball}
+tarball <- list.files(repo_dir, pattern = "^engager_.*[.]tar[.]gz$", full.names = TRUE)
+tarball <- tarball[order(file.info(tarball)$mtime, decreasing = TRUE)][1]
+
+files <- utils::untar(tarball, list = TRUE)
+rel <- sub("^engager/", "", files)
+
+top_bad <- c(
+  "project-docs/",
+  "cran/",
+  "audits/",
+  "backups/",
+  "dev/",
+  "perf/",
+  "revdep/",
+  "scripts/",
+  "zoom_real_world_testing/"
+)
+
+bad <- rel == ".DS_Store" |
+  endsWith(rel, "/.DS_Store") |
+  startsWith(rel, "engager.Rcheck/") |
+  endsWith(rel, ".backup") |
+  endsWith(rel, "~") |
+  vapply(rel, function(x) any(startsWith(x, top_bad)), logical(1)) |
+  startsWith(rel, "inst/extdata/transcripts/") |
+  rel %in% c(
+    "inst/extdata/roster.csv",
+    "inst/extdata/transcripts_summary.csv",
+    "inst/extdata/transcripts_session_summary.csv",
+    "inst/new_analysis_template.Rmd",
+    "inst/Zoom_Student_Engagement_Analysis_student_summary_report.Rmd",
+    "inst/Zoom_Student_Engagement_Analysis_student_summary_report.Rmd.backup"
+  )
+
+tarball_hits <- files[bad]
+
+list(
+  tarball = basename(tarball),
+  entries = length(files),
+  suspicious_hits = tarball_hits
+)
+```
+
+Expected `suspicious_hits` is `character(0)`.
+
+# Sign-Off Readiness
+
+This section separates what the notebook can verify from what requires human
+judgment.
+
+```{r signoff-readiness}
+local_pass <- list(
+  package_loaded = "engager" %in% loadedNamespaces(),
+  processed_transcript_count = length(processed),
+  output_file_count = length(output_files),
+  comments_column_hit_count = length(comments_column_hits),
+  identifier_scan_hit_count = nrow(scan_hits),
+  tarball_suspicious_hit_count = length(tarball_hits)
+)
+
+local_pass
+```
+
+For issue #153, `validation_mode` must be `"live_validation"`, `comments_column_hit_count`
+must be `0`, and a human must complete the manual review checklist. Synthetic
+walkthrough mode is useful, but it is not sufficient for release sign-off.
+
+# Final Sign-Off Template
+
+Complete this text after live validation. Do not include sensitive details.
+
+```text
+For issue #153, I reviewed a real-world, institutionally authorized validation
+run for engager.
+
+Reviewer:
+Review date:
+Branch:
+Commit:
+Privacy level used:
+Input data location: private local/institutional storage only
+Output review location: private local/institutional storage only
+
+I confirm:
+- The validation data was authorized for this review.
+- The reviewer had appropriate access under local policy.
+- Raw transcripts and rosters were kept outside the package repository.
+- Generated outputs were reviewed for direct identifiers.
+- Generated outputs were reviewed for indirect or small-cell disclosure risks.
+- Privacy-safe CSV exports did not include raw transcript/comment text.
+- CSVs, plots/reports if generated, logs, and temporary outputs were considered.
+- Sensitive validation evidence remains outside GitHub, CRAN, and the package repository.
+- The package tarball was checked for raw or institution-specific data.
+- Retention/disposal expectations were reviewed under local policy.
+
+Decision:
+[ ] Approved for CRAN release privacy gate
+[ ] Not approved
+[ ] Approved after follow-ups listed below
+
+Follow-ups or limitations:
+-
+
+This is a release privacy review summary, not a legal compliance certification.
+```
+
+```{r restore-working-directory, include=FALSE}
+setwd(old_wd)
+```
