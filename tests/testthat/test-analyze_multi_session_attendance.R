@@ -30,6 +30,46 @@ test_that("analyze_multi_session_attendance validates inputs correctly", {
   )
 })
 
+test_that("analyze_multi_session_attendance supports deprecated privacy aliases", {
+  temp_dir <- tempfile()
+  transcript_dir <- file.path(temp_dir, "transcripts")
+  dir.create(transcript_dir, recursive = TRUE)
+  on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
+
+  writeLines("WEBVTT\n\n00:00:00.000 --> 00:00:01.000\nStudent A: Hello", file.path(transcript_dir, "session1.transcript.vtt"))
+  writeLines("WEBVTT\n\n00:00:00.000 --> 00:00:01.000\nStudent B: Hello", file.path(transcript_dir, "session2.transcript.vtt"))
+
+  roster_data <- data.frame(
+    first_name = c("Student", "Student"),
+    last_name = c("A", "B"),
+    stringsAsFactors = FALSE
+  )
+
+  with_mocked_bindings(
+    process_transcript_with_privacy = function(transcript_data, roster_data) {
+      data.frame(name = c("Student_001", "Student_002"), stringsAsFactors = FALSE)
+    },
+    summarize_transcript_metrics = function(transcript_file_path, names_exclude) {
+      data.frame(name = "Student_001", n = 1, stringsAsFactors = FALSE)
+    },
+    {
+      expect_warning(
+        result <- analyze_multi_session_attendance(
+          transcript_files = c("session1.transcript.vtt", "session2.transcript.vtt"),
+          roster_data = roster_data,
+          data_folder = temp_dir,
+          unmatched_names_action = "warn",
+          privacy_level = "ferpa_strict"
+        ),
+        "deprecated"
+      )
+    }
+  )
+
+  expect_true(is.list(result))
+  expect_true(result$privacy_compliant)
+})
+
 test_that("analyze_multi_session_attendance works with mock data", {
   # Create mock transcript files
   temp_dir <- tempdir()
@@ -202,7 +242,7 @@ test_that("multi-session analysis maintains privacy compliance", {
         transcript_files = c("session1.transcript.vtt", "session2.transcript.vtt"),
         roster_data = roster_data,
         data_folder = temp_dir,
-        privacy_level = "ferpa_strict",
+        privacy_level = "privacy_strict",
         unmatched_names_action = "warn"
       )
 

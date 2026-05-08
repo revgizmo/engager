@@ -4,7 +4,7 @@ library(testthat)
 library(engager)
 
 test_that("consolidate_transcript returns consistent column lengths", {
-  tf <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt", package = "engager")
+  tf <- system.file("extdata/test_transcripts/intro_statistics_week1.vtt", package = "engager")
   skip_if_not(file.exists(tf), "sample transcript not available")
 
   tr <- load_zoom_transcript(tf)
@@ -15,7 +15,7 @@ test_that("consolidate_transcript returns consistent column lengths", {
 })
 
 test_that("process_zoom_transcript returns consistent column lengths", {
-  tf <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt", package = "engager")
+  tf <- system.file("extdata/test_transcripts/intro_statistics_week1.vtt", package = "engager")
   skip_if_not(file.exists(tf), "sample transcript not available")
 
   proc <- process_zoom_transcript(transcript_file_path = tf, consolidate_comments = TRUE, add_dead_air = TRUE)

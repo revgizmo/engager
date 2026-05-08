@@ -124,7 +124,7 @@ test_that("audit_ethical_usage works correctly", {
   audit <- audit_ethical_usage(
     function_calls = c("analyze_transcripts", "plot_users"),
     data_sizes = c(100, 150),
-    privacy_settings = c("ferpa_strict", "ferpa_strict"),
+    privacy_settings = c("privacy_strict", "privacy_strict"),
     time_period = 30
   )
 
@@ -143,7 +143,7 @@ test_that("audit_ethical_usage detects concerning patterns", {
   audit <- audit_ethical_usage(
     function_calls = c("analyze_transcripts", "write_metrics"),
     data_sizes = c(100, 150),
-    privacy_settings = c("none", "ferpa_strict"),
+    privacy_settings = c("none", "privacy_strict"),
     time_period = 30
   )
 
@@ -156,7 +156,7 @@ test_that("audit_ethical_usage handles large datasets", {
   audit <- audit_ethical_usage(
     function_calls = c("analyze_transcripts"),
     data_sizes = c(1500), # Large dataset
-    privacy_settings = c("ferpa_strict"),
+    privacy_settings = c("privacy_strict"),
     time_period = 30
   )
 
@@ -169,7 +169,7 @@ test_that("audit_ethical_usage handles high export frequency", {
   audit <- audit_ethical_usage(
     function_calls = rep("write_metrics", 15), # High frequency
     data_sizes = rep(100, 15),
-    privacy_settings = rep("ferpa_strict", 15),
+    privacy_settings = rep("privacy_strict", 15),
     time_period = 30
   )
 
@@ -239,7 +239,7 @@ test_that("audit_ethical_usage handles edge cases", {
   audit <- audit_ethical_usage(
     function_calls = "analyze_transcripts",
     data_sizes = 100,
-    privacy_settings = "ferpa_strict",
+    privacy_settings = "privacy_strict",
     time_period = 30
   )
 
@@ -262,7 +262,7 @@ test_that("ethical compliance functions maintain privacy", {
   audit <- audit_ethical_usage(
     function_calls = c("analyze_transcripts"),
     data_sizes = c(100),
-    privacy_settings = c("ferpa_strict"),
+    privacy_settings = c("privacy_strict"),
     time_period = 30
   )
 
@@ -287,7 +287,7 @@ test_that("ethical compliance functions provide helpful guidance", {
   audit <- audit_ethical_usage(
     function_calls = c("write_metrics", "write_metrics", "write_metrics"),
     data_sizes = c(100, 200, 300),
-    privacy_settings = c("none", "ferpa_strict", "ferpa_strict"),
+    privacy_settings = c("none", "privacy_strict", "privacy_strict"),
     time_period = 30
   )
 

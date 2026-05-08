@@ -66,7 +66,7 @@ library(engager)
 
 # 1) Compute metrics for a single transcript
 transcript_file <- system.file(
-  "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+  "extdata/test_transcripts/intro_statistics_week1.vtt",
   package = "engager"
 )
 metrics <- summarize_transcript_metrics(transcript_file_path = transcript_file)
@@ -87,7 +87,7 @@ library(engager)
 
 # Load and process a transcript
 transcript_file <- system.file(
-  "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+  "extdata/test_transcripts/intro_statistics_week1.vtt",
   package = "engager"
 )
 

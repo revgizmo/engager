@@ -20,11 +20,13 @@
 ## Additional Notes
 - Package renamed for better clarity and branding
 - Initial CRAN submission as `engager`
-- Local tests: 2,402 pass, 0 fail, 71 warnings, 6 skips
-- Local coverage: 83.30% overall; 92.31% strategic exported API coverage
+- Local tests: 2,501 pass, 0 fail, 67 warnings, 6 skips
+- Local coverage: 83.82% overall; 92.34% strategic exported API coverage
 - Release PR CI: Ubuntu, Windows, and macOS R CMD check pass; coverage, lint, and build validation pass
 - Privacy-supporting defaults mask common student identifiers by default
+- Privacy-safe metric CSV exports omit raw transcript/comment text by default
 - FERPA-oriented documentation is guidance only; institutional review remains required
+- Real-world, institutionally authorized privacy validation for issue #153 was completed locally on commit `e4a78da`; the rendered sign-off approved the privacy-safe CSV export surface and did not classify raw transcripts, rosters, in-memory metric objects, or explicit raw-comment exports as de-identified
 
 ## Validation Status
 - [x] Local R CMD check completed
@@ -32,5 +34,6 @@
 - [x] Examples working under local R CMD check
 - [x] Documentation complete
 - [x] Local source build and tarball inspection complete
+- [x] Real-world privacy validation sign-off completed
 - [x] Release PR CI completed
-- [ ] Ready for CRAN submission
+- [x] Ready for maintainer final review before CRAN submission

@@ -151,6 +151,12 @@ with_test_directory <- function(test_data, test_function) {
       # Verify the output file contains data
       file_content <- readLines(output_file, warn = FALSE)
       expect_true(length(file_content) > 1) # Header + at least one data row
+      written <- readr::read_csv(output_file, show_col_types = FALSE)
+      expect_false("comments" %in% names(written))
+      expect_false(any(grepl(
+        "Hello everyone|Hi there|José García|Anna Kowalski|Buenos días",
+        file_content
+      )))
     })
   })
 
@@ -476,11 +482,11 @@ Student%d: Response from file %d", i, i, i + 1, i)
 
 # Real-world scenario tests
 # Real-world scenario tests
-  # Test 1: Using actual sample transcript from package
-  test_that("analyze_transcripts works with actual sample transcript", {
-    # Use the actual sample transcript from the package
+  # Test 1: Using synthetic sample transcript from package
+  test_that("analyze_transcripts works with synthetic sample transcript", {
+    # Use a synthetic sample transcript from the package
     sample_transcript <- system.file(
-      "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+      "extdata/test_transcripts/intro_statistics_week1.vtt",
       package = "engager"
     )
 
@@ -511,10 +517,10 @@ Student%d: Response from file %d", i, i, i + 1, i)
     expect_true("name" %in% names(result))
   })
 
-  # Test 2: Privacy compliance with real data
-  test_that("analyze_transcripts maintains privacy with real data", {
+  # Test 2: Privacy masking with synthetic data
+  test_that("analyze_transcripts maintains privacy with synthetic data", {
     sample_transcript <- system.file(
-      "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+      "extdata/test_transcripts/intro_statistics_week1.vtt",
       package = "engager"
     )
 
@@ -658,4 +664,3 @@ Student%d: Response from file %d", i, i, i + 1, i)
       # column name or the data would need to be transformed first.
     })
   })
-

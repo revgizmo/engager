@@ -109,7 +109,7 @@ print(validation$compliant)
 ```{r privacy-setup}
 # Set privacy defaults to maximum protection
 set_privacy_defaults(
-  privacy_level = "ferpa_strict",
+  privacy_level = "privacy_strict",
   unmatched_names_action = "stop"
 )
 
@@ -196,7 +196,7 @@ writeLines(paste(
 
 ```{r privacy-settings}
 # Recommended privacy configuration
-set_privacy_defaults("ferpa_strict")
+set_privacy_defaults("privacy_strict")
 
 # For research with IRB approval, you might use:
 
@@ -272,7 +272,7 @@ if (!user_validation$ethically_compliant) {
 monthly_audit <- audit_ethical_usage(
   function_calls = c("analyze_transcripts", "plot_users", "write_metrics"),
   data_sizes = c(100, 150, 200),
-  privacy_settings = c("ferpa_strict", "ferpa_strict", "ferpa_strict"),
+  privacy_settings = c("privacy_strict", "privacy_strict", "privacy_strict"),
   time_period = 30
 )
 
@@ -359,7 +359,7 @@ The `zoomstudentengagement` package provides powerful tools for analyzing studen
 
 ```{r quick-reference}
 # Set maximum privacy protection
-set_privacy_defaults("ferpa_strict")
+set_privacy_defaults("privacy_strict")
 
 # Validate ethical use
 validate_ethical_use("teaching", "section", "Improving participation equity")

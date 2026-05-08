@@ -1,17 +1,17 @@
-# Coverage tests for ensure_privacy ferpa_strict/standard verbose paths
+# Coverage tests for ensure_privacy privacy_strict/standard verbose paths
 
 library(testthat)
 library(engager)
 
-test_that("ensure_privacy executes ferpa_strict/standard without error when verbose", {
+test_that("ensure_privacy executes privacy_strict/standard without error when verbose", {
   old_verbose <- getOption("engager.verbose", NULL)
   on.exit(options(engager.verbose = old_verbose), add = TRUE)
   options(engager.verbose = TRUE)
 
   df <- tibble::tibble(name = c("Alice", "Bob"), comment = c("Hi", "Hello"))
 
-  out1 <- ensure_privacy(df, privacy_level = "ferpa_strict")
-  out2 <- ensure_privacy(df, privacy_level = "ferpa_standard")
+  out1 <- ensure_privacy(df, privacy_level = "privacy_strict")
+  out2 <- ensure_privacy(df, privacy_level = "privacy_standard")
   expect_s3_class(out1, "tbl_df")
   expect_s3_class(out2, "tbl_df")
 })

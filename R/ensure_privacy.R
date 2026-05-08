@@ -14,7 +14,9 @@
 #' load. Use `set_privacy_defaults()` to change at runtime.
 #'
 #' @param x Data object to apply privacy rules to (typically a `tibble`)
-#' @param privacy_level Privacy level: "mask", "ferpa_strict", "ferpa_standard", or "none"
+#' @param privacy_level Privacy level: "mask", "privacy_strict",
+#'   "privacy_standard", or "none". Deprecated aliases "ferpa_strict" and
+#'   "ferpa_standard" are accepted with a warning.
 #' @param id_columns Vector of column names to treat as identifiers (default: common name columns)
 #' @param audit_log Whether to log privacy operations (default: TRUE)
 #' @return Privacy-compliant version of the input object
@@ -39,8 +41,7 @@ ensure_privacy <- function(x = NULL,
                              "speaker"
                            ),
                            audit_log = TRUE) {
-  # Validate privacy level
-  validate_privacy_level(privacy_level)
+  privacy_level <- normalize_privacy_level(privacy_level)
 
   # Handle privacy level and get appropriate columns
   result <- handle_privacy_level(privacy_level, id_columns, audit_log, x)
@@ -66,26 +67,46 @@ ensure_privacy <- function(x = NULL,
   df
 }
 
-# Helper function to validate privacy level
-validate_privacy_level <- function(privacy_level) {
-  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
-  # This was causing 100+ test failures and preventing CRAN submission
-
-  # Validate inputs
+# Helper function to normalize privacy level aliases
+normalize_privacy_level <- function(privacy_level) {
   if (!is.character(privacy_level) || length(privacy_level) == 0) {
-    stop("privacy_level must be a non-empty character vector")
+    stop(
+      "Invalid privacy_level. Must be one of: privacy_strict, privacy_standard, mask, none",
+      call. = FALSE
+    )
   }
 
-  # Handle vector input gracefully
   if (length(privacy_level) > 1) {
     privacy_level <- privacy_level[1]
     warning("privacy_level had length > 1, using first element: ", privacy_level)
   }
 
-  valid_levels <- c("ferpa_strict", "ferpa_standard", "mask", "none")
+  deprecated_levels <- c(
+    ferpa_strict = "privacy_strict",
+    ferpa_standard = "privacy_standard"
+  )
+
+  if (privacy_level %in% names(deprecated_levels)) {
+    new_level <- unname(deprecated_levels[[privacy_level]])
+    warning(
+      "privacy_level = \"", privacy_level, "\" is deprecated; use \"",
+      new_level, "\" instead.",
+      call. = FALSE
+    )
+    privacy_level <- new_level
+  }
+
+  valid_levels <- c("privacy_strict", "privacy_standard", "mask", "none")
   if (!privacy_level %in% valid_levels) {
     stop("Invalid privacy_level. Must be one of: ", paste(valid_levels, collapse = ", "), call. = FALSE)
   }
+
+  privacy_level
+}
+
+# Helper function to validate privacy level
+validate_privacy_level <- function(privacy_level) {
+  normalize_privacy_level(privacy_level)
 }
 
 # Helper function to handle privacy level and get appropriate columns
@@ -93,21 +114,15 @@ handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
   # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
   # This was causing 100+ test failures and preventing CRAN submission
 
-  # Validate inputs
-  if (!is.character(privacy_level) || length(privacy_level) == 0) {
-    stop("privacy_level must be a non-empty character vector")
-  }
-
-  # Handle vector input gracefully
-  if (length(privacy_level) > 1) {
-    privacy_level <- privacy_level[1]
-    warning("privacy_level had length > 1, using first element: ", privacy_level)
-  }
+  privacy_level <- normalize_privacy_level(privacy_level)
 
   # If privacy is explicitly disabled, warn and return unmodified
   if (identical(privacy_level, "none")) {
     warning(
-      "CRITICAL: Privacy disabled; outputs may contain identifiable data and violate FERPA requirements.",
+      paste(
+        "CRITICAL: Privacy disabled; outputs may contain identifiable data.",
+        "Confirm this is authorized before sharing outputs."
+      ),
       call. = FALSE
     )
 
@@ -124,8 +139,8 @@ handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
     return(list(early_return = TRUE, data = x, id_columns = NULL, privacy_level = privacy_level))
   }
 
-  # FERPA strict level - most comprehensive masking
-  if (identical(privacy_level, "ferpa_strict")) {
+  # Privacy strict level - most comprehensive masking
+  if (identical(privacy_level, "privacy_strict")) {
     id_columns <- c(
       id_columns,
       "email", "email_address", "e_mail",
@@ -138,8 +153,8 @@ handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
     )
   }
 
-  # FERPA standard level - standard educational compliance
-  if (identical(privacy_level, "ferpa_standard")) {
+  # Privacy standard level - standard educational privacy masking
+  if (identical(privacy_level, "privacy_standard")) {
     id_columns <- c(
       id_columns,
       "email", "email_address", "e_mail",

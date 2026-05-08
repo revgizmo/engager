@@ -14,7 +14,7 @@ test_that(".onLoad preserves existing privacy_level when already set", {
   on.exit(options(engager.privacy_level = old), add = TRUE)
 
   # Test with different existing values (using valid privacy levels)
-  test_values <- c("ferpa_strict", "ferpa_standard", "mask", "none")
+  test_values <- c("privacy_strict", "privacy_standard", "mask", "none")
 
   for (test_value in test_values) {
     options(engager.privacy_level = test_value)
@@ -69,9 +69,9 @@ test_that(".onLoad integrates correctly with set_privacy_defaults", {
 
   # Test that .onLoad doesn't override set_privacy_defaults
   options(engager.privacy_level = NULL)
-  set_privacy_defaults("ferpa_standard")
+  set_privacy_defaults("privacy_standard")
   engager:::.onLoad(NULL, NULL)
-  expect_identical(getOption("engager.privacy_level"), "ferpa_standard")
+  expect_identical(getOption("engager.privacy_level"), "privacy_standard")
 })
 
 test_that(".onLoad behavior is consistent across multiple calls", {
@@ -166,13 +166,13 @@ test_that(".onLoad preserves existing multiple options", {
   )
 
   # Set existing values
-  options(engager.privacy_level = "ferpa_strict")
+  options(engager.privacy_level = "privacy_strict")
   options(engager.verbose = TRUE)
 
   engager:::.onLoad(NULL, NULL)
 
   # Should preserve existing values
-  expect_identical(getOption("engager.privacy_level"), "ferpa_strict")
+  expect_identical(getOption("engager.privacy_level"), "privacy_strict")
   expect_identical(getOption("engager.verbose"), TRUE)
 })
 

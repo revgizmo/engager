@@ -18,7 +18,7 @@ safe_name_matching_workflow(
 
 \item{roster_data}{Data frame containing roster information}
 
-\item{privacy_level}{Privacy level to apply. One of \code{c("ferpa_strict", "ferpa_standard", "mask", "none")}.
+\item{privacy_level}{Privacy level to apply. One of \code{c("privacy_strict", "privacy_standard", "mask", "none")}.
 Defaults to \code{getOption("engager.privacy_level", "mask")}.}
 
 \item{unmatched_names_action}{Action to take for unmatched names. One of \code{c("stop", "warn")}.

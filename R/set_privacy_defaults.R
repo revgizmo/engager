@@ -1,7 +1,10 @@
 # Internal function - no documentation needed
-set_privacy_defaults <- function(privacy_level = c("ferpa_strict", "ferpa_standard", "mask", "none"),
+set_privacy_defaults <- function(privacy_level = c("privacy_strict", "privacy_standard", "mask", "none"),
                                  unmatched_names_action = c("stop", "warn")) {
-  privacy_level <- match.arg(privacy_level)
+  if (missing(privacy_level)) {
+    privacy_level <- "privacy_strict"
+  }
+  privacy_level <- normalize_privacy_level(privacy_level)
   unmatched_names_action <- match.arg(unmatched_names_action)
 
   # Validate privacy level
@@ -10,13 +13,13 @@ set_privacy_defaults <- function(privacy_level = c("ferpa_strict", "ferpa_standa
       "Privacy disabled globally; outputs may contain identifiable data.",
       call. = FALSE
     )
-  } else if (identical(privacy_level, "ferpa_strict")) {
+  } else if (identical(privacy_level, "privacy_strict")) {
     if (getOption("engager.verbose", FALSE)) {
-      message("FERPA strict mode enabled; maximum privacy protection applied.")
+      message("Privacy strict mode enabled; maximum privacy protection applied.")
     }
-  } else if (identical(privacy_level, "ferpa_standard")) {
+  } else if (identical(privacy_level, "privacy_standard")) {
     if (getOption("engager.verbose", FALSE)) {
-      message("FERPA standard mode enabled; educational privacy defaults applied.")
+      message("Privacy standard mode enabled; educational privacy defaults applied.")
     }
   }
 

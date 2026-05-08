@@ -8,7 +8,8 @@
 #' @param data_folder Base folder containing data files
 #' @param transcripts_folder Subfolder containing transcript files
 #' @param unmatched_names_action Action to take for unmatched names: "stop" or "warn"
-#' @param privacy_level Privacy level: "ferpa_strict", "ferpa_standard", "mask", "none"
+#' @param privacy_level Privacy level: "privacy_strict", "privacy_standard", "mask", "none".
+#'   Deprecated aliases "ferpa_strict" and "ferpa_standard" are accepted with a warning.
 #' @param min_attendance_threshold Minimum attendance threshold for "consistent attendee" (default: 0.5)
 #' @return List containing:
 #'   - `attendance_matrix`: Data frame with participants as rows and sessions as columns
@@ -36,11 +37,14 @@ analyze_multi_session_attendance <- function(
     data_folder = ".",
     transcripts_folder = "transcripts",
     unmatched_names_action = c("stop", "warn"),
-    privacy_level = c("ferpa_strict", "ferpa_standard", "mask", "none"),
+    privacy_level = c("privacy_strict", "privacy_standard", "mask", "none"),
     min_attendance_threshold = 0.5) {
   # Validate inputs
   unmatched_names_action <- match.arg(unmatched_names_action)
-  privacy_level <- match.arg(privacy_level)
+  if (missing(privacy_level)) {
+    privacy_level <- "privacy_strict"
+  }
+  privacy_level <- normalize_privacy_level(privacy_level)
 
   if (length(transcript_files) < 2) {
     stop("At least 2 transcript files are required for multi-session analysis")

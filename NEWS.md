@@ -10,5 +10,7 @@
   `write_unresolved()`.
 * Added FERPA-oriented privacy review helpers and documentation with explicit
   institutional-review caveats.
+* Made CSV metric exports omit raw transcript/comment text by default; raw
+  comments now require an explicit local-review export with privacy disabled.
 * Added release validation targets for R CMD check, exported API coverage,
   lint, build, tarball inspection, and performance regression review.

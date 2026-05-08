@@ -17,10 +17,16 @@
 #' @param transcript_df Pre-loaded transcript data frame (alternative to transcript_file_path)
 #' @param comments_format Format for comments: "list", "text", or "count" (default: "list")
 #' @return A tibble containing summary metrics by speaker
+#'
+#' @details This function preserves in-memory comment data for analysis
+#' compatibility. Use `write_metrics()` for privacy-safe CSV exports. The
+#' privacy helpers mask structured identifier columns, but they do not redact
+#' identifiers embedded in free transcript text.
+#'
 #' @examples
 #'
 #' # Load a sample transcript from the package's extdata directory
-#' transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+#' transcript_file <- system.file("extdata/test_transcripts/intro_statistics_week1.vtt",
 #'   package = "engager"
 #' )
 #' summarize_transcript_metrics(transcript_file_path = transcript_file)

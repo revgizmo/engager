@@ -96,7 +96,7 @@ data_folder_input <- system.file("extdata", package = "engager")
 
 
 
-transcripts_folder_input <- "transcripts"
+transcripts_folder_input <- "test_transcripts"
 topic_split_pattern_input <- paste0(
   "^(?<dept>\\S+) (?<section>\\S+) - ",
   "(?<day>[A-Za-z]+) (?<time>\\S+\\s*\\S+) (?<instructor>\\(.*?\\))"
@@ -108,7 +108,7 @@ scheduled_session_length_hours_input <- 1.5
 
 
 ### roster_file
-roster_file_input <- "roster.csv"
+roster_file_input <- "test_transcripts/ideal_course_roster.csv"
 # roster_file used in load_roster()
 
 
@@ -118,7 +118,7 @@ cancelled_classes_file_input <- "cancelled_classes.csv"
 
 
 ### names_lookup_file
-names_lookup_file_input <- "section_names_lookup.csv"
+names_lookup_file_input <- "example_section_names_lookup.csv"
 # names_lookup_file used in load_section_names_lookup(), make_clean_names_df()
 
 
@@ -133,7 +133,7 @@ transcripts_summary_file_input <- "transcripts_summary.csv"
 
 
 ### instructor_name_input
-instructor_name_input <- "Conor Healy"
+instructor_name_input <- "Instructor"
 # instructor_name_input used in make_students_only_transcripts_summary_df()
 
 
@@ -305,7 +305,7 @@ transcripts_metrics_df %>% count(name)
 
 ## 1. Load Roster of Students from a CSV file
 
-0. Run Students.Rmd to create roster.csv. (Which is based on the course roster output from UC Berkeley's BCourses implementation of Canvas.)
+0. Prepare an institutionally authorized roster CSV outside the package source tree, or use the synthetic roster included with the package examples.
 1. Run `load_roster()` to get a tibble from a provided csv file of students enrolled in the class or classes.
 
 ```{r}
@@ -696,7 +696,7 @@ recording_transcript_file_path <-
     "/",
     transcripts_folder_input,
     "/",
-    "GMT20240124-202901_Recording.transcript.vtt"
+    "intro_statistics_week1.vtt"
   )
 
 
@@ -729,7 +729,7 @@ single_zoom_transcript_df <- load_zoom_transcript(
     "/",
     transcripts_folder_input,
     "/",
-    "GMT20240124-202901_Recording.transcript.vtt"
+    "intro_statistics_week1.vtt"
   )
 )
 
@@ -839,9 +839,6 @@ plot(pressure)
 ```
 
 In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
-
-
-
 
 
 

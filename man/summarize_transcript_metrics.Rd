@@ -46,11 +46,16 @@ Original code posted by Conor Healy:
 https://ucbischool.slack.com/archives/C02A36407K9/p1631855705002000 Addition
 of \code{wordcount}, \code{wordcount_perc}, and \code{wpm} by Brooks Ambrose:
 https://gist.github.com/brooksambrose/1a8a673eb3bf884c1868ad4d80f08246
+
+This function preserves in-memory comment data for analysis
+compatibility. Use \code{write_metrics()} for privacy-safe CSV exports. The
+privacy helpers mask structured identifier columns, but they do not redact
+identifiers embedded in free transcript text.
 }
 \examples{
 
 # Load a sample transcript from the package's extdata directory
-transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+transcript_file <- system.file("extdata/test_transcripts/intro_statistics_week1.vtt",
   package = "engager"
 )
 summarize_transcript_metrics(transcript_file_path = transcript_file)

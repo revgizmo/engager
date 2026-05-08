@@ -50,6 +50,31 @@ test_that("load_transcript_files_list returns empty data.frame if no matching fi
   unlink(transcripts_dir, recursive = TRUE)
 })
 
+test_that("load_transcript_files_list groups non-Zoom transcript siblings by session key", {
+  temp_dir <- tempfile()
+  transcripts_dir <- file.path(temp_dir, "transcripts")
+  dir.create(transcripts_dir, recursive = TRUE)
+  on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
+
+  file.create(
+    file.path(transcripts_dir, "session1.transcript.vtt"),
+    file.path(transcripts_dir, "session1.cc.vtt"),
+    file.path(transcripts_dir, "session1.chat.vtt")
+  )
+
+  result <- load_transcript_files_list(
+    data_folder = temp_dir,
+    transcripts_folder = "transcripts",
+    transcript_files_names_pattern = "session1"
+  )
+
+  expect_equal(nrow(result), 1)
+  expect_equal(result$date_extract, "session1")
+  expect_equal(result$transcript_file, "session1.transcript.vtt")
+  expect_equal(result$closed_caption_file, "session1.cc.vtt")
+  expect_equal(result$chat_file, "session1.chat.vtt")
+})
+
 test_that("load_transcript_files_list handles empty folder gracefully", {
   temp_dir <- tempdir()
   transcripts_dir <- file.path(temp_dir, "transcripts")

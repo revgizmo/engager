@@ -4,18 +4,18 @@ create_analysis_config <- function(
     dept = "LTF",
     semester_start_mdy = "Jan 01, 2024",
     scheduled_session_length_hours = 1.5,
-    instructor_name = "Conor Healy",
+    instructor_name = "Instructor",
     # File Paths
     data_folder = system.file("extdata", package = "engager"),
-    transcripts_folder = "transcripts",
-    roster_file = "roster.csv",
+    transcripts_folder = "test_transcripts",
+    roster_file = "test_transcripts/ideal_course_roster.csv",
     cancelled_classes_file = "cancelled_classes.csv",
-    names_lookup_file = "section_names_lookup.csv",
+    names_lookup_file = "example_section_names_lookup.csv",
     trnscrptssssnsmmryfl = "transcripts_session_summary.csv",
     transcripts_summary_file = "transcripts_summary.csv",
     # Report Settings
-    student_summary_report = "Zoom_Student_Engagement_Analysis_student_summary_report",
-    student_summary_report_folder = system.file("", package = "engager"),
+    student_summary_report = NULL,
+    student_summary_report_folder = NULL,
     # File Patterns
     topic_split_pattern = paste0(
       "^(?<dept>\\S+) (?<section>\\S+) - ",
@@ -27,7 +27,7 @@ create_analysis_config <- function(
       "Total Views,Total Downloads,Last Accessed"
     ),
     # Transcript File Patterns
-    transcript_files_names_pattern = "GMT\\d{8}-\\d{6}_Recording",
+    transcript_files_names_pattern = "[.]vtt$",
     dt_extract_pattern = "(?<=GMT)\\d{8}",
     trnscrptflxtnsnpttrn = ".transcript",
     clsdcptnflxtnsnpttrn = ".cc",
@@ -89,12 +89,18 @@ create_analysis_config <- function(
     stop("transcripts_summary_file must be a single character string")
   }
 
-  if (!is.character(student_summary_report) || length(student_summary_report) != 1) {
-    stop("student_summary_report must be a single character string")
+  if (
+    !is.null(student_summary_report) &&
+      (!is.character(student_summary_report) || length(student_summary_report) != 1)
+  ) {
+    stop("student_summary_report must be NULL or a single character string")
   }
 
-  if (!is.character(student_summary_report_folder) || length(student_summary_report_folder) != 1) {
-    stop("student_summary_report_folder must be a single character string")
+  if (
+    !is.null(student_summary_report_folder) &&
+      (!is.character(student_summary_report_folder) || length(student_summary_report_folder) != 1)
+  ) {
+    stop("student_summary_report_folder must be NULL or a single character string")
   }
 
   if (!is.character(topic_split_pattern) || length(topic_split_pattern) != 1) {

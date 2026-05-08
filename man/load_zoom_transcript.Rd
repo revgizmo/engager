@@ -23,7 +23,7 @@ https://gist.github.com/brooksambrose/1a8a673eb3bf884c1868ad4d80f08246
 }
 \examples{
 # Load a sample transcript from the package's extdata directory
-transcript_file <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+transcript_file <- system.file("extdata/test_transcripts/intro_statistics_week1.vtt",
   package = "engager"
 )
 load_zoom_transcript(transcript_file_path = transcript_file)

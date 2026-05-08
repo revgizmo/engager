@@ -5,10 +5,14 @@
 #' violations and stops processing if real names are found.
 #'
 #' @param data Data frame or object to validate for privacy compliance
-#' @param privacy_level Privacy level to validate against. One of `c("ferpa_strict", "ferpa_standard", "mask", "none")`.
-#'   Defaults to `getOption("engager.privacy_level", "mask")`.
-#' @param real_names Vector of real names to check against. If NULL, uses common name patterns to detect potential violations.
-#' @param stop_on_violation Whether to stop processing if violations are found. Defaults to TRUE for maximum privacy protection.
+#' @param privacy_level Privacy level to validate against. One of
+#'   `c("privacy_strict", "privacy_standard", "mask", "none")`.
+#'   Defaults to `getOption("engager.privacy_level", "mask")`. Deprecated
+#'   aliases "ferpa_strict" and "ferpa_standard" are accepted with a warning.
+#' @param real_names Vector of real names to check against. If NULL, uses
+#'   common name patterns to detect potential violations.
+#' @param stop_on_violation Whether to stop processing if violations are found.
+#'   Defaults to TRUE for maximum privacy protection.
 #'
 #' @return Validation results with compliance status and any violations found
 #' @export
@@ -30,14 +34,7 @@ validate_privacy_compliance <- function(data = NULL,
                                         ),
                                         real_names = NULL,
                                         stop_on_violation = TRUE) {
-  # Validate inputs
-  valid_levels <- c("ferpa_strict", "ferpa_standard", "mask", "none")
-  if (!privacy_level %in% valid_levels) {
-    stop("Invalid privacy_level. Must be one of: ",
-      paste(valid_levels, collapse = ", "),
-      call. = FALSE
-    )
-  }
+  privacy_level <- normalize_privacy_level(privacy_level)
 
   if (!is.logical(stop_on_violation) || length(stop_on_violation) != 1) {
     stop("stop_on_violation must be a single logical value", call. = FALSE)

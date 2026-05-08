@@ -299,7 +299,7 @@ create_ethical_use_report <- function(usage_context = NULL,
 #' audit <- audit_ethical_usage(
 #'   function_calls = c("analyze_transcripts", "plot_users", "write_metrics"),
 #'   data_sizes = c(100, 150, 200),
-#'   privacy_settings = c("mask", "mask", "ferpa_strict"),
+#'   privacy_settings = c("mask", "mask", "privacy_strict"),
 #'   time_period = 30
 #' )
 #' }

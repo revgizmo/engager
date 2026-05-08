@@ -1,6 +1,6 @@
 test_that("write_metrics writes CSV with masking", {
   transcript_file <- system.file(
-    "extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+    "extdata/test_transcripts/intro_statistics_week1.vtt",
     package = "engager"
   )
   skip_if(transcript_file == "", "Sample transcript not available")
@@ -14,5 +14,7 @@ test_that("write_metrics writes CSV with masking", {
   # Should not contain raw names like typical English-looking full names
   txt <- readLines(tmp, warn = FALSE)
   expect_true(any(grepl("Student\\s+\\d+", txt)))
+  written <- readr::read_csv(tmp, show_col_types = FALSE)
+  expect_false("comments" %in% names(written))
   expect_s3_class(out, "tbl_df")
 })

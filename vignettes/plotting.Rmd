@@ -74,7 +74,7 @@ roster_sessions <- tibble::tibble(
 )
 
 # For this example, we'll work directly with the sample data
-# In practice, you would use the essential functions to process real data
+# In practice, you would use the essential functions to process authorized data
 
 # Create a simplified summary dataframe for demonstration
 transcripts_summary_df <- transcripts_metrics_df %>%
