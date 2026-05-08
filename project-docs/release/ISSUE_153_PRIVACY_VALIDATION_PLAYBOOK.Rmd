@@ -137,6 +137,23 @@ if (length(missing_packages) > 0) {
 devtools::load_all(repo_dir, quiet = TRUE)
 library(engager)
 set_privacy_defaults(privacy_level)
+
+loaded_write_metrics_args <- names(formals(write_metrics))
+if (!"comments_policy" %in% loaded_write_metrics_args) {
+  stop(
+    "Loaded write_metrics() does not support comments_policy. ",
+    "Restart R and rerun devtools::load_all(repo_dir, quiet = TRUE)."
+  )
+}
+
+loaded_package_path <- system.file(package = "engager")
+loaded_package_version <- as.character(utils::packageVersion("engager"))
+
+list(
+  loaded_package_path = loaded_package_path,
+  loaded_package_version = loaded_package_version,
+  write_metrics_args = loaded_write_metrics_args
+)
 ```
 
 # Select Validation Inputs
