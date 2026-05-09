@@ -190,7 +190,7 @@ head(custom_processed)
 The processed transcript contains:
 
 - **start_time**: When the comment started
-- **end_time**: When the comment ended  
+- **end_time**: When the comment ended
 - **duration**: Length of the comment
 - **name**: Speaker name
 - **comment**: The actual text
@@ -241,4 +241,4 @@ if (!compliance_result$compliant) {
 - **For roster management**: See the [Roster Cleaning](roster-cleaning.html) vignette
 - **For visualization**: See the [Plotting and Analysis](plotting.html) vignette
 - **For session mapping**: See the [Session Mapping](session-mapping.html) vignette
-- **For FERPA compliance**: See the [FERPA Compliance & Ethical Use](ferpa-ethics.html) vignette 
+- **For privacy, ethics, and institutional review considerations**: See the [privacy and institutional review considerations](privacy-ethics-review.html) vignette

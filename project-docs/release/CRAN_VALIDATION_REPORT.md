@@ -17,7 +17,7 @@
 | Release docs | Complete locally | `NEWS.md`, `cran/cran-comments.md`, and release docs added/updated |
 | Privacy wording | Complete locally | Active CRAN-facing docs reworded to privacy-supporting / FERPA-oriented language; no legal compliance guarantee claimed |
 | Issue #153 privacy validation | Approved locally | Real-world, institutionally authorized validation rendered on commit `e4a78da`: 4 outputs, no `comments` column, 0 blocking identifier scan hits, 0 metadata identifier scan hits, clean tarball check; approval limited to privacy-safe CSV export surface |
-| Issue #154 adoption guidance | Complete locally | `vignettes/ferpa-ethics.Rmd` provides institutional adoption guidance with privacy-supporting caveats |
+| Issue #154 adoption guidance | Complete locally | `vignettes/privacy-ethics-review.Rmd` provides institutional adoption considerations with privacy-supporting caveats |
 | Tests | Pass locally | `devtools::test()`: 2,501 pass, 0 fail, 67 warnings, 6 skips |
 | Coverage | Pass locally | Overall 83.82%; strategic exported API 92.34% |
 | Lint | Non-blocking debt remains | `lintr::lint_package()`: 52 existing style/object-usage findings |
