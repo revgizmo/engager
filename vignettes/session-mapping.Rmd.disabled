@@ -361,4 +361,4 @@ if (!mapping_compliance$compliant) {
 
 - **For basic workflows**: See the [Getting Started](getting-started.html) vignette
 - **For analysis**: See the [Plotting and Analysis](plotting.html) vignette
-- **For FERPA compliance**: See the [FERPA Compliance & Ethical Use](ferpa-ethics.html) vignette 
+- **For privacy, ethics, and institutional review considerations**: See the [privacy and institutional review considerations](privacy-ethics-review.html) vignette

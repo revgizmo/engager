@@ -1,8 +1,8 @@
 ---
-title: "Privacy and Ethical Use Guide"
+title: "Privacy, Ethics, and Institutional Review Considerations"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Privacy and Ethical Use Guide}
+  %\VignetteIndexEntry{Privacy, Ethics, and Institutional Review Considerations}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -11,15 +11,19 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-# Privacy and Ethical Use Guide
+# Privacy, Ethics, and Institutional Review Considerations
 
-This vignette provides guidance for using the `engager` package with privacy-supporting defaults and ethical practices for educational data analysis. It is not a FERPA source, it is not legal advice, and the package does not guarantee FERPA compliance. Users and institutions remain responsible for policy review, authorization, disclosure decisions, retention, and legal compliance.
+This vignette offers considerations for using the `engager` package with
+privacy-supporting defaults and ethical practices for educational data analysis.
+It is not a FERPA source, it is not legal advice, and the package does not
+guarantee FERPA compliance. Users and institutions remain responsible for policy
+review, authorization, disclosure decisions, retention, and legal compliance.
 
 ## External FERPA References
 
-Do not rely on this vignette as a summary of FERPA requirements. For FERPA
-interpretation, start with official U.S. Department of Education resources and
-your institution's policies:
+This vignette is not a summary of FERPA requirements. For FERPA interpretation,
+you might start with official U.S. Department of Education resources and/or your
+institution's policies:
 
 - Student Privacy Policy Office FERPA overview:
   `https://studentprivacy.ed.gov/ferpa`
@@ -30,13 +34,14 @@ your institution's policies:
 - School official and legitimate educational interest FAQ:
   `https://studentprivacy.ed.gov/faq/under-ferpa-may-educational-agency-or-institution-disclose-education-records-any-its-employees`
 
-When using this package with student data, confirm through local policy review
-that your workflow, data access, disclosure decisions, retention plan, and
-output sharing are authorized.
+When using this package with student data, consider confirming through local
+policy review that your workflow, data access, disclosure decisions, retention
+plan, and output sharing are authorized.
 
 ## Privacy-Supporting Design
 
-The package implements privacy-supporting defaults to reduce accidental exposure of student identifiers:
+The package includes privacy-supporting defaults intended to reduce accidental
+exposure of student identifiers:
 
 ```r
 library(engager)
@@ -45,14 +50,16 @@ library(engager)
 getOption("engager.privacy_level")
 ```
 
-By default, the package sets privacy level to `"mask"`, which automatically masks personally identifiable information.
+By default, the package sets privacy level to `"mask"`, which masks common
+identifier fields in package summaries, plots, and writers.
 
 ## Privacy Levels
 
-The package supports multiple privacy levels to accommodate different institutional requirements:
+The package supports multiple privacy levels that can be considered during local
+review:
 
 ### 1. Privacy Strict (`"privacy_strict"`)
-Maximum privacy protection for institutions requiring the strongest default masking:
+The broadest built-in masking option:
 
 ```r
 set_privacy_defaults("privacy_strict")
@@ -69,7 +76,7 @@ This level masks:
 - Instructor names and IDs
 
 ### 2. Privacy Standard (`"privacy_standard"`)
-Standard educational privacy defaults for most instructional workflows:
+A broader masking option for many instructional workflows:
 
 ```r
 set_privacy_defaults("privacy_standard")
@@ -82,7 +89,7 @@ This level masks:
 - Instructor names and IDs
 
 ### 3. Basic Mask (`"mask"`)
-Default level for basic privacy protection:
+The package default for basic identifier masking:
 
 ```r
 set_privacy_defaults("mask")
@@ -93,7 +100,8 @@ This level masks:
 - Email addresses
 
 ### 4. No Masking (`"none"`)
-Disables privacy protection (not recommended):
+Turns off package masking. This is usually not appropriate for student data
+unless local review has authorized identifiable outputs:
 
 ```r
 set_privacy_defaults("none")  # Will emit a warning
@@ -107,7 +115,7 @@ legal determination.
 
 ### Data Validation
 
-Review your data for possible privacy risks:
+You can review data for possible privacy risks:
 
 ```r
 # Sample data with PII
@@ -126,7 +134,7 @@ print(validation_result$recommendations)
 
 ### Data Anonymization
 
-Anonymize data using various methods:
+You can anonymize data using several package methods:
 
 ```r
 # Basic masking
@@ -144,7 +152,7 @@ aggregated_data <- anonymize_educational_data(sample_data, method = "aggregate",
 
 ### Privacy Reporting
 
-Generate privacy review reports:
+You can generate privacy review reports:
 
 ```r
 # Generate privacy review report
@@ -160,7 +168,7 @@ generate_ferpa_report(
 
 ### Data Retention
 
-Check data retention policies:
+You can check a data frame against a retention period:
 
 ```r
 # Add date column for retention checking
@@ -178,11 +186,11 @@ print(retention_check$compliant)
 print(retention_check$recommendations)
 ```
 
-## Institutional Review Guidelines
+## Institutional Review Considerations
 
 ### Educational Institutions
 
-For traditional educational institutions:
+For traditional educational institutions, one technical review might look like:
 
 ```r
 # Validate with educational institution settings
@@ -196,7 +204,7 @@ print(edu_validation$institution_guidance)
 
 ### Research Institutions
 
-For research-focused institutions:
+For research-focused institutions, one technical review might look like:
 
 ```r
 # Validate with research institution settings
@@ -210,7 +218,8 @@ print(research_validation$institution_guidance)
 
 ### Mixed Institutions
 
-For institutions with both educational and research functions:
+For institutions with both educational and research functions, one technical
+review might look like:
 
 ```r
 # Validate with mixed institution settings
@@ -222,11 +231,11 @@ mixed_validation <- validate_ferpa_compliance(
 print(mixed_validation$institution_guidance)
 ```
 
-## Data Handling Best Practices
+## Data Handling Practices to Consider
 
 ### 1. Data Classification
 
-Classify your data appropriately:
+Consider classifying the data before analysis:
 
 - **Public Data**: Aggregated statistics, anonymized results
 - **Internal Data**: Student records for legitimate educational purposes
@@ -234,7 +243,7 @@ Classify your data appropriately:
 
 ### 2. Access Controls
 
-Implement appropriate access controls:
+Consider access controls that match the data classification:
 
 - Limit access to authorized personnel only
 - Use role-based access controls
@@ -243,7 +252,7 @@ Implement appropriate access controls:
 
 ### 3. Data Storage
 
-Ensure secure data storage:
+Plan storage and transfer practices for sensitive data:
 
 - Use encrypted storage for sensitive data
 - Implement secure backup procedures
@@ -252,54 +261,59 @@ Ensure secure data storage:
 
 ### 4. Data Disposal
 
-Follow proper data disposal procedures:
+Follow local retention and disposal procedures:
 
 - Implement automated data disposal
 - Document disposal procedures
 - Verify complete data removal
 - Maintain disposal audit trails
 
-## Instructor Guidelines
+## Instructor Review Prompts
 
 ### Before Analysis
 
-1. **Review Institutional Policies**: Understand your institution's FERPA policies
-2. **Obtain Necessary Permissions**: Ensure you have authorization to access student data
-3. **Plan Data Handling**: Determine how you will protect and dispose of data
-4. **Document Procedures**: Create clear procedures for data handling
+1. **Review Institutional Policies**: Consider reviewing your institution's
+   educational records and data handling policies
+2. **Document Authorization**: Confirm or record the authorization path for
+   accessing student data
+3. **Plan Data Handling**: Decide how data will be protected, retained, and
+   disposed of
+4. **Document Procedures**: Keep local procedures for data handling
 
 ### During Analysis
 
-1. **Use Privacy Defaults**: Always use privacy-safe settings
-2. **Review Data**: Use privacy review functions to check your data
-3. **Limit Access**: Restrict access to only necessary personnel
-4. **Monitor Usage**: Track how data is being used
+1. **Prefer Privacy Defaults**: Prefer privacy-supporting settings unless local
+   review authorizes otherwise
+2. **Review Data**: Use privacy review functions as technical checks
+3. **Limit Access**: Keep access aligned with documented educational need
+4. **Monitor Usage**: Track how data is being used when local policy calls for it
 
 ### After Analysis
 
-1. **Anonymize Results**: Ensure all outputs are privacy-safe
-2. **Secure Storage**: Store results securely
+1. **Review Results**: Check whether outputs contain identifiers or small-cell
+   disclosure risks
+2. **Secure Storage**: Store results according to local policy
 3. **Dispose of Data**: Follow institutional disposal procedures
-4. **Document Process**: Maintain records of your analysis
+4. **Document Process**: Maintain non-sensitive records of the analysis review
 
 ## Institutional Review Checklist
 
-Use this checklist to support institutional privacy review:
+This checklist may help support institutional privacy review:
 
 ### Pre-Analysis
 - [ ] Review official FERPA sources and institutional policies
-- [ ] Obtain necessary permissions
+- [ ] Document authorization or local review path
 - [ ] Set up secure data environment
 - [ ] Configure privacy defaults
 
 ### During Analysis
-- [ ] Use privacy-safe functions
+- [ ] Use privacy-supporting functions
 - [ ] Review data for privacy risks
 - [ ] Limit data access
 - [ ] Monitor data usage
 
 ### Post-Analysis
-- [ ] Anonymize all outputs
+- [ ] Review whether outputs are masked, aggregated, or otherwise appropriate
 - [ ] Secure result storage
 - [ ] Dispose of raw data
 - [ ] Document procedures
@@ -310,33 +324,33 @@ Use this checklist to support institutional privacy review:
 - [ ] Policy reviews
 - [ ] Security assessments
 
-## Institutional Adoption Guide
+## Institutional Adoption Considerations
 
 This package is intended to support institutionally authorized educational
 analysis. Before using it with transcripts, rosters, or other student records,
-confirm that the planned workflow has been reviewed under your local policies.
-The package can reduce accidental disclosure through masking and review helpers,
-but it does not determine whether a use is legally permitted.
+consider confirming that the planned workflow has been reviewed under your local
+policies. The package can reduce accidental disclosure through masking and
+review helpers, but it does not determine whether a use is legally permitted.
 
-### 1. Confirm Authorization
+### 1. Review Authorization
 
-Before importing data:
+Before importing data, consider:
 
 - Identify the educational purpose for the analysis.
-- Confirm who is authorized to access the transcript and roster data.
+- Identifying who is authorized to access the transcript and roster data.
 - Review whether students, instructors, teaching assistants, or guests are
   represented in the data.
-- Confirm whether additional institutional review is needed for research,
+- Considering whether additional institutional review is needed for research,
   assessment, reporting, or cross-course comparison.
 - Document the local approval path without storing sensitive raw data in the
   package project or public repositories.
 
 ### 2. Prepare a Local Data Environment
 
-Use local storage and access controls that match your institution's data
+Choose local storage and access controls that match your institution's data
 classification:
 
-- Keep raw transcripts and rosters outside package source directories.
+- Prefer keeping raw transcripts and rosters outside package source directories.
 - Avoid committing raw transcripts, rosters, generated summaries, review logs,
   or analysis outputs that include identifiers.
 - Use institution-approved storage, encryption, retention, and sharing
@@ -345,7 +359,8 @@ classification:
 
 ### 3. Configure Privacy Defaults
 
-Before processing data, set and record the intended privacy level:
+Before processing data, consider setting and recording the intended privacy
+level:
 
 ```r
 library(engager)
@@ -354,26 +369,27 @@ set_privacy_defaults("mask")
 getOption("engager.privacy_level")
 ```
 
-Use `"privacy_standard"` or `"privacy_strict"` when your local review calls for
-broader masking. These are package setting names, not compliance labels. Use
+Consider `"privacy_standard"` or `"privacy_strict"` when your local review calls
+for broader masking. These are package setting names, not compliance labels. Use
 `"none"` only for a documented, authorized reason and review all outputs before
 sharing them.
 
 ### 4. Review Inputs and Outputs
 
-Use the package's privacy review helpers as a technical check, not as a legal
-determination:
+The package's privacy review helpers can support technical checks; they are not
+legal determinations:
 
 ```r
 validation <- validate_ferpa_compliance(your_data)
 validation$recommendations
 ```
 
-Before sharing or storing results outside the restricted working environment:
+Before sharing or storing results outside the restricted working environment,
+consider:
 
 - Inspect output files for names, email addresses, student IDs, meeting IDs,
   course identifiers, and small-cell disclosure risks.
-- Use `write_metrics()` for CSV exports; it omits raw transcript/comment text by
+- Prefer `write_metrics()` for CSV exports; it omits raw transcript/comment text by
   default because free-text comments can include spoken names or contextual
   identifiers.
 - Prefer masked, aggregated, or pseudonymized outputs for routine sharing.
@@ -382,18 +398,18 @@ Before sharing or storing results outside the restricted working environment:
 
 ### 5. Retain and Dispose of Data
 
-Follow local policy for retention and disposal:
+Follow local policy for retention and disposal. A local process might include:
 
 - Keep raw transcripts and rosters only as long as authorized.
 - Remove local generated outputs when they are no longer needed.
-- Do not use package examples, vignettes, test fixtures, or repositories as
+- Avoid using package examples, vignettes, test fixtures, or repositories as
   storage locations for real student data.
 - Preserve only non-sensitive validation evidence in release or project notes.
 
 ### 6. Suggested Local Sign-Off Record
 
-For a CRAN release or institutional deployment, maintain a local record that
-answers these questions without including raw student data:
+For a CRAN release or institutional deployment, a local record can answer these
+questions without including raw student data:
 
 - What data source was reviewed?
 - Who performed the privacy review?
@@ -402,9 +418,9 @@ answers these questions without including raw student data:
 - What retention or disposal action is required?
 - Who approved use under institutional policy?
 
-This sign-off record should remain with the institution or release owner. It
-should not be submitted to CRAN and should not be used to claim that the package
-guarantees legal compliance.
+This sign-off record is best kept with the institution or release owner. It is
+not submitted to CRAN and does not show that the package guarantees legal
+compliance.
 
 ## Troubleshooting Common Issues
 
@@ -460,7 +476,7 @@ print(retention_check$recommendations)
 
 ### 1. Educational Purpose
 
-Use this package to support educational outcomes:
+This package is best used to support educational outcomes:
 
 - Focus on participation equity
 - Identify students who need support
@@ -469,16 +485,16 @@ Use this package to support educational outcomes:
 
 ### 2. Avoid Surveillance
 
-Do not use this package for surveillance:
+Avoid using this package for surveillance:
 
 - Avoid tracking individual students without educational purpose
-- Don't use data for punitive measures
+- Avoid using data for punitive measures
 - Focus on positive interventions
 - Respect student privacy
 
 ### 3. Transparency
 
-Be transparent about data use:
+Consider transparency around data use:
 
 - Inform students about data collection
 - Explain how data will be used
@@ -487,7 +503,7 @@ Be transparent about data use:
 
 ### 4. Beneficence
 
-Ensure data use benefits students:
+Center student benefit in data use:
 
 - Use insights to improve teaching
 - Provide targeted support
@@ -503,10 +519,10 @@ Ensure data use benefits students:
 - School official and legitimate educational interest FAQ: `https://studentprivacy.ed.gov/faq/under-ferpa-may-educational-agency-or-institution-disclose-education-records-any-its-employees`
 
 ### Institutional Resources
-- Contact your institution's FERPA compliance officer
-- Review institutional data handling policies
-- Consult with your institutional review board (IRB)
-- Attend FERPA training sessions
+- Contacting your institution's FERPA compliance officer
+- Reviewing institutional data handling policies
+- Consulting with your institutional review board (IRB)
+- Attending FERPA training sessions
 
 ### Package Resources
 - Package documentation: `?engager`
@@ -516,6 +532,12 @@ Ensure data use benefits students:
 
 ## Conclusion
 
-Privacy review is essential when working with student data. This package provides tools that support privacy-conscious workflows, but responsibility for authorization, legal interpretation, and institutional policy compliance remains with the user and their institution. Always review official sources and institutional policies, and consult appropriate institutional officials when needed.
+Privacy review can be important when working with student data. This package
+provides tools that support privacy-conscious workflows, but responsibility for
+authorization, legal interpretation, and institutional policy compliance remains
+with the user and their institution. Consider reviewing official sources and
+institutional policies, and consult appropriate institutional officials when
+needed.
 
-Remember: **Privacy by design, ethical by default.**
+A useful working posture is **privacy by design, with local review before
+sharing**.

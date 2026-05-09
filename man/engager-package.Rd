@@ -15,6 +15,7 @@ FERPA-oriented review helpers, and masked outputs by default.
 Useful links:
 \itemize{
   \item \url{https://github.com/revgizmo/engager}
+  \item \url{https://revgizmo.github.io/engager/}
   \item Report bugs at \url{https://github.com/revgizmo/engager/issues}
 }
 

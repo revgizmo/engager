@@ -160,7 +160,7 @@ For detailed troubleshooting guidance:
 
 - **For visualization**: see `vignette("plotting")`
 - **For exported function coverage**: see `vignette("essential-functions")`
-- **For privacy and ethical use**: see `vignette("ferpa-ethics")`
+- **For privacy, ethics, and institutional review considerations**: see `vignette("privacy-ethics-review")`
 
 ## Getting Help
 

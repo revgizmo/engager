@@ -41,5 +41,5 @@ Suggests:
     gridExtra
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-URL: https://github.com/revgizmo/engager
+URL: https://github.com/revgizmo/engager, https://revgizmo.github.io/engager/
 BugReports: https://github.com/revgizmo/engager/issues

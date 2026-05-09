@@ -111,8 +111,8 @@ For detailed workflows and examples, see the package vignettes:
   `vignette("plotting", package = "engager")`
 - **Essential Functions**: see
   `vignette("essential-functions", package = "engager")`
-- **Privacy and Ethical Use**: see
-  `vignette("ferpa-ethics", package = "engager")`
+- **Privacy, Ethics, and Institutional Review**: see
+  `vignette("privacy-ethics-review", package = "engager")`
 
 ## 🎯 What the Package Does
 
@@ -227,8 +227,8 @@ set_privacy_defaults("mask")  # restore safe default
 Masked by default: `preferred_name`, `name`, `first_last`, `name_raw`,
 `student_id`, `email`.
 
-See `vignette("ferpa-ethics", package = "engager")` for privacy and
-ethical use guidance.
+See `vignette("privacy-ethics-review", package = "engager")` for privacy,
+ethics, and institutional review considerations.
 
 ## Development
 

@@ -193,7 +193,7 @@ The name cleaning process involves:
 Typical issues you might encounter:
 
 - **Nicknames**: "Mike" vs "Michael"
-- **Display Names**: "Prof. Smith" vs "Dr. Smith"  
+- **Display Names**: "Prof. Smith" vs "Dr. Smith"
 - **Guest Speakers**: Names not in the roster
 - **Technical Issues**: "Unknown" or "User123"
 
@@ -310,4 +310,4 @@ if (!roster_compliance$compliant) {
 
 - **For analysis**: See the [Plotting and Analysis](plotting.html) vignette
 - **For session mapping**: See the [Session Mapping](session-mapping.html) vignette
-- **For FERPA compliance**: See the [FERPA Compliance & Ethical Use](ferpa-ethics.html) vignette 
+- **For privacy, ethics, and institutional review considerations**: See the [privacy and institutional review considerations](privacy-ethics-review.html) vignette

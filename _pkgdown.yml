@@ -7,6 +7,11 @@ destination: docs
 
 url: https://revgizmo.github.io/engager/
 
+llm-docs: false
+
+redirects:
+  - ["articles/ferpa-ethics.html", "articles/privacy-ethics-review.html"]
+
 navbar:
   title: engager
   structure:
@@ -23,50 +28,82 @@ reference:
 - title: Core Functions
   contents:
   - analyze_transcripts
+  - basic_transcript_analysis
+  - batch_basic_analysis
+  - quick_analysis
   - consolidate_transcript
   - detect_duplicate_transcripts
   - load_zoom_transcript
   - process_zoom_transcript
   - summarize_transcript_files
   - summarize_transcript_metrics
+- title: Name Matching
+  contents:
+  - load_roster
+  - make_blank_section_names_lookup_csv
+  - apply_name_matching
+  - apply_privacy_aware_matching
+  - safe_name_matching_workflow
+  - detect_unmatched_names
+  - match_names_workflow
+  - write_unresolved
+- title: Attendance
+  contents:
+  - analyze_multi_session_attendance
+  - generate_attendance_report
+  - make_blank_cancelled_classes_df
 - title: Privacy and Compliance
   contents:
   - anonymize_educational_data
   - ensure_privacy
   - privacy_audit
   - validate_privacy_compliance
+  - audit_ethical_usage
+  - check_data_retention_policy
+  - ethical_compliance
+  - ferpa_compliance
 - title: Visualization and Output
   contents:
   - plot_users
   - write_metrics
+- title: User Guidance
+  contents:
+  - find_function_for_task
+  - get_next_level
+  - get_smart_recommendations
+  - get_ux_level
+  - get_visible_functions
+  - set_ux_level
+  - show_available_functions
+  - show_error_recovery
+  - show_function_categories
+  - show_function_help
+  - show_getting_started
+  - show_privacy_guidance
+  - show_troubleshooting
+  - show_workflow_help
+  - user_friendly_error
+  - validate_directory_argument
+  - validate_file_argument
 - title: Internal Functions
   contents:
-  - starts_with("abort_")
-  - starts_with("add_")
-  - starts_with("analyze_")
-  - starts_with("apply_")
-  - starts_with("basic_")
-  - starts_with("batch_")
-  - starts_with("calculate_")
-  - starts_with("convert_")
+  - abort_zse
+  - add_dead_air_rows
+  - aliases_long
+  - build_match_audit
+  - build_roster_hash_index
+  - calculate_content_similarity
+  - convert_error_to_user_friendly
   - starts_with("data")
+  - derive_speaker_column
   - starts_with("engager-")
-  - starts_with("ethical_")
-  - starts_with("ferpa_")
-  - starts_with("find_")
-  - starts_with("get_")
-  - starts_with("load_")
+  - hash_canonical_name
   - starts_with("lookup_")
-  - starts_with("make_")
-  - starts_with("plot_")
-  - starts_with("quick_")
-  - starts_with("run_")
-  - starts_with("safe_")
+  - match_names_exact
+  - match_names_fuzzy
+  - normalize_name
+  - prepare_transcript_names
+  - resolve_name_hash_key
   - starts_with("schema")
-  - starts_with("set_")
-  - starts_with("show_")
-  - starts_with("ux_")
-  - starts_with("user_")
-  - starts_with("validate_")
   - starts_with("zse_")
   - "%>%"
