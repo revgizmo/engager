@@ -1,20 +1,39 @@
-#' FERPA-Oriented Privacy Review Functions
+#' Privacy Review Functions
 #'
-#' Functions to support FERPA-oriented privacy review for educational data.
+#' Functions to support institutional privacy review for educational data.
 #' These helpers do not guarantee legal compliance; institutions remain
 #' responsible for policy review and authorization.
 #'
 #' @importFrom magrittr %>%
-#' @name ferpa_compliance
+#' @name privacy_review
 NULL
 
-# Internal function - no documentation needed
-validate_ferpa_compliance <- function(data = NULL,
-                                      institution_type = c("educational", "research", "mixed"),
-                                      check_retention = TRUE,
-                                      retention_period = c("academic_year", "semester", "quarter", "custom"),
-                                      custom_retention_days = NULL,
-                                      audit_log = TRUE) {
+.privacy_review_log_env <- new.env(parent = emptyenv())
+
+#' Review Data for Privacy Risks
+#'
+#' Performs a technical privacy review of a data frame by looking for common
+#' identifier columns, optional retention concerns, and institution-specific
+#' review prompts. This is a screening helper, not a legal compliance
+#' determination.
+#'
+#' @param data Data frame or tibble containing educational data.
+#' @param institution_type Review context: "educational", "research", or "mixed".
+#' @param check_retention Whether to run the retention-policy helper.
+#' @param retention_period Retention period: "academic_year", "semester",
+#'   "quarter", or "custom".
+#' @param custom_retention_days Custom retention period in days, used when
+#'   `retention_period = "custom"`.
+#' @param audit_log Whether to record an in-memory review audit event.
+#' @return A list with technical review status, detected fields, recommendations,
+#'   retention check details, and institutional review prompts.
+#' @export
+review_privacy_risks <- function(data = NULL,
+                                 institution_type = c("educational", "research", "mixed"),
+                                 check_retention = TRUE,
+                                 retention_period = c("academic_year", "semester", "quarter", "custom"),
+                                 custom_retention_days = NULL,
+                                 audit_log = TRUE) {
   institution_type <- match.arg(institution_type)
   retention_period <- match.arg(retention_period)
 
@@ -24,7 +43,7 @@ validate_ferpa_compliance <- function(data = NULL,
 
   # Initialize results
   result <- list(
-    compliant = TRUE,
+    passed = TRUE,
     pii_detected = character(0),
     recommendations = character(0),
     retention_check = NULL,
@@ -53,20 +72,20 @@ validate_ferpa_compliance <- function(data = NULL,
 
   # Generate recommendations based on PII detection
   if (length(result$pii_detected) > 0) {
-    result$compliant <- FALSE
+    result$passed <- FALSE
     result$recommendations <- c(
       result$recommendations,
       paste("PII detected in columns:", paste(result$pii_detected, collapse = ", ")),
       "Consider using ensure_privacy() to mask identifiable data",
-      "Review institutional FERPA policies for data handling",
+      "Review institutional privacy policies for data handling",
       "Ensure data access is limited to authorized personnel"
     )
   }
 
-  # Log FERPA-oriented privacy review for audit purposes
+  # Log privacy review for audit purposes
   if (audit_log) {
-    log_ferpa_compliance_check(
-      compliant = result$compliant,
+    log_privacy_review(
+      passed = result$passed,
       pii_detected = length(result$pii_detected),
       institution_type = institution_type,
       timestamp = Sys.time()
@@ -77,7 +96,7 @@ validate_ferpa_compliance <- function(data = NULL,
   if (institution_type == "educational") {
     result$institution_guidance <- c(
       result$institution_guidance,
-      "Educational institutions should review FERPA requirements",
+      "Consider reviewing applicable student-record privacy requirements",
       "Student records must be protected from unauthorized access",
       "Consider implementing role-based access controls",
       "Document all data access and usage procedures"
@@ -93,10 +112,10 @@ validate_ferpa_compliance <- function(data = NULL,
   } else if (institution_type == "mixed") {
     result$institution_guidance <- c(
       result$institution_guidance,
-      "Mixed institutions should review both FERPA and research ethics",
+      "Mixed institutions should review both student-record privacy and research ethics requirements",
       "Implement separate procedures for educational vs. research data",
       "Ensure clear data classification and handling procedures",
-      "Review both FERPA and IRB requirements"
+      "Review applicable student-record privacy and IRB requirements"
     )
   }
 
@@ -108,8 +127,8 @@ validate_ferpa_compliance <- function(data = NULL,
       custom_retention_days = custom_retention_days
     )
 
-    if (!result$retention_check$compliant) {
-      result$compliant <- FALSE
+    if (!result$retention_check$passed) {
+      result$passed <- FALSE
       result$recommendations <- c(
         result$recommendations,
         result$retention_check$recommendations
@@ -122,17 +141,38 @@ validate_ferpa_compliance <- function(data = NULL,
     result$recommendations,
     "Use set_privacy_defaults('mask') for privacy-safe outputs",
     "Implement secure data storage and transmission",
-    "Train personnel on FERPA-oriented privacy requirements",
+    "Train personnel on applicable privacy requirements",
     "Maintain audit trails for data access and modifications"
   )
 
   result
 }
 
+# Deprecated compatibility wrapper. Kept unexported because the old helper was
+# not part of the public NAMESPACE, but tests and historical scripts may call it.
+validate_ferpa_compliance <- function(data = NULL,
+                                      institution_type = c("educational", "research", "mixed"),
+                                      check_retention = TRUE,
+                                      retention_period = c("academic_year", "semester", "quarter", "custom"),
+                                      custom_retention_days = NULL,
+                                      audit_log = TRUE) {
+  .Deprecated("review_privacy_risks")
+  result <- review_privacy_risks(
+    data = data,
+    institution_type = institution_type,
+    check_retention = check_retention,
+    retention_period = retention_period,
+    custom_retention_days = custom_retention_days,
+    audit_log = audit_log
+  )
+  result$compliant <- result$passed
+  result
+}
+
 #' Anonymize Educational Data
 #'
 #' Advanced anonymization for educational data that preserves data utility
-#' while supporting FERPA-oriented privacy review.
+#' while supporting privacy review.
 #'
 #'
 #'
@@ -280,16 +320,32 @@ apply_hash_anonymization <- function(data, columns_to_anonymize, hash_salt) {
 }
 
 
-# Internal function - no documentation needed
-generate_ferpa_report <- function(data = NULL,
-                                  output_file = NULL,
-                                  report_format = c("text", "html", "json"),
-                                  include_audit_trail = TRUE,
-                                  institution_info = NULL) {
+#' Generate a Privacy Review Report
+#'
+#' Generates a lightweight report from `review_privacy_risks()`. The report is
+#' intended to support local review and documentation; it does not certify legal
+#' compliance.
+#'
+#' @param data Data frame or tibble containing educational data.
+#' @param output_file Optional file path for writing the report.
+#' @param report_format Output format: "text", "html", or "json".
+#' @param include_audit_trail Whether to include basic report metadata.
+#' @param institution_info Optional institution-provided metadata to include.
+#' @param institution_type Review context: "educational", "research", or "mixed".
+#' @return A list containing report metadata, summary, review results, and
+#'   recommendations.
+#' @export
+generate_privacy_review_report <- function(data = NULL,
+                                           output_file = NULL,
+                                           report_format = c("text", "html", "json"),
+                                           include_audit_trail = TRUE,
+                                           institution_info = NULL,
+                                           institution_type = c("educational", "research", "mixed")) {
   report_format <- match.arg(report_format)
+  institution_type <- match.arg(institution_type)
 
   # Validate data
-  validation_result <- validate_ferpa_compliance(data)
+  validation_result <- review_privacy_risks(data, institution_type = institution_type)
 
   # Generate audit trail
   audit_trail <- if (include_audit_trail) {
@@ -306,10 +362,10 @@ generate_ferpa_report <- function(data = NULL,
 
   # Build report
   report <- list(
-    title = "FERPA Compliance Report",
+    title = "Privacy Review Report",
     generated = Sys.time(),
     summary = list(
-      compliant = validation_result$compliant,
+      passed = validation_result$passed,
       pii_detected = validation_result$pii_detected,
       recommendations_count = length(validation_result$recommendations)
     ),
@@ -321,32 +377,75 @@ generate_ferpa_report <- function(data = NULL,
 
   # Save to file if requested
   if (!is.null(output_file)) {
-    if (report_format == "json") {
-      jsonlite::write_json(report, output_file, pretty = TRUE)
-    } else if (report_format == "html") {
-      # Create simple HTML report
-      html_content <- paste0(
-        "<html><head><title>FERPA Compliance Report</title></head><body>",
-        "<h1>FERPA Compliance Report</h1>",
-        "<p><strong>Generated:</strong> ", report$generated, "</p>",
-        "<p><strong>Compliant:</strong> ", ifelse(report$summary$compliant, "Yes", "No"), "</p>",
-        "<h2>Recommendations</h2><ul>",
-        paste0("<li>", report$recommendations, "</li>", collapse = ""),
-        "</ul></body></html>"
-      )
-      writeLines(html_content, output_file)
-    } else {
-      # Text format
-      text_content <- paste0(
-        "FERPA Compliance Report\n",
-        "Generated: ", report$generated, "\n",
-        "Compliant: ", ifelse(report$summary$compliant, "Yes", "No"), "\n",
-        "PII Detected: ", paste(report$summary$pii_detected, collapse = ", "), "\n",
-        "\nRecommendations:\n",
-        paste0("- ", report$recommendations, collapse = "\n")
-      )
-      writeLines(text_content, output_file)
-    }
+    write_privacy_review_report(
+      report = report,
+      output_file = output_file,
+      report_format = report_format,
+      status_field = "passed",
+      status_label = "Review passed"
+    )
+  }
+
+  report
+}
+
+write_privacy_review_report <- function(report,
+                                        output_file,
+                                        report_format,
+                                        status_field,
+                                        status_label) {
+  if (report_format == "json") {
+    jsonlite::write_json(report, output_file, pretty = TRUE)
+  } else if (report_format == "html") {
+    html_content <- paste0(
+      "<html><head><title>Privacy Review Report</title></head><body>",
+      "<h1>Privacy Review Report</h1>",
+      "<p><strong>Generated:</strong> ", report$generated, "</p>",
+      "<p><strong>", status_label, ":</strong> ", ifelse(report$summary[[status_field]], "Yes", "No"), "</p>",
+      "<h2>Recommendations</h2><ul>",
+      paste0("<li>", report$recommendations, "</li>", collapse = ""),
+      "</ul></body></html>"
+    )
+    writeLines(html_content, output_file)
+  } else {
+    text_content <- paste0(
+      "Privacy Review Report\n",
+      "Generated: ", report$generated, "\n",
+      status_label, ": ", ifelse(report$summary[[status_field]], "Yes", "No"), "\n",
+      "PII Detected: ", paste(report$summary$pii_detected, collapse = ", "), "\n",
+      "\nRecommendations:\n",
+      paste0("- ", report$recommendations, collapse = "\n")
+    )
+    writeLines(text_content, output_file)
+  }
+}
+
+# Deprecated compatibility wrapper. Kept unexported because the old helper was
+# not part of the public NAMESPACE, but tests and historical scripts may call it.
+generate_ferpa_report <- function(data = NULL,
+                                  output_file = NULL,
+                                  report_format = c("text", "html", "json"),
+                                  include_audit_trail = TRUE,
+                                  institution_info = NULL) {
+  .Deprecated("generate_privacy_review_report")
+  report <- generate_privacy_review_report(
+    data = data,
+    output_file = NULL,
+    report_format = report_format,
+    include_audit_trail = include_audit_trail,
+    institution_info = institution_info
+  )
+  report$summary$compliant <- report$summary$passed
+  report$validation_results$compliant <- report$validation_results$passed
+
+  if (!is.null(output_file)) {
+    write_privacy_review_report(
+      report = report,
+      output_file = output_file,
+      report_format = match.arg(report_format),
+      status_field = "compliant",
+      status_label = "Compliant"
+    )
   }
 
   report
@@ -362,7 +461,9 @@ generate_ferpa_report <- function(data = NULL,
 #' @param custom_retention_days Custom retention period in days (for "custom" period)
 #' @param date_column Column name containing dates to check
 #' @param current_date Current date for comparison (default: Sys.Date())
-#' @return List containing compliance status and retention analysis
+#' @return List containing review status and retention analysis. The `passed`
+#'   field is the preferred status name; `compliant` is retained as a
+#'   backward-compatible alias.
 #' @keywords internal
 #' @examples
 #' \dontrun{
@@ -378,7 +479,7 @@ generate_ferpa_report <- function(data = NULL,
 #'   retention_period = "academic_year",
 #'   date_column = "session_date"
 #' )
-#' print(retention_check$compliant)
+#' print(retention_check$passed)
 #' }
 check_data_retention_policy <- function(data = NULL,
                                         retention_period = c("academic_year", "semester", "quarter", "custom"),
@@ -392,6 +493,7 @@ check_data_retention_policy <- function(data = NULL,
   }
 
   result <- list(
+    passed = TRUE,
     compliant = TRUE,
     retention_period_days = 0,
     data_to_dispose = NULL,
@@ -423,6 +525,7 @@ check_data_retention_policy <- function(data = NULL,
     old_data_indices <- which(dates < cutoff_date)
 
     if (length(old_data_indices) > 0) {
+      result$passed <- FALSE
       result$compliant <- FALSE
       result$data_to_dispose <- data[old_data_indices, ]
       result$recommendations <- c(
@@ -448,34 +551,52 @@ check_data_retention_policy <- function(data = NULL,
 }
 
 # Internal function - no documentation needed
-log_ferpa_compliance_check <- function(compliant,
-                                       pii_detected,
-                                       institution_type,
-                                       timestamp = Sys.time()) {
+log_privacy_review <- function(passed,
+                               pii_detected,
+                               institution_type,
+                               timestamp = Sys.time()) {
   # Create log entry
   log_entry <- list(
     timestamp = timestamp,
-    compliant = compliant,
+    passed = passed,
     pii_detected = pii_detected,
     institution_type = institution_type,
     session_id = Sys.getpid()
   )
 
   # Store in package environment for session tracking (CRAN compliant)
-  log_key <- paste0("zse_ferpa_log_", format(timestamp, "%Y%m%d_%H%M%S"))
-  # Simple in-memory storage for session tracking - use options() for CRAN compliance
-  current_logs <- getOption("engager.ferpa_logs", list())
+  log_key <- paste0("engager_privacy_review_log_", format(timestamp, "%Y%m%d_%H%M%OS6"))
+  current_logs <- as.list(.privacy_review_log_env)
+  if (length(current_logs) == 0) {
+    current_logs <- getOption(
+      "engager.privacy_review_logs",
+      getOption("engager.ferpa_logs", list())
+    )
+    if (is.list(current_logs) && length(current_logs) > 0) {
+      for (existing_log_key in names(current_logs)) {
+        assign(existing_log_key, current_logs[[existing_log_key]], envir = .privacy_review_log_env)
+      }
+    }
+  }
+  assign(log_key, log_entry, envir = .privacy_review_log_env)
+
+  # Backward-compatible read mirror for historical scripts/tests.
+  current_logs <- as.list(.privacy_review_log_env)
   current_logs[[log_key]] <- log_entry
+  options(engager.privacy_review_logs = current_logs)
   options(engager.ferpa_logs = current_logs)
 
   # Optionally write to file if logging is enabled
-  log_file <- getOption("engager.ferpa_log_file", NULL)
+  log_file <- getOption(
+    "engager.privacy_review_log_file",
+    getOption("engager.ferpa_log_file", NULL)
+  )
   if (!is.null(log_file) && is.character(log_file)) {
     tryCatch(
       {
         log_line <- paste(
           format(timestamp, "%Y-%m-%d %H:%M:%S"),
-          ifelse(compliant, "COMPLIANT", "NON_COMPLIANT"),
+          ifelse(passed, "PASSED", "RISKS_DETECTED"),
           pii_detected,
           institution_type,
           sep = "\t"
@@ -490,4 +611,19 @@ log_ferpa_compliance_check <- function(compliant,
   }
 
   invisible(log_entry)
+}
+
+log_ferpa_compliance_check <- function(compliant,
+                                       pii_detected,
+                                       institution_type,
+                                       timestamp = Sys.time()) {
+  .Deprecated("log_privacy_review")
+  result <- log_privacy_review(
+    passed = compliant,
+    pii_detected = pii_detected,
+    institution_type = institution_type,
+    timestamp = timestamp
+  )
+  result$compliant <- result$passed
+  invisible(result)
 }

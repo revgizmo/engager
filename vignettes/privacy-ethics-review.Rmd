@@ -127,8 +127,8 @@ sample_data <- tibble::tibble(
 )
 
 # Run a privacy-oriented technical review
-validation_result <- validate_ferpa_compliance(sample_data)
-print(validation_result$compliant)
+validation_result <- review_privacy_risks(sample_data)
+print(validation_result$passed)
 print(validation_result$recommendations)
 ```
 
@@ -154,16 +154,26 @@ aggregated_data <- anonymize_educational_data(sample_data, method = "aggregate",
 
 You can generate privacy review reports:
 
-```r
-# Generate privacy review report
-report <- generate_ferpa_report(sample_data)
+```{r privacy-reporting-example}
+# Sample data with identifier-like fields
+sample_data <- tibble::tibble(
+  student_id = c("12345", "67890"),
+  preferred_name = c("Alice Johnson", "Bob Smith"),
+  email = c("alice@university.edu", "bob@university.edu"),
+  participation_score = c(85, 92)
+)
 
-# Save report to file
-generate_ferpa_report(
-  sample_data, 
-  output_file = "ferpa_privacy_review_report.json",
+# Generate privacy review report
+report <- engager::generate_privacy_review_report(sample_data)
+
+# Save report to a temporary file
+report_file <- tempfile(fileext = ".json")
+written_report <- engager::generate_privacy_review_report(
+  sample_data,
+  output_file = report_file,
   report_format = "json"
 )
+unlink(report_file)
 ```
 
 ### Data Retention
@@ -188,47 +198,44 @@ print(retention_check$recommendations)
 
 ## Institutional Review Considerations
 
-### Educational Institutions
+The package cannot know which institutional role, policy, or legal framework
+applies to a particular dataset. Instead of treating institution type as a
+compliance decision, use the review context only to surface different technical
+prompts for local review.
 
-For traditional educational institutions, one technical review might look like:
+For a classroom or program-improvement workflow, one review might look like:
 
 ```r
-# Validate with educational institution settings
-edu_validation <- validate_ferpa_compliance(
+classroom_review <- review_privacy_risks(
   sample_data,
   institution_type = "educational"
 )
 
-print(edu_validation$institution_guidance)
+print(classroom_review$institution_guidance)
 ```
 
-### Research Institutions
-
-For research-focused institutions, one technical review might look like:
+For a research workflow, use the research context as a reminder to consider IRB,
+consent, publication, and data-sharing expectations:
 
 ```r
-# Validate with research institution settings
-research_validation <- validate_ferpa_compliance(
+research_review <- review_privacy_risks(
   sample_data,
   institution_type = "research"
 )
 
-print(research_validation$institution_guidance)
+print(research_review$institution_guidance)
 ```
 
-### Mixed Institutions
-
-For institutions with both educational and research functions, one technical
-review might look like:
+If a workflow has both instructional and research uses, treat that as a reason
+to document both review paths rather than as a stronger package-level claim:
 
 ```r
-# Validate with mixed institution settings
-mixed_validation <- validate_ferpa_compliance(
+combined_review <- review_privacy_risks(
   sample_data,
   institution_type = "mixed"
 )
 
-print(mixed_validation$institution_guidance)
+print(combined_review$institution_guidance)
 ```
 
 ## Data Handling Practices to Consider
@@ -380,7 +387,7 @@ The package's privacy review helpers can support technical checks; they are not
 legal determinations:
 
 ```r
-validation <- validate_ferpa_compliance(your_data)
+validation <- review_privacy_risks(your_data)
 validation$recommendations
 ```
 
@@ -446,14 +453,14 @@ If privacy validation is flagging issues:
 
 ```r
 # Check what PII was detected
-validation_result <- validate_ferpa_compliance(your_data)
+validation_result <- review_privacy_risks(your_data)
 print(validation_result$pii_detected)
 
 # Anonymize the data
 anonymized_data <- anonymize_educational_data(your_data, method = "mask")
 
 # Re-validate
-validate_ferpa_compliance(anonymized_data)
+review_privacy_risks(anonymized_data)
 ```
 
 ### Data Retention Issues
@@ -519,7 +526,7 @@ Center student benefit in data use:
 - School official and legitimate educational interest FAQ: `https://studentprivacy.ed.gov/faq/under-ferpa-may-educational-agency-or-institution-disclose-education-records-any-its-employees`
 
 ### Institutional Resources
-- Contacting your institution's FERPA compliance officer
+- Contacting your institution's privacy, records, or FERPA officer
 - Reviewing institutional data handling policies
 - Consulting with your institutional review board (IRB)
 - Attending FERPA training sessions
@@ -527,8 +534,8 @@ Center student benefit in data use:
 ### Package Resources
 - Package documentation: `?engager`
 - Privacy functions: `?ensure_privacy`, `?set_privacy_defaults`
-- Privacy review functions: `?validate_ferpa_compliance`, `?anonymize_educational_data`
-- Report generation: `?generate_ferpa_report`
+- Privacy review functions: `?review_privacy_risks`, `?anonymize_educational_data`
+- Report generation: `?generate_privacy_review_report`
 
 ## Conclusion
 

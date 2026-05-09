@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 This vignette demonstrates the core functionality of the `engager` package using only the essential functions. After scope reduction, the package now exports **26 essential functions** focused on:
 
 - **Transcript Processing**: Loading and processing Zoom transcripts
-- **Privacy Protection**: Applying privacy-supporting defaults and FERPA-oriented review
+- **Privacy Protection**: Applying privacy-supporting defaults and privacy review
 - **Analysis**: Core engagement metrics and analysis
 - **Name Matching**: Safe student name matching workflows
 
@@ -117,7 +117,7 @@ synthetic_data <- data.frame(
 
 # Note: Privacy review functions check for real names in data
 cat("Privacy review functions check whether real names are exposed\n")
-cat("validate_privacy_compliance() and validate_ferpa_compliance() support FERPA-oriented review\n")
+cat("validate_privacy_compliance() and review_privacy_risks() support privacy review\n")
 ```
 
 ## Function Categories
@@ -161,4 +161,4 @@ With the scope reduction complete, the package is now ready for:
 3. **Documentation Updates**: Focus on core workflows
 4. **UX Simplification**: Streamlined user experience
 
-The package now provides a clean, focused API for analyzing student engagement from Zoom transcripts while maintaining strong privacy-supporting defaults and FERPA-oriented review helpers.
+The package now provides a clean, focused API for analyzing student engagement from Zoom transcripts while maintaining strong privacy-supporting defaults and privacy review helpers.

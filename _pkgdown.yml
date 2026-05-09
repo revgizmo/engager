@@ -11,6 +11,7 @@ llm-docs: false
 
 redirects:
   - ["articles/ferpa-ethics.html", "articles/privacy-ethics-review.html"]
+  - ["reference/ferpa_compliance.html", "reference/privacy_review.html"]
 
 navbar:
   title: engager
@@ -58,10 +59,12 @@ reference:
   - ensure_privacy
   - privacy_audit
   - validate_privacy_compliance
+  - review_privacy_risks
+  - generate_privacy_review_report
   - audit_ethical_usage
   - check_data_retention_policy
   - ethical_compliance
-  - ferpa_compliance
+  - privacy_review
 - title: Visualization and Output
   contents:
   - plot_users

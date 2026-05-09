@@ -8,7 +8,7 @@
 * Added an exact name-matching MVP with privacy-safe unresolved-name export:
   `detect_unmatched_names()`, `match_names_workflow()`, and
   `write_unresolved()`.
-* Added FERPA-oriented privacy review helpers and documentation with explicit
+* Added privacy review helpers and documentation with explicit
   institutional-review caveats.
 * Made CSV metric exports omit raw transcript/comment text by default; raw
   comments now require an explicit local-review export with privacy disabled.

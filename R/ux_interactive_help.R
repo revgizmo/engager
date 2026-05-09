@@ -82,7 +82,7 @@ find_function_for_task <- function(task) {
     cat("   - set_privacy_defaults() - Configure privacy settings\n")
     cat("   - privacy_audit() - Check privacy risks\n")
     cat("   - mask_user_names_by_metric() - Anonymize user names\n")
-    cat("   - validate_ferpa_compliance() - FERPA-oriented privacy review\n\n")
+    cat("   - review_privacy_risks() - privacy review\n\n")
   }
 
   # Batch processing
@@ -98,7 +98,7 @@ find_function_for_task <- function(task) {
     cat("SUCCESS: Validation & Quality:\n")
     cat("   - validate_schema() - Check data structure\n")
     cat("   - validate_privacy_compliance() - Check privacy risks\n")
-    cat("   - validate_ferpa_compliance() - FERPA-oriented privacy review\n")
+    cat("   - review_privacy_risks() - privacy review\n")
     cat("   - validate_ethical_use() - Check ethical usage\n\n")
   }
 
@@ -206,7 +206,7 @@ get_smart_recommendations <- function(context) {
     cat("   1. ensure_privacy() - Apply privacy protection\n")
     cat("   2. set_privacy_defaults('high') - Maximum privacy\n")
     cat("   3. privacy_audit() - Check privacy risks\n")
-    cat("   4. validate_ferpa_compliance() - FERPA-oriented privacy review\n")
+    cat("   4. review_privacy_risks() - privacy review\n")
     cat("   5. show_privacy_guidance() - Privacy best practices\n\n")
   }
 

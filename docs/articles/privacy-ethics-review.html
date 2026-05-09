@@ -176,8 +176,8 @@ they do not make a legal determination.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Run a privacy-oriented technical review</span></span>
-<span><span class="va">validation_result</span> <span class="op">&lt;-</span> <span class="fu">validate_ferpa_compliance</span><span class="op">(</span><span class="va">sample_data</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">validation_result</span><span class="op">$</span><span class="va">compliant</span><span class="op">)</span></span>
+<span><span class="va">validation_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/review_privacy_risks.html">review_privacy_risks</a></span><span class="op">(</span><span class="va">sample_data</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">validation_result</span><span class="op">$</span><span class="va">passed</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">validation_result</span><span class="op">$</span><span class="va">recommendations</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -202,15 +202,25 @@ they do not make a legal determination.</p>
 </h4>
 <p>You can generate privacy review reports:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Generate privacy review report</span></span>
-<span><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu">generate_ferpa_report</span><span class="op">(</span><span class="va">sample_data</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># Sample data with identifier-like fields</span></span>
+<span><span class="va">sample_data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  student_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"12345"</span>, <span class="st">"67890"</span><span class="op">)</span>,</span>
+<span>  preferred_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alice Johnson"</span>, <span class="st">"Bob Smith"</span><span class="op">)</span>,</span>
+<span>  email <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"alice@university.edu"</span>, <span class="st">"bob@university.edu"</span><span class="op">)</span>,</span>
+<span>  participation_score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">85</span>, <span class="fl">92</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Save report to file</span></span>
-<span><span class="fu">generate_ferpa_report</span><span class="op">(</span></span>
-<span>  <span class="va">sample_data</span>, </span>
-<span>  output_file <span class="op">=</span> <span class="st">"ferpa_privacy_review_report.json"</span>,</span>
+<span><span class="co"># Generate privacy review report</span></span>
+<span><span class="va">report</span> <span class="op">&lt;-</span> <span class="fu">engager</span><span class="fu">::</span><span class="fu"><a href="../reference/generate_privacy_review_report.html">generate_privacy_review_report</a></span><span class="op">(</span><span class="va">sample_data</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Save report to a temporary file</span></span>
+<span><span class="va">report_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".json"</span><span class="op">)</span></span>
+<span><span class="va">written_report</span> <span class="op">&lt;-</span> <span class="fu">engager</span><span class="fu">::</span><span class="fu"><a href="../reference/generate_privacy_review_report.html">generate_privacy_review_report</a></span><span class="op">(</span></span>
+<span>  <span class="va">sample_data</span>,</span>
+<span>  output_file <span class="op">=</span> <span class="va">report_file</span>,</span>
 <span>  report_format <span class="op">=</span> <span class="st">"json"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">report_file</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="data-retention">Data Retention<a class="anchor" aria-label="anchor" href="#data-retention"></a>
@@ -235,48 +245,38 @@ they do not make a legal determination.</p>
 <div class="section level3">
 <h3 id="institutional-review-considerations">Institutional Review Considerations<a class="anchor" aria-label="anchor" href="#institutional-review-considerations"></a>
 </h3>
-<div class="section level4">
-<h4 id="educational-institutions">Educational Institutions<a class="anchor" aria-label="anchor" href="#educational-institutions"></a>
-</h4>
-<p>For traditional educational institutions, one technical review might
+<p>The package cannot know which institutional role, policy, or legal
+framework applies to a particular dataset. Instead of treating
+institution type as a compliance decision, use the review context only
+to surface different technical prompts for local review.</p>
+<p>For a classroom or program-improvement workflow, one review might
 look like:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Validate with educational institution settings</span></span>
-<span><span class="va">edu_validation</span> <span class="op">&lt;-</span> <span class="fu">validate_ferpa_compliance</span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">classroom_review</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/review_privacy_risks.html">review_privacy_risks</a></span><span class="op">(</span></span>
 <span>  <span class="va">sample_data</span>,</span>
 <span>  institution_type <span class="op">=</span> <span class="st">"educational"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">edu_validation</span><span class="op">$</span><span class="va">institution_guidance</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="research-institutions">Research Institutions<a class="anchor" aria-label="anchor" href="#research-institutions"></a>
-</h4>
-<p>For research-focused institutions, one technical review might look
-like:</p>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">classroom_review</span><span class="op">$</span><span class="va">institution_guidance</span><span class="op">)</span></span></code></pre></div>
+<p>For a research workflow, use the research context as a reminder to
+consider IRB, consent, publication, and data-sharing expectations:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Validate with research institution settings</span></span>
-<span><span class="va">research_validation</span> <span class="op">&lt;-</span> <span class="fu">validate_ferpa_compliance</span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">research_review</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/review_privacy_risks.html">review_privacy_risks</a></span><span class="op">(</span></span>
 <span>  <span class="va">sample_data</span>,</span>
 <span>  institution_type <span class="op">=</span> <span class="st">"research"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">research_validation</span><span class="op">$</span><span class="va">institution_guidance</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="mixed-institutions">Mixed Institutions<a class="anchor" aria-label="anchor" href="#mixed-institutions"></a>
-</h4>
-<p>For institutions with both educational and research functions, one
-technical review might look like:</p>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">research_review</span><span class="op">$</span><span class="va">institution_guidance</span><span class="op">)</span></span></code></pre></div>
+<p>If a workflow has both instructional and research uses, treat that as
+a reason to document both review paths rather than as a stronger
+package-level claim:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Validate with mixed institution settings</span></span>
-<span><span class="va">mixed_validation</span> <span class="op">&lt;-</span> <span class="fu">validate_ferpa_compliance</span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">combined_review</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/review_privacy_risks.html">review_privacy_risks</a></span><span class="op">(</span></span>
 <span>  <span class="va">sample_data</span>,</span>
 <span>  institution_type <span class="op">=</span> <span class="st">"mixed"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mixed_validation</span><span class="op">$</span><span class="va">institution_guidance</span><span class="op">)</span></span></code></pre></div>
-</div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">combined_review</span><span class="op">$</span><span class="va">institution_guidance</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="data-handling-practices-to-consider">Data Handling Practices to Consider<a class="anchor" aria-label="anchor" href="#data-handling-practices-to-consider"></a>
@@ -503,7 +503,7 @@ all outputs before sharing them.</p>
 <p>The package’s privacy review helpers can support technical checks;
 they are not legal determinations:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">validation</span> <span class="op">&lt;-</span> <span class="fu">validate_ferpa_compliance</span><span class="op">(</span><span class="va">your_data</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">validation</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/review_privacy_risks.html">review_privacy_risks</a></span><span class="op">(</span><span class="va">your_data</span><span class="op">)</span></span>
 <span><span class="va">validation</span><span class="op">$</span><span class="va">recommendations</span></span></code></pre></div>
 <p>Before sharing or storing results outside the restricted working
 environment, consider:</p>
@@ -575,14 +575,14 @@ guarantees legal compliance.</p>
 <p>If privacy validation is flagging issues:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Check what PII was detected</span></span>
-<span><span class="va">validation_result</span> <span class="op">&lt;-</span> <span class="fu">validate_ferpa_compliance</span><span class="op">(</span><span class="va">your_data</span><span class="op">)</span></span>
+<span><span class="va">validation_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/review_privacy_risks.html">review_privacy_risks</a></span><span class="op">(</span><span class="va">your_data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">validation_result</span><span class="op">$</span><span class="va">pii_detected</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Anonymize the data</span></span>
 <span><span class="va">anonymized_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anonymize_educational_data.html">anonymize_educational_data</a></span><span class="op">(</span><span class="va">your_data</span>, method <span class="op">=</span> <span class="st">"mask"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Re-validate</span></span>
-<span><span class="fu">validate_ferpa_compliance</span><span class="op">(</span><span class="va">anonymized_data</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/review_privacy_risks.html">review_privacy_risks</a></span><span class="op">(</span><span class="va">anonymized_data</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="data-retention-issues">Data Retention Issues<a class="anchor" aria-label="anchor" href="#data-retention-issues"></a>
@@ -673,7 +673,8 @@ guarantees legal compliance.</p>
 <h4 id="institutional-resources">Institutional Resources<a class="anchor" aria-label="anchor" href="#institutional-resources"></a>
 </h4>
 <ul>
-<li>Contacting your institution’s FERPA compliance officer</li>
+<li>Contacting your institution’s privacy, records, or FERPA
+officer</li>
 <li>Reviewing institutional data handling policies</li>
 <li>Consulting with your institutional review board (IRB)</li>
 <li>Attending FERPA training sessions</li>
@@ -688,10 +689,10 @@ guarantees legal compliance.</p>
 <li>Privacy functions: <code><a href="../reference/ensure_privacy.html">?ensure_privacy</a></code>,
 <code>?set_privacy_defaults</code>
 </li>
-<li>Privacy review functions: <code>?validate_ferpa_compliance</code>,
+<li>Privacy review functions: <code><a href="../reference/review_privacy_risks.html">?review_privacy_risks</a></code>,
 <code><a href="../reference/anonymize_educational_data.html">?anonymize_educational_data</a></code>
 </li>
-<li>Report generation: <code>?generate_ferpa_report</code>
+<li>Report generation: <code><a href="../reference/generate_privacy_review_report.html">?generate_privacy_review_report</a></code>
 </li>
 </ul>
 </div>

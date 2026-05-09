@@ -1,5 +1,5 @@
-# Test file for FERPA compliance functions
-# Tests for validate_ferpa_compliance, anonymize_educational_data, and related functions
+# Test file for privacy review functions
+# Tests for review_privacy_risks, anonymize_educational_data, and related functions
 
 library(testthat)
 library(engager)
@@ -36,98 +36,98 @@ create_ferpa_test_data_without_pii <- function() {
 }
 
 # =============================================================================
-# TESTS FOR validate_ferpa_compliance
+# TESTS FOR review_privacy_risks
 # =============================================================================
 
-test_that("validate_ferpa_compliance returns proper structure", {
+test_that("review_privacy_risks returns proper structure", {
   data <- create_ferpa_test_data_with_pii()
-  result <- validate_ferpa_compliance(data)
+  result <- review_privacy_risks(data)
 
   # Validate structure
   expect_true(is.list(result))
-  expect_true("compliant" %in% names(result))
+  expect_true("passed" %in% names(result))
   expect_true("pii_detected" %in% names(result))
   expect_true("recommendations" %in% names(result))
   expect_true("retention_check" %in% names(result))
   expect_true("institution_guidance" %in% names(result))
 })
 
-test_that("validate_ferpa_compliance detects PII correctly", {
+test_that("review_privacy_risks detects PII correctly", {
   data <- create_ferpa_test_data_with_pii()
-  result <- validate_ferpa_compliance(data)
+  result <- review_privacy_risks(data)
 
   # Should detect PII
-  expect_false(result$compliant)
+  expect_false(result$passed)
   expect_true(length(result$pii_detected) > 0)
   expect_true("student_id" %in% result$pii_detected)
   expect_true("preferred_name" %in% result$pii_detected)
   expect_true("email" %in% result$pii_detected)
 })
 
-test_that("validate_ferpa_compliance handles data without PII", {
+test_that("review_privacy_risks handles data without PII", {
   data <- create_ferpa_test_data_without_pii()
-  result <- validate_ferpa_compliance(data)
+  result <- review_privacy_risks(data)
 
-  # Should be compliant
-  expect_true(result$compliant)
+  # Should pass the technical privacy review
+  expect_true(result$passed)
   expect_equal(length(result$pii_detected), 0)
 })
 
-test_that("validate_ferpa_compliance handles different institution types", {
+test_that("review_privacy_risks handles different institution types", {
   data <- create_ferpa_test_data_with_pii()
 
   # Test educational institution
-  result_edu <- validate_ferpa_compliance(data, institution_type = "educational")
-  expect_true("Educational institutions should review FERPA requirements" %in% result_edu$institution_guidance)
+  result_edu <- review_privacy_risks(data, institution_type = "educational")
+  expect_true("Consider reviewing applicable student-record privacy requirements" %in% result_edu$institution_guidance)
 
   # Test research institution
-  result_research <- validate_ferpa_compliance(data, institution_type = "research")
+  result_research <- review_privacy_risks(data, institution_type = "research")
   expect_true("Research institutions should follow IRB guidelines" %in% result_research$institution_guidance)
 
   # Test mixed institution
-  result_mixed <- validate_ferpa_compliance(data, institution_type = "mixed")
-  expect_true("Mixed institutions should review both FERPA and research ethics" %in% result_mixed$institution_guidance)
+  result_mixed <- review_privacy_risks(data, institution_type = "mixed")
+  expect_true("Mixed institutions should review both student-record privacy and research ethics requirements" %in% result_mixed$institution_guidance)
 })
 
-test_that("validate_ferpa_compliance handles different retention periods", {
+test_that("review_privacy_risks handles different retention periods", {
   data <- create_ferpa_test_data_with_pii()
 
   # Test academic year
-  result_ay <- validate_ferpa_compliance(data, retention_period = "academic_year")
+  result_ay <- review_privacy_risks(data, retention_period = "academic_year")
   expect_true(is.list(result_ay$retention_check))
 
   # Test semester
-  result_sem <- validate_ferpa_compliance(data, retention_period = "semester")
+  result_sem <- review_privacy_risks(data, retention_period = "semester")
   expect_true(is.list(result_sem$retention_check))
 
   # Test quarter
-  result_qtr <- validate_ferpa_compliance(data, retention_period = "quarter")
+  result_qtr <- review_privacy_risks(data, retention_period = "quarter")
   expect_true(is.list(result_qtr$retention_check))
 
   # Test custom
-  result_custom <- validate_ferpa_compliance(data, retention_period = "custom", custom_retention_days = 100)
+  result_custom <- review_privacy_risks(data, retention_period = "custom", custom_retention_days = 100)
   expect_true(is.list(result_custom$retention_check))
 })
 
-test_that("validate_ferpa_compliance handles invalid data", {
+test_that("review_privacy_risks handles invalid data", {
   # Test with NULL data
-  expect_error(validate_ferpa_compliance(NULL))
+  expect_error(review_privacy_risks(NULL))
 
   # Test with non-data.frame
-  expect_error(validate_ferpa_compliance("not a data frame"))
-  expect_error(validate_ferpa_compliance(123))
-  expect_error(validate_ferpa_compliance(list()))
+  expect_error(review_privacy_risks("not a data frame"))
+  expect_error(review_privacy_risks(123))
+  expect_error(review_privacy_risks(list()))
 })
 
-test_that("validate_ferpa_compliance provides appropriate recommendations", {
+test_that("review_privacy_risks provides appropriate recommendations", {
   data <- create_ferpa_test_data_with_pii()
-  result <- validate_ferpa_compliance(data)
+  result <- review_privacy_risks(data)
 
   # Should have recommendations
   expect_true(length(result$recommendations) > 0)
   expect_true(any(grepl("PII detected", result$recommendations)))
   expect_true(any(grepl("ensure_privacy", result$recommendations)))
-  expect_true(any(grepl("FERPA policies", result$recommendations)))
+  expect_true(any(grepl("institutional privacy policies", result$recommendations)))
 })
 
 # =============================================================================
@@ -279,10 +279,12 @@ test_that("check_data_retention_policy returns proper structure", {
 
   # Validate structure
   expect_true(is.list(result))
+  expect_true("passed" %in% names(result))
   expect_true("compliant" %in% names(result))
   expect_true("retention_period_days" %in% names(result))
   expect_true("data_to_dispose" %in% names(result))
   expect_true("recommendations" %in% names(result))
+  expect_identical(result$passed, result$compliant)
 })
 
 test_that("check_data_retention_policy handles different retention periods", {
@@ -305,6 +307,24 @@ test_that("check_data_retention_policy handles different retention periods", {
   expect_equal(result_custom$retention_period_days, 100)
 })
 
+test_that("check_data_retention_policy keeps passed and compliant aliases synchronized", {
+  data <- tibble::tibble(
+    student_id = c("12345", "67890"),
+    session_date = as.Date(c("2020-01-15", "2025-02-20"))
+  )
+
+  result <- check_data_retention_policy(
+    data,
+    retention_period = "academic_year",
+    date_column = "session_date",
+    current_date = as.Date("2025-03-01")
+  )
+
+  expect_false(result$passed)
+  expect_false(result$compliant)
+  expect_identical(result$passed, result$compliant)
+})
+
 test_that("check_data_retention_policy handles invalid data", {
   # Test with NULL data
   expect_error(check_data_retention_policy(NULL))
@@ -316,12 +336,12 @@ test_that("check_data_retention_policy handles invalid data", {
 })
 
 # =============================================================================
-# TESTS FOR generate_ferpa_report
+# TESTS FOR generate_privacy_review_report
 # =============================================================================
 
-test_that("generate_ferpa_report returns proper structure", {
+test_that("generate_privacy_review_report returns proper structure", {
   data <- create_ferpa_test_data_with_pii()
-  result <- generate_ferpa_report(data)
+  result <- generate_privacy_review_report(data)
 
   # Validate structure
   expect_true(is.list(result))
@@ -332,57 +352,160 @@ test_that("generate_ferpa_report returns proper structure", {
   expect_true("recommendations" %in% names(result))
 })
 
-test_that("generate_ferpa_report handles different report formats", {
+test_that("generate_privacy_review_report supports institution-specific contexts", {
+  data <- create_ferpa_test_data_with_pii()
+
+  result <- generate_privacy_review_report(data, institution_type = "research")
+
+  expect_true(any(grepl("IRB", result$validation_results$institution_guidance)))
+})
+
+test_that("deprecated privacy review wrappers preserve legacy compliant fields", {
+  data <- create_ferpa_test_data_with_pii()
+
+  legacy_review <- expect_warning(
+    validate_ferpa_compliance(data, audit_log = FALSE),
+    "deprecated"
+  )
+  expect_identical(legacy_review$compliant, legacy_review$passed)
+
+  legacy_report <- expect_warning(
+    generate_ferpa_report(data),
+    "deprecated"
+  )
+  expect_identical(legacy_report$summary$compliant, legacy_report$summary$passed)
+  expect_identical(
+    legacy_report$validation_results$compliant,
+    legacy_report$validation_results$passed
+  )
+
+  tmp_json <- tempfile(fileext = ".json")
+  on.exit(unlink(tmp_json), add = TRUE)
+  expect_warning(
+    generate_ferpa_report(data, output_file = tmp_json, report_format = "json"),
+    "deprecated"
+  )
+  persisted_report <- jsonlite::read_json(tmp_json, simplifyVector = TRUE)
+  expect_identical(persisted_report$summary$compliant, persisted_report$summary$passed)
+  expect_identical(
+    persisted_report$validation_results$compliant,
+    persisted_report$validation_results$passed
+  )
+
+  legacy_log <- expect_warning(
+    log_ferpa_compliance_check(
+      compliant = FALSE,
+      pii_detected = 2,
+      institution_type = "educational"
+    ),
+    "deprecated"
+  )
+  expect_identical(legacy_log$compliant, legacy_log$passed)
+})
+
+test_that("generate_privacy_review_report handles different report formats", {
   data <- create_ferpa_test_data_with_pii()
 
   # Test text format
-  result_text <- generate_ferpa_report(data, report_format = "text")
+  result_text <- generate_privacy_review_report(data, report_format = "text")
   expect_true(is.list(result_text))
 
   # Test HTML format
-  result_html <- generate_ferpa_report(data, report_format = "html")
+  result_html <- generate_privacy_review_report(data, report_format = "html")
   expect_true(is.list(result_html))
 
   # Test JSON format
-  result_json <- generate_ferpa_report(data, report_format = "json")
+  result_json <- generate_privacy_review_report(data, report_format = "json")
   expect_true(is.list(result_json))
 })
 
-test_that("generate_ferpa_report handles invalid data", {
+test_that("generate_privacy_review_report handles invalid data", {
   # Test with NULL data
-  expect_error(generate_ferpa_report(NULL))
+  expect_error(generate_privacy_review_report(NULL))
 
   # Test with non-data.frame
-  expect_error(generate_ferpa_report("not a data frame"))
-  expect_error(generate_ferpa_report(123))
-  expect_error(generate_ferpa_report(list()))
+  expect_error(generate_privacy_review_report("not a data frame"))
+  expect_error(generate_privacy_review_report(123))
+  expect_error(generate_privacy_review_report(list()))
 })
 
 # =============================================================================
-# TESTS FOR log_ferpa_compliance_check
+# TESTS FOR log_privacy_review
 # =============================================================================
 
-test_that("log_ferpa_compliance_check handles logging", {
+test_that("log_privacy_review handles logging", {
   # Test logging with different parameters
-  result1 <- log_ferpa_compliance_check(TRUE, 0, "educational")
+  result1 <- log_privacy_review(TRUE, 0, "educational")
   expect_true(is.list(result1))
   expect_true("timestamp" %in% names(result1))
-  expect_true("compliant" %in% names(result1))
+  expect_true("passed" %in% names(result1))
   expect_true("pii_detected" %in% names(result1))
   expect_true("institution_type" %in% names(result1))
 
-  result2 <- log_ferpa_compliance_check(FALSE, 3, "research")
+  result2 <- log_privacy_review(FALSE, 3, "research")
   expect_true(is.list(result2))
-  expect_false(result2$compliant)
+  expect_false(result2$passed)
   expect_equal(result2$pii_detected, 3)
   expect_equal(result2$institution_type, "research")
+})
+
+test_that("log_privacy_review avoids same-second audit key collisions", {
+  old_logs <- getOption("engager.privacy_review_logs")
+  old_ferpa_logs <- getOption("engager.ferpa_logs")
+  on.exit(options(engager.privacy_review_logs = old_logs, engager.ferpa_logs = old_ferpa_logs), add = TRUE)
+  options(engager.privacy_review_logs = list())
+  options(engager.ferpa_logs = list())
+  rm(list = ls(envir = .privacy_review_log_env), envir = .privacy_review_log_env)
+
+  timestamp1 <- as.POSIXct("2026-05-09 12:00:00.123456", tz = "UTC")
+  timestamp2 <- as.POSIXct("2026-05-09 12:00:00.654321", tz = "UTC")
+
+  log_privacy_review(TRUE, 0, "educational", timestamp = timestamp1)
+  log_privacy_review(FALSE, 1, "educational", timestamp = timestamp2)
+
+  logs <- getOption("engager.privacy_review_logs")
+  expect_length(logs, 2)
+  expect_length(unique(names(logs)), 2)
+  expect_length(ls(envir = .privacy_review_log_env), 2)
+  expect_identical(getOption("engager.ferpa_logs"), logs)
+})
+
+test_that("log_privacy_review falls back to legacy FERPA log options", {
+  old_logs <- getOption("engager.privacy_review_logs")
+  old_ferpa_logs <- getOption("engager.ferpa_logs")
+  old_log_file <- getOption("engager.privacy_review_log_file")
+  old_ferpa_log_file <- getOption("engager.ferpa_log_file")
+  on.exit(
+    options(
+      engager.privacy_review_logs = old_logs,
+      engager.ferpa_logs = old_ferpa_logs,
+      engager.privacy_review_log_file = old_log_file,
+      engager.ferpa_log_file = old_ferpa_log_file
+    ),
+    add = TRUE
+  )
+
+  rm(list = ls(envir = .privacy_review_log_env), envir = .privacy_review_log_env)
+  options(engager.privacy_review_logs = NULL)
+  options(engager.ferpa_logs = list(existing = list(passed = TRUE)))
+
+  tmp_log <- tempfile(fileext = ".log")
+  on.exit(unlink(tmp_log), add = TRUE)
+  options(engager.privacy_review_log_file = NULL)
+  options(engager.ferpa_log_file = tmp_log)
+
+  log_privacy_review(TRUE, 0, "educational")
+
+  logs <- getOption("engager.privacy_review_logs")
+  expect_true("existing" %in% names(logs))
+  expect_true(file.exists(tmp_log))
 })
 
 # =============================================================================
 # COMPREHENSIVE PARAMETER TESTING
 # =============================================================================
 
-test_that("validate_ferpa_compliance handles comprehensive parameters", {
+test_that("review_privacy_risks handles comprehensive parameters", {
   data <- create_ferpa_test_data_with_pii()
 
   # Test all parameter combinations
@@ -394,9 +517,9 @@ test_that("validate_ferpa_compliance handles comprehensive parameters", {
   )
 
   for (params in param_combinations) {
-    result <- do.call(validate_ferpa_compliance, params)
+    result <- do.call(review_privacy_risks, params)
     expect_true(is.list(result))
-    expect_true("compliant" %in% names(result))
+    expect_true("passed" %in% names(result))
   }
 })
 
@@ -424,20 +547,20 @@ test_that("anonymize_educational_data handles comprehensive parameters", {
 # EDGE CASE TESTING
 # =============================================================================
 
-test_that("FERPA functions handle edge cases", {
+test_that("privacy review functions handle edge cases", {
   # Test with empty data
   empty_data <- tibble::tibble()
-  result <- validate_ferpa_compliance(empty_data)
+  result <- review_privacy_risks(empty_data)
   expect_true(is.list(result))
 
   # Test with single row
   single_row <- create_ferpa_test_data_with_pii()[1, ]
-  result <- validate_ferpa_compliance(single_row)
+  result <- review_privacy_risks(single_row)
   expect_true(is.list(result))
 
   # Test with missing values
   data_with_na <- create_ferpa_test_data_with_pii()
   data_with_na$student_id[1] <- NA
-  result <- validate_ferpa_compliance(data_with_na)
+  result <- review_privacy_risks(data_with_na)
   expect_true(is.list(result))
 })

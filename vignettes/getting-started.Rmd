@@ -80,7 +80,7 @@ The `engager` package provides tools for:
 3. **Name Matching and Cleaning**: Match transcript names to student rosters
 4. **Visualization**: Create plots to analyze participation patterns
 5. **Reporting**: Generate individual student reports
-6. **Privacy Review**: Support FERPA-oriented privacy review and institutional oversight
+6. **Privacy Review**: Support privacy review and institutional oversight
 7. **Data Anonymization**: Protect student privacy while preserving data utility
 
 ## Basic Workflow
@@ -115,8 +115,10 @@ name_mappings <- data.frame(
   stringsAsFactors = FALSE
 )
 
-# Write the mapping file
-readr::write_csv(name_mappings, "section_names_lookup.csv")
+# Write the mapping file to a temporary location for the example
+lookup_file <- tempfile(fileext = ".csv")
+readr::write_csv(name_mappings, lookup_file)
+unlink(lookup_file)
 ```
 
 #### Issue: Guest Users in Transcripts

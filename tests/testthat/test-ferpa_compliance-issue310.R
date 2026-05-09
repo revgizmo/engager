@@ -1,4 +1,4 @@
-test_that("validate_ferpa_compliance detects PII and retention issues across institution types", {
+test_that("review_privacy_risks detects PII and retention issues across institution types", {
   df <- tibble::tibble(
     student_id = c("001", "002"),
     preferred_name = c("Alice", "Böb"),
@@ -7,20 +7,20 @@ test_that("validate_ferpa_compliance detects PII and retention issues across ins
   )
 
   # Educational
-  res1 <- validate_ferpa_compliance(df, institution_type = "educational", check_retention = TRUE, retention_period = "academic_year")
-  expect_false(res1$compliant)
+  res1 <- review_privacy_risks(df, institution_type = "educational", check_retention = TRUE, retention_period = "academic_year")
+  expect_false(res1$passed)
   expect_true(length(res1$pii_detected) >= 1)
   expect_true(length(res1$institution_guidance) > 0)
   expect_type(res1$retention_check, "list")
 
   # Research
-  res2 <- validate_ferpa_compliance(df, institution_type = "research", check_retention = FALSE)
+  res2 <- review_privacy_risks(df, institution_type = "research", check_retention = FALSE)
   expect_true(!is.null(res2$institution_guidance))
   expect_null(res2$retention_check)
 
   # Mixed with custom retention (note: function does not pass date_column, so only generic retention text is present)
-  res3 <- validate_ferpa_compliance(df, institution_type = "mixed", check_retention = TRUE, retention_period = "custom", custom_retention_days = 30)
-  # Depending on date_column presence, compliance may remain FALSE due to PII or change based on retention
+  res3 <- review_privacy_risks(df, institution_type = "mixed", check_retention = TRUE, retention_period = "custom", custom_retention_days = 30)
+  # Depending on date_column presence, status may remain FALSE due to PII or change based on retention
   expect_type(res3$recommendations, "character")
 })
 
@@ -41,7 +41,7 @@ test_that("check_data_retention_policy flags old records and handles custom days
   expect_true(nrow(out2$data_to_dispose) >= 1)
 })
 
-test_that("generate_ferpa_report produces JSON, HTML, and text reports", {
+test_that("generate_privacy_review_report produces JSON, HTML, and text reports", {
   df <- tibble::tibble(
     student_id = c("1", "2"),
     preferred_name = c("Alice", "Chloé"),
@@ -55,9 +55,9 @@ test_that("generate_ferpa_report produces JSON, HTML, and text reports", {
   tmp_txt <- tempfile(fileext = ".txt")
   on.exit(unlink(tmp_txt), add = TRUE)
 
-  rep1 <- generate_ferpa_report(df, output_file = tmp_json, report_format = "json")
-  rep2 <- generate_ferpa_report(df, output_file = tmp_html, report_format = "html")
-  rep3 <- generate_ferpa_report(df, output_file = tmp_txt, report_format = "text")
+  rep1 <- generate_privacy_review_report(df, output_file = tmp_json, report_format = "json")
+  rep2 <- generate_privacy_review_report(df, output_file = tmp_html, report_format = "html")
+  rep3 <- generate_privacy_review_report(df, output_file = tmp_txt, report_format = "text")
 
   expect_true(file.exists(tmp_json))
   expect_true(file.exists(tmp_html))
