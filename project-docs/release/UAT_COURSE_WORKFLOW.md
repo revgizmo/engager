@@ -41,8 +41,8 @@ loads `engager` from that library, and exercises:
 - R is installed and available to `Rscript`.
 - Package dependencies needed by the tarball are already installed in the
   normal user or site libraries.
-- The source tarball exists. Current release candidate:
-  `/Users/piper/git/zoomstudentengagement/engager_0.1.0.tar.gz`.
+- The source tarball exists. Current release candidate filename:
+  `engager_0.1.0.tar.gz`.
 - The command is run from the repository root.
 
 ## Command
@@ -50,15 +50,17 @@ loads `engager` from that library, and exercises:
 Run the default UAT against the current release-candidate tarball:
 
 ```sh
+REPO_ROOT="$(git rev-parse --show-toplevel)"
 Rscript project-docs/release/run_uat_course_workflow.R \
-  /Users/piper/git/zoomstudentengagement/engager_0.1.0.tar.gz
+  "$REPO_ROOT/engager_0.1.0.tar.gz"
 ```
 
 Optionally provide a persistent output directory:
 
 ```sh
+REPO_ROOT="$(git rev-parse --show-toplevel)"
 Rscript project-docs/release/run_uat_course_workflow.R \
-  /Users/piper/git/zoomstudentengagement/engager_0.1.0.tar.gz \
+  "$REPO_ROOT/engager_0.1.0.tar.gz" \
   /tmp/engager-uat-course-workflow
 ```
 
