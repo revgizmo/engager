@@ -71,7 +71,7 @@ A passing run confirms:
 
 - The tarball installs into an isolated library.
 - `engager` is loaded from that isolated library.
-- The installed package version is `0.1.0`.
+- The installed package version matches the supplied tarball version.
 - Bundled synthetic course transcripts and roster fixtures are discoverable.
 - One or more installed VTT transcript files load and process successfully.
 - Course-level summary metrics contain non-empty plausible data.
@@ -111,8 +111,8 @@ written through the privacy-safe unresolved-name path.
 
 ## Evidence for Issue #4
 
-Before CRAN submission, paste a concise summary into issue #4 using the result
-template below or `project-docs/release/UAT_RESULT_TEMPLATE.md`.
+Before CRAN submission, paste a concise summary into issue #4 using the
+canonical template in `project-docs/release/UAT_RESULT_TEMPLATE.md`.
 
 Include:
 
@@ -140,23 +140,5 @@ decisions, retention, and legal compliance.
 
 ## Result Template
 
-```md
-### Course Workflow UAT
-
-- Package version:
-- Tarball path:
-- R version:
-- OS/platform:
-- Command run:
-- Result: PASS / FAIL
-- Output directory:
-- Evidence file:
-- Artifacts generated:
-- Privacy review result:
-- Raw identifier export check:
-- Vignette discovery:
-- CRAN tarball hygiene:
-- Known non-blocking warnings:
-- Blockers:
-- Follow-up issues recommended:
-```
+Use `project-docs/release/UAT_RESULT_TEMPLATE.md` as the canonical result
+template for issue #4 evidence.

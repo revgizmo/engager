@@ -46,11 +46,36 @@ tail_file <- function(path, n = 40) {
   utils::tail(lines, n)
 }
 
+tarball_package_version <- function(path) {
+  listing <- utils::untar(path, list = TRUE)
+  description_path <- listing[grepl("^[^/]+/DESCRIPTION$", listing)]
+  if (length(description_path) != 1) {
+    fail("Could not find exactly one DESCRIPTION file in tarball: ", path)
+  }
+
+  extract_dir <- tempfile("engager-uat-description-")
+  dir.create(extract_dir, recursive = TRUE, showWarnings = FALSE)
+  on.exit(unlink(extract_dir, recursive = TRUE, force = TRUE), add = TRUE)
+
+  utils::untar(path, files = description_path, exdir = extract_dir, tar = "internal")
+  extracted_description <- file.path(extract_dir, description_path)
+  if (!file.exists(extracted_description)) {
+    fail("Could not extract DESCRIPTION from tarball: ", path)
+  }
+
+  description <- read.dcf(extracted_description)
+  version <- unname(as.character(description[1, "Version"]))
+  if (is.na(version) || !nzchar(version)) {
+    fail("Tarball DESCRIPTION does not contain a Version field: ", path)
+  }
+  version
+}
+
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) < 1 || args[[1]] %in% c("-h", "--help")) {
   cat(
     "Usage: Rscript project-docs/release/run_uat_course_workflow.R ",
-    "/path/to/engager_0.1.0.tar.gz [output_dir]\n",
+    "/path/to/engager_VERSION.tar.gz [output_dir]\n",
     sep = ""
   )
   quit(status = if (length(args) < 1) 1 else 0)
@@ -60,6 +85,7 @@ tarball <- normalizePath(args[[1]], mustWork = FALSE)
 if (!file.exists(tarball)) {
   fail("Tarball does not exist: ", tarball)
 }
+expected_pkg_version <- tarball_package_version(tarball)
 
 timestamp <- format(Sys.time(), "%Y%m%d-%H%M%S")
 tmp_root <- Sys.getenv("TMPDIR", unset = tempdir())
@@ -77,6 +103,7 @@ dir.create(local_lib, recursive = TRUE, showWarnings = FALSE)
 
 cat("engager UAT course workflow\n")
 cat("Tarball: ", tarball, "\n", sep = "")
+cat("Expected package version: ", expected_pkg_version, "\n", sep = "")
 cat("Output directory: ", output_dir, "\n", sep = "")
 
 install_log <- file.path(output_dir, "install.log")
@@ -96,7 +123,10 @@ installed_path <- normalizePath(find.package("engager", lib.loc = local_lib), mu
 check(startsWith(installed_path, normalizePath(local_lib, mustWork = TRUE)), "loaded engager from isolated library")
 
 pkg_version <- as.character(utils::packageVersion("engager", lib.loc = local_lib))
-check(identical(pkg_version, "0.1.0"), paste0("installed package version is ", pkg_version))
+check(
+  identical(pkg_version, expected_pkg_version),
+  paste0("installed package version matches tarball version: ", pkg_version)
+)
 
 test_transcript_dir <- system.file("extdata/test_transcripts", package = "engager")
 check(dir.exists(test_transcript_dir), "discovered installed synthetic transcript fixture directory")
@@ -284,6 +314,7 @@ evidence_lines <- c(
   "# engager Course Workflow UAT Evidence",
   "",
   paste0("- Package version: ", pkg_version),
+  paste0("- Tarball package version: ", expected_pkg_version),
   paste0("- Tarball: ", tarball),
   paste0("- Installed package path: ", installed_path),
   paste0("- R version: ", R.version.string),
