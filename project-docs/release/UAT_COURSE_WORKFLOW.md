@@ -1,0 +1,162 @@
+# Course Workflow UAT for Pre-CRAN Release
+
+## Purpose
+
+This UAT validates that a real user can install the built `engager` source
+tarball and run a realistic course workflow without relying on source-tree
+paths, development libraries, or private course data.
+
+The workflow uses only installed package resources discovered with
+`system.file("extdata/test_transcripts", package = "engager")` and writes all
+outputs to a temporary directory outside the repository.
+
+This is a package-side release validation check. It does not submit to CRAN and
+does not mutate GitHub issues, pull requests, labels, milestones, or releases.
+
+## Scope
+
+The UAT script installs a supplied source tarball into an isolated R library,
+loads `engager` from that library, and exercises:
+
+- Installed synthetic VTT transcript discovery.
+- Installed synthetic roster discovery.
+- VTT loading with `load_zoom_transcript()`.
+- Transcript processing with `process_zoom_transcript()`.
+- Multi-file and single-file summarization with
+  `summarize_transcript_files()` and `summarize_transcript_metrics()`.
+- Exact name matching with `match_names_workflow()`.
+- Unresolved-name review with `detect_unmatched_names()` and
+  `write_unresolved()`.
+- Privacy review with `review_privacy_risks()`.
+- Privacy report generation with `generate_privacy_review_report()`.
+- CSV export through `write_metrics()`.
+- Installed vignette discovery with:
+  `vignette(package = "engager")`,
+  `vignette("getting-started", package = "engager")`,
+  `vignette("essential-functions", package = "engager")`, and
+  `vignette("privacy-ethics-review", package = "engager")`.
+
+## Prerequisites
+
+- R is installed and available to `Rscript`.
+- Package dependencies needed by the tarball are already installed in the
+  normal user or site libraries.
+- The source tarball exists. Current release candidate:
+  `/Users/piper/git/zoomstudentengagement/engager_0.1.0.tar.gz`.
+- The command is run from the repository root.
+
+## Command
+
+Run the default UAT against the current release-candidate tarball:
+
+```sh
+Rscript project-docs/release/run_uat_course_workflow.R \
+  /Users/piper/git/zoomstudentengagement/engager_0.1.0.tar.gz
+```
+
+Optionally provide a persistent output directory:
+
+```sh
+Rscript project-docs/release/run_uat_course_workflow.R \
+  /Users/piper/git/zoomstudentengagement/engager_0.1.0.tar.gz \
+  /tmp/engager-uat-course-workflow
+```
+
+## Expected Pass Criteria
+
+The script should finish with `UAT PASS` and should report an output directory
+and `UAT_EVIDENCE.md` file.
+
+A passing run confirms:
+
+- The tarball installs into an isolated library.
+- `engager` is loaded from that isolated library.
+- The installed package version is `0.1.0`.
+- Bundled synthetic course transcripts and roster fixtures are discoverable.
+- One or more installed VTT transcript files load and process successfully.
+- Course-level summary metrics contain non-empty plausible data.
+- Exact name matching runs and links at least one transcript speaker to the
+  synthetic roster.
+- Unresolved-name output is written without raw names by default.
+- Privacy review and privacy report generation complete.
+- Exported summary/report outputs do not contain obvious raw synthetic course
+  identifiers checked by the script.
+- Required vignettes are discoverable from the installed package.
+
+## Expected Fail Criteria
+
+Treat the UAT as failed if any of these occur:
+
+- The tarball cannot be installed.
+- The loaded package path is not inside the isolated UAT library.
+- Installed fixtures are missing.
+- Transcript loading, processing, summarization, name matching, privacy review,
+  privacy report generation, or exports fail.
+- Expected output files are missing or empty.
+- Exported summary/report files contain obvious raw synthetic course identifiers
+  where the UAT expects masked output.
+- Required vignettes are not discoverable from the installed package.
+
+## Known Non-Blocking Warnings
+
+The privacy review helper is a technical screening tool. It may report
+identifier-like column names such as `name` or `name_raw` even when exported
+values are masked. That result should be recorded in the UAT evidence, but it
+is not by itself a UAT failure when raw identifiers are absent from the exported
+files.
+
+The synthetic fixtures include unmatched non-roster speakers, such as the
+instructor or guests. Unresolved-name output is expected as long as it is
+written through the privacy-safe unresolved-name path.
+
+## Evidence for Issue #4
+
+Before CRAN submission, paste a concise summary into issue #4 using the result
+template below or `project-docs/release/UAT_RESULT_TEMPLATE.md`.
+
+Include:
+
+- Package version.
+- Tarball path.
+- R version and OS.
+- Exact command run.
+- Pass/fail result.
+- Output directory and generated artifact list.
+- Privacy review result, including whether the helper flagged identifier-like
+  columns.
+- Confirmation that exported summary/report outputs did not contain obvious
+  raw synthetic course identifiers.
+- Confirmation that the CRAN tarball stayed clean after `.Rbuildignore`
+  inspection.
+- Any blockers or follow-up issues recommended.
+
+## Limits
+
+This UAT uses bundled synthetic fixtures only. It does not validate real
+institutional workflows, does not use real/private course data, and does not
+determine or certify FERPA or other legal compliance. Institutions remain
+responsible for policy review, authorization, access controls, disclosure
+decisions, retention, and legal compliance.
+
+## Result Template
+
+```md
+### Course Workflow UAT
+
+- Package version:
+- Tarball path:
+- R version:
+- OS/platform:
+- Command run:
+- Result: PASS / FAIL
+- Output directory:
+- Evidence file:
+- Artifacts generated:
+- Privacy review result:
+- Raw identifier export check:
+- Vignette discovery:
+- CRAN tarball hygiene:
+- Known non-blocking warnings:
+- Blockers:
+- Follow-up issues recommended:
+```
