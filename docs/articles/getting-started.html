@@ -60,15 +60,15 @@
       <h1>Getting Started with engager</h1>
                         <h4 data-toc-skip class="author">engager
 package</h4>
-            
+
             <h4 data-toc-skip class="date">2026-05-09</h4>
-      
+
       <small class="dont-index">Source: <a href="https://github.com/revgizmo/engager/blob/HEAD/vignettes/getting-started.Rmd" class="external-link"><code>vignettes/getting-started.Rmd</code></a></small>
       <div class="d-none name"><code>getting-started.Rmd</code></div>
     </div>
 
-    
-    
+
+
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/revgizmo/engager" class="external-link">engager</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Welcome to engager!</span></span>
@@ -167,8 +167,8 @@ participation patterns</li>
 <li>
 <strong>Reporting</strong>: Generate individual student reports</li>
 <li>
-<strong>Privacy Review</strong>: Support FERPA-oriented privacy
-review and institutional oversight</li>
+<strong>Privacy Review</strong>: Support privacy review and
+institutional oversight</li>
 <li>
 <strong>Data Anonymization</strong>: Protect student privacy while
 preserving data utility</li>
@@ -225,8 +225,10 @@ roster names.</p>
 <span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Write the mapping file</span></span>
-<span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">name_mappings</span>, <span class="st">"section_names_lookup.csv"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Write the mapping file to a temporary location for the example</span></span>
+<span><span class="va">lookup_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span></span>
+<span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span><span class="va">name_mappings</span>, <span class="va">lookup_file</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">lookup_file</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="issue-guest-users-in-transcripts">Issue: Guest Users in Transcripts<a class="anchor" aria-label="anchor" href="#issue-guest-users-in-transcripts"></a>

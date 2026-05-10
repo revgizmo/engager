@@ -39,9 +39,9 @@
 <url><loc>https://revgizmo.github.io/engager/reference/engager-package.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/ensure_privacy.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/ethical_compliance.html</loc></url>
-<url><loc>https://revgizmo.github.io/engager/reference/ferpa_compliance.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/find_function_for_task.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/generate_attendance_report.html</loc></url>
+<url><loc>https://revgizmo.github.io/engager/reference/generate_privacy_review_report.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/get_next_level.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/get_smart_recommendations.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/get_ux_level.html</loc></url>
@@ -61,9 +61,11 @@
 <url><loc>https://revgizmo.github.io/engager/reference/plot_users.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/prepare_transcript_names.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/privacy_audit.html</loc></url>
+<url><loc>https://revgizmo.github.io/engager/reference/privacy_review.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/process_zoom_transcript.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/quick_analysis.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/resolve_name_hash_key.html</loc></url>
+<url><loc>https://revgizmo.github.io/engager/reference/review_privacy_risks.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/safe_name_matching_workflow.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/schema.html</loc></url>
 <url><loc>https://revgizmo.github.io/engager/reference/set_ux_level.html</loc></url>

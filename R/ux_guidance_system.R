@@ -46,7 +46,7 @@ NEED HELP?
 PRIVACY & ETHICS:
    - Privacy protection is enabled by default
    - Use ensure_privacy() to protect sensitive data
-   - See validate_ferpa_compliance() for compliance checking
+   - See review_privacy_risks() for privacy review
 
 MORE RESOURCES:
    - vignette('getting-started') - Detailed tutorial
@@ -180,13 +180,13 @@ Privacy & Ethics Guidance
 Privacy Protection (Enabled by Default):
    - Student names are automatically protected
    - Sensitive data is anonymized
-   - FERPA-oriented privacy review helpers included
+   - privacy review helpers included
 
 TOOLS: Privacy Functions:
    - ensure_privacy() - Apply privacy protection
    - set_privacy_defaults() - Configure privacy settings
    - privacy_audit() - Check privacy risks
-   - validate_ferpa_compliance() - FERPA-oriented privacy review
+   - review_privacy_risks() - privacy review
 
 Ethical Use Guidelines:
    - Focus on participation equity, not surveillance
@@ -202,8 +202,8 @@ Best Practices:
 
 Privacy Questions?
    - show_function_help('ensure_privacy')
-   - show_function_help('validate_ferpa_compliance')
-   - vignette('privacy-and-ethics')
+   - show_function_help('review_privacy_risks')
+   - vignette('privacy-ethics-review')
 ")
 }
 

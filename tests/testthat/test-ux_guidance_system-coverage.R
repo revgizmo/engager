@@ -18,7 +18,7 @@ test_that("show_privacy_guidance emphasizes privacy best practices", {
   output <- capture.output(show_privacy_guidance())
   expect_true(any(grepl("Privacy & Ethics Guidance", output, fixed = TRUE)))
   expect_true(any(grepl("ensure_privacy()", output, fixed = TRUE)))
-  expect_true(any(grepl("FERPA", output)))
+  expect_true(any(grepl("review_privacy_risks()", output, fixed = TRUE)))
 })
 
 test_that("show_troubleshooting provides actionable suggestions", {
