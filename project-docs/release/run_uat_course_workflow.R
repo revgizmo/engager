@@ -47,7 +47,7 @@ tail_file <- function(path, n = 40) {
 }
 
 tarball_package_version <- function(path) {
-  listing <- utils::untar(path, list = TRUE)
+  listing <- utils::untar(path, list = TRUE, tar = "internal")
   description_path <- listing[grepl("^[^/]+/DESCRIPTION$", listing)]
   if (length(description_path) != 1) {
     fail("Could not find exactly one DESCRIPTION file in tarball: ", path)
@@ -64,6 +64,9 @@ tarball_package_version <- function(path) {
   }
 
   description <- read.dcf(extracted_description)
+  if (!"Version" %in% colnames(description)) {
+    fail("Tarball DESCRIPTION does not contain a Version field: ", path)
+  }
   version <- unname(as.character(description[1, "Version"]))
   if (is.na(version) || !nzchar(version)) {
     fail("Tarball DESCRIPTION does not contain a Version field: ", path)
