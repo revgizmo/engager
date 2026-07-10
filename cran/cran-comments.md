@@ -18,8 +18,8 @@
 - **Warnings**: 0
 - **Notes**: 0
 
-One immediately prior run produced only `unable to verify current time`; an
-unchanged rerun completed at 0 errors, 0 warnings, and 0 notes.
+A supplemental incoming-remote probe reported only the expected informational
+`New submission` note.
 
 ## Reverse Dependencies
 
@@ -28,11 +28,13 @@ unchanged rerun completed at 0 errors, 0 warnings, and 0 notes.
 ## Additional Notes
 
 - The full local test suite passes with 0 failures, 67 expected warnings, and
-  6 documented skips.
+  5 documented skips. Four are CRAN-only diagnostic tests and one covers an
+  internal empty-session-mapping edge case.
 - An installed-package UAT installs the source tarball into an isolated library
   and exercises bundled synthetic transcript discovery, beginner and advanced
   workflows, name matching, privacy review, CSV/report outputs, onboarding
-  guidance, and all installed vignettes.
+  guidance, the exact 35-function export allowlist, bounded identifier
+  transformations, and all installed vignettes.
 - The UAT uses synthetic fixtures only and writes artifacts outside the source
   repository.
 - Privacy-supporting defaults mask recognized structured identifier fields;
@@ -54,5 +56,6 @@ unchanged rerun completed at 0 errors, 0 warnings, and 0 notes.
 - [x] Source tarball builds and installs successfully
 - [x] Installed-package UAT passes
 - [x] Tarball hygiene inspection passes
-- [ ] Final remediation PR CI and review complete
+- [x] Release-surface remediation PR #566 merged with passing CI
+- [ ] Feature-surface hardening PR CI and review complete
 - [ ] Maintainer final release disposition recorded
