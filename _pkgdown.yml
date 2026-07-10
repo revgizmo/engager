@@ -97,6 +97,7 @@ reference:
   - starts_with("engager-")
   - hash_canonical_name
   - starts_with("lookup_")
+  - make_blank_cancelled_classes_df
   - match_names_exact
   - match_names_fuzzy
   - normalize_name
