@@ -1,5 +1,7 @@
-#' Analyze Multi-Session Attendance Patterns
+#' Experimental Multi-Session Attendance Patterns
 #'
+#' Internal prototype for a possible v0.1.1 workflow. Its roster, unmatched-name,
+#' threshold, and reporting semantics are not part of the v0.1.0 public API.
 #' Analyzes attendance patterns across multiple Zoom sessions, tracking who attended
 #' which sessions and identifying participation patterns while applying the
 #' selected package masking controls.
@@ -33,7 +35,7 @@
 #' # )
 #' # print(results$attendance_summary)
 #'
-#' @export
+#' @keywords internal
 analyze_multi_session_attendance <- function(
     transcript_files = NULL,
     roster_data = NULL,
@@ -215,13 +217,16 @@ analyze_multi_session_attendance <- function(
   return(result)
 }
 
-#' Generate Attendance Report
+#' Experimental Attendance Report
+#'
+#' Internal prototype for a possible v0.1.1 reporting workflow. Chart and
+#' threshold semantics are not part of the v0.1.0 public API.
 #'
 #' @param analysis_results Results from `analyze_multi_session_attendance()`
 #' @param output_file Optional file path to save the report
 #' @param include_charts Boolean to include charts (default: FALSE)
 #' @return Report content as character vector
-#' @export
+#' @keywords internal
 generate_attendance_report <- function(
     analysis_results = NULL,
     output_file = NULL,

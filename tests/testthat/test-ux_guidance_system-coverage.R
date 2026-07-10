@@ -65,6 +65,28 @@ test_that("exported onboarding recommends only callable public functions", {
   )
 
   expect_length(unexpected_calls, 0)
+  expect_false("analyze_multi_session_attendance" %in% getNamespaceExports("engager"))
+  expect_false("generate_attendance_report" %in% getNamespaceExports("engager"))
+  expect_false(any(grepl("analyze_multi_session_attendance", outputs, fixed = TRUE)))
+  expect_false(any(grepl("generate_attendance_report", outputs, fixed = TRUE)))
+})
+
+test_that("active release documentation stays within the focused v0.1.0 surface", {
+  source_root <- normalizePath(testthat::test_path("..", ".."), mustWork = FALSE)
+  documentation_paths <- c(
+    file.path(source_root, "README.Rmd"),
+    file.path(source_root, "vignettes", "getting-started.Rmd"),
+    file.path(source_root, "vignettes", "essential-functions.Rmd"),
+    file.path(source_root, "vignettes", "plotting.Rmd"),
+    file.path(source_root, "vignettes", "privacy-ethics-review.Rmd")
+  )
+  skip_if_not(all(file.exists(documentation_paths)), "active source documentation is not installed")
+
+  documentation <- unlist(lapply(documentation_paths, readLines, warn = FALSE))
+  expect_true(any(grepl("basic_transcript_analysis(", documentation, fixed = TRUE)))
+  expect_false(any(grepl("analyze_multi_session_attendance(", documentation, fixed = TRUE)))
+  expect_false(any(grepl("generate_attendance_report(", documentation, fixed = TRUE)))
+  expect_false(any(grepl('method = "aggregate"', documentation, fixed = TRUE)))
 })
 
 test_that("show_function_help handles unknown functions gracefully", {

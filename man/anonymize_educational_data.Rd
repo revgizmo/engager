@@ -6,7 +6,7 @@
 \usage{
 anonymize_educational_data(
   data = NULL,
-  method = c("mask", "hash", "pseudonymize", "aggregate"),
+  method = c("mask", "hash", "pseudonymize"),
   preserve_columns = NULL,
   hash_salt = NULL,
   aggregation_level = c("individual", "section", "course", "institution")
@@ -15,16 +15,23 @@ anonymize_educational_data(
 \arguments{
 \item{data}{Data frame or tibble containing educational data}
 
-\item{method}{Anonymization method: "mask", "hash", "pseudonymize", or "aggregate"}
+\item{method}{Identifier transformation method: "mask", "hash", or
+"pseudonymize". The previously advertised "aggregate" method is not
+supported in version 0.1.0 because it did not reliably remove row-level
+identifiers.}
 
 \item{preserve_columns}{Vector of column names to preserve unchanged}
 
-\item{hash_salt}{Salt value for hash-based anonymization}
+\item{hash_salt}{Required non-empty salt for hash-based transformation.}
 
-\item{aggregation_level}{Level of aggregation: "individual", "section", "course", or "institution"}
+\item{aggregation_level}{Reserved for a future aggregation workflow. It has
+no effect for supported version 0.1.0 methods.}
 }
 \value{
-Anonymized data frame
+Data frame with recognized structured identifier columns transformed.
+Missing and blank identifiers remain missing or blank. These transformations
+do not inspect free text and do not establish that a data set is anonymous or
+compliant with legal or institutional requirements.
 }
 \description{
 Advanced anonymization for educational data that preserves data utility
@@ -43,7 +50,7 @@ participation_score = c(85, 92)
 anonymized <- anonymize_educational_data(sample_data, method = "mask")
 }
 
-\section{Hash method with salt}{
+\section{Hash method requires a caller-provided salt}{
 hashed <- anonymize_educational_data(sample_data, method = "hash", hash_salt = "my_salt")
 }
 

@@ -52,15 +52,13 @@ find_function_for_task <- function(task) {
   if (grepl("analyze|calculate|metrics|engagement|measure", task_lower)) {
     cat("RESULTS: Analyzing Engagement:\n")
     cat("   - analyze_transcripts() - Calculate engagement metrics\n")
-    cat("   - summarize_transcript_metrics() - Generate summary statistics\n")
-    cat("   - analyze_multi_session_attendance() - Analyze attendance across sessions\n\n")
+    cat("   - summarize_transcript_metrics() - Generate summary statistics\n\n")
   }
 
   # Visualize functions
   if (grepl("visualize|plot|chart|graph|display|show", task_lower)) {
     cat("Creating Visualizations:\n")
-    cat("   - plot_users() - Create engagement visualizations\n")
-    cat("   - generate_attendance_report() - Generate attendance summaries\n\n")
+    cat("   - plot_users() - Create engagement visualizations\n\n")
   }
 
   # Export functions
@@ -77,7 +75,7 @@ find_function_for_task <- function(task) {
     cat("   - ensure_privacy() - Apply privacy protection to data\n")
     cat("   - write_metrics() - Export masked metrics without raw comments by default\n")
     cat("   - privacy_audit() - Check privacy risks\n")
-    cat("   - anonymize_educational_data() - Apply supported anonymization methods\n")
+    cat("   - anonymize_educational_data() - Transform recognized identifier columns\n")
     cat("   - review_privacy_risks() - Run a technical privacy review\n\n")
   }
 
@@ -85,8 +83,7 @@ find_function_for_task <- function(task) {
   if (grepl("batch|multiple|several|all", task_lower)) {
     cat("Batch Processing:\n")
     cat("   - batch_basic_analysis() - Process multiple transcript files\n")
-    cat("   - summarize_transcript_files() - Summarize multiple transcripts\n")
-    cat("   - analyze_multi_session_attendance() - Multi-session analysis\n\n")
+    cat("   - summarize_transcript_files() - Summarize multiple transcripts\n\n")
   }
 
   # Validation functions
@@ -190,8 +187,7 @@ get_smart_recommendations <- function(context) {
   if (grepl("batch|multiple|several|many", context_lower)) {
     cat("Batch Processing Solutions:\n")
     cat("   1. batch_basic_analysis(files, 'output/') - Process multiple files\n")
-    cat("   2. summarize_transcript_files() - Summarize multiple transcripts\n")
-    cat("   3. analyze_multi_session_attendance() - Multi-session analysis\n\n")
+    cat("   2. summarize_transcript_files() - Summarize multiple transcripts\n\n")
   }
 
   if (grepl("privacy|secure|protect|anonymize|ferpa", context_lower)) {
@@ -205,16 +201,14 @@ get_smart_recommendations <- function(context) {
 
   if (grepl("visual|chart|graph|plot|display", context_lower)) {
     cat("Visualization Solutions:\n")
-    cat("   1. plot_users() - Create engagement charts\n")
-    cat("   2. generate_attendance_report() - Generate attendance summaries\n\n")
+    cat("   1. plot_users() - Create engagement charts\n\n")
   }
 
   if (grepl("export|save|output|download|share", context_lower)) {
     cat("Export & Sharing:\n")
     cat("   1. write_metrics() - Export privacy-processed metrics to CSV\n")
     cat("   2. write_unresolved() - Unresolved-name review CSV\n")
-    cat("   3. generate_attendance_report() - Attendance summary\n")
-    cat("   4. generate_privacy_review_report() - Privacy review report\n\n")
+    cat("   3. generate_privacy_review_report() - Privacy review report\n\n")
   }
 
   if (grepl("error|problem|issue|trouble|help", context_lower)) {

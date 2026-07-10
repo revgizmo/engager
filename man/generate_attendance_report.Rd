@@ -2,7 +2,7 @@
 % Please edit documentation in R/analyze_multi_session_attendance.R
 \name{generate_attendance_report}
 \alias{generate_attendance_report}
-\title{Generate Attendance Report}
+\title{Experimental Attendance Report}
 \usage{
 generate_attendance_report(
   analysis_results = NULL,
@@ -21,5 +21,7 @@ generate_attendance_report(
 Report content as character vector
 }
 \description{
-Generate Attendance Report
+Internal prototype for a possible v0.1.1 reporting workflow. Chart and
+threshold semantics are not part of the v0.1.0 public API.
 }
+\keyword{internal}

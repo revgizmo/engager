@@ -177,12 +177,16 @@ test_that("anonymize_educational_data handles hash method", {
   expect_equal(result$participation_data, data$participation_data)
 })
 
-test_that("anonymize_educational_data hashes with default salt when none provided", {
+test_that("anonymize_educational_data requires an explicit hash salt", {
   data <- create_ferpa_test_data_with_pii()
-  result <- anonymize_educational_data(data, method = "hash")
-  expect_true(all(nchar(result$student_id) == 8))
-  expect_true(all(nchar(result$preferred_name) == 8))
-  expect_true(all(nchar(result$email) == 8))
+  expect_error(
+    anonymize_educational_data(data, method = "hash"),
+    "hash_salt must be one non-empty character value"
+  )
+  expect_error(
+    anonymize_educational_data(data, method = "hash", hash_salt = "  "),
+    "hash_salt must be one non-empty character value"
+  )
 })
 
 test_that("anonymize_educational_data handles pseudonymize method", {
@@ -200,21 +204,17 @@ test_that("anonymize_educational_data handles pseudonymize method", {
   expect_equal(result$participation_data, data$participation_data)
 })
 
-test_that("anonymize_educational_data handles aggregate method", {
-  skip("Temporarily disabled due to segfault issue in dplyr::across")
-
-  # Create simple test data to avoid segfault
+test_that("anonymize_educational_data rejects unsafe aggregate method", {
   data <- tibble::tibble(
     section = c("A", "A", "B", "B"),
     student_id = c("S1", "S2", "S3", "S4"),
     participation_data = c(10, 15, 20, 25)
   )
 
-  result <- anonymize_educational_data(data, method = "aggregate", aggregation_level = "section")
-
-  # Should aggregate by section
-  expect_true(nrow(result) <= nrow(data))
-  expect_true("section" %in% names(result))
+  expect_error(
+    anonymize_educational_data(data, method = "aggregate", aggregation_level = "section"),
+    "not supported in engager 0.1.0"
+  )
 })
 
 test_that("anonymize_educational_data handles preserve_columns", {
@@ -229,12 +229,26 @@ test_that("anonymize_educational_data handles preserve_columns", {
   expect_true(all(grepl("^Student_", result$email)))
 })
 
-test_that("anonymize_educational_data aggregate with non-group level falls back to marking aggregated", {
-  data <- create_ferpa_test_data_with_pii()
-  result <- anonymize_educational_data(data, method = "aggregate", aggregation_level = "institution")
-  expect_true(all(result$student_id == "[AGGREGATED]"))
-  expect_true(all(result$preferred_name == "[AGGREGATED]"))
-  expect_true(all(result$email == "[AGGREGATED]"))
+test_that("anonymize_educational_data preserves missing and blank identifiers", {
+  data <- tibble::tibble(
+    student_id = c("S1", NA_character_, ""),
+    preferred_name = c("Alice", NA_character_, "  "),
+    score = c(1, 2, 3)
+  )
+
+  results <- list(
+    anonymize_educational_data(data, method = "mask"),
+    anonymize_educational_data(data, method = "hash", hash_salt = "test-salt"),
+    anonymize_educational_data(data, method = "pseudonymize")
+  )
+
+  for (result in results) {
+    expect_true(is.na(result$student_id[[2]]))
+    expect_identical(result$student_id[[3]], "")
+    expect_true(is.na(result$preferred_name[[2]]))
+    expect_identical(result$preferred_name[[3]], "  ")
+    expect_equal(result$score, data$score)
+  }
 })
 
 test_that("anonymize_educational_data handles invalid method argument", {
@@ -526,13 +540,11 @@ test_that("review_privacy_risks handles comprehensive parameters", {
 test_that("anonymize_educational_data handles comprehensive parameters", {
   data <- create_ferpa_test_data_with_pii()
 
-  # Test all method combinations (excluding aggregate due to segfault)
+  # Test all supported v0.1.0 method combinations
   method_combinations <- list(
     list(data = data, method = "mask"),
     list(data = data, method = "hash", hash_salt = "test_salt"),
     list(data = data, method = "pseudonymize"),
-    # list(data = data, method = "aggregate", aggregation_level = "section"), # Disabled due to segfault
-    # list(data = data, method = "aggregate", aggregation_level = "course"), # Disabled due to segfault
     list(data = data, method = "mask", preserve_columns = "student_id")
   )
 

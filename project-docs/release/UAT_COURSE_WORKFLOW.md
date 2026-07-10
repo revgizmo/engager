@@ -23,6 +23,7 @@ loads `engager` from that library, and exercises:
 - Installed onboarding identity plus function-call checks across getting
   started, workflow, privacy, troubleshooting, task finder, smart
   recommendations, error recovery, and progressive guidance output.
+- Exact namespace comparison against the focused v0.1.0 export allowlist.
 - VTT loading with `load_zoom_transcript()`.
 - Transcript processing with `process_zoom_transcript()`.
 - Multi-file and single-file summarization with
@@ -34,6 +35,9 @@ loads `engager` from that library, and exercises:
   `write_unresolved()`.
 - Privacy review with `review_privacy_risks()`.
 - Privacy report generation with `generate_privacy_review_report()`.
+- Identifier transformation checks confirming that unsafe aggregation is
+  rejected, hash mode requires a caller-provided salt, and missing or blank
+  identifiers are preserved.
 - CSV export through `write_metrics()`.
 - Installed vignette discovery with:
   `vignette(package = "engager")`,
@@ -83,6 +87,8 @@ A passing run confirms:
 - Bundled synthetic course transcripts and roster fixtures are discoverable.
 - Installed onboarding uses the `engager` identity and progressive guidance
   names only exported functions.
+- The installed namespace exactly matches the focused v0.1.0 allowlist and
+  does not export unfinished attendance/reporting workflows.
 - One or more installed VTT transcript files load and process successfully.
 - The installed beginner workflow completes with non-empty metrics, a plot,
   and a non-empty CSV export.
@@ -91,6 +97,9 @@ A passing run confirms:
   synthetic roster.
 - Unresolved-name output is written without raw names by default.
 - Privacy review and privacy report generation complete.
+- Supported identifier transformations remove recognized raw identifiers,
+  preserve missing values, reject unsafe aggregation, and require an explicit
+  hash salt.
 - Exported summary/report outputs do not contain obvious raw synthetic course
   identifiers checked by the script.
 - Required vignettes are discoverable from the installed package.
@@ -104,11 +113,14 @@ Treat the UAT as failed if any of these occur:
 - Installed fixtures are missing.
 - Installed onboarding uses the former package identity or advertises
   non-exported functions.
+- The namespace differs from the focused v0.1.0 export allowlist.
 - Transcript loading, processing, summarization, beginner workflow, name
   matching, privacy review, privacy report generation, or exports fail.
 - Expected output files are missing or empty.
 - Exported summary/report files contain obvious raw synthetic course identifiers
   where the UAT expects masked output.
+- Identifier transformation accepts the withdrawn aggregation mode, accepts
+  hash mode without a salt, or transforms missing identifiers into values.
 - Required vignettes are not discoverable from the installed package.
 
 ## Known Non-Blocking Warnings

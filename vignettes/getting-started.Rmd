@@ -38,25 +38,35 @@ devtools::install_github("revgizmo/engager")
 
 ## Quick Start
 
-Here's a minimal example to get you started:
+The beginner workflow loads, processes, summarizes, plots, and exports one
+transcript with privacy-supporting defaults:
 
 ```{r quick-start}
-# Load a sample transcript
 transcript_file <- system.file(
   "extdata/test_transcripts/intro_statistics_week1.vtt",
   package = "engager"
 )
 
-# Process the transcript
-processed_transcript <- process_zoom_transcript(
-  transcript_file_path = transcript_file,
+results <- basic_transcript_analysis(
+  transcript_file,
+  output_dir = tempfile("engager-getting-started-")
+)
+head(results$analysis)
+print(results$plots)
+```
+
+For explicit control, compose the public processing functions and pass the
+processed object forward instead of re-reading the file:
+
+```{r composable-workflow}
+transcript <- load_zoom_transcript(transcript_file)
+processed <- process_zoom_transcript(
+  transcript_df = transcript,
   consolidate_comments = TRUE,
   add_dead_air = TRUE
 )
-
-# Calculate summary metrics
 summary_metrics <- summarize_transcript_metrics(
-  transcript_file_path = transcript_file,
+  transcript_df = processed,
   names_exclude = c("dead_air")
 )
 
@@ -79,7 +89,7 @@ The `engager` package provides tools for:
 2. **Calculating Engagement Metrics**: Measure participation by speaker/student
 3. **Name Matching and Cleaning**: Match transcript names to student rosters
 4. **Visualization**: Create plots to analyze participation patterns
-5. **Reporting**: Generate individual student reports
+5. **Exporting**: Write privacy-supporting participation metrics and summaries
 6. **Privacy Review**: Support technical review and institutional oversight
 7. **Masking and Data Transformation**: Reduce exposure of recognized structured identifiers
 
@@ -158,7 +168,7 @@ custom_mappings <- data.frame(
 For detailed troubleshooting guidance:
 - **Check the package documentation**: `?match_names_workflow`
 - **Find unmatched names before matching**: `?detect_unmatched_names`
-- **Review example files**: See `inst/extdata/example_section_names_lookup.csv`
+- **Review the supported workflow**: See `?match_names_workflow` and `?write_unresolved`
 
 ## Next Steps
 

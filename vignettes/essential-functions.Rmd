@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-This vignette demonstrates the core functionality of the `engager` package using its public API. The package currently exports **37 functions** focused on:
+This vignette demonstrates the supported v0.1.0 core using the package's public API:
 
 - **Transcript Processing**: Loading and processing Zoom transcripts
 - **Privacy-Supporting Workflows**: Applying structured-field masking and technical review
@@ -29,57 +29,37 @@ This vignette demonstrates the core functionality of the `engager` package using
 
 ## Essential Functions
 
-The package now exports these essential functions:
+The package exposes additional interactive guidance helpers, but the functions
+below define the supported analysis workflow for v0.1.0:
 
 ```{r essential-functions, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
 library(engager)
 
-# Try to derive exported functions dynamically; fall back to a curated list
-safe_exports <- tryCatch(names(getNamespaceExports("engager")), error = function(e) character(0))
-essential_functions <- setdiff(safe_exports, c("%>%"))
+essential_functions <- c(
+  "basic_transcript_analysis",
+  "quick_analysis",
+  "batch_basic_analysis",
+  "load_zoom_transcript",
+  "process_zoom_transcript",
+  "consolidate_transcript",
+  "summarize_transcript_metrics",
+  "summarize_transcript_files",
+  "analyze_transcripts",
+  "plot_users",
+  "write_metrics",
+  "load_roster",
+  "detect_unmatched_names",
+  "match_names_workflow",
+  "write_unresolved",
+  "ensure_privacy",
+  "privacy_audit",
+  "anonymize_educational_data",
+  "validate_privacy_compliance",
+  "review_privacy_risks",
+  "generate_privacy_review_report"
+)
 
-if (length(essential_functions) == 0) {
-  # Fallback list aligned with current exported API
-  essential_functions <- c(
-    "load_zoom_transcript",
-    "process_zoom_transcript",
-    "consolidate_transcript",
-    "summarize_transcript_files",
-    "analyze_transcripts",
-    "summarize_transcript_metrics",
-    "analyze_multi_session_attendance",
-    "anonymize_educational_data",
-    "basic_transcript_analysis",
-    "batch_basic_analysis",
-    "detect_unmatched_names",
-    "ensure_privacy",
-    "find_function_for_task",
-    "generate_attendance_report",
-    "generate_privacy_review_report",
-    "get_smart_recommendations",
-    "get_ux_level",
-    "get_visible_functions",
-    "load_roster",
-    "match_names_workflow",
-    "privacy_audit",
-    "quick_analysis",
-    "review_privacy_risks",
-    "set_ux_level",
-    "show_available_functions",
-    "show_error_recovery",
-    "show_function_categories",
-    "show_function_help",
-    "show_getting_started",
-    "show_privacy_guidance",
-    "show_troubleshooting",
-    "show_workflow_help",
-    "user_friendly_error",
-    "validate_privacy_compliance",
-    "plot_users",
-    "write_metrics",
-    "write_unresolved"
-  )
-}
+stopifnot(all(essential_functions %in% getNamespaceExports("engager")))
 
 # Emit a markdown list with autolinkable inline code items
 cat("Essential functions (", length(essential_functions), "):\n\n")
@@ -165,7 +145,10 @@ cat("validate_privacy_compliance() and review_privacy_risks() support technical 
 - `validate_privacy_compliance()` - Review privacy settings
 
 ### Name Matching
-<!-- The core name-matching helpers are currently internal/non-exported. Public workflows will be linked here when exported. -->
+- `load_roster()` - Load a roster for matching
+- `detect_unmatched_names()` - Identify speakers requiring review
+- `match_names_workflow()` - Apply the supported exact matching workflow
+- `write_unresolved()` - Write a privacy-supporting unresolved-name review file
 
 ### Utilities
 - `plot_users()` - Plot user engagement

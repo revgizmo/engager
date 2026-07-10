@@ -32,7 +32,7 @@ The goal of `engager` is to allow instructors to gain insights into student enga
 
 - **Installed help**: run `help(package = "engager")`
 - **Package vignettes**: run `browseVignettes(package = "engager")`
-- **[Development and contributing notes](https://github.com/revgizmo/engager/blob/main/project-docs/development/README.md)**
+- **[Issue tracker and contribution discussion](https://github.com/revgizmo/engager/issues)**
 - **[Release project status](https://github.com/revgizmo/engager/blob/main/project-docs/release/PROJECT.md)**
 
 ## 🚀 Quick Start
@@ -44,46 +44,51 @@ devtools::install_github("revgizmo/engager")
 ```
 
 
-### 5-minute whole-game example
+### One-function beginner workflow
 
 ```{r quick-whole-game}
 library(engager)
 
-# 1) Compute metrics for a single transcript
 transcript_file <- system.file(
   "extdata/test_transcripts/intro_statistics_week1.vtt",
   package = "engager"
 )
-metrics <- summarize_transcript_metrics(transcript_file_path = transcript_file)
-
-# 2) Plot a returned metric with privacy-supporting defaults
-#    (outputs a bar chart with a minimal theme)
-plot <- plot_users(metrics, metric = "n", facet_by = "none", mask_by = "name")
-print(plot)
-
-# 3) Write masked metrics to CSV
-invisible(write_metrics(metrics, what = "engagement", path = "engagement_metrics.csv"))
+results <- basic_transcript_analysis(
+  transcript_file,
+  output_dir = tempfile("engager-basic-")
+)
+head(results$analysis)
+print(results$plots)
 ```
 
-### Basic Example
+### Composable workflow
 
 ```{r quick-example}
 library(engager)
 
-# Load and process a transcript
 transcript_file <- system.file(
   "extdata/test_transcripts/intro_statistics_week1.vtt",
   package = "engager"
 )
 
-# Calculate engagement metrics
+# Load and process once
+transcript <- load_zoom_transcript(transcript_file)
+processed <- process_zoom_transcript(transcript_df = transcript)
+
+# Summarize the processed data
 metrics <- summarize_transcript_metrics(
-  transcript_file_path = transcript_file,
+  transcript_df = processed,
   names_exclude = c("dead_air")
 )
 
-# View results
-head(metrics)
+# Plot and export with privacy-supporting defaults
+plot <- plot_users(metrics, metric = "n", facet_by = "none", mask_by = "name")
+print(plot)
+invisible(write_metrics(
+  metrics,
+  what = "engagement",
+  path = tempfile(fileext = ".csv")
+))
 ```
 
 ## 📖 Vignettes
@@ -103,7 +108,7 @@ The `engager` package provides tools for:
 2. **Calculating Engagement Metrics**: Measure participation by speaker/student
 3. **Name Matching and Cleaning**: Match transcript names to student rosters
 4. **Visualization**: Create plots to analyze participation patterns
-5. **Reporting**: Generate individual student reports
+5. **Exporting**: Write privacy-supporting participation metrics and summaries
 
 **Note**: The package specifically processes `.transcript.vtt` files (the canonical Zoom transcript files). Other Zoom file types like `.cc.vtt` (closed captions) and `.newChat.txt` (chat logs) are not currently supported but may be added in future versions.
 
@@ -157,8 +162,6 @@ summarize_transcript_metrics(transcript_file_path = transcript_file)
 options(engager.verbose = FALSE)
 ```
 
-See the [development and contributing notes](https://github.com/revgizmo/engager/blob/main/project-docs/development/README.md) for repository-level workflow guidance.
-
 ## 📊 Typical Workflow
 
 1. **Setup**: Configure analysis parameters
@@ -197,21 +200,22 @@ See `vignette("privacy-ethics-review", package = "engager")` for privacy, ethics
 ## Development
 
 ### Pull Request Review
-This project uses a lightweight PR review process focused on CRAN submission readiness and privacy risk review. See the [development and contributing notes](https://github.com/revgizmo/engager/blob/main/project-docs/development/README.md) for repository-level guidance.
+This project uses a lightweight PR review process focused on CRAN submission
+readiness and privacy risk review. Open an issue before proposing a substantial
+change so scope and validation expectations are explicit.
 
 ## 🤝 Contributing
 
-We welcome contributions! Start with the [development and contributing notes](https://github.com/revgizmo/engager/blob/main/project-docs/development/README.md) and the [issue tracker](https://github.com/revgizmo/engager/issues).
+We welcome contributions. Start with the
+[issue tracker](https://github.com/revgizmo/engager/issues).
 
 ## 📄 License
 
-This package is licensed under the MIT License. See the CRAN stub in [LICENSE](LICENSE)
-and the [full license text on GitHub](https://github.com/revgizmo/engager/blob/main/LICENSE.md).
+This package is licensed under the MIT License. See the CRAN license stub in
+[LICENSE](LICENSE); the standard MIT terms accompany the distributed package.
 
 ## 🔗 Links
 
 - **GitHub Repository**: https://github.com/revgizmo/engager
 - **Issues**: https://github.com/revgizmo/engager/issues
 - **Project Status**: [release project status](https://github.com/revgizmo/engager/blob/main/project-docs/release/PROJECT.md)
-
-

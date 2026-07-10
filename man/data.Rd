@@ -4,20 +4,15 @@
 \alias{data}
 \title{Package Data Documentation}
 \description{
-Zoom transcript data that users provide.
+User-provided data and bundled synthetic fixtures.
 }
 \details{
-The engager package is designed to work with user-provided data rather than including static datasets.
-This approach ensures privacy and allows the package to be used with any institutional data without concerns about
-data sharing or licensing.
-
-This package works with user-provided Zoom transcripts and related
-institutional data. No static datasets are included with the package.
-Typical workflows involve loading transcripts, analyzing engagement,
-and exporting metrics. See function help pages for runnable examples.
+The package is designed to analyze user-provided WebVTT transcripts and
+related institutional data. It does not bundle real course or student data.
+Synthetic transcript and roster fixtures are included under
+\code{inst/extdata/test_transcripts} for runnable examples and package validation.
+They must not be interpreted as institutional records.
 
 See also: load_zoom_transcript() for loading transcript data and
 write_metrics() for exporting analysis results.
-
-This package works with user-provided data and includes no static datasets.
 }
