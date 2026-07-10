@@ -43,92 +43,92 @@ user_friendly_error <- function(expr, context = "operation") {
 convert_error_to_user_friendly <- function(error_message, context) {
   # Function not found errors
   if (grepl("could not find function|could not find object", error_message)) {
-    paste0(
+    return(paste0(
       "ERROR: Function not found. This might be an advanced function.\n",
       "TIP: Try: set_ux_level('intermediate') to see more functions\n",
       "TIP: Or: show_function_help('function_name') for guidance\n",
       "TIP: Or: find_function_for_task('what you want to do') to find the right function"
-    )
+    ))
   }
 
   # File not found errors
   if (grepl("file not found|cannot open file|no such file", error_message)) {
-    paste0(
+    return(paste0(
       "ERROR: File not found. Please check the file path.\n",
       "TIP: Make sure the file exists and you have permission to read it\n",
       "TIP: Try: list.files() to see available files\n",
-      "TIP: Check file extension (.vtt, .txt, .csv are supported)"
-    )
+      "TIP: Check the function documentation for the expected file extension"
+    ))
   }
 
   # Permission denied errors
   if (grepl("permission denied|access denied|cannot open", error_message)) {
-    paste0(
+    return(paste0(
       "ERROR: Permission denied. You don't have access to this file.\n",
       "TIP: Check file permissions or try a different file\n",
       "TIP: Try a different output directory\n",
       "TIP: Contact your system administrator if needed"
-    )
+    ))
   }
 
   # Memory errors
   if (grepl("memory|cannot allocate|out of memory", error_message)) {
-    paste0(
+    return(paste0(
       "ERROR: Memory issue. The file might be too large.\n",
       "TIP: Try with a smaller file first\n",
       "TIP: Use batch processing for large datasets\n",
       "TIP: Check available system memory"
-    )
+    ))
   }
 
   # Data format errors
   if (grepl("invalid|malformed|parse error|format", error_message)) {
-    paste0(
+    return(paste0(
       "ERROR: Data format issue. The file might be corrupted or in wrong format.\n",
-      "TIP: Check file format (VTT, TXT, CSV are supported)\n",
-      "TIP: Try: validate_schema() to check data structure\n",
+      "TIP: Confirm transcript inputs use valid WebVTT format\n",
+      "TIP: Try: show_function_help('load_zoom_transcript') for input requirements\n",
       "TIP: Use a different transcript file to test"
-    )
+    ))
   }
 
   # Network/connection errors
   if (grepl("connection|network|timeout|unreachable", error_message)) {
-    paste0(
+    return(paste0(
       "ERROR: Connection issue. Network or server problem.\n",
       "TIP: Check your internet connection\n",
       "TIP: Try again in a few minutes\n",
       "TIP: Contact support if problem persists"
-    )
+    ))
   }
 
   # Package dependency errors
   if (grepl("package.*not found|library.*not found|namespace", error_message)) {
-    paste0(
+    return(paste0(
       "ERROR: Missing package dependency.\n",
       "TIP: Try: install.packages('package_name')\n",
       "TIP: Or: devtools::install_deps() to install all dependencies\n",
       "TIP: Check package installation"
-    )
+    ))
   }
 
   # Argument errors
   if (grepl("argument|parameter|missing|required", error_message)) {
-    paste0(
+    return(paste0(
       "ERROR: Function argument issue.\n",
       "TIP: Check function arguments and required parameters\n",
       "TIP: Try: show_function_help('function_name') for usage\n",
       "TIP: Or: find_function_for_task('what you want to do')"
-    )
+    ))
   }
 
   # Privacy/security errors
   if (grepl("privacy|security|access|unauthorized", error_message)) {
-    paste0(
+    return(paste0(
       "ERROR: Privacy or security issue.\n",
-      "TIP: Check privacy settings: set_privacy_defaults()\n",
-      "TIP: Use: ensure_privacy() to protect data\n",
+      "TIP: Check the engager.privacy_level option\n",
+      "TIP: Use: ensure_privacy(data, privacy_level = 'mask') to mask structured identifiers\n",
       "TIP: See: show_privacy_guidance() for help"
-    )
+    ))
   }
 
   # Default user-friendly message
@@ -169,7 +169,7 @@ validate_file_argument <- function(file_path, context = "file operation") {
     stop("ERROR: File not found: ", file_path, "\n",
       "TIP: Check the file path and try again\n",
       "TIP: Use list.files() to see available files\n",
-      "TIP: Make sure file has .vtt, .txt, or .csv extension",
+      "TIP: Check the function documentation for the expected file extension",
       call. = FALSE
     )
   }
@@ -235,7 +235,7 @@ show_error_recovery <- function(error_type) {
     "file_not_found" = {
       cat("TOOLS: File Not Found - Recovery Steps:\n")
       cat("1. Check file path: list.files() to see available files\n")
-      cat("2. Check file extension: .vtt, .txt, .csv are supported\n")
+      cat("2. Check the function documentation for the expected file extension\n")
       cat("3. Check working directory: getwd() to see current location\n")
       cat("4. Use full path: '/full/path/to/file.vtt'\n")
     },

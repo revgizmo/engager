@@ -13,8 +13,8 @@
 #' }
 show_getting_started <- function() {
   cat("
-Getting Started with zoomstudentengagement
-============================================
+Getting Started with engager
+============================
 
 BASIC WORKFLOW (5 steps):
 1. load_zoom_transcript() - Load your transcript file
@@ -28,10 +28,10 @@ QUICK START (Recommended for new users):
 
 STEP-BY-STEP WORKFLOW:
    transcript <- load_zoom_transcript('your_file.vtt')
-   processed <- process_zoom_transcript(transcript)
-   analysis <- analyze_transcripts(processed)
-   plots <- plot_users(analysis)
-   write_metrics(analysis, 'output/')
+   processed <- process_zoom_transcript(transcript_df = transcript)
+   analysis <- summarize_transcript_metrics(transcript_df = processed)
+   plots <- plot_users(analysis, metric = 'wordcount', facet_by = 'transcript_file')
+   write_metrics(analysis, path = 'output/engagement_metrics.csv')
 
 BATCH PROCESSING:
    files <- c('session1.vtt', 'session2.vtt')
@@ -50,7 +50,7 @@ PRIVACY & ETHICS:
 
 MORE RESOURCES:
    - vignette('getting-started') - Detailed tutorial
-   - utils::help(package = 'zoomstudentengagement') - All documentation
+   - utils::help(package = 'engager') - All documentation
 ")
 }
 
@@ -98,14 +98,15 @@ show_function_help <- function(function_name) {
 
   # Show function documentation
   cat("DOCS: Documentation:\n")
-  tryCatch(
-    {
-      utils::help(function_name, package = "zoomstudentengagement")
-    },
-    error = function(e) {
-      cat("   No documentation available\n")
-    }
+  documentation <- tryCatch(
+    utils::help(function_name, package = "engager"),
+    error = function(e) NULL
   )
+  if (length(documentation) == 0) {
+    cat("   No documentation available\n")
+  } else {
+    print(documentation)
+  }
 
   # Show usage examples for common functions
   if (function_name %in% c("basic_transcript_analysis", "quick_analysis", "batch_basic_analysis")) {
@@ -146,10 +147,10 @@ QUICK: Quick Workflow (Fastest):
 
 RESULTS: Step-by-Step Workflow (Full control):
    1. transcript <- load_zoom_transcript('file.vtt')
-   2. processed <- process_zoom_transcript(transcript)
-   3. analysis <- analyze_transcripts(processed)
-   4. plots <- plot_users(analysis)
-   5. write_metrics(analysis, 'output/')
+   2. processed <- process_zoom_transcript(transcript_df = transcript)
+   3. analysis <- summarize_transcript_metrics(transcript_df = processed)
+   4. plots <- plot_users(analysis, metric = 'wordcount', facet_by = 'transcript_file')
+   5. write_metrics(analysis, path = 'output/engagement_metrics.csv')
 
 Batch Workflow (Multiple files):
    files <- c('session1.vtt', 'session2.vtt', 'session3.vtt')
@@ -178,13 +179,13 @@ Privacy & Ethics Guidance
 ===========================
 
 Privacy Protection (Enabled by Default):
-   - Student names are automatically protected
-   - Sensitive data is anonymized
-   - privacy review helpers included
+   - Common structured identifier fields are masked by default
+   - Free transcript text still requires local review before sharing
+   - Technical privacy review helpers are included
 
 TOOLS: Privacy Functions:
    - ensure_privacy() - Apply privacy protection
-   - set_privacy_defaults() - Configure privacy settings
+   - write_metrics() - Export masked metrics without raw comments by default
    - privacy_audit() - Check privacy risks
    - review_privacy_risks() - privacy review
 
@@ -224,7 +225,7 @@ ERROR: Common Issues and Solutions:
 File Not Found:
    - Check file path is correct
    - Use list.files() to see available files
-   - Ensure file has .vtt, .txt, or .csv extension
+   - Check the function documentation for the expected file extension
 
 Permission Denied:
    - Check file permissions
@@ -238,7 +239,7 @@ Function Not Found:
 
 RESULTS: Analysis Errors:
    - Check transcript file format
-   - Use validate_schema() to check data structure
+   - Use show_function_help('load_zoom_transcript') to review input requirements
    - Try with a smaller file first
 
 Memory Issues:
@@ -250,6 +251,6 @@ TIP: Getting More Help:
    - show_getting_started() - Basic guide
    - show_function_help('function_name') - Specific help
    - find_function_for_task('task') - Find right function
-   - vignette('troubleshooting') - Detailed guide
+   - vignette('privacy-ethics-review') - Privacy review guide
 ")
 }

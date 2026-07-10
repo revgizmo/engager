@@ -1,53 +1,65 @@
 # CRAN Validation Report
 
-## Current Release Branch
+Generated: 2026-07-10
 
-- Branch: `codex/cran-gate-reconciliation`
-- Base: `origin/main`
-- Integrated:
-  - PR #550 branch `origin/feat/name-matching-mvp`
-  - Release-prep commit `a3954f8`
-  - CRAN gate reconciliation through commit `e4a78da`
+## Decision
+
+**GO pending remediation PR merge, hosted CI/review, and maintainer signoff.**
+
+The package-side release gates pass. CRAN upload, public tag replacement, issue
+#4 updates, and final release publication remain separately authorized owner
+actions.
+
+## Release Candidate
+
+- Branch: `codex/cran-release-surface-remediation`
+- Base: `origin/main` at `1eae39368c3d99ccfdead34cc306fb6f81c6690c`
+- Package-source commit: `1b89b7fd63044b3b7c09c67927fb28cd1bc46f6c`
+- Version: `0.1.0`
+- Tarball: `/private/tmp/engager-release-1b89b7f/engager_0.1.0.tar.gz`
+- SHA-256: `f7759c980f09ff4d152f60f19fe8110222d752061dd5df9834751582ec362a03`
+- UAT evidence: `/private/tmp/engager-release-1b89b7f/uat/UAT_EVIDENCE.md`
 
 ## Validation Matrix
 
-| Check | Status | Evidence |
+| Check | Result | Evidence |
 |---|---|---|
-| Metadata cleanup | Complete locally | `DESCRIPTION` set to `0.1.0`; `pryr` removed; PR #550 imports retained where used |
-| Release docs | Complete locally | `NEWS.md`, `cran/cran-comments.md`, and release docs added/updated |
-| Privacy wording | Complete locally | Active CRAN-facing docs reworded to privacy-supporting / FERPA-oriented language; no legal compliance guarantee claimed |
-| Issue #153 privacy validation | Approved locally | Real-world, institutionally authorized validation rendered on commit `e4a78da`: 4 outputs, no `comments` column, 0 blocking identifier scan hits, 0 metadata identifier scan hits, clean tarball check; approval limited to privacy-safe CSV export surface |
-| Issue #154 adoption guidance | Complete locally | `vignettes/privacy-ethics-review.Rmd` provides institutional adoption considerations with privacy-supporting caveats |
-| Tests | Pass locally | `devtools::test()`: 2,501 pass, 0 fail, 67 warnings, 6 skips |
-| Coverage | Pass locally | Overall 83.82%; strategic exported API 92.34% |
-| Lint | Non-blocking debt remains | `lintr::lint_package()`: 52 existing style/object-usage findings |
-| R CMD check | Pass locally | 0 errors, 0 warnings, 0 notes |
-| Build/tarball inspection | Pass locally | `R CMD build .` succeeded; tarball has 267 files and no local release docs, project-only docs, private transcript data, `.Rcheck`, `.DS_Store`, backup files, generated outputs, or excluded extdata paths |
-| Benchmarks | Complete locally | Transcript and synthetic name-matching benchmarks recorded below |
-| CI | Pass on release PR | PR #557 passes Ubuntu, Windows, and macOS R-CMD-check; coverage; lint; and build validation |
+| Live ownership | Pass | One worktree; no open PRs or `CRAN-blocker` issues before branch publication |
+| Full tests | Pass | 0 failures; 67 expected warnings; 6 documented skips |
+| R CMD check | Pass | `--no-manual --as-cran`: 0 errors, 0 warnings, 0 notes |
+| Source build | Pass | Built from package-source commit in `/private/tmp` |
+| Installed-package UAT | Pass | Isolated install; 3 sessions/34 transcript rows; beginner workflow; exact matching; privacy/report exports; 4 vignettes |
+| Onboarding/API contract | Pass | 24 progressive functions and 33 printed function calls checked against installed exports; data-format recovery path included |
+| Raw identifier scan | Pass | No bundled raw course identifier hits in checked CSV/report artifacts |
+| Tarball hygiene | Pass | 270 entries; no excluded local/project/UAT/private-data paths matched |
+| Privacy wording | Pass | Active shipped docs use technical masking/review language and preserve institutional responsibility |
+| Independent diff review | Pass | Final review returned GO with no actionable findings |
+| CRAN publication check | Not published | `engager` absent from the CRAN package index snapshot downloaded 2026-07-10 09:16 PDT |
 
-## Local Benchmark Results
+## Known Non-Blocking Evidence
 
-Run on macOS Tahoe 26.4.1, R 4.5.3, with two iterations unless noted.
+- The UAT privacy screen reports `passed = FALSE` because the in-memory metrics
+  contain identifier-like column names `name` and `name_raw`. This is expected
+  technical-screen behavior; the exported-artifact scan found no raw synthetic
+  identifier values.
+- One CRAN-check run could not verify current time and emitted that single
+  environment note. An unchanged immediate rerun completed at 0/0/0.
+- `lintr::lint_package()` reports 52 existing style/object-usage findings under
+  the repository configuration. This is pre-existing cleanup debt, not a CRAN
+  check failure or a scope justification for pre-submission refactoring.
+- Win-builder and R-hub remain optional follow-ups by release-owner decision.
+- The public `v0.1.0` tag still points to stale commit `525ea206...` and contains
+  outdated compliance wording. It was not modified. Deletion/recreation requires
+  separate explicit approval and the replacement tag should be created only for
+  the accepted release source.
 
-| Benchmark | Median Runtime | Memory |
-|---|---:|---:|
-| Small VTT parse | 35.3 ms | 8.2 MB |
-| Engagement summary | 47.8 ms | 1.3 MB |
-| Exact name matching, 100 speakers | 12.0 ms | 1.7 MB |
-| Exact name matching, 1,000 speakers | 127.7 ms | 8.8 MB |
-| Exact name matching, 5,000 speakers | 629.8 ms | 196.8 MB |
+## Remaining Gates
 
-The 5,000-speaker name-matching benchmark is sub-second locally. Memory should
-be watched in CI and future benchmark runs, but this result does not yet justify
-speculative optimization before CRAN.
-
-## Notes
-
-- Overall coverage will be reported separately from the strategic exported API
-  gate.
-- Issue #153 is approved for the CRAN privacy gate based on the rendered local
-  validation report. The approval does not classify raw transcripts, rosters,
-  in-memory metric objects, or explicitly raw comment exports as de-identified.
-- Release PR #557 was green at the time of the earlier release-prep report.
-  Recheck CI after pushing this reconciliation branch.
+1. Push the remediation branch, open the scoped PR, and require hosted checks
+   and review to pass.
+2. Merge the remediation PR and rebuild the final upload tarball from merged
+   `main`.
+3. Obtain separate approval to remove the stale public `v0.1.0` tag before
+   submission; recreate it only after CRAN acceptance.
+4. Maintainer reviews the upload packet and manually submits the tarball.
+5. Keep issue #4 open through CRAN review and acceptance.

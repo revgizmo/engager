@@ -37,12 +37,15 @@ List containing:
 \item \code{attendance_summary}: Summary statistics for each participant
 \item \code{session_summary}: Summary statistics for each session
 \item \code{participation_patterns}: Analysis of participation patterns
-\item \code{privacy_compliant}: Boolean indicating if all outputs maintain privacy
+\item \code{privacy_compliant}: Backward-compatible Boolean indicating whether the
+package's technical privacy checks completed without an error. This is
+not a legal or institutional compliance determination.
 }
 }
 \description{
 Analyzes attendance patterns across multiple Zoom sessions, tracking who attended
-which sessions and identifying participation patterns while maintaining privacy compliance.
+which sessions and identifying participation patterns while applying the
+selected package masking controls.
 }
 \examples{
 # Analyze attendance across multiple sessions

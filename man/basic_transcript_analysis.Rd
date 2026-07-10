@@ -11,11 +11,13 @@ basic_transcript_analysis(
 )
 }
 \arguments{
-\item{transcript_file}{Path to transcript file (VTT, TXT, or CSV format)}
+\item{transcript_file}{Path to a WebVTT transcript file}
 
 \item{output_dir}{Output directory for results (default: "output")}
 
-\item{privacy_level}{Privacy protection level: "high" (default), "medium", "low"}
+\item{privacy_level}{Privacy protection level: "high" (default), "medium",
+or "low". These map to \code{"privacy_strict"}, \code{"privacy_standard"}, and
+\code{"mask"}, respectively. All three levels mask common identifiers.}
 }
 \value{
 List containing analysis results, plots, and output directory path

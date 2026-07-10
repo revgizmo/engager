@@ -12,7 +12,7 @@ validate_privacy_compliance(
 )
 }
 \arguments{
-\item{data}{Data frame or object to validate for privacy compliance}
+\item{data}{Data frame or object to inspect for possible identifier exposure}
 
 \item{privacy_level}{Privacy level to validate against. One of
 \code{c("privacy_strict", "privacy_standard", "mask", "none")}.
@@ -26,12 +26,13 @@ common name patterns to detect potential violations.}
 Defaults to TRUE for maximum privacy protection.}
 }
 \value{
-Validation results with compliance status and any violations found
+\code{TRUE} when the technical check finds no configured real names.
 }
 \description{
-Scans data objects to ensure no real names appear in outputs when privacy
-masking is enabled. This function performs exact matching to detect privacy
-violations and stops processing if real names are found.
+Scans data objects for possible real names when package masking is enabled.
+This is an exact-match technical check, not a legal or institutional
+compliance determination. It stops processing when configured names are
+found.
 }
 \examples{
 # Validate privacy compliance

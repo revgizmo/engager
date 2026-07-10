@@ -11,7 +11,8 @@
 #'
 #' The default behavior is controlled by the global option
 #' `engager.privacy_level`, which is set to "mask" on package
-#' load. Use `set_privacy_defaults()` to change at runtime.
+#' load. Pass `privacy_level` explicitly for one call, or set the
+#' `engager.privacy_level` option for the current R session.
 #'
 #' @param x Data object to apply privacy rules to (typically a `tibble`)
 #' @param privacy_level Privacy level: "mask", "privacy_strict",
@@ -19,7 +20,8 @@
 #'   "ferpa_standard" are accepted with a warning.
 #' @param id_columns Vector of column names to treat as identifiers (default: common name columns)
 #' @param audit_log Whether to log privacy operations (default: TRUE)
-#' @return Privacy-compliant version of the input object
+#' @return A privacy-processed version of the input object. This is a technical
+#'   masking result, not a legal or institutional compliance determination.
 #'
 #' df <- tibble::tibble(
 #'   section = c("A", "A", "B"),

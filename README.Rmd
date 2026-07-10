@@ -30,10 +30,10 @@ The goal of `engager` is to allow instructors to gain insights into student enga
 
 ## 📚 Documentation
 
-- **[docs/README.md](docs/README.md)** - Complete documentation index
-- **[docs/features/feature-index.md](docs/features/feature-index.md)** - Comprehensive feature documentation
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** - How to contribute
-- **[docs/development/ISSUE_MANAGEMENT_QUICK_REFERENCE.md](docs/development/ISSUE_MANAGEMENT_QUICK_REFERENCE.md)** - Quick guide for issue management
+- **Installed help**: run `help(package = "engager")`
+- **Package vignettes**: run `browseVignettes(package = "engager")`
+- **[Development and contributing notes](https://github.com/revgizmo/engager/blob/main/project-docs/development/README.md)**
+- **[Release project status](https://github.com/revgizmo/engager/blob/main/project-docs/release/PROJECT.md)**
 
 ## 🚀 Quick Start
 
@@ -56,9 +56,9 @@ transcript_file <- system.file(
 )
 metrics <- summarize_transcript_metrics(transcript_file_path = transcript_file)
 
-# 2) Plot one metric with privacy-supporting defaults
+# 2) Plot a returned metric with privacy-supporting defaults
 #    (outputs a bar chart with a minimal theme)
-plot <- plot_users(metrics, metric = "session_ct", facet_by = "none", mask_by = "name")
+plot <- plot_users(metrics, metric = "n", facet_by = "none", mask_by = "name")
 print(plot)
 
 # 3) Write masked metrics to CSV
@@ -117,8 +117,8 @@ The `engager` package provides tools for:
 
 ### Data Management
 - `load_roster()` - Load student enrollment data
-- `make_clean_names_df()` - Match transcript names to student records
-- `create_session_mapping()` - Map recordings to courses (advanced)
+- `detect_unmatched_names()` - Identify transcript names that need review
+- `match_names_workflow()` - Apply the supported exact name-matching workflow
 
 ### Name Matching (Exact MVP)
 Use `match_names_workflow()` for exact hash-based matching:
@@ -140,9 +140,9 @@ res
 
 ### Analysis and Visualization
 - `plot_users()` - Unified plotting with privacy-aware options
-- `make_transcripts_summary_df()` - Generate summary statistics
+- `summarize_transcript_files()` - Generate metrics for multiple transcript files
 
-### Diagnostics and interactive prompts
+### Diagnostics
 
 Most functions are quiet by default to keep examples/tests clean. You can enable optional diagnostics:
 
@@ -150,20 +150,14 @@ Most functions are quiet by default to keep examples/tests clean. You can enable
 # Enable package-wide diagnostics
 options(engager.verbose = TRUE)
 
-# Or enable per-call diagnostics where supported
-load_zoom_recorded_sessions_list(
-  data_folder = ".",
-  transcripts_folder = "transcripts",
-  verbose = TRUE
-)
+# Run an exported workflow with diagnostics enabled
+summarize_transcript_metrics(transcript_file_path = transcript_file)
 
 # Turn diagnostics back off
 options(engager.verbose = FALSE)
 ```
 
-Interactive prompts (e.g., in `create_session_mapping()` when assigning unmatched recordings) are only shown in interactive sessions. In non-interactive runs (e.g., CI), prompts are suppressed and a quiet fallback is used.
-
-See also: `CONTRIBUTING.md` Diagnostic Output Policy.
+See the [development and contributing notes](https://github.com/revgizmo/engager/blob/main/project-docs/development/README.md) for repository-level workflow guidance.
 
 ## 📊 Typical Workflow
 
@@ -176,44 +170,48 @@ See also: `CONTRIBUTING.md` Diagnostic Output Policy.
 
 ## 🔒 Privacy Defaults
 
-This package uses privacy-supporting defaults. On load, it sets the global option
+This package uses privacy-supporting defaults. On load, it sets the session option
 `engager.privacy_level` to `"mask"` (unless you set it yourself).
-This means identifiers like names and student IDs are masked to labels such as
-`Student 01` in summaries, plots, and writers.
+Supported summaries, plots, and writers use this option to mask recognized
+structured identifier columns with labels such as `Student 01`. Masking does not
+redact names or other identifiers embedded in free transcript text, and it is
+not a legal or institutional compliance determination.
 
-To change behavior temporarily (not recommended for student data):
+To change the option temporarily for an authorized workflow, save and restore
+its prior value:
 
 ```r
 library(engager)
-set_privacy_defaults("none")  # will emit a warning
+old_privacy_level <- getOption("engager.privacy_level", "mask")
+options(engager.privacy_level = "none")
 # ... analysis that may include identifiable outputs ...
-set_privacy_defaults("mask")  # restore safe default
+options(engager.privacy_level = old_privacy_level)
 ```
 
-Masked by default: `preferred_name`, `name`, `first_last`, `name_raw`, `student_id`, `email`.
+Common structured fields considered for masking include `preferred_name`,
+`name`, `first_last`, `name_raw`, `student_id`, and `email`. Inspect all outputs
+before storing or sharing them.
 
 See `vignette("privacy-ethics-review", package = "engager")` for privacy, ethics, and institutional review considerations.
 
 ## Development
 
 ### Pull Request Review
-This project uses a lightweight PR review process focused on CRAN submission readiness and privacy risk review. See [CONTRIBUTING.md](CONTRIBUTING.md) for the review checklist and criteria.
+This project uses a lightweight PR review process focused on CRAN submission readiness and privacy risk review. See the [development and contributing notes](https://github.com/revgizmo/engager/blob/main/project-docs/development/README.md) for repository-level guidance.
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+We welcome contributions! Start with the [development and contributing notes](https://github.com/revgizmo/engager/blob/main/project-docs/development/README.md) and the [issue tracker](https://github.com/revgizmo/engager/issues).
 
 ## 📄 License
 
 This package is licensed under the MIT License. See the CRAN stub in [LICENSE](LICENSE)
-and the full text in [LICENSE.md](LICENSE.md).
+and the [full license text on GitHub](https://github.com/revgizmo/engager/blob/main/LICENSE.md).
 
 ## 🔗 Links
 
 - **GitHub Repository**: https://github.com/revgizmo/engager
 - **Issues**: https://github.com/revgizmo/engager/issues
-- **Project Status**: [docs/development/PROJECT.md](docs/development/PROJECT.md)
-
-
+- **Project Status**: [release project status](https://github.com/revgizmo/engager/blob/main/project-docs/release/PROJECT.md)
 
 
