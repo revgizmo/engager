@@ -14,11 +14,11 @@ actions.
 
 - Branch: `codex/cran-feature-surface-hardening`
 - Base: `origin/main` at `0fe64066e372cdc7a5648625f423b116c26105d4`
-- Package-source commit: `8857713f0c36071c1e2602f59ef75e3c8aeb7f49`
+- Package-source commit: `0cedc6e0762841d23d3154b61848be474cb8fb5f`
 - Version: `0.1.0`
-- Tarball: `/private/tmp/engager-feature-hardening-8857713/engager_0.1.0.tar.gz`
-- SHA-256: `e4ef8ecc14aec07935afe9ee6984c6cf2721c3a9ee61b349da13542d43c0a0c6`
-- UAT evidence: `/private/tmp/engager-feature-hardening-8857713/uat/UAT_EVIDENCE.md`
+- Tarball: `/private/tmp/engager-feature-hardening-0cedc6e/engager_0.1.0.tar.gz`
+- SHA-256: `881581794ee525dfdf4ef157c7089546c5917748c5690c6d68f483f8d10dcd6b`
+- UAT evidence: `/private/tmp/engager-feature-hardening-0cedc6e/uat/UAT_EVIDENCE.md`
 
 ## Validation Matrix
 
@@ -30,7 +30,7 @@ actions.
 | Source build | Pass | Built from package-source commit in `/private/tmp` |
 | Installed-package UAT | Pass | Isolated install; 3 sessions/34 transcript rows; beginner workflow; exact matching; bounded identifier transformations; privacy/report exports; 4 vignettes |
 | Onboarding/API contract | Pass | Exact 35-function allowlist; 22 progressive functions and 31 printed function calls checked against installed exports |
-| Identifier transformation | Pass | Aggregate mode rejected; explicit hash salt required; missing/blank identifiers preserved; recognized raw identifiers absent |
+| Identifier transformation | Pass | Aggregate mode rejected; explicit hash salt required; repeated values map consistently; portable non-serialized SHA-256 used; missing/blank identifiers preserved; recognized raw identifiers absent |
 | Raw identifier scan | Pass | No bundled raw course identifier hits in checked CSV/report artifacts |
 | Tarball hygiene | Pass | 270 entries; no excluded local/project/UAT/private-data paths matched |
 | Privacy wording | Pass | Active shipped docs use technical masking/review language and preserve institutional responsibility |
