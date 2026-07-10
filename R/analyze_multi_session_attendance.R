@@ -1,7 +1,8 @@
 #' Analyze Multi-Session Attendance Patterns
 #'
 #' Analyzes attendance patterns across multiple Zoom sessions, tracking who attended
-#' which sessions and identifying participation patterns while maintaining privacy compliance.
+#' which sessions and identifying participation patterns while applying the
+#' selected package masking controls.
 #'
 #' @param transcript_files Vector of transcript file paths to analyze
 #' @param roster_data Data frame containing student roster information
@@ -16,7 +17,9 @@
 #'   - `attendance_summary`: Summary statistics for each participant
 #'   - `session_summary`: Summary statistics for each session
 #'   - `participation_patterns`: Analysis of participation patterns
-#'   - `privacy_compliant`: Boolean indicating if all outputs maintain privacy
+#'   - `privacy_compliant`: Backward-compatible Boolean indicating whether the
+#'     package's technical privacy checks completed without an error. This is
+#'     not a legal or institutional compliance determination.
 #'
 #' @examples
 #' # Analyze attendance across multiple sessions
@@ -170,7 +173,7 @@ analyze_multi_session_attendance <- function(
     attendance_rate_std = round(stats::sd(attendance_rates) * 100, 1)
   )
 
-  # Validate privacy compliance
+  # Run the package's technical privacy checks.
   privacy_compliant <- TRUE
   tryCatch(
     {
@@ -257,12 +260,12 @@ generate_attendance_report <- function(
     paste("- **Median Attendance Rate**:", patterns$median_attendance_rate, "%"),
     paste("- **Attendance Rate Std Dev**:", patterns$attendance_rate_std, "%"),
     "",
-    "## Privacy Compliance",
+    "## Technical Privacy Check",
     "",
     if (analysis_results$privacy_compliant) {
-      "[PASS] All outputs maintain privacy compliance"
+      "[PASS] Package masking checks completed"
     } else {
-      "[FAIL] Privacy violations detected"
+      "[FAIL] Package masking checks detected possible identifiers"
     },
     ""
   )

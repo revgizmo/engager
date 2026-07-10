@@ -28,6 +28,14 @@ split_aliases <- function(x) {
   trimws(pieces[nzchar(trimws(pieces))])
 }
 
+extract_function_calls <- function(lines) {
+  matches <- unlist(regmatches(
+    lines,
+    gregexpr("[A-Za-z][A-Za-z0-9_.:]*[(]", lines, perl = TRUE)
+  ))
+  sort(unique(sub("[(]$", "", matches)))
+}
+
 contains_identifiers <- function(path, identifiers) {
   identifiers <- unique(identifiers[!is.na(identifiers) & nzchar(identifiers)])
   text <- tolower(paste(readLines(path, warn = FALSE), collapse = "\n"))
@@ -131,6 +139,62 @@ check(
   paste0("installed package version matches tarball version: ", pkg_version)
 )
 
+getting_started_output <- utils::capture.output(engager::show_getting_started())
+check(
+  any(grepl("Getting Started with engager", getting_started_output, fixed = TRUE)) &&
+    !any(grepl("Getting Started with zoomstudentengagement", getting_started_output, fixed = TRUE)),
+  "installed getting-started guidance uses the engager package identity"
+)
+format_error_output <- tryCatch(
+  engager::user_friendly_error(stop("invalid transcript format"), "loading transcript"),
+  error = function(e) conditionMessage(e)
+)
+check(
+  grepl("show_function_help('load_zoom_transcript')", format_error_output, fixed = TRUE) &&
+    !grepl("validate_schema", format_error_output, fixed = TRUE),
+  "installed data-format recovery guidance names a supported public helper"
+)
+visible_functions <- engager::get_visible_functions("expert")
+namespace_exports <- getNamespaceExports("engager")
+check(
+  length(setdiff(visible_functions, namespace_exports)) == 0,
+  "installed progressive guidance lists only exported functions"
+)
+guidance_output <- c(
+  getting_started_output,
+  format_error_output,
+  utils::capture.output(engager::show_workflow_help()),
+  utils::capture.output(engager::show_privacy_guidance()),
+  utils::capture.output(engager::show_troubleshooting()),
+  unlist(lapply(
+    c("load", "process", "analyze", "visualize", "export", "privacy", "batch", "validate"),
+    function(task) utils::capture.output(engager::find_function_for_task(task))
+  )),
+  unlist(lapply(
+    c("new user", "batch", "privacy", "visual", "export", "error"),
+    function(context) utils::capture.output(engager::get_smart_recommendations(context))
+  )),
+  utils::capture.output(engager::show_available_functions("expert")),
+  utils::capture.output(engager::show_function_categories())
+)
+guidance_calls <- extract_function_calls(guidance_output)
+allowed_external_calls <- c("c", "list.files", "utils::help", "vignette")
+unexpected_guidance_calls <- setdiff(
+  guidance_calls,
+  c(namespace_exports, allowed_external_calls)
+)
+check(
+  length(unexpected_guidance_calls) == 0,
+  paste0(
+    "installed onboarding recommends only exported package functions",
+    if (length(unexpected_guidance_calls) > 0) {
+      paste0(": ", paste(unexpected_guidance_calls, collapse = ", "))
+    } else {
+      ""
+    }
+  )
+)
+
 test_transcript_dir <- system.file("extdata/test_transcripts", package = "engager")
 check(dir.exists(test_transcript_dir), "discovered installed synthetic transcript fixture directory")
 
@@ -195,6 +259,27 @@ single_session_metrics <- engager::summarize_transcript_metrics(
 check(
   tibble::is_tibble(single_session_metrics) && nrow(single_session_metrics) > 0,
   "summarized a single transcript session"
+)
+
+basic_workflow_dir <- file.path(artifact_dir, "basic_workflow")
+basic_workflow <- engager::basic_transcript_analysis(
+  ideal_files[[1]],
+  output_dir = basic_workflow_dir,
+  privacy_level = "high"
+)
+basic_workflow_path <- file.path(basic_workflow_dir, "engagement_metrics.csv")
+check(
+  is.list(basic_workflow) &&
+    tibble::is_tibble(basic_workflow$analysis) &&
+    nrow(basic_workflow$analysis) > 0,
+  "ran installed beginner workflow with non-empty engagement metrics"
+)
+check(inherits(basic_workflow$plots, "ggplot"), "created installed beginner workflow plot")
+check(non_empty_file(basic_workflow_path), "wrote installed beginner workflow CSV")
+basic_workflow_export <- utils::read.csv(basic_workflow_path, check.names = FALSE)
+check(
+  nrow(basic_workflow_export) > 0 && !"comments" %in% names(basic_workflow_export),
+  "installed beginner workflow CSV contains rows and omits raw comments"
 )
 
 roster <- engager::load_roster(roster_path)
@@ -288,7 +373,13 @@ identifier_values <- unique(c(
   "Professor Ed"
 ))
 identifier_values <- identifier_values[nchar(identifier_values) >= 4]
-privacy_checked_paths <- c(engagement_path, session_summary_path, single_session_path, privacy_report_path)
+privacy_checked_paths <- c(
+  engagement_path,
+  session_summary_path,
+  single_session_path,
+  basic_workflow_path,
+  privacy_report_path
+)
 identifier_hits <- unlist(lapply(privacy_checked_paths, contains_identifiers, identifiers = identifier_values))
 check(
   length(identifier_hits) == 0,
@@ -298,7 +389,7 @@ check(
 all_vignettes <- utils::vignette(package = "engager")
 check(!is.null(all_vignettes$results) && NROW(all_vignettes$results) > 0, "listed installed package vignettes")
 
-required_vignettes <- c("getting-started", "essential-functions", "privacy-ethics-review")
+required_vignettes <- c("getting-started", "essential-functions", "plotting", "privacy-ethics-review")
 for (required_vignette in required_vignettes) {
   vignette_result <- utils::vignette(required_vignette, package = "engager")
   vignette_info <- unclass(vignette_result)
@@ -320,12 +411,15 @@ evidence_lines <- c(
   paste0("- Tarball package version: ", expected_pkg_version),
   paste0("- Tarball: ", tarball),
   paste0("- Installed package path: ", installed_path),
+  paste0("- Expert guidance functions checked: ", length(visible_functions)),
+  paste0("- Onboarding function calls checked: ", length(guidance_calls)),
   paste0("- R version: ", R.version.string),
   paste0("- Platform: ", R.version$platform),
   paste0("- Output directory: ", output_dir),
   paste0("- Transcript sessions loaded: ", length(ideal_files)),
   paste0("- Transcript rows loaded: ", nrow(transcripts_for_matching)),
   paste0("- Summary metric rows: ", nrow(metrics)),
+  paste0("- Beginner workflow metric rows: ", nrow(basic_workflow$analysis)),
   paste0("- Matched transcript rows: ", sum(!is.na(match_result$transcripts_with_ids$student_id))),
   paste0("- Unresolved speaker groups: ", nrow(unresolved_public)),
   paste0("- Privacy review passed field: ", privacy_review$passed),
@@ -336,6 +430,7 @@ evidence_lines <- c(
   paste0("- ", engagement_path),
   paste0("- ", session_summary_path),
   paste0("- ", single_session_path),
+  paste0("- ", basic_workflow_path),
   paste0("- ", unresolved_path),
   paste0("- ", privacy_report_path),
   paste0("- ", install_log)

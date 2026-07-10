@@ -169,9 +169,11 @@ students_only_summary <- transcripts_summary_df %>%
 plot_users(students_only_summary, metric = "session_ct", facet_by = "section", mask_by = "name")
 ```
 
-### Masked Names for Privacy
+### Masked Labels for Review
 
-Use rank-based masked labels for privacy-conscious analysis:
+Use rank-based masked labels as one privacy-supporting step. Inspect the source
+data and finished plot because masking one label column does not review free
+text, annotations, small groups, or other identifying context:
 
 ```{r masked-plots}
 # Plot with rank-masked names
@@ -285,7 +287,7 @@ ggplot(transcripts_summary_df, aes(x = duration, y = wordcount)) +
 
 ### Privacy Considerations
 
-- Use masked names when sharing results
+- Inspect outputs and apply masking appropriate to the approved sharing context
 - Consider aggregating data for small groups
 - Review FERPA and institutional privacy requirements before sharing outputs
 
@@ -298,6 +300,6 @@ ggplot(transcripts_summary_df, aes(x = duration, y = wordcount)) +
 
 ## Next Steps
 
-- **For session mapping**: See the [Session Mapping](session-mapping.html) vignette
-- **For student reports**: See the [Student Reports](student-reports.html) vignette
-- **For troubleshooting**: See the [Troubleshooting Guide](troubleshooting.html) vignette 
+- **For the end-to-end workflow**: see `vignette("getting-started", package = "engager")`
+- **For exported function coverage**: see `vignette("essential-functions", package = "engager")`
+- **For privacy, ethics, and institutional review**: see `vignette("privacy-ethics-review", package = "engager")`

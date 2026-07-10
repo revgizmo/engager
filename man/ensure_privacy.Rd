@@ -24,7 +24,8 @@ ensure_privacy(
 \item{audit_log}{Whether to log privacy operations (default: TRUE)}
 }
 \value{
-Privacy-compliant version of the input object
+A privacy-processed version of the input object. This is a technical
+masking result, not a legal or institutional compliance determination.
 
 df <- tibble::tibble(
 section = c("A", "A", "B"),
@@ -46,5 +47,6 @@ compliance review remains the user's responsibility.
 
 The default behavior is controlled by the global option
 \code{engager.privacy_level}, which is set to "mask" on package
-load. Use \code{set_privacy_defaults()} to change at runtime.
+load. Pass \code{privacy_level} explicitly for one call, or set the
+\code{engager.privacy_level} option for the current R session.
 }

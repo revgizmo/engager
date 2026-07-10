@@ -28,6 +28,45 @@ test_that("show_troubleshooting provides actionable suggestions", {
   expect_true(any(grepl("Getting More Help", output, fixed = TRUE)))
 })
 
+test_that("exported onboarding recommends only callable public functions", {
+  format_error_output <- tryCatch(
+    user_friendly_error(stop("invalid transcript format"), "loading transcript"),
+    error = function(e) conditionMessage(e)
+  )
+  expect_match(format_error_output, "show_function_help\\('load_zoom_transcript'\\)")
+  expect_false(grepl("validate_schema", format_error_output, fixed = TRUE))
+
+  outputs <- c(
+    capture.output(show_getting_started()),
+    format_error_output,
+    capture.output(show_workflow_help()),
+    capture.output(show_privacy_guidance()),
+    capture.output(show_troubleshooting()),
+    unlist(lapply(
+      c("load", "process", "analyze", "visualize", "export", "privacy", "batch", "validate"),
+      function(task) capture.output(find_function_for_task(task))
+    )),
+    unlist(lapply(
+      c("new user", "batch", "privacy", "visual", "export", "error"),
+      function(context) capture.output(get_smart_recommendations(context))
+    )),
+    capture.output(show_available_functions("expert")),
+    capture.output(show_function_categories())
+  )
+  matches <- unlist(regmatches(
+    outputs,
+    gregexpr("[A-Za-z][A-Za-z0-9_.:]*[(]", outputs, perl = TRUE)
+  ))
+  calls <- sort(unique(sub("[(]$", "", matches)))
+  allowed_external_calls <- c("c", "list.files", "utils::help", "vignette")
+  unexpected_calls <- setdiff(
+    calls,
+    c(getNamespaceExports("engager"), allowed_external_calls)
+  )
+
+  expect_length(unexpected_calls, 0)
+})
+
 test_that("show_function_help handles unknown functions gracefully", {
   dummy_ns <- new.env(parent = emptyenv())
   # Mock the engager namespace lookup so we can exercise
@@ -58,7 +97,8 @@ test_that("show_function_help categorizes essential functions", {
   )
   expect_true(any(grepl("Essential Function", output, fixed = TRUE)))
   expect_true(any(grepl("TIP: Usage Examples", output, fixed = TRUE)))
-  expect_true(any(grepl("No documentation available", output, fixed = TRUE)))
+  expect_true(any(grepl("DOCS: Documentation", output, fixed = TRUE)))
+  expect_false(any(grepl("No documentation available", output, fixed = TRUE)))
 })
 
 test_that("show_function_help falls back to generic labeling when uncategorized", {

@@ -1,8 +1,8 @@
-#' Ethical Compliance Functions
+#' Ethical Review Functions
 #'
-#' Comprehensive ethical compliance tools for educational data analysis.
-#' These functions ensure the package promotes participation equity rather than
-#' surveillance and maintains the highest ethical standards for educational research.
+#' Internal technical prompts for reviewing educational data-analysis use.
+#' These helpers do not determine whether a workflow is ethically approved or
+#' compliant with institutional requirements.
 #'
 #' @name ethical_compliance
 NULL
@@ -122,13 +122,13 @@ validate_ethical_use <- function(usage_context = c("research", "teaching", "asse
     )
   } else {
     result$required_documentation <- c(
-      "Basic privacy compliance documentation"
+      "Basic privacy review documentation"
     )
   }
 
   # Institutional guidance
   result$institutional_guidance <- c(
-    "Ensure all data handling complies with institutional policies",
+    "Review data handling against applicable institutional policies",
     "Consult with institutional privacy officer if uncertain",
     "Document all data processing and analysis procedures",
     "Regularly review and update privacy safeguards"

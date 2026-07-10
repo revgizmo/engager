@@ -60,14 +60,14 @@ summary_metrics <- summarize_transcript_metrics(
   names_exclude = c("dead_air")
 )
 
-# View the results (privacy-safe by default)
+# View the results (recognized structured identifiers are masked by default)
 head(summary_metrics)
 
-# Run a privacy audit
+# Run a technical privacy review
 privacy_result <- privacy_audit(summary_metrics)
 cat(
-  "Privacy Check:",
-  ifelse(nrow(privacy_result) == 0, "No issues found", "Issues found"),
+  "Privacy review:",
+  ifelse(nrow(privacy_result) == 0, "No recognized issues flagged", "Review flags returned"),
   "\n"
 )
 ```
@@ -80,8 +80,8 @@ The `engager` package provides tools for:
 3. **Name Matching and Cleaning**: Match transcript names to student rosters
 4. **Visualization**: Create plots to analyze participation patterns
 5. **Reporting**: Generate individual student reports
-6. **Privacy Review**: Support privacy review and institutional oversight
-7. **Data Anonymization**: Protect student privacy while preserving data utility
+6. **Privacy Review**: Support technical review and institutional oversight
+7. **Masking and Data Transformation**: Reduce exposure of recognized structured identifiers
 
 ## Basic Workflow
 
@@ -92,12 +92,14 @@ The typical workflow involves:
 3. **Load Roster**: Import student enrollment data
 4. **Clean Names**: Match transcript names to student records
 5. **Analyze**: Calculate metrics and create visualizations
-6. **Review Privacy**: Audit outputs and anonymize data where needed
+6. **Review Privacy**: Review outputs and apply masking or other transformations where needed
 7. **Report**: Generate insights and reports
 
 ## Troubleshooting Name Matching Issues
 
-When working with Zoom transcripts and student rosters, you may encounter name matching issues. The package uses a privacy-supporting approach that stops processing when names cannot be safely matched.
+When working with Zoom transcripts and student rosters, you may encounter name
+matching issues. The supported `match_names_workflow()` uses exact matching and
+reports unresolved names rather than silently guessing a match.
 
 ### Common Issues and Solutions
 

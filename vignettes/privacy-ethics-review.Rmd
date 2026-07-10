@@ -62,7 +62,7 @@ review:
 The broadest built-in masking option:
 
 ```r
-set_privacy_defaults("privacy_strict")
+options(engager.privacy_level = "privacy_strict")
 ```
 
 This level masks:
@@ -79,7 +79,7 @@ This level masks:
 A broader masking option for many instructional workflows:
 
 ```r
-set_privacy_defaults("privacy_standard")
+options(engager.privacy_level = "privacy_standard")
 ```
 
 This level masks:
@@ -92,7 +92,7 @@ This level masks:
 The package default for basic identifier masking:
 
 ```r
-set_privacy_defaults("mask")
+options(engager.privacy_level = "mask")
 ```
 
 This level masks:
@@ -104,8 +104,12 @@ Turns off package masking. This is usually not appropriate for student data
 unless local review has authorized identifiable outputs:
 
 ```r
-set_privacy_defaults("none")  # Will emit a warning
+options(engager.privacy_level = "none")
 ```
+
+Setting the option does not modify existing objects. Supported masking and
+output helpers may warn when they run with this value; inspect their results
+before storing or sharing them.
 
 ## Privacy Review Functions
 
@@ -132,21 +136,24 @@ print(validation_result$passed)
 print(validation_result$recommendations)
 ```
 
-### Data Anonymization
+### Data Masking and Transformation
 
-You can anonymize data using several package methods:
+`anonymize_educational_data()` applies masking, hashing, pseudonymization, or
+aggregation transformations to recognized columns. These technical operations
+do not by themselves establish that re-identification is impossible or that an
+output satisfies a legal or institutional definition of anonymized data.
 
 ```r
-# Basic masking
+# Structured-field masking
 masked_data <- anonymize_educational_data(sample_data, method = "mask")
 
-# Hash-based anonymization
+# Hashing transform
 hashed_data <- anonymize_educational_data(sample_data, method = "hash", hash_salt = "institution_salt")
 
-# Pseudonymization
+# Pseudonymization transform
 pseudonymized_data <- anonymize_educational_data(sample_data, method = "pseudonymize")
 
-# Aggregation-based anonymization
+# Aggregation transform
 aggregated_data <- anonymize_educational_data(sample_data, method = "aggregate", aggregation_level = "section")
 ```
 
@@ -176,25 +183,30 @@ written_report <- engager::generate_privacy_review_report(
 unlink(report_file)
 ```
 
-### Data Retention
+### Data Retention Review
 
-You can check a data frame against a retention period:
+The exported review interface can record a retention period as part of a
+technical review. It does not enforce an institutional records schedule or
+decide which records may be retained or disposed of:
 
 ```r
 # Add date column for retention checking
 sample_data_with_dates <- sample_data %>%
   dplyr::mutate(session_date = as.Date(c("2024-01-15", "2024-02-20")))
 
-# Check retention policy
-retention_check <- check_data_retention_policy(
+# Include retention context in the technical review
+retention_review <- review_privacy_risks(
   sample_data_with_dates,
-  retention_period = "academic_year",
-  date_column = "session_date"
+  check_retention = TRUE,
+  retention_period = "academic_year"
 )
 
-print(retention_check$compliant)
-print(retention_check$recommendations)
+print(retention_review$retention_check$retention_period_days)
+print(retention_review$recommendations)
 ```
+
+Compare record dates with the institution-approved schedule in the authorized
+records-management system, and have the appropriate owner approve any disposal.
 
 ## Institutional Review Considerations
 
@@ -244,7 +256,7 @@ print(combined_review$institution_guidance)
 
 Consider classifying the data before analysis:
 
-- **Public Data**: Aggregated statistics, anonymized results
+- **Public Data**: Results approved for public release after aggregation or de-identification review
 - **Internal Data**: Student records for legitimate educational purposes
 - **Confidential Data**: Personally identifiable information requiring special protection
 
@@ -272,7 +284,7 @@ Follow local retention and disposal procedures:
 
 - Implement automated data disposal
 - Document disposal procedures
-- Verify complete data removal
+- Verify removal according to the approved local procedure
 - Maintain disposal audit trails
 
 ## Instructor Review Prompts
@@ -326,7 +338,7 @@ This checklist may help support institutional privacy review:
 - [ ] Document procedures
 
 ### Ongoing
-- [ ] Regular privacy audits
+- [ ] Regular technical privacy reviews
 - [ ] Staff training updates
 - [ ] Policy reviews
 - [ ] Security assessments
@@ -372,7 +384,7 @@ level:
 ```r
 library(engager)
 
-set_privacy_defaults("mask")
+options(engager.privacy_level = "mask")
 getOption("engager.privacy_level")
 ```
 
@@ -439,8 +451,8 @@ If privacy masking isn't working as expected:
 # Check current privacy level
 getOption("engager.privacy_level")
 
-# Reset to default
-set_privacy_defaults("mask")
+# Reset the documented session option
+options(engager.privacy_level = "mask")
 
 # Verify with sample data
 test_data <- tibble::tibble(name = "Test Student")
@@ -456,27 +468,27 @@ If privacy validation is flagging issues:
 validation_result <- review_privacy_risks(your_data)
 print(validation_result$pii_detected)
 
-# Anonymize the data
-anonymized_data <- anonymize_educational_data(your_data, method = "mask")
+# Mask recognized structured identifier columns
+masked_data <- anonymize_educational_data(your_data, method = "mask")
 
 # Re-validate
-review_privacy_risks(anonymized_data)
+review_privacy_risks(masked_data)
 ```
 
-### Data Retention Issues
+### Data Retention Questions
 
-If data retention checks are flagging issues:
+If the technical review raises retention questions:
 
 ```r
-# Check retention policy
-retention_check <- check_data_retention_policy(
+# Record the retention context in the exported review interface
+retention_review <- review_privacy_risks(
   your_data,
-  retention_period = "academic_year",
-  date_column = "your_date_column"
+  check_retention = TRUE,
+  retention_period = "academic_year"
 )
 
-# Review recommendations
-print(retention_check$recommendations)
+# Review technical prompts, then apply the institution-approved schedule
+print(retention_review$recommendations)
 ```
 
 ## Ethical Use Principles
@@ -533,7 +545,7 @@ Center student benefit in data use:
 
 ### Package Resources
 - Package documentation: `?engager`
-- Privacy functions: `?ensure_privacy`, `?set_privacy_defaults`
+- Privacy masking: `?ensure_privacy` and `getOption("engager.privacy_level")`
 - Privacy review functions: `?review_privacy_risks`, `?anonymize_educational_data`
 - Report generation: `?generate_privacy_review_report`
 

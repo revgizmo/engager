@@ -2,9 +2,9 @@
 % Please edit documentation in R/ethical_compliance.R
 \name{ethical_compliance}
 \alias{ethical_compliance}
-\title{Ethical Compliance Functions}
+\title{Ethical Review Functions}
 \description{
-Comprehensive ethical compliance tools for educational data analysis.
-These functions ensure the package promotes participation equity rather than
-surveillance and maintains the highest ethical standards for educational research.
+Internal technical prompts for reviewing educational data-analysis use.
+These helpers do not determine whether a workflow is ethically approved or
+compliant with institutional requirements.
 }

@@ -20,10 +20,15 @@ loads `engager` from that library, and exercises:
 
 - Installed synthetic VTT transcript discovery.
 - Installed synthetic roster discovery.
+- Installed onboarding identity plus function-call checks across getting
+  started, workflow, privacy, troubleshooting, task finder, smart
+  recommendations, error recovery, and progressive guidance output.
 - VTT loading with `load_zoom_transcript()`.
 - Transcript processing with `process_zoom_transcript()`.
 - Multi-file and single-file summarization with
   `summarize_transcript_files()` and `summarize_transcript_metrics()`.
+- The exported beginner workflow with `basic_transcript_analysis()`, including
+  its plot and privacy-processed CSV output.
 - Exact name matching with `match_names_workflow()`.
 - Unresolved-name review with `detect_unmatched_names()` and
   `write_unresolved()`.
@@ -33,7 +38,8 @@ loads `engager` from that library, and exercises:
 - Installed vignette discovery with:
   `vignette(package = "engager")`,
   `vignette("getting-started", package = "engager")`,
-  `vignette("essential-functions", package = "engager")`, and
+  `vignette("essential-functions", package = "engager")`,
+  `vignette("plotting", package = "engager")`, and
   `vignette("privacy-ethics-review", package = "engager")`.
 
 ## Prerequisites
@@ -75,7 +81,11 @@ A passing run confirms:
 - `engager` is loaded from that isolated library.
 - The installed package version matches the supplied tarball version.
 - Bundled synthetic course transcripts and roster fixtures are discoverable.
+- Installed onboarding uses the `engager` identity and progressive guidance
+  names only exported functions.
 - One or more installed VTT transcript files load and process successfully.
+- The installed beginner workflow completes with non-empty metrics, a plot,
+  and a non-empty CSV export.
 - Course-level summary metrics contain non-empty plausible data.
 - Exact name matching runs and links at least one transcript speaker to the
   synthetic roster.
@@ -92,8 +102,10 @@ Treat the UAT as failed if any of these occur:
 - The tarball cannot be installed.
 - The loaded package path is not inside the isolated UAT library.
 - Installed fixtures are missing.
-- Transcript loading, processing, summarization, name matching, privacy review,
-  privacy report generation, or exports fail.
+- Installed onboarding uses the former package identity or advertises
+  non-exported functions.
+- Transcript loading, processing, summarization, beginner workflow, name
+  matching, privacy review, privacy report generation, or exports fail.
 - Expected output files are missing or empty.
 - Exported summary/report files contain obvious raw synthetic course identifiers
   where the UAT expects masked output.

@@ -20,12 +20,12 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-This vignette demonstrates the core functionality of the `engager` package using only the essential functions. After scope reduction, the package now exports **26 essential functions** focused on:
+This vignette demonstrates the core functionality of the `engager` package using its public API. The package currently exports **37 functions** focused on:
 
 - **Transcript Processing**: Loading and processing Zoom transcripts
-- **Privacy Protection**: Applying privacy-supporting defaults and privacy review
+- **Privacy-Supporting Workflows**: Applying structured-field masking and technical review
 - **Analysis**: Core engagement metrics and analysis
-- **Name Matching**: Safe student name matching workflows
+- **Name Matching**: Reviewable exact student name matching workflows
 
 ## Essential Functions
 
@@ -47,11 +47,37 @@ if (length(essential_functions) == 0) {
     "summarize_transcript_files",
     "analyze_transcripts",
     "summarize_transcript_metrics",
+    "analyze_multi_session_attendance",
+    "anonymize_educational_data",
+    "basic_transcript_analysis",
+    "batch_basic_analysis",
+    "detect_unmatched_names",
     "ensure_privacy",
+    "find_function_for_task",
+    "generate_attendance_report",
+    "generate_privacy_review_report",
+    "get_smart_recommendations",
+    "get_ux_level",
+    "get_visible_functions",
+    "load_roster",
+    "match_names_workflow",
     "privacy_audit",
+    "quick_analysis",
+    "review_privacy_risks",
+    "set_ux_level",
+    "show_available_functions",
+    "show_error_recovery",
+    "show_function_categories",
+    "show_function_help",
+    "show_getting_started",
+    "show_privacy_guidance",
+    "show_troubleshooting",
+    "show_workflow_help",
+    "user_friendly_error",
     "validate_privacy_compliance",
     "plot_users",
-    "write_metrics"
+    "write_metrics",
+    "write_unresolved"
   )
 }
 
@@ -115,9 +141,10 @@ synthetic_data <- data.frame(
   timestamp = c("00:01:00", "00:02:00", "00:00:30")
 )
 
-# Note: Privacy review functions check for real names in data
-cat("Privacy review functions check whether real names are exposed\n")
-cat("validate_privacy_compliance() and review_privacy_risks() support privacy review\n")
+# Privacy review helpers flag recognized identifier-like columns. They do not
+# prove that a data set or free-text field contains no identifying information.
+cat("Privacy review helpers flag recognized identifier-like columns\n")
+cat("validate_privacy_compliance() and review_privacy_risks() support technical review\n")
 ```
 
 ## Function Categories
@@ -133,7 +160,7 @@ cat("validate_privacy_compliance() and review_privacy_risks() support privacy re
 - `summarize_transcript_metrics()` - Calculate engagement metrics
 
 ### Privacy Review
-- `ensure_privacy()` - Apply privacy protection
+- `ensure_privacy()` - Mask recognized structured identifier columns
 - `privacy_audit()` - Audit privacy risks
 - `validate_privacy_compliance()` - Review privacy settings
 
@@ -146,19 +173,22 @@ cat("validate_privacy_compliance() and review_privacy_risks() support privacy re
 
 ## Benefits of Scope Reduction
 
-1. **Focused Functionality**: Only essential functions are exported
+1. **Focused Functionality**: Public functions are organized around the supported workflows
 2. **Easier Maintenance**: Smaller codebase to maintain
 3. **Better User Experience**: Clear, focused API
-4. **CRAN Ready**: Minimal function surface for submission
-5. **Privacy Supporting**: All functions prioritize data protection
+4. **CRAN Focused**: A bounded public surface for release validation
+5. **Privacy Supporting**: Output helpers provide documented masking and review controls
 
 ## Next Steps
 
-With the scope reduction complete, the package is now ready for:
+With the scope reduction complete, the package supports:
 
-1. **CRAN Submission**: Minimal, focused function set
+1. **CRAN Validation**: A focused function set to validate before submission
 2. **User Testing**: Clear, essential functionality
 3. **Documentation Updates**: Focus on core workflows
 4. **UX Simplification**: Streamlined user experience
 
-The package now provides a clean, focused API for analyzing student engagement from Zoom transcripts while maintaining strong privacy-supporting defaults and privacy review helpers.
+The package now provides a focused API for analyzing student engagement from
+Zoom transcripts with documented structured-field masking and technical review
+helpers. Users remain responsible for reviewing inputs, free text, outputs, and
+institutional requirements.

@@ -21,18 +21,18 @@ UX_COMMON_FUNCTIONS <- c(
 UX_ADVANCED_FUNCTIONS <- c(
   "consolidate_transcript",
   "summarize_transcript_metrics",
-  "detect_duplicate_transcripts",
-  "create_session_mapping",
-  "load_session_mapping",
-  "make_clean_names_df"
+  "summarize_transcript_files",
+  "detect_unmatched_names",
+  "match_names_workflow",
+  "review_privacy_risks"
 )
 
 UX_EXPERT_FUNCTIONS <- c(
-  "hash_name_consistently",
   "anonymize_educational_data",
   "validate_privacy_compliance",
-  "write_lookup_transactional",
-  "match_names_workflow"
+  "analyze_multi_session_attendance",
+  "generate_attendance_report",
+  "generate_privacy_review_report"
 )
 
 # Declare globals to silence NSE notes in CRAN checks
@@ -57,15 +57,15 @@ UX_FUNCTION_DESCRIPTIONS <- list(
   "show_function_help" = "Get help for specific function",
   "consolidate_transcript" = "Combine transcript data",
   "summarize_transcript_metrics" = "Calculate summary statistics",
-  "detect_duplicate_transcripts" = "Find duplicate content",
-  "create_session_mapping" = "Map session information",
-  "load_session_mapping" = "Load session mapping data",
-  "make_clean_names_df" = "Clean and standardize names",
-  "hash_name_consistently" = "Hash names for privacy",
+  "summarize_transcript_files" = "Summarize multiple transcript files",
+  "detect_unmatched_names" = "Find transcript speakers that need roster review",
+  "review_privacy_risks" = "Run a technical privacy review",
   "anonymize_educational_data" = "Anonymize sensitive data",
-  "validate_privacy_compliance" = "Check privacy compliance",
-  "write_lookup_transactional" = "Write lookup data safely",
-  "match_names_workflow" = "Safe name matching process"
+  "validate_privacy_compliance" = "Run technical identifier checks",
+  "match_names_workflow" = "Safe name matching process",
+  "analyze_multi_session_attendance" = "Analyze attendance across sessions",
+  "generate_attendance_report" = "Generate an attendance summary",
+  "generate_privacy_review_report" = "Generate a technical privacy review report"
 )
 
 .onAttach <- function(libname, pkgname) {

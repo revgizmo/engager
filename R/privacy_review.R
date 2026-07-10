@@ -139,7 +139,7 @@ review_privacy_risks <- function(data = NULL,
   # Additional privacy review recommendations
   result$recommendations <- c(
     result$recommendations,
-    "Use set_privacy_defaults('mask') for privacy-safe outputs",
+    "Use ensure_privacy(..., privacy_level = 'mask') or write_metrics(..., privacy_level = 'mask') for masked outputs",
     "Implement secure data storage and transmission",
     "Train personnel on applicable privacy requirements",
     "Maintain audit trails for data access and modifications"
@@ -451,12 +451,12 @@ generate_ferpa_report <- function(data = NULL,
   report
 }
 
-#' Check Data Retention Policy
+#' Review a Configured Data Retention Period
 #'
-#' Validates data retention policies and identifies data that should be
-#' disposed of according to institutional policies.
+#' Compares configured date fields with a selected period to support local
+#' records review. It does not determine or enforce institutional policy.
 #'
-#' @param data Data frame to check for retention policy compliance
+#' @param data Data frame to inspect for retention-period review
 #' @param retention_period Retention period: "academic_year", "semester", "quarter", or "custom"
 #' @param custom_retention_days Custom retention period in days (for "custom" period)
 #' @param date_column Column name containing dates to check

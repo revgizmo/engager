@@ -8,9 +8,11 @@
 #' @description This is the main function for new users. It performs a complete
 #'   analysis workflow in 5 simple steps: load, process, analyze, visualize, and export.
 #'
-#' @param transcript_file Path to transcript file (VTT, TXT, or CSV format)
+#' @param transcript_file Path to a WebVTT transcript file
 #' @param output_dir Output directory for results (default: "output")
-#' @param privacy_level Privacy protection level: "high" (default), "medium", "low"
+#' @param privacy_level Privacy protection level: "high" (default), "medium",
+#'   or "low". These map to `"privacy_strict"`, `"privacy_standard"`, and
+#'   `"mask"`, respectively. All three levels mask common identifiers.
 #' @return List containing analysis results, plots, and output directory path
 #' @export
 #' @examples
@@ -35,8 +37,10 @@ basic_transcript_analysis <- function(transcript_file, output_dir = "output", pr
     dir.create(output_dir, recursive = TRUE)
   }
 
-  # Set privacy defaults
-  set_privacy_defaults()
+  normalized_privacy_level <- normalize_basic_privacy_level(privacy_level)
+  previous_privacy_level <- getOption("engager.privacy_level")
+  on.exit(options(engager.privacy_level = previous_privacy_level), add = TRUE)
+  options(engager.privacy_level = normalized_privacy_level)
 
   # TARGET: Starting Basic Transcript Analysis
   message("==> Starting Basic Transcript Analysis")
@@ -55,22 +59,47 @@ basic_transcript_analysis <- function(transcript_file, output_dir = "output", pr
 
       # Step 2: Process transcript
       message("Step 2/5: Processing transcript...")
-      processed <- process_zoom_transcript(transcript)
+      processed <- process_zoom_transcript(transcript_df = transcript)
+      if (!is.data.frame(processed) || nrow(processed) == 0) {
+        stop("Transcript processing returned no rows", call. = FALSE)
+      }
       message("SUCCESS: Processed transcript data")
 
       # Step 3: Analyze engagement
       message("Step 3/5: Analyzing engagement...")
-      analysis <- analyze_transcripts(processed)
+      analysis <- summarize_transcript_metrics(
+        transcript_df = processed,
+        names_exclude = c("dead_air"),
+        comments_format = "count"
+      )
+      if (!is.data.frame(analysis) || nrow(analysis) == 0) {
+        stop("Transcript analysis returned no engagement metrics", call. = FALSE)
+      }
       message("SUCCESS: Calculated engagement metrics")
 
       # Step 4: Create visualizations
       message("Step 4/5: Creating visualizations...")
-      plots <- plot_users(analysis)
+      plots <- plot_users(
+        analysis,
+        metric = "wordcount",
+        student_col = "name",
+        facet_by = if ("transcript_file" %in% names(analysis)) "transcript_file" else "none",
+        # `analysis` was already processed with the selected privacy level.
+        # Avoid applying a second masking pass that would change stable labels.
+        privacy_level = "none"
+      )
       message("SUCCESS: Created engagement visualizations")
 
       # Step 5: Export results
       message("Step 5/5: Exporting results...")
-      write_metrics(analysis, output_dir)
+      output_path <- file.path(output_dir, "engagement_metrics.csv")
+      write_metrics(
+        analysis,
+        what = "engagement",
+        path = output_path,
+        privacy_level = normalized_privacy_level,
+        comments_policy = "omit"
+      )
       message("SUCCESS: Exported results to ", output_dir)
 
       message("")
@@ -96,6 +125,24 @@ basic_transcript_analysis <- function(transcript_file, output_dir = "output", pr
       stop(e)
     }
   )
+}
+
+# Internal mapping retained for the beginner-facing high/medium/low API.
+normalize_basic_privacy_level <- function(privacy_level) {
+  if (!is.character(privacy_level) || length(privacy_level) != 1 || is.na(privacy_level)) {
+    stop('`privacy_level` must be one of: "high", "medium", "low"', call. = FALSE)
+  }
+
+  levels <- c(
+    high = "privacy_strict",
+    medium = "privacy_standard",
+    low = "mask"
+  )
+  if (!privacy_level %in% names(levels)) {
+    stop('`privacy_level` must be one of: "high", "medium", "low"', call. = FALSE)
+  }
+
+  unname(levels[[privacy_level]])
 }
 
 #' Quick analysis for single transcript file

@@ -2,7 +2,7 @@
 % Please edit documentation in R/privacy_review.R
 \name{check_data_retention_policy}
 \alias{check_data_retention_policy}
-\title{Check Data Retention Policy}
+\title{Review a Configured Data Retention Period}
 \usage{
 check_data_retention_policy(
   data = NULL,
@@ -13,7 +13,7 @@ check_data_retention_policy(
 )
 }
 \arguments{
-\item{data}{Data frame to check for retention policy compliance}
+\item{data}{Data frame to inspect for retention-period review}
 
 \item{retention_period}{Retention period: "academic_year", "semester", "quarter", or "custom"}
 
@@ -29,8 +29,8 @@ field is the preferred status name; \code{compliant} is retained as a
 backward-compatible alias.
 }
 \description{
-Validates data retention policies and identifies data that should be
-disposed of according to institutional policies.
+Compares configured date fields with a selected period to support local
+records review. It does not determine or enforce institutional policy.
 }
 \examples{
 \dontrun{
