@@ -238,13 +238,15 @@ anonymize_educational_data <- function(data = NULL,
   method <- match.arg(method)
   aggregation_level <- match.arg(aggregation_level)
 
-  if (identical(method, "hash") &&
-        (!is.character(hash_salt) || length(hash_salt) != 1 ||
-          is.na(hash_salt) || !nzchar(trimws(hash_salt)))) {
-    stop(
-      "hash_salt must be one non-empty character value when method = \"hash\"",
-      call. = FALSE
-    )
+  if (identical(method, "hash")) {
+    invalid_hash_salt <- !is.character(hash_salt) || length(hash_salt) != 1 ||
+      is.na(hash_salt) || !nzchar(trimws(hash_salt))
+    if (invalid_hash_salt) {
+      stop(
+        "hash_salt must be one non-empty character value when method = \"hash\"",
+        call. = FALSE
+      )
+    }
   }
 
   # Identify columns to anonymize
@@ -260,7 +262,8 @@ anonymize_educational_data <- function(data = NULL,
     for (col in columns_to_anonymize) {
       values <- as.character(data[[col]])
       present <- !is.na(values) & nzchar(trimws(values))
-      values[present] <- paste0("Student_", which(present))
+      unique_values <- unique(values[present])
+      values[present] <- paste0("Student_", match(values[present], unique_values))
       data[[col]] <- values
     }
   } else if (method == "hash") {
@@ -268,7 +271,11 @@ anonymize_educational_data <- function(data = NULL,
       values <- as.character(data[[col]])
       present <- !is.na(values) & nzchar(trimws(values))
       values[present] <- vapply(values[present], function(x) {
-        substr(digest::digest(paste0(x, hash_salt), algo = "sha256"), 1, 8)
+        substr(digest::digest(
+          paste0(x, hash_salt),
+          algo = "sha256",
+          serialize = FALSE
+        ), 1, 8)
       }, character(1))
       data[[col]] <- values
     }

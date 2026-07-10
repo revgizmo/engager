@@ -341,9 +341,9 @@ roster <- engager::load_roster(roster_path)
 check(is.data.frame(roster) && nrow(roster) > 0, "loaded installed ideal course roster")
 
 transform_input <- tibble::tibble(
-  student_id = c("UAT-RAW-1", NA_character_, ""),
-  preferred_name = c("UAT Raw Name", NA_character_, "  "),
-  score = c(1, 2, 3)
+  student_id = c("UAT-RAW-1", "UAT-RAW-1", NA_character_, ""),
+  preferred_name = c("UAT Raw Name", "UAT Raw Name", NA_character_, "  "),
+  score = c(1, 2, 3, 4)
 )
 aggregate_error <- tryCatch(
   engager::anonymize_educational_data(
@@ -366,20 +366,31 @@ check(
   "installed hash transformation requires a caller-provided salt"
 )
 transformed_outputs <- list(
-  engager::anonymize_educational_data(transform_input, method = "mask"),
-  engager::anonymize_educational_data(transform_input, method = "hash", hash_salt = "uat-salt"),
-  engager::anonymize_educational_data(transform_input, method = "pseudonymize")
+  mask = engager::anonymize_educational_data(transform_input, method = "mask"),
+  hash = engager::anonymize_educational_data(transform_input, method = "hash", hash_salt = "uat-salt"),
+  pseudonymize = engager::anonymize_educational_data(transform_input, method = "pseudonymize")
 )
 transform_checks <- vapply(transformed_outputs, function(transformed) {
-  is.na(transformed$student_id[[2]]) &&
-    identical(transformed$student_id[[3]], "") &&
-    is.na(transformed$preferred_name[[2]]) &&
-    identical(transformed$preferred_name[[3]], "  ") &&
+  identical(transformed$student_id[[1]], transformed$student_id[[2]]) &&
+    identical(transformed$preferred_name[[1]], transformed$preferred_name[[2]]) &&
+    is.na(transformed$student_id[[3]]) &&
+    identical(transformed$student_id[[4]], "") &&
+    is.na(transformed$preferred_name[[3]]) &&
+    identical(transformed$preferred_name[[4]], "  ") &&
     !any(c("UAT-RAW-1", "UAT Raw Name") %in% unlist(transformed, use.names = FALSE))
 }, logical(1))
 check(
   all(transform_checks),
   "installed identifier transformations preserve missing values and remove recognized raw identifiers"
+)
+expected_hash <- substr(digest::digest(
+  paste0(transform_input$student_id[[1]], "uat-salt"),
+  algo = "sha256",
+  serialize = FALSE
+), 1, 8)
+check(
+  identical(transformed_outputs$hash$student_id[[1]], expected_hash),
+  "installed hash transformation uses portable non-serialized SHA-256 input"
 )
 
 matching_roster <- roster

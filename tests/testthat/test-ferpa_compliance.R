@@ -162,6 +162,18 @@ test_that("anonymize_educational_data handles mask method", {
   expect_equal(result$participation_data, data$participation_data)
 })
 
+test_that("anonymize_educational_data maps repeated identifiers consistently", {
+  data <- tibble::tibble(
+    student_id = c("S1", "S2", "S1"),
+    preferred_name = c("Alice", "Bob", "Alice")
+  )
+  result <- anonymize_educational_data(data, method = "mask")
+
+  expect_identical(result$student_id[[1]], result$student_id[[3]])
+  expect_identical(result$preferred_name[[1]], result$preferred_name[[3]])
+  expect_false(identical(result$student_id[[1]], result$student_id[[2]]))
+})
+
 test_that("anonymize_educational_data handles hash method", {
   data <- create_ferpa_test_data_with_pii()
   result <- anonymize_educational_data(data, method = "hash", hash_salt = "test_salt")
@@ -170,6 +182,14 @@ test_that("anonymize_educational_data handles hash method", {
   expect_true(all(nchar(result$student_id) == 8))
   expect_true(all(nchar(result$preferred_name) == 8))
   expect_true(all(nchar(result$email) == 8))
+  expect_identical(
+    result$student_id[[1]],
+    substr(digest::digest(
+      paste0(data$student_id[[1]], "test_salt"),
+      algo = "sha256",
+      serialize = FALSE
+    ), 1, 8)
+  )
 
   # Should preserve non-PII columns
   expect_equal(result$course, data$course)
