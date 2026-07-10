@@ -83,7 +83,7 @@ basic_transcript_analysis <- function(transcript_file, output_dir = "output", pr
         analysis,
         metric = "wordcount",
         student_col = "name",
-        facet_by = if ("transcript_file" %in% names(analysis)) "transcript_file" else "none",
+        facet_by = "none",
         # `analysis` was already processed with the selected privacy level.
         # Avoid applying a second masking pass that would change stable labels.
         privacy_level = "none"

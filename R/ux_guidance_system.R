@@ -104,6 +104,8 @@ show_function_help <- function(function_name) {
   )
   if (length(documentation) == 0) {
     cat("   No documentation available\n")
+  } else {
+    print(documentation)
   }
 
   # Show usage examples for common functions
