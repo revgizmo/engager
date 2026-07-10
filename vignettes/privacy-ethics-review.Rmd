@@ -138,10 +138,12 @@ print(validation_result$recommendations)
 
 ### Data Masking and Transformation
 
-`anonymize_educational_data()` applies masking, hashing, pseudonymization, or
-aggregation transformations to recognized columns. These technical operations
-do not by themselves establish that re-identification is impossible or that an
-output satisfies a legal or institutional definition of anonymized data.
+`anonymize_educational_data()` applies masking, hashing, or pseudonymization
+transformations to recognized columns. Hashing requires an explicit non-empty
+salt. Missing and blank identifiers remain missing or blank. These technical
+operations do not by themselves establish that re-identification is impossible
+or that an output satisfies a legal or institutional definition of anonymized
+data.
 
 ```r
 # Structured-field masking
@@ -153,9 +155,10 @@ hashed_data <- anonymize_educational_data(sample_data, method = "hash", hash_sal
 # Pseudonymization transform
 pseudonymized_data <- anonymize_educational_data(sample_data, method = "pseudonymize")
 
-# Aggregation transform
-aggregated_data <- anonymize_educational_data(sample_data, method = "aggregate", aggregation_level = "section")
 ```
+
+Aggregation is intentionally not exposed through this helper in v0.1.0. Remove
+row-level identifiers before aggregating and review the result before sharing it.
 
 ### Privacy Reporting
 

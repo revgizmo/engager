@@ -10,6 +10,11 @@
   `write_unresolved()`.
 * Added privacy review helpers and documentation with explicit
   institutional-review caveats.
+* Limited the supported v0.1.0 identifier transformations to masking, hashing
+  with an explicit caller-provided salt, and pseudonymization. Missing and blank
+  identifiers remain missing or blank; unsafe aggregation is rejected.
+* Kept multi-session attendance and attendance-report generation internal until
+  their roster, threshold, and chart semantics receive installed-workflow UAT.
 * Made CSV metric exports omit raw transcript/comment text by default; raw
   comments now require an explicit local-review export with privacy disabled.
 * Added release validation targets for R CMD check, exported API coverage,

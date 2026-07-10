@@ -65,8 +65,7 @@ test_that("generate_privacy_review_report produces JSON, HTML, and text reports"
   expect_true(is.list(rep1) && is.list(rep2) && is.list(rep3))
 })
 
-test_that("anonymize_educational_data supports mask, hash, pseudonymize, and aggregate modes", {
-  skip_on_cran()
+test_that("anonymize_educational_data supports the bounded v0.1.0 methods", {
   df <- tibble::tibble(
     student_id = c("S1", "S2", NA_character_),
     preferred_name = c("Alice", "Bëlla", ""),
@@ -86,7 +85,8 @@ test_that("anonymize_educational_data supports mask, hash, pseudonymize, and agg
   pseudo <- anonymize_educational_data(df, method = "pseudonymize")
   expect_true(all(grepl("^PSEUDO_", pseudo$preferred_name[!is.na(pseudo$preferred_name) & nzchar(pseudo$preferred_name)])))
 
-  # aggregate at individual level (routes to masking path)
-  agg <- anonymize_educational_data(df, method = "aggregate", aggregation_level = "individual")
-  expect_s3_class(agg, "tbl_df")
+  expect_error(
+    anonymize_educational_data(df, method = "aggregate", aggregation_level = "individual"),
+    "not supported in engager 0.1.0"
+  )
 })

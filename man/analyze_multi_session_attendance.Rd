@@ -2,7 +2,7 @@
 % Please edit documentation in R/analyze_multi_session_attendance.R
 \name{analyze_multi_session_attendance}
 \alias{analyze_multi_session_attendance}
-\title{Analyze Multi-Session Attendance Patterns}
+\title{Experimental Multi-Session Attendance Patterns}
 \usage{
 analyze_multi_session_attendance(
   transcript_files = NULL,
@@ -43,6 +43,8 @@ not a legal or institutional compliance determination.
 }
 }
 \description{
+Internal prototype for a possible v0.1.1 workflow. Its roster, unmatched-name,
+threshold, and reporting semantics are not part of the v0.1.0 public API.
 Analyzes attendance patterns across multiple Zoom sessions, tracking who attended
 which sessions and identifying participation patterns while applying the
 selected package masking controls.
@@ -60,3 +62,4 @@ selected package masking controls.
 # print(results$attendance_summary)
 
 }
+\keyword{internal}

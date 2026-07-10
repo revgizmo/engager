@@ -156,6 +156,61 @@ check(
 )
 visible_functions <- engager::get_visible_functions("expert")
 namespace_exports <- getNamespaceExports("engager")
+expected_exports <- c(
+  "analyze_transcripts",
+  "anonymize_educational_data",
+  "basic_transcript_analysis",
+  "batch_basic_analysis",
+  "consolidate_transcript",
+  "detect_unmatched_names",
+  "ensure_privacy",
+  "find_function_for_task",
+  "generate_privacy_review_report",
+  "get_smart_recommendations",
+  "get_ux_level",
+  "get_visible_functions",
+  "load_roster",
+  "load_zoom_transcript",
+  "match_names_workflow",
+  "plot_users",
+  "privacy_audit",
+  "process_zoom_transcript",
+  "quick_analysis",
+  "review_privacy_risks",
+  "set_ux_level",
+  "show_available_functions",
+  "show_error_recovery",
+  "show_function_categories",
+  "show_function_help",
+  "show_getting_started",
+  "show_privacy_guidance",
+  "show_troubleshooting",
+  "show_workflow_help",
+  "summarize_transcript_files",
+  "summarize_transcript_metrics",
+  "user_friendly_error",
+  "validate_privacy_compliance",
+  "write_metrics",
+  "write_unresolved"
+)
+unexpected_exports <- setdiff(namespace_exports, expected_exports)
+missing_exports <- setdiff(expected_exports, namespace_exports)
+check(
+  length(unexpected_exports) == 0 && length(missing_exports) == 0,
+  paste0(
+    "installed namespace matches the focused v0.1.0 export allowlist",
+    if (length(unexpected_exports) > 0) {
+      paste0("; unexpected: ", paste(unexpected_exports, collapse = ", "))
+    } else {
+      ""
+    },
+    if (length(missing_exports) > 0) {
+      paste0("; missing: ", paste(missing_exports, collapse = ", "))
+    } else {
+      ""
+    }
+  )
+)
 check(
   length(setdiff(visible_functions, namespace_exports)) == 0,
   "installed progressive guidance lists only exported functions"
@@ -285,6 +340,59 @@ check(
 roster <- engager::load_roster(roster_path)
 check(is.data.frame(roster) && nrow(roster) > 0, "loaded installed ideal course roster")
 
+transform_input <- tibble::tibble(
+  student_id = c("UAT-RAW-1", "UAT-RAW-1", NA_character_, ""),
+  preferred_name = c("UAT Raw Name", "UAT Raw Name", NA_character_, "  "),
+  score = c(1, 2, 3, 4)
+)
+aggregate_error <- tryCatch(
+  engager::anonymize_educational_data(
+    transform_input,
+    method = "aggregate",
+    aggregation_level = "section"
+  ),
+  error = function(e) conditionMessage(e)
+)
+check(
+  is.character(aggregate_error) && grepl("not supported in engager 0.1.0", aggregate_error, fixed = TRUE),
+  "installed identifier transformation rejects unsafe aggregation"
+)
+hash_salt_error <- tryCatch(
+  engager::anonymize_educational_data(transform_input, method = "hash"),
+  error = function(e) conditionMessage(e)
+)
+check(
+  is.character(hash_salt_error) && grepl("hash_salt must be", hash_salt_error, fixed = TRUE),
+  "installed hash transformation requires a caller-provided salt"
+)
+transformed_outputs <- list(
+  mask = engager::anonymize_educational_data(transform_input, method = "mask"),
+  hash = engager::anonymize_educational_data(transform_input, method = "hash", hash_salt = "uat-salt"),
+  pseudonymize = engager::anonymize_educational_data(transform_input, method = "pseudonymize")
+)
+transform_checks <- vapply(transformed_outputs, function(transformed) {
+  identical(transformed$student_id[[1]], transformed$student_id[[2]]) &&
+    identical(transformed$preferred_name[[1]], transformed$preferred_name[[2]]) &&
+    is.na(transformed$student_id[[3]]) &&
+    identical(transformed$student_id[[4]], "") &&
+    is.na(transformed$preferred_name[[3]]) &&
+    identical(transformed$preferred_name[[4]], "  ") &&
+    !any(c("UAT-RAW-1", "UAT Raw Name") %in% unlist(transformed, use.names = FALSE))
+}, logical(1))
+check(
+  all(transform_checks),
+  "installed identifier transformations preserve missing values and remove recognized raw identifiers"
+)
+expected_hash <- substr(digest::digest(
+  paste0(transform_input$student_id[[1]], "uat-salt"),
+  algo = "sha256",
+  serialize = FALSE
+), 1, 8)
+check(
+  identical(transformed_outputs$hash$student_id[[1]], expected_hash),
+  "installed hash transformation uses portable non-serialized SHA-256 input"
+)
+
 matching_roster <- roster
 matching_roster$student_id <- sprintf("UAT%03d", seq_len(nrow(matching_roster)))
 matching_roster$aliases <- matching_roster$transcript_names
@@ -412,6 +520,7 @@ evidence_lines <- c(
   paste0("- Tarball: ", tarball),
   paste0("- Installed package path: ", installed_path),
   paste0("- Expert guidance functions checked: ", length(visible_functions)),
+  paste0("- Namespace exports checked: ", length(namespace_exports)),
   paste0("- Onboarding function calls checked: ", length(guidance_calls)),
   paste0("- R version: ", R.version.string),
   paste0("- Platform: ", R.version$platform),

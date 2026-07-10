@@ -48,12 +48,7 @@ reference:
   - detect_unmatched_names
   - match_names_workflow
   - write_unresolved
-- title: Attendance
-  contents:
-  - analyze_multi_session_attendance
-  - generate_attendance_report
-  - make_blank_cancelled_classes_df
-- title: Privacy and Compliance
+- title: Privacy Controls and Review
   contents:
   - anonymize_educational_data
   - ensure_privacy

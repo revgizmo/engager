@@ -188,15 +188,22 @@ validate_ferpa_compliance <- function(data = NULL,
 #' # Mask method (default)
 #' anonymized <- anonymize_educational_data(sample_data, method = "mask")
 #'
-#' # Hash method with salt
+#' # Hash method requires a caller-provided salt
 #' hashed <- anonymize_educational_data(sample_data, method = "hash", hash_salt = "my_salt")
 #'
 #' @param data Data frame or tibble containing educational data
-#' @param method Anonymization method: "mask", "hash", "pseudonymize", or "aggregate"
+#' @param method Identifier transformation method: "mask", "hash", or
+#'   "pseudonymize". The previously advertised "aggregate" method is not
+#'   supported in version 0.1.0 because it did not reliably remove row-level
+#'   identifiers.
 #' @param preserve_columns Vector of column names to preserve unchanged
-#' @param hash_salt Salt value for hash-based anonymization
-#' @param aggregation_level Level of aggregation: "individual", "section", "course", or "institution"
-#' @return Anonymized data frame
+#' @param hash_salt Required non-empty salt for hash-based transformation.
+#' @param aggregation_level Reserved for a future aggregation workflow. It has
+#'   no effect for supported version 0.1.0 methods.
+#' @return Data frame with recognized structured identifier columns transformed.
+#'   Missing and blank identifiers remain missing or blank. These transformations
+#'   do not inspect free text and do not establish that a data set is anonymous or
+#'   compliant with legal or institutional requirements.
 #' @examples
 #' sample_data <- tibble::tibble(
 #'   student_id = c("12345", "67890"),
@@ -208,15 +215,38 @@ validate_ferpa_compliance <- function(data = NULL,
 #' @importFrom magrittr %>%
 #' @export
 anonymize_educational_data <- function(data = NULL,
-                                       method = c("mask", "hash", "pseudonymize", "aggregate"),
+                                       method = c("mask", "hash", "pseudonymize"),
                                        preserve_columns = NULL,
                                        hash_salt = NULL,
                                        aggregation_level = c("individual", "section", "course", "institution")) {
+  if (!is.data.frame(data)) {
+    stop("Data must be a data frame or tibble", call. = FALSE)
+  }
+
+  if (length(method) == 1 && identical(method, "aggregate")) {
+    stop(
+      paste(
+        "method = \"aggregate\" is not supported in engager 0.1.0 because",
+        "the prior implementation could retain row-level identifiers.",
+        "Use a supported identifier transformation and aggregate only after",
+        "removing identifiers."
+      ),
+      call. = FALSE
+    )
+  }
+
   method <- match.arg(method)
   aggregation_level <- match.arg(aggregation_level)
 
-  if (!is.data.frame(data)) {
-    stop("Data must be a data frame or tibble", call. = FALSE)
+  if (identical(method, "hash")) {
+    invalid_hash_salt <- !is.character(hash_salt) || length(hash_salt) != 1 ||
+      is.na(hash_salt) || !nzchar(trimws(hash_salt))
+    if (invalid_hash_salt) {
+      stop(
+        "hash_salt must be one non-empty character value when method = \"hash\"",
+        call. = FALSE
+      )
+    }
   }
 
   # Identify columns to anonymize
@@ -230,48 +260,33 @@ anonymize_educational_data <- function(data = NULL,
   # Apply anonymization based on method
   if (method == "mask") {
     for (col in columns_to_anonymize) {
-      data[[col]] <- paste0("Student_", seq_len(nrow(data)))
+      values <- as.character(data[[col]])
+      present <- !is.na(values) & nzchar(trimws(values))
+      unique_values <- unique(values[present])
+      values[present] <- paste0("Student_", match(values[present], unique_values))
+      data[[col]] <- values
     }
   } else if (method == "hash") {
-    if (is.null(hash_salt)) {
-      hash_salt <- "default_salt"
-    }
     for (col in columns_to_anonymize) {
-      data[[col]] <- sapply(data[[col]], function(x) {
-        substr(digest::digest(paste0(x, hash_salt), algo = "sha256"), 1, 8)
-      })
+      values <- as.character(data[[col]])
+      present <- !is.na(values) & nzchar(trimws(values))
+      values[present] <- vapply(values[present], function(x) {
+        substr(digest::digest(
+          paste0(x, hash_salt),
+          algo = "sha256",
+          serialize = FALSE
+        ), 1, 8)
+      }, character(1))
+      data[[col]] <- values
     }
   } else if (method == "pseudonymize") {
     for (col in columns_to_anonymize) {
-      unique_values <- unique(data[[col]])
+      values <- as.character(data[[col]])
+      present <- !is.na(values) & nzchar(trimws(values))
+      unique_values <- unique(values[present])
       pseudonyms <- paste0("PSEUDO_", seq_along(unique_values))
-      data[[col]] <- pseudonyms[match(data[[col]], unique_values)]
-    }
-  } else if (method == "aggregate") {
-    # For aggregation, we'll group by the aggregation level
-    if (aggregation_level == "section" && "section" %in% names(data)) {
-      # Use simple aggregation approach to avoid segfault
-      data <- data %>%
-        dplyr::group_by(section) %>%
-        dplyr::summarise(
-          dplyr::across(dplyr::where(is.numeric), ~ mean(., na.rm = TRUE)),
-          dplyr::across(dplyr::where(~ !is.numeric(.)), ~ .[1]),
-          .groups = "drop"
-        )
-    } else if (aggregation_level == "course" && "course" %in% names(data)) {
-      # Use simple aggregation approach to avoid segfault
-      data <- data %>%
-        dplyr::group_by(course) %>%
-        dplyr::summarise(
-          dplyr::across(dplyr::where(is.numeric), ~ mean(., na.rm = TRUE)),
-          dplyr::across(dplyr::where(~ !is.numeric(.)), ~ .[1]),
-          .groups = "drop"
-        )
-    } else {
-      # Individual level - just mask the PII columns
-      for (col in columns_to_anonymize) {
-        data[[col]] <- "[AGGREGATED]"
-      }
+      values[present] <- pseudonyms[match(values[present], unique_values)]
+      data[[col]] <- values
     }
   }
 
