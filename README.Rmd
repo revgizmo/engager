@@ -169,7 +169,11 @@ options(engager.verbose = FALSE)
 3. **Load Roster**: Import student enrollment data
 4. **Clean Names**: Match transcript names to student records
 5. **Analyze**: Calculate metrics and create visualizations
-6. **Report**: Generate insights and reports
+6. **Export**: Write privacy-supporting metrics and summaries; save returned plot objects explicitly
+
+Version 0.1.0 provides per-session metrics, summaries, and plot objects. It does
+not generate a polished course-level engagement report or support longitudinal
+individual-student reporting.
 
 ## 🔒 Privacy Defaults
 
