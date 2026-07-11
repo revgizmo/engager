@@ -5,7 +5,6 @@
 - **Package**: engager
 - **Version**: 0.1.0
 - **Submission type**: Initial CRAN submission
-- **History**: Package renamed from `zoomstudentengagement` before submission
 
 ## Test Environments
 
@@ -16,10 +15,11 @@
 
 - **Errors**: 0
 - **Warnings**: 0
-- **Notes**: 0
+- **Notes**: 1
 
-A supplemental incoming-remote probe reported only the expected informational
-`New submission` note.
+The note is the expected informational `New submission` note. A canonical local
+check with incoming feasibility disabled completed at 0 errors, 0 warnings, and
+0 notes.
 
 ## Reverse Dependencies
 
@@ -28,13 +28,17 @@ A supplemental incoming-remote probe reported only the expected informational
 ## Additional Notes
 
 - The full local test suite passes with 0 failures, 67 expected warnings, and
-  5 documented skips. Four are CRAN-only diagnostic tests and one covers an
+  5 documented skips. Four are diagnostic placeholder tests and one covers an
   internal empty-session-mapping edge case.
 - An installed-package UAT installs the source tarball into an isolated library
   and exercises bundled synthetic transcript discovery, beginner and advanced
   workflows, name matching, privacy review, CSV/report outputs, onboarding
   guidance, the exact 35-function export allowlist, bounded identifier
   transformations, and all installed vignettes.
+- Installed-package checks verify that plot labels are masked for `mask`,
+  `privacy_standard`, and `privacy_strict`; labels remain visible only for the
+  explicit `none` setting, and vector privacy input is normalized before
+  masking.
 - The UAT uses synthetic fixtures only and writes artifacts outside the source
   repository.
 - Privacy-supporting defaults mask recognized structured identifier fields;
@@ -57,5 +61,6 @@ A supplemental incoming-remote probe reported only the expected informational
 - [x] Installed-package UAT passes
 - [x] Tarball hygiene inspection passes
 - [x] Release-surface remediation PR #566 merged with passing CI
-- [ ] Feature-surface hardening PR CI and review complete
+- [x] Feature-surface hardening and final product-voice/privacy review complete
+- [ ] R-devel win-builder check complete
 - [ ] Maintainer final release disposition recorded
