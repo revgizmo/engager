@@ -18,7 +18,7 @@
 - **Notes**: 1
 
 The note is the expected informational `New submission` note. A canonical local
-check with incoming feasibility disabled completed at 0 errors, 0 warnings, and
+check with incoming feasibility disabled completed with 0 errors, 0 warnings, and
 0 notes.
 
 ## Reverse Dependencies
