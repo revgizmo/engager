@@ -20,7 +20,7 @@
 - **Notes**: 1
 
 The R-devel win-builder note is the expected informational `New submission`
-note. Its incoming-feasibility output also identifies `WebVTT` (the transcript
+note. Its incoming feasibility output also identifies `WebVTT` (the transcript
 format name) and `reviewable` (an intentional English word) as possible
 misspellings. A canonical local check with incoming feasibility disabled
 completed with 0 errors, 0 warnings, and 0 notes.
