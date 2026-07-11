@@ -22,6 +22,7 @@ plot_users <- function(
     metrics_lookup_df = NULL) {
   facet_by <- match.arg(facet_by)
   mask_by <- match.arg(mask_by)
+  privacy_level <- normalize_privacy_level(privacy_level)
 
   # Validate and prepare data
   validation_result <- validate_plot_users_inputs(data, metric, student_col)
@@ -30,7 +31,7 @@ plot_users <- function(
   student_col <- validation_result$student_col
 
   # Apply privacy masking if needed
-  if (privacy_level != "none") {
+  if (!identical(privacy_level, "none")) {
     data <- apply_privacy_masking_plot(data, privacy_level, student_col, mask_by)
   }
 
@@ -71,27 +72,17 @@ validate_plot_users_inputs <- function(data, metric, student_col) {
 
 # Helper function to apply privacy masking
 apply_privacy_masking_plot <- function(data, privacy_level, student_col, mask_by) {
-  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
-  # This was causing 100+ test failures and preventing CRAN submission
+  privacy_level <- normalize_privacy_level(privacy_level)
 
-  # Validate inputs
-  if (!is.character(privacy_level) || length(privacy_level) == 0) {
-    stop("privacy_level must be a non-empty character vector")
+  if (identical(privacy_level, "none")) {
+    return(data)
   }
 
-  # Handle vector input gracefully
-  if (length(privacy_level) > 1) {
-    privacy_level <- privacy_level[1]
-    warning("privacy_level had length > 1, using first element: ", privacy_level)
+  if (mask_by == "name") {
+    data[[student_col]] <- paste0("Student_", seq_len(nrow(data)))
+  } else if (mask_by == "rank") {
+    data[[student_col]] <- paste0("Rank_", seq_len(nrow(data)))
   }
 
-  # Apply masking based on privacy level
-  if (privacy_level == "mask") {
-    if (mask_by == "name") {
-      data[[student_col]] <- paste0("Student_", seq_len(nrow(data)))
-    } else if (mask_by == "rank") {
-      data[[student_col]] <- paste0("Rank_", seq_len(nrow(data)))
-    }
-  }
   data
 }

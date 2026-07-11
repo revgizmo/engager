@@ -30,6 +30,8 @@ loads `engager` from that library, and exercises:
   `summarize_transcript_files()` and `summarize_transcript_metrics()`.
 - The exported beginner workflow with `basic_transcript_analysis()`, including
   its plot and privacy-processed CSV output.
+- Plot-label masking for `mask`, `privacy_standard`, and `privacy_strict`, plus
+  explicit `none` behavior and vector privacy-level normalization.
 - Exact name matching with `match_names_workflow()`.
 - Unresolved-name review with `detect_unmatched_names()` and
   `write_unresolved()`.
