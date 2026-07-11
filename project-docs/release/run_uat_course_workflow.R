@@ -337,6 +337,44 @@ check(
   "installed beginner workflow CSV contains rows and omits raw comments"
 )
 
+plot_privacy_input <- tibble::tibble(
+  name = c("UAT Plot Raw 1", "UAT Plot Raw 2"),
+  n = c(3, 2)
+)
+for (plot_privacy_level in c("mask", "privacy_standard", "privacy_strict")) {
+  privacy_plot <- engager::plot_users(
+    plot_privacy_input,
+    metric = "n",
+    facet_by = "none",
+    privacy_level = plot_privacy_level
+  )
+  check(
+    identical(as.character(privacy_plot$data$name), c("Student_1", "Student_2")),
+    paste0("installed plot masks labels for privacy level: ", plot_privacy_level)
+  )
+}
+unmasked_plot <- engager::plot_users(
+  plot_privacy_input,
+  metric = "n",
+  facet_by = "none",
+  privacy_level = "none"
+)
+check(
+  identical(as.character(unmasked_plot$data$name), plot_privacy_input$name),
+  "installed plot preserves labels only when privacy is disabled"
+)
+vector_privacy_plot <- suppressWarnings(engager::plot_users(
+  plot_privacy_input,
+  metric = "n",
+  facet_by = "none",
+  mask_by = "rank",
+  privacy_level = c("privacy_strict", "none")
+))
+check(
+  identical(as.character(vector_privacy_plot$data$name), c("Rank_1", "Rank_2")),
+  "installed plot normalizes vector privacy input before masking"
+)
+
 roster <- engager::load_roster(roster_path)
 check(is.data.frame(roster) && nrow(roster) > 0, "loaded installed ideal course roster")
 
