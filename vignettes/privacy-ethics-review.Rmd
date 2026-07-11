@@ -415,7 +415,7 @@ consider:
   default because free-text comments can include spoken names or contextual
   identifiers.
 - Prefer masked, aggregated, or pseudonymized outputs for routine sharing.
-- Review generated plots and reports, not just CSV files.
+- Review plots and exported privacy-review artifacts, not just CSV files.
 - Record a non-sensitive summary of the review decision.
 
 ### 5. Retain and Dispose of Data
@@ -430,8 +430,8 @@ Follow local policy for retention and disposal. A local process might include:
 
 ### 6. Suggested Local Sign-Off Record
 
-For a CRAN release or institutional deployment, a local record can answer these
-questions without including raw student data:
+For an institutional deployment or other formal review, a local record can
+answer these questions without including raw student data:
 
 - What data source was reviewed?
 - Who performed the privacy review?
@@ -440,9 +440,8 @@ questions without including raw student data:
 - What retention or disposal action is required?
 - Who approved use under institutional policy?
 
-This sign-off record is best kept with the institution or release owner. It is
-not submitted to CRAN and does not show that the package guarantees legal
-compliance.
+This sign-off record is best kept with the institution or authorized review
+owner. It does not show that the package guarantees legal compliance.
 
 ## Troubleshooting Common Issues
 

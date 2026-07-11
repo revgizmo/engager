@@ -1,25 +1,23 @@
 
 - [engager](#engager)
-  - [📚 Documentation](#books-documentation)
-  - [🚀 Quick Start](#rocket-quick-start)
+  - [Documentation](#documentation)
+  - [Quick Start](#quick-start)
     - [Installation](#installation)
     - [One-function beginner workflow](#one-function-beginner-workflow)
     - [Composable workflow](#composable-workflow)
-  - [📖 Vignettes](#open_book-vignettes)
-  - [🎯 What the Package Does](#dart-what-the-package-does)
-  - [🔧 Key Functions](#wrench-key-functions)
+  - [Vignettes](#vignettes)
+  - [What the Package Does](#what-the-package-does)
+  - [Key Functions](#key-functions)
     - [Core Processing](#core-processing)
     - [Data Management](#data-management)
     - [Name Matching (Exact MVP)](#name-matching-exact-mvp)
     - [Analysis and Visualization](#analysis-and-visualization)
     - [Diagnostics](#diagnostics)
-  - [📊 Typical Workflow](#bar_chart-typical-workflow)
-  - [🔒 Privacy Defaults](#lock-privacy-defaults)
-  - [Development](#development)
-    - [Pull Request Review](#pull-request-review)
-  - [🤝 Contributing](#handshake-contributing)
-  - [📄 License](#page_facing_up-license)
-  - [🔗 Links](#link-links)
+  - [Typical Workflow](#typical-workflow)
+  - [Privacy Defaults](#privacy-defaults)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Links](#links)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -29,28 +27,23 @@
 
 # engager
 
-**Note:** Renamed from `zoomstudentengagement` to `engager` (no API
-changes).
-
 <!-- badges: start -->
 
 [![coverage](https://img.shields.io/github/actions/workflow/status/revgizmo/engager/coverage.yaml?branch=main&label=coverage)](https://github.com/revgizmo/engager/actions/workflows/coverage.yaml)
 <!-- badges: end -->
 
-The goal of `engager` is to allow instructors to gain insights into
-student engagement, with a particular focus on participation equity,
-from Zoom transcripts of recorded course sessions.
+`engager` analyzes participation in Zoom WebVTT transcripts and produces
+privacy-supporting metrics, summaries, plots, and export files for
+instructor review.
 
-## 📚 Documentation
+## Documentation
 
 - **Installed help**: run `help(package = "engager")`
 - **Package vignettes**: run `browseVignettes(package = "engager")`
 - **[Issue tracker and contribution
   discussion](https://github.com/revgizmo/engager/issues)**
-- **[Release project
-  status](https://github.com/revgizmo/engager/blob/main/project-docs/release/PROJECT.md)**
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
@@ -105,7 +98,7 @@ invisible(write_metrics(
 ))
 ```
 
-## 📖 Vignettes
+## Vignettes
 
 For detailed workflows and examples, see the package vignettes:
 
@@ -118,7 +111,7 @@ For detailed workflows and examples, see the package vignettes:
 - **Privacy, Ethics, and Institutional Review**: see
   `vignette("privacy-ethics-review", package = "engager")`
 
-## 🎯 What the Package Does
+## What the Package Does
 
 The `engager` package provides tools for:
 
@@ -137,7 +130,7 @@ The `engager` package provides tools for:
 `.cc.vtt` (closed captions) and `.newChat.txt` (chat logs) are not
 currently supported but may be added in future versions.
 
-## 🔧 Key Functions
+## Key Functions
 
 ### Core Processing
 
@@ -196,7 +189,7 @@ summarize_transcript_metrics(transcript_file_path = transcript_file)
 options(engager.verbose = FALSE)
 ```
 
-## 📊 Typical Workflow
+## Typical Workflow
 
 1.  **Setup**: Configure analysis parameters
 2.  **Load Transcripts**: Import and process Zoom transcript files
@@ -210,7 +203,7 @@ Version 0.1.0 provides per-session metrics, summaries, and plot objects.
 It does not generate a polished course-level engagement report or
 support longitudinal individual-student reporting.
 
-## 🔒 Privacy Defaults
+## Privacy Defaults
 
 This package uses privacy-supporting defaults. On load, it sets the
 session option `engager.privacy_level` to `"mask"` (unless you set it
@@ -238,29 +231,18 @@ Common structured fields considered for masking include
 See `vignette("privacy-ethics-review", package = "engager")` for
 privacy, ethics, and institutional review considerations.
 
-## Development
-
-### Pull Request Review
-
-This project uses a lightweight PR review process focused on CRAN
-submission readiness and privacy risk review. Open an issue before
-proposing a substantial change so scope and validation expectations are
-explicit.
-
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions. Start with the [issue
 tracker](https://github.com/revgizmo/engager/issues).
 
-## 📄 License
+## License
 
 This package is licensed under the MIT License. See the CRAN license
 stub in [LICENSE](LICENSE); the standard MIT terms accompany the
 distributed package.
 
-## 🔗 Links
+## Links
 
 - **GitHub Repository**: <https://github.com/revgizmo/engager>
 - **Issues**: <https://github.com/revgizmo/engager/issues>
-- **Project Status**: [release project
-  status](https://github.com/revgizmo/engager/blob/main/project-docs/release/PROJECT.md)

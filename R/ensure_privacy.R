@@ -113,8 +113,7 @@ validate_privacy_level <- function(privacy_level) {
 
 # Helper function to handle privacy level and get appropriate columns
 handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
-  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
-  # This was causing 100+ test failures and preventing CRAN submission
+  # Normalize privacy-level input before selecting masking controls.
 
   privacy_level <- normalize_privacy_level(privacy_level)
 
@@ -170,8 +169,7 @@ handle_privacy_level <- function(privacy_level, id_columns, audit_log, x) {
 
 # Helper function to apply privacy masking
 apply_privacy_masking <- function(x, id_columns, privacy_level, audit_log) {
-  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
-  # This was causing 100+ test failures and preventing CRAN submission
+  # Normalize vector input before scalar privacy-level comparisons.
 
   # Validate inputs
   if (!is.character(privacy_level) || length(privacy_level) == 0) {

@@ -1,10 +1,10 @@
 ---
-title: "Essential Functions - Core Package Functionality"
+title: "Core Workflows and Functions"
 author: "engager package"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Essential Functions - Core Package Functionality}
+  %\VignetteIndexEntry{Core Workflows and Functions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -27,7 +27,7 @@ This vignette demonstrates the supported v0.1.0 core using the package's public 
 - **Analysis**: Core engagement metrics and analysis
 - **Name Matching**: Reviewable exact student name matching workflows
 
-## Essential Functions
+## Supported Functions
 
 The package exposes additional interactive guidance helpers, but the functions
 below define the supported analysis workflow for v0.1.0:
@@ -62,7 +62,7 @@ essential_functions <- c(
 stopifnot(all(essential_functions %in% getNamespaceExports("engager")))
 
 # Emit a markdown list with autolinkable inline code items
-cat("Essential functions (", length(essential_functions), "):\n\n")
+cat("Supported workflow functions (", length(essential_functions), "):\n\n")
 cat(paste0("- `", essential_functions, "()`"), sep = "\n")
 ```
 
@@ -81,7 +81,7 @@ transcript <- load_zoom_transcript(transcript_file)
 cat("Transcript loaded with", nrow(transcript), "comments\n")
 ```
 
-### 2. Process with Privacy Protection
+### 2. Process and Summarize
 
 ```{r process-transcript}
 # Process transcript with privacy defaults
@@ -91,27 +91,37 @@ processed <- process_zoom_transcript(
   consolidate_comments = TRUE
 )
 
-cat("Processed transcript has", nrow(processed), "rows\n")
-# Diagnostic: Print column lengths and structure
-cat("Column lengths:\n")
-for (col in names(processed)) {
-  cat(col, ":", length(processed[[col]]), "\n")
-}
-cat("Column names:", paste(names(processed), collapse = ", "), "\n")
-cat("Dimensions:", paste(dim(processed), collapse = " x "), "\n")
+metrics <- summarize_transcript_metrics(
+  transcript_df = processed,
+  names_exclude = c("dead_air")
+)
+
+head(metrics)
 ```
 
-### 3. Analyze Engagement
+### 3. Plot and Export
 
-```{r analyze-engagement}
-# Analyze transcripts for engagement metrics
-# Note: This would normally analyze actual transcript files
-# For this example, we'll demonstrate the function call structure
-cat("analyze_transcripts() would analyze all .vtt files in the specified folder\n")
-cat("Function signature: analyze_transcripts(transcripts_folder, names_to_exclude, write, output_path)\n")
+```{r plot-and-export}
+engagement_plot <- plot_users(
+  metrics,
+  metric = "n",
+  facet_by = "none",
+  mask_by = "name"
+)
+print(engagement_plot)
+
+output_file <- tempfile(fileext = ".csv")
+write_metrics(
+  metrics,
+  what = "engagement",
+  path = output_file,
+  comments_policy = "omit"
+)
+stopifnot(file.exists(output_file))
+unlink(output_file)
 ```
 
-### 4. Privacy Review
+### 4. Run a Privacy Review
 
 ```{r privacy-compliance}
 # Check privacy risk with synthetic data
@@ -123,8 +133,9 @@ synthetic_data <- data.frame(
 
 # Privacy review helpers flag recognized identifier-like columns. They do not
 # prove that a data set or free-text field contains no identifying information.
-cat("Privacy review helpers flag recognized identifier-like columns\n")
-cat("validate_privacy_compliance() and review_privacy_risks() support technical review\n")
+privacy_review <- review_privacy_risks(synthetic_data, audit_log = FALSE)
+privacy_review$pii_detected
+privacy_review$recommendations
 ```
 
 ## Function Categories
@@ -154,24 +165,15 @@ cat("validate_privacy_compliance() and review_privacy_risks() support technical 
 - `plot_users()` - Plot user engagement
 - `write_metrics()` - Export metrics
 
-## Benefits of Scope Reduction
+## Supported Boundaries
 
-1. **Focused Functionality**: Public functions are organized around the supported workflows
-2. **Easier Maintenance**: Smaller codebase to maintain
-3. **Better User Experience**: Clear, focused API
-4. **CRAN Focused**: A bounded public surface for release validation
-5. **Privacy Supporting**: Output helpers provide documented masking and review controls
+- Beginner and batch workflows produce per-session metrics, summaries, and plot
+  objects.
+- Exact name matching reports unresolved names instead of guessing.
+- Output helpers mask recognized structured identifiers and omit raw comment
+  text by default.
+- Version 0.1.0 does not generate polished course-level engagement reports or
+  support longitudinal individual-student reporting.
 
-## Next Steps
-
-With the scope reduction complete, the package supports:
-
-1. **CRAN Validation**: A focused function set to validate before submission
-2. **User Testing**: Clear, essential functionality
-3. **Documentation Updates**: Focus on core workflows
-4. **UX Simplification**: Streamlined user experience
-
-The package now provides a focused API for analyzing student engagement from
-Zoom transcripts with documented structured-field masking and technical review
-helpers. Users remain responsible for reviewing inputs, free text, outputs, and
-institutional requirements.
+Users remain responsible for reviewing inputs, free text, outputs, sharing
+decisions, and institutional requirements.

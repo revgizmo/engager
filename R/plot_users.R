@@ -71,8 +71,7 @@ validate_plot_users_inputs <- function(data, metric, student_col) {
 
 # Helper function to apply privacy masking
 apply_privacy_masking_plot <- function(data, privacy_level, student_col, mask_by) {
-  # CRAN FIX: Handle vector privacy_level input to prevent "condition has length > 1" error
-  # This was causing 100+ test failures and preventing CRAN submission
+  # Normalize vector input before scalar privacy-level comparisons.
 
   # Validate inputs
   if (!is.character(privacy_level) || length(privacy_level) == 0) {
