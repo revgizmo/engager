@@ -1,17 +1,19 @@
 Package: engager
 Type: Package
-Title: Analyze Student Engagement from Zoom and WebVTT Transcripts
+Title: Analyze Student Engagement from 'WebVTT' Transcripts
 Version: 0.1.0
 Authors@R: person(given = "Conor",
                   family = "Healy",
                   role = c("aut", "cre"),
                   email = "conorhealy@berkeley.edu")
 Description: Analyzes participation in course-session transcripts stored in
-    WebVTT format. Provides tools to load and process transcripts, calculate
-    speaker-level engagement metrics, create privacy-supporting plots and
-    exports, and perform reviewable exact name matching against course rosters.
-    Structured-field masking and technical privacy-review helpers support local
-    review but do not determine legal or institutional compliance.
+    the 'WebVTT' format <https://www.w3.org/TR/webvtt1/>, including transcripts
+    exported by 'Zoom' and similar videoconferencing platforms. Provides tools
+    to load and process transcripts, calculate speaker-level engagement metrics,
+    create privacy-supporting plots and exports, and perform reviewable exact
+    name matching against course rosters. Structured-field masking and technical
+    privacy-review helpers support local review but do not determine legal or
+    institutional compliance.
 License: MIT + file LICENSE
 Depends: R (>= 4.1.0)
 Language: en-US
