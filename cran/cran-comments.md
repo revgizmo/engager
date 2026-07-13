@@ -12,6 +12,8 @@
 - **GitHub Actions baseline**: Ubuntu, Windows, and macOS with R release
 - **Initial R-devel win-builder**: Windows Server 2022 x64, R Under development
   (2026-07-10 r90234 ucrt)
+- **Replacement R-devel win-builder**: Windows Server 2022 x64, R Under
+  development (2026-07-12 r90242 ucrt)
 
 ## CRAN Reviewer Response
 
@@ -44,8 +46,11 @@ The package note is the expected informational `New submission` note. A
 canonical local check with incoming feasibility disabled completed with 0
 errors, 0 warnings, and 0 notes. A network-enabled check of the exact
 replacement tarball completed with 0 errors, 0 warnings, and 2 notes: `New
-submission` and the local machine's outdated HTML Tidy. The previously reported
-`WebVTT` and `reviewable` spelling flags are no longer present.
+submission` and the local machine's outdated HTML Tidy. Replacement R-devel
+win-builder completed with 0 errors, 0 warnings, and 1 incoming-feasibility
+note: `New submission` plus `reviewable` as a possible misspelling. `reviewable`
+is an intentional English word. The reviewer-reported `WebVTT` flag is no
+longer present.
 
 ## Reverse Dependencies
 
@@ -86,8 +91,8 @@ submission` and the local machine's outdated HTML Tidy. The previously reported
   API was 93.33%.
 - The replacement installed-package UAT passed, and tarball inspection again
   found 270 clean entries with no project-only or private/local artifacts.
-- The exact replacement tarball was submitted to R-devel win-builder; its
-  emailed result is pending.
+- The exact replacement tarball passed R-devel win-builder installation,
+  examples, tests, vignettes, and PDF/HTML manual checks.
 
 ## Validation Status
 
@@ -99,5 +104,5 @@ submission` and the local machine's outdated HTML Tidy. The previously reported
 - [x] Tarball hygiene inspection passes
 - [x] Release-surface remediation PR #566 merged with passing CI
 - [x] Feature-surface hardening and final product-voice/privacy review complete
-- [ ] Replacement R-devel win-builder check complete
+- [x] Replacement R-devel win-builder check complete
 - [ ] Maintainer final release disposition recorded
