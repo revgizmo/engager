@@ -9,7 +9,8 @@ pre-scope-reduction API, and 122 live open GitHub issues. The existing
 refreshed before it authorizes any live mutation.
 
 This roadmap governs product direction. GitHub issues remain the execution
-ledger; `project-docs/release/V0_1_1_RELEASE_PLAN.md` governs the next release.
+ledger; [release/V0_1_1_RELEASE_PLAN.md](release/V0_1_1_RELEASE_PLAN.md) governs
+the next release.
 
 ## Product promise
 
@@ -63,7 +64,7 @@ release, and issue #4 closeout described in the 0.1.1 release plan are approved.
 Commitment: next feature release.
 
 The complete scope, dependency-ordered tranches, gates, and mutation boundaries
-are in `project-docs/release/V0_1_1_RELEASE_PLAN.md`.
+are in [release/V0_1_1_RELEASE_PLAN.md](release/V0_1_1_RELEASE_PLAN.md).
 
 Outcome: a user can analyze a synthetic or locally held course roster and
 multiple session transcripts, understand failed/unmatched inputs, and create an
