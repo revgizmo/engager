@@ -1,47 +1,45 @@
-### Summary
+## Outcome
 
-Provide a concise summary of the change and the motivation.
-
-### Linked Issues
+What bounded outcome does this change deliver, and why is it needed?
 
 Closes #
 
-### Changes
+## Change class
 
-- 
+- [ ] Routine
+- [ ] Governed — maintainer authorization is linked below
+- [ ] Release/external mutation — separate approval is linked below
 
-### Screenshots / Outputs (if applicable)
+Authorization/evidence link, if required:
 
-Paste images, logs, or example outputs that demonstrate the change.
+## Impact
 
-### Test Plan
+- Package or user behavior:
+- Public API or result schema:
+- Privacy, disclosure, or data handling:
+- CRAN/release line:
 
-- [ ] Build system test (if applicable): `bookdown::render_book('index.Rmd')`
-- [ ] Content validation (if applicable): Review accuracy and completeness
-- [ ] User experience test (if applicable): Navigation and usability
-- [ ] Cross-platform compatibility (if applicable): Test on different devices
-- [ ] Performance test (if applicable): Page load times and responsiveness
+## Validation
 
-### Documentation
+- [ ] Targeted tests (describe below)
+- [ ] `Rscript scripts/pre-pr-validation.R`
+- [ ] Generated documentation is committed and drift-free, if applicable
+- [ ] Installed-package UAT, if required by the release tranche
+- [ ] Only synthetic fixtures and temporary outputs were used
 
-- [ ] README.md updated for user-facing changes
-- [ ] ACTIVE_ROADMAP_CHECKLIST.md updated with completion status
-- [ ] Technical documentation updated (if applicable)
-- [ ] Navigation and links verified
+Exact commands and results:
 
-### Quality Checklist
+## Review disposition
 
-- [ ] Code follows project conventions (if applicable)
-- [ ] Content is accurate and well-structured
-- [ ] No broken links or references
-- [ ] Build process remains functional
-- [ ] User experience improved or maintained
+- [ ] Actionable automated-review findings are fixed or explicitly declined
+- [ ] All review threads are resolved
+- [ ] Required hosted checks pass at this exact head, or an authorized
+      CI-degraded evidence packet is linked
 
-### Risks / Rollback
+## Risk and rollback
 
-List any risks and how to mitigate or roll back.
+What could fail, how would it be detected, and how can this change be reverted?
 
-### Release note (user-facing summary)
+## User-facing release note
 
-A one-liner describing the improvement for users.
-
+One sentence, or `Not user-facing`.

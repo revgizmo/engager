@@ -16,7 +16,7 @@ body:
     attributes:
       label: Roadmap Context
       description: Which phase and weeks this epic covers
-      placeholder: e.g., Phase 1: Foundation and Cleanup (Weeks 1-4)
+      placeholder: "e.g., Phase 1: Foundation and Cleanup (Weeks 1-4)"
     validations:
       required: true
   - type: textarea
@@ -26,9 +26,9 @@ body:
       description: What's in and out of scope for this phase
       value: |
         In:
-        - 
+        -
         Out:
-        - 
+        -
   - type: textarea
     id: success
     attributes:
@@ -71,6 +71,6 @@ body:
       label: Related Documentation
       description: Links to roadmap documents and related materials
       value: |
-        - STRATEGIC_ROADMAP_AND_ACTION_PLAN.md
-        - ACTIVE_ROADMAP_CHECKLIST.md
-        - FINAL_REVIEW_VALIDATION.md
+        - project-docs/ROADMAP.md
+        - project-docs/release/V0_1_1_RELEASE_PLAN.md
+        - CONTRIBUTING.md
