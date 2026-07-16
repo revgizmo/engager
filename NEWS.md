@@ -1,3 +1,7 @@
+# engager 0.1.1 (development version)
+
+* No user-facing changes yet.
+
 # engager 0.1.0
 
 ## Initial CRAN Submission
