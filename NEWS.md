@@ -1,4 +1,4 @@
-# engager 0.1.1 (development version)
+# engager 0.1.1
 
 * Added `analyze_multi_session_attendance()` for deterministic, exact
   roster-based attendance across multiple WebVTT sessions, with explicit

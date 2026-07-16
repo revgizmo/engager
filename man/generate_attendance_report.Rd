@@ -43,3 +43,4 @@ Raw participant identifiers cannot be requested. Participant detail requires
 \code{identifier_method = "mask"}, \code{"hash"}, or \code{"pseudonymize"}; hash mode also
 requires an explicit non-empty \code{salt}.
 }
+
