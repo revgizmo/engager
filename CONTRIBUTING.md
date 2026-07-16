@@ -86,8 +86,12 @@ temporary directory, then verifies that tracked and untracked state did not
 change. It does not generate or rewrite source files.
 
 For R or roxygen changes, run `devtools::document()` intentionally, inspect the
-result, and commit `NAMESPACE` and `man/` updates. CI regenerates documentation
-and fails if those tracked outputs drift.
+result, and commit `NAMESPACE` and `man/` updates. Required CI checks the
+committed package exactly; it does not rewrite package files before validation.
+The existing roxygen 7.3.3 output drift is tracked maintenance debt while the
+submitted 0.1.0 package surface remains frozen. Reconcile it on `develop` after
+0.1.0 acceptance, then promote generated-documentation drift to a required
+gate.
 
 Required hosted gates are:
 

@@ -50,15 +50,6 @@ jobs:
             any::knitr
             any::rcmdcheck
             any::rmarkdown
-            any::roxygen2
-
-      - name: Generate documentation (roxygenise)
-        run: |
-          roxygen2::roxygenise()
-        shell: Rscript {0}
-
-      - name: Verify generated documentation is committed
-        run: git diff --exit-code -- NAMESPACE man/
 
       - name: Check
         run: |

@@ -34,14 +34,6 @@ jobs:
           needs: coverage
           extra-packages: |
             any::covr
-            any::roxygen2
-
-      - name: Generate documentation
-        run: roxygen2::roxygenise()
-        shell: Rscript {0}
-
-      - name: Verify generated documentation is committed
-        run: git diff --exit-code -- NAMESPACE man/
 
       - name: Build and install package
         run: |

@@ -41,7 +41,9 @@ devtools::document()
 Lint is currently advisory. Required hosted gates are strict `R-CMD-check` and
 `Coverage`; the latter also checks the namespace against
 `project-docs/release/supported-exports.txt` and enforces the current 85%
-all-supported-export coverage floor.
+all-supported-export coverage floor. Required CI validates committed package
+files without regenerating documentation. The existing roxygen 7.3.3 drift is
+reconciled on `develop` after 0.1.0 acceptance before a drift gate is enabled.
 
 ## Handoffs
 

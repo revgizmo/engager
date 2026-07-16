@@ -247,6 +247,9 @@ Maintenance work runs beside, not inside, feature tranches:
   surface.
 - Resolve current lint findings incrementally; do not use broad mechanical
   rewrites in release PRs.
+- After 0.1.0 acceptance, reconcile the existing roxygen 7.3.3 output drift on
+  `develop`, then make generated-documentation drift a required hosted gate.
+  Do not rewrite the frozen submitted package surface to clean this baseline.
 - Remove disabled vignettes, historical artifacts, stale generated documents,
   and remote branches only after evidence and separate approval.
 - Keep required CI and coverage truthful. Reduce the advisory lint baseline in
