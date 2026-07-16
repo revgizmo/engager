@@ -2,64 +2,33 @@
 % Please edit documentation in R/analyze_multi_session_attendance.R
 \name{analyze_multi_session_attendance}
 \alias{analyze_multi_session_attendance}
-\title{Experimental Multi-Session Attendance Patterns}
+\title{Analyze Exact Roster Attendance Across Sessions}
 \usage{
 analyze_multi_session_attendance(
-  transcript_files = NULL,
-  roster_data = NULL,
-  data_folder = ".",
-  transcripts_folder = "transcripts",
-  unmatched_names_action = c("stop", "warn"),
-  privacy_level = c("privacy_strict", "privacy_standard", "mask", "none"),
+  sessions,
+  roster_data,
+  unmatched_names_action = c("warn", "stop"),
   min_attendance_threshold = 0.5
 )
 }
 \arguments{
-\item{transcript_files}{Vector of transcript file paths to analyze}
+\item{sessions}{Either a character vector of WebVTT paths or a data frame
+with \code{session_id}, \code{transcript_file}, \code{status}, and optional \code{session_at}.}
 
-\item{roster_data}{Data frame containing student roster information}
+\item{roster_data}{A data frame with \code{student_id}, \code{preferred_name}, optional
+semicolon-delimited \code{aliases}, and optional logical \code{eligible}.}
 
-\item{data_folder}{Base folder containing data files}
+\item{unmatched_names_action}{Either \code{"warn"} or \code{"stop"}.}
 
-\item{transcripts_folder}{Subfolder containing transcript files}
-
-\item{unmatched_names_action}{Action to take for unmatched names: "stop" or "warn"}
-
-\item{privacy_level}{Privacy level: "privacy_strict", "privacy_standard", "mask", "none".
-Deprecated aliases "ferpa_strict" and "ferpa_standard" are accepted with a warning.}
-
-\item{min_attendance_threshold}{Minimum attendance threshold for "consistent attendee" (default: 0.5)}
+\item{min_attendance_threshold}{One finite numeric scalar in \verb{[0, 1]}.}
 }
 \value{
-List containing:
-\itemize{
-\item \code{attendance_matrix}: Data frame with participants as rows and sessions as columns
-\item \code{attendance_summary}: Summary statistics for each participant
-\item \code{session_summary}: Summary statistics for each session
-\item \code{participation_patterns}: Analysis of participation patterns
-\item \code{privacy_compliant}: Backward-compatible Boolean indicating whether the
-package's technical privacy checks completed without an error. This is
-not a legal or institutional compliance determination.
-}
+An internal \code{engager_attendance} object containing typed attendance,
+participant, session, problem, and metadata components.
 }
 \description{
-Internal prototype for a possible v0.1.1 workflow. Its roster, unmatched-name,
-threshold, and reporting semantics are not part of the v0.1.0 public API.
-Analyzes attendance patterns across multiple Zoom sessions, tracking who attended
-which sessions and identifying participation patterns while applying the
-selected package masking controls.
-}
-\examples{
-# Analyze attendance across multiple sessions
-# transcript_files <- c("session1.vtt", "session2.vtt", "session3.vtt")
-# roster_data <- load_roster(data_folder = "data/metadata", roster_file = "roster.csv")
-# results <- analyze_multi_session_attendance(
-#   transcript_files = transcript_files,
-#   roster_data = roster_data,
-#   data_folder = "data",
-#   unmatched_names_action = "warn"
-# )
-# print(results$attendance_summary)
-
+Internal 0.1.1 engine. The roster defines the participant universe and
+exact matching determines presence. The returned object contains local
+roster identifiers and is not a shareable report.
 }
 \keyword{internal}

@@ -1,0 +1,7 @@
+student_id,preferred_name,aliases,eligible
+student-001,Ada Rowan,,true
+student-002,Ben Ortiz,,true
+student-003,Cleo Singh,,true
+student-004,Dax Kim,,true
+student-005,Etta Moss,,true
+staff-001,Instructor Vale,,false
