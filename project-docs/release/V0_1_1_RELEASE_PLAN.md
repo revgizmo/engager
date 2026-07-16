@@ -30,10 +30,22 @@ After publication:
    reviewer-remediation history, package-content commit
    `67918c4904c072e91f378f3bb3677d2ffdd35bda`, and main-line evidence commit
    `50188a1ae17fa646dc5792b52992db7210192b85`.
-5. Obtain explicit approval before creating the annotated `v0.1.0` tag at the
+5. In a fresh clone, make the accepted package-content commit reachable through
+   the preserved PR #572 pull ref, then verify the object before tagging:
+
+   ```sh
+   git fetch origin refs/pull/572/head:refs/remotes/origin/pr/572
+   git cat-file -e 67918c4904c072e91f378f3bb3677d2ffdd35bda^{commit}
+   ```
+
+   PR #572's final head descends from this commit. The later squash commit
+   changes only `cran/cran-comments.md`, which is excluded from the package
+   tarball, but the release tag remains anchored to the exact accepted package
+   content.
+6. Obtain explicit approval before creating the annotated `v0.1.0` tag at the
    accepted package-content commit, publishing the GitHub release, or closing
    issue #4.
-6. Open a separate kickoff PR that changes the development version to
+7. Open a separate kickoff PR that changes the development version to
    `0.1.0.9000` and adds an `engager 0.1.1` NEWS section. The development suffix
    identifies work toward 0.1.1; the accepted 0.1.0 source remains unchanged.
 
