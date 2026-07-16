@@ -1,0 +1,5 @@
+session_id,status,eligible,roster_size,attended_count,absent_count,unmatched_speaker_count,attendance_rate
+session-01,recorded,true,5,2,3,1,0.4
+session-02,recorded,true,5,2,3,0,0.4
+session-03,recorded,true,5,4,1,0,0.8
+session-04,cancelled,false,5,,,0,
