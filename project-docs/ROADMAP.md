@@ -56,8 +56,13 @@ Supported product:
   pseudonymization.
 - Beginner, composable, and batch transcript workflows.
 
-No post-release work begins until the acceptance reconciliation, tag, GitHub
-release, and issue #4 closeout described in the 0.1.1 release plan are approved.
+Isolated 0.1.1 development may proceed on protected `develop` while CRAN review
+continues. `main` remains the stable 0.1.0 release and evidence line. No 0.1.1
+package content may merge to it until the 0.1.1 release is finalized under the
+T6 gates, and any merge remains blocked until at least the 0.1.0 acceptance
+reconciliation, tag, GitHub release, and issue #4 closeout described in the
+0.1.1 release plan are approved. CRAN remediation branches from `main`;
+applicable fixes are forward-ported to `develop` through separate reviewed PRs.
 
 ### 0.1.1 — Multi-session attendance and reviewable reports
 
