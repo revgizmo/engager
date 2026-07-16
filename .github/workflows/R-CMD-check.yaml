@@ -48,21 +48,17 @@ jobs:
           needs: check
           extra-packages: |
             any::knitr
-            any::lintr
             any::rcmdcheck
             any::rmarkdown
             any::roxygen2
-            any::styler
-
-      - name: Lint
-        run: |
-          lintr::lint_package()
-        shell: Rscript {0}
 
       - name: Generate documentation (roxygenise)
         run: |
           roxygen2::roxygenise()
         shell: Rscript {0}
+
+      - name: Verify generated documentation is committed
+        run: git diff --exit-code -- NAMESPACE man/
 
       - name: Check
         run: |

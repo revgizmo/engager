@@ -2,8 +2,8 @@
 
 Status: product and release planning source of truth.
 
-Last reconciled: 2026-07-14 against `main` at
-`50188a1ae17fa646dc5792b52992db7210192b85`, 35 current exports, the historical
+Last reconciled: 2026-07-15 against the stable `main` release line, 35 current
+exports, the historical
 pre-scope-reduction API, and 122 live open GitHub issues. The existing
 `project-docs/backlog-normalization` snapshot contains 128 issues and must be
 refreshed before it authorizes any live mutation.
@@ -61,8 +61,11 @@ continues. `main` remains the stable 0.1.0 release and evidence line. No 0.1.1
 package content may merge to it until the 0.1.1 release is finalized under the
 T6 gates, and any merge remains blocked until at least the 0.1.0 acceptance
 reconciliation, tag, GitHub release, and issue #4 closeout described in the
-0.1.1 release plan are approved. CRAN remediation branches from `main`;
+0.1.1 release plan are complete. CRAN remediation branches from `main`;
 applicable fixes are forward-ported to `develop` through separate reviewed PRs.
+Development and merge authorization follow [CONTRIBUTING.md](../CONTRIBUTING.md):
+objective checks and resolved review threads gate routine work, while governed
+or release actions require explicit maintainer authorization.
 
 ### 0.1.1 — Multi-session attendance and reviewable reports
 
@@ -202,8 +205,9 @@ control artifacts and review each proposed change.
 - #395 can remain a coordination umbrella but should not own implementation.
 
 Closure, supersession, duplicate marking, label deletion, and issue #4 closure
-remain human-only. Comments require an approved manifest/PR; labels, milestones,
-priority, status, and body changes require specific review.
+remain maintainer-authorized actions. Backlog mutations require a reviewed
+manifest with the exact proposed operation; labels, milestones, priority,
+status, and body changes require specific review.
 
 ## Capabilities newly added to the roadmap
 
@@ -238,12 +242,15 @@ Maintenance work runs beside, not inside, feature tranches:
   assertions without hiding real warnings.
 - Review the five documented skips and remove skips that conceal supported
   behavior.
+- Raise the truthful all-supported-export coverage floor from 85% toward 90%
+  with bounded tests; do not report a handpicked API subset as the public
+  surface.
 - Resolve current lint findings incrementally; do not use broad mechanical
   rewrites in release PRs.
 - Remove disabled vignettes, historical artifacts, stale generated documents,
   and remote branches only after evidence and separate approval.
-- Make CI, coverage, lint, pkgdown, and release workflows report their true
-  scope and status.
+- Keep required CI and coverage truthful. Reduce the advisory lint baseline in
+  bounded maintenance changes before promoting lint to a required gate.
 - Benchmark before optimizing. Large-file work must be triggered by measured
   workload limits, not historical severity labels.
 

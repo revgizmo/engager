@@ -82,6 +82,34 @@ tarball_package_version <- function(path) {
   version
 }
 
+script_directory <- function() {
+  file_arg <- grep(
+    "^--file=",
+    commandArgs(trailingOnly = FALSE),
+    value = TRUE
+  )
+  if (length(file_arg) != 1L) {
+    fail("Could not determine the installed-UAT script directory")
+  }
+  dirname(normalizePath(sub("^--file=", "", file_arg), mustWork = TRUE))
+}
+
+read_supported_exports <- function() {
+  path <- file.path(script_directory(), "supported-exports.txt")
+  if (!file.exists(path)) {
+    fail("Supported-export allowlist not found: ", path)
+  }
+  entries <- trimws(readLines(path, warn = FALSE))
+  entries <- entries[nzchar(entries) & !startsWith(entries, "#")]
+  if (length(entries) == 0L) {
+    fail("Supported-export allowlist is empty: ", path)
+  }
+  if (anyDuplicated(entries)) {
+    fail("Supported-export allowlist contains duplicates: ", path)
+  }
+  sort(entries)
+}
+
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) < 1 || args[[1]] %in% c("-h", "--help")) {
   cat(
@@ -156,43 +184,7 @@ check(
 )
 visible_functions <- engager::get_visible_functions("expert")
 namespace_exports <- getNamespaceExports("engager")
-expected_exports <- c(
-  "analyze_transcripts",
-  "anonymize_educational_data",
-  "basic_transcript_analysis",
-  "batch_basic_analysis",
-  "consolidate_transcript",
-  "detect_unmatched_names",
-  "ensure_privacy",
-  "find_function_for_task",
-  "generate_privacy_review_report",
-  "get_smart_recommendations",
-  "get_ux_level",
-  "get_visible_functions",
-  "load_roster",
-  "load_zoom_transcript",
-  "match_names_workflow",
-  "plot_users",
-  "privacy_audit",
-  "process_zoom_transcript",
-  "quick_analysis",
-  "review_privacy_risks",
-  "set_ux_level",
-  "show_available_functions",
-  "show_error_recovery",
-  "show_function_categories",
-  "show_function_help",
-  "show_getting_started",
-  "show_privacy_guidance",
-  "show_troubleshooting",
-  "show_workflow_help",
-  "summarize_transcript_files",
-  "summarize_transcript_metrics",
-  "user_friendly_error",
-  "validate_privacy_compliance",
-  "write_metrics",
-  "write_unresolved"
-)
+expected_exports <- read_supported_exports()
 unexpected_exports <- setdiff(namespace_exports, expected_exports)
 missing_exports <- setdiff(expected_exports, namespace_exports)
 check(

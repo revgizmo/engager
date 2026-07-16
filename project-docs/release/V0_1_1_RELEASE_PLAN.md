@@ -5,8 +5,8 @@ protected `develop` while `engager` 0.1.0 remains under CRAN review. Merging
 0.1.1 package content to `main` is governed by the T6 release gates and remains
 strictly blocked until at least the 0.1.0 acceptance closeout is complete.
 
-Last reconciled: 2026-07-15 against `main` at
-`f0c98c2addedc8507922dd75b3dadac434559958` and the live GitHub backlog.
+Last reconciled: 2026-07-15 against the stable `main` release line and the live
+GitHub backlog.
 
 ## Release thesis
 
@@ -64,11 +64,14 @@ still requires the following steps after publication:
    accepted package-content commit, publishing the GitHub release, or closing
    issue #4.
 
-The protected `develop` branch requires reviewed pull requests, one approving
-review, dismissal of stale approvals after a push, resolved review threads,
-strict `R CMD check` passing, linear history, and protection from force-push or
-deletion. The obsolete `development` branch is not reused or deleted as part of
-this release tranche.
+The protected `develop` branch requires pull requests, resolved review threads,
+strict `R-CMD-check` and `Coverage` passing, squash-only linear history, and
+protection from force-push or deletion. Routine changes do not require a formal
+GitHub approving review. Public API, privacy or schema contracts, repository
+rulesets, CRAN remediation, and release promotion require explicit maintainer
+authorization under [CONTRIBUTING.md](../../CONTRIBUTING.md). Automated review
+is evidence, not authorization. The obsolete `development` branch is not reused
+or deleted as part of this release tranche.
 
 ## Product boundary
 
@@ -106,8 +109,8 @@ Each tranche starts from current `origin/develop` in a dedicated worktree and
 targets `develop`. CRAN remediation is the only package-content lane based on
 `main` while 0.1.0 remains under review. Before delegation, scan live issues,
 PRs, branches, and worktrees for duplicate ownership. Each implementation PR
-runs targeted tests, full tests, `devtools::document()`, `git diff --check`, and
-the hosted required checks.
+runs targeted tests, the canonical non-mutating validator, intentional
+documentation generation when applicable, and the hosted required checks.
 
 ### T0 — Development kickoff
 
@@ -207,8 +210,9 @@ A GO disposition requires:
   functions are added.
 - Full tests have zero failures; every remaining warning and skip is explained.
 - `R CMD check --as-cran` has zero errors and warnings and only explained notes.
-- Hosted Linux, Windows, and macOS checks, coverage, lint, and documentation
-  checks pass at the exact release head.
+- Hosted Linux, Windows, and macOS `R-CMD-check` plus `Coverage` pass at the
+  exact release head; generated documentation is drift-free and advisory lint
+  findings are reviewed.
 - The exact source tarball passes hygiene inspection and installed-package UAT.
 - R-devel win-builder and a documented current secondary remote check complete.
 - The maintainer approves the exact candidate checksum before manual upload.

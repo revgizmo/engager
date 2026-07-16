@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: 📋 Roadmap Implementation
-    url: https://github.com/revgizmo/career-data-science/blob/main/STRATEGIC_ROADMAP_AND_ACTION_PLAN.md
-    about: View the strategic roadmap and implementation plan
-  - name: ✅ Active Checklist
-    url: https://github.com/revgizmo/career-data-science/blob/main/ACTIVE_ROADMAP_CHECKLIST.md
-    about: Track progress on the active roadmap checklist
-  - name: 📊 Process Management
-    url: https://github.com/revgizmo/career-data-science/blob/main/PROCESS_MANAGEMENT_GUIDE.md
-    about: Learn about our process management approach
+  - name: Product roadmap
+    url: https://github.com/revgizmo/engager/blob/main/project-docs/ROADMAP.md
+    about: Review supported scope and release horizons before proposing work
+  - name: Development policy
+    url: https://github.com/revgizmo/engager/blob/main/CONTRIBUTING.md
+    about: Review branch, validation, review, and authorization requirements
+  - name: Version 0.1.1 release plan
+    url: https://github.com/revgizmo/engager/blob/main/project-docs/release/V0_1_1_RELEASE_PLAN.md
+    about: Review the active feature-release boundary and delivery tranches
