@@ -1,7 +1,7 @@
 Package: engager
 Type: Package
 Title: Analyze Student Engagement from 'WebVTT' Transcripts
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: person(given = "Conor",
                   family = "Healy",
                   role = c("aut", "cre"),
