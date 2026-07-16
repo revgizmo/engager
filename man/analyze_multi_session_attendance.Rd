@@ -18,17 +18,30 @@ with \code{session_id}, \code{transcript_file}, \code{status}, and optional \cod
 \item{roster_data}{A data frame with \code{student_id}, \code{preferred_name}, optional
 semicolon-delimited \code{aliases}, and optional logical \code{eligible}.}
 
-\item{unmatched_names_action}{Either \code{"warn"} or \code{"stop"}.}
+\item{unmatched_names_action}{Either \code{"warn"} to return attendance with
+structured unmatched-speaker problems, or \code{"stop"} to fail without
+returning partial attendance.}
 
-\item{min_attendance_threshold}{One finite numeric scalar in \verb{[0, 1]}.}
+\item{min_attendance_threshold}{One finite numeric scalar in \verb{[0, 1]}. A
+participant meets the threshold when their attendance rate is greater than
+or equal to this value.}
 }
 \value{
-An internal \code{engager_attendance} object containing typed attendance,
-participant, session, problem, and metadata components.
+An \code{engager_attendance} object containing \code{attendance},
+\code{participant_summary}, \code{session_summary}, \code{problems}, and \code{metadata}
+components under schema \code{engager_attendance_v1}.
 }
 \description{
-Internal 0.1.1 engine. The roster defines the participant universe and
-exact matching determines presence. The returned object contains local
-roster identifiers and is not a shareable report.
+The roster defines the participant universe and exact name matching
+determines presence. Cancelled sessions remain visible but do not contribute
+to attendance denominators. The returned object contains local roster
+identifiers and should be treated as sensitive working data; use
+\code{\link[=generate_attendance_report]{generate_attendance_report()}} for a reviewable output.
 }
-\keyword{internal}
+\section{Privacy}{
+
+The analysis object contains the roster's \code{student_id} values. Unmatched
+speakers are represented only by counts in the returned problems table.
+Neither behavior establishes anonymity, legal compliance, or institutional
+approval.
+}

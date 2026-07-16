@@ -16,9 +16,10 @@ generate_attendance_report(
 \item{analysis_results}{An \code{engager_attendance} object returned by
 \code{analyze_multi_session_attendance()}.}
 
-\item{output_file}{Optional path for the deterministic Markdown report.}
+\item{output_file}{Optional path for the deterministic Markdown report. Its
+parent directory must already exist.}
 
-\item{detail}{Either \code{"aggregate"} or \code{"participant"}.}
+\item{detail}{Either \code{"aggregate"} (the default) or \code{"participant"}.}
 
 \item{identifier_method}{For participant detail, one of \code{"mask"}, \code{"hash"},
 or \code{"pseudonymize"}.}
@@ -26,14 +27,19 @@ or \code{"pseudonymize"}.}
 \item{salt}{Required non-empty salt when \code{identifier_method = "hash"}.}
 }
 \value{
-Deterministic Markdown report content as a character vector.
+The deterministic Markdown report as a character vector. When
+\code{output_file} is supplied, the same content is written and returned.
 }
 \description{
-Internal 0.1.1 report engine. Aggregate output is the default and contains
-no participant identifiers or transcript text. Participant detail is an
-explicit opt-in and requires a supported technical identifier
-transformation. These operations do not establish anonymity, legal
-compliance, institutional approval, or protection from contextual
-disclosure in small cohorts.
+Aggregate output is the default and contains no participant identifiers or
+transcript text. Participant detail is an explicit opt-in and requires a
+supported technical identifier transformation. These operations do not
+establish anonymity, legal compliance, institutional approval, or protection
+from contextual disclosure in small cohorts.
 }
-\keyword{internal}
+\section{Participant detail}{
+
+Raw participant identifiers cannot be requested. Participant detail requires
+\code{identifier_method = "mask"}, \code{"hash"}, or \code{"pseudonymize"}; hash mode also
+requires an explicit non-empty \code{salt}.
+}

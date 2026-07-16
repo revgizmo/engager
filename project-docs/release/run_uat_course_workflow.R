@@ -190,7 +190,7 @@ missing_exports <- setdiff(expected_exports, namespace_exports)
 check(
   length(unexpected_exports) == 0 && length(missing_exports) == 0,
   paste0(
-    "installed namespace matches the focused v0.1.0 export allowlist",
+    "installed namespace matches the supported export allowlist",
     if (length(unexpected_exports) > 0) {
       paste0("; unexpected: ", paste(unexpected_exports, collapse = ", "))
     } else {
@@ -370,6 +370,124 @@ check(
 roster <- engager::load_roster(roster_path)
 check(is.data.frame(roster) && nrow(roster) > 0, "loaded installed ideal course roster")
 
+attendance_fixture_dir <- system.file(
+  "extdata",
+  "attendance-contract",
+  package = "engager"
+)
+check(
+  dir.exists(attendance_fixture_dir),
+  "discovered installed synthetic attendance fixture directory"
+)
+attendance_roster_path <- file.path(attendance_fixture_dir, "roster.csv")
+attendance_roster <- utils::read.csv(
+  attendance_roster_path,
+  stringsAsFactors = FALSE
+)
+attendance_roster$eligible <-
+  tolower(attendance_roster$eligible) == "true"
+check(
+  nrow(attendance_roster) == 6L &&
+    identical(sum(attendance_roster$eligible), 5L),
+  "loaded installed attendance roster with five eligible participants"
+)
+
+attendance_sessions <- data.frame(
+  session_id = c("session-03", "session-01", "session-02"),
+  transcript_file = file.path(
+    attendance_fixture_dir,
+    c("session-03.vtt", "session-01.vtt", "session-02.vtt")
+  ),
+  status = "recorded",
+  session_at = as.POSIXct(
+    c(
+      "2026-01-24 09:00:00",
+      "2026-01-10 09:00:00",
+      "2026-01-17 09:00:00"
+    ),
+    tz = "UTC"
+  ),
+  stringsAsFactors = FALSE
+)
+attendance_warnings <- character()
+attendance_analysis <- withCallingHandlers(
+  engager::analyze_multi_session_attendance(
+    attendance_sessions,
+    attendance_roster,
+    min_attendance_threshold = 2 / 3
+  ),
+  warning = function(warning) {
+    attendance_warnings <<- c(attendance_warnings, conditionMessage(warning))
+    invokeRestart("muffleWarning")
+  }
+)
+check(
+  inherits(attendance_analysis, "engager_attendance") &&
+    identical(attendance_analysis$metadata$schema_version, "engager_attendance_v1"),
+  "ran installed multi-session attendance analysis"
+)
+check(
+  identical(
+    attendance_analysis$session_summary$session_id,
+    c("session-01", "session-02", "session-03")
+  ),
+  "attendance sessions are ordered chronologically"
+)
+check(
+  identical(attendance_analysis$metadata$eligible_session_count, 3L) &&
+    identical(attendance_analysis$metadata$eligible_roster_size, 5L) &&
+    all(attendance_analysis$participant_summary$eligible_sessions == 3L),
+  "attendance denominators use three recorded sessions and five eligible participants"
+)
+check(
+  any(attendance_analysis$problems$code == "unmatched_speaker") &&
+    sum(attendance_analysis$session_summary$unmatched_speaker_count) == 1L &&
+    any(grepl("unmatched speaker", attendance_warnings, fixed = TRUE)),
+  "unmatched speakers remain separate from roster attendance and are reported"
+)
+
+aggregate_attendance_path <- file.path(artifact_dir, "attendance_aggregate.md")
+masked_attendance_path <- file.path(artifact_dir, "attendance_masked.md")
+aggregate_attendance_report <- engager::generate_attendance_report(
+  attendance_analysis,
+  output_file = aggregate_attendance_path
+)
+masked_attendance_report <- engager::generate_attendance_report(
+  attendance_analysis,
+  output_file = masked_attendance_path,
+  detail = "participant",
+  identifier_method = "mask"
+)
+check(
+  non_empty_file(aggregate_attendance_path) &&
+    !any(grepl("## Participant detail", aggregate_attendance_report, fixed = TRUE)),
+  "generated aggregate attendance report by default"
+)
+check(
+  non_empty_file(masked_attendance_path) &&
+    any(grepl("## Participant detail (mask identifiers)", masked_attendance_report, fixed = TRUE)) &&
+    any(grepl("Student_1", masked_attendance_report, fixed = TRUE)),
+  "generated explicitly requested masked participant report"
+)
+attendance_forbidden <- c(
+  attendance_roster$student_id,
+  attendance_roster$preferred_name,
+  split_aliases(attendance_roster$aliases),
+  "Guest Nova",
+  "Welcome back",
+  "Good morning",
+  attendance_sessions$transcript_file
+)
+attendance_report_hits <- unlist(lapply(
+  c(aggregate_attendance_path, masked_attendance_path),
+  contains_identifiers,
+  identifiers = attendance_forbidden
+))
+check(
+  length(attendance_report_hits) == 0L,
+  "attendance reports contain no raw synthetic identifiers, transcript text, or source paths"
+)
+
 transform_input <- tibble::tibble(
   student_id = c("UAT-RAW-1", "UAT-RAW-1", NA_character_, ""),
   preferred_name = c("UAT Raw Name", "UAT Raw Name", NA_character_, "  "),
@@ -516,7 +634,9 @@ privacy_checked_paths <- c(
   session_summary_path,
   single_session_path,
   basic_workflow_path,
-  privacy_report_path
+  privacy_report_path,
+  aggregate_attendance_path,
+  masked_attendance_path
 )
 identifier_hits <- unlist(lapply(privacy_checked_paths, contains_identifiers, identifiers = identifier_values))
 check(
@@ -561,6 +681,9 @@ evidence_lines <- c(
   paste0("- Beginner workflow metric rows: ", nrow(basic_workflow$analysis)),
   paste0("- Matched transcript rows: ", sum(!is.na(match_result$transcripts_with_ids$student_id))),
   paste0("- Unresolved speaker groups: ", nrow(unresolved_public)),
+  paste0("- Attendance eligible sessions: ", attendance_analysis$metadata$eligible_session_count),
+  paste0("- Attendance eligible participants: ", attendance_analysis$metadata$eligible_roster_size),
+  paste0("- Attendance structured problems: ", sum(attendance_analysis$problems$count)),
   paste0("- Privacy review passed field: ", privacy_review$passed),
   paste0("- Privacy review PII columns detected: ", paste(privacy_review$pii_detected, collapse = ", ")),
   "",
@@ -572,6 +695,8 @@ evidence_lines <- c(
   paste0("- ", basic_workflow_path),
   paste0("- ", unresolved_path),
   paste0("- ", privacy_report_path),
+  paste0("- ", aggregate_attendance_path),
+  paste0("- ", masked_attendance_path),
   paste0("- ", install_log)
 )
 writeLines(evidence_lines, evidence_path)

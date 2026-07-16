@@ -65,13 +65,11 @@ test_that("exported onboarding recommends only callable public functions", {
   )
 
   expect_length(unexpected_calls, 0)
-  expect_false("analyze_multi_session_attendance" %in% getNamespaceExports("engager"))
-  expect_false("generate_attendance_report" %in% getNamespaceExports("engager"))
-  expect_false(any(grepl("analyze_multi_session_attendance", outputs, fixed = TRUE)))
-  expect_false(any(grepl("generate_attendance_report", outputs, fixed = TRUE)))
+  expect_true("analyze_multi_session_attendance" %in% getNamespaceExports("engager"))
+  expect_true("generate_attendance_report" %in% getNamespaceExports("engager"))
 })
 
-test_that("active release documentation stays within the focused v0.1.0 surface", {
+test_that("active release documentation includes the supported attendance workflow", {
   source_root <- normalizePath(testthat::test_path("..", ".."), mustWork = FALSE)
   documentation_paths <- c(
     file.path(source_root, "README.Rmd"),
@@ -84,8 +82,8 @@ test_that("active release documentation stays within the focused v0.1.0 surface"
 
   documentation <- unlist(lapply(documentation_paths, readLines, warn = FALSE))
   expect_true(any(grepl("basic_transcript_analysis(", documentation, fixed = TRUE)))
-  expect_false(any(grepl("analyze_multi_session_attendance(", documentation, fixed = TRUE)))
-  expect_false(any(grepl("generate_attendance_report(", documentation, fixed = TRUE)))
+  expect_true(any(grepl("analyze_multi_session_attendance(", documentation, fixed = TRUE)))
+  expect_true(any(grepl("generate_attendance_report(", documentation, fixed = TRUE)))
   expect_false(any(grepl('method = "aggregate"', documentation, fixed = TRUE)))
 })
 

@@ -203,6 +203,6 @@ test_that("attendance report validates schema and escapes Markdown cells", {
   expect_match(report, "session\\\\|one review", fixed = TRUE)
 })
 
-test_that("attendance report remains internal until T5", {
-  expect_false("generate_attendance_report" %in% getNamespaceExports("engager"))
+test_that("attendance report is exported at the T5 public boundary", {
+  expect_true("generate_attendance_report" %in% getNamespaceExports("engager"))
 })
