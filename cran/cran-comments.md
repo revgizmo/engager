@@ -1,108 +1,86 @@
-# CRAN Comments for engager Package
+# CRAN Comments for engager 0.1.1
 
 ## Package Information
 
 - **Package**: engager
-- **Version**: 0.1.0
-- **Submission type**: Initial CRAN submission
+- **Version**: 0.1.1
+- **Submission type**: Update following the initial 0.1.0 release
+
+## Release Summary
+
+This release adds two public functions:
+
+- `analyze_multi_session_attendance()` performs deterministic exact
+  roster-based attendance analysis across multiple WebVTT sessions.
+- `generate_attendance_report()` creates aggregate Markdown reports by
+  default. Participant detail requires an explicit masking, hashing, or
+  pseudonymization method; raw participant detail is not available.
+
+The release does not add fuzzy matching, generic aggregate anonymization,
+longitudinal student profiles, risk scoring, or new transcript formats.
 
 ## Test Environments
 
-- **Local**: macOS Tahoe 26.5.2, R 4.5.3 (2026-03-11), aarch64-apple-darwin20
-- **GitHub Actions baseline**: Ubuntu, Windows, and macOS with R release
-- **Initial R-devel win-builder**: Windows Server 2022 x64, R Under development
-  (2026-07-10 r90234 ucrt)
-- **Replacement R-devel win-builder**: Windows Server 2022 x64, R Under
-  development (2026-07-12 r90242 ucrt)
-
-## CRAN Reviewer Response
-
-The initial submission received this request from Uwe Ligges:
-
-> Possibly misspelled words in DESCRIPTION:
-> WebVTT (3:49, 10:5)
->
-> Please single quote software names in both Title and Description fields
-> of the DESCRIPTION file.
->
-> Is there some reference about the method you can add in the Description
-> field in the form Authors (year) <doi:10.....> or link tom the format in
-> the form <https://.....>?
-
-In response, the Title and Description now single-quote `WebVTT` and `Zoom`,
-and the Description links to the W3C specification for the WebVTT format:
-<https://www.w3.org/TR/webvtt1/>. The package calculates descriptive
-transcript-derived participation metrics rather than implementing a named
-published research method. `WebVTT` and `reviewable` were also added to the
-package spelling wordlist.
+- **Local**: macOS Tahoe 26.5.2, R 4.5.3 (2026-03-11),
+  aarch64-apple-darwin20
+- **GitHub Actions**: Ubuntu, Windows, and macOS with R release — pending
+- **R-devel win-builder**: pending
+- **Secondary remote check**: R-release win-builder — pending
 
 ## R CMD Check Results
+
+A network-enabled `R CMD check --no-manual --as-cran` of the exact source
+tarball completed with:
 
 - **Errors**: 0
 - **Warnings**: 0
 - **Notes**: 1
 
-The package note is the expected informational `New submission` note. A
-canonical local check with incoming feasibility disabled completed with 0
-errors, 0 warnings, and 0 notes. A network-enabled check of the exact
-replacement tarball completed with 0 errors, 0 warnings, and 2 notes: `New
-submission` and the local machine's outdated HTML Tidy. Replacement R-devel
-win-builder completed with 0 errors, 0 warnings, and 1 incoming-feasibility
-note: `New submission` plus `reviewable` as a possible misspelling. `reviewable`
-is an intentional English word. The reviewer-reported `WebVTT` flag is no
-longer present.
+The note is `New submission`. At validation time, version 0.1.0 remained under
+CRAN review and `engager` was not yet present in the CRAN package index.
+
+The canonical sandboxed local validator also passed with 0 errors, 0 warnings,
+and two environment-only notes: incoming URL checks were unavailable without
+network access, and the current time could not be verified. The network-enabled
+check above verified URLs and timestamps successfully.
 
 ## Reverse Dependencies
 
-- **None** (new package)
+- None at candidate validation time; the package was not yet published on CRAN.
 
-## Additional Notes
+## Validation Details
 
-- The full local test suite passes with 0 failures, 67 expected warnings, and
-  5 documented skips. Four are diagnostic placeholder tests and one covers an
-  internal empty-session-mapping edge case.
-- An installed-package UAT installs the source tarball into an isolated library
-  and exercises bundled synthetic transcript discovery, beginner and advanced
-  workflows, name matching, privacy review, CSV/report outputs, onboarding
-  guidance, the exact 35-function export allowlist, bounded identifier
-  transformations, and all installed vignettes.
-- Installed-package checks verify that plot labels are masked for `mask`,
-  `privacy_standard`, and `privacy_strict`; labels remain visible only for the
-  explicit `none` setting, and vector privacy input is normalized before
-  masking.
-- The UAT uses synthetic fixtures only and writes artifacts outside the source
-  repository.
-- Privacy-supporting defaults mask recognized structured identifier fields;
-  free transcript text and contextual disclosure risks still require local
-  review.
-- Metric CSV exports omit raw transcript/comment text by default.
-- Privacy and FERPA-oriented documentation is guidance only and does not
-  certify legal or institutional compliance.
-- The release-candidate tarball contains 270 entries. Inspection found no
-  project-only release documents, development scripts, nested archives,
-  `.Rcheck` directories, local libraries, generated UAT output, or private
-  transcript/roster paths.
-- The replacement release candidate was built from package-content commit
-  `67918c4904c072e91f378f3bb3677d2ffdd35bda`. Its SHA-256 is
-  `2a8087a2b315fac48de8fa8239465d7360152dacf0c725d803e5cdeb50ce6ae1`.
-- Prior hosted baseline checks passed for R CMD check on Ubuntu,
-  Windows, and macOS, lint, package coverage, and pkgdown Pages deployment.
-  Overall coverage was 89.35%; coverage across the declared strategic exported
-  API was 93.33%.
-- The replacement installed-package UAT passed, and tarball inspection again
-  found 270 clean entries with no project-only or private/local artifacts.
-- The exact replacement tarball passed R-devel win-builder installation,
-  examples, tests, vignettes, and PDF/HTML manual checks.
+- The full test suite passes with 0 failures, 67 expected warning-path
+  assertions, and 5 documented skips. Four skips are empty diagnostic
+  placeholders; one covers an internal empty-session-mapping edge case.
+- Installed-package UAT installs the source tarball into an isolated library
+  and exercises the complete 37-function export allowlist, beginner and batch
+  workflows, exact roster matching, three-session attendance analysis,
+  aggregate-default reporting, explicitly masked participant reporting,
+  identifier transformations, plots, exports, privacy review, and installed
+  vignettes.
+- UAT scans generated attendance reports and other exported artifacts for raw
+  synthetic roster identifiers, transcript text, and source paths.
+- Complete supported-export statement coverage is 86.22%, above the declared
+  85% floor; overall package coverage is 89.16%.
+- The release tarball contains 288 entries. Inspection found no `.git` pointer,
+  project-only directories, UAT output, nested archives, local libraries,
+  backups, or private transcript/roster paths.
+- Candidate package-content commit:
+  `45c900a623a78adf713de0042c3a5914be842dcf`.
+- Candidate source-tarball SHA-256:
+  `bb860a6a94923a7001a6bc099f17f31e03f313f9edc5c69ceb030692989489de`.
 
 ## Validation Status
 
-- [x] Local tests passing
-- [x] Local `R CMD check --as-cran` completed at 0/0/0
-- [x] Examples and vignettes pass under `R CMD check`
-- [x] Source tarball builds and installs successfully
+- [x] Full tests pass with no failures
+- [x] Network-enabled local `R CMD check --as-cran` is 0 errors, 0 warnings,
+      and 1 explained note
+- [x] Generated documentation is current
+- [x] Source tarball builds, installs, and passes hygiene inspection
 - [x] Installed-package UAT passes
-- [x] Tarball hygiene inspection passes
-- [x] Release-surface remediation PR #566 merged with passing CI
-- [x] Feature-surface hardening and final product-voice/privacy review complete
-- [x] Replacement R-devel win-builder check complete
-- [ ] Maintainer final release disposition recorded
+- [x] Export allowlist and supported-export coverage contract pass
+- [ ] Required hosted checks pass at the exact release head
+- [ ] R-devel win-builder completes
+- [ ] Secondary remote check completes
+- [ ] Maintainer approves the exact candidate checksum for promotion
