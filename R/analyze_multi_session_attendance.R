@@ -404,19 +404,20 @@ prepare_attendance_roster <- function(roster_data) {
     )
   }
 
-  normalized_names <- unlist(lapply(seq_len(nrow(roster_spec)), function(i) {
+  roster_names <- lapply(seq_len(nrow(roster_spec)), function(i) {
     unique(normalize_name(c(
       roster_spec$preferred_name[i],
       split_aliases(roster_spec$aliases[i], delimiter = ";")
     )))
-  }), use.names = FALSE)
-  normalized_ids <- unlist(lapply(seq_len(nrow(roster_spec)), function(i) {
-    names_for_row <- unique(normalize_name(c(
-      roster_spec$preferred_name[i],
-      split_aliases(roster_spec$aliases[i], delimiter = ";")
-    )))
-    rep(roster_spec$student_id[i], length(names_for_row))
-  }), use.names = FALSE)
+  })
+  normalized_names <- unlist(roster_names, use.names = FALSE)
+  normalized_ids <- rep(
+    roster_spec$student_id,
+    times = vapply(roster_names, length, integer(1))
+  )
+  valid_name <- !is.na(normalized_names) & nzchar(normalized_names)
+  normalized_names <- normalized_names[valid_name]
+  normalized_ids <- normalized_ids[valid_name]
   collision <- vapply(unique(normalized_names), function(name) {
     length(unique(normalized_ids[normalized_names == name])) > 1L
   }, logical(1))
