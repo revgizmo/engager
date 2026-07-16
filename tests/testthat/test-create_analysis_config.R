@@ -96,22 +96,30 @@ test_that("create_analysis_config validates input parameters", {
 test_that("create_analysis_config defaults discover bundled synthetic transcripts", {
   config <- create_analysis_config()
 
-  transcript_files <- load_transcript_files_list(
-    data_folder = config$paths$data_folder,
-    transcripts_folder = config$paths$transcripts_folder,
-    transcript_files_names_pattern = config$patterns$transcript_files_names,
-    dt_extract_pattern = config$patterns$dt_extract,
-    trnscrptflxtnsnpttrn = config$patterns$transcript_file_extension,
-    clsdcptnflxtnsnpttrn = config$patterns$closed_caption_file_extension,
-    recording_start_pattern = config$patterns$recording_start,
-    recording_start_format = config$patterns$recording_start_format,
-    start_time_local_tzone = config$patterns$start_time_local_tzone
+  expect_warning(
+    transcript_files <- load_transcript_files_list(
+      data_folder = config$paths$data_folder,
+      transcripts_folder = config$paths$transcripts_folder,
+      transcript_files_names_pattern = config$patterns$transcript_files_names,
+      dt_extract_pattern = config$patterns$dt_extract,
+      trnscrptflxtnsnpttrn = config$patterns$transcript_file_extension,
+      clsdcptnflxtnsnpttrn = config$patterns$closed_caption_file_extension,
+      recording_start_pattern = config$patterns$recording_start,
+      recording_start_format = config$patterns$recording_start_format,
+      start_time_local_tzone = config$patterns$start_time_local_tzone
+    ),
+    "Recording time could not be parsed for [0-9]+ sessions"
   )
 
   expect_gt(nrow(transcript_files), 0)
+  expect_true("session_key" %in% names(transcript_files))
   expect_true("transcript_file" %in% names(transcript_files))
   expect_true(any(transcript_files$transcript_file == "intro_statistics_week1.vtt"))
-  expect_false(any(is.na(transcript_files$recording_start)))
+  expect_true(any(is.na(transcript_files$recording_start)))
+  expect_identical(
+    is.na(transcript_files$recording_start),
+    is.na(transcript_files$start_time_local)
+  )
 })
 
 test_that("create_analysis_config works with edge cases", {

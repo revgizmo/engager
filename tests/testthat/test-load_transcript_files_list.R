@@ -62,17 +62,90 @@ test_that("load_transcript_files_list groups non-Zoom transcript siblings by ses
     file.path(transcripts_dir, "session1.chat.vtt")
   )
 
-  result <- load_transcript_files_list(
-    data_folder = temp_dir,
-    transcripts_folder = "transcripts",
-    transcript_files_names_pattern = "session1"
+  expect_warning(
+    result <- load_transcript_files_list(
+      data_folder = temp_dir,
+      transcripts_folder = "transcripts",
+      transcript_files_names_pattern = "session1"
+    ),
+    "Recording time could not be parsed for 1 session"
   )
 
   expect_equal(nrow(result), 1)
+  expect_equal(result$session_key, "session1")
   expect_equal(result$date_extract, "session1")
+  expect_true(is.na(result$recording_start))
+  expect_true(is.na(result$start_time_local))
   expect_equal(result$transcript_file, "session1.transcript.vtt")
   expect_equal(result$closed_caption_file, "session1.cc.vtt")
   expect_equal(result$chat_file, "session1.chat.vtt")
+})
+
+test_that("load_transcript_files_list orders known and unknown sessions deterministically", {
+  temp_dir <- tempfile()
+  transcripts_dir <- file.path(temp_dir, "transcripts")
+  dir.create(transcripts_dir, recursive = TRUE)
+  on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
+
+  file.create(
+    file.path(transcripts_dir, "zeta.transcript.vtt"),
+    file.path(transcripts_dir, "alpha.transcript.vtt"),
+    file.path(transcripts_dir, "GMT20240612-130000_Recording.transcript.vtt"),
+    file.path(transcripts_dir, "GMT20240612-120000_Recording.transcript.vtt")
+  )
+
+  load_sessions <- function() {
+    load_transcript_files_list(
+      data_folder = temp_dir,
+      transcripts_folder = "transcripts",
+      transcript_files_names_pattern = "[.]transcript[.]vtt$"
+    )
+  }
+
+  expect_warning(
+    first <- load_sessions(),
+    "Recording time could not be parsed for 2 sessions"
+  )
+  expect_warning(
+    second <- load_sessions(),
+    "Recording time could not be parsed for 2 sessions"
+  )
+
+  expect_identical(first, second)
+  expect_equal(
+    first$session_key,
+    c(
+      "GMT20240612-120000_Recording",
+      "GMT20240612-130000_Recording",
+      "alpha",
+      "zeta"
+    )
+  )
+  expect_false(any(is.na(first$recording_start[1:2])))
+  expect_true(all(is.na(first$recording_start[3:4])))
+  expect_true(all(is.na(first$start_time_local[3:4])))
+})
+
+test_that("load_transcript_files_list rejects colliding session and file types", {
+  temp_dir <- tempfile()
+  transcripts_dir <- file.path(temp_dir, "transcripts")
+  dir.create(transcripts_dir, recursive = TRUE)
+  on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
+
+  file.create(
+    file.path(transcripts_dir, "lecture.vtt"),
+    file.path(transcripts_dir, "lecture.transcript.vtt")
+  )
+
+  expect_error(
+    load_transcript_files_list(
+      data_folder = temp_dir,
+      transcripts_folder = "transcripts",
+      transcript_files_names_pattern = "lecture"
+    ),
+    "1 session contains duplicate files of the same type",
+    class = "engager_schema_error"
+  )
 })
 
 test_that("load_transcript_files_list handles empty folder gracefully", {
