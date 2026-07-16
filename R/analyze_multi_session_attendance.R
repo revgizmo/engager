@@ -1,18 +1,30 @@
 #' Analyze Exact Roster Attendance Across Sessions
 #'
-#' Internal 0.1.1 engine. The roster defines the participant universe and
-#' exact matching determines presence. The returned object contains local
-#' roster identifiers and is not a shareable report.
+#' The roster defines the participant universe and exact name matching
+#' determines presence. Cancelled sessions remain visible but do not contribute
+#' to attendance denominators. The returned object contains local roster
+#' identifiers and should be treated as sensitive working data; use
+#' [generate_attendance_report()] for a reviewable output.
 #'
 #' @param sessions Either a character vector of WebVTT paths or a data frame
 #'   with `session_id`, `transcript_file`, `status`, and optional `session_at`.
 #' @param roster_data A data frame with `student_id`, `preferred_name`, optional
 #'   semicolon-delimited `aliases`, and optional logical `eligible`.
-#' @param unmatched_names_action Either `"warn"` or `"stop"`.
-#' @param min_attendance_threshold One finite numeric scalar in `[0, 1]`.
-#' @return An internal `engager_attendance` object containing typed attendance,
-#'   participant, session, problem, and metadata components.
-#' @keywords internal
+#' @param unmatched_names_action Either `"warn"` to return attendance with
+#'   structured unmatched-speaker problems, or `"stop"` to fail without
+#'   returning partial attendance.
+#' @param min_attendance_threshold One finite numeric scalar in `[0, 1]`. A
+#'   participant meets the threshold when their attendance rate is greater than
+#'   or equal to this value.
+#' @return An `engager_attendance` object containing `attendance`,
+#'   `participant_summary`, `session_summary`, `problems`, and `metadata`
+#'   components under schema `engager_attendance_v1`.
+#' @section Privacy:
+#' The analysis object contains the roster's `student_id` values. Unmatched
+#' speakers are represented only by counts in the returned problems table.
+#' Neither behavior establishes anonymity, legal compliance, or institutional
+#' approval.
+#' @export
 analyze_multi_session_attendance <- function(
     sessions,
     roster_data,
@@ -568,22 +580,27 @@ summary.engager_attendance <- function(object, ...) {
 
 #' Generate a Reviewable Attendance Report
 #'
-#' Internal 0.1.1 report engine. Aggregate output is the default and contains
-#' no participant identifiers or transcript text. Participant detail is an
-#' explicit opt-in and requires a supported technical identifier
-#' transformation. These operations do not establish anonymity, legal
-#' compliance, institutional approval, or protection from contextual
-#' disclosure in small cohorts.
+#' Aggregate output is the default and contains no participant identifiers or
+#' transcript text. Participant detail is an explicit opt-in and requires a
+#' supported technical identifier transformation. These operations do not
+#' establish anonymity, legal compliance, institutional approval, or protection
+#' from contextual disclosure in small cohorts.
 #'
 #' @param analysis_results An `engager_attendance` object returned by
 #'   `analyze_multi_session_attendance()`.
-#' @param output_file Optional path for the deterministic Markdown report.
-#' @param detail Either `"aggregate"` or `"participant"`.
+#' @param output_file Optional path for the deterministic Markdown report. Its
+#'   parent directory must already exist.
+#' @param detail Either `"aggregate"` (the default) or `"participant"`.
 #' @param identifier_method For participant detail, one of `"mask"`, `"hash"`,
 #'   or `"pseudonymize"`.
 #' @param salt Required non-empty salt when `identifier_method = "hash"`.
-#' @return Deterministic Markdown report content as a character vector.
-#' @keywords internal
+#' @return The deterministic Markdown report as a character vector. When
+#'   `output_file` is supplied, the same content is written and returned.
+#' @section Participant detail:
+#' Raw participant identifiers cannot be requested. Participant detail requires
+#' `identifier_method = "mask"`, `"hash"`, or `"pseudonymize"`; hash mode also
+#' requires an explicit non-empty `salt`.
+#' @export
 generate_attendance_report <- function(
     analysis_results,
     output_file = NULL,

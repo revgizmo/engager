@@ -23,7 +23,7 @@ loads `engager` from that library, and exercises:
 - Installed onboarding identity plus function-call checks across getting
   started, workflow, privacy, troubleshooting, task finder, smart
   recommendations, error recovery, and progressive guidance output.
-- Exact namespace comparison against the focused v0.1.0 export allowlist.
+- Exact namespace comparison against the supported export allowlist.
 - VTT loading with `load_zoom_transcript()`.
 - Transcript processing with `process_zoom_transcript()`.
 - Multi-file and single-file summarization with
@@ -41,6 +41,13 @@ loads `engager` from that library, and exercises:
   rejected, hash mode requires a caller-provided salt, and missing or blank
   identifiers are preserved.
 - CSV export through `write_metrics()`.
+- Multi-session attendance with `analyze_multi_session_attendance()`, including
+  chronological ordering, roster/session denominators, and structured
+  unmatched-speaker problems.
+- Aggregate-default and explicitly masked attendance reports with
+  `generate_attendance_report()`.
+- Attendance-report scans for raw synthetic roster identifiers, transcript
+  text, and source paths.
 - Installed vignette discovery with:
   `vignette(package = "engager")`,
   `vignette("getting-started", package = "engager")`,
@@ -53,8 +60,8 @@ loads `engager` from that library, and exercises:
 - R is installed and available to `Rscript`.
 - Package dependencies needed by the tarball are already installed in the
   normal user or site libraries.
-- The source tarball exists. Current release candidate filename:
-  `engager_0.1.0.tar.gz`.
+- The source tarball exists; replace `VERSION` below with the built package
+  version.
 - The command is run from the repository root.
 
 ## Command
@@ -64,7 +71,7 @@ Run the default UAT against the current release-candidate tarball:
 ```sh
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 Rscript project-docs/release/run_uat_course_workflow.R \
-  "$REPO_ROOT/engager_0.1.0.tar.gz"
+  "$REPO_ROOT/engager_VERSION.tar.gz"
 ```
 
 Optionally provide a persistent output directory:
@@ -72,7 +79,7 @@ Optionally provide a persistent output directory:
 ```sh
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 Rscript project-docs/release/run_uat_course_workflow.R \
-  "$REPO_ROOT/engager_0.1.0.tar.gz" \
+  "$REPO_ROOT/engager_VERSION.tar.gz" \
   /tmp/engager-uat-course-workflow
 ```
 
@@ -89,14 +96,20 @@ A passing run confirms:
 - Bundled synthetic course transcripts and roster fixtures are discoverable.
 - Installed onboarding uses the `engager` identity and progressive guidance
   names only exported functions.
-- The installed namespace exactly matches the focused v0.1.0 allowlist and
-  does not export unfinished attendance/reporting workflows.
+- The installed namespace exactly matches the supported allowlist, including
+  only the two approved attendance/reporting exports from this feature family.
 - One or more installed VTT transcript files load and process successfully.
 - The installed beginner workflow completes with non-empty metrics, a plot,
   and a non-empty CSV export.
 - Course-level summary metrics contain non-empty plausible data.
 - Exact name matching runs and links at least one transcript speaker to the
   synthetic roster.
+- Multi-session attendance preserves chronological ordering, uses the approved
+  denominators, and keeps unmatched speakers separate from roster attendance.
+- Aggregate attendance output is the default; participant detail appears only
+  after an explicit supported transformation.
+- Aggregate and masked attendance reports contain no checked raw synthetic
+  roster identifiers, transcript text, or source paths.
 - Unresolved-name output is written without raw names by default.
 - Privacy review and privacy report generation complete.
 - Supported identifier transformations remove recognized raw identifiers,
@@ -115,9 +128,10 @@ Treat the UAT as failed if any of these occur:
 - Installed fixtures are missing.
 - Installed onboarding uses the former package identity or advertises
   non-exported functions.
-- The namespace differs from the focused v0.1.0 export allowlist.
+- The namespace differs from the supported export allowlist.
 - Transcript loading, processing, summarization, beginner workflow, name
-  matching, privacy review, privacy report generation, or exports fail.
+  matching, attendance analysis, attendance reporting, privacy review, privacy
+  report generation, or exports fail.
 - Expected output files are missing or empty.
 - Exported summary/report files contain obvious raw synthetic course identifiers
   where the UAT expects masked output.
@@ -137,10 +151,11 @@ The synthetic fixtures include unmatched non-roster speakers, such as the
 instructor or guests. Unresolved-name output is expected as long as it is
 written through the privacy-safe unresolved-name path.
 
-## Evidence for Issue #4
+## Release evidence
 
-Before CRAN submission, paste a concise summary into issue #4 using the
-canonical template in `project-docs/release/UAT_RESULT_TEMPLATE.md`.
+Before a CRAN submission, paste a concise summary into the active release
+ledger using the canonical template in
+`project-docs/release/UAT_RESULT_TEMPLATE.md`.
 
 Include:
 
@@ -169,4 +184,4 @@ decisions, retention, and legal compliance.
 ## Result Template
 
 Use `project-docs/release/UAT_RESULT_TEMPLATE.md` as the canonical result
-template for issue #4 evidence.
+template for release evidence.

@@ -1,6 +1,13 @@
 # engager 0.1.1 (development version)
 
-* No user-facing changes yet.
+* Added `analyze_multi_session_attendance()` for deterministic, exact
+  roster-based attendance across multiple WebVTT sessions, with explicit
+  cancellation, denominator, threshold, and unmatched-speaker semantics.
+* Added `generate_attendance_report()` for deterministic aggregate Markdown
+  reports by default. Participant detail requires an explicit masking, hashing,
+  or pseudonymization method; raw participant detail is not available.
+* Added installed synthetic attendance fixtures, public workflow guidance, and
+  installed-tarball UAT for the complete three-session workflow.
 
 # engager 0.1.0
 

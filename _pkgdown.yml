@@ -48,6 +48,10 @@ reference:
   - detect_unmatched_names
   - match_names_workflow
   - write_unresolved
+- title: Multi-Session Attendance and Reports
+  contents:
+  - analyze_multi_session_attendance
+  - generate_attendance_report
 - title: Privacy Controls and Review
   contents:
   - anonymize_educational_data

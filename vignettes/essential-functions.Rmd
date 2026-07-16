@@ -20,17 +20,18 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-This vignette demonstrates the supported v0.1.0 core using the package's public API:
+This vignette demonstrates the supported core using the package's public API:
 
 - **Transcript Processing**: Loading and processing Zoom transcripts
 - **Privacy-Supporting Workflows**: Applying structured-field masking and technical review
 - **Analysis**: Core engagement metrics and analysis
 - **Name Matching**: Reviewable exact student name matching workflows
+- **Multi-Session Attendance**: Exact roster attendance and reviewable reports
 
 ## Supported Functions
 
 The package exposes additional interactive guidance helpers, but the functions
-below define the supported analysis workflow for v0.1.0:
+below define the supported analysis workflow:
 
 ```{r essential-functions, results='asis', echo=FALSE, message=FALSE, warning=FALSE}
 library(engager)
@@ -51,6 +52,8 @@ essential_functions <- c(
   "detect_unmatched_names",
   "match_names_workflow",
   "write_unresolved",
+  "analyze_multi_session_attendance",
+  "generate_attendance_report",
   "ensure_privacy",
   "privacy_audit",
   "anonymize_educational_data",
@@ -161,6 +164,12 @@ privacy_review$recommendations
 - `match_names_workflow()` - Apply the supported exact matching workflow
 - `write_unresolved()` - Write a privacy-supporting unresolved-name review file
 
+### Multi-Session Attendance
+- `analyze_multi_session_attendance()` - Analyze exact roster attendance across
+  sessions
+- `generate_attendance_report()` - Generate aggregate reports by default, with
+  transformed participant detail only by explicit request
+
 ### Utilities
 - `plot_users()` - Plot user engagement
 - `write_metrics()` - Export metrics
@@ -172,8 +181,10 @@ privacy_review$recommendations
 - Exact name matching reports unresolved names instead of guessing.
 - Output helpers mask recognized structured identifiers and omit raw comment
   text by default.
-- Version 0.1.0 does not generate polished course-level engagement reports or
-  support longitudinal individual-student reporting.
+- Multi-session attendance reports are aggregate by default. Participant detail
+  requires an explicit supported identifier transformation.
+- The package does not provide longitudinal individual-student reporting or
+  risk scoring.
 
 Users remain responsible for reviewing inputs, free text, outputs, sharing
 decisions, and institutional requirements.

@@ -5,6 +5,8 @@
     - [Installation](#installation)
     - [One-function beginner workflow](#one-function-beginner-workflow)
     - [Composable workflow](#composable-workflow)
+    - [Multi-session attendance and
+      reports](#multi-session-attendance-and-reports)
   - [Vignettes](#vignettes)
   - [What the Package Does](#what-the-package-does)
   - [Key Functions](#key-functions)
@@ -12,6 +14,8 @@
     - [Data Management](#data-management)
     - [Name Matching (Exact MVP)](#name-matching-exact-mvp)
     - [Analysis and Visualization](#analysis-and-visualization)
+    - [Multi-Session Attendance and
+      Reports](#multi-session-attendance-and-reports-1)
     - [Diagnostics](#diagnostics)
   - [Typical Workflow](#typical-workflow)
   - [Privacy Defaults](#privacy-defaults)
@@ -98,6 +102,57 @@ invisible(write_metrics(
 ))
 ```
 
+### Multi-session attendance and reports
+
+Use the bundled synthetic attendance fixtures to try the complete course
+workflow. The analysis object contains local roster identifiers and
+should be treated as sensitive working data. The default report is
+aggregate and contains no participant identifiers or transcript text.
+
+``` r
+attendance_dir <- system.file(
+  "extdata/attendance-contract",
+  package = "engager"
+)
+roster <- utils::read.csv(
+  file.path(attendance_dir, "roster.csv"),
+  stringsAsFactors = FALSE
+)
+roster$eligible <- tolower(roster$eligible) == "true"
+sessions <- data.frame(
+  session_id = sprintf("session-%02d", 1:3),
+  transcript_file = file.path(
+    attendance_dir,
+    sprintf("session-%02d.vtt", 1:3)
+  ),
+  status = "recorded",
+  session_at = as.POSIXct(
+    c(
+      "2026-01-10 09:00:00",
+      "2026-01-17 09:00:00",
+      "2026-01-24 09:00:00"
+    ),
+    tz = "UTC"
+  )
+)
+
+attendance <- suppressWarnings(analyze_multi_session_attendance(
+  sessions,
+  roster,
+  min_attendance_threshold = 2 / 3
+))
+
+aggregate_report <- generate_attendance_report(attendance)
+cat(aggregate_report, sep = "\n")
+
+# Participant detail is available only with an explicit transformation.
+masked_report <- generate_attendance_report(
+  attendance,
+  detail = "participant",
+  identifier_method = "mask"
+)
+```
+
 ## Vignettes
 
 For detailed workflows and examples, see the package vignettes:
@@ -122,8 +177,10 @@ The `engager` package provides tools for:
 3.  **Name Matching and Cleaning**: Match transcript names to student
     rosters
 4.  **Visualization**: Create plots to analyze participation patterns
-5.  **Exporting**: Write privacy-supporting participation metrics and
-    summaries
+5.  **Multi-Session Attendance**: Analyze exact roster attendance with
+    explicit denominator and unmatched-speaker semantics
+6.  **Exporting**: Write privacy-supporting participation metrics,
+    summaries, and aggregate attendance reports
 
 **Note**: The package specifically processes `.transcript.vtt` files
 (the canonical Zoom transcript files). Other Zoom file types like
@@ -173,6 +230,13 @@ res
 - `summarize_transcript_files()` - Generate metrics for multiple
   transcript files
 
+### Multi-Session Attendance and Reports
+
+- `analyze_multi_session_attendance()` - Analyze exact roster attendance
+  across sessions
+- `generate_attendance_report()` - Generate aggregate Markdown by
+  default or explicitly transformed participant detail
+
 ### Diagnostics
 
 Most functions are quiet by default to keep examples/tests clean. You
@@ -199,9 +263,10 @@ options(engager.verbose = FALSE)
 6.  **Export**: Write privacy-supporting metrics and summaries; save
     returned plot objects explicitly
 
-Version 0.1.0 provides per-session metrics, summaries, and plot objects.
-It does not generate a polished course-level engagement report or
-support longitudinal individual-student reporting.
+Multi-session attendance reports are reviewable and aggregate by
+default; participant detail requires an explicit masking, hashing, or
+pseudonymization method. The package does not provide longitudinal
+individual-student reporting or risk scoring.
 
 ## Privacy Defaults
 

@@ -275,3 +275,7 @@ test_that("attendance print and summary disclose aggregate counts only", {
   expect_identical(summarized$eligible_roster_size, 5L)
   expect_false(grepl("Ada Rowan|student-001|Guest Nova", disclosure_text))
 })
+
+test_that("attendance analysis is exported at the T5 public boundary", {
+  expect_true("analyze_multi_session_attendance" %in% getNamespaceExports("engager"))
+})
