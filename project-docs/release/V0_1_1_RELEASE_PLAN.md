@@ -2,8 +2,8 @@
 
 Status: approved planning baseline; isolated 0.1.1 development may proceed on
 protected `develop` while `engager` 0.1.0 remains under CRAN review. Merging
-0.1.1 package content to `main` remains blocked until the 0.1.0 acceptance
-closeout is complete.
+0.1.1 package content to `main` is governed by the T6 release gates and remains
+strictly blocked until at least the 0.1.0 acceptance closeout is complete.
 
 Last reconciled: 2026-07-15 against `main` at
 `f0c98c2addedc8507922dd75b3dadac434559958` and the live GitHub backlog.
@@ -66,7 +66,7 @@ still requires the following steps after publication:
 
 The protected `develop` branch requires reviewed pull requests, one approving
 review, dismissal of stale approvals after a push, resolved review threads,
-strict `R-CMD-check`, linear history, and protection from force-push or
+strict `R CMD check` passing, linear history, and protection from force-push or
 deletion. The obsolete `development` branch is not reused or deleted as part of
 this release tranche.
 
