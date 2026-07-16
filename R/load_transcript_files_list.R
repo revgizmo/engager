@@ -31,11 +31,12 @@ load_transcript_files_list <-
     # Use base R operations instead of dplyr to avoid segmentation fault
     # Create data frame with file names
     df <- data.frame(file_name = transcript_files, stringsAsFactors = FALSE)
+    df$session_key <- derive_transcript_session_key(df$file_name)
 
     # Extract date
     df$date_extract <- stringr::str_extract(df$file_name, dt_extract_pattern)
     missing_date <- is.na(df$date_extract) | !nzchar(df$date_extract)
-    df$date_extract[missing_date] <- derive_transcript_session_key(df$file_name[missing_date])
+    df$date_extract[missing_date] <- df$session_key[missing_date]
 
     # Determine file type
     df$file_type <- ifelse(
@@ -54,29 +55,49 @@ load_transcript_files_list <-
 
     # Extract and parse recording start time
     recording_start_str <- stringr::str_extract(df$file_name, recording_start_pattern)
-    df$recording_start <- lubridate::parse_date_time(recording_start_str, orders = recording_start_format)
-    df$recording_start <- as.POSIXct(df$recording_start, tz = "UTC")
+    df$recording_start <- as.POSIXct(
+      recording_start_str,
+      format = recording_start_format,
+      tz = "UTC"
+    )
     missing_start <- is.na(df$recording_start)
     if (any(missing_start)) {
-      fallback_session_keys <- unique(df$date_extract[missing_start])
-      fallback_recording_start <- as.POSIXct(
-        seq_along(fallback_session_keys),
-        origin = "1970-01-01",
-        tz = "UTC"
-      )
-      names(fallback_recording_start) <- fallback_session_keys
-      df$recording_start[missing_start] <- as.POSIXct(
-        fallback_recording_start[df$date_extract[missing_start]],
-        origin = "1970-01-01",
-        tz = "UTC"
+      unknown_session_count <- length(unique(df$session_key[missing_start]))
+      warning(
+        sprintf(
+          paste0(
+            "Recording time could not be parsed for %d session%s; ",
+            "recording_start and start_time_local remain NA. ",
+            "Unknown-time sessions are ordered by session_key."
+          ),
+          unknown_session_count,
+          if (unknown_session_count == 1L) "" else "s"
+        ),
+        call. = FALSE
       )
     }
     df$start_time_local <- lubridate::with_tz(df$recording_start, tzone = start_time_local_tzone)
 
-    # Pivot to wide format per recording using base R
-    groups_df <- unique(df[, c("date_extract", "recording_start", "start_time_local"), drop = FALSE])
-    # Ensure groups are ordered by time
-    groups_df <- groups_df[order(groups_df$start_time_local), , drop = FALSE]
+    # Pivot to wide format per stable session key using base R.
+    first_session_row <- match(unique(df$session_key), df$session_key)
+    groups_df <- df[
+      first_session_row,
+      c("session_key", "date_extract", "recording_start", "start_time_local"),
+      drop = FALSE
+    ]
+
+    # Known sessions sort chronologically. Unknown sessions sort after them by
+    # stable session key rather than by a fabricated timestamp or input order.
+    known_rows <- which(!is.na(groups_df$recording_start))
+    unknown_rows <- which(is.na(groups_df$recording_start))
+    known_rows <- known_rows[order(
+      groups_df$recording_start[known_rows],
+      groups_df$session_key[known_rows]
+    )]
+    unknown_rows <- unknown_rows[order(groups_df$session_key[unknown_rows])]
+    groups_df <- groups_df[c(known_rows, unknown_rows), , drop = FALSE]
+    rownames(groups_df) <- NULL
+
     # Initialize result with groups
     result <- groups_df
 
@@ -89,11 +110,13 @@ load_transcript_files_list <-
     # Fill in file names per group and type
     if (nrow(result) > 0) {
       for (k in seq_len(nrow(result))) {
-        row_date <- result$date_extract[k]
-        row_start <- result$recording_start[k]
+        row_session_key <- result$session_key[k]
         for (file_type in file_types) {
-          type_files <- df[df$file_type == file_type & df$date_extract == row_date &
-            df$recording_start == row_start, "file_name", drop = TRUE]
+          type_files <- df[
+            df$file_type == file_type & df$session_key == row_session_key,
+            "file_name",
+            drop = TRUE
+          ]
           if (length(type_files) > 0) {
             result[[file_type]][k] <- type_files[1]
           }
