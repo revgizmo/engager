@@ -1,0 +1,2 @@
+session_id,code,severity,count,message
+session-01,unmatched_speaker,warning,1,One unique speaker did not match the roster.

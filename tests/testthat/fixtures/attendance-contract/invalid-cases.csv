@@ -1,0 +1,13 @@
+case,input_surface,expected_class,reason
+blank_student_id,roster,engager_schema_error,student_id must be non-blank
+blank_preferred_name,roster,engager_schema_error,preferred_name must be non-blank
+duplicate_student_id,roster,engager_schema_error,student_id must be unique
+ambiguous_alias,roster,engager_schema_error,exact names and aliases must map uniquely
+duplicate_session_id,sessions,engager_schema_error,session_id must be unique
+duplicate_transcript_file,sessions,engager_schema_error,normalized transcript paths must be unique
+missing_recorded_file,sessions,engager_input_error,recorded transcript file must exist
+invalid_webvtt,sessions,engager_input_error,recorded transcript must be valid WebVTT
+fewer_than_two_recorded_sessions,sessions,engager_input_error,at least two recorded sessions are required
+unknown_session_status,sessions,engager_schema_error,status must be recorded or cancelled
+unmatched_stop,matching,engager_unmatched_error,stop policy aborts on unmatched speakers
+invalid_threshold,parameters,engager_input_error,threshold must be one finite number in the closed interval zero to one

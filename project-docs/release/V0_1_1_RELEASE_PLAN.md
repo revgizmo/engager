@@ -125,6 +125,7 @@ documentation generation when applicable, and the hosted required checks.
 
 - Branch: `codex/v011-attendance-contract`
 - Worktree: `engager-v011-attendance-contract`
+- Contract: [V0_1_1_ATTENDANCE_CONTRACT.md](V0_1_1_ATTENDANCE_CONTRACT.md)
 - Decide and document the roster authority, unresolved-speaker handling,
   absence versus failed-session semantics, denominator rules, threshold
   inclusivity, duplicate-session behavior, cancelled-session behavior, result

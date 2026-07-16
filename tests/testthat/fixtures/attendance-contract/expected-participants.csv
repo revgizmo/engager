@@ -1,0 +1,6 @@
+student_id,eligible_sessions,sessions_attended,attendance_rate,meets_threshold,is_one_time_attendee
+student-001,3,3,1,true,false
+student-002,3,2,0.6666666667,true,false
+student-003,3,2,0.6666666667,true,false
+student-004,3,1,0.3333333333,false,true
+student-005,3,0,0,false,false
