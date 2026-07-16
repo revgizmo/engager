@@ -634,23 +634,18 @@ generate_attendance_report <- function(
     "|---|---|---:|---:|---:|---:|---:|---:|"
   )
 
-  for (i in seq_len(nrow(session_summary))) {
-    row <- session_summary[i, , drop = FALSE]
-    report_content <- c(
-      report_content,
-      sprintf(
-        "| %s | %s | %s | %d | %s | %s | %d | %s |",
-        escape_attendance_report_cell(row$session_id),
-        row$status,
-        if (row$eligible) "yes" else "no",
-        row$roster_size,
-        format_attendance_integer(row$attended_count),
-        format_attendance_integer(row$absent_count),
-        row$unmatched_speaker_count,
-        format_attendance_rate(row$attendance_rate)
-      )
-    )
-  }
+  session_lines <- sprintf(
+    "| %s | %s | %s | %d | %s | %s | %d | %s |",
+    escape_attendance_report_cell(session_summary$session_id),
+    session_summary$status,
+    ifelse(session_summary$eligible, "yes", "no"),
+    session_summary$roster_size,
+    format_attendance_integer(session_summary$attended_count),
+    format_attendance_integer(session_summary$absent_count),
+    session_summary$unmatched_speaker_count,
+    format_attendance_rate(session_summary$attendance_rate)
+  )
+  report_content <- c(report_content, session_lines)
 
   problem_count <- sum(analysis_results$problems$count)
   report_content <- c(
@@ -678,19 +673,14 @@ generate_attendance_report <- function(
       "| Session | Code | Severity | Count |",
       "|---|---|---|---:|"
     )
-    for (i in seq_len(nrow(analysis_results$problems))) {
-      row <- analysis_results$problems[i, , drop = FALSE]
-      report_content <- c(
-        report_content,
-        sprintf(
-          "| %s | %s | %s | %d |",
-          escape_attendance_report_cell(row$session_id),
-          escape_attendance_report_cell(row$code),
-          escape_attendance_report_cell(row$severity),
-          row$count
-        )
-      )
-    }
+    problem_lines <- sprintf(
+      "| %s | %s | %s | %d |",
+      escape_attendance_report_cell(analysis_results$problems$session_id),
+      escape_attendance_report_cell(analysis_results$problems$code),
+      escape_attendance_report_cell(analysis_results$problems$severity),
+      analysis_results$problems$count
+    )
+    report_content <- c(report_content, problem_lines)
   }
 
   if (detail == "participant") {
@@ -713,21 +703,16 @@ generate_attendance_report <- function(
       ),
       "|---|---:|---:|---:|---:|---:|"
     )
-    for (i in seq_len(nrow(transformed))) {
-      row <- transformed[i, , drop = FALSE]
-      report_content <- c(
-        report_content,
-        sprintf(
-          "| %s | %d | %d | %s | %s | %s |",
-          escape_attendance_report_cell(row$student_id),
-          row$eligible_sessions,
-          row$sessions_attended,
-          format_attendance_rate(row$attendance_rate),
-          if (row$meets_threshold) "yes" else "no",
-          if (row$is_one_time_attendee) "yes" else "no"
-        )
-      )
-    }
+    participant_lines <- sprintf(
+      "| %s | %d | %d | %s | %s | %s |",
+      escape_attendance_report_cell(transformed$student_id),
+      transformed$eligible_sessions,
+      transformed$sessions_attended,
+      format_attendance_rate(transformed$attendance_rate),
+      ifelse(transformed$meets_threshold, "yes", "no"),
+      ifelse(transformed$is_one_time_attendee, "yes", "no")
+    )
+    report_content <- c(report_content, participant_lines)
   }
 
   if (!is.null(output_file)) {
@@ -827,15 +812,27 @@ transform_report_identifiers <- function(data, method, salt = NULL) {
 }
 
 format_attendance_rate <- function(value) {
-  if (length(value) != 1L || is.na(value)) return("NA")
-  paste0(
-    formatC(100 * value, format = "f", digits = 1, decimal.mark = "."),
+  if (is.null(value)) return(character())
+  result <- rep("NA", length(value))
+  valid <- !is.na(value)
+  result[valid] <- paste0(
+    formatC(
+      100 * value[valid],
+      format = "f",
+      digits = 1,
+      decimal.mark = "."
+    ),
     "%"
   )
+  result
 }
 
 format_attendance_integer <- function(value) {
-  if (length(value) != 1L || is.na(value)) "NA" else as.character(value)
+  if (is.null(value)) return(character())
+  result <- rep("NA", length(value))
+  valid <- !is.na(value)
+  result[valid] <- as.character(value[valid])
+  result
 }
 
 escape_attendance_report_cell <- function(value) {
