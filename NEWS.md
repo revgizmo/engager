@@ -1,8 +1,6 @@
 # engager 0.1.1 (development version)
 
-* Began development of multi-session attendance analysis and reviewable,
-  privacy-supporting reports. The public API remains unchanged during the
-  contract and validation tranches.
+* No user-facing changes yet.
 
 # engager 0.1.0
 
