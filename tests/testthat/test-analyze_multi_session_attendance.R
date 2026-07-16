@@ -275,29 +275,3 @@ test_that("attendance print and summary disclose aggregate counts only", {
   expect_identical(summarized$eligible_roster_size, 5L)
   expect_false(grepl("Ada Rowan|student-001|Guest Nova", disclosure_text))
 })
-
-test_that("experimental report remains internal pending T4", {
-  mock_results <- list(
-    attendance_summary = data.frame(
-      participant = "Student_001",
-      total_sessions = 2L,
-      attendance_rate = 100,
-      stringsAsFactors = FALSE
-    ),
-    participation_patterns = list(
-      total_participants = 1L,
-      total_sessions = 2L,
-      consistent_attendees = 1L,
-      occasional_attendees = 0L,
-      one_time_attendees = 0L,
-      average_attendance_rate = 100,
-      median_attendance_rate = 100,
-      attendance_rate_std = 0
-    ),
-    privacy_compliant = TRUE
-  )
-
-  report <- generate_attendance_report(mock_results)
-  expect_true(any(grepl("Multi-Session Attendance Analysis Report", report)))
-  expect_false("generate_attendance_report" %in% getNamespaceExports("engager"))
-})

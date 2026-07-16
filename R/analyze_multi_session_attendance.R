@@ -566,96 +566,278 @@ summary.engager_attendance <- function(object, ...) {
   )
 }
 
-#' Experimental Attendance Report
+#' Generate a Reviewable Attendance Report
 #'
-#' Internal prototype for a possible v0.1.1 reporting workflow. Chart and
-#' threshold semantics are not part of the v0.1.0 public API.
+#' Internal 0.1.1 report engine. Aggregate output is the default and contains
+#' no participant identifiers or transcript text. Participant detail is an
+#' explicit opt-in and requires a supported technical identifier
+#' transformation. These operations do not establish anonymity, legal
+#' compliance, institutional approval, or protection from contextual
+#' disclosure in small cohorts.
 #'
-#' @param analysis_results Results from `analyze_multi_session_attendance()`
-#' @param output_file Optional file path to save the report
-#' @param include_charts Boolean to include charts (default: FALSE)
-#' @return Report content as character vector
+#' @param analysis_results An `engager_attendance` object returned by
+#'   `analyze_multi_session_attendance()`.
+#' @param output_file Optional path for the deterministic Markdown report.
+#' @param detail Either `"aggregate"` or `"participant"`.
+#' @param identifier_method For participant detail, one of `"mask"`, `"hash"`,
+#'   or `"pseudonymize"`.
+#' @param salt Required non-empty salt when `identifier_method = "hash"`.
+#' @return Deterministic Markdown report content as a character vector.
 #' @keywords internal
 generate_attendance_report <- function(
-    analysis_results = NULL,
+    analysis_results,
     output_file = NULL,
-    include_charts = FALSE) {
-  if (!is.list(analysis_results) || !"participation_patterns" %in% names(analysis_results)) {
-    stop("analysis_results must be the output from analyze_multi_session_attendance()")
-  }
+    detail = c("aggregate", "participant"),
+    identifier_method = NULL,
+    salt = NULL) {
+  validate_report_input(analysis_results)
+  detail <- match.arg(detail)
+  validate_report_options(detail, identifier_method, salt)
+  validate_report_output(output_file)
 
-  patterns <- analysis_results$participation_patterns
-  summary <- analysis_results$attendance_summary
+  participant_summary <- analysis_results$participant_summary
+  session_summary <- analysis_results$session_summary
+  metadata <- analysis_results$metadata
+  threshold <- metadata$min_attendance_threshold
 
-  # Generate report content
   report_content <- c(
-    "# Multi-Session Attendance Analysis Report",
+    "# Multi-Session Attendance Report",
     "",
-    paste("**Generated**:", format(Sys.time(), "%Y-%m-%d %H:%M:%S")),
-    paste("**Sessions Analyzed**:", patterns$total_sessions),
-    paste("**Total Participants**:", patterns$total_participants),
+    "## Course summary",
     "",
-    "## Participation Summary",
-    "",
-    paste(
-      "- **Consistent Attendees** (>=", patterns$total_sessions * 0.5,
-      "sessions):", patterns$consistent_attendees
+    sprintf("- Recorded sessions: %d", metadata$eligible_session_count),
+    sprintf("- Eligible participants: %d", metadata$eligible_roster_size),
+    sprintf("- Attendance threshold: %s", format_attendance_rate(threshold)),
+    sprintf(
+      "- Participants meeting threshold: %d",
+      sum(participant_summary$meets_threshold)
     ),
-    paste(
-      "- **Occasional Attendees** (2-",
-      ceiling(patterns$total_sessions * 0.5) - 1,
-      "sessions):", patterns$occasional_attendees
+    sprintf(
+      "- One-time attendees: %d",
+      sum(participant_summary$is_one_time_attendee)
     ),
-    paste("- **One-time Attendees**:", patterns$one_time_attendees),
+    sprintf(
+      "- Participants with zero recorded attendance: %d",
+      sum(participant_summary$sessions_attended == 0L)
+    ),
+    sprintf(
+      "- Mean attendance rate: %s",
+      format_attendance_rate(mean(participant_summary$attendance_rate))
+    ),
     "",
-    "## Attendance Statistics",
+    "## Session summary",
     "",
-    paste("- **Average Attendance Rate**:", patterns$average_attendance_rate, "%"),
-    paste("- **Median Attendance Rate**:", patterns$median_attendance_rate, "%"),
-    paste("- **Attendance Rate Std Dev**:", patterns$attendance_rate_std, "%"),
-    "",
-    "## Technical Privacy Check",
-    "",
-    if (analysis_results$privacy_compliant) {
-      "[PASS] Package masking checks completed"
-    } else {
-      "[FAIL] Package masking checks detected possible identifiers"
-    },
-    ""
+    paste0(
+      "| Session | Status | Eligible | Roster size | Attended | Absent | ",
+      "Unmatched speakers | Attendance rate |"
+    ),
+    "|---|---|---:|---:|---:|---:|---:|---:|"
   )
 
-  # Add attendance matrix if privacy allows
-  if (analysis_results$privacy_compliant) {
+  session_lines <- sprintf(
+    "| %s | %s | %s | %d | %s | %s | %d | %s |",
+    escape_attendance_report_cell(session_summary$session_id),
+    session_summary$status,
+    ifelse(session_summary$eligible, "yes", "no"),
+    session_summary$roster_size,
+    format_attendance_integer(session_summary$attended_count),
+    format_attendance_integer(session_summary$absent_count),
+    session_summary$unmatched_speaker_count,
+    format_attendance_rate(session_summary$attendance_rate)
+  )
+  report_content <- c(report_content, session_lines)
+
+  problem_count <- sum(analysis_results$problems$count)
+  report_content <- c(
+    report_content,
+    "",
+    "## Review notes",
+    "",
+    sprintf("- Recorded problem count: %d", problem_count),
+    paste0(
+      "- This report uses technical privacy-supporting transformations and ",
+      "does not determine anonymity, legal compliance, or institutional approval."
+    ),
+    paste0(
+      "- Small cohorts and contextual details may still permit identification; ",
+      "review disclosure risk before sharing."
+    )
+  )
+
+  if (nrow(analysis_results$problems) > 0L) {
     report_content <- c(
       report_content,
-      "## Attendance Matrix",
       "",
-      "| Participant | Sessions Attended | Attendance Rate |",
-      "|-------------|-------------------|-----------------|"
+      "### Structured problems",
+      "",
+      "| Session | Code | Severity | Count |",
+      "|---|---|---|---:|"
     )
+    problem_lines <- sprintf(
+      "| %s | %s | %s | %d |",
+      escape_attendance_report_cell(analysis_results$problems$session_id),
+      escape_attendance_report_cell(analysis_results$problems$code),
+      escape_attendance_report_cell(analysis_results$problems$severity),
+      analysis_results$problems$count
+    )
+    report_content <- c(report_content, problem_lines)
+  }
 
-    for (i in seq_len(min(10, nrow(summary)))) { # Limit to first 10 for report
-      row <- summary[i, ]
-      report_content <- c(
-        report_content,
-        sprintf(
-          "| %s | %d | %.1f%% |",
-          row$participant,
-          row$total_sessions,
-          row$attendance_rate
-        )
+  if (detail == "participant") {
+    transformed <- transform_report_identifiers(
+      participant_summary,
+      identifier_method,
+      salt
+    )
+    report_content <- c(
+      report_content,
+      "",
+      sprintf(
+        "## Participant detail (%s identifiers)",
+        identifier_method
+      ),
+      "",
+      paste0(
+        "| Participant | Eligible sessions | Sessions attended | ",
+        "Attendance rate | Meets threshold | One-time attendee |"
+      ),
+      "|---|---:|---:|---:|---:|---:|"
+    )
+    participant_lines <- sprintf(
+      "| %s | %d | %d | %s | %s | %s |",
+      escape_attendance_report_cell(transformed$student_id),
+      transformed$eligible_sessions,
+      transformed$sessions_attended,
+      format_attendance_rate(transformed$attendance_rate),
+      ifelse(transformed$meets_threshold, "yes", "no"),
+      ifelse(transformed$is_one_time_attendee, "yes", "no")
+    )
+    report_content <- c(report_content, participant_lines)
+  }
+
+  if (!is.null(output_file)) {
+    writeLines(report_content, output_file, useBytes = TRUE)
+  }
+  report_content
+}
+
+validate_report_input <- function(analysis_results) {
+  valid <- inherits(analysis_results, "engager_attendance") &&
+    is.list(analysis_results$metadata) &&
+    identical(
+      analysis_results$metadata$schema_version,
+      "engager_attendance_v1"
+    )
+  if (!valid) {
+    rlang::abort(
+      message = paste0(
+        "analysis_results must be an engager_attendance object with schema ",
+        "engager_attendance_v1."
+      ),
+      class = "engager_input_error"
+    )
+  }
+  invisible(analysis_results)
+}
+
+validate_report_options <- function(detail, identifier_method, salt) {
+  if (detail == "aggregate") {
+    if (!is.null(identifier_method) || !is.null(salt)) {
+      rlang::abort(
+        message = paste0(
+          "identifier_method and salt are only supported when ",
+          "detail = \"participant\"."
+        ),
+        class = "engager_input_error"
       )
     }
+    return(invisible(NULL))
+  }
 
-    if (nrow(summary) > 10) {
-      report_content <- c(report_content, "| ... | ... | ... |")
+  valid_method <- is.character(identifier_method) &&
+    length(identifier_method) == 1L && !is.na(identifier_method) &&
+    identifier_method %in% c("mask", "hash", "pseudonymize")
+  if (!valid_method) {
+    rlang::abort(
+      message = paste0(
+        "Participant detail requires identifier_method = \"mask\", ",
+        "\"hash\", or \"pseudonymize\"."
+      ),
+      class = "engager_input_error"
+    )
+  }
+  if (identifier_method == "hash") {
+    valid_salt <- is.character(salt) && length(salt) == 1L &&
+      !is.na(salt) && nzchar(trimws(salt))
+    if (!valid_salt) {
+      rlang::abort(
+        message = "Hash participant detail requires one explicit non-empty salt.",
+        class = "engager_input_error"
+      )
     }
+  } else if (!is.null(salt)) {
+    rlang::abort(
+      message = "salt is supported only when identifier_method = \"hash\".",
+      class = "engager_input_error"
+    )
   }
+  invisible(NULL)
+}
 
-  # Save report if output file specified
-  if (!is.null(output_file)) {
-    writeLines(report_content, output_file)
+validate_report_output <- function(output_file) {
+  if (is.null(output_file)) return(invisible(NULL))
+  valid <- is.character(output_file) && length(output_file) == 1L &&
+    !is.na(output_file) && nzchar(trimws(output_file))
+  if (!valid) {
+    rlang::abort(
+      message = "output_file must be one non-empty character path.",
+      class = "engager_input_error"
+    )
   }
+  if (!dir.exists(dirname(output_file))) {
+    rlang::abort(
+      message = "The output_file parent directory must already exist.",
+      class = "engager_input_error"
+    )
+  }
+  invisible(output_file)
+}
 
-  return(report_content)
+transform_report_identifiers <- function(data, method, salt = NULL) {
+  anonymize_educational_data(
+    data,
+    method = method,
+    hash_salt = salt
+  )
+}
+
+format_attendance_rate <- function(value) {
+  if (is.null(value)) return(character())
+  result <- rep("NA", length(value))
+  valid <- !is.na(value)
+  result[valid] <- paste0(
+    formatC(
+      100 * value[valid],
+      format = "f",
+      digits = 1,
+      decimal.mark = "."
+    ),
+    "%"
+  )
+  result
+}
+
+format_attendance_integer <- function(value) {
+  if (is.null(value)) return(character())
+  result <- rep("NA", length(value))
+  valid <- !is.na(value)
+  result[valid] <- as.character(value[valid])
+  result
+}
+
+escape_attendance_report_cell <- function(value) {
+  value <- as.character(value)
+  value <- gsub("\r", " ", value, fixed = TRUE)
+  value <- gsub("\n", " ", value, fixed = TRUE)
+  gsub("|", "\\\\|", value, fixed = TRUE)
 }

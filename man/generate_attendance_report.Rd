@@ -2,26 +2,38 @@
 % Please edit documentation in R/analyze_multi_session_attendance.R
 \name{generate_attendance_report}
 \alias{generate_attendance_report}
-\title{Experimental Attendance Report}
+\title{Generate a Reviewable Attendance Report}
 \usage{
 generate_attendance_report(
-  analysis_results = NULL,
+  analysis_results,
   output_file = NULL,
-  include_charts = FALSE
+  detail = c("aggregate", "participant"),
+  identifier_method = NULL,
+  salt = NULL
 )
 }
 \arguments{
-\item{analysis_results}{Results from \code{analyze_multi_session_attendance()}}
+\item{analysis_results}{An \code{engager_attendance} object returned by
+\code{analyze_multi_session_attendance()}.}
 
-\item{output_file}{Optional file path to save the report}
+\item{output_file}{Optional path for the deterministic Markdown report.}
 
-\item{include_charts}{Boolean to include charts (default: FALSE)}
+\item{detail}{Either \code{"aggregate"} or \code{"participant"}.}
+
+\item{identifier_method}{For participant detail, one of \code{"mask"}, \code{"hash"},
+or \code{"pseudonymize"}.}
+
+\item{salt}{Required non-empty salt when \code{identifier_method = "hash"}.}
 }
 \value{
-Report content as character vector
+Deterministic Markdown report content as a character vector.
 }
 \description{
-Internal prototype for a possible v0.1.1 reporting workflow. Chart and
-threshold semantics are not part of the v0.1.0 public API.
+Internal 0.1.1 report engine. Aggregate output is the default and contains
+no participant identifiers or transcript text. Participant detail is an
+explicit opt-in and requires a supported technical identifier
+transformation. These operations do not establish anonymity, legal
+compliance, institutional approval, or protection from contextual
+disclosure in small cohorts.
 }
 \keyword{internal}
