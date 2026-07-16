@@ -1,4 +1,4 @@
-student_id,session_id,session_status,present
+student_id,session_id,status,present
 student-001,session-01,recorded,true
 student-001,session-02,recorded,true
 student-001,session-03,recorded,true

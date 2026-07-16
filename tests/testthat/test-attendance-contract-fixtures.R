@@ -57,14 +57,14 @@ test_that("attendance contract derives roster-based presence", {
   expect_setequal(attendance$student_id, eligible_roster$student_id)
   expect_false("staff-001" %in% attendance$student_id)
 
-  recorded_rows <- attendance$session_status == "recorded"
-  cancelled_rows <- attendance$session_status == "cancelled"
+  recorded_rows <- attendance$status == "recorded"
+  cancelled_rows <- attendance$status == "cancelled"
   expect_false(any(is.na(attendance$present[recorded_rows])))
   expect_true(all(is.na(attendance$present[cancelled_rows])))
 
   for (i in seq_len(nrow(attendance))) {
     row <- attendance[i, , drop = FALSE]
-    if (row$session_status == "cancelled") {
+    if (row$status == "cancelled") {
       next
     }
     roster_name <- eligible_roster$preferred_name[
@@ -81,7 +81,7 @@ test_that("attendance contract preserves denominator and threshold boundaries", 
   sessions <- read_attendance_contract("expected-sessions.csv")
   threshold <- 2 / 3
 
-  recorded <- attendance$session_status == "recorded"
+  recorded <- attendance$status == "recorded"
   derived_counts <- vapply(participants$student_id, function(student_id) {
     sum(attendance$present[
       attendance$student_id == student_id & recorded
@@ -138,5 +138,6 @@ test_that("attendance contract enumerates fail-fast cases", {
   expect_true(all(nzchar(invalid$reason)))
   expect_true(any(invalid$case == "blank_student_id"))
   expect_true(any(invalid$case == "blank_preferred_name"))
+  expect_true(any(invalid$case == "no_eligible_participants"))
   expect_true(any(invalid$case == "unmatched_stop"))
 })

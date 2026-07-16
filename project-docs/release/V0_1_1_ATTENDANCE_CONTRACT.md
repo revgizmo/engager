@@ -72,6 +72,8 @@ people with zero observed attendance. An `eligible = FALSE` row represents a
 known nonparticipant such as an instructor: it may match a speaker, but it is
 excluded from attendance rows, denominators, and unmatched counts. The package
 does not infer eligibility from `role`, names, email domains, or other fields.
+At least one roster row must be eligible; an all-ineligible roster is an input
+error rather than a result with an undefined `0 / 0` session rate.
 
 Duplicate identifiers and name/alias collisions are errors. Blank identifiers
 or names are errors. Exact normalization may remove case and accent differences
@@ -138,7 +140,7 @@ One row per eligible roster participant per scheduled session:
 |---|---|---|
 | `student_id` | character | Roster identifier; sensitive local analysis data |
 | `session_id` | character | Stable session identifier |
-| `session_status` | character | `recorded` or `cancelled` |
+| `status` | character | `recorded` or `cancelled` |
 | `present` | logical | `TRUE`/`FALSE` for recorded; `NA` for cancelled |
 
 ### `participant_summary`
