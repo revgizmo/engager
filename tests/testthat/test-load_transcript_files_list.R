@@ -126,6 +126,28 @@ test_that("load_transcript_files_list orders known and unknown sessions determin
   expect_true(all(is.na(first$start_time_local[3:4])))
 })
 
+test_that("load_transcript_files_list rejects colliding session and file types", {
+  temp_dir <- tempfile()
+  transcripts_dir <- file.path(temp_dir, "transcripts")
+  dir.create(transcripts_dir, recursive = TRUE)
+  on.exit(unlink(temp_dir, recursive = TRUE), add = TRUE)
+
+  file.create(
+    file.path(transcripts_dir, "lecture.vtt"),
+    file.path(transcripts_dir, "lecture.transcript.vtt")
+  )
+
+  expect_error(
+    load_transcript_files_list(
+      data_folder = temp_dir,
+      transcripts_folder = "transcripts",
+      transcript_files_names_pattern = "lecture"
+    ),
+    "1 session contains duplicate files of the same type",
+    class = "engager_schema_error"
+  )
+})
+
 test_that("load_transcript_files_list handles empty folder gracefully", {
   temp_dir <- tempdir()
   transcripts_dir <- file.path(temp_dir, "transcripts")

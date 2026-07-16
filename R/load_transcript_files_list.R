@@ -53,6 +53,30 @@ load_transcript_files_list <-
       )
     )
 
+    # One session may have one file of each supported type. Two files that map
+    # to the same session and type are ambiguous and must not be silently
+    # collapsed into one attendance input.
+    session_type_key <- paste(df$session_key, df$file_type, sep = "\r")
+    duplicate_session_type <- duplicated(session_type_key) |
+      duplicated(session_type_key, fromLast = TRUE)
+    if (any(duplicate_session_type)) {
+      duplicate_session_count <- length(unique(
+        df$session_key[duplicate_session_type]
+      ))
+      rlang::abort(
+        message = sprintf(
+          paste0(
+            "%d session%s %s duplicate files of the same type; ",
+            "session keys and file types must map uniquely."
+          ),
+          duplicate_session_count,
+          if (duplicate_session_count == 1L) "" else "s",
+          if (duplicate_session_count == 1L) "contains" else "contain"
+        ),
+        class = "engager_schema_error"
+      )
+    }
+
     # Extract and parse recording start time
     recording_start_str <- stringr::str_extract(df$file_name, recording_start_pattern)
     df$recording_start <- as.POSIXct(
