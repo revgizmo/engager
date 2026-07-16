@@ -1,3 +1,11 @@
+> **Current planning notice (2026-07-14):** This file contains historical,
+> generated status records with conflicting dates, metrics, and conclusions. It
+> is retained as project history, not as the current roadmap. Use
+> [`../ROADMAP.md`](../ROADMAP.md) for product direction and
+> [`V0_1_1_RELEASE_PLAN.md`](V0_1_1_RELEASE_PLAN.md) for the approved next-release
+> plan. Live GitHub, CRAN, package, and validation evidence outrank older sections
+> below.
+
 ### 📊 **PRD Audit Analysis (COMPLETED - 2025-01-27)**
 A comprehensive PRD audit was completed with **ACTIONABLE FINDINGS** for package optimization:
 
@@ -1614,4 +1622,3 @@ SOFTWARE.
 - [Issue #183]: Clarify privacy defaults in README and link FERPA vignette (privacy, docs, readme, priority: high)
 - [Issue #183]: Clarify privacy defaults in README and link FERPA vignette (privacy, docs, readme, priority: high)
 - [Issue #183]: Clarify privacy defaults in README and link FERPA vignette (privacy, docs, readme, priority: high)
-
