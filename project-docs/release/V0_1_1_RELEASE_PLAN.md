@@ -1,10 +1,12 @@
 # `engager` 0.1.1 Release Plan
 
-Status: approved planning baseline; execution is blocked until `engager` 0.1.0
-is publicly available from CRAN.
+Status: approved planning baseline; isolated 0.1.1 development may proceed on
+protected `develop` while `engager` 0.1.0 remains under CRAN review. Merging
+0.1.1 package content to `main` remains blocked until the 0.1.0 acceptance
+closeout is complete.
 
-Last reconciled: 2026-07-14 against `main` at
-`50188a1ae17fa646dc5792b52992db7210192b85` and the live GitHub backlog.
+Last reconciled: 2026-07-15 against `main` at
+`f0c98c2addedc8507922dd75b3dadac434559958` and the live GitHub backlog.
 
 ## Release thesis
 
@@ -15,12 +17,28 @@ Version 0.1.1 will graduate the retained internal attendance and reporting
 prototypes into a supported installed-package workflow. It is not a general
 reporting, longitudinal analytics, or anonymization release.
 
-## Entry gate: close version 0.1.0
+## Parallel development and 0.1.0 closeout
 
-Do not change package content until both a CRAN acceptance message and the
-public CRAN package page exist.
+The submitted 0.1.0 artifact and 0.1.1 development are separate lanes:
 
-After publication:
+- `main` remains the stable 0.1.0 release and evidence line throughout CRAN
+  review. No 0.1.1 package content may be merged to it before closeout.
+- `develop` is created from the policy-approved `main` head and is the
+  integration target for 0.1.1. Its first package-content change is the T0
+  development-version bump to `0.1.0.9000`.
+- Every 0.1.1 tranche branches from current `develop`, uses a dedicated
+  worktree, and returns through a reviewed PR targeting `develop`.
+- A CRAN reviewer request receives one bounded `codex/cran-<failure-slug>`
+  branch from current `main`. Unfinished 0.1.1 work must never enter a 0.1.0
+  remediation or resubmission.
+- A remediation that also applies to 0.1.1 is carried forward through a
+  separate `codex/v011-forward-port-<slug>` PR targeting `develop`; do not merge
+  the development line into the CRAN remediation lane.
+- Merging `develop` into `main`, publishing a 0.1.1 tag or release, and any
+  0.1.1 CRAN submission remain release actions governed by the T6 gates.
+
+Parallel development may begin before CRAN publication. The 0.1.0 closeout
+still requires the following steps after publication:
 
 1. Download the published CRAN source tarball and calculate its SHA-256.
 2. Compare it with the submitted replacement artifact SHA-256:
@@ -45,9 +63,12 @@ After publication:
 6. Obtain explicit approval before creating the annotated `v0.1.0` tag at the
    accepted package-content commit, publishing the GitHub release, or closing
    issue #4.
-7. Open a separate kickoff PR that changes the development version to
-   `0.1.0.9000` and adds an `engager 0.1.1` NEWS section. The development suffix
-   identifies work toward 0.1.1; the accepted 0.1.0 source remains unchanged.
+
+The protected `develop` branch requires reviewed pull requests, one approving
+review, dismissal of stale approvals after a push, resolved review threads,
+strict `R-CMD-check`, linear history, and protection from force-push or
+deletion. The obsolete `development` branch is not reused or deleted as part of
+this release tranche.
 
 ## Product boundary
 
@@ -81,10 +102,12 @@ After publication:
 
 ## Delivery tranches
 
-Each tranche starts from current `origin/main` in a dedicated worktree. Before
-delegation, scan live issues, PRs, branches, and worktrees for duplicate
-ownership. Each implementation PR runs targeted tests, full tests,
-`devtools::document()`, `git diff --check`, and the hosted required checks.
+Each tranche starts from current `origin/develop` in a dedicated worktree and
+targets `develop`. CRAN remediation is the only package-content lane based on
+`main` while 0.1.0 remains under review. Before delegation, scan live issues,
+PRs, branches, and worktrees for duplicate ownership. Each implementation PR
+runs targeted tests, full tests, `devtools::document()`, `git diff --check`, and
+the hosted required checks.
 
 ### T0 — Development kickoff
 
