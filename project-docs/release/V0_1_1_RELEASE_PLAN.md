@@ -1,13 +1,14 @@
 # `engager` 0.1.1 Release Plan
 
-Status: approved planning baseline; isolated 0.1.1 development may proceed on
-protected `develop` while `engager` 0.1.0 remains under CRAN review. Merging
-0.1.1 package content to `main` is governed by the T6 release gates and remains
-strictly blocked until at least the 0.1.0 acceptance closeout is complete.
+Status: approved planning baseline; `engager` 0.1.0 was published on CRAN on
+2026-07-30. Isolated 0.1.1 work may proceed on protected `develop`, but merging
+0.1.1 package content to `main` remains governed by the T6 release gates and is
+blocked until the 0.1.0 acceptance closeout is complete.
 
-Last release-state reconciliation: 2026-07-22 against stable `main` at
-`6214c0316d39154140bdba064266119007bff41a`. The feature/backlog baseline
-remains the 2026-07-15 review.
+Last release-state reconciliation: 2026-07-30 against the public CRAN package,
+stable `main` at `4b72bb0cefeb1dfa4fe21efb87a87a5c2610fdfa`, and the accepted
+package-source commit `6214c0316d39154140bdba064266119007bff41a`. The
+feature/backlog baseline remains the 2026-07-15 review.
 
 ## Release thesis
 
@@ -43,19 +44,20 @@ The submitted 0.1.0 artifact and 0.1.1 development are separate lanes:
 - Merging `develop` into `main`, publishing a 0.1.1 tag or release, and any
   0.1.1 CRAN submission remain release actions governed by the T6 gates.
 
-Parallel development may begin before CRAN publication. The 0.1.0 closeout
-still requires the following steps after publication:
+Public publication, archive reconciliation, and installed-package UAT are now
+complete. Detailed evidence and release commands are maintained in
+[V0_1_0_ACCEPTANCE_CLOSEOUT.md](V0_1_0_ACCEPTANCE_CLOSEOUT.md).
 
-1. Download the published CRAN source tarball and calculate its SHA-256.
-2. Compare it with the submitted documentation/write-safety remediation
-   artifact SHA-256:
-   `21e6ecddeed86dad177708d7b7f3bf1df79059f769dedc0e0439e995e2fa5e74`.
-3. Install from CRAN in an isolated library and run the beginner smoke workflow.
-4. Update issue #4 with the CRAN URL, publication date, published checksum,
-   reviewer-remediation history, accepted source commit
-   `6214c0316d39154140bdba064266119007bff41a`, and the merged evidence-only
-   closeout commit.
-5. In a fresh clone, verify the accepted source commit from `main` before
+The remaining 0.1.0 closeout sequence is:
+
+1. On or after 2026-08-01 10:20 PDT, refresh the CRAN check page and inspect
+   every reported platform. The early six-result snapshot is all `OK` but is
+   not the final 48-hour matrix.
+2. Update issue #4 with the CRAN URL, publication date, submitted and published
+   checksums, explained CRAN metadata-only archive differences, reviewer
+   history, accepted source commit, installed UAT result, and final check
+   matrix.
+3. In a fresh clone, verify the accepted source commit from `main` before
    tagging:
 
    ```sh
@@ -66,7 +68,7 @@ still requires the following steps after publication:
    This commit is the exact source used to build the submitted remediation
    tarball. Later evidence-only commits change only files excluded from the
    package tarball; the release tag remains anchored to the accepted source.
-6. Obtain explicit approval before creating the annotated `v0.1.0` tag at the
+4. Obtain explicit approval before creating the annotated `v0.1.0` tag at the
    accepted package-content commit, publishing the GitHub release, or closing
    issue #4.
 

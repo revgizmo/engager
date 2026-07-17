@@ -1,15 +1,31 @@
 # CRAN Validation Report
 
-Generated: 2026-07-22
+Generated: 2026-07-30
 
 ## Decision
 
-**GO for maintainer-controlled manual CRAN resubmission after evidence review.**
+**PUBLISHED — acceptance verification passes; final release closeout pending.**
 
-The documentation and write-safety remediation requested by CRAN passes the
-package-side release gates. Issue #4 updates, CRAN resubmission, acceptance
-closeout, tagging, and release publication remain separately authorized owner
-actions.
+CRAN published `engager` 0.1.0 on 2026-07-30. The public package identity,
+source archive, accepted source commit, and installed workflow are reconciled.
+Wait for the 48-hour CRAN check matrix before requesting the separately
+authorized tag, GitHub release, and issue #4 closure.
+
+## Public CRAN Evidence
+
+- Package page: <https://cran.r-project.org/package=engager>
+- Published source:
+  <https://cran.r-project.org/src/contrib/engager_0.1.0.tar.gz>
+- Publication date: 2026-07-30
+- Published SHA-256:
+  `0051326ad8e0d648969a56b7d374ba9bb4560ffe0f380e201ec6d07ac860468b`
+- Submitted SHA-256:
+  `21e6ecddeed86dad177708d7b7f3bf1df79059f769dedc0e0439e995e2fa5e74`
+- Archive difference: CRAN-normalized `DESCRIPTION` metadata plus generated
+  `MD5`; no R code, documentation, test, vignette, fixture, or other package
+  content difference.
+- Published-tarball installed UAT: PASS on R 4.5.3,
+  `aarch64-apple-darwin20`.
 
 ## Final Remediation Artifact
 
@@ -54,12 +70,12 @@ actions.
 
 ## Remaining Gates
 
-1. Review and merge the evidence-only PR; it must not change any file included
-   in the frozen tarball.
-2. Under separate approval, post the final remediation disposition to issue #4.
-3. The maintainer manually resubmits the exact SHA-verified tarball to CRAN and
-   confirms the submission email.
-4. Preserve any reviewer wording and address only requested failures in a
-   bounded remediation branch.
-5. Keep issue #4 open and do not tag or publish a GitHub release until CRAN
-   acceptance and separate approval.
+1. Refresh the CRAN check matrix on or after 2026-08-01 10:20 PDT and inspect
+   every reported platform; the initial six results are all `OK`.
+2. Record the final publication/check/UAT evidence in issue #4 without closing
+   it.
+3. Obtain separate approval for the annotated `v0.1.0` tag at exact source
+   commit `6214c0316d39154140bdba064266119007bff41a`.
+4. Obtain separate approval for the GitHub release, then for issue #4 closure.
+5. Forward-port the CRAN documentation/write-safety remediation to `develop`
+   before rebuilding the 0.1.1 candidate.

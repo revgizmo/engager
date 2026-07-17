@@ -2,8 +2,9 @@
 
 Status: product and release planning source of truth.
 
-Last release-state reconciliation: 2026-07-22 against stable `main` at
-`6214c0316d39154140bdba064266119007bff41a` and 35 current exports. The
+Last release-state reconciliation: 2026-07-30 against the public CRAN 0.1.0
+package, stable `main` at
+`4b72bb0cefeb1dfa4fe21efb87a87a5c2610fdfa`, and 35 current exports. The
 feature/backlog baseline remains the 2026-07-15 review of the historical
 pre-scope-reduction API and 122 then-open GitHub issues. The existing
 `project-docs/backlog-normalization` snapshot contains 128 issues and must be
@@ -45,9 +46,9 @@ turning participation measurements into unsupported judgments about students.
 
 ### 0.1.0 — Focused transcript-analysis foundation
 
-Status: CRAN-requested documentation and write-safety remediation is validated
-locally and on R-devel win-builder; awaiting maintainer-controlled
-resubmission.
+Status: published on CRAN on 2026-07-30. Public source reconciliation and
+installed-package UAT pass; the 48-hour CRAN check-matrix review, annotated
+tag, GitHub release, and issue #4 closure remain pending.
 
 Supported product:
 
