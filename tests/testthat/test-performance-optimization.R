@@ -110,8 +110,8 @@ test_that("consolidate_transcript maintains linear time complexity", {
   skip_on_cran()
   testthat::skip_if(nzchar(Sys.getenv("CI")), "Skip linearity timing test on CI")
 
-  # Test with different dataset sizes
-  sizes <- c(100, 1000, 5000)
+  # Use sizes large enough to avoid dividing by a near-zero clock reading.
+  sizes <- c(5000, 25000, 50000)
   times <- numeric(length(sizes))
 
   for (i in seq_along(sizes)) {
@@ -129,20 +129,22 @@ test_that("consolidate_transcript maintains linear time complexity", {
       wordcount = rep(1, size)
     )
 
-    # Measure execution time
-    start_time <- Sys.time()
-    result <- consolidate_transcript(test_data, max_pause_sec = 1)
-    end_time <- Sys.time()
-
-    times[i] <- as.numeric(end_time - start_time)
+    # Warm caches, then use a repeated median to reduce scheduler noise.
+    invisible(consolidate_transcript(test_data, max_pause_sec = 1))
+    times[i] <- stats::median(replicate(
+      3L,
+      system.time(
+        consolidate_transcript(test_data, max_pause_sec = 1)
+      )[["elapsed"]]
+    ))
   }
 
   # Check that time increases roughly linearly
   time_ratio_1 <- times[2] / times[1]
   time_ratio_2 <- times[3] / times[2]
 
-  expect_true(time_ratio_1 < 20, sprintf("Time ratio for 10x size increase: %.2f (should be <20)", time_ratio_1))
-  expect_true(time_ratio_2 < 15, sprintf("Time ratio for 5x size increase: %.2f (should be <15)", time_ratio_2))
+  expect_true(time_ratio_1 < 10, sprintf("Time ratio for 5x size increase: %.2f (should be <10)", time_ratio_1))
+  expect_true(time_ratio_2 < 5, sprintf("Time ratio for 2x size increase: %.2f (should be <5)", time_ratio_2))
 })
 
 test_that("consolidate_transcript memory usage is reasonable", {

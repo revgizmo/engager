@@ -85,6 +85,7 @@
 ^inst/\.!.*\.Rmd$
 
 # Git and version control
+^\.git$
 ^\.git/
 
 # Additional hidden files and directories
