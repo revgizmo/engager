@@ -82,6 +82,10 @@ aggregate report that does not reveal raw participant names by default.
 
 Candidate scope; confirm after 0.1.1 user feedback.
 
+The draft [privacy-safe aggregation contract](release/V0_1_2_AGGREGATION_CONTRACT.md)
+is a specification packet only. It does not authorize implementation, export,
+or merge to `develop` before the contract approval gate.
+
 - Design a distinct aggregation API that accepts explicit grouping keys and
   permitted metrics and cannot carry row-level identifiers or free text.
 - Define minimum-group and disclosure-review behavior without calling the output
