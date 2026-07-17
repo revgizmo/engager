@@ -23,9 +23,11 @@ longitudinal student profiles, risk scoring, or new transcript formats.
 
 - **Local**: macOS Tahoe 26.5.2, R 4.5.3 (2026-03-11),
   aarch64-apple-darwin20
-- **GitHub Actions**: Ubuntu, Windows, and macOS with R release — pending
-- **R-devel win-builder**: pending
-- **Secondary remote check**: R-release win-builder — pending
+- **GitHub Actions**: Ubuntu, Windows, and macOS with R release — passed
+- **R-devel win-builder**: R Under development (2026-07-16 r90264 ucrt) —
+  0 errors, 0 warnings, 1 note
+- **Secondary remote check**: R-release win-builder, R 4.6.1
+  (2026-06-24 ucrt) — 0 errors, 0 warnings, 1 note
 
 ## R CMD Check Results
 
@@ -38,6 +40,11 @@ tarball completed with:
 
 The note is `New submission`. At validation time, version 0.1.0 remained under
 CRAN review and `engager` was not yet present in the CRAN package index.
+
+Both win-builder checks reported the same single incoming-feasibility note:
+`New submission`, with `reviewable` listed as a possibly misspelled word.
+`reviewable` is an intentional English word describing the package's exact
+name-matching output and review workflow.
 
 The canonical sandboxed local validator also passed with 0 errors, 0 warnings,
 and two environment-only notes: incoming URL checks were unavailable without
@@ -80,7 +87,7 @@ check above verified URLs and timestamps successfully.
 - [x] Source tarball builds, installs, and passes hygiene inspection
 - [x] Installed-package UAT passes
 - [x] Export allowlist and supported-export coverage contract pass
-- [ ] Required hosted checks pass at the exact release head
-- [ ] R-devel win-builder completes
-- [ ] Secondary remote check completes
+- [x] Required hosted checks pass at the exact release head
+- [x] R-devel win-builder completes
+- [x] Secondary remote check completes
 - [ ] Maintainer approves the exact candidate checksum for promotion
