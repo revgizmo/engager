@@ -544,11 +544,44 @@ build_attendance_problems <- function(session_spec, unmatched_counts) {
   tibble::as_tibble(do.call(rbind, rows))
 }
 
-attendance_package_version <- function() {
-  tryCatch(
+attendance_package_version <- function(description_paths = NULL) {
+  installed_version <- tryCatch(
     as.character(utils::packageVersion("engager")),
-    error = function(error) "0.1.0.9000"
+    error = function(error) NULL
   )
+  if (!is.null(installed_version)) {
+    return(installed_version)
+  }
+
+  if (is.null(description_paths)) {
+    source_file <- tryCatch(
+      utils::getSrcFilename(attendance_package_version, full.names = TRUE),
+      error = function(error) character()
+    )
+    source_roots <- c(
+      if (length(source_file) > 0L && nzchar(source_file[[1]])) {
+        file.path(dirname(source_file[[1]]), "..")
+      },
+      getwd()
+    )
+    description_paths <- unique(file.path(source_roots, "DESCRIPTION"))
+  }
+
+  for (description_path in description_paths) {
+    description <- tryCatch(
+      read.dcf(description_path, fields = c("Package", "Version")),
+      error = function(error) NULL
+    )
+    if (
+      !is.null(description) &&
+        identical(description[[1, "Package"]], "engager") &&
+        nzchar(description[[1, "Version"]])
+    ) {
+      return(description[[1, "Version"]])
+    }
+  }
+
+  "unknown"
 }
 
 #' @export

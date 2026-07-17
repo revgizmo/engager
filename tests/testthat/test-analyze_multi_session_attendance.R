@@ -40,6 +40,26 @@ attendance_contract_sessions <- function() {
   )
 }
 
+test_that("source-mode attendance metadata uses the local package version", {
+  description_path <- testthat::test_path("..", "..", "DESCRIPTION")
+  if (!file.exists(description_path)) {
+    description_path <- system.file("DESCRIPTION", package = "engager")
+  }
+
+  source_version <- testthat::with_mocked_bindings(
+    attendance_package_version(description_path),
+    packageVersion = function(...) stop("package is not installed"),
+    .package = "utils"
+  )
+
+  expected_version <- read.dcf(
+    description_path,
+    fields = "Version"
+  )[[1]]
+  expect_identical(source_version, expected_version)
+  expect_identical(source_version, "0.1.1")
+})
+
 test_that("attendance engine reproduces the approved golden contract", {
   roster <- attendance_contract_roster()
   expect_equal(roster, attendance_contract_expected("roster.csv"))
