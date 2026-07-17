@@ -62,14 +62,14 @@ check above verified URLs and timestamps successfully.
 - UAT scans generated attendance reports and other exported artifacts for raw
   synthetic roster identifiers, transcript text, and source paths.
 - Complete supported-export statement coverage is 86.22%, above the declared
-  85% floor; overall package coverage is 89.16%.
+  85% floor; overall package coverage is 88.97%.
 - The release tarball contains 288 entries. Inspection found no `.git` pointer,
   project-only directories, UAT output, nested archives, local libraries,
   backups, or private transcript/roster paths.
 - Candidate package-content commit:
-  `45c900a623a78adf713de0042c3a5914be842dcf`.
+  `645112b102f26aeaa57f1ffb8fed68ddb6c14987`.
 - Candidate source-tarball SHA-256:
-  `bb860a6a94923a7001a6bc099f17f31e03f313f9edc5c69ceb030692989489de`.
+  `74c309818893c5938f7ee8ba3b623cee2501b390bf7b2b2038682d5f4c54f392`.
 
 ## Validation Status
 
