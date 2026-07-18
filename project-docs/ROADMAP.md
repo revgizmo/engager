@@ -78,16 +78,17 @@ Outcome: a user can analyze a synthetic or locally held course roster and
 multiple session transcripts, understand failed/unmatched inputs, and create an
 aggregate report that does not reveal raw participant names by default.
 
-### 0.1.2 — Privacy-safe sharing and reliability
+### 0.1.2 — Privacy-supporting sharing and reliability
 
 Candidate scope; confirm after 0.1.1 user feedback.
 
-The draft [privacy-safe aggregation contract](release/V0_1_2_AGGREGATION_CONTRACT.md)
+The draft [attendance aggregation disclosure contract](release/V0_1_2_AGGREGATION_CONTRACT.md)
 is a specification packet only. It does not authorize implementation, export,
 or merge to `develop` before the contract approval gate.
 
-- Design a distinct aggregation API that accepts explicit grouping keys and
-  permitted metrics and cannot carry row-level identifiers or free text.
+- Design a distinct attendance aggregation API with an explicit required
+  course/session grain and a fixed metric schema that cannot carry row-level
+  identifiers or free text.
 - Define minimum-group and disclosure-review behavior without calling the output
   anonymous or compliant.
 - Unify identifier transformations and provenance metadata around issue #341.
@@ -95,10 +96,11 @@ or merge to `develop` before the contract approval gate.
   informed by issue #381.
 - Standardize file-write errors and atomic output behavior, informed by issue
   #438.
-- Publish stable result and output schemas with schema-version metadata.
-- Add a machine-readable analysis manifest containing package version, input
-  fingerprints rather than paths or names, parameters, warnings/problems, and
-  output checksums.
+- Publish a stable result schema with schema-version metadata; govern shareable
+  file serialization separately.
+- Add a separate local-only machine-readable analysis manifest containing
+  package version, input fingerprints rather than paths or names, parameters,
+  warnings/problems, and output checksums.
 
 Generic aggregate mode does not return merely because this version exists. It
 returns only after its disclosure contract and adversarial privacy tests pass.
