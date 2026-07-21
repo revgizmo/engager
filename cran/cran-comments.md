@@ -101,7 +101,7 @@ all passed.
 
 ## Additional Notes
 
-- The full local test suite passes with 0 failures, 67 expected warnings, and
+- The full local test suite passes with 0 failures, 68 expected warnings, and
   5 documented skips. Four are diagnostic placeholder tests and one covers an
   internal empty-session-mapping edge case.
 - An installed-package UAT installs the source tarball into an isolated library
@@ -138,9 +138,9 @@ all passed.
 - The exact replacement tarball passed R-devel win-builder installation,
   examples, tests, vignettes, and PDF/HTML manual checks.
 - The documentation/write-safety remediation candidate was built from exact
-  package-content commit `a0faec5b5abb4e001c1d65350970b037eaaa59ba`.
+  package-content commit `799deabc0be1a7ee33a91ae82bd1add2dc980243`.
   Its SHA-256 is
-  `cc77646bd74451f39fa27c6ffaff8b1c5d82ea8d4f6e534551a15be4cf4dca0c`.
+  `0842a7726b9c7f1fc78681d11e58fb541d5b24ac9f005047cc9d3ed21acd7b36`.
 - The remediation tarball contains 270 entries. Inspection found no Git
   worktree metadata, project-only release documents, development scripts,
   nested archives, `.Rcheck` directories, local libraries, generated UAT
@@ -150,6 +150,11 @@ all passed.
   library, including the 35-function export allowlist, synthetic beginner and
   advanced workflows, name matching, identifier transformation, plots,
   explicit CSV/report writes, and installed vignette discovery.
+- Optional beginner-workflow output directories and the internal section-name
+  lookup writer now reject malformed destinations before creating files or
+  directories. Runnable UX examples restore the caller's option state, and a
+  syntax-aware test gate checks common filesystem writers for literal
+  destinations.
 
 ## Validation Status
 
