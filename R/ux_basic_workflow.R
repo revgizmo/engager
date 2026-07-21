@@ -34,12 +34,14 @@ basic_transcript_analysis <- function(transcript_file, output_dir = NULL, privac
     )
   }
 
+  validate_optional_output_dir(output_dir)
+  normalized_privacy_level <- normalize_basic_privacy_level(privacy_level)
+
   if (!is.null(output_dir) && !dir.exists(output_dir)) {
     message("Creating output directory: ", output_dir)
     dir.create(output_dir, recursive = TRUE)
   }
 
-  normalized_privacy_level <- normalize_basic_privacy_level(privacy_level)
   previous_privacy_level <- getOption("engager.privacy_level")
   on.exit(options(engager.privacy_level = previous_privacy_level), add = TRUE)
   options(engager.privacy_level = normalized_privacy_level)
@@ -135,6 +137,24 @@ basic_transcript_analysis <- function(transcript_file, output_dir = NULL, privac
   )
 }
 
+# Internal validation shared by the beginner workflows. Validate before any
+# directory creation so malformed destinations fail without side effects.
+validate_optional_output_dir <- function(output_dir) {
+  if (is.null(output_dir)) {
+    return(invisible(NULL))
+  }
+
+  if (!is.character(output_dir) || length(output_dir) != 1L ||
+      is.na(output_dir) || !nzchar(output_dir)) {
+    stop(
+      "`output_dir` must be NULL or an explicit non-empty directory path",
+      call. = FALSE
+    )
+  }
+
+  invisible(output_dir)
+}
+
 # Internal mapping retained for the beginner-facing high/medium/low API.
 normalize_basic_privacy_level <- function(privacy_level) {
   if (!is.character(privacy_level) || length(privacy_level) != 1 || is.na(privacy_level)) {
@@ -203,6 +223,8 @@ batch_basic_analysis <- function(transcript_files, output_dir = NULL, privacy_le
   if (length(transcript_files) == 0) {
     stop("ERROR: No transcript files provided")
   }
+
+  validate_optional_output_dir(output_dir)
 
   # Validate all files exist
   missing_files <- transcript_files[!file.exists(transcript_files)]

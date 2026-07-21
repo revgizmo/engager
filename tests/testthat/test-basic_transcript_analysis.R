@@ -139,6 +139,59 @@ test_that("basic privacy levels map to supported masking levels", {
   expect_error(normalize_basic_privacy_level(c("high", "low")), "must be one of")
 })
 
+test_that("beginner workflows reject malformed output directories without writing", {
+  transcript_file <- system.file(
+    "extdata/test_transcripts/ideal_course_session1.vtt",
+    package = "engager"
+  )
+  work_dir <- withr::local_tempdir()
+  withr::local_dir(work_dir)
+  before <- list.files(work_dir, all.files = TRUE, no.. = TRUE, recursive = TRUE)
+
+  invalid_output_dirs <- list(
+    "",
+    NA_character_,
+    character(),
+    c("first", "second"),
+    1
+  )
+
+  for (output_dir in invalid_output_dirs) {
+    expect_error(
+      basic_transcript_analysis(transcript_file, output_dir = output_dir),
+      "output_dir.*non-empty directory path"
+    )
+    expect_error(
+      batch_basic_analysis(transcript_file, output_dir = output_dir),
+      "output_dir.*non-empty directory path"
+    )
+  }
+
+  expect_identical(
+    list.files(work_dir, all.files = TRUE, no.. = TRUE, recursive = TRUE),
+    before
+  )
+})
+
+test_that("invalid privacy level does not create an output directory", {
+  transcript_file <- system.file(
+    "extdata/test_transcripts/ideal_course_session1.vtt",
+    package = "engager"
+  )
+  output_root <- withr::local_tempdir()
+  output_dir <- file.path(output_root, "must-not-exist")
+
+  expect_error(
+    basic_transcript_analysis(
+      transcript_file,
+      output_dir = output_dir,
+      privacy_level = "unsupported"
+    ),
+    "privacy_level.*must be one of"
+  )
+  expect_false(dir.exists(output_dir))
+})
+
 test_that("quick_analysis delegates to basic_transcript_analysis", {
   tf <- tempfile(fileext = ".vtt")
   writeLines(c("WEBVTT", "\n", "00:00:00.000 --> 00:00:01.000", "Hello"), tf)

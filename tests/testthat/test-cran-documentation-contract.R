@@ -73,29 +73,93 @@ test_that("generated test artifacts are absent from the package source", {
   expect_false(file.exists(test_path("section_names_lookup.csv")))
 })
 
-test_that("tests do not target literal relative write destinations", {
+test_that("tests do not target literal write destinations or change working directory", {
   package_root <- normalizePath(test_path("../.."), mustWork = TRUE)
   test_files <- list.files(
     file.path(package_root, "tests", "testthat"),
     pattern = "[.]R$",
     full.names = TRUE
   )
-  test_files <- test_files[basename(test_files) != "test-cran-documentation-contract.R"]
-  test_lines <- unlist(lapply(test_files, readLines, warn = FALSE), use.names = FALSE)
-
-  relative_side_effects <- c(
-    "dir[.]create[(][[:space:]]*['\"]",
-    "unlink[(][[:space:]]*['\"]",
-    "file[.]create[(][[:space:]]*['\"]",
-    "setwd[(]"
+  destination_arguments <- list(
+    "dir.create" = c(path = 1L),
+    "unlink" = c(x = 1L),
+    "file.create" = c(file = 1L),
+    "writeLines" = c(con = 2L),
+    "write.csv" = c(file = 2L),
+    "utils::write.csv" = c(file = 2L),
+    "write.csv2" = c(file = 2L),
+    "utils::write.csv2" = c(file = 2L),
+    "write.table" = c(file = 2L),
+    "utils::write.table" = c(file = 2L),
+    "readr::write_csv" = c(file = 2L),
+    "saveRDS" = c(file = 2L),
+    "file.copy" = c(to = 2L),
+    "file.rename" = c(to = 2L),
+    "ggplot2::ggsave" = c(filename = 1L)
   )
-  matches <- vapply(
-    relative_side_effects,
-    function(pattern) any(grepl(pattern, test_lines)),
-    logical(1)
-  )
 
-  expect_false(any(matches), info = paste(names(matches)[matches], collapse = ", "))
+  call_name <- function(expr) {
+    if (!is.call(expr)) {
+      return(NULL)
+    }
+    head <- expr[[1L]]
+    if (is.symbol(head)) {
+      return(as.character(head))
+    }
+    if (is.call(head) && identical(head[[1L]], as.name("::"))) {
+      return(paste(as.character(head[[2L]]), as.character(head[[3L]]), sep = "::"))
+    }
+    NULL
+  }
+
+  destination_arg <- function(expr, specification) {
+    args <- as.list(expr)[-1L]
+    argument_name <- names(specification)[[1L]]
+    named_position <- match(argument_name, names(args), nomatch = 0L)
+    if (named_position > 0L) {
+      return(args[[named_position]])
+    }
+    position <- unname(specification[[1L]])
+    if (length(args) >= position) args[[position]] else NULL
+  }
+
+  violations <- character()
+  inspect_expression <- function(expr, source_file) {
+    if (!is.call(expr)) {
+      return(invisible(NULL))
+    }
+
+    name <- call_name(expr)
+    if (identical(name, "setwd")) {
+      violations <<- c(violations, paste0(basename(source_file), ": setwd"))
+    }
+    if (!is.null(name) && name %in% names(destination_arguments)) {
+      destination <- destination_arg(expr, destination_arguments[[name]])
+      if (is.character(destination)) {
+        violations <<- c(violations, paste0(basename(source_file), ": ", name))
+      }
+    }
+
+    for (index in seq_along(expr)) {
+      if (identical(expr[[index]], quote(expr = ))) {
+        next
+      }
+      inspect_expression(expr[[index]], source_file)
+    }
+    invisible(NULL)
+  }
+
+  for (test_file in test_files) {
+    expressions <- parse(test_file, keep.source = FALSE)
+    for (expr in expressions) {
+      inspect_expression(expr, test_file)
+    }
+  }
+
+  expect_false(
+    length(unique(violations)) > 0L,
+    info = paste(unique(violations), collapse = ", ")
+  )
 })
 
 test_that("worktree metadata is excluded from source builds", {

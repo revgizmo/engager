@@ -16,9 +16,11 @@ Invisibly, the selected experience level as a character scalar.
 Set user experience level
 }
 \examples{
+old_ux_level <- getOption("zoomstudentengagement.ux_level")
 # Set to basic level (5 essential functions)
 set_ux_level("basic")
 
 # Set to intermediate level (15 functions)
 set_ux_level("intermediate")
+options(zoomstudentengagement.ux_level = old_ux_level)
 }
