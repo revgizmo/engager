@@ -1,8 +1,11 @@
 # Internal function - no documentation needed
 write_section_names_lookup <-
   function(clean_names_df = NULL,
-           data_folder = ".",
+           data_folder = NULL,
            section_names_lookup_file = "section_names_lookup.csv") {
+    if (tibble::is_tibble(clean_names_df) && is.null(data_folder)) {
+      stop("`data_folder` must be supplied to write the lookup", call. = FALSE)
+    }
     if (tibble::is_tibble(clean_names_df) &&
       file.exists(data_folder)
     ) {

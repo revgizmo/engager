@@ -1,3 +1,6 @@
+test_root <- withr::local_tempdir()
+test_transcripts_dir <- file.path(test_root, "test_transcripts")
+
 test_that("summarize_transcript_files triggers duplicate diagnostics path (quiet in tests)", {
   # Minimal tibble input (no real files needed)
   tfiles <- tibble::tibble(transcript_file = character())
@@ -17,18 +20,18 @@ test_that("summarize_transcript_files triggers duplicate diagnostics path (quiet
   on.exit(assignInNamespace("detect_duplicate_transcripts", orig, ns = "engager"), add = TRUE)
 
   # Create a fake transcripts folder to pass folder existence check
-  dir.create("test_transcripts", showWarnings = FALSE)
+  dir.create(test_transcripts_dir, showWarnings = FALSE)
 
   # Call with deduplicate_content = TRUE to hit the diagnostics branch
   expect_no_error(
     summarize_transcript_files(
       transcript_file_names = tfiles,
-      data_folder = ".",
+      data_folder = test_root,
       transcripts_folder = "test_transcripts",
       deduplicate_content = TRUE,
       duplicate_method = "hybrid"
     )
   )
 
-  unlink("test_transcripts", recursive = TRUE)
+  unlink(test_transcripts_dir, recursive = TRUE)
 })

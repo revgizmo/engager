@@ -6,21 +6,24 @@
 \usage{
 basic_transcript_analysis(
   transcript_file,
-  output_dir = "output",
+  output_dir = NULL,
   privacy_level = "high"
 )
 }
 \arguments{
 \item{transcript_file}{Path to a WebVTT transcript file}
 
-\item{output_dir}{Output directory for results (default: "output")}
+\item{output_dir}{Optional output directory. When \code{NULL} (the default), the
+analysis is returned in memory and no files or directories are created.}
 
 \item{privacy_level}{Privacy protection level: "high" (default), "medium",
 or "low". These map to \code{"privacy_strict"}, \code{"privacy_standard"}, and
 \code{"mask"}, respectively. All three levels mask common identifiers.}
 }
 \value{
-List containing analysis results, plots, and output directory path
+A named list with \code{analysis} (a tibble of speaker metrics), \code{plots}
+(a \code{ggplot} object), \code{output_dir} (the explicit output directory or
+\code{NULL}), \code{transcript_file}, and \code{privacy_level}.
 }
 \description{
 Simplified workflow that guides new users through basic analysis
@@ -28,14 +31,13 @@ of Zoom transcripts with minimal complexity.
 Complete basic transcript analysis workflow
 
 This is the main function for new users. It performs a complete
-analysis workflow in 5 simple steps: load, process, analyze, visualize, and export.
+analysis workflow in five simple steps: load, process, analyze, visualize,
+and either return results in memory or export to an explicit directory.
 }
 \examples{
-\dontrun{
-# Basic workflow for new users
-results <- basic_transcript_analysis("transcript.vtt", "output/")
-
-# With custom privacy level
-results <- basic_transcript_analysis("transcript.vtt", "output/", "medium")
-}
+transcript_file <- system.file(
+  "extdata/test_transcripts/ideal_course_session1.vtt",
+  package = "engager"
+)
+results <- basic_transcript_analysis(transcript_file)
 }

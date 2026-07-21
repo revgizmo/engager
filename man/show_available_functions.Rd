@@ -9,15 +9,16 @@ show_available_functions(level = NULL)
 \arguments{
 \item{level}{User experience level (optional, uses current level if not specified)}
 }
+\value{
+Invisibly \code{NULL}; called for its formatted console output.
+}
 \description{
 Show functions available at current UX level
 }
 \examples{
-\dontrun{
 # Show functions at current level
 show_available_functions()
 
 # Show functions at specific level
 show_available_functions("intermediate")
-}
 }

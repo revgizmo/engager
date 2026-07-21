@@ -35,35 +35,6 @@ This function helps clean up transcript datasets by finding files that contain s
 or identical content, which can occur when multiple transcript formats are generated
 for the same recording session.
 }
-\examples{
-\dontrun{
-# Create sample transcript list
-transcript_list <- tibble::tibble(
-  transcript_file = c(
-    "GMT20240115-100000_Recording.transcript.vtt",
-    "GMT20240115-100000_Recording.cc.vtt",
-    "GMT20240116-140000_Recording.transcript.vtt"
-  )
-)
-
-# Detect duplicates in a transcript list
-duplicates <- detect_duplicate_transcripts(transcript_list)
-
-# View duplicate groups
-duplicates$duplicate_groups
-
-# View recommendations
-duplicates$recommendations
-
-# Use different detection method
-content_duplicates <- detect_duplicate_transcripts(
-  transcript_list,
-  method = "content",
-  similarity_threshold = 0.9
-)
-}
-
-}
 \seealso{
 \code{\link{process_zoom_transcript}} for processing individual transcripts,
 \code{\link{summarize_transcript_metrics}} for analyzing transcript content

@@ -9,6 +9,9 @@ find_function_for_task(task)
 \arguments{
 \item{task}{Description of what user wants to do}
 }
+\value{
+Invisibly \code{NULL}; called for its function suggestions printed to the console.
+}
 \description{
 Provides interactive help and function discovery to help users
 find the right functions for their specific tasks.
@@ -17,9 +20,7 @@ Interactive function discovery
 Helps users find the right function based on what they want to do
 }
 \examples{
-\dontrun{
 find_function_for_task("load transcript file")
 find_function_for_task("create visualizations")
 find_function_for_task("export results")
-}
 }

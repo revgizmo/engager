@@ -9,15 +9,16 @@ set_ux_level(level = "basic")
 \arguments{
 \item{level}{User experience level: "basic", "intermediate", "advanced", "expert"}
 }
+\value{
+Invisibly, the selected experience level as a character scalar.
+}
 \description{
 Set user experience level
 }
 \examples{
-\dontrun{
 # Set to basic level (5 essential functions)
 set_ux_level("basic")
 
 # Set to intermediate level (15 functions)
 set_ux_level("intermediate")
-}
 }

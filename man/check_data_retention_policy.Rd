@@ -32,21 +32,4 @@ backward-compatible alias.
 Compares configured date fields with a selected period to support local
 records review. It does not determine or enforce institutional policy.
 }
-\examples{
-\dontrun{
-# Check data retention policy
-sample_data <- tibble::tibble(
-  student_id = c("12345", "67890"),
-  session_date = as.Date(c("2024-01-15", "2024-02-20")),
-  participation_score = c(85, 92)
-)
-
-retention_check <- check_data_retention_policy(
-  sample_data,
-  retention_period = "academic_year",
-  date_column = "session_date"
-)
-print(retention_check$passed)
-}
-}
 \keyword{internal}

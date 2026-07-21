@@ -6,11 +6,12 @@
 \usage{
 show_function_categories()
 }
+\value{
+Invisibly \code{NULL}; called for its category summary printed to the console.
+}
 \description{
 Show function categories and counts
 }
 \examples{
-\dontrun{
 show_function_categories()
-}
 }

@@ -27,8 +27,9 @@ generate_privacy_review_report(
 \item{institution_type}{Review context: "educational", "research", or "mixed".}
 }
 \value{
-A list containing report metadata, summary, review results, and
-recommendations.
+A named list containing report metadata, a summary, the underlying
+technical review results, and recommendations. When \code{output_file} is
+supplied, the same report is also serialized there.
 }
 \description{
 Generates a lightweight report from \code{review_privacy_risks()}. The report is

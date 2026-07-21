@@ -9,17 +9,11 @@
 #'
 #' @param expr Expression to evaluate
 #' @param context Context for error message
+#' @return The value of `expr` unchanged when evaluation succeeds. On failure,
+#'   the function raises a rewritten error with recovery guidance.
 #' @export
 #' @examples
-#' \dontrun{
-#' # Wrap any expression with user-friendly error handling
-#' result <- user_friendly_error(
-#'   {
-#'     load_zoom_transcript("nonexistent.vtt")
-#'   },
-#'   "loading transcript"
-#' )
-#' }
+#' result <- user_friendly_error(1 + 1, "adding values")
 user_friendly_error <- function(expr, context = "operation") {
   tryCatch(
     {
@@ -224,12 +218,11 @@ validate_directory_argument <- function(dir_path, context = "directory operation
 #' @description Provides specific recovery suggestions based on error type
 #'
 #' @param error_type Type of error encountered
+#' @return Invisibly `NULL`; called for its recovery guidance printed to the console.
 #' @export
 #' @examples
-#' \dontrun{
 #' show_error_recovery("file_not_found")
 #' show_error_recovery("permission_denied")
-#' }
 show_error_recovery <- function(error_type) {
   switch(error_type,
     "file_not_found" = {

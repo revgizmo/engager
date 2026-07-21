@@ -28,6 +28,7 @@ test_that("prompt_name_matching works correctly", {
         prompt_name_matching(unmatched, data_folder = tempdir()),
         "Found 3 unmatched names that need manual mapping"
       )
+      expect_false(file.exists(file.path(tempdir(), "section_names_lookup.csv")))
     }
   )
 
@@ -59,11 +60,13 @@ test_that("prompt_name_matching works correctly", {
           prompt_name_matching(
             unmatched_names = c("John Doe"),
             data_folder = tf,
-            section_names_lookup_file = "test_lookup.csv"
+            section_names_lookup_file = "test_lookup.csv",
+            write_lookup = TRUE
           )
         },
         "Found 1 unmatched name"
       )
+      unlink(file.path(tf, "test_lookup.csv"))
     }
   )
 })
@@ -84,7 +87,7 @@ test_that("prompt_name_matching validates inputs correctly", {
   # Test invalid data_folder
   expect_error(
     prompt_name_matching(c("test"), data_folder = 123),
-    "data_folder must be a single character string"
+    "data_folder must be NULL or a non-empty character string"
   )
 
   # Test invalid section_names_lookup_file
@@ -97,6 +100,11 @@ test_that("prompt_name_matching validates inputs correctly", {
   expect_error(
     prompt_name_matching(c("test"), include_instructions = "invalid"),
     "include_instructions must be a single logical value"
+  )
+
+  expect_error(
+    prompt_name_matching(c("test"), write_lookup = TRUE),
+    "data_folder.*must be supplied"
   )
 })
 

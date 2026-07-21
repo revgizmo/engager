@@ -7,7 +7,7 @@
 write_metrics(
   data = NULL,
   what = c("engagement", "summary", "session_summary"),
-  path = NULL,
+  path,
   comments_format = NULL,
   privacy_level = getOption("engager.privacy_level", "mask"),
   comments_policy = c("auto", "omit", "count", "text")
@@ -18,7 +18,8 @@ write_metrics(
 
 \item{what}{Type of output: "engagement", "summary", or "session_summary" (default: "engagement")}
 
-\item{path}{File path where to write the output}
+\item{path}{Explicit file path where the output will be written. No default
+path is used.}
 
 \item{comments_format}{Deprecated alias for \code{comments_policy}. Use
 \code{comments_policy = "count"} or \code{comments_policy = "text"} instead.

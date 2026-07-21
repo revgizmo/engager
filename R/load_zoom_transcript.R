@@ -8,7 +8,9 @@
 #' https://gist.github.com/brooksambrose/1a8a673eb3bf884c1868ad4d80f08246
 #'
 #' @param transcript_file_path Path to the transcript file to load
-#' @return A tibble containing the transcript data, or NULL if the file is empty
+#' @return A tibble with one row per parsed WebVTT cue and columns describing
+#'   speaker name, cue text, start and end times, duration, word count, and
+#'   source transcript. Returns `NULL` when the file is empty.
 #' @examples
 #' # Load a sample transcript from the package's extdata directory
 #' transcript_file <- system.file("extdata/test_transcripts/intro_statistics_week1.vtt",

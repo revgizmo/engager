@@ -9,13 +9,14 @@ get_smart_recommendations(context)
 \arguments{
 \item{context}{User's current context or situation}
 }
+\value{
+Invisibly \code{NULL}; called for its recommendations printed to the console.
+}
 \description{
 Provides intelligent function recommendations based on user context
 }
 \examples{
-\dontrun{
 get_smart_recommendations("new user")
 get_smart_recommendations("batch processing")
 get_smart_recommendations("privacy concerns")
-}
 }

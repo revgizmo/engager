@@ -10,7 +10,7 @@ get_visible_functions(level = "basic")
 \item{level}{User experience level: "basic", "intermediate", "advanced", "expert"}
 }
 \value{
-Vector of function names visible at this level
+A character vector of exported function names visible at \code{level}.
 }
 \description{
 Manages which functions are visible to users based on experience level
@@ -18,11 +18,9 @@ to implement progressive disclosure and simplify the user interface.
 Get visible functions for user experience level
 }
 \examples{
-\dontrun{
 # Get functions visible to basic users
 basic_functions <- get_visible_functions("basic")
 
 # Get functions visible to intermediate users
 intermediate_functions <- get_visible_functions("intermediate")
-}
 }

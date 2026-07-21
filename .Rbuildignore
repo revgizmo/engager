@@ -8,6 +8,7 @@
 ^\.github/
 ^\.lintr$
 ^\.gitignore$
+^\.git$
 ^\.cursorrules$
 
 # Docker and container development files

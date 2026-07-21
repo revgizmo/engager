@@ -29,8 +29,9 @@ review_privacy_risks(
 \item{audit_log}{Whether to record an in-memory review audit event.}
 }
 \value{
-A list with technical review status, detected fields, recommendations,
-retention check details, and institutional review prompts.
+A named list containing the logical technical review status,
+detected identifier fields, recommendations, retention-review details,
+and institutional review prompts.
 }
 \description{
 Performs a technical privacy review of a data frame by looking for common

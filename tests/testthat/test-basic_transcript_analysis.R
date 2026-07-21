@@ -144,11 +144,10 @@ test_that("quick_analysis delegates to basic_transcript_analysis", {
   writeLines(c("WEBVTT", "\n", "00:00:00.000 --> 00:00:01.000", "Hello"), tf)
   called <- FALSE
   with_mocked_bindings(
-    basic_transcript_analysis = function(transcript_file, output_dir = "output", privacy_level = "high") {
+    basic_transcript_analysis = function(transcript_file, output_dir = NULL, privacy_level = "high") {
       called <<- TRUE
-      if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
       expect_equal(transcript_file, tf)
-      expect_equal(output_dir, "quick_output")
+      expect_null(output_dir)
       list(
         analysis = tibble::tibble(), plots = list(), output_dir = output_dir,
         transcript_file = transcript_file, privacy_level = privacy_level
@@ -157,7 +156,7 @@ test_that("quick_analysis delegates to basic_transcript_analysis", {
     {
       res <- quick_analysis(tf)
       expect_true(called)
-      expect_equal(res$output_dir, "quick_output")
+      expect_null(res$output_dir)
       expect_equal(res$transcript_file, tf)
     }
   )
@@ -175,8 +174,30 @@ test_that("quick_analysis runs a bundled transcript without source-tree assumpti
   result <- quick_analysis(transcript_file)
 
   expect_s3_class(result$analysis, "tbl_df")
-  expect_true(file.exists(file.path(work_dir, "quick_output", "engagement_metrics.csv")))
+  expect_length(list.files(work_dir, all.files = TRUE, no.. = TRUE), 0)
   expect_equal(getOption("engager.privacy_level"), "mask")
+})
+
+test_that("default beginner and batch workflows do not write", {
+  withr::local_options(engager.privacy_level = "mask")
+  work_dir <- withr::local_tempdir()
+  withr::local_dir(work_dir)
+  transcript_dir <- system.file("extdata/test_transcripts", package = "engager")
+  files <- file.path(
+    transcript_dir,
+    c("ideal_course_session1.vtt", "ideal_course_session2.vtt")
+  )
+  before <- list.files(work_dir, all.files = TRUE, no.. = TRUE, recursive = TRUE)
+
+  basic <- basic_transcript_analysis(files[[1]])
+  batch <- batch_basic_analysis(files)
+
+  expect_null(basic$output_dir)
+  expect_true(all(vapply(batch, function(x) is.null(x$output_dir), logical(1))))
+  expect_identical(
+    list.files(work_dir, all.files = TRUE, no.. = TRUE, recursive = TRUE),
+    before
+  )
 })
 
 test_that("batch_basic_analysis validates and processes multiple files", {
@@ -186,7 +207,7 @@ test_that("batch_basic_analysis validates and processes multiple files", {
 
   called <- 0L
   with_mocked_bindings(
-    basic_transcript_analysis = function(transcript_file, output_dir = "output", privacy_level = "high") {
+    basic_transcript_analysis = function(transcript_file, output_dir = NULL, privacy_level = "high") {
       called <<- called + 1L
       if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
       list(analysis = tibble::tibble(), output_dir = output_dir, transcript_file = transcript_file)

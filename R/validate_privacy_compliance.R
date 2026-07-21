@@ -15,7 +15,8 @@
 #' @param stop_on_violation Whether to stop processing if violations are found.
 #'   Defaults to TRUE for maximum privacy protection.
 #'
-#' @return `TRUE` when the technical check finds no configured real names.
+#' @return The logical scalar `TRUE` when the technical check finds no configured
+#'   real names. The function raises an error instead when a blocking exposure is found.
 #' @export
 #' @examples
 #' # Validate privacy compliance

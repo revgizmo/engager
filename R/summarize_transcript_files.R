@@ -9,16 +9,20 @@
 #' @param deduplicate_content Whether to detect and handle duplicate content (default: FALSE)
 #' @param similarity_threshold Similarity threshold for duplicate detection (default: 0.95)
 #' @param duplicate_method Method for duplicate detection: "hybrid", "content", or "metadata" (default: "hybrid")
-#' @return A tibble containing summarized transcript metrics
+#' @return A tibble of speaker-level metrics combined across the requested
+#'   transcript files. Metadata columns supplied with `transcript_file_names`
+#'   are retained in the result.
 #' @examples
-#' # Create sample transcript file names
+#' transcript_dir <- system.file("extdata/test_transcripts", package = "engager")
 #' transcript_files <- c(
-#'   "GMT20240115-100000_Recording.transcript.vtt",
-#'   "GMT20240116-140000_Recording.transcript.vtt"
+#'   "ideal_course_session1.vtt",
+#'   "ideal_course_session2.vtt"
 #' )
-#'
-#' # Summarize transcript files
-#' summary <- summarize_transcript_files(transcript_file_names = transcript_files)
+#' summary <- summarize_transcript_files(
+#'   transcript_file_names = transcript_files,
+#'   data_folder = transcript_dir,
+#'   transcripts_folder = "."
+#' )
 #'
 #' @export
 summarize_transcript_files <-
