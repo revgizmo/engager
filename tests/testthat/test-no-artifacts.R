@@ -6,11 +6,7 @@ test_that("tests do not leave artifacts in working directory", {
   unlink(tmp)
   expect_false(file.exists(tmp))
 
-  # Ensure default output filename used by analyze_transcripts is not present
-  # If present from a prior failure, remove it now to avoid bleed-over
-  if (file.exists("engagement_metrics.csv")) {
-    unlink("engagement_metrics.csv")
-  }
+  # Default analysis must not create this historical output in getwd().
   expect_false(file.exists("engagement_metrics.csv"))
 })
 

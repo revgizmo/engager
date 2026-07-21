@@ -16,7 +16,9 @@ privacy_audit(
 \item{id_columns}{Vector of column names to check for identifiers (default: common name columns)}
 }
 \value{
-A tibble containing audit results with columns: column, values, non_empty, masked_estimate
+A tibble with one row per detected identifier column and the fields
+\code{column}, \code{values}, \code{non_empty}, and \code{masked_estimate}, summarizing the
+technical masking state of the supplied data.
 }
 \description{
 Summarize which identifier columns were present and how many values were masked.

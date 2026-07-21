@@ -30,19 +30,23 @@ summarize_transcript_files(
 \item{duplicate_method}{Method for duplicate detection: "hybrid", "content", or "metadata" (default: "hybrid")}
 }
 \value{
-A tibble containing summarized transcript metrics
+A tibble of speaker-level metrics combined across the requested
+transcript files. Metadata columns supplied with \code{transcript_file_names}
+are retained in the result.
 }
 \description{
 Summarize multiple transcript files and return aggregated metrics. If a tibble with additional columns beyond 'transcript_file' is provided, all metadata columns will be preserved in the output.
 }
 \examples{
-# Create sample transcript file names
+transcript_dir <- system.file("extdata/test_transcripts", package = "engager")
 transcript_files <- c(
-  "GMT20240115-100000_Recording.transcript.vtt",
-  "GMT20240116-140000_Recording.transcript.vtt"
+  "ideal_course_session1.vtt",
+  "ideal_course_session2.vtt"
 )
-
-# Summarize transcript files
-summary <- summarize_transcript_files(transcript_file_names = transcript_files)
+summary <- summarize_transcript_files(
+  transcript_file_names = transcript_files,
+  data_folder = transcript_dir,
+  transcripts_folder = "."
+)
 
 }

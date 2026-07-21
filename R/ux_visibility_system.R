@@ -6,16 +6,14 @@
 #' Get visible functions for user experience level
 #'
 #' @param level User experience level: "basic", "intermediate", "advanced", "expert"
-#' @return Vector of function names visible at this level
+#' @return A character vector of exported function names visible at `level`.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Get functions visible to basic users
 #' basic_functions <- get_visible_functions("basic")
 #'
 #' # Get functions visible to intermediate users
 #' intermediate_functions <- get_visible_functions("intermediate")
-#' }
 get_visible_functions <- function(level = "basic") {
   switch(level,
     "basic" = UX_ESSENTIAL_FUNCTIONS,
@@ -29,15 +27,16 @@ get_visible_functions <- function(level = "basic") {
 #' Set user experience level
 #'
 #' @param level User experience level: "basic", "intermediate", "advanced", "expert"
+#' @return Invisibly, the selected experience level as a character scalar.
 #' @export
 #' @examples
-#' \dontrun{
+#' old_ux_level <- getOption("zoomstudentengagement.ux_level")
 #' # Set to basic level (5 essential functions)
 #' set_ux_level("basic")
 #'
 #' # Set to intermediate level (15 functions)
 #' set_ux_level("intermediate")
-#' }
+#' options(zoomstudentengagement.ux_level = old_ux_level)
 set_ux_level <- function(level = "basic") {
   valid_levels <- c("basic", "intermediate", "advanced", "expert")
   if (!level %in% valid_levels) {
@@ -59,12 +58,11 @@ set_ux_level <- function(level = "basic") {
 
 #' Get current user experience level
 #'
-#' @return Current UX level
+#' @return A character scalar containing the configured experience level, or
+#'   `"basic"` when no level has been configured. This function takes no arguments.
 #' @export
 #' @examples
-#' \dontrun{
 #' current_level <- get_ux_level()
-#' }
 get_ux_level <- function() {
   getOption("zoomstudentengagement.ux_level", "basic")
 }
@@ -72,15 +70,14 @@ get_ux_level <- function() {
 #' Show functions available at current UX level
 #'
 #' @param level User experience level (optional, uses current level if not specified)
+#' @return Invisibly `NULL`; called for its formatted console output.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Show functions at current level
 #' show_available_functions()
 #'
 #' # Show functions at specific level
 #' show_available_functions("intermediate")
-#' }
 show_available_functions <- function(level = NULL) {
   if (is.null(level)) {
     level <- get_ux_level()

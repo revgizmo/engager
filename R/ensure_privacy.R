@@ -20,9 +20,11 @@
 #'   "ferpa_standard" are accepted with a warning.
 #' @param id_columns Vector of column names to treat as identifiers (default: common name columns)
 #' @param audit_log Whether to log privacy operations (default: TRUE)
-#' @return A privacy-processed version of the input object. This is a technical
-#'   masking result, not a legal or institutional compliance determination.
-#'
+#' @return For tabular input, an object with the same data-frame class as `x`
+#'   and configured identifier columns transformed according to `privacy_level`.
+#'   Non-tabular input is returned unchanged. This is a technical masking result,
+#'   not a legal or institutional compliance determination.
+#' @examples
 #' df <- tibble::tibble(
 #'   section = c("A", "A", "B"),
 #'   preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz"),

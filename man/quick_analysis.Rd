@@ -4,20 +4,24 @@
 \alias{quick_analysis}
 \title{Quick analysis for single transcript file}
 \usage{
-quick_analysis(transcript_file)
+quick_analysis(transcript_file, output_dir = NULL)
 }
 \arguments{
 \item{transcript_file}{Path to transcript file}
+
+\item{output_dir}{Optional output directory. When \code{NULL}, no files or
+directories are created.}
 }
 \value{
-Analysis results
+The named analysis list returned by \code{basic_transcript_analysis()}.
 }
 \description{
 Simplified version for users who just want quick results
 }
 \examples{
-\dontrun{
-# Quick analysis
-results <- quick_analysis("transcript.vtt")
-}
+transcript_file <- system.file(
+  "extdata/test_transcripts/ideal_course_session1.vtt",
+  package = "engager"
+)
+results <- quick_analysis(transcript_file)
 }

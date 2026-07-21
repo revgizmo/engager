@@ -11,7 +11,7 @@
 #' @param path Output file path.
 #' @param include_raw Logical; include raw names if `TRUE` and allowed.
 #' @param overwrite Logical; overwrite existing file if `TRUE`.
-#' @return Invisibly, the path written.
+#' @return Invisibly, a character scalar containing the path that was written.
 #' @export
 #' @family name-matching
 write_unresolved <- function(unresolved_tbl,

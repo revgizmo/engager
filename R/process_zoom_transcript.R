@@ -15,7 +15,9 @@
 #' @param dead_air_name Name to use for dead air periods (default: 'dead_air')
 #' @param na_name Name to use for unknown speakers (default: 'unknown')
 #' @param transcript_df Pre-loaded transcript data frame (alternative to transcript_file_path)
-#' @return A tibble containing the processed transcript data
+#' @return A tibble of processed transcript cues with normalized speaker,
+#'   comment, timing, duration, word-count, and source-file fields. Depending on
+#'   the arguments, adjacent cues may be consolidated and dead-air rows added.
 #' @examples
 #' # Load a sample transcript from the package's extdata directory
 #' transcript_file <- system.file("extdata/test_transcripts/intro_statistics_week1.vtt",

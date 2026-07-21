@@ -24,15 +24,10 @@ ensure_privacy(
 \item{audit_log}{Whether to log privacy operations (default: TRUE)}
 }
 \value{
-A privacy-processed version of the input object. This is a technical
-masking result, not a legal or institutional compliance determination.
-
-df <- tibble::tibble(
-section = c("A", "A", "B"),
-preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz"),
-session_ct = c(3, 5, 2)
-)
-ensure_privacy(df)
+For tabular input, an object with the same data-frame class as \code{x}
+and configured identifier columns transformed according to \code{privacy_level}.
+Non-tabular input is returned unchanged. This is a technical masking result,
+not a legal or institutional compliance determination.
 }
 \description{
 Applies privacy rules to objects before they are returned, written, or
@@ -49,4 +44,13 @@ The default behavior is controlled by the global option
 \code{engager.privacy_level}, which is set to "mask" on package
 load. Pass \code{privacy_level} explicitly for one call, or set the
 \code{engager.privacy_level} option for the current R session.
+}
+\examples{
+df <- tibble::tibble(
+  section = c("A", "A", "B"),
+  preferred_name = c("Alice Johnson", "Bob Lee", "Cara Diaz"),
+  session_ct = c(3, 5, 2)
+)
+ensure_privacy(df)
+
 }

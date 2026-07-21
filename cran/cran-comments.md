@@ -36,6 +36,42 @@ transcript-derived participation metrics rather than implementing a named
 published research method. `WebVTT` and `reviewable` were also added to the
 package spelling wordlist.
 
+## Subsequent CRAN Reviewer Response
+
+The resubmission received the following documentation and write-safety request
+from Konstanze Lauseker:
+
+> Please add \value to .Rd files regarding exported methods and explain the
+> functions results in the documentation. Please write about the structure of
+> the output (class) and also what the output means. (If a function does not
+> return a value, please document that too, e.g. \value{No return value, called
+> for side effects} or similar)
+>
+> You have examples for unexported functions. Please either omit these examples
+> or export these functions.
+>
+> Some code lines in examples are commented out. Please never do that. Ideally
+> find toy examples that can be regularly executed and checked.
+>
+> Please unwrap the examples if they are executable in < 5 sec, or replace
+> \dontrun{} with \donttest{}.
+>
+> Please ensure that your functions do not write by default or in your
+> examples/vignettes/tests in the user's home filespace (including the package
+> directory and getwd()). This is not allowed by CRAN policies. Please omit any
+> default path in writing functions. In your examples/vignettes/tests you can
+> write to tempdir().
+
+In response, all 35 exported functions now document the class, structure, and
+meaning of their return values or their console side effects. Examples were
+removed from unexported functions. All remaining examples are runnable with
+bundled synthetic fixtures and temporary destinations; no `\dontrun{}` or
+commented executable examples remain. Analysis workflows now return results in
+memory without writing by default, and writer functions require an explicit
+destination. Tests cover the documentation contract, default no-write behavior,
+explicit writer failures and success paths, temporary test destinations, and
+source-tarball metadata exclusions.
+
 ## R CMD Check Results
 
 - **Errors**: 0
@@ -52,13 +88,20 @@ note: `New submission` plus `reviewable` as a possible misspelling. `reviewable`
 is an intentional English word. The reviewer-reported `WebVTT` flag is no
 longer present.
 
+The exact documentation/write-safety remediation tarball completed local
+`R CMD check --as-cran --no-manual` with 0 errors, 0 warnings, and 2
+environment-only notes: network access was unavailable for incoming URL checks,
+and the local environment could not verify the current time. Package
+installation, code/documentation consistency, examples, tests, and vignettes
+all passed.
+
 ## Reverse Dependencies
 
 - **None** (new package)
 
 ## Additional Notes
 
-- The full local test suite passes with 0 failures, 67 expected warnings, and
+- The full local test suite passes with 0 failures, 68 expected warnings, and
   5 documented skips. Four are diagnostic placeholder tests and one covers an
   internal empty-session-mapping edge case.
 - An installed-package UAT installs the source tarball into an isolated library
@@ -78,11 +121,12 @@ longer present.
 - Metric CSV exports omit raw transcript/comment text by default.
 - Privacy and FERPA-oriented documentation is guidance only and does not
   certify legal or institutional compliance.
-- The release-candidate tarball contains 270 entries. Inspection found no
+- The prior replacement release-candidate tarball contained 270 entries.
+  Inspection found no
   project-only release documents, development scripts, nested archives,
   `.Rcheck` directories, local libraries, generated UAT output, or private
   transcript/roster paths.
-- The replacement release candidate was built from package-content commit
+- The prior replacement release candidate was built from package-content commit
   `67918c4904c072e91f378f3bb3677d2ffdd35bda`. Its SHA-256 is
   `2a8087a2b315fac48de8fa8239465d7360152dacf0c725d803e5cdeb50ce6ae1`.
 - Prior hosted baseline checks passed for R CMD check on Ubuntu,
@@ -93,11 +137,30 @@ longer present.
   found 270 clean entries with no project-only or private/local artifacts.
 - The exact replacement tarball passed R-devel win-builder installation,
   examples, tests, vignettes, and PDF/HTML manual checks.
+- The documentation/write-safety remediation candidate was built from exact
+  package-content commit `799deabc0be1a7ee33a91ae82bd1add2dc980243`.
+  Its SHA-256 is
+  `0842a7726b9c7f1fc78681d11e58fb541d5b24ac9f005047cc9d3ed21acd7b36`.
+- The remediation tarball contains 270 entries. Inspection found no Git
+  worktree metadata, project-only release documents, development scripts,
+  nested archives, `.Rcheck` directories, local libraries, generated UAT
+  output, or private transcript/roster paths. The bundled
+  `example_section_names_lookup.csv` remains a synthetic installed fixture.
+- The exact remediation tarball passed installed-package UAT in an isolated
+  library, including the 35-function export allowlist, synthetic beginner and
+  advanced workflows, name matching, identifier transformation, plots,
+  explicit CSV/report writes, and installed vignette discovery.
+- Optional beginner-workflow output directories and the internal section-name
+  lookup writer now reject malformed destinations before creating files or
+  directories. Runnable UX examples restore the caller's option state, and a
+  syntax-aware test gate checks common filesystem writers for literal
+  destinations.
 
 ## Validation Status
 
 - [x] Local tests passing
-- [x] Local `R CMD check --as-cran` completed at 0/0/0
+- [x] Exact remediation tarball completed local `R CMD check --as-cran` at
+  0 errors, 0 warnings, and 2 environment-only notes
 - [x] Examples and vignettes pass under `R CMD check`
 - [x] Source tarball builds and installs successfully
 - [x] Installed-package UAT passes
@@ -105,4 +168,5 @@ longer present.
 - [x] Release-surface remediation PR #566 merged with passing CI
 - [x] Feature-surface hardening and final product-voice/privacy review complete
 - [x] Replacement R-devel win-builder check complete
+- [ ] Remediation R-devel win-builder check complete
 - [ ] Maintainer final release disposition recorded

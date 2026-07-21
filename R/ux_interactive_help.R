@@ -8,13 +8,12 @@
 #' @description Helps users find the right function based on what they want to do
 #'
 #' @param task Description of what user wants to do
+#' @return Invisibly `NULL`; called for its function suggestions printed to the console.
 #' @export
 #' @examples
-#' \dontrun{
 #' find_function_for_task("load transcript file")
 #' find_function_for_task("create visualizations")
 #' find_function_for_task("export results")
-#' }
 find_function_for_task <- function(task) {
   if (missing(task) || is.null(task) || task == "") {
     cat("What would you like to do? Please describe your task.\n")
@@ -64,7 +63,7 @@ find_function_for_task <- function(task) {
   # Export functions
   if (grepl("export|save|output|write|download", task_lower)) {
     cat("Exporting Results:\n")
-    cat("   - write_metrics() - Export privacy-processed metrics to CSV\n")
+    cat("   - write_metrics(data, path = 'your/output.csv') - Export privacy-processed metrics to CSV\n")
     cat("   - write_unresolved() - Export unresolved-name review data\n")
     cat("   - generate_privacy_review_report() - Write a privacy review report\n\n")
   }
@@ -73,7 +72,7 @@ find_function_for_task <- function(task) {
   if (grepl("privacy|protect|anonymize|mask|secure", task_lower)) {
     cat("Privacy Protection:\n")
     cat("   - ensure_privacy() - Apply privacy protection to data\n")
-    cat("   - write_metrics() - Export masked metrics without raw comments by default\n")
+    cat("   - write_metrics(data, path = 'your/output.csv') - Export masked metrics without raw comments by default\n")
     cat("   - privacy_audit() - Check privacy risks\n")
     cat("   - anonymize_educational_data() - Transform recognized identifier columns\n")
     cat("   - review_privacy_risks() - Run a technical privacy review\n\n")
@@ -111,11 +110,10 @@ find_function_for_task <- function(task) {
 
 #' Show function categories and counts
 #'
+#' @return Invisibly `NULL`; called for its category summary printed to the console.
 #' @export
 #' @examples
-#' \dontrun{
 #' show_function_categories()
-#' }
 show_function_categories <- function() {
   cat("RESULTS: Function Categories Overview\n")
   cat(paste(rep("=", 35), collapse = ""), "\n\n")
@@ -154,13 +152,12 @@ show_function_categories <- function() {
 #' @description Provides intelligent function recommendations based on user context
 #'
 #' @param context User's current context or situation
+#' @return Invisibly `NULL`; called for its recommendations printed to the console.
 #' @export
 #' @examples
-#' \dontrun{
 #' get_smart_recommendations("new user")
 #' get_smart_recommendations("batch processing")
 #' get_smart_recommendations("privacy concerns")
-#' }
 get_smart_recommendations <- function(context) {
   if (missing(context) || is.null(context) || context == "") {
     cat("What's your situation? Please describe your context.\n")
@@ -206,7 +203,7 @@ get_smart_recommendations <- function(context) {
 
   if (grepl("export|save|output|download|share", context_lower)) {
     cat("Export & Sharing:\n")
-    cat("   1. write_metrics() - Export privacy-processed metrics to CSV\n")
+    cat("   1. write_metrics(data, path = 'your/output.csv') - Export privacy-processed metrics to CSV\n")
     cat("   2. write_unresolved() - Unresolved-name review CSV\n")
     cat("   3. generate_privacy_review_report() - Privacy review report\n\n")
   }

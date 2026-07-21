@@ -30,7 +30,9 @@ process_zoom_transcript(
 \item{transcript_df}{Pre-loaded transcript data frame (alternative to transcript_file_path)}
 }
 \value{
-A tibble containing the processed transcript data
+A tibble of processed transcript cues with normalized speaker,
+comment, timing, duration, word-count, and source-file fields. Depending on
+the arguments, adjacent cues may be consolidated and dead-air rows added.
 }
 \description{
 Process a Zoom recording transcript with given parameters and return tibble containing the consolidated and annotated

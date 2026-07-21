@@ -9,12 +9,13 @@ show_function_help(function_name)
 \arguments{
 \item{function_name}{Name of function to get help for}
 }
+\value{
+Invisibly \code{NULL}; called for its formatted console help.
+}
 \description{
 Show help for specific function
 }
 \examples{
-\dontrun{
 show_function_help("load_zoom_transcript")
 show_function_help("basic_transcript_analysis")
-}
 }

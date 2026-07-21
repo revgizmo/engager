@@ -79,3 +79,10 @@ test_that("load_cancelled_classes creates blank file when write_blank_cancelled_
   # Clean up
   unlink(temp_file)
 })
+
+test_that("load_cancelled_classes requires a destination before writing", {
+  expect_error(
+    load_cancelled_classes(write_blank_cancelled_classes = TRUE),
+    "data_folder.*must be supplied"
+  )
+})

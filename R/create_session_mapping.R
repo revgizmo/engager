@@ -2,7 +2,7 @@
 create_session_mapping <- function(
     zoom_recordings_df = NULL,
     course_info_df = NULL,
-    output_file = "session_mapping.csv",
+    output_file = NULL,
     semester_start_mdy = "Jan 01, 2024",
     auto_assign_patterns = list(
       "CS 101" = "CS.*101",

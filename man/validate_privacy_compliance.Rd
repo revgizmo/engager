@@ -26,7 +26,8 @@ common name patterns to detect potential violations.}
 Defaults to TRUE for maximum privacy protection.}
 }
 \value{
-\code{TRUE} when the technical check finds no configured real names.
+The logical scalar \code{TRUE} when the technical check finds no configured
+real names. The function raises an error instead when a blocking exposure is found.
 }
 \description{
 Scans data objects for possible real names when package masking is enabled.

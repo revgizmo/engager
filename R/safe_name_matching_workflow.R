@@ -12,21 +12,10 @@
 #'   Defaults to `getOption("engager.unmatched_names_action", "stop")`.
 #' @param data_folder Directory containing data files
 #' @param section_names_lookup_file Name of the section names lookup file
+#' @param write_lookup Logical; whether the unmatched-name flow may write a
+#'   lookup template to the explicitly selected `data_folder`.
 #'
 #' @return Processed transcript data with privacy-aware name matching applied
-#' @examples
-#' # Default behavior (maximum privacy)
-#' # result <- safe_name_matching_workflow(
-#' #   transcript_file_path = "transcript.vtt",
-#' #   roster_data = roster_df
-#' # )
-#' #
-#' # Opt-in for convenience
-#' # result <- safe_name_matching_workflow(
-#' #   transcript_file_path = "transcript.vtt",
-#' #   roster_data = roster_df,
-#' #   unmatched_names_action = "warn"
-#' # )
 safe_name_matching_workflow <- function(transcript_file_path = NULL,
                                         roster_data = NULL,
                                         privacy_level = getOption(
@@ -37,12 +26,13 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
                                           "engager.unmatched_names_action",
                                           "stop"
                                         ),
-                                        data_folder = ".",
-                                        section_names_lookup_file = "section_names_lookup.csv") {
+                                        data_folder = NULL,
+                                        section_names_lookup_file = "section_names_lookup.csv",
+                                        write_lookup = FALSE) {
   # Validate inputs
   validate_safe_name_inputs(
     transcript_file_path, roster_data, privacy_level,
-    unmatched_names_action, data_folder, section_names_lookup_file
+    unmatched_names_action, data_folder, section_names_lookup_file, write_lookup
   )
 
   # Stage 1: Load and process with real names in memory (quiet by default)
@@ -57,7 +47,7 @@ safe_name_matching_workflow <- function(transcript_file_path = NULL,
   # Process name matching workflow
   processed_data <- process_name_matching_workflow(
     transcript_data, roster_data, name_mappings, unmatched_names_action,
-    privacy_level, data_folder, section_names_lookup_file
+    privacy_level, data_folder, section_names_lookup_file, write_lookup
   )
 
   # Name matching workflow completed successfully
@@ -95,7 +85,8 @@ handle_unmatched_names <- function(unmatched_names,
                                    unmatched_names_action,
                                    privacy_level,
                                    data_folder,
-                                   section_names_lookup_file) {
+                                   section_names_lookup_file,
+                                   write_lookup = FALSE) {
   # Extract actual names from transcript data for unmatched entries only
   actual_names <- extract_unmatched_names_from_transcript(unmatched_names, transcript_data)
 
@@ -104,14 +95,14 @@ handle_unmatched_names <- function(unmatched_names,
     stop(
       paste0(
         "Found unmatched names: ", paste(actual_names, collapse = ", "), "\n",
-        "Please update your section_names_lookup.csv file with these mappings.\n",
-        "See ?match_names_workflow and ?write_unresolved for detailed instructions.\n",
+        "No mapping file was created.\n",
+        "Use ?match_names_workflow to review matches in memory, then call ",
+        "write_unresolved(..., path = 'your/output.csv') with an explicit path if needed.\n",
         "Example mappings:\n",
         paste(sapply(actual_names, function(name) {
           paste0("  ", name, " -> [Your roster name]")
         }), collapse = "\n"), "\n",
-        "Lookup file path: ", file.path(data_folder, section_names_lookup_file), "\n",
-        "For guided assistance, set unmatched_names_action = 'warn' to receive a template."
+        "For guided assistance, set unmatched_names_action = 'warn' to receive an in-memory template."
       ),
       call. = FALSE
     )
@@ -123,17 +114,33 @@ handle_unmatched_names <- function(unmatched_names,
     )
 
     # Prompt user for name matching
-    prompt_name_matching(
+    lookup_result <- prompt_name_matching(
       unmatched_names = actual_names,
       privacy_level = privacy_level,
       data_folder = data_folder,
-      section_names_lookup_file = section_names_lookup_file
+      section_names_lookup_file = section_names_lookup_file,
+      write_lookup = write_lookup
     )
 
-    # Stop processing to allow user to update mappings
-    stop(
-      "Please update the name mappings file and re-run the analysis.",
-      call. = FALSE
+    lookup_path <- if (isTRUE(write_lookup)) lookup_result else NULL
+    lookup_template <- if (isTRUE(write_lookup)) NULL else lookup_result
+    recovery <- if (isTRUE(write_lookup)) {
+      paste0("A lookup template was written to: ", lookup_path, ".")
+    } else {
+      paste(
+        "No file was written.",
+        "The error condition contains an in-memory `lookup_template` field.",
+        "Choose an explicit destination and call prompt_name_matching(...,",
+        "data_folder = output_dir, write_lookup = TRUE) to write it."
+      )
+    }
+
+    # Stop processing while preserving a supported recovery object.
+    rlang::abort(
+      paste("Name mappings are required before analysis can continue.", recovery),
+      class = "engager_name_matching_required",
+      lookup_template = lookup_template,
+      lookup_path = lookup_path
     )
   }
 }
@@ -407,7 +414,8 @@ apply_name_matching <- function(transcript_data, name_lookup, roster_data) {
 
 # Helper function to validate safe name matching inputs
 validate_safe_name_inputs <- function(transcript_file_path, roster_data, privacy_level,
-                                      unmatched_names_action, data_folder, section_names_lookup_file) {
+                                      unmatched_names_action, data_folder,
+                                      section_names_lookup_file, write_lookup = FALSE) {
   # Validate inputs
   if (!is.character(transcript_file_path) || length(transcript_file_path) != 1) {
     stop("transcript_file_path must be a single character string", call. = FALSE)
@@ -431,12 +439,19 @@ validate_safe_name_inputs <- function(transcript_file_path, roster_data, privacy
     )
   }
 
-  if (!is.character(data_folder) || length(data_folder) != 1) {
-    stop("data_folder must be a single character string", call. = FALSE)
+  if (!is.null(data_folder) &&
+      (!is.character(data_folder) || length(data_folder) != 1 || !nzchar(data_folder))) {
+    stop("data_folder must be NULL or a non-empty character string", call. = FALSE)
   }
 
   if (!is.character(section_names_lookup_file) || length(section_names_lookup_file) != 1) {
     stop("section_names_lookup_file must be a single character string", call. = FALSE)
+  }
+  if (!is.logical(write_lookup) || length(write_lookup) != 1 || is.na(write_lookup)) {
+    stop("write_lookup must be a single logical value", call. = FALSE)
+  }
+  if (isTRUE(write_lookup) && is.null(data_folder)) {
+    stop("`data_folder` must be supplied when `write_lookup = TRUE`", call. = FALSE)
   }
 
   # Validate roster has at least one usable name column and non-empty values
@@ -548,7 +563,8 @@ load_name_mappings <- function(data_folder, section_names_lookup_file) {
 # Helper function to process name matching workflow
 process_name_matching_workflow <- function(transcript_data, roster_data, name_mappings,
                                            unmatched_names_action, privacy_level,
-                                           data_folder, section_names_lookup_file) {
+                                           data_folder, section_names_lookup_file,
+                                           write_lookup = FALSE) {
   # Prepare roster data for matching (validate schema and compute hashes)
   roster_data <- validate_roster_for_matching(roster_data)
   roster_data <- compute_roster_hashes(roster_data)
@@ -569,7 +585,8 @@ process_name_matching_workflow <- function(transcript_data, roster_data, name_ma
       unmatched_names_action = unmatched_names_action,
       privacy_level = privacy_level,
       data_folder = data_folder,
-      section_names_lookup_file = section_names_lookup_file
+      section_names_lookup_file = section_names_lookup_file,
+      write_lookup = write_lookup
     )
   }
 

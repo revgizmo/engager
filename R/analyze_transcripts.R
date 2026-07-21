@@ -6,8 +6,10 @@
 #' @param transcripts_folder Path to folder containing transcript files
 #' @param names_to_exclude Vector of names to exclude from analysis (default: "dead_air")
 #' @param write Whether to write results to file (default: FALSE)
-#' @param output_path Path for output file (defaults to "engagement_metrics.csv")
-#' @return Data frame with engagement metrics
+#' @param output_path Explicit path for the output file when `write = TRUE`.
+#' @return A tibble with speaker-level engagement metrics for the discovered
+#'   transcript files. When `write = TRUE`, the same metrics are also written
+#'   to `output_path` after export privacy policies are applied.
 #'
 #' @export
 analyze_transcripts <- function(
@@ -17,6 +19,10 @@ analyze_transcripts <- function(
     output_path = NULL) {
   if (!dir.exists(transcripts_folder)) {
     stop(sprintf("Folder not found: %s", transcripts_folder))
+  }
+  if (isTRUE(write) && (is.null(output_path) || !is.character(output_path) ||
+    length(output_path) != 1L || !nzchar(output_path))) {
+    stop("`output_path` must be supplied when `write = TRUE`", call. = FALSE)
   }
 
   files <- list.files(transcripts_folder, pattern = "\\.transcript\\.vtt$", full.names = TRUE)
@@ -40,7 +46,7 @@ analyze_transcripts <- function(
     write_metrics(
       metrics,
       what = "engagement",
-      path = if (is.null(output_path)) "engagement_metrics.csv" else output_path
+      path = output_path
     )
   }
 

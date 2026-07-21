@@ -23,18 +23,6 @@
 #'     package's technical privacy checks completed without an error. This is
 #'     not a legal or institutional compliance determination.
 #'
-#' @examples
-#' # Analyze attendance across multiple sessions
-#' # transcript_files <- c("session1.vtt", "session2.vtt", "session3.vtt")
-#' # roster_data <- load_roster(data_folder = "data/metadata", roster_file = "roster.csv")
-#' # results <- analyze_multi_session_attendance(
-#' #   transcript_files = transcript_files,
-#' #   roster_data = roster_data,
-#' #   data_folder = "data",
-#' #   unmatched_names_action = "warn"
-#' # )
-#' # print(results$attendance_summary)
-#'
 #' @keywords internal
 analyze_multi_session_attendance <- function(
     transcript_files = NULL,

@@ -16,7 +16,7 @@ write_unresolved(unresolved_tbl, path, include_raw = FALSE, overwrite = FALSE)
 \item{overwrite}{Logical; overwrite existing file if \code{TRUE}.}
 }
 \value{
-Invisibly, the path written.
+Invisibly, a character scalar containing the path that was written.
 }
 \description{
 By default, writes only hashed columns (no raw names). To include raw
