@@ -5,8 +5,9 @@ protected `develop` while `engager` 0.1.0 remains under CRAN review. Merging
 0.1.1 package content to `main` is governed by the T6 release gates and remains
 strictly blocked until at least the 0.1.0 acceptance closeout is complete.
 
-Last reconciled: 2026-07-15 against the stable `main` release line and the live
-GitHub backlog.
+Last release-state reconciliation: 2026-07-22 against stable `main` at
+`6214c0316d39154140bdba064266119007bff41a`. The feature/backlog baseline
+remains the 2026-07-15 review.
 
 ## Release thesis
 
@@ -34,6 +35,11 @@ The submitted 0.1.0 artifact and 0.1.1 development are separate lanes:
 - A remediation that also applies to 0.1.1 is carried forward through a
   separate `codex/v011-forward-port-<slug>` PR targeting `develop`; do not merge
   the development line into the CRAN remediation lane.
+- The documentation/write-safety remediation forward-port must also normalize
+  malformed explicit path inputs, including `NA` and blank scalar values,
+  across public and internal writers. This P2 error-contract debt is tracked by
+  issue #438 and does not reopen 0.1.0 because default workflows remain
+  read-only and explicit-path Windows checks passed.
 - Merging `develop` into `main`, publishing a 0.1.1 tag or release, and any
   0.1.1 CRAN submission remain release actions governed by the T6 gates.
 
@@ -41,25 +47,25 @@ Parallel development may begin before CRAN publication. The 0.1.0 closeout
 still requires the following steps after publication:
 
 1. Download the published CRAN source tarball and calculate its SHA-256.
-2. Compare it with the submitted replacement artifact SHA-256:
-   `2a8087a2b315fac48de8fa8239465d7360152dacf0c725d803e5cdeb50ce6ae1`.
+2. Compare it with the submitted documentation/write-safety remediation
+   artifact SHA-256:
+   `21e6ecddeed86dad177708d7b7f3bf1df79059f769dedc0e0439e995e2fa5e74`.
 3. Install from CRAN in an isolated library and run the beginner smoke workflow.
 4. Update issue #4 with the CRAN URL, publication date, published checksum,
-   reviewer-remediation history, package-content commit
-   `67918c4904c072e91f378f3bb3677d2ffdd35bda`, and main-line evidence commit
-   `50188a1ae17fa646dc5792b52992db7210192b85`.
-5. In a fresh clone, make the accepted package-content commit reachable through
-   the preserved PR #572 pull ref, then verify the object before tagging:
+   reviewer-remediation history, accepted source commit
+   `6214c0316d39154140bdba064266119007bff41a`, and the merged evidence-only
+   closeout commit.
+5. In a fresh clone, verify the accepted source commit from `main` before
+   tagging:
 
    ```sh
-   git fetch origin refs/pull/572/head:refs/remotes/origin/pr/572
-   git cat-file -e 67918c4904c072e91f378f3bb3677d2ffdd35bda^{commit}
+   git fetch origin main
+   git cat-file -e 6214c0316d39154140bdba064266119007bff41a^{commit}
    ```
 
-   PR #572's final head descends from this commit. The later squash commit
-   changes only `cran/cran-comments.md`, which is excluded from the package
-   tarball, but the release tag remains anchored to the exact accepted package
-   content.
+   This commit is the exact source used to build the submitted remediation
+   tarball. Later evidence-only commits change only files excluded from the
+   package tarball; the release tag remains anchored to the accepted source.
 6. Obtain explicit approval before creating the annotated `v0.1.0` tag at the
    accepted package-content commit, publishing the GitHub release, or closing
    issue #4.
