@@ -14,6 +14,8 @@
   (2026-07-10 r90234 ucrt)
 - **Replacement R-devel win-builder**: Windows Server 2022 x64, R Under
   development (2026-07-12 r90242 ucrt)
+- **Remediation R-devel win-builder**: Windows Server 2022 x64, R Under
+  development (2026-07-20 r90283 ucrt)
 
 ## CRAN Reviewer Response
 
@@ -95,6 +97,13 @@ and the local environment could not verify the current time. Package
 installation, code/documentation consistency, examples, tests, and vignettes
 all passed.
 
+The exact merged-`main` remediation tarball completed R-devel win-builder with
+0 errors, 0 warnings, and 1 incoming-feasibility note: `New submission` plus
+`reviewable` as a possible misspelling. `reviewable` is intentional. Package
+installation, examples, 2,573 test expectations, vignettes, and PDF/HTML manuals
+passed on Windows Server 2022; the 64 expected warnings and 27 documented
+CRAN/platform skips did not become package-check warnings.
+
 ## Reverse Dependencies
 
 - **None** (new package)
@@ -137,10 +146,10 @@ all passed.
   found 270 clean entries with no project-only or private/local artifacts.
 - The exact replacement tarball passed R-devel win-builder installation,
   examples, tests, vignettes, and PDF/HTML manual checks.
-- The documentation/write-safety remediation candidate was built from exact
-  package-content commit `799deabc0be1a7ee33a91ae82bd1add2dc980243`.
+- The final documentation/write-safety remediation artifact was built from
+  exact merged-`main` commit `6214c0316d39154140bdba064266119007bff41a`.
   Its SHA-256 is
-  `0842a7726b9c7f1fc78681d11e58fb541d5b24ac9f005047cc9d3ed21acd7b36`.
+  `21e6ecddeed86dad177708d7b7f3bf1df79059f769dedc0e0439e995e2fa5e74`.
 - The remediation tarball contains 270 entries. Inspection found no Git
   worktree metadata, project-only release documents, development scripts,
   nested archives, `.Rcheck` directories, local libraries, generated UAT
@@ -168,5 +177,5 @@ all passed.
 - [x] Release-surface remediation PR #566 merged with passing CI
 - [x] Feature-surface hardening and final product-voice/privacy review complete
 - [x] Replacement R-devel win-builder check complete
-- [ ] Remediation R-devel win-builder check complete
+- [x] Remediation R-devel win-builder check complete
 - [ ] Maintainer final release disposition recorded

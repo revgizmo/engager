@@ -2,9 +2,10 @@
 
 Status: product and release planning source of truth.
 
-Last reconciled: 2026-07-15 against the stable `main` release line, 35 current
-exports, the historical
-pre-scope-reduction API, and 122 live open GitHub issues. The existing
+Last release-state reconciliation: 2026-07-22 against stable `main` at
+`6214c0316d39154140bdba064266119007bff41a` and 35 current exports. The
+feature/backlog baseline remains the 2026-07-15 review of the historical
+pre-scope-reduction API and 122 then-open GitHub issues. The existing
 `project-docs/backlog-normalization` snapshot contains 128 issues and must be
 refreshed before it authorizes any live mutation.
 
@@ -44,7 +45,9 @@ turning participation measurements into unsupported judgments about students.
 
 ### 0.1.0 — Focused transcript-analysis foundation
 
-Status: submitted to CRAN; awaiting public acceptance at this reconciliation.
+Status: CRAN-requested documentation and write-safety remediation is validated
+locally and on R-devel win-builder; awaiting maintainer-controlled
+resubmission.
 
 Supported product:
 
