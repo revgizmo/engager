@@ -3,8 +3,18 @@
 #' @param data_folder Directory containing the roster file
 #' @param roster_file Name of the roster CSV file
 #' @param strict_errors Logical; if TRUE, throw error when file doesn't exist
-#' @return A tibble with roster data, filtered by enrolled status if applicable
+#' @return A tibble containing the roster rows. When an `enrolled` column is
+#'   present, only rows where it is `TRUE` are returned. A missing file returns
+#'   an empty tibble unless `strict_errors = TRUE`.
 #' @export
+#' @examples
+#' roster_path <- tempfile(fileext = ".csv")
+#' readr::write_csv(
+#'   tibble::tibble(student_id = "S001", preferred_name = "Student One"),
+#'   roster_path
+#' )
+#' roster <- load_roster(roster_path)
+#' unlink(roster_path)
 load_roster <- function(
     data_folder = ".",
     roster_file = "roster.csv",

@@ -12,11 +12,9 @@ consolidate_transcript(df = NULL, max_pause_sec = 1)
 \item{max_pause_sec}{Maximum pause in seconds between comments to consolidate (default: 1)}
 }
 \value{
-A tibble with consolidated comments
-
-transcript.
-
-consolidate_transcript(df = "NULL")
+A tibble with consecutive comments consolidated by speaker and pause
+threshold, including \code{name}, \code{comment}, \code{start}, \code{end}, \code{duration}, and
+\code{wordcount} columns. Returns \code{NULL} when \code{df} is not a tibble.
 }
 \description{
 Take a tibble containing the comments from a Zoom recording transcript and return a tibble

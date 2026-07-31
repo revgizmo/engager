@@ -6,24 +6,26 @@
 #' Complete basic transcript analysis workflow
 #'
 #' @description This is the main function for new users. It performs a complete
-#'   analysis workflow in 5 simple steps: load, process, analyze, visualize, and export.
+#'   analysis workflow in five simple steps: load, process, analyze, visualize,
+#'   and either return results in memory or export to an explicit directory.
 #'
 #' @param transcript_file Path to a WebVTT transcript file
-#' @param output_dir Output directory for results (default: "output")
+#' @param output_dir Optional output directory. When `NULL` (the default), the
+#'   analysis is returned in memory and no files or directories are created.
 #' @param privacy_level Privacy protection level: "high" (default), "medium",
 #'   or "low". These map to `"privacy_strict"`, `"privacy_standard"`, and
 #'   `"mask"`, respectively. All three levels mask common identifiers.
-#' @return List containing analysis results, plots, and output directory path
+#' @return A named list with `analysis` (a tibble of speaker metrics), `plots`
+#'   (a `ggplot` object), `output_dir` (the explicit output directory or
+#'   `NULL`), `transcript_file`, and `privacy_level`.
 #' @export
 #' @examples
-#' \dontrun{
-#' # Basic workflow for new users
-#' results <- basic_transcript_analysis("transcript.vtt", "output/")
-#'
-#' # With custom privacy level
-#' results <- basic_transcript_analysis("transcript.vtt", "output/", "medium")
-#' }
-basic_transcript_analysis <- function(transcript_file, output_dir = "output", privacy_level = "high") {
+#' transcript_file <- system.file(
+#'   "extdata/test_transcripts/ideal_course_session1.vtt",
+#'   package = "engager"
+#' )
+#' results <- basic_transcript_analysis(transcript_file)
+basic_transcript_analysis <- function(transcript_file, output_dir = NULL, privacy_level = "high") {
   # Validate inputs
   if (!file.exists(transcript_file)) {
     stop(
@@ -32,12 +34,14 @@ basic_transcript_analysis <- function(transcript_file, output_dir = "output", pr
     )
   }
 
-  if (!dir.exists(output_dir)) {
+  validate_optional_output_dir(output_dir)
+  normalized_privacy_level <- normalize_basic_privacy_level(privacy_level)
+
+  if (!is.null(output_dir) && !dir.exists(output_dir)) {
     message("Creating output directory: ", output_dir)
     dir.create(output_dir, recursive = TRUE)
   }
 
-  normalized_privacy_level <- normalize_basic_privacy_level(privacy_level)
   previous_privacy_level <- getOption("engager.privacy_level")
   on.exit(options(engager.privacy_level = previous_privacy_level), add = TRUE)
   options(engager.privacy_level = normalized_privacy_level)
@@ -46,7 +50,7 @@ basic_transcript_analysis <- function(transcript_file, output_dir = "output", pr
   message("==> Starting Basic Transcript Analysis")
   message(paste(rep("=", 40), collapse = ""))
   message("FILE: File: ", basename(transcript_file))
-  message("DIR: Output: ", output_dir)
+  message("DIR: Output: ", if (is.null(output_dir)) "in memory" else output_dir)
   message("PRIVACY: Privacy: ", privacy_level)
   message("")
 
@@ -90,23 +94,29 @@ basic_transcript_analysis <- function(transcript_file, output_dir = "output", pr
       )
       message("SUCCESS: Created engagement visualizations")
 
-      # Step 5: Export results
-      message("Step 5/5: Exporting results...")
-      output_path <- file.path(output_dir, "engagement_metrics.csv")
-      write_metrics(
-        analysis,
-        what = "engagement",
-        path = output_path,
-        privacy_level = normalized_privacy_level,
-        comments_policy = "omit"
-      )
-      message("SUCCESS: Exported results to ", output_dir)
+      # Step 5: Export results only when explicitly requested
+      if (!is.null(output_dir)) {
+        message("Step 5/5: Exporting results...")
+        output_path <- file.path(output_dir, "engagement_metrics.csv")
+        write_metrics(
+          analysis,
+          what = "engagement",
+          path = output_path,
+          privacy_level = normalized_privacy_level,
+          comments_policy = "omit"
+        )
+        message("SUCCESS: Exported results to ", output_dir)
+      } else {
+        message("Step 5/5: Returning results in memory (no output directory supplied)")
+      }
 
       message("")
       message("COMPLETE: Basic analysis complete!")
-      message("RESULTS: Results saved to: ", output_dir)
+      message("RESULTS: Results ", if (is.null(output_dir)) "returned in memory" else paste0("saved to: ", output_dir))
       message("TIP: Next steps:")
-      message("   - Check the output files in ", output_dir)
+      if (!is.null(output_dir)) {
+        message("   - Check the output files in ", output_dir)
+      }
       message("   - Use show_available_functions() to see more options")
       message("   - Use set_ux_level('intermediate') for more functions")
 
@@ -125,6 +135,24 @@ basic_transcript_analysis <- function(transcript_file, output_dir = "output", pr
       stop(e)
     }
   )
+}
+
+# Internal validation shared by the beginner workflows. Validate before any
+# directory creation so malformed destinations fail without side effects.
+validate_optional_output_dir <- function(output_dir) {
+  if (is.null(output_dir)) {
+    return(invisible(NULL))
+  }
+
+  if (!is.character(output_dir) || length(output_dir) != 1L ||
+      is.na(output_dir) || !nzchar(trimws(output_dir))) {
+    stop(
+      "`output_dir` must be NULL or an explicit non-empty directory path",
+      call. = FALSE
+    )
+  }
+
+  invisible(output_dir)
 }
 
 # Internal mapping retained for the beginner-facing high/medium/low API.
@@ -150,22 +178,25 @@ normalize_basic_privacy_level <- function(privacy_level) {
 #' @description Simplified version for users who just want quick results
 #'
 #' @param transcript_file Path to transcript file
-#' @return Analysis results
+#' @param output_dir Optional output directory. When `NULL`, no files or
+#'   directories are created.
+#' @return The named analysis list returned by `basic_transcript_analysis()`.
 #' @export
 #' @examples
-#' \dontrun{
-#' # Quick analysis
-#' results <- quick_analysis("transcript.vtt")
-#' }
-quick_analysis <- function(transcript_file) {
+#' transcript_file <- system.file(
+#'   "extdata/test_transcripts/ideal_course_session1.vtt",
+#'   package = "engager"
+#' )
+#' results <- quick_analysis(transcript_file)
+quick_analysis <- function(transcript_file, output_dir = NULL) {
   message("QUICK: Quick Analysis Mode")
   message(paste(rep("=", 25), collapse = ""))
 
   # Use basic workflow with default settings
-  results <- basic_transcript_analysis(transcript_file, "quick_output")
+  results <- basic_transcript_analysis(transcript_file, output_dir)
 
   message("SUCCESS: Quick analysis complete!")
-  message("DIR: Results in: quick_output/")
+  message("DIR: Results: ", if (is.null(output_dir)) "in memory" else output_dir)
 
   results
 }
@@ -175,20 +206,25 @@ quick_analysis <- function(transcript_file) {
 #' @description Process multiple transcript files in one workflow
 #'
 #' @param transcript_files Vector of transcript file paths
-#' @param output_dir Output directory for results
+#' @param output_dir Optional parent output directory. When `NULL` (the
+#'   default), all results are returned in memory without creating directories.
 #' @param privacy_level Privacy protection level
-#' @return List of analysis results for each file
+#' @return A named list keyed by transcript basename. Each element is the
+#'   analysis list returned by `basic_transcript_analysis()` or a list with an
+#'   `error` message when that file could not be processed.
 #' @export
 #' @examples
-#' \dontrun{
-#' # Batch analysis
-#' files <- c("session1.vtt", "session2.vtt", "session3.vtt")
-#' results <- batch_basic_analysis(files, "batch_output")
-#' }
-batch_basic_analysis <- function(transcript_files, output_dir = "batch_output", privacy_level = "high") {
+#' transcript_dir <- system.file("extdata/test_transcripts", package = "engager")
+#' files <- file.path(transcript_dir, c(
+#'   "ideal_course_session1.vtt", "ideal_course_session2.vtt"
+#' ))
+#' results <- batch_basic_analysis(files)
+batch_basic_analysis <- function(transcript_files, output_dir = NULL, privacy_level = "high") {
   if (length(transcript_files) == 0) {
     stop("ERROR: No transcript files provided")
   }
+
+  validate_optional_output_dir(output_dir)
 
   # Validate all files exist
   missing_files <- transcript_files[!file.exists(transcript_files)]
@@ -199,7 +235,7 @@ batch_basic_analysis <- function(transcript_files, output_dir = "batch_output", 
   message("BATCH: Batch Analysis Mode")
   message(paste(rep("=", 25), collapse = ""))
   message("FILE: Files: ", length(transcript_files))
-  message("DIR: Output: ", output_dir)
+  message("DIR: Output: ", if (is.null(output_dir)) "in memory" else output_dir)
   message("PRIVACY: Privacy: ", privacy_level)
   message("")
 
@@ -210,7 +246,7 @@ batch_basic_analysis <- function(transcript_files, output_dir = "batch_output", 
     message("Processing file ", i, "/", length(transcript_files), ": ", basename(file))
 
     # Create subdirectory for each file
-    file_output_dir <- file.path(output_dir, paste0("session_", i))
+    file_output_dir <- if (is.null(output_dir)) NULL else file.path(output_dir, paste0("session_", i))
 
     tryCatch(
       {
@@ -228,7 +264,7 @@ batch_basic_analysis <- function(transcript_files, output_dir = "batch_output", 
   }
 
   message("COMPLETE: Batch analysis complete!")
-  message("RESULTS: Results saved to: ", output_dir)
+  message("RESULTS: Results ", if (is.null(output_dir)) "returned in memory" else paste0("saved to: ", output_dir))
   message("STATS: Successful: ", sum(sapply(results, function(x) is.null(x$error))))
   message("ERROR: Failed: ", sum(sapply(results, function(x) !is.null(x$error))))
 

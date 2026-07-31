@@ -6,6 +6,9 @@
 \usage{
 show_getting_started()
 }
+\value{
+Invisibly \code{NULL}; called for its formatted console guide.
+}
 \description{
 Provides contextual help and guidance for users to navigate
 the package effectively and find the right functions for their tasks.
@@ -14,7 +17,5 @@ Show getting started guide
 Displays a comprehensive getting started guide for new users
 }
 \examples{
-\dontrun{
 show_getting_started()
-}
 }

@@ -36,7 +36,9 @@ summarize_transcript_metrics(
 \item{comments_format}{Format for comments: "list", "text", or "count" (default: "list")}
 }
 \value{
-A tibble containing summary metrics by speaker
+A tibble with one row per speaker (and source transcript when
+present), containing participation totals such as duration, word count,
+session count, and the configured comment representation.
 }
 \description{
 Process a Zoom recording transcript and return summary metrics by speaker

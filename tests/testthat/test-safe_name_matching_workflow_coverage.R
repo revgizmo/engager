@@ -81,7 +81,7 @@ test_that("safe_name_matching_workflow validates inputs correctly", {
   # Test invalid data_folder
   expect_error(
     safe_name_matching_workflow(tmp, tibble::tibble(first_last = "Test", preferred_name = "Test"), data_folder = 123),
-    "data_folder must be a single character string"
+    "data_folder must be NULL or a non-empty character string"
   )
 
   # Test invalid section_names_lookup_file
@@ -228,7 +228,7 @@ test_that("safe_name_matching_workflow handles unmatched names", {
       roster_data = partial_roster,
       unmatched_names_action = "warn"
     ),
-    "Please update the name mappings file"
+    class = "engager_name_matching_required"
   )
 })
 
@@ -651,25 +651,19 @@ test_that("handle_unmatched_names handles different actions", {
     regexp = "Found unmatched names"
   )
 
-  # Test with warn action (mocked to avoid interactive prompts)
-  with_mocked_bindings(
-    prompt_name_matching = function(...) {
-      # Mock implementation that doesn't prompt
-      invisible(NULL)
-    },
-    {
-      expect_error(
-        handle_unmatched_names(
-          unmatched_names = unmatched_names,
-          unmatched_names_action = "warn",
-          privacy_level = "mask",
-          data_folder = ".",
-          section_names_lookup_file = "test.csv"
-        ),
-        regexp = "Please update the name mappings file"
-      )
-    }
+  # Test with warn action and in-memory recovery template.
+  err <- expect_error(
+    handle_unmatched_names(
+      unmatched_names = unmatched_names,
+      transcript_data = transcript_data,
+      unmatched_names_action = "warn",
+      privacy_level = "mask",
+      data_folder = NULL,
+      section_names_lookup_file = "test.csv"
+    ),
+    class = "engager_name_matching_required"
   )
+  expect_s3_class(err$lookup_template, "data.frame")
 })
 
 # Test detect_unmatched_names function

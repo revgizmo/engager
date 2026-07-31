@@ -11,6 +11,10 @@ user_friendly_error(expr, context = "operation")
 
 \item{context}{Context for error message}
 }
+\value{
+The value of \code{expr} unchanged when evaluation succeeds. On failure,
+the function raises a rewritten error with recovery guidance.
+}
 \description{
 Provides helpful error messages and recovery guidance to help
 users understand and resolve issues quickly.
@@ -19,13 +23,5 @@ User-friendly error wrapper
 Wraps expressions with user-friendly error handling
 }
 \examples{
-\dontrun{
-# Wrap any expression with user-friendly error handling
-result <- user_friendly_error(
-  {
-    load_zoom_transcript("nonexistent.vtt")
-  },
-  "loading transcript"
-)
-}
+result <- user_friendly_error(1 + 1, "adding values")
 }

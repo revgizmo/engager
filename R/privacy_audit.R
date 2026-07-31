@@ -4,7 +4,9 @@
 #'
 #' @param data A tibble containing the data to audit
 #' @param id_columns Vector of column names to check for identifiers (default: common name columns)
-#' @return A tibble containing audit results with columns: column, values, non_empty, masked_estimate
+#' @return A tibble with one row per detected identifier column and the fields
+#'   `column`, `values`, `non_empty`, and `masked_estimate`, summarizing the
+#'   technical masking state of the supplied data.
 #'
 #' @export
 privacy_audit <- function(

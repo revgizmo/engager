@@ -5,6 +5,8 @@
 - **Package**: engager
 - **Version**: 0.1.1
 - **Submission type**: Update following the initial 0.1.0 release
+- **Current status**: Forward-port validated locally; hosted checks and fresh-user
+  QA pending; not approved for upload
 
 ## Release Summary
 
@@ -19,75 +21,56 @@ This release adds two public functions:
 The release does not add fuzzy matching, generic aggregate anonymization,
 longitudinal student profiles, risk scoring, or new transcript formats.
 
-## Test Environments
+## Candidate Reset
 
-- **Local**: macOS Tahoe 26.5.2, R 4.5.3 (2026-03-11),
-  aarch64-apple-darwin20
-- **GitHub Actions**: Ubuntu, Windows, and macOS with R release — passed
-- **R-devel win-builder**: R Under development (2026-07-16 r90264 ucrt) —
-  0 errors, 0 warnings, 1 note
-- **Secondary remote check**: R-release win-builder, R 4.6.1
-  (2026-06-24 ucrt) — 0 errors, 0 warnings, 1 note
+The earlier 0.1.1 candidate was fully validated before `engager` 0.1.0 was
+accepted by CRAN:
 
-## R CMD Check Results
+- package-content commit:
+  `645112b102f26aeaa57f1ffb8fed68ddb6c14987`;
+- source-tarball SHA-256:
+  `74c309818893c5938f7ee8ba3b623cee2501b390bf7b2b2038682d5f4c54f392`;
+- full tests, installed-package UAT, tarball inspection, hosted checks,
+  R-devel win-builder, and R-release win-builder passed for that artifact.
 
-A network-enabled `R CMD check --no-manual --as-cran` of the exact source
-tarball completed with:
+That artifact is now **superseded for release purposes** because the
+CRAN-requested documentation and explicit-write remediation from 0.1.0 must be
+forward-ported to the 0.1.1 source. The former checksum remains historical
+provenance only and must not be uploaded or described as the current release
+candidate.
 
-- **Errors**: 0
-- **Warnings**: 0
-- **Notes**: 1
+## Forward-Port Boundary
 
-The note is `New submission`. At validation time, version 0.1.0 remained under
-CRAN review and `engager` was not yet present in the CRAN package index.
+The refreshed source must:
 
-Both win-builder checks reported the same single incoming-feasibility note:
-`New submission`, with `reviewable` listed as a possibly misspelled word.
-`reviewable` is an intentional English word describing the package's exact
-name-matching output and review workflow.
+- preserve the exact 37-function 0.1.1 export allowlist;
+- retain the approved multi-session attendance and report schemas;
+- make beginner, quick, and batch analysis read-only by default;
+- require explicit caller-selected destinations for file-writing operations;
+- contain runnable examples and complete argument and return documentation;
+- use only bundled synthetic fixtures and temporary validation destinations.
 
-The canonical sandboxed local validator also passed with 0 errors, 0 warnings,
-and two environment-only notes: incoming URL checks were unavailable without
-network access, and the current time could not be verified. The network-enabled
-check above verified URLs and timestamps successfully.
-
-## Reverse Dependencies
-
-- None at candidate validation time; the package was not yet published on CRAN.
-
-## Validation Details
-
-- The full test suite passes with 0 failures, 67 expected warning-path
-  assertions, and 5 documented skips. Four skips are empty diagnostic
-  placeholders; one covers an internal empty-session-mapping edge case.
-- Installed-package UAT installs the source tarball into an isolated library
-  and exercises the complete 37-function export allowlist, beginner and batch
-  workflows, exact roster matching, three-session attendance analysis,
-  aggregate-default reporting, explicitly masked participant reporting,
-  identifier transformations, plots, exports, privacy review, and installed
-  vignettes.
-- UAT scans generated attendance reports and other exported artifacts for raw
-  synthetic roster identifiers, transcript text, and source paths.
-- Complete supported-export statement coverage is 86.22%, above the declared
-  85% floor; overall package coverage is 88.97%.
-- The release tarball contains 288 entries. Inspection found no `.git` pointer,
-  project-only directories, UAT output, nested archives, local libraries,
-  backups, or private transcript/roster paths.
-- Candidate package-content commit:
-  `645112b102f26aeaa57f1ffb8fed68ddb6c14987`.
-- Candidate source-tarball SHA-256:
-  `74c309818893c5938f7ee8ba3b623cee2501b390bf7b2b2038682d5f4c54f392`.
+The forward-port adds no feature, dependency, export, transcript format,
+privacy claim, or legal or institutional compliance determination.
 
 ## Validation Status
 
-- [x] Full tests pass with no failures
-- [x] Network-enabled local `R CMD check --as-cran` is 0 errors, 0 warnings,
-      and 1 explained note
-- [x] Generated documentation is current
-- [x] Source tarball builds, installs, and passes hygiene inspection
-- [x] Installed-package UAT passes
-- [x] Export allowlist and supported-export coverage contract pass
-- [x] Required hosted checks pass at the exact release head
-- [x] R-devel win-builder completes
-- [x] Secondary remote check completes
-- [ ] Maintainer approves the exact candidate checksum for promotion
+- [x] Generated documentation is current and the export allowlist is exactly 37
+      functions
+- [x] Full tests pass with no failures (68 expected warning-path assertions and
+      5 documented skips)
+- [x] Local `R CMD check --as-cran` completes with no errors or warnings and
+      only explained notes
+- [x] Default workflows create no files or directories without explicit paths
+- [x] Explicit temporary destinations produce the expected artifacts
+- [x] Source tarball builds and passes hygiene inspection (289 entries; no
+      prohibited project, local, nested-archive, or generated artifacts)
+- [x] Installed-package UAT passes, including attendance and reporting
+- [ ] Required hosted Linux, Windows, macOS, `R-CMD-check`, and `Coverage` pass
+- [ ] Fresh-user QA passes for the refreshed artifact
+- [ ] Current R-devel and secondary remote checks pass near the release window
+- [ ] A new exact source commit and SHA-256 are recorded
+- [ ] Maintainer approves the exact refreshed checksum for promotion
+
+No GO disposition, CRAN upload, tag, GitHub release, or release promotion is
+authorized by this reset record.

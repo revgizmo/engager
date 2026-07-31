@@ -9,8 +9,9 @@ safe_name_matching_workflow(
   roster_data = NULL,
   privacy_level = getOption("engager.privacy_level", "mask"),
   unmatched_names_action = getOption("engager.unmatched_names_action", "stop"),
-  data_folder = ".",
-  section_names_lookup_file = "section_names_lookup.csv"
+  data_folder = NULL,
+  section_names_lookup_file = "section_names_lookup.csv",
+  write_lookup = FALSE
 )
 }
 \arguments{
@@ -27,6 +28,9 @@ Defaults to \code{getOption("engager.unmatched_names_action", "stop")}.}
 \item{data_folder}{Directory containing data files}
 
 \item{section_names_lookup_file}{Name of the section names lookup file}
+
+\item{write_lookup}{Logical; whether the unmatched-name flow may write a
+lookup template to the explicitly selected \code{data_folder}.}
 }
 \value{
 Processed transcript data with privacy-aware name matching applied
@@ -35,18 +39,4 @@ Processed transcript data with privacy-aware name matching applied
 Main workflow function for privacy-supporting name matching. Implements two-stage
 processing: Stage 1 (unmasked matching in memory) and Stage 2 (privacy masking
 for outputs). Provides configuration-driven behavior for unmatched names.
-}
-\examples{
-# Default behavior (maximum privacy)
-# result <- safe_name_matching_workflow(
-#   transcript_file_path = "transcript.vtt",
-#   roster_data = roster_df
-# )
-#
-# Opt-in for convenience
-# result <- safe_name_matching_workflow(
-#   transcript_file_path = "transcript.vtt",
-#   roster_data = roster_df,
-#   unmatched_names_action = "warn"
-# )
 }

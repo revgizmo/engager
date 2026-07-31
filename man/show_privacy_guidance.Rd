@@ -6,11 +6,12 @@
 \usage{
 show_privacy_guidance()
 }
+\value{
+Invisibly \code{NULL}; called for its formatted console guide.
+}
 \description{
 Show privacy and ethics guidance
 }
 \examples{
-\dontrun{
 show_privacy_guidance()
-}
 }

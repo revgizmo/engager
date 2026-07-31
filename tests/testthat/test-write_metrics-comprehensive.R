@@ -279,26 +279,19 @@ test_that("write_metrics creates parent directories", {
   expect_true(dir.exists(dirname(tmp_file)))
 })
 
-test_that("write_metrics uses default filename when path is NULL", {
+test_that("write_metrics requires an explicit path without writing", {
   test_data <- tibble::tibble(
     name = "Student1",
     comment_count = 5
   )
 
-  # Change to temp directory to avoid cluttering current directory
-  old_wd <- getwd()
-  tmp_dir <- tempdir()
-  setwd(tmp_dir)
-  on.exit(
-    {
-      setwd(old_wd)
-      unlink("engagement_metrics.csv")
-    },
-    add = TRUE
+  work_dir <- withr::local_tempdir()
+  withr::local_dir(work_dir)
+  expect_error(
+    write_metrics(test_data, what = "engagement"),
+    "explicit non-empty file path"
   )
-
-  result <- write_metrics(test_data, what = "engagement")
-  expect_true(file.exists("engagement_metrics.csv"))
+  expect_length(list.files(work_dir, all.files = TRUE, no.. = TRUE), 0)
 })
 
 test_that("write_metrics handles empty tibble", {

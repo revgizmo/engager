@@ -25,8 +25,9 @@ NULL
 #' @param custom_retention_days Custom retention period in days, used when
 #'   `retention_period = "custom"`.
 #' @param audit_log Whether to record an in-memory review audit event.
-#' @return A list with technical review status, detected fields, recommendations,
-#'   retention check details, and institutional review prompts.
+#' @return A named list containing the logical technical review status,
+#'   detected identifier fields, recommendations, retention-review details,
+#'   and institutional review prompts.
 #' @export
 review_privacy_risks <- function(data = NULL,
                                  institution_type = c("educational", "research", "mixed"),
@@ -200,7 +201,8 @@ validate_ferpa_compliance <- function(data = NULL,
 #' @param hash_salt Required non-empty salt for hash-based transformation.
 #' @param aggregation_level Reserved for a future aggregation workflow. It has
 #'   no effect for supported version 0.1.0 methods.
-#' @return Data frame with recognized structured identifier columns transformed.
+#' @return A data frame of the same row shape as `data`, with recognized
+#'   structured identifier columns transformed by the selected method.
 #'   Missing and blank identifiers remain missing or blank. These transformations
 #'   do not inspect free text and do not establish that a data set is anonymous or
 #'   compliant with legal or institutional requirements.
@@ -347,8 +349,9 @@ apply_hash_anonymization <- function(data, columns_to_anonymize, hash_salt) {
 #' @param include_audit_trail Whether to include basic report metadata.
 #' @param institution_info Optional institution-provided metadata to include.
 #' @param institution_type Review context: "educational", "research", or "mixed".
-#' @return A list containing report metadata, summary, review results, and
-#'   recommendations.
+#' @return A named list containing report metadata, a summary, the underlying
+#'   technical review results, and recommendations. When `output_file` is
+#'   supplied, the same report is also serialized there.
 #' @export
 generate_privacy_review_report <- function(data = NULL,
                                            output_file = NULL,
@@ -356,6 +359,7 @@ generate_privacy_review_report <- function(data = NULL,
                                            include_audit_trail = TRUE,
                                            institution_info = NULL,
                                            institution_type = c("educational", "research", "mixed")) {
+  validate_optional_privacy_report_path(output_file)
   report_format <- match.arg(report_format)
   institution_type <- match.arg(institution_type)
 
@@ -409,6 +413,7 @@ write_privacy_review_report <- function(report,
                                         report_format,
                                         status_field,
                                         status_label) {
+  validate_optional_privacy_report_path(output_file, allow_null = FALSE)
   if (report_format == "json") {
     jsonlite::write_json(report, output_file, pretty = TRUE)
   } else if (report_format == "html") {
@@ -435,6 +440,21 @@ write_privacy_review_report <- function(report,
   }
 }
 
+validate_optional_privacy_report_path <- function(output_file, allow_null = TRUE) {
+  if (is.null(output_file) && isTRUE(allow_null)) {
+    return(invisible(TRUE))
+  }
+  if (is.null(output_file) || !is.character(output_file) ||
+      length(output_file) != 1L || is.na(output_file) ||
+      !nzchar(trimws(output_file))) {
+    stop(
+      "`output_file` must be NULL or one explicit non-empty character path.",
+      call. = FALSE
+    )
+  }
+  invisible(TRUE)
+}
+
 # Deprecated compatibility wrapper. Kept unexported because the old helper was
 # not part of the public NAMESPACE, but tests and historical scripts may call it.
 generate_ferpa_report <- function(data = NULL,
@@ -442,6 +462,7 @@ generate_ferpa_report <- function(data = NULL,
                                   report_format = c("text", "html", "json"),
                                   include_audit_trail = TRUE,
                                   institution_info = NULL) {
+  validate_optional_privacy_report_path(output_file)
   .Deprecated("generate_privacy_review_report")
   report <- generate_privacy_review_report(
     data = data,
@@ -480,22 +501,6 @@ generate_ferpa_report <- function(data = NULL,
 #'   field is the preferred status name; `compliant` is retained as a
 #'   backward-compatible alias.
 #' @keywords internal
-#' @examples
-#' \dontrun{
-#' # Check data retention policy
-#' sample_data <- tibble::tibble(
-#'   student_id = c("12345", "67890"),
-#'   session_date = as.Date(c("2024-01-15", "2024-02-20")),
-#'   participation_score = c(85, 92)
-#' )
-#'
-#' retention_check <- check_data_retention_policy(
-#'   sample_data,
-#'   retention_period = "academic_year",
-#'   date_column = "session_date"
-#' )
-#' print(retention_check$passed)
-#' }
 check_data_retention_policy <- function(data = NULL,
                                         retention_period = c("academic_year", "semester", "quarter", "custom"),
                                         custom_retention_days = NULL,

@@ -155,6 +155,11 @@ test_that("participant report rejects raw or ambiguous detail requests", {
     class = "engager_input_error"
   )
   expect_error(
+    generate_attendance_report(analysis, output_file = NA_character_),
+    "one non-empty character path",
+    class = "engager_input_error"
+  )
+  expect_error(
     generate_attendance_report(
       analysis,
       output_file = file.path(tempfile(), "report.md")

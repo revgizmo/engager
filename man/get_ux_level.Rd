@@ -7,13 +7,12 @@
 get_ux_level()
 }
 \value{
-Current UX level
+A character scalar containing the configured experience level, or
+\code{"basic"} when no level has been configured. This function takes no arguments.
 }
 \description{
 Get current user experience level
 }
 \examples{
-\dontrun{
 current_level <- get_ux_level()
-}
 }

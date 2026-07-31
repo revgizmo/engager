@@ -30,7 +30,8 @@ plot_users(
 \item{metrics_lookup_df}{Optional lookup table for metric names (default: NULL)}
 }
 \value{
-A ggplot2 object
+A \code{ggplot} object whose data contains the selected metric and the
+configured privacy-processed participant labels, ready to print or modify.
 }
 \description{
 Unified plotting function for engagement metrics with privacy-aware options.

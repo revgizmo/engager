@@ -6,11 +6,12 @@
 \usage{
 show_workflow_help()
 }
+\value{
+Invisibly \code{NULL}; called for its formatted console guide.
+}
 \description{
 Show workflow help and templates
 }
 \examples{
-\dontrun{
 show_workflow_help()
-}
 }

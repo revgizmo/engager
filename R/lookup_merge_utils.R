@@ -71,8 +71,9 @@ NULL
 
 # Internal function - no documentation needed
 read_lookup_safely <- function(path = NULL) {
-  if (!is.character(path) || length(path) != 1) {
-    stop("path must be a single character string", call. = FALSE)
+  if (!is.character(path) || length(path) != 1L ||
+      is.na(path) || !nzchar(trimws(path))) {
+    stop("path must be one explicit non-empty character path", call. = FALSE)
   }
   if (!file.exists(path)) {
     return(.normalize_lookup_df(data.frame(stringsAsFactors = FALSE)))
@@ -99,8 +100,9 @@ merge_lookup_preserve <- function(existing_df = NULL, add_df = NULL) {
 
 # Internal function - no documentation needed
 write_lookup_transactional <- function(df = NULL, path = NULL) {
-  if (!is.character(path) || length(path) != 1) {
-    stop("path must be a single character string", call. = FALSE)
+  if (!is.character(path) || length(path) != 1L ||
+      is.na(path) || !nzchar(trimws(path))) {
+    stop("path must be one explicit non-empty character path", call. = FALSE)
   }
   df <- .normalize_lookup_df(df)
   dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)

@@ -6,11 +6,12 @@
 \usage{
 show_troubleshooting()
 }
+\value{
+Invisibly \code{NULL}; called for its formatted console guide.
+}
 \description{
 Show troubleshooting guide
 }
 \examples{
-\dontrun{
 show_troubleshooting()
-}
 }
