@@ -25,8 +25,14 @@ run_git <- function(args, label) {
   output
 }
 
-run_external <- function(command, args, label) {
-  output <- system2(command, args, stdout = TRUE, stderr = TRUE)
+run_external <- function(command, args, label, env = character()) {
+  output <- system2(
+    command,
+    args,
+    stdout = TRUE,
+    stderr = TRUE,
+    env = env
+  )
   if (length(output) > 0L) {
     cat(paste(output, collapse = "\n"), "\n")
   }
@@ -111,7 +117,8 @@ main <- function() {
         paste0("--output=", check_output),
         tarballs[[1]]
       ),
-      "R CMD check --as-cran"
+      "R CMD check --as-cran",
+      env = "_R_CHECK_CRAN_INCOMING_REMOTE_=false"
     )
 
     package_name <- read.dcf(

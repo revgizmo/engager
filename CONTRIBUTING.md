@@ -85,6 +85,14 @@ It runs `git diff --check`, the test suite, and `R CMD check --as-cran` in a
 temporary directory, then verifies that tracked and untracked state did not
 change. It does not generate or rewrite source files.
 
+Routine repository checks set `_R_CHECK_CRAN_INCOMING_REMOTE_=false`. The
+remote incoming-feasibility probe depends on CRAN publication state and warns
+when the repository still contains an already-published version, even when the
+package passes installation, examples, tests, vignettes, and local CRAN checks.
+Disabling that remote probe does not relax local `--as-cran` validation.
+Release candidates must still run the remote incoming checks through
+R-devel win-builder and the maintainer-controlled CRAN submission workflow.
+
 For R or roxygen changes, run `devtools::document()` intentionally, inspect the
 result, and commit `NAMESPACE` and `man/` updates. Required CI checks the
 committed package exactly; it does not rewrite package files before validation.
