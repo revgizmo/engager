@@ -17,8 +17,9 @@
 #' @param transcript_df Pre-loaded transcript data frame (alternative to transcript_file_path)
 #' @param comments_format Format for comments: "list", "text", or "count" (default: "list")
 #' @return A tibble with one row per speaker (and source transcript when
-#'   present), containing participation totals such as duration, word count,
-#'   session count, and the configured comment representation.
+#'   present). The `n` column counts processed cue/comment segments; other
+#'   columns contain total speaking duration, word count, percentage measures,
+#'   words per minute, and the configured comment representation.
 #'
 #' @details This function preserves in-memory comment data for analysis
 #' compatibility. Use `write_metrics()` for privacy-safe CSV exports. The
