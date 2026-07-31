@@ -52,6 +52,12 @@ jobs:
             any::rmarkdown
 
       - name: Check
+        # Remote incoming-feasibility checks are release-state dependent. Once
+        # a version is published, CRAN warns that the same version already
+        # exists even when package validation succeeds. Release candidates run
+        # the remote probe separately through win-builder and CRAN submission.
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: "false"
         run: |
           rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
