@@ -5,7 +5,8 @@
 #'
 #' @param data A tibble containing the data to write
 #' @param what Type of output: "engagement", "summary", or "session_summary" (default: "engagement")
-#' @param path File path where to write the output
+#' @param path Explicit file path where the output will be written. No default
+#'   path is used.
 #' @param comments_format Deprecated alias for `comments_policy`. Use
 #'   `comments_policy = "count"` or `comments_policy = "text"` instead.
 #'   Retained before `privacy_level` to preserve positional compatibility.
@@ -26,7 +27,7 @@
 write_metrics <- function(
     data = NULL,
     what = c("engagement", "summary", "session_summary"),
-    path = NULL,
+    path,
     comments_format = NULL,
     privacy_level = getOption("engager.privacy_level", "mask"),
     comments_policy = c("auto", "omit", "count", "text")) {
@@ -41,6 +42,10 @@ write_metrics <- function(
 
   if (!tibble::is_tibble(data)) {
     stop("`data` must be a tibble")
+  }
+  if (missing(path) || is.null(path) || !is.character(path) ||
+      length(path) != 1L || is.na(path) || !nzchar(trimws(path))) {
+    stop("`path` must be an explicit non-empty file path", call. = FALSE)
   }
 
   # Process data for export
@@ -183,15 +188,6 @@ flatten_comment_entry <- function(x) {
 
 # Helper function to write processed data to file
 write_processed_data_to_file <- function(export_data, what, path) {
-  # Determine default filename
-  if (is.null(path)) {
-    fname <- switch(what,
-      engagement = "engagement_metrics.csv",
-      summary = "transcripts_summary.csv",
-      session_summary = "transcripts_session_summary.csv"
-    )
-    path <- fname
-  }
   dir_path <- dirname(path)
   if (!dir.exists(dir_path)) {
     dir.create(dir_path, recursive = TRUE)

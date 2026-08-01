@@ -11,13 +11,21 @@
 #' @param path Output file path.
 #' @param include_raw Logical; include raw names if `TRUE` and allowed.
 #' @param overwrite Logical; overwrite existing file if `TRUE`.
-#' @return Invisibly, the path written.
+#' @return Invisibly, a character scalar containing the path that was written.
 #' @export
 #' @family name-matching
 write_unresolved <- function(unresolved_tbl,
                              path,
                              include_raw = FALSE,
                              overwrite = FALSE) {
+  if (missing(path) || is.null(path) || !is.character(path) ||
+      length(path) != 1L || is.na(path) || !nzchar(trimws(path))) {
+    rlang::abort(
+      message = "path must be one explicit non-empty character path.",
+      class = "engager_schema_error"
+    )
+  }
+
   if (isTRUE(include_raw)) {
     allow_raw <- getOption("engager.allow_raw_name_exports", FALSE)
     if (!isTRUE(allow_raw)) {

@@ -28,7 +28,8 @@ identifiers.}
 no effect for supported version 0.1.0 methods.}
 }
 \value{
-Data frame with recognized structured identifier columns transformed.
+A data frame of the same row shape as \code{data}, with recognized
+structured identifier columns transformed by the selected method.
 Missing and blank identifiers remain missing or blank. These transformations
 do not inspect free text and do not establish that a data set is anonymous or
 compliant with legal or institutional requirements.

@@ -2,7 +2,7 @@
 create_session_mapping <- function(
     zoom_recordings_df = NULL,
     course_info_df = NULL,
-    output_file = "session_mapping.csv",
+    output_file = NULL,
     semester_start_mdy = "Jan 01, 2024",
     auto_assign_patterns = list(
       "CS 101" = "CS.*101",
@@ -11,6 +11,15 @@ create_session_mapping <- function(
     ),
     interactive = FALSE,
     verbose = FALSE) {
+  if (!is.null(output_file) &&
+      (!is.character(output_file) || length(output_file) != 1L ||
+        is.na(output_file) || !nzchar(trimws(output_file)))) {
+    stop(
+      "`output_file` must be NULL or one explicit non-empty character path",
+      call. = FALSE
+    )
+  }
+
   # Validate inputs
   if (is.null(zoom_recordings_df) || is.null(course_info_df)) {
     return(tibble::tibble(

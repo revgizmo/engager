@@ -2,21 +2,6 @@
 # This function loads a session mapping file created by `create_session_mapping()`
 # and integrates it with the Zoom recordings data to provide reliable course
 # information for analysis.
-#
-#
-#
-# \dontrun{
-# # Load session mapping
-# session_mapping <- load_session_mapping("session_mapping.csv")
-#
-# # Load and merge with Zoom recordings
-# zoom_recordings_df <- load_zoom_recorded_sessions_list()
-# mapped_recordings <- load_session_mapping(
-#   "session_mapping.csv",
-#   zoom_recordings_df = zoom_recordings_df
-# )
-# }
-
 # Internal function - no documentation needed
 load_mapping_file <- function(mapping_file) {
   # Check if mapping file exists

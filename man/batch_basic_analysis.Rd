@@ -6,27 +6,30 @@
 \usage{
 batch_basic_analysis(
   transcript_files,
-  output_dir = "batch_output",
+  output_dir = NULL,
   privacy_level = "high"
 )
 }
 \arguments{
 \item{transcript_files}{Vector of transcript file paths}
 
-\item{output_dir}{Output directory for results}
+\item{output_dir}{Optional parent output directory. When \code{NULL} (the
+default), all results are returned in memory without creating directories.}
 
 \item{privacy_level}{Privacy protection level}
 }
 \value{
-List of analysis results for each file
+A named list keyed by transcript basename. Each element is the
+analysis list returned by \code{basic_transcript_analysis()} or a list with an
+\code{error} message when that file could not be processed.
 }
 \description{
 Process multiple transcript files in one workflow
 }
 \examples{
-\dontrun{
-# Batch analysis
-files <- c("session1.vtt", "session2.vtt", "session3.vtt")
-results <- batch_basic_analysis(files, "batch_output")
-}
+transcript_dir <- system.file("extdata/test_transcripts", package = "engager")
+files <- file.path(transcript_dir, c(
+  "ideal_course_session1.vtt", "ideal_course_session2.vtt"
+))
+results <- batch_basic_analysis(files)
 }

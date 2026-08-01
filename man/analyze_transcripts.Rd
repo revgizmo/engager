@@ -18,10 +18,12 @@ analyze_transcripts(
 
 \item{write}{Whether to write results to file (default: FALSE)}
 
-\item{output_path}{Path for output file (defaults to "engagement_metrics.csv")}
+\item{output_path}{Explicit path for the output file when \code{write = TRUE}.}
 }
 \value{
-Data frame with engagement metrics
+A tibble with speaker-level engagement metrics for the discovered
+transcript files. When \code{write = TRUE}, the same metrics are also written
+to \code{output_path} after export privacy policies are applied.
 }
 \description{
 Convenience wrapper to process a set of \code{.transcript.vtt} files from a folder,

@@ -83,12 +83,13 @@ test_that("conditionally_write_lookup handles different allow_write values", {
 
 test_that("lookup_merge_utils functions handle edge cases", {
   # Test with invalid file paths
-  result1 <- read_lookup_safely("")
-  expect_s3_class(result1, "data.frame")
-  expect_equal(nrow(result1), 0)
+  expect_error(
+    read_lookup_safely(""),
+    "explicit non-empty character path"
+  )
 
   # Test with NULL path (should error)
-  expect_error(read_lookup_safely(NULL), "path must be a single character string")
+  expect_error(read_lookup_safely(NULL), "explicit non-empty character path")
 
   # Test with invalid data types (should error)
   expect_error(write_lookup_transactional("invalid_data", "test.csv"), "invalid 'times' argument")

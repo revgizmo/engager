@@ -119,33 +119,6 @@ calc_content_similarity_matrix <- function(existing_files, existing_names,
 #' @param method Detection method: "hybrid" (default), "content", or "metadata"
 #' @param names_to_exclude Vector of names to exclude from comparison (default: c("dead_air"))
 #' @return List containing duplicate groups, similarity matrix, and recommendations
-#' @examples
-#' \dontrun{
-#' # Create sample transcript list
-#' transcript_list <- tibble::tibble(
-#'   transcript_file = c(
-#'     "GMT20240115-100000_Recording.transcript.vtt",
-#'     "GMT20240115-100000_Recording.cc.vtt",
-#'     "GMT20240116-140000_Recording.transcript.vtt"
-#'   )
-#' )
-#'
-#' # Detect duplicates in a transcript list
-#' duplicates <- detect_duplicate_transcripts(transcript_list)
-#'
-#' # View duplicate groups
-#' duplicates$duplicate_groups
-#'
-#' # View recommendations
-#' duplicates$recommendations
-#'
-#' # Use different detection method
-#' content_duplicates <- detect_duplicate_transcripts(
-#'   transcript_list,
-#'   method = "content",
-#'   similarity_threshold = 0.9
-#' )
-#' }
 #'
 #' @seealso
 #' \code{\link{process_zoom_transcript}} for processing individual transcripts,

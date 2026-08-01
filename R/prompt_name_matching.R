@@ -4,9 +4,10 @@ prompt_name_matching <- function(unmatched_names = NULL,
                                    "engager.privacy_level",
                                    "mask"
                                  ),
-                                 data_folder = ".",
+                                 data_folder = NULL,
                                  section_names_lookup_file = "section_names_lookup.csv",
-                                 include_instructions = TRUE) {
+                                 include_instructions = TRUE,
+                                 write_lookup = FALSE) {
   # Validate inputs
   if (!is.character(unmatched_names)) {
     stop("unmatched_names must be a character vector", call. = FALSE)
@@ -14,16 +15,24 @@ prompt_name_matching <- function(unmatched_names = NULL,
 
   privacy_level <- normalize_privacy_level(privacy_level)
 
-  if (!is.character(data_folder) || length(data_folder) != 1) {
-    stop("data_folder must be a single character string", call. = FALSE)
+  if (!is.null(data_folder) &&
+      (!is.character(data_folder) || length(data_folder) != 1L ||
+        is.na(data_folder) || !nzchar(trimws(data_folder)))) {
+    stop("data_folder must be NULL or a non-empty character string", call. = FALSE)
   }
 
-  if (!is.character(section_names_lookup_file) || length(section_names_lookup_file) != 1) {
+  if (!is.character(section_names_lookup_file) ||
+      length(section_names_lookup_file) != 1L ||
+      is.na(section_names_lookup_file) ||
+      !nzchar(trimws(section_names_lookup_file))) {
     stop("section_names_lookup_file must be a single character string", call. = FALSE)
   }
 
   if (!is.logical(include_instructions) || length(include_instructions) != 1) {
     stop("include_instructions must be a single logical value", call. = FALSE)
+  }
+  if (!is.logical(write_lookup) || length(write_lookup) != 1 || is.na(write_lookup)) {
+    stop("write_lookup must be a single logical value", call. = FALSE)
   }
 
   # If no unmatched names, return early
@@ -32,12 +41,6 @@ prompt_name_matching <- function(unmatched_names = NULL,
       message("No unmatched names found. Name matching is complete.")
     }
     return(invisible(NULL))
-  }
-
-  # Create data folder if it doesn't exist
-  if (!dir.exists(data_folder)) {
-    dir.create(data_folder, recursive = TRUE)
-    # Created data folder
   }
 
   # Generate privacy-safe guidance
@@ -52,17 +55,23 @@ prompt_name_matching <- function(unmatched_names = NULL,
     cat("\n", guidance, "\n", sep = "")
   }
 
-  # Create the lookup file using existing function
-  lookup_file_path <- file.path(data_folder, section_names_lookup_file)
-
   # Use existing function to create blank template
   lookup_template <- make_blank_section_names_lookup_csv()
 
+  if (!isTRUE(write_lookup)) {
+    return(invisible(lookup_template))
+  }
+
+  if (is.null(data_folder)) {
+    stop("`data_folder` must be supplied when `write_lookup = TRUE`", call. = FALSE)
+  }
+  lookup_file_path <- file.path(data_folder, section_names_lookup_file)
+  if (!dir.exists(data_folder)) {
+    dir.create(data_folder, recursive = TRUE)
+  }
+
   # Save the template to the specified file
   readr::write_csv(lookup_template, lookup_file_path)
-
-  # Created lookup file
-  # Please edit this file to map the unmatched names, then re-run your analysis.
 
   # Return the file path invisibly
   invisible(lookup_file_path)
@@ -101,8 +110,8 @@ generate_name_matching_guidance <- function(unmatched_names, privacy_level, incl
   if (include_instructions) {
     instructions_msg <- paste(
       "\n\n*** INSTRUCTIONS:",
-      "1. Open the created 'section_names_lookup.csv' file",
-      "2. Add rows for each unmatched name above",
+      "1. Review the in-memory lookup template returned by prompt_name_matching()",
+      "2. Choose an explicit output directory and call prompt_name_matching(..., data_folder = output_dir, write_lookup = TRUE) if a CSV template is needed",
       "3. Map each transcript name to the correct roster name",
       "4. Set 'participant_type' to one of:",
       "   - 'instructor' for faculty/staff",

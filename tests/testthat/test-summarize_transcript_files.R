@@ -1,3 +1,6 @@
+test_root <- withr::local_tempdir()
+test_transcripts_dir <- file.path(test_root, "test_transcripts")
+
 test_that("summarize_transcript_files summarizes multiple transcript files correctly", {
   # Create a fake transcript list
   transcript_file_names <- tibble::tibble(
@@ -25,31 +28,31 @@ test_that("summarize_transcript_files summarizes multiple transcript files corre
   on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
-  dir.create("test_transcripts", showWarnings = FALSE)
-  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = ".", transcripts_folder = "test_transcripts")
+  dir.create(test_transcripts_dir, showWarnings = FALSE)
+  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = test_root, transcripts_folder = "test_transcripts")
   expect_s3_class(result, "tbl_df")
   expect_true(all(c("name", "n", "duration", "wordcount", "comments", "n_perc", "duration_perc", "wordcount_perc", "wpm", "transcript_file", "transcript_path", "name_raw") %in% names(result)))
-  unlink("test_transcripts", recursive = TRUE)
+  unlink(test_transcripts_dir, recursive = TRUE)
 })
 
 test_that("summarize_transcript_files handles empty input", {
   transcript_file_names <- tibble::tibble(transcript_file = character())
-  dir.create("test_transcripts", showWarnings = FALSE)
-  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = ".", transcripts_folder = "test_transcripts")
+  dir.create(test_transcripts_dir, showWarnings = FALSE)
+  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = test_root, transcripts_folder = "test_transcripts")
   expect_true(is.null(result) || (is.data.frame(result) && nrow(result) == 0))
-  unlink("test_transcripts", recursive = TRUE)
+  unlink(test_transcripts_dir, recursive = TRUE)
 })
 
 test_that("summarize_transcript_files handles NA transcript_file", {
   transcript_file_names <- tibble::tibble(transcript_file = c(NA, "file2.vtt"))
-  dir.create("test_transcripts", showWarnings = FALSE)
-  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = ".", transcripts_folder = "test_transcripts")
+  dir.create(test_transcripts_dir, showWarnings = FALSE)
+  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = test_root, transcripts_folder = "test_transcripts")
   expect_true(is.null(result) || (is.data.frame(result) && nrow(result) >= 0))
-  unlink("test_transcripts", recursive = TRUE)
+  unlink(test_transcripts_dir, recursive = TRUE)
 })
 
 test_that("summarize_transcript_files returns NULL for completely invalid input", {
-  result <- summarize_transcript_files(transcript_file_names = NULL, data_folder = ".", transcripts_folder = "test_transcripts")
+  result <- summarize_transcript_files(transcript_file_names = NULL, data_folder = test_root, transcripts_folder = "test_transcripts")
   expect_null(result)
 })
 
@@ -113,16 +116,16 @@ test_that("summarize_transcript_files validates file name matching", {
   on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
-  dir.create("test_transcripts", showWarnings = FALSE)
+  dir.create(test_transcripts_dir, showWarnings = FALSE)
 
   # Warnings are now conditional in test environment, so don't expect them
-  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = ".", transcripts_folder = "test_transcripts")
+  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = test_root, transcripts_folder = "test_transcripts")
 
   # Should still return a valid result
   expect_s3_class(result, "tbl_df")
   expect_true("transcript_file" %in% names(result))
 
-  unlink("test_transcripts", recursive = TRUE)
+  unlink(test_transcripts_dir, recursive = TRUE)
 })
 
 test_that("summarize_transcript_files handles matching file names correctly", {
@@ -153,18 +156,18 @@ test_that("summarize_transcript_files handles matching file names correctly", {
   on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
-  dir.create("test_transcripts", showWarnings = FALSE)
+  dir.create(test_transcripts_dir, showWarnings = FALSE)
 
   # Should not warn about mismatched filenames
   expect_no_warning(
-    result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = ".", transcripts_folder = "test_transcripts")
+    result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = test_root, transcripts_folder = "test_transcripts")
   )
 
   # Should return a valid result
   expect_s3_class(result, "tbl_df")
   expect_true("transcript_file" %in% names(result))
 
-  unlink("test_transcripts", recursive = TRUE)
+  unlink(test_transcripts_dir, recursive = TRUE)
 })
 
 test_that("summarize_transcript_files handles character vector input", {
@@ -193,14 +196,14 @@ test_that("summarize_transcript_files handles character vector input", {
   on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
-  dir.create("test_transcripts", showWarnings = FALSE)
+  dir.create(test_transcripts_dir, showWarnings = FALSE)
 
-  result <- summarize_transcript_files(transcript_file_names = transcript_files, data_folder = ".", transcripts_folder = "test_transcripts")
+  result <- summarize_transcript_files(transcript_file_names = transcript_files, data_folder = test_root, transcripts_folder = "test_transcripts")
 
   expect_s3_class(result, "tbl_df")
   expect_true(all(c("name", "n", "duration", "wordcount", "transcript_file", "transcript_path", "name_raw") %in% names(result)))
 
-  unlink("test_transcripts", recursive = TRUE)
+  unlink(test_transcripts_dir, recursive = TRUE)
 })
 
 test_that("summarize_transcript_files handles non-existent folder", {
@@ -210,7 +213,7 @@ test_that("summarize_transcript_files handles non-existent folder", {
   )
 
   # Should return NULL when folder doesn't exist
-  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = ".", transcripts_folder = "non_existent_folder")
+  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = test_root, transcripts_folder = "non_existent_folder")
   expect_null(result)
 })
 
@@ -222,12 +225,12 @@ test_that("summarize_transcript_files handles non-tibble input", {
   )
 
   # Function should return NULL for non-tibble input
-  result <- summarize_transcript_files(transcript_file_names = df_input, data_folder = ".", transcripts_folder = "test_transcripts")
+  result <- summarize_transcript_files(transcript_file_names = df_input, data_folder = test_root, transcripts_folder = "test_transcripts")
   expect_null(result)
 
   # Test with list input
   list_input <- list(transcript_file = c("file1.vtt", "file2.vtt"))
-  result2 <- summarize_transcript_files(transcript_file_names = list_input, data_folder = ".", transcripts_folder = "test_transcripts")
+  result2 <- summarize_transcript_files(transcript_file_names = list_input, data_folder = test_root, transcripts_folder = "test_transcripts")
   expect_null(result2)
 })
 
@@ -248,9 +251,9 @@ test_that("summarize_transcript_files handles empty results", {
   on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
-  dir.create("test_transcripts", showWarnings = FALSE)
+  dir.create(test_transcripts_dir, showWarnings = FALSE)
 
-  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = ".", transcripts_folder = "test_transcripts")
+  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = test_root, transcripts_folder = "test_transcripts")
 
   # Should return empty tibble with expected columns
   expect_s3_class(result, "tbl_df")
@@ -260,7 +263,7 @@ test_that("summarize_transcript_files handles empty results", {
     "wordcount_perc", "wpm", "transcript_file", "transcript_path", "name_raw"
   ) %in% names(result)))
 
-  unlink("test_transcripts", recursive = TRUE)
+  unlink(test_transcripts_dir, recursive = TRUE)
 })
 
 test_that("summarize_transcript_files handles metadata preservation", {
@@ -294,15 +297,15 @@ test_that("summarize_transcript_files handles metadata preservation", {
   on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
-  dir.create("test_transcripts", showWarnings = FALSE)
+  dir.create(test_transcripts_dir, showWarnings = FALSE)
 
-  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = ".", transcripts_folder = "test_transcripts")
+  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = test_root, transcripts_folder = "test_transcripts")
 
   expect_s3_class(result, "tbl_df")
   expect_true(all(c("transcript_file", "session_date", "instructor", "course_code") %in% names(result)))
   expect_equal(nrow(result), 4) # 2 files * 2 speakers each
 
-  unlink("test_transcripts", recursive = TRUE)
+  unlink(test_transcripts_dir, recursive = TRUE)
 })
 
 test_that("summarize_transcript_files handles NA file names", {
@@ -337,15 +340,15 @@ test_that("summarize_transcript_files handles NA file names", {
   on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
-  dir.create("test_transcripts", showWarnings = FALSE)
+  dir.create(test_transcripts_dir, showWarnings = FALSE)
 
-  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = ".", transcripts_folder = "test_transcripts")
+  result <- summarize_transcript_files(transcript_file_names = transcript_file_names, data_folder = test_root, transcripts_folder = "test_transcripts")
 
   expect_s3_class(result, "tbl_df")
   # Should have results for the 2 valid files (4 rows total: 2 files * 2 speakers each)
   expect_equal(nrow(result), 4)
 
-  unlink("test_transcripts", recursive = TRUE)
+  unlink(test_transcripts_dir, recursive = TRUE)
 })
 
 test_that("summarize_transcript_files handles names_to_exclude parameter", {
@@ -382,12 +385,12 @@ test_that("summarize_transcript_files handles names_to_exclude parameter", {
   on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
-  dir.create("test_transcripts", showWarnings = FALSE)
+  dir.create(test_transcripts_dir, showWarnings = FALSE)
 
   # Test without exclusions
   result1 <- summarize_transcript_files(
     transcript_file_names = transcript_file_names,
-    data_folder = ".",
+    data_folder = test_root,
     transcripts_folder = "test_transcripts"
   )
   expect_equal(nrow(result1), 6) # 2 files * 3 speakers each
@@ -395,13 +398,13 @@ test_that("summarize_transcript_files handles names_to_exclude parameter", {
   # Test with exclusions
   result2 <- summarize_transcript_files(
     transcript_file_names = transcript_file_names,
-    data_folder = ".",
+    data_folder = test_root,
     transcripts_folder = "test_transcripts",
     names_to_exclude = c("Alice", "Bob")
   )
   expect_equal(nrow(result2), 2) # 2 files * 1 speaker each (Charlie only)
 
-  unlink("test_transcripts", recursive = TRUE)
+  unlink(test_transcripts_dir, recursive = TRUE)
 })
 
 test_that("summarize_transcript_files handles metadata preservation with row_id", {
@@ -452,11 +455,11 @@ test_that("summarize_transcript_files handles metadata preservation with row_id"
   on.exit(assignInNamespace("summarize_transcript_metrics", orig, ns = "engager"))
 
   # Create a fake transcripts folder
-  dir.create("test_transcripts", showWarnings = FALSE)
+  dir.create(test_transcripts_dir, showWarnings = FALSE)
 
   result <- summarize_transcript_files(
     transcript_file_names = transcript_file_names,
-    data_folder = ".",
+    data_folder = test_root,
     transcripts_folder = "test_transcripts"
   )
 
@@ -468,5 +471,5 @@ test_that("summarize_transcript_files handles metadata preservation with row_id"
   expect_true("Bob" %in% result$name)
   expect_true("Charlie" %in% result$name)
 
-  unlink("test_transcripts", recursive = TRUE)
+  unlink(test_transcripts_dir, recursive = TRUE)
 })

@@ -82,7 +82,7 @@ test_that("safe_name_matching_workflow validates inputs correctly", {
   # Test invalid data_folder
   expect_error(
     safe_name_matching_workflow(temp_file, tibble::tibble(), data_folder = 123),
-    "data_folder must be a single character string"
+    "data_folder must be NULL or a non-empty character string"
   )
 
   # Test invalid section_names_lookup_file
@@ -332,25 +332,34 @@ test_that("handle_unmatched_names works correctly", {
   expect_match(err$message, "Guest1")
 
   # Test with warn action
-  captured_unmatched_names <- NULL
-  with_mocked_bindings(
-    prompt_name_matching = function(unmatched_names, ...) {
-      captured_unmatched_names <<- unmatched_names
-      TRUE
-    },
-    {
-      expect_error(
-        handle_unmatched_names(
-          unmatched_names = c("Dr. Smith", "Guest1"),
-          transcript_data = tibble::tibble(speaker = c("Dr. Smith", "Guest1")),
-          unmatched_names_action = "warn",
-          privacy_level = "mask",
-          data_folder = "data",
-          section_names_lookup_file = "test.csv"
-        ),
-        "Please update the name mappings file"
-      )
-    }
+  err <- expect_error(
+    handle_unmatched_names(
+      unmatched_names = c("Dr. Smith", "Guest1"),
+      transcript_data = tibble::tibble(speaker = c("Dr. Smith", "Guest1")),
+      unmatched_names_action = "warn",
+      privacy_level = "mask",
+      data_folder = NULL,
+      section_names_lookup_file = "test.csv"
+    ),
+    class = "engager_name_matching_required"
   )
-  expect_equal(captured_unmatched_names, c("Dr. Smith", "Guest1"))
+  expect_s3_class(err$lookup_template, "data.frame")
+  expect_null(err$lookup_path)
+  expect_match(err$message, "No file was written")
+
+  output_dir <- withr::local_tempdir()
+  err <- expect_error(
+    handle_unmatched_names(
+      unmatched_names = c("Dr. Smith", "Guest1"),
+      transcript_data = tibble::tibble(speaker = c("Dr. Smith", "Guest1")),
+      unmatched_names_action = "warn",
+      privacy_level = "mask",
+      data_folder = output_dir,
+      section_names_lookup_file = "test.csv",
+      write_lookup = TRUE
+    ),
+    class = "engager_name_matching_required"
+  )
+  expect_equal(err$lookup_path, file.path(output_dir, "test.csv"))
+  expect_true(file.exists(err$lookup_path))
 })

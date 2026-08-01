@@ -9,7 +9,8 @@
 #' @param mask_by Masking option: "name" or "rank" (default: "name")
 #' @param privacy_level Privacy level for data visualization (default: from global option)
 #' @param metrics_lookup_df Optional lookup table for metric names (default: NULL)
-#' @return A ggplot2 object
+#' @return A `ggplot` object whose data contains the selected metric and the
+#'   configured privacy-processed participant labels, ready to print or modify.
 #'
 #' @export
 plot_users <- function(

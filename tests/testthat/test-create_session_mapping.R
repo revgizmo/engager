@@ -233,10 +233,12 @@ test_that("create_session_mapping handles verbose mode", {
 test_that("create_session_mapping handles comprehensive parameters", {
   zoom_data <- create_zoom_recordings_data()
   course_data <- create_course_info_data()
+  explicit_output <- tempfile(fileext = ".csv")
+  on.exit(unlink(explicit_output), add = TRUE)
 
   param_combinations <- list(
     list(zoom_recordings_df = zoom_data, course_info_df = course_data),
-    list(zoom_recordings_df = zoom_data, course_info_df = course_data, output_file = "test.csv"),
+    list(zoom_recordings_df = zoom_data, course_info_df = course_data, output_file = explicit_output),
     list(zoom_recordings_df = zoom_data, course_info_df = course_data, semester_start_mdy = "Feb 01, 2024"),
     list(zoom_recordings_df = zoom_data, course_info_df = course_data, auto_assign_patterns = list()),
     list(zoom_recordings_df = zoom_data, course_info_df = course_data, interactive = TRUE),

@@ -10,7 +10,9 @@ load_zoom_transcript(transcript_file_path = NULL)
 \item{transcript_file_path}{Path to the transcript file to load}
 }
 \value{
-A tibble containing the transcript data, or NULL if the file is empty
+A tibble with one row per parsed WebVTT cue and columns describing
+speaker name, cue text, start and end times, duration, word count, and
+source transcript. Returns \code{NULL} when the file is empty.
 }
 \description{
 Load a Zoom recording transcript and return tibble containing the comments from a Zoom recording transcript

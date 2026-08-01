@@ -9,17 +9,11 @@
 #'
 #' @param expr Expression to evaluate
 #' @param context Context for error message
+#' @return The value of `expr` unchanged when evaluation succeeds. On failure,
+#'   the function raises a rewritten error with recovery guidance.
 #' @export
 #' @examples
-#' \dontrun{
-#' # Wrap any expression with user-friendly error handling
-#' result <- user_friendly_error(
-#'   {
-#'     load_zoom_transcript("nonexistent.vtt")
-#'   },
-#'   "loading transcript"
-#' )
-#' }
+#' result <- user_friendly_error(1 + 1, "adding values")
 user_friendly_error <- function(expr, context = "operation") {
   tryCatch(
     {
@@ -186,7 +180,7 @@ validate_file_argument <- function(file_path, context = "file operation") {
 #' @param create_if_missing Whether to create directory if it doesn't exist
 #' @return TRUE if valid, stops with user-friendly error if invalid
 validate_directory_argument <- function(dir_path, context = "directory operation", create_if_missing = TRUE) {
-  if (missing(dir_path) || is.null(dir_path) || dir_path == "") {
+  if (missing(dir_path) || is.null(dir_path)) {
     stop("ERROR: Directory path is required.\n",
       "TIP: Please provide a valid directory path\n",
       "TIP: Example: 'output' or '/path/to/output'",
@@ -194,10 +188,18 @@ validate_directory_argument <- function(dir_path, context = "directory operation
     )
   }
 
-  if (!is.character(dir_path) || length(dir_path) != 1) {
+  if (!is.character(dir_path) || length(dir_path) != 1L || is.na(dir_path)) {
     stop("ERROR: Directory path must be a single text string.\n",
       "TIP: Example: 'output'\n",
       "TIP: Not: c('dir1', 'dir2')",
+      call. = FALSE
+    )
+  }
+
+  if (!nzchar(trimws(dir_path))) {
+    stop("ERROR: Directory path is required.\n",
+      "TIP: Please provide a valid directory path\n",
+      "TIP: Example: 'output' or '/path/to/output'",
       call. = FALSE
     )
   }
@@ -224,12 +226,11 @@ validate_directory_argument <- function(dir_path, context = "directory operation
 #' @description Provides specific recovery suggestions based on error type
 #'
 #' @param error_type Type of error encountered
+#' @return Invisibly `NULL`; called for its recovery guidance printed to the console.
 #' @export
 #' @examples
-#' \dontrun{
 #' show_error_recovery("file_not_found")
 #' show_error_recovery("permission_denied")
-#' }
 show_error_recovery <- function(error_type) {
   switch(error_type,
     "file_not_found" = {

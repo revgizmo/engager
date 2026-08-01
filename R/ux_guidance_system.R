@@ -6,11 +6,10 @@
 #' Show getting started guide
 #'
 #' @description Displays a comprehensive getting started guide for new users
+#' @return Invisibly `NULL`; called for its formatted console guide.
 #' @export
 #' @examples
-#' \dontrun{
 #' show_getting_started()
-#' }
 show_getting_started <- function() {
   cat("
 Getting Started with engager
@@ -21,10 +20,11 @@ BASIC WORKFLOW (5 steps):
 2. process_zoom_transcript() - Clean and prepare data
 3. analyze_transcripts() - Calculate engagement metrics
 4. plot_users() - Create charts and graphs
-5. write_metrics() - Save your results
+5. write_metrics(..., path = 'your/output.csv') - Save to an explicit path
 
 QUICK START (Recommended for new users):
    results <- basic_transcript_analysis('your_file.vtt')
+   # To export, supply output_dir = 'your/output/directory'
 
 STEP-BY-STEP WORKFLOW:
    transcript <- load_zoom_transcript('your_file.vtt')
@@ -35,7 +35,7 @@ STEP-BY-STEP WORKFLOW:
 
 BATCH PROCESSING:
    files <- c('session1.vtt', 'session2.vtt')
-   results <- batch_basic_analysis(files, 'output/')
+   results <- batch_basic_analysis(files, output_dir = 'output/')
 
 NEED HELP?
    - show_available_functions() - See functions at your level
@@ -57,12 +57,11 @@ MORE RESOURCES:
 #' Show help for specific function
 #'
 #' @param function_name Name of function to get help for
+#' @return Invisibly `NULL`; called for its formatted console help.
 #' @export
 #' @examples
-#' \dontrun{
 #' show_function_help("load_zoom_transcript")
 #' show_function_help("basic_transcript_analysis")
-#' }
 show_function_help <- function(function_name) {
   # Check if function exists
   if (!exists(function_name, envir = asNamespace("engager"))) {
@@ -114,14 +113,14 @@ show_function_help <- function(function_name) {
     switch(function_name,
       "basic_transcript_analysis" = {
         cat("   results <- basic_transcript_analysis('transcript.vtt')\n")
-        cat("   results <- basic_transcript_analysis('transcript.vtt', 'output/', 'medium')\n")
+        cat("   results <- basic_transcript_analysis('transcript.vtt', output_dir = 'output/', privacy_level = 'medium')\n")
       },
       "quick_analysis" = {
         cat("   results <- quick_analysis('transcript.vtt')\n")
       },
       "batch_basic_analysis" = {
         cat("   files <- c('session1.vtt', 'session2.vtt')\n")
-        cat("   results <- batch_basic_analysis(files, 'output/')\n")
+        cat("   results <- batch_basic_analysis(files, output_dir = 'output/')\n")
       }
     )
   }
@@ -129,18 +128,18 @@ show_function_help <- function(function_name) {
 
 #' Show workflow help and templates
 #'
+#' @return Invisibly `NULL`; called for its formatted console guide.
 #' @export
 #' @examples
-#' \dontrun{
 #' show_workflow_help()
-#' }
 show_workflow_help <- function() {
   cat("
 Available Workflows
 =====================
 
 Basic Workflow (Recommended for new users):
-   results <- basic_transcript_analysis('file.vtt', 'output/')
+   results <- basic_transcript_analysis('file.vtt')
+   # Supply output_dir explicitly when files should be written.
 
 QUICK: Quick Workflow (Fastest):
    results <- quick_analysis('file.vtt')
@@ -154,7 +153,8 @@ RESULTS: Step-by-Step Workflow (Full control):
 
 Batch Workflow (Multiple files):
    files <- c('session1.vtt', 'session2.vtt', 'session3.vtt')
-   results <- batch_basic_analysis(files, 'output/')
+   results <- batch_basic_analysis(files)
+   # Supply output_dir explicitly when files should be written.
 
 Advanced Workflows:
    - Use set_ux_level('intermediate') to see more options
@@ -168,11 +168,10 @@ TIP: Need help finding the right workflow?
 
 #' Show privacy and ethics guidance
 #'
+#' @return Invisibly `NULL`; called for its formatted console guide.
 #' @export
 #' @examples
-#' \dontrun{
 #' show_privacy_guidance()
-#' }
 show_privacy_guidance <- function() {
   cat("
 Privacy & Ethics Guidance
@@ -185,7 +184,7 @@ Privacy Protection (Enabled by Default):
 
 TOOLS: Privacy Functions:
    - ensure_privacy() - Apply privacy protection
-   - write_metrics() - Export masked metrics without raw comments by default
+   - write_metrics(data, path = 'your/output.csv') - Export masked metrics without raw comments by default
    - privacy_audit() - Check privacy risks
    - review_privacy_risks() - privacy review
 
@@ -210,11 +209,10 @@ Privacy Questions?
 
 #' Show troubleshooting guide
 #'
+#' @return Invisibly `NULL`; called for its formatted console guide.
 #' @export
 #' @examples
-#' \dontrun{
 #' show_troubleshooting()
-#' }
 show_troubleshooting <- function() {
   cat("
 TOOLS: Troubleshooting Guide

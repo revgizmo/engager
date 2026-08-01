@@ -13,11 +13,9 @@
 #'
 #' @param df A tibble containing transcript comments with columns: name, start, end, comment
 #' @param max_pause_sec Maximum pause in seconds between comments to consolidate (default: 1)
-#' @return A tibble with consolidated comments
-#'
-#'   transcript.
-#'
-#' consolidate_transcript(df = "NULL")
+#' @return A tibble with consecutive comments consolidated by speaker and pause
+#'   threshold, including `name`, `comment`, `start`, `end`, `duration`, and
+#'   `wordcount` columns. Returns `NULL` when `df` is not a tibble.
 #'
 #' @export
 consolidate_transcript <- function(df = NULL, max_pause_sec = 1) {

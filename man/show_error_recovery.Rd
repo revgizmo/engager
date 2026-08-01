@@ -9,12 +9,13 @@ show_error_recovery(error_type)
 \arguments{
 \item{error_type}{Type of error encountered}
 }
+\value{
+Invisibly \code{NULL}; called for its recovery guidance printed to the console.
+}
 \description{
 Provides specific recovery suggestions based on error type
 }
 \examples{
-\dontrun{
 show_error_recovery("file_not_found")
 show_error_recovery("permission_denied")
-}
 }

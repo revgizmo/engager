@@ -18,8 +18,19 @@ load_roster(
 \item{strict_errors}{Logical; if TRUE, throw error when file doesn't exist}
 }
 \value{
-A tibble with roster data, filtered by enrolled status if applicable
+A tibble containing the roster rows. When an \code{enrolled} column is
+present, only rows where it is \code{TRUE} are returned. A missing file returns
+an empty tibble unless \code{strict_errors = TRUE}.
 }
 \description{
 Load a roster file
+}
+\examples{
+roster_path <- tempfile(fileext = ".csv")
+readr::write_csv(
+  tibble::tibble(student_id = "S001", preferred_name = "Student One"),
+  roster_path
+)
+roster <- load_roster(roster_path)
+unlink(roster_path)
 }

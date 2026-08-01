@@ -78,9 +78,7 @@ cleanup_test_files <- function(test_data) {
 # Helper function to run tests with proper directory setup
 with_test_directory <- function(test_data, test_function) {
   # Change to the base directory so that relative paths work correctly
-  old_wd <- getwd()
-  on.exit(setwd(old_wd), add = TRUE)
-  setwd(test_data$temp_base)
+  withr::local_dir(test_data$temp_base)
 
   # Run the test function
   test_function()
@@ -161,21 +159,20 @@ with_test_directory <- function(test_data, test_function) {
   })
 
   # Test 4: NULL output path handling
-  test_that("analyze_transcripts handles NULL output_path", {
+  test_that("analyze_transcripts rejects NULL output_path without writing", {
     test_data <- create_sample_transcript_files()
     on.exit(cleanup_test_files(test_data))
 
     with_test_directory(test_data, function() {
-      # Test with write = TRUE and NULL output_path
-      result <- analyze_transcripts(
-        transcripts_folder = "transcripts",
-        write = TRUE,
-        output_path = NULL
+      expect_error(
+        analyze_transcripts(
+          transcripts_folder = "transcripts",
+          write = TRUE,
+          output_path = NULL
+        ),
+        "output_path.*supplied"
       )
-
-      expect_s3_class(result, "tbl_df")
-      expect_true(file.exists("engagement_metrics.csv"))
-      unlink("engagement_metrics.csv") # Clean up default file
+      expect_false(file.exists("engagement_metrics.csv"))
     })
   })
 
@@ -204,9 +201,7 @@ Student2: Hi there"
     writeLines(sample_content, file.path(transcripts_dir, "single.transcript.vtt"))
 
     # Change to the base directory so that relative paths work correctly
-    old_wd <- getwd()
-    on.exit(setwd(old_wd), add = TRUE)
-    setwd(temp_base)
+    withr::local_dir(temp_base)
 
     result <- analyze_transcripts("transcripts")
     expect_s3_class(result, "tbl_df")
@@ -505,9 +500,7 @@ Student%d: Response from file %d", i, i, i + 1, i)
     file.copy(sample_transcript, file.path(transcripts_dir, "sample.transcript.vtt"))
 
     # Change to the base directory so that relative paths work correctly
-    old_wd <- getwd()
-    on.exit(setwd(old_wd), add = TRUE)
-    setwd(temp_base)
+    withr::local_dir(temp_base)
 
     # Test the function
     result <- analyze_transcripts("transcripts")
@@ -538,9 +531,7 @@ Student%d: Response from file %d", i, i, i + 1, i)
     file.copy(sample_transcript, file.path(transcripts_dir, "sample.transcript.vtt"))
 
     # Change to the base directory so that relative paths work correctly
-    old_wd <- getwd()
-    on.exit(setwd(old_wd), add = TRUE)
-    setwd(temp_base)
+    withr::local_dir(temp_base)
 
     # Test with write = TRUE to verify privacy compliance
     output_file <- tempfile("privacy_test_output.csv")
