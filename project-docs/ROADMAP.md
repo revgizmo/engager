@@ -2,8 +2,9 @@
 
 Status: product and release planning source of truth.
 
-Last release-state reconciliation: 2026-07-22 against stable `main` at
-`6214c0316d39154140bdba064266119007bff41a` and 35 current exports. The
+Last release-state reconciliation: 2026-08-29 against the public CRAN 0.1.0
+package, stable `main` at
+`185f2a8cdf1c27f99dda94f94024fb67221c36e8`, and 35 stable-line exports. The
 feature/backlog baseline remains the 2026-07-15 review of the historical
 pre-scope-reduction API and 122 then-open GitHub issues. The existing
 `project-docs/backlog-normalization` snapshot contains 128 issues and must be
@@ -45,9 +46,11 @@ turning participation measurements into unsupported judgments about students.
 
 ### 0.1.0 — Focused transcript-analysis foundation
 
-Status: CRAN-requested documentation and write-safety remediation is validated
-locally and on R-devel win-builder; awaiting maintainer-controlled
-resubmission.
+Status: published on CRAN on 2026-07-30. Public source reconciliation,
+installed-package UAT, and the 48-hour CRAN check-matrix review pass. The
+official matrix reported 13 of 13 results `OK` when refreshed on 2026-08-29.
+The annotated tag, GitHub release, final issue #4 evidence update, and issue
+#4 closure remain separately governed and pending.
 
 Supported product:
 
@@ -59,10 +62,12 @@ Supported product:
   pseudonymization.
 - Beginner, composable, and batch transcript workflows.
 
-Isolated 0.1.1 development may proceed on protected `develop` while CRAN review
-continues. `main` remains the stable 0.1.0 release and evidence line. No 0.1.1
-package content may merge to it until the 0.1.1 release is finalized under the
-T6 gates, and any merge remains blocked until at least the 0.1.0 acceptance
+Protected `develop` is at the validated 0.1.1 QA source head
+`23d0474072d3d5188749f20450c3363e9bb31036` with 37 exports. Fresh-user QA
+remains pending, and the refreshed QA tarball is not the final CRAN candidate.
+`main` remains the stable 0.1.0 release and evidence line. No 0.1.1 package
+content may merge to it until the 0.1.1 release is finalized under the T6
+gates, and any merge remains blocked until at least the 0.1.0 acceptance
 reconciliation, tag, GitHub release, and issue #4 closeout described in the
 0.1.1 release plan are complete. CRAN remediation branches from `main`;
 applicable fixes are forward-ported to `develop` through separate reviewed PRs.

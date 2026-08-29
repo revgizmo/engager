@@ -1,15 +1,37 @@
 # CRAN Validation Report
 
-Generated: 2026-07-22
+Generated: 2026-07-30
+
+Last refreshed: 2026-08-29
 
 ## Decision
 
-**GO for maintainer-controlled manual CRAN resubmission after evidence review.**
+**PUBLISHED — acceptance verification passes; final release closeout pending.**
 
-The documentation and write-safety remediation requested by CRAN passes the
-package-side release gates. Issue #4 updates, CRAN resubmission, acceptance
-closeout, tagging, and release publication remain separately authorized owner
-actions.
+CRAN published `engager` 0.1.0 on 2026-07-30. The public package identity,
+source archive, accepted source commit, installed workflow, and 48-hour CRAN
+check matrix are reconciled. The official matrix reported 13 of 13 results
+`OK` when refreshed on 2026-08-29. The final issue #4 evidence update,
+annotated tag, GitHub release, and issue #4 closure remain separately governed.
+
+## Public CRAN Evidence
+
+- Package page: <https://cran.r-project.org/package=engager>
+- Published source:
+  <https://cran.r-project.org/src/contrib/engager_0.1.0.tar.gz>
+- Publication date: 2026-07-30
+- Check matrix: <https://cran.r-project.org/web/checks/check_results_engager.html>
+- Matrix disposition: 13 of 13 results `OK`, no flags; page last updated at
+  2026-08-29 18:51:37 CEST
+- Published SHA-256:
+  `0051326ad8e0d648969a56b7d374ba9bb4560ffe0f380e201ec6d07ac860468b`
+- Submitted SHA-256:
+  `21e6ecddeed86dad177708d7b7f3bf1df79059f769dedc0e0439e995e2fa5e74`
+- Archive difference: CRAN-normalized `DESCRIPTION` metadata plus generated
+  `MD5`; no R code, documentation, test, vignette, fixture, or other package
+  content difference.
+- Published-tarball installed UAT: PASS on R 4.5.3,
+  `aarch64-apple-darwin20`.
 
 ## Final Remediation Artifact
 
@@ -54,12 +76,12 @@ actions.
 
 ## Remaining Gates
 
-1. Review and merge the evidence-only PR; it must not change any file included
-   in the frozen tarball.
-2. Under separate approval, post the final remediation disposition to issue #4.
-3. The maintainer manually resubmits the exact SHA-verified tarball to CRAN and
-   confirms the submission email.
-4. Preserve any reviewer wording and address only requested failures in a
-   bounded remediation branch.
-5. Keep issue #4 open and do not tag or publish a GitHub release until CRAN
-   acceptance and separate approval.
+1. Record the final 13/13 matrix evidence in issue #4 without closing it.
+2. Obtain separate approval for the annotated `v0.1.0` tag at exact source
+   commit `6214c0316d39154140bdba064266119007bff41a`.
+3. Obtain separate approval for the GitHub release, then for issue #4 closure.
+
+The CRAN documentation/write-safety remediation was forward-ported to
+`develop` through PR #591 at
+`23d0474072d3d5188749f20450c3363e9bb31036`. Fresh-user QA of the refreshed
+0.1.1 artifact remains pending; it is not the final CRAN candidate.
