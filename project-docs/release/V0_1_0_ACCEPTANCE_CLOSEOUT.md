@@ -1,19 +1,20 @@
 # `engager` 0.1.0 CRAN Acceptance Closeout
 
-Status: CRAN publication verified; installed-package UAT passed; release
-mutations remain pending.
+Status: CRAN publication, installed-package UAT, and the 48-hour CRAN check
+matrix are verified; release mutations remain pending.
 
-Last reconciled: 2026-07-30 against the public CRAN package page, published
-source tarball, current CRAN check matrix, `origin/main`, and issue #4.
+Last reconciled: 2026-08-29 against the public CRAN package page, published
+source tarball, official CRAN check matrix, `origin/main` at
+`185f2a8cdf1c27f99dda94f94024fb67221c36e8`, and issue #4.
 
 ## Decision
 
 `engager` 0.1.0 is publicly available from CRAN. The package identity,
-published archive contents, accepted source commit, and installed workflow are
-reconciled. Do not close the release ledger yet: wait at least 48 hours from
-publication for the CRAN check matrix to populate, then inspect every reported
-platform before requesting the final tag, GitHub release, and issue-close
-approvals.
+published archive contents, accepted source commit, installed workflow, and
+48-hour check matrix are reconciled. The official matrix reported 13 of 13
+results `OK` with no flags. Do not close the release ledger yet: the final
+matrix evidence update, tag, GitHub release, and issue closure each retain
+their separate approval requirements.
 
 This packet does not authorize or perform any release mutation.
 
@@ -100,29 +101,36 @@ the exact source used to build the submitted remediation artifact. The later
 commit `4b72bb0cefeb1dfa4fe21efb87a87a5c2610fdfa` changes only package-excluded
 release evidence.
 
-The accepted tag target must therefore be `6214c0316d39154140bdba064266119007bff41a`,
-not the later evidence commit and not any 0.1.1 development commit.
+If separately authorized, the tag target must therefore be
+`6214c0316d39154140bdba064266119007bff41a`, not the later evidence commit and
+not any 0.1.1 development commit.
 
-## Gate D — CRAN check matrix: IN PROGRESS
+## Gate D — CRAN check matrix: PASS
 
-At the 2026-07-30 reconciliation, the public matrix reported six results and
-all six were `OK`:
+At the 2026-08-29 reconciliation, the public matrix reported 13 results and all
+13 were `OK`, with no flags:
 
+- R-devel Debian clang;
+- R-devel Debian gcc;
 - R-devel Fedora clang;
 - R-devel Fedora gcc;
+- R-devel Windows;
+- R-patched Linux;
+- R-release Linux;
 - R-release macOS arm64;
 - R-release macOS x86_64;
+- R-release Windows;
 - R-oldrel macOS arm64;
-- R-oldrel macOS x86_64.
+- R-oldrel macOS x86_64;
+- R-oldrel Windows.
 
-This is a positive but still early snapshot. Wait until at least
-2026-08-01 10:20 PDT, refresh the matrix, and inspect every reported platform.
-Windows binaries were not yet available at this reconciliation; binary
-availability is not itself a source-package release blocker.
+The official page was last updated at 2026-08-29 18:51:37 CEST. Windows
+binaries were also available from the public package page. This observation
+completes the 48-hour matrix gate; it does not authorize a release mutation.
 
 ## Gate E — ledger and public release closeout: PENDING APPROVAL
 
-After Gate D passes, post the final verification to issue #4 with:
+After separate approval, post the final verification to issue #4 with:
 
 - CRAN page and publication date;
 - submitted and published checksums and the explained metadata-only difference;
@@ -133,9 +141,9 @@ After Gate D passes, post the final verification to issue #4 with:
 
 Keep issue #4 open until all separately approved release actions finish.
 
-## Separately approved release actions
+## Release actions requiring separate approval
 
-Perform these sequentially only after the 48-hour CRAN matrix review.
+Perform these sequentially only after the required approval for each action.
 
 ### 1. Create and push the annotated tag
 
@@ -191,10 +199,11 @@ matrix.
 
 ## Post-closeout unlock
 
-Only after the 0.1.0 tag, GitHub release, and issue #4 closure may the completed
-0.1.1 candidate be considered for governed `develop`-to-`main` promotion. The
-CRAN documentation/write-safety remediation must first be forward-ported to
-`develop` and the 0.1.1 candidate rebuilt and revalidated.
+Only after the 0.1.0 tag, GitHub release, and issue #4 closure may the 0.1.1
+line be considered for governed `develop`-to-`main` promotion. The CRAN
+documentation/write-safety remediation was forward-ported through PR #591 at
+`23d0474072d3d5188749f20450c3363e9bb31036`. Fresh-user QA remains pending,
+and the refreshed QA tarball is not the final CRAN candidate.
 
 No 0.1.2 implementation is authorized by this closeout.
 
@@ -206,7 +215,8 @@ No 0.1.2 implementation is authorized by this closeout.
 | Published archive reconciliation | PASS | Record both checksums and CRAN metadata changes |
 | Installed published-package UAT | PASS | Preserve evidence summary |
 | Accepted source provenance | PASS | Tag only `6214c031...` after approval |
-| 48-hour CRAN matrix | IN PROGRESS | Refresh on or after 2026-08-01 10:20 PDT |
-| Annotated tag | PENDING APPROVAL | Create only after matrix review |
+| 48-hour CRAN matrix | PASS | Preserve 13/13 `OK` observation and timestamp |
+| Issue #4 final matrix update | PENDING APPROVAL | Post without closing only after approval |
+| Annotated tag | PENDING APPROVAL | Create only after explicit approval |
 | GitHub release | PENDING APPROVAL | Publish from verified tag |
 | Issue #4 closure | PENDING APPROVAL | Close only after durable evidence is linked |

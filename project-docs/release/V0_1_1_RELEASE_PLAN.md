@@ -1,14 +1,16 @@
 # `engager` 0.1.1 Release Plan
 
 Status: approved planning baseline; `engager` 0.1.0 was published on CRAN on
-2026-07-30. Isolated 0.1.1 work may proceed on protected `develop`, but merging
-0.1.1 package content to `main` remains governed by the T6 release gates and is
-blocked until the 0.1.0 acceptance closeout is complete.
+2026-07-30. The validated 0.1.1 QA source is on protected `develop`, but
+fresh-user QA remains pending and the refreshed artifact is not the final CRAN
+candidate. Merging 0.1.1 package content to `main` remains governed by the T6
+release gates and is blocked until the 0.1.0 acceptance closeout is complete.
 
-Last release-state reconciliation: 2026-07-30 against the public CRAN package,
-stable `main` at `4b72bb0cefeb1dfa4fe21efb87a87a5c2610fdfa`, and the accepted
-package-source commit `6214c0316d39154140bdba064266119007bff41a`. The
-feature/backlog baseline remains the 2026-07-15 review.
+Last release-state reconciliation: 2026-08-29 against the public CRAN package,
+stable `main` at `185f2a8cdf1c27f99dda94f94024fb67221c36e8`, `develop` at
+`23d0474072d3d5188749f20450c3363e9bb31036`, and the accepted package-source
+commit `6214c0316d39154140bdba064266119007bff41a`. The feature/backlog baseline
+remains the 2026-07-15 review.
 
 ## Release thesis
 
@@ -23,11 +25,11 @@ reporting, longitudinal analytics, or anonymization release.
 
 The submitted 0.1.0 artifact and 0.1.1 development are separate lanes:
 
-- `main` remains the stable 0.1.0 release and evidence line throughout CRAN
-  review. No 0.1.1 package content may be merged to it before closeout.
-- `develop` is created from the policy-approved `main` head and is the
-  integration target for 0.1.1. Its first package-content change is the T0
-  development-version bump to `0.1.0.9000`.
+- `main` remains the stable 0.1.0 release and evidence line. No 0.1.1 package
+  content may be merged to it before closeout.
+- `develop` is the integration target for 0.1.1. It currently records version
+  `0.1.1`, 37 exports, and the validated QA source head
+  `23d0474072d3d5188749f20450c3363e9bb31036`.
 - Every 0.1.1 tranche branches from current `develop`, uses a dedicated
   worktree, and returns through a reviewed PR targeting `develop`.
 - A CRAN reviewer request receives one bounded `codex/cran-<failure-slug>`
@@ -35,12 +37,9 @@ The submitted 0.1.0 artifact and 0.1.1 development are separate lanes:
   remediation or resubmission.
 - A remediation that also applies to 0.1.1 is carried forward through a
   separate `codex/v011-forward-port-<slug>` PR targeting `develop`; do not merge
-  the development line into the CRAN remediation lane.
-- The documentation/write-safety remediation forward-port must also normalize
-  malformed explicit path inputs, including `NA` and blank scalar values,
-  across public and internal writers. This P2 error-contract debt is tracked by
-  issue #438 and does not reopen 0.1.0 because default workflows remain
-  read-only and explicit-path Windows checks passed.
+  the development line into the CRAN remediation lane. The documentation and
+  write-safety forward-port, including malformed explicit-path normalization,
+  was completed through PR #591 at current `develop`.
 - Merging `develop` into `main`, publishing a 0.1.1 tag or release, and any
   0.1.1 CRAN submission remain release actions governed by the T6 gates.
 
@@ -50,14 +49,11 @@ complete. Detailed evidence and release commands are maintained in
 
 The remaining 0.1.0 closeout sequence is:
 
-1. On or after 2026-08-01 10:20 PDT, refresh the CRAN check page and inspect
-   every reported platform. The early six-result snapshot is all `OK` but is
-   not the final 48-hour matrix.
-2. Update issue #4 with the CRAN URL, publication date, submitted and published
-   checksums, explained CRAN metadata-only archive differences, reviewer
-   history, accepted source commit, installed UAT result, and final check
-   matrix.
-3. In a fresh clone, verify the accepted source commit from `main` before
+1. After separate approval, update issue #4 with the final 13/13 `OK` matrix
+   observation. The earlier interim comment already records the CRAN URL,
+   publication date, checksums, metadata-only archive differences, accepted
+   source commit, and installed UAT result.
+2. In a fresh clone, verify the accepted source commit from `main` before
    tagging:
 
    ```sh
@@ -68,9 +64,22 @@ The remaining 0.1.0 closeout sequence is:
    This commit is the exact source used to build the submitted remediation
    tarball. Later evidence-only commits change only files excluded from the
    package tarball; the release tag remains anchored to the accepted source.
-4. Obtain explicit approval before creating the annotated `v0.1.0` tag at the
+3. Obtain explicit approval before creating the annotated `v0.1.0` tag at the
    accepted package-content commit, publishing the GitHub release, or closing
    issue #4.
+
+## Current 0.1.1 QA checkpoint
+
+- Source head: `23d0474072d3d5188749f20450c3363e9bb31036`
+- Source tree: `cdccc447cf60e3abfadc224b6f3524464700ad04`
+- Package version: `0.1.1`
+- Supported exports: 37
+- Refreshed QA tarball SHA-256:
+  `7111570b4da2de4b4997995121151b53729ff2ce415e766b9446bcf37ac046b5`
+- Disposition: QA-only artifact; fresh-user QA is pending, and this is not the
+  final CRAN candidate.
+- Issue #576 still records the earlier technical-GO candidate; no refreshed
+  candidate comment has been posted.
 
 The protected `develop` branch requires pull requests, resolved review threads,
 strict `R-CMD-check` and `Coverage` passing, squash-only linear history, and
@@ -119,6 +128,11 @@ targets `develop`. CRAN remediation is the only package-content lane based on
 PRs, branches, and worktrees for duplicate ownership. Each implementation PR
 runs targeted tests, the canonical non-mutating validator, intentional
 documentation generation when applicable, and the hosted required checks.
+
+T0 through T6 implementation and the later CRAN remediation forward-port are
+complete on `develop`; the tranche definitions below remain the approved
+historical delivery contract. The active product gate is fresh-user QA before
+a final candidate is rebuilt and revalidated.
 
 ### T0 — Development kickoff
 

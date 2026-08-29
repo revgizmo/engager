@@ -2,14 +2,17 @@
 
 Generated: 2026-07-30
 
+Last refreshed: 2026-08-29
+
 ## Decision
 
 **PUBLISHED — acceptance verification passes; final release closeout pending.**
 
 CRAN published `engager` 0.1.0 on 2026-07-30. The public package identity,
-source archive, accepted source commit, and installed workflow are reconciled.
-Wait for the 48-hour CRAN check matrix before requesting the separately
-authorized tag, GitHub release, and issue #4 closure.
+source archive, accepted source commit, installed workflow, and 48-hour CRAN
+check matrix are reconciled. The official matrix reported 13 of 13 results
+`OK` when refreshed on 2026-08-29. The final issue #4 evidence update,
+annotated tag, GitHub release, and issue #4 closure remain separately governed.
 
 ## Public CRAN Evidence
 
@@ -17,6 +20,9 @@ authorized tag, GitHub release, and issue #4 closure.
 - Published source:
   <https://cran.r-project.org/src/contrib/engager_0.1.0.tar.gz>
 - Publication date: 2026-07-30
+- Check matrix: <https://cran.r-project.org/web/checks/check_results_engager.html>
+- Matrix disposition: 13 of 13 results `OK`, no flags; page last updated at
+  2026-08-29 18:51:37 CEST
 - Published SHA-256:
   `0051326ad8e0d648969a56b7d374ba9bb4560ffe0f380e201ec6d07ac860468b`
 - Submitted SHA-256:
@@ -70,12 +76,12 @@ authorized tag, GitHub release, and issue #4 closure.
 
 ## Remaining Gates
 
-1. Refresh the CRAN check matrix on or after 2026-08-01 10:20 PDT and inspect
-   every reported platform; the initial six results are all `OK`.
-2. Record the final publication/check/UAT evidence in issue #4 without closing
-   it.
-3. Obtain separate approval for the annotated `v0.1.0` tag at exact source
+1. Record the final 13/13 matrix evidence in issue #4 without closing it.
+2. Obtain separate approval for the annotated `v0.1.0` tag at exact source
    commit `6214c0316d39154140bdba064266119007bff41a`.
-4. Obtain separate approval for the GitHub release, then for issue #4 closure.
-5. Forward-port the CRAN documentation/write-safety remediation to `develop`
-   before rebuilding the 0.1.1 candidate.
+3. Obtain separate approval for the GitHub release, then for issue #4 closure.
+
+The CRAN documentation/write-safety remediation was forward-ported to
+`develop` through PR #591 at
+`23d0474072d3d5188749f20450c3363e9bb31036`. Fresh-user QA of the refreshed
+0.1.1 artifact remains pending; it is not the final CRAN candidate.
