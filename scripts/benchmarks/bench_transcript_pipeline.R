@@ -1,14 +1,18 @@
 #!/usr/bin/env Rscript
 
-# Load the package in development mode
-suppressPackageStartupMessages(devtools::load_all())
-suppressPackageStartupMessages(library(tibble))
+if (!requireNamespace("engager", quietly = TRUE)) {
+  stop("engager must be installed before running benchmarks")
+}
 
 args <- commandArgs(trailingOnly = TRUE)
 # Optional arg: base temp dir
 base_dir <- if (length(args) >= 1) args[[1]] else tempdir()
+if (!dir.exists(base_dir)) {
+  dir.create(base_dir, recursive = TRUE)
+}
+base_dir <- normalizePath(base_dir)
 
-sample <- system.file("extdata/transcripts/GMT20240124-202901_Recording.transcript.vtt",
+sample <- system.file("extdata/test_transcripts/ideal_course_session1.vtt",
                       package = "engager")
 if (sample == "") {
   stop("Sample transcript not found in installed package")
@@ -22,19 +26,45 @@ budget_500 <- as.numeric(Sys.getenv("BUDGET_500", "1200"))
 results <- list()
 
 for (n in sizes) {
-  dir_n <- file.path(base_dir, paste0("bench_transcripts_", n))
+  dir_name <- paste0("bench_transcripts_", n)
+  dir_n <- file.path(base_dir, dir_name)
   if (!dir.exists(dir_n)) dir.create(dir_n, recursive = TRUE)
   # Populate folder with n copies
   for (i in seq_len(n)) {
-    file.copy(sample, file.path(dir_n, sprintf("copy_%03d.transcript.vtt", i)), overwrite = TRUE)
+    copied <- file.copy(
+      sample,
+      file.path(dir_n, sprintf("copy_%03d.transcript.vtt", i)),
+      overwrite = TRUE
+    )
+    if (!copied) stop("Failed to create benchmark transcript fixture")
   }
   cat(sprintf("\nProcessing %d files in %s...\n", n, dir_n))
   t0 <- Sys.time()
-  metrics <- analyze_transcripts(dir_n, write = FALSE)
+  old_wd <- setwd(base_dir)
+  metrics <- tryCatch(
+    engager::analyze_transcripts(dir_name, write = FALSE),
+    finally = setwd(old_wd)
+  )
   t1 <- Sys.time()
+  if (!is.data.frame(metrics)) {
+    stop(sprintf("Benchmark returned no metrics for %d files", n))
+  }
+  processed_files <- length(unique(metrics$transcript_file))
+  if (processed_files != n) {
+    stop(sprintf(
+      "Benchmark processed %d of %d requested files",
+      processed_files,
+      n
+    ))
+  }
   dt <- as.numeric(difftime(t1, t0, units = "secs"))
   cat(sprintf("Elapsed: %.2f sec\n", dt))
-  results[[as.character(n)]] <- list(n = n, seconds = dt, rows = nrow(metrics))
+  results[[as.character(n)]] <- list(
+    n = n,
+    files = processed_files,
+    seconds = dt,
+    rows = nrow(metrics)
+  )
 }
 
 cat("\nSummary:\n")
