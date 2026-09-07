@@ -28,7 +28,6 @@ jobs:
       BUDGET_1: '10'
       BUDGET_50: '120'
       BUDGET_500: '1200'
-      BENCHMARK_RUNNER: ubuntu-latest-${{ runner.arch }}
     
     steps:
       - uses: actions/checkout@v4
@@ -72,6 +71,8 @@ jobs:
         run: Rscript scripts/benchmarks/test_measurement_contract.R
 
       - name: Run measurements and enforce existing budgets
+        env:
+          BENCHMARK_RUNNER: ubuntu-latest-${{ runner.arch }}
         run: |
           mkdir -p "$RUNNER_TEMP/engager-upload"
           Rscript scripts/benchmarks/measurement_contract.R run "$RUNNER_TEMP/engager-upload/measurements.json"
