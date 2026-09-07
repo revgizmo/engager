@@ -7,6 +7,18 @@ on:
     paths:
       - 'scripts/benchmarks/**'
       - 'R/**'
+      - '.github/workflows/benchmarks.yaml'
+  pull_request:
+    branches: [ develop ]
+    paths:
+      - 'scripts/benchmarks/**'
+      - 'R/**'
+      - '.github/workflows/benchmarks.yaml'
+      - 'project-docs/performance/MEASUREMENT_CONTRACT.md'
+      - 'perf/README.md'
+
+permissions:
+  contents: read
 
 jobs:
   benchmarks:
@@ -16,9 +28,12 @@ jobs:
       BUDGET_1: '10'
       BUDGET_50: '120'
       BUDGET_500: '1200'
+      BENCHMARK_RUNNER: ubuntu-latest-${{ runner.arch }}
     
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - uses: r-lib/actions/setup-r@v2
         with:
@@ -37,7 +52,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev time
 
       - name: Install dependencies and package
         run: |
@@ -53,16 +68,19 @@ jobs:
           stopifnot(requireNamespace("engager", quietly = TRUE))
         shell: Rscript {0}
 
-      - name: Run benchmarks
-        run: |
-          options(repos = c(CRAN = "https://cloud.r-project.org"))
-          source("scripts/benchmarks/bench_transcript_pipeline.R")
-        shell: Rscript {0}
-        timeout-minutes: 30
+      - name: Test measurement contract
+        run: Rscript scripts/benchmarks/test_measurement_contract.R
 
-      - name: Check budget compliance
+      - name: Run measurements and enforce existing budgets
         run: |
-          echo "Benchmark budget check completed"
-          echo "Budget 1: $BUDGET_1 seconds"
-          echo "Budget 50: $BUDGET_50 seconds" 
-          echo "Budget 500: $BUDGET_500 seconds"
+          mkdir -p "$RUNNER_TEMP/engager-upload"
+          Rscript scripts/benchmarks/measurement_contract.R run "$RUNNER_TEMP/engager-upload/measurements.json"
+          Rscript scripts/benchmarks/measurement_contract.R validate "$RUNNER_TEMP/engager-upload/measurements.json"
+        timeout-minutes: 120
+
+      - name: Upload validated JSON only
+        uses: actions/upload-artifact@v4
+        with:
+          name: measurements-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/engager-upload/measurements.json
+          if-no-files-found: error
