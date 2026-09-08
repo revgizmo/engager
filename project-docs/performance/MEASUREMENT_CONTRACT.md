@@ -113,3 +113,7 @@ runs contract tests and all 30 measurements, revalidates the result and uploads
 only the validated JSON. Required package R-CMD-check and Coverage remain
 separate gates. Successful measurements do not imply review approval, merge,
 issue closure, release readiness, or acceptance of new budgets.
+
+For two explicitly supplied checksum-bound artifacts, see the
+[descriptive comparison contract](COMPARISON_CONTRACT.md). Comparison does not
+change this measurement schema or establish a regression verdict.
