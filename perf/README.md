@@ -14,3 +14,7 @@ budgets and records measurements without relative-baseline comparisons.
 Issue [#471](https://github.com/revgizmo/engager/issues/471) tracks the broader
 work. Baseline reconciliation, accepted regression thresholds, regression
 detection, dashboards, and optimizations require separate work and authority.
+
+The [descriptive comparison tool](../project-docs/performance/COMPARISON_CONTRACT.md)
+compares two explicitly selected checksum-bound measurement artifacts. It does
+not select or update these legacy baselines or issue regression verdicts.
