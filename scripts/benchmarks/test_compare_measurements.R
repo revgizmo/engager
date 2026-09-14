@@ -1,5 +1,6 @@
 #!/usr/bin/env Rscript
 source("scripts/benchmarks/compare_measurements.R")
+source("scripts/benchmarks/test_runtime_metadata.R")
 
 run_comparison_tests <- function() {
   contract <- comparison_contract()
@@ -14,6 +15,7 @@ run_comparison_tests <- function() {
   }
   # Fabricated validator fixtures only. No measured observations are committed.
   fixture <- function(run, multiplier = 1) {
+    runtime <- runtime_test_fixture()
     observations <- list()
     for (s in contract$benchmark_scenarios()) for (r in 1:5) {
       w <- expected[[s]]
@@ -21,9 +23,10 @@ run_comparison_tests <- function() {
         scenario = s, repetition = r, workload = w,
         elapsed_seconds = r * multiplier, processed_files = w$expected_processed_files,
         output_rows = w$expected_output_rows, assertions_passed = TRUE,
-        status = "passed", max_rss_kib = (1000 + r * 10) * multiplier)
+        status = "passed", max_rss_kib = (1000 + r * 10) * multiplier,
+        runtime_start = runtime, runtime_end = runtime)
     }
-    list(schema_version = "1.0.0", metadata = list(
+    list(schema_version = "2.0.0", runtime_start = runtime, runtime_end = runtime, metadata = list(
       commit = strrep(if (run == "100") "a" else "b", 40),
       package_version = "0.1.1", r_version = "4.6.1", os = "Linux",
       architecture = "x86_64", runner = "ubuntu-latest-X64",
@@ -35,7 +38,7 @@ run_comparison_tests <- function() {
   }
   write_fixture <- function(x) {
     path <- tempfile(tmpdir = root, fileext = ".json")
-    jsonlite::write_json(x, path, auto_unbox = TRUE, digits = 17)
+    jsonlite::write_json(x, path, auto_unbox = TRUE, digits = 17, null = "null")
     list(path = path, hash = digest::digest(file = path, algo = "sha256"))
   }
   baseline <- fixture("100")
@@ -96,24 +99,43 @@ run_comparison_tests <- function() {
     function(x) { x$metadata$commit <- "SyntheticSpeaker0"; x },
     function(x) { x$comment <- "private free text"; x },
     function(x) { names(x$observations) <- as.character(1:30); x },
-    function(x) { x$schema_version <- "2.0.0"; x }
+    function(x) { x$schema_version <- "3.0.0"; x }
   )) reject(change(candidate))
 
+  update_runtime <- function(x, update) {
+    x$runtime_start <- update(x$runtime_start)
+    x$runtime_end <- x$runtime_start
+    x$observations <- lapply(x$observations, function(o) {
+      o$runtime_start <- x$runtime_start
+      o$runtime_end <- x$runtime_start
+      o
+    })
+    x
+  }
+  sync_platform <- function(x) update_runtime(x, function(r) {
+    r$platform <- x$metadata[c("package_version", "r_version", "os", "architecture", "runner")]
+    r$dependencies[[3]]$version <- x$metadata$package_version
+    r
+  })
   for (key in c("package_version", "r_version", "architecture", "runner")) {
     x <- candidate
     x$metadata[[key]] <- switch(key, package_version = "0.1.2", r_version = "4.5.3",
                                architecture = "aarch64", runner = "ubuntu-latest-ARM64")
+    x <- sync_platform(x)
     r <- reject(x, 3L)
-    check(identical(r$value$reasons, list(paste0("environment_mismatch_", key))))
+    expected_reasons <- c(paste0("environment_mismatch_", key), "runtime_mismatch_platform")
+    if (key == "package_version") expected_reasons <- c(expected_reasons, "runtime_mismatch_dependencies")
+    check(identical(r$value$reasons, as.list(expected_reasons)))
     check(length(r$value$scenarios) == 0L && r$value$disposition == "non_comparable")
   }
   x <- candidate
   x$metadata$r_version <- "4.5.3"
   x$metadata$runner <- "ubuntu-latest-ARM64"
   x$budgets_seconds$analyze_files_50 <- 121
+  x <- sync_platform(x)
   r <- reject(x, 3L)
   check(identical(r$value$reasons, list("environment_mismatch_r_version",
-                                      "environment_mismatch_runner", "budget_mismatch")))
+    "environment_mismatch_runner", "runtime_mismatch_platform", "budget_mismatch")))
   same <- invoke(a, a)
   check(same$status == 3L)
   check(identical(same$value$reasons, list("identical_artifact", "same_run_identity")))
@@ -146,8 +168,8 @@ run_comparison_tests <- function() {
   check(invoke(a, invalid)$status == 2L)
   malformed <- file.path(root, "malformed.json")
   for (text in c('{"broken":',
-                 sub('"schema_version":"1.0.0"',
-                     '"schema_version":"1.0.0","schema_version":"1.0.0"',
+                 sub('"schema_version":"2.0.0"',
+                     '"schema_version":"2.0.0","schema_version":"2.0.0"',
                      jsonlite::toJSON(candidate, auto_unbox = TRUE), fixed = TRUE))) {
     writeLines(text, malformed)
     m <- list(path = malformed, hash = digest::digest(file = malformed, algo = "sha256"))
@@ -187,6 +209,69 @@ run_comparison_tests <- function() {
   check(!grepl("SyntheticSpeaker|Professor Ed|WEBVTT|private free text|transcript_file", output_text))
   check(length(list.files(root, pattern = "^[.]comparison-", all.files = TRUE)) == 0L)
   check(comparison_main(character()) == 2L)
+
+  for (section in c("dependencies", "image", "hardware", "harness")) {
+    x <- update_runtime(candidate, function(r) {
+      if (section == "dependencies") r$dependencies[[1]]$version <- "1.0.1"
+      if (section == "image") r$image$version <- "20260914.1.0"
+      if (section == "hardware") r$hardware$cpu_model <- 2
+      if (section == "harness") {
+        r$harness$files[[1]]$sha256 <- strrep("0", 64)
+        r$harness$sha256 <- contract$runtime_manifest_hash(r$harness$files)
+      }
+      r
+    })
+    check(identical(reject(x, 3L)$value$reasons, list(paste0("runtime_mismatch_", section))))
+  }
+  x <- candidate
+  x$observations[[1]]$runtime_end$image$version <- "20260914.1.0"
+  reject(x)
+  x <- candidate
+  x$observations[[1]]$runtime_start$hardware$logical_cpus <- 8
+  x$observations[[1]]$runtime_end <- x$observations[[1]]$runtime_start
+  reject(x)
+  x <- candidate
+  x$runtime_end$dependencies[[1]]$version <- "1.0.1"
+  reject(x)
+  for (change in list(
+    function(x) { x$runtime_start <- NULL; x },
+    function(x) { x$runtime_end <- NULL; x },
+    function(x) { x$observations[[1]]$runtime_start <- NULL; x },
+    function(x) { x$metadata$r_version <- "4.6.2"; x },
+    function(x) { x["schema_version"] <- list(list("2.0.0")); x },
+    function(x) { x["schema_version"] <- list(NULL); x }
+  )) reject(change(candidate))
+  for (section in c("image", "hardware")) for (key in names(candidate$runtime_start[[section]])) {
+    unknown_field <- function(x) update_runtime(x, function(r) {
+      r[[section]][key] <- list(NULL)
+      r
+    })
+    pair <- invoke(write_fixture(unknown_field(baseline)), write_fixture(unknown_field(candidate)))
+    check(pair$status == 3L && identical(pair$value$reasons, list("runtime_evidence_unknown")))
+    check(length(pair$value$scenarios) == 0L)
+  }
+  unknown <- function(x) update_runtime(x, function(r) { r$image["id"] <- list(NULL); r })
+  check(invoke(write_fixture(unknown(baseline)), write_fixture(unknown(candidate)))$status == 3L)
+  check(identical(invoke(write_fixture(unknown(baseline)), write_fixture(unknown(candidate)))$value$reasons,
+                  list("runtime_evidence_unknown")))
+  legacy <- function(x) {
+    x$schema_version <- "1.0.0"
+    x$runtime_start <- x$runtime_end <- NULL
+    x$observations <- lapply(x$observations, function(o) {
+      o$runtime_start <- o$runtime_end <- NULL
+      o
+    })
+    x
+  }
+  old <- invoke(write_fixture(legacy(baseline)), write_fixture(legacy(candidate)))
+  check(old$status == 3L && identical(old$value$reasons, list("legacy_runtime_unrecorded")))
+  check(is.null(old$value$baseline$runtime) && length(old$value$scenarios) == 0L)
+  mixed <- invoke(write_fixture(legacy(baseline)), b)
+  check(mixed$status == 3L && identical(mixed$value$reasons,
+    list("measurement_schema_mismatch", "legacy_runtime_unrecorded")))
+  check(is.null(mixed$value$baseline$runtime) && !is.null(mixed$value$candidate$runtime))
+  check(result$value$comparison_schema_version == "2.0.0")
+  check(comparison_equal(result$value$baseline$runtime, baseline$runtime_start))
 
   # Real CLI exit codes and location-independent loading from a different cwd.
   cli <- file.path(comparison_root, "scripts/benchmarks/compare_measurements.R")

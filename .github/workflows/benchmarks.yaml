@@ -67,8 +67,13 @@ jobs:
           stopifnot(requireNamespace("engager", quietly = TRUE))
         shell: Rscript {0}
 
-      - name: Test measurement contract
-        run: Rscript scripts/benchmarks/test_measurement_contract.R
+      - name: Test benchmark contracts
+        env:
+          BENCHMARK_RUNNER: ubuntu-latest-${{ runner.arch }}
+        run: |
+          Rscript scripts/benchmarks/test_measurement_contract.R
+          Rscript scripts/benchmarks/test_runtime_metadata.R
+          Rscript scripts/benchmarks/test_compare_measurements.R
 
       - name: Run measurements and enforce existing budgets
         env:

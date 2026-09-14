@@ -47,6 +47,9 @@ reject(measurement_parse_rss(c("Maximum resident set size (kbytes): 20",
 stopifnot(measurement_parse_rss(c("\tMaximum resident set size (kbytes): 12345", "\tExit status: 0")) == 12345)
 mutate_reject <- function(change) reject(measurement_validate(change(x), expected))
 mutate_reject(function(z) { z$observations <- z$observations[-1]; z })
+for (version in list(NULL, list("1.0.0"), c("1.0.0", "2.0.0"), list(), 1)) {
+  mutate_reject(function(z) { z["schema_version"] <- list(version); z })
+}
 for (v in c("/tmp/private", "SyntheticSpeaker0")) {
   mutate_reject(function(z) { names(z$observations) <- c(v, as.character(2:30)); z })
   mutate_reject(function(z) { names(z$summaries) <- c(v, as.character(2:6)); z })

@@ -62,10 +62,12 @@ budgets; it is not a new performance threshold.
 ## Artifact schema and failure behavior
 
 One `measurements.json` is uploaded only after the whole run succeeds. Schema
-`1.0.0` contains:
+`2.0.0` contains:
 
 - `metadata`: exact checked-out commit, installed package version, R version,
   OS, architecture, runner configuration, Actions run ID/attempt, UTC start time.
+- `runtime_start` and `runtime_end`: controller runtime snapshots, described
+  below. Every observation also retains its worker's two runtime snapshots.
 - `semantics`: fixed timing, RSS, process-isolation and non-regression labels.
 - `observations`: exactly six scenarios times repetitions 1–5, with every
   observation retained. Each has its scenario/repetition identity, synthetic
@@ -78,8 +80,8 @@ One `measurements.json` is uploaded only after the whole run succeeds. Schema
 Strict validation rejects missing/extra/duplicate object keys, invalid
 identities, missing/nonfinite measurements, nonpositive RSS, mismatched fixture
 metadata, incomplete or duplicate repetitions, false assertions, altered
-summaries, or exceeded budgets. JSON round-trip validation precedes publication.
-Missing dependencies and failed subprocesses fail the run. Worker logs and GNU
+summaries, or exceeded budgets. JSON round-trip validation precedes atomic no-clobber hard-link publication.
+Missing dependencies, failed subprocesses and runtime drift fail the run. Worker logs and GNU
 time reports remain temporary and are never uploaded. The upload names one JSON
 file explicitly; it does not glob a directory of fixtures or logs.
 
@@ -87,6 +89,106 @@ Artifacts carry numeric counts, hashes and constrained metadata, not transcript
 or comment text, raw synthetic participant identifiers, filenames or absolute
 paths. This is a benchmark artifact boundary, not a claim of anonymity, legal
 compliance, or institutional approval. Arbitrary free-form metadata is rejected.
+
+## Runtime evidence in schema 2.0.0
+
+The controller and every fresh worker independently capture the same runtime
+shape at start and end. Workers load the defined dependency set before their
+first snapshot, then run the unchanged workload. The worker rejects start/end
+differences; the controller rejects disagreement with either worker snapshot,
+any subsequent worker, or its own final snapshot. Strict artifact validation
+rechecks these equalities and agreement with top-level package/R/platform
+metadata. A disagreement cannot be hidden by selecting one worker's metadata or
+aggregating different runtime environments. Exact commit/run/time remain
+provenance; they are not required-equal cross-run environment fields.
+
+The runtime object has these fixed keys:
+
+| Key | Evidence and constraints |
+| --- | --- |
+| `coverage` | Fixed `benchmark-direct-dependencies-v1` policy |
+| `platform` | Loaded engager version, R version, OS, architecture, runner label; same constraints as top-level metadata |
+| `dependencies` | Ordered array of `{package, version}` for the fixed set below; versions from `getNamespaceVersion()` in the actual process |
+| `image` | `id` from `ImageOS` (`ubuntu` plus two digits), `version` from `ImageVersion` (eight-digit date plus one or two numeric dotted components); JSON null when absent |
+| `hardware` | `cpu_vendor` (`intel` or `amd`), numeric CPU family/model/stepping, logical CPU count and total memory KiB; JSON null where unsupported or absent |
+| `harness` | Fixed source IDs, each raw-byte SHA256, algorithm and canonical manifest SHA256 |
+
+Dependency order is ASCII/alphabetic and fixed: `digest`, `dplyr`, `engager`,
+`ggplot2`, `hms`, `jsonlite`, `lubridate`, `magrittr`, `openssl`, `readr`, `rlang`,
+`stringi`, `stringr`, `tibble`, `tidyr`. This covers the installed package and its
+current direct Imports, including the harness's direct `digest`/`jsonlite`/
+`tibble`/`hms` use. Every listed namespace is explicitly loaded in each measuring
+worker. It does not assert that every dependency executes in every scenario or
+record transitive dependencies, native library versions, package build hashes,
+compiler flags or a complete dependency environment. Missing required namespaces
+fail; installed DESCRIPTION versions are not substituted for loaded versions.
+
+The image values come from the runner's two documented image variables
+([runner-images source](https://github.com/actions/runner-images/discussions/7661)).
+Only these variables and the existing constrained provenance variables are read;
+no environment dump is retained. On Linux, a fixed awk selector emits only
+`vendor_id`, `cpu family`, `model`, `stepping` and a processor count from
+`/proc/cpuinfo`, plus `MemTotal` from `/proc/meminfo`. CPU model *numbers* are
+recorded, never model-name text. Heterogeneous selected CPU fields or malformed
+values fail. Memory is host-reported total, not free memory or a cgroup limit;
+logical CPU count is host-reported, not an effective scheduler quota. These
+characteristics aid interpretation but do not identify a machine or establish
+equivalent execution conditions. No hostname, serial number, machine ID,
+username, path, participant text or unrestricted command output is emitted.
+
+Local missing/unsupported fields remain explicit JSON null; no placeholder,
+runner-label inference or value from another process fills them. A local
+artifact can be structurally valid with unknown image/hardware fields, but the
+comparator returns non-comparable, even when both inputs have the same nulls.
+In GitHub Actions (`GITHUB_ACTIONS=true`), runtime capture requires every image
+and hardware field defined, Linux and the supported Ubuntu runner label. The
+current hosted reference path is x86 CPU metadata; unsupported hosted hardware
+fails until a separately specified metadata policy supports it. Malformed
+nonempty metadata always fails rather than becoming an unknown success.
+
+Harness IDs and paths are fixed in this order (paths are documentation only;
+artifacts contain the IDs and hashes):
+
+| ID | Source bytes |
+| --- | --- |
+| `controller` | `scripts/benchmarks/measurement_contract.R` |
+| `runtime` | `scripts/benchmarks/runtime_metadata.R` |
+| `workflow` | `.github/workflows/benchmarks.yaml` |
+| `workloads` | `scripts/benchmarks/bench_transcript_pipeline.R` |
+
+Each file is hashed as raw bytes; whitespace and line endings count. Aggregate
+algorithm `sha256-manifest-v1` hashes the UTF-8/ASCII bytes of
+`engager-measurement-harness-v1\n` followed by each `ID:SHA256\n` in the above
+order, including the final newline. Strict validation requires the exact IDs,
+order, unique entries and matching aggregate digest. The comparator compares
+the recorded manifests, not today's local source hash, so historical artifacts
+are not silently rewritten to match current code. Workload input hashes remain
+separate. Comparator, tests and documentation are outside the measured harness;
+the workflow is included because it controls installation and invocation.
+
+At startup the controller snapshots the enumerated source bytes and evaluates
+the workload/runtime helpers from those exact buffers. Every runtime capture
+rehashes disk sources and requires agreement with the startup snapshot. This
+rejects persistent source changes after loading and between controller and
+workers. It is snapshot evidence, not continuous or adversarial attestation:
+the controller itself is parsed before its startup snapshot, and changes made
+and restored between observations are not detected. Package source changes are
+provenance and are not folded into the harness fingerprint. Identical harness
+and dependency records still do not establish equal native binaries, host load,
+caches, CPU scheduling/frequency, effective resource limits or calibrated noise.
+RSS continues to include the complete worker, now including metadata capture;
+operation elapsed time continues to exclude setup and runtime snapshots.
+
+### Legacy artifacts
+
+Schema `1.0.0` retains its strict original read/validation path. New producers
+emit only `2.0.0`. Legacy artifacts do not gain runtime fields, and runtime fields
+added to a `1.0.0` artifact are invalid extra keys. New comparator schema `2.0.0`
+deliberately makes every legacy pair non-comparable (`legacy_runtime_unrecorded`),
+including two otherwise matching old artifacts. Mixed versions additionally
+report `measurement_schema_mismatch`. Neither input is relabeled or backfilled.
+This is a stricter comparison policy than the previous comparator's legacy
+numeric descriptive output; archival reading remains supported.
 
 ## Reproduction
 
@@ -97,6 +199,8 @@ must already be available or installed into that temporary library.
 
 ```sh
 Rscript scripts/benchmarks/test_measurement_contract.R
+Rscript scripts/benchmarks/test_runtime_metadata.R
+Rscript scripts/benchmarks/test_compare_measurements.R
 Rscript scripts/benchmarks/measurement_contract.R run /tmp/measurements.json
 Rscript scripts/benchmarks/measurement_contract.R validate /tmp/measurements.json
 ```
@@ -104,7 +208,8 @@ Rscript scripts/benchmarks/measurement_contract.R validate /tmp/measurements.jso
 Choose a new output file; the controller refuses to overwrite an existing one.
 Local runs use runner/run ID `local` unless explicitly supplied. A macOS smoke
 can source `measurement_contract.R` and call `benchmark_observation(scenario,
-1L)` for selected scenarios. Such a smoke checks workload behavior only and
+1L)` for selected scenarios. The `worker` command additionally emits runtime snapshots on macOS. Such a smoke
+checks workload/runtime behavior only and
 cannot produce reference RSS evidence or a complete accepted artifact. Test
 suite fabricated numbers exercise validation only and are never measurements.
 
@@ -116,4 +221,4 @@ issue closure, release readiness, or acceptance of new budgets.
 
 For two explicitly supplied checksum-bound artifacts, see the
 [descriptive comparison contract](COMPARISON_CONTRACT.md). Comparison does not
-change this measurement schema or establish a regression verdict.
+establish a regression verdict or accept a baseline.

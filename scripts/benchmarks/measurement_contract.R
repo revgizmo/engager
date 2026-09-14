@@ -1,5 +1,28 @@
 #!/usr/bin/env Rscript
-source("scripts/benchmarks/bench_transcript_pipeline.R")
+# Resolve this checkout once and evaluate helper snapshots that are fingerprinted.
+measurement_script <- if (sys.nframe() > 0L) {
+  sources <- Filter(function(x) is.character(x) && length(x) == 1L,
+                    lapply(sys.frames(), function(frame) frame$ofile))
+  stopifnot(length(sources) > 0L)
+  tail(sources, 1L)[[1L]]
+} else sub("^--file=", "", grep("^--file=", commandArgs(), value = TRUE)[1])
+measurement_root <- normalizePath(file.path(dirname(measurement_script), "..", ".."),
+                                  mustWork = TRUE)
+measurement_sources <- c(
+  controller = "scripts/benchmarks/measurement_contract.R",
+  runtime = "scripts/benchmarks/runtime_metadata.R",
+  workflow = ".github/workflows/benchmarks.yaml",
+  workloads = "scripts/benchmarks/bench_transcript_pipeline.R")
+measurement_raw <- function(path) {
+  con <- file(path, "rb")
+  on.exit(close(con))
+  readBin(con, "raw", n = file.info(path)$size)
+}
+measurement_source_bytes <- lapply(file.path(measurement_root, measurement_sources), measurement_raw)
+names(measurement_source_bytes) <- names(measurement_sources)
+for (id in c("workloads", "runtime")) {
+  eval(parse(text = rawToChar(measurement_source_bytes[[id]])), envir = environment())
+}
 
 measurement_semantics <- function() {
   list(elapsed = "operation-wall-seconds-excludes-setup-and-assertions",
@@ -24,9 +47,9 @@ measurement_token <- function(x, pattern = "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$")
 }
 
 measurement_metadata <- function() {
-  commit <- system2("git", c("rev-parse", "HEAD"), stdout = TRUE)
+  commit <- system2("git", c("-C", shQuote(measurement_root), "rev-parse", "HEAD"), stdout = TRUE)
   stopifnot(is.null(attr(commit, "status")))
-  list(commit = commit, package_version = as.character(utils::packageVersion("engager")),
+  list(commit = commit, package_version = as.character(getNamespaceVersion("engager")),
        r_version = as.character(getRversion()), os = unname(Sys.info()[["sysname"]]),
        architecture = R.version$arch,
        runner = Sys.getenv("BENCHMARK_RUNNER", "local"),
@@ -49,11 +72,17 @@ measurement_validate_metadata <- function(x) {
   measurement_token(x$measured_at_utc, "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$")
 }
 
-measurement_validate_observation <- function(x, expected = NULL, rss = TRUE) {
+measurement_validate_observation <- function(x, expected = NULL, rss = TRUE, runtime = FALSE) {
   keys <- c("scenario", "repetition", "workload", "elapsed_seconds", "processed_files",
             "output_rows", "assertions_passed", "status")
   if (rss) keys <- c(keys, "max_rss_kib")
+  if (runtime) keys <- c(keys, "runtime_start", "runtime_end")
   measurement_keys(x, keys)
+  if (runtime) {
+    runtime_validate(x$runtime_start)
+    runtime_validate(x$runtime_end)
+    runtime_equal(x$runtime_start, x$runtime_end)
+  }
   benchmark_identity(x$scenario, x$repetition)
   measurement_number(x$elapsed_seconds)
   if (rss) measurement_number(x$max_rss_kib, integer = TRUE, positive = TRUE)
@@ -110,16 +139,30 @@ measurement_expected <- function() {
 }
 
 measurement_validate <- function(x, expected = measurement_expected()) {
-  measurement_keys(x, c("schema_version", "metadata", "semantics", "observations", "summaries", "budgets_seconds", "status"))
-  stopifnot(identical(x$schema_version, "1.0.0"), identical(x$status, "passed"),
+  stopifnot(is.list(x), identical(x$schema_version, "1.0.0") ||
+              identical(x$schema_version, "2.0.0"))
+  current <- identical(x$schema_version, "2.0.0")
+  keys <- c("schema_version", "metadata", "semantics", "observations", "summaries", "budgets_seconds", "status")
+  if (current) keys <- c(keys, "runtime_start", "runtime_end")
+  measurement_keys(x, keys)
+  stopifnot(identical(x$status, "passed"),
             identical(x$semantics, measurement_semantics()))
   measurement_validate_metadata(x$metadata)
+  if (current) {
+    runtime_validate(x$runtime_start)
+    runtime_validate(x$runtime_end)
+    runtime_equal(x$runtime_start, x$runtime_end)
+    for (key in c("package_version", "r_version", "os", "architecture", "runner")) {
+      stopifnot(identical(x$metadata[[key]], x$runtime_start$platform[[key]]))
+    }
+  }
   stopifnot(identical(x$metadata$os, "Linux"), is.list(x$observations), length(x$observations) == 30L,
             is.null(names(x$observations)), is.list(x$summaries),
             is.null(names(x$summaries)))
   for (o in x$observations) {
     benchmark_identity(o$scenario, o$repetition)
-    measurement_validate_observation(o, expected[[o$scenario]])
+    measurement_validate_observation(o, expected[[o$scenario]], runtime = current)
+    if (current) runtime_equal(x$runtime_start, o$runtime_start)
   }
   stopifnot(isTRUE(all.equal(x$summaries, measurement_summaries(x$observations), check.attributes = TRUE)))
   measurement_keys(x$budgets_seconds, benchmark_scenarios()[1:3])
@@ -143,6 +186,7 @@ measurement_run <- function(output) {
             !file.exists(output), dir.exists(dirname(output)))
   version <- system2("/usr/bin/time", "--version", stdout = TRUE, stderr = TRUE)
   stopifnot(is.null(attr(version, "status")), any(grepl("GNU", version)))
+  runtime_start <- runtime_capture()
   metadata <- measurement_metadata()
   measurement_validate_metadata(metadata)
   expected <- measurement_expected()
@@ -157,15 +201,16 @@ measurement_run <- function(output) {
     unlink(c(result_path, rss_path, log_path))
     status <- system2("/usr/bin/time", c("-v", "-o", shQuote(rss_path),
       shQuote(file.path(R.home("bin"), "Rscript")), "--vanilla",
-      "scripts/benchmarks/measurement_contract.R", "worker", scenario,
+      shQuote(file.path(measurement_root, measurement_sources[["controller"]])), "worker", scenario,
       repetition, shQuote(result_path)), stdout = log_path, stderr = log_path,
       env = "LC_ALL=C")
     stopifnot(status == 0L, file.exists(result_path), file.exists(rss_path))
     o <- measurement_read(result_path)
-    measurement_validate_observation(o, expected[[scenario]], rss = FALSE)
+    measurement_validate_observation(o, expected[[scenario]], rss = FALSE, runtime = TRUE)
+    runtime_equal(runtime_start, o$runtime_start)
     stopifnot(identical(o$scenario, scenario), o$repetition == repetition)
     o$max_rss_kib <- measurement_parse_rss(readLines(rss_path))
-    measurement_validate_observation(o, expected[[scenario]])
+    measurement_validate_observation(o, expected[[scenario]], runtime = TRUE)
     observations[[length(observations) + 1L]] <- o
     cat(scenario, repetition, "passed\n")
   }
@@ -175,16 +220,30 @@ measurement_run <- function(output) {
     measurement_number(value, positive = TRUE)
     value
   }), benchmark_scenarios()[1:3])
-  result <- list(schema_version = "1.0.0", metadata = metadata,
+  runtime_end <- runtime_capture()
+  runtime_equal(runtime_start, runtime_end)
+  result <- list(schema_version = "2.0.0", metadata = metadata,
+                 runtime_start = runtime_start, runtime_end = runtime_end,
                  semantics = measurement_semantics(), observations = observations,
                  summaries = measurement_summaries(observations),
                  budgets_seconds = budgets, status = "passed")
   measurement_validate(result, expected)
-  candidate <- file.path(scratch, "validated.json")
-  jsonlite::write_json(result, candidate, auto_unbox = TRUE, pretty = TRUE, digits = NA)
+  candidate <- tempfile(".measurements-", tmpdir = dirname(output))
+  on.exit(unlink(candidate), add = TRUE)
+  jsonlite::write_json(result, candidate, auto_unbox = TRUE, pretty = TRUE, digits = 17, null = "null")
   measurement_validate(measurement_read(candidate), expected)
-  stopifnot(file.copy(candidate, output, overwrite = FALSE))
+  stopifnot(file.link(candidate, output))
   invisible(result)
+}
+
+measurement_worker <- function(scenario, repetition) {
+  start <- runtime_capture()
+  o <- benchmark_observation(scenario, repetition)
+  end <- runtime_capture()
+  runtime_equal(start, end)
+  o$runtime_start <- start
+  o$runtime_end <- end
+  o
 }
 
 measurement_main <- function(args) {
@@ -192,9 +251,11 @@ measurement_main <- function(args) {
   stopifnot(length(args) >= 1L)
   if (identical(args[[1]], "worker")) {
     stopifnot(length(args) == 4L, grepl("^[1-5]$", args[[3]]))
-    o <- benchmark_observation(args[[2]], as.integer(args[[3]]))
-    measurement_validate_observation(o, rss = FALSE)
-    jsonlite::write_json(o, args[[4]], auto_unbox = TRUE, digits = NA)
+    o <- measurement_worker(args[[2]], as.integer(args[[3]]))
+    measurement_validate_observation(o, rss = FALSE, runtime = TRUE)
+    link <- Sys.readlink(args[[4]])
+    stopifnot(!file.exists(args[[4]]), is.na(link) || !nzchar(link))
+    jsonlite::write_json(o, args[[4]], auto_unbox = TRUE, digits = 17, null = "null")
   } else if (identical(args[[1]], "run")) {
     stopifnot(length(args) == 2L)
     measurement_run(args[[2]])

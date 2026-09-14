@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
-# Repository tooling only; measurement schema 1.0.0 remains unchanged.
+# Repository tooling only; explicit legacy and runtime-evidence schema paths.
 comparison_script <- if (sys.nframe() > 0L) {
   sys.frame(1)$ofile
 } else {
@@ -76,6 +76,21 @@ comparison_reasons <- function(baseline, candidate, contract) {
       reasons <- c(reasons, paste0("environment_mismatch_", key))
     }
   }
+  if (!identical(a$schema_version, b$schema_version)) {
+    reasons <- c(reasons, "measurement_schema_mismatch")
+  }
+  if (a$schema_version == "1.0.0" || b$schema_version == "1.0.0") {
+    reasons <- c(reasons, "legacy_runtime_unrecorded")
+  } else {
+    if (contract$runtime_unknown(a$runtime_start) || contract$runtime_unknown(b$runtime_start)) {
+      reasons <- c(reasons, "runtime_evidence_unknown")
+    }
+    for (key in c("coverage", "platform", "dependencies", "image", "hardware", "harness")) {
+      if (!comparison_equal(a$runtime_start[[key]], b$runtime_start[[key]])) {
+        reasons <- c(reasons, paste0("runtime_mismatch_", key))
+      }
+    }
+  }
   if (!comparison_equal(a$semantics, b$semantics)) {
     reasons <- c(reasons, "semantics_mismatch")
   }
@@ -114,8 +129,9 @@ comparison_build <- function(baseline, candidate, contract) {
   reasons <- comparison_reasons(baseline, candidate, contract)
   comparable <- length(reasons) == 0L
   provenance <- function(x) list(sha256 = x$sha256,
-                                measurement_schema_version = x$measurement$schema_version,
-                                metadata = x$measurement$metadata)
+    measurement_schema_version = x$measurement$schema_version,
+    metadata = x$measurement$metadata,
+    runtime = if (x$measurement$schema_version == "2.0.0") x$measurement$runtime_start else NULL)
   scenarios <- list()
   if (comparable) {
     scenarios <- lapply(seq_along(contract$benchmark_scenarios()), function(i) {
@@ -129,14 +145,14 @@ comparison_build <- function(baseline, candidate, contract) {
            max_rss_kib = metric("max_rss_kib"))
     })
   }
-  list(comparison_schema_version = "1.0.0",
+  list(comparison_schema_version = "2.0.0",
        tool_status = if (comparable) "completed" else "not_comparable",
        disposition = if (comparable) "descriptive_only" else "non_comparable",
        reasons = as.list(reasons), regression_verdict = "not_assessed",
        trusted_baseline = FALSE,
-       limitations = as.list(c("dependency_versions_unrecorded",
-                               "runner_image_unrecorded", "hardware_identity_unrecorded",
-                               "measurement_harness_fingerprint_unrecorded")),
+       limitations = as.list(c("transitive_dependency_versions_unrecorded",
+         "native_libraries_and_package_builds_unrecorded", "execution_conditions_not_equivalent",
+         "runtime_snapshots_not_continuous_attestation")),
        baseline = provenance(baseline), candidate = provenance(candidate),
        baseline_budgets_seconds = baseline$measurement$budgets_seconds,
        candidate_budgets_seconds = candidate$measurement$budgets_seconds,
