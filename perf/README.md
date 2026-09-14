@@ -18,3 +18,10 @@ detection, dashboards, and optimizations require separate work and authority.
 The [descriptive comparison tool](../project-docs/performance/COMPARISON_CONTRACT.md)
 compares two explicitly selected checksum-bound measurement artifacts. It does
 not select or update these legacy baselines or issue regression verdicts.
+
+New measurements use schema `2.0.0` runtime snapshots: loaded direct dependency
+versions, constrained runner image/hardware metadata and a measurement-source
+fingerprint. Legacy `1.0.0` is still readable but is non-comparable in the new
+comparator because runtime evidence is absent. Matching recorded facts permits
+descriptive differences only; it does not establish equivalent execution
+conditions, a trusted baseline or accepted regression thresholds.

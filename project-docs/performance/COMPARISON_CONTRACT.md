@@ -5,9 +5,11 @@ for issue #471. It does not choose, admit, replace, or update a baseline. Its
 output is descriptive evidence, never a passed/no-regression verdict, a trusted
 baseline decision, or acceptance of performance thresholds.
 
-The [measurement contract](MEASUREMENT_CONTRACT.md) and its schema `1.0.0` remain
-unchanged. Package code, public exports, package output schemas, dependencies,
-workflows, old baseline files, and existing budgets are outside this tranche.
+The [measurement contract](MEASUREMENT_CONTRACT.md) produces schema `2.0.0`
+with runtime evidence. The strict legacy `1.0.0` reader remains, but the new
+comparison policy makes legacy inputs non-comparable rather than inventing
+runtime facts. Package code, public exports, package output schemas, dependency
+requirements, old baseline files and existing budgets remain unchanged.
 
 ## Inputs and provenance
 
@@ -40,7 +42,8 @@ contract's bundled synthetic fixture, must be available.
 
 The output retains each input's raw-byte SHA-256, measurement schema version,
 commit, package/R version, OS/architecture/runner label, run ID/attempt and UTC
-timestamp. Commit, run and timestamp differences are provenance, not reasons to
+timestamp, plus the complete validated runtime snapshot for schema `2.0.0`
+(or JSON null for legacy). Commit, run and timestamp differences are provenance, not reasons to
 reject compatibility. Identical commits from distinct runs may be compared;
 source-tree equivalence is not inferred because it is not recorded in inputs.
 The caller chooses orientation; no chronological ordering is required.
@@ -50,6 +53,9 @@ The caller chooses orientation; no chronological ordering is required.
 For two valid inputs, the following recorded evidence must agree exactly:
 
 - Package version, R version, OS, architecture and runner label.
+- Measurement schema `2.0.0`, defined runtime image/hardware evidence, and exact
+  runtime coverage/platform/dependency/image/hardware/harness records. Nulls
+  never establish comparability, even when both artifacts contain the same null.
 - Scenario/workload definitions and measurement semantics.
 - All effective historical budget values. Each input must independently pass
   its recorded budgets; the comparator never substitutes the current shell's
@@ -63,26 +69,45 @@ A self-comparison is not evidence from two runs. Equal raw hashes add
 even if bytes or commit metadata differ. Reformatting the same artifact does not
 make an independent run. Distinct attempts of the same hosted run may be compared.
 An input with a `local` run ID or attempt adds `unverifiable_run_identity` because
-schema 1.0.0 provides no unique local execution identity. It remains a valid
+neither measurement schema provides a unique local execution identity. It remains a valid
 measurement artifact but cannot establish two distinct runs for this comparator.
 
 Non-comparability reasons are fixed codes in deterministic order: artifact
 identity, run identity, environment fields in package/R/OS/architecture/runner
-order, semantics, budgets, then workloads in contract scenario order. Codes are
-`environment_mismatch_<field>`, `semantics_mismatch`, `budget_mismatch`, and
-`workload_mismatch_<scenario>` as applicable. Invalid schema-1.0.0 workloads or
-semantics normally fail input validation before compatibility evaluation.
+order, measurement schema, legacy evidence, unknown runtime evidence, runtime
+sections in coverage/platform/dependencies/image/hardware/harness order,
+semantics, budgets, then workloads in contract scenario order. Codes include
+`environment_mismatch_<field>`, `measurement_schema_mismatch`,
+`legacy_runtime_unrecorded`, `runtime_evidence_unknown`,
+`runtime_mismatch_<section>`, `semantics_mismatch`, `budget_mismatch`, and
+`workload_mismatch_<scenario>`.
 
-Matching visible fields permits **descriptive differences only**. Every report
-lists the same unresolved evidence limitations: dependency versions, runner
-image, hardware identity, and a standalone measurement-harness fingerprint are
-unrecorded. The comparator cannot infer equivalent runtimes, calibrated noise,
-causality, improvement, or a regression threshold from matching runner labels.
-`regression_verdict` is always `not_assessed`; `trusted_baseline` is always false.
+Strict validation precedes comparison. Malformed, missing or duplicate fields,
+invalid runtime shapes/manifests, worker start/end drift, controller/worker
+mismatch and top-level metadata disagreement are invalid input, not a valid
+non-comparable report. Two valid but different dependency/image/hardware/harness
+records are non-comparable. Changes to measurement scripts or workflow must not
+be treated as equivalent merely because package code is identical.
+
+Legacy `1.0.0` remains strictly readable but always adds
+`legacy_runtime_unrecorded`; mixed schemas also add `measurement_schema_mismatch`.
+This intentionally replaces the previous comparator's descriptive legacy-pair
+behavior. Old artifacts are never relabeled, backfilled or assigned current
+runtime metadata. Unsupported schema versions remain invalid input.
+
+Matching recorded fields permits **descriptive differences only**. Every report
+lists `transitive_dependency_versions_unrecorded`,
+`native_libraries_and_package_builds_unrecorded`,
+`execution_conditions_not_equivalent`, and
+`runtime_snapshots_not_continuous_attestation`. The dependency coverage and
+source-fingerprint limits are defined in the measurement contract. The
+comparator cannot infer calibrated noise, causality, improvement or a regression
+threshold from these records. `regression_verdict` is always `not_assessed`;
+`trusted_baseline` is always false.
 
 ## Arithmetic and output
 
-Comparison schema `1.0.0` is separate from measurement schema `1.0.0`. A completed
+Comparison schema `2.0.0` is versioned separately from measurement schemas. A completed
 report contains `tool_status: completed`, `disposition: descriptive_only`, an
 empty reasons array, fixed limitations, both provenance records and budgets,
 and six scenario objects. Each scenario compares median, minimum and maximum
@@ -145,5 +170,7 @@ environment/workload/budget drift, arithmetic and zero baselines, self-compariso
 output safety, deterministic JSON and actual CLI exits from a different cwd.
 Genuine hosted artifacts may be used for a demonstration outside Git, with their
 explicit checksums. No measured artifact or generated comparison is committed.
-Workflow integration, additional metadata collection, threshold calibration,
-baseline admission and regression enforcement remain separate work.
+Threshold calibration, baseline admission and regression enforcement remain
+separate work. The existing Benchmarks workflow executes the focused comparator
+and runtime tests alongside measurement-contract tests; this does not create a
+required regression gate.
