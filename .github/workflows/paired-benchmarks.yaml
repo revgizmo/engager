@@ -1,0 +1,58 @@
+name: Paired benchmarks (manual)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  paired_benchmarks:
+    runs-on: ubuntu-latest
+    # Two 120-minute controller ceilings plus up to 60 minutes of setup/upload.
+    timeout-minutes: 300
+    env:
+      BUDGET_1: '10'
+      BUDGET_50: '120'
+      BUDGET_500: '1200'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev time
+      - name: Install pinned package and dependencies once
+        shell: Rscript {0}
+        run: |
+          options(repos = c(CRAN = "https://cloud.r-project.org"))
+          install.packages("remotes")
+          remotes::install_local(".", dependencies = NA, build = TRUE,
+                                force = TRUE, upgrade = "never")
+          stopifnot(requireNamespace("engager", quietly = TRUE))
+      - name: Execute reference then repeat and compare
+        env:
+          BENCHMARK_RUNNER: ubuntu-latest-${{ runner.arch }}
+        run: |
+          Rscript scripts/benchmarks/paired_execution.R run "$RUNNER_TEMP/engager-pair"
+          pair_sha=$(sha256sum "$RUNNER_TEMP/engager-pair/pair.json" | cut -d ' ' -f 1)
+          set +e
+          Rscript scripts/benchmarks/paired_execution.R compare "$RUNNER_TEMP/engager-pair/pair.json" "$pair_sha" "$RUNNER_TEMP/engager-pair/comparison.json"
+          comparison_status=$?
+          set -e
+          # Non-comparability is a retained descriptive disposition, not a pass.
+          test "$comparison_status" -eq 0 || test "$comparison_status" -eq 3
+      - name: Upload complete validated pair only
+        uses: actions/upload-artifact@v4
+        with:
+          name: paired-measurements-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/engager-pair/reference.json
+            ${{ runner.temp }}/engager-pair/repeat.json
+            ${{ runner.temp }}/engager-pair/pair.json
+            ${{ runner.temp }}/engager-pair/comparison.json
+          if-no-files-found: error
