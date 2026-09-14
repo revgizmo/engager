@@ -1,0 +1,17 @@
+name: Paired benchmarks (manual)
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  select_develop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Require the develop workflow
+        shell: bash
+        run: |
+          printf '%s\n' '::error::Select develop in the Run workflow branch menu. main does not contain the paired benchmark tooling.'
+          exit 1
