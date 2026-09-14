@@ -74,6 +74,7 @@ jobs:
           Rscript scripts/benchmarks/test_measurement_contract.R
           Rscript scripts/benchmarks/test_runtime_metadata.R
           Rscript scripts/benchmarks/test_compare_measurements.R
+          Rscript scripts/benchmarks/test_paired_execution.R
 
       - name: Run measurements and enforce existing budgets
         env:

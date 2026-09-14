@@ -25,3 +25,9 @@ fingerprint. Legacy `1.0.0` is still readable but is non-comparable in the new
 comparator because runtime evidence is absent. Matching recorded facts permits
 descriptive differences only; it does not establish equivalent execution
 conditions, a trusted baseline or accepted regression thresholds.
+
+The [paired execution contract](../project-docs/performance/PAIRED_EXECUTION_CONTRACT.md)
+adds an explicitly versioned, manual-only reference/repeat experiment on one
+allocated worker. It preserves measurement2 and the ordinary comparator's
+same-run rejection. Implementation tests use fabricated values; a real hosted
+paired demonstration and later pilot require separate execution authority.
